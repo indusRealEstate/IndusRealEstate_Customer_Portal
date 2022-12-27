@@ -1,0 +1,75 @@
+.home-bg {
+    background-color: #2B333E03;
+}
+
+.card-stats {
+    .home-card-icon-main {
+        align-self: flex-end;
+        position: absolute;
+        font-size: 40px;
+        margin: 20px;
+        color: white;
+    }
+
+    padding-top: 20px;
+
+    .card-header {
+        .homePage-more-info-link{
+            color: white;
+        }
+
+        .arrow_icon_more_info {
+            padding-left: 15px;
+            color: white;
+            font-size: 9px;
+        }
+    }
+
+    background-color: #d3ab33;
+
+    .card-title {
+        color: white;
+    }
+
+    .card-heading {
+        justify-self: left;
+        padding-top: 5px;
+        font-size: 20px;
+        color: white;
+        font-weight: 500;
+    }
+
+    .tableList-title {
+        font-size: large;
+        font-weight: 500;
+        color: white;
+    }
+
+    .home-card-icons {
+        background-color: #d3ab33;
+    }
+
+}
+
+.card-recent-happenings {
+    box-shadow: 0px 0px 276px -86px rgba(0, 0, 0, 0.63);
+    -webkit-box-shadow: 0px 0px 276px -86px rgba(0, 0, 0, 0.63);
+    -moz-box-shadow: 0px 0px 276px -86px rgba(0, 0, 0, 0.63);
+
+    .recent-happening-icon {
+        position: absolute;
+        justify-self: center;
+        margin: 0;
+        color: white;
+    }
+
+    .card-recent-happenings-head {
+        background-color: #2B333E;
+
+        .card-title {
+            color: white;
+            padding-left: 40px;
+        }
+    }
+
+}

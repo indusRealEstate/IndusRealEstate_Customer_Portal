@@ -1,0 +1,19 @@
+.navbar{
+    background-color: #2B333E !important;
+    color: white !important;
+}
+
+.navBar-main-top {
+    // background-color: black;
+    top: 0;
+
+    .notification-dropdown {
+        .notification-dropdown-item {
+            &:hover {
+                background-color: #2B333E;
+                box-shadow: 0;
+            }
+
+        }
+    }
+}

@@ -1,0 +1,106 @@
+<div *ngIf="isMobileMenu()">
+  <ul class="nav nav-mobile-menu services-dropdown-mobile">
+    <li class="nav-item dropdown services-dropdown-mobile-link">
+      <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="material-icons">assignment</i>
+        <tr>
+          <td>
+            <span class="d-lg-none d-md-block services-dropdown-mobile-title">Services</span>
+          </td>
+          <td>
+            <i class="material-icons service-dropdown-arrow-icon-mobile">keyboard_arrow_down</i>
+          </td>
+        </tr>
+        <!-- <p>
+          <span class="d-lg-none d-md-block services-dropdown-mobile-title">Services</span>
+        </p> -->
+      </a>
+      <div class="dropdown-menu dropdown-menu-right services-dropdown-items" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item " href="#">• CUSTOMER CARE</a>
+        <a class="dropdown-item " href="#">• FACILITY MANAGEMENT SERVICES</a>
+        <a class="dropdown-item " href="#">• RESIDENT SERVICES</a>
+      </div>
+    </li>
+
+  </ul>
+</div>
+
+<ng-container>
+  <div #button [matMenuTriggerFor]="menu" class="dropdown-services" #menuTrigger="matMenuTrigger">
+    <div *ngIf="isPCMenu()" [ngClass]="isPCMenu() ? 'services-Menu-pc': 'services-hiddenMenu-mobile'">
+      <i class="material-icons dropdown-services-icon">assignment</i>
+      <tr>
+        <td>
+          <button class="dropdown-services-btn">Services</button>
+        </td>
+        <td>
+          <i class="material-icons service-dropdown-arrow-icon">keyboard_arrow_down</i>
+        </td>
+      </tr>
+    </div>
+  </div>
+</ng-container>
+
+<!-- #enddocregion mat-menu-trigger-for -->
+<mat-menu #menu="matMenu" [overlapTrigger]="false">
+  <div class="dropdown-servives-items" (mouseenter)="menuenter()" (mouseleave)="menuLeave(menuTrigger, button)">
+
+    <button mat-menu-item class="dropdown-servives-items-ind" [matMenuTriggerFor]="customerCareMenu"
+      #customerCareMenuTrigger="matMenuTrigger" (mouseenter)="customerCareMenuTrigger.openMenu()">CUSTOMER
+      CARE</button>
+
+    <button mat-menu-item class="dropdown-servives-items-ind" [matMenuTriggerFor]="facilityMenu"
+      #facilityMenuTrigger="matMenuTrigger" (mouseenter)="facilityMenuTrigger.openMenu()">FACILITY MANAGEMENT
+      SERVICES</button>
+
+    <button mat-menu-item class="dropdown-servives-items-ind">RESIDENT SERVICES</button>
+
+
+
+  </div>
+</mat-menu>
+
+<mat-menu #customerCareMenu="matMenu" [overlapTrigger]="false">
+  <div class="dropdown-customerCare" (mouseenter)="menu2enter()"
+    (mouseleave)="menu2Leave(menuTrigger,customerCareMenuTrigger, button)">
+    <button mat-menu-item class="dropdown-customer-care-ind">dropdown 1</button>
+    <button mat-menu-item class="dropdown-customer-care-ind">dropdown 2</button>
+  </div>
+</mat-menu>
+
+<mat-menu #facilityMenu="matMenu" [overlapTrigger]="false">
+  <div class="dropdown-facility" (mouseenter)="menu2enter()"
+    (mouseleave)="menu2Leave(menuTrigger,facilityMenuTrigger, button)">
+    <button mat-menu-item class="dropdown-facility-ind">FM-MAINTENANCE REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind">OWNER MOVE-IN REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind">OWNER MOVE-OUT REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind">TENANT MOVE-OUT REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind">TENANT REGISTRATION</button>
+  </div>
+</mat-menu>
+
+<ng-container>
+  <div #button [matMenuTriggerFor]="myDocMenu" class="dropdown-myDocuments" #myDocMenuTrigger="matMenuTrigger">
+    <div *ngIf="isPCMenu()" [ngClass]="isPCMenu() ? 'myDocuments-Menu-pc': 'myDocuments-hiddenMenu-mobile'">
+      <i class="material-icons dropdown-myDocuments-icon">folder_copy</i>
+      <tr>
+        <td>
+          <button class="dropdown-myDocuments-btn">My Documents</button>
+        </td>
+        <td>
+          <i class="material-icons myDocuments-dropdown-arrow-icon">keyboard_arrow_down</i>
+        </td>
+      </tr>
+    </div>
+  </div>
+</ng-container>
+
+<mat-menu #myDocMenu="matMenu" [overlapTrigger]="false">
+  <div class="dropdown-myDoc-items" (mouseenter)="menuenter()" (mouseleave)="menuLeave(myDocMenuTrigger, button)">
+
+    <button mat-menu-item class="dropdown-myDoc-items-ind" routerLink="/documents">DOCUMENTS</button>
+
+    <button mat-menu-item class="dropdown-myDoc-items-ind">TEMPLATES</button>
+  </div>
+</mat-menu>

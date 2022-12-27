@@ -1,0 +1,43 @@
+<div class="main-content reports-bg">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-appointments">
+                    <div class="card-header card-appointments-head">
+                        <tr>
+                            <td>
+                                <i class="material-icons appointments-icon">calendar_month</i>
+                            </td>
+                            <td>
+                                <h4 class="card-title mt-0 tableList-title">Calendar</h4>
+                            </td>
+                        </tr>
+
+                    </div>
+                    <div class="calendar-wrapper">
+                        <full-calendar [options]="calendarOptions" class="calendar-appointents"></full-calendar>
+                    </div>
+
+                </div>
+                <div class="card card-appointments">
+                    <div class="card-header card-appointments-head">
+                        <tr>
+                            <td>
+                                <i class="material-icons appointments-icon">app_registration</i>
+                            </td>
+                            <td>
+                                <h4 class="card-title mt-0 tableList-title">My Appointments</h4>
+                            </td>
+                        </tr>
+
+                    </div>
+                    <div class="appointments-table">
+                          <p>No Appointments for this month</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
