@@ -15,7 +15,7 @@
 
                     </div>
                     <div class="calendar-wrapper">
-                        <full-calendar [options]="calendarOptions" class="calendar-appointents"></full-calendar>
+                        <full-calendar #calendar [options]="calendarOptions" class="calendar-appointents"></full-calendar>
                     </div>
 
                 </div>
@@ -31,8 +31,15 @@
                         </tr>
 
                     </div>
-                    <div class="appointments-table">
-                          <p>No Appointments for this month</p>
+                    <div class="appointments-table" *ngIf="eventsCurrentMonth.length == 0">
+                        <p>No Appointments for this month</p>
+                    </div>
+
+                    <div class="appointments-table" *ngIf="eventsCurrentMonth.length != 0">
+                        <span class="monthly-appointments-heading">This month :</span>
+                        <ul *ngFor="let event of eventsCurrentMonth" class="monthly-appointments-ind">
+                            <li><b>{{event["title"]}}</b> on {{event["start"] | date: 'MMM d, y, h:mm:ss a'}}</li>
+                        </ul>
                     </div>
 
                 </div>

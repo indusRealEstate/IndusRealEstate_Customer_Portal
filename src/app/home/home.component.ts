@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from 'app/services/api.service';
+import { AuthenticationService } from 'app/services/authentication.service';
 import * as Chartist from 'chartist';
 
 @Component({
@@ -8,17 +11,20 @@ import * as Chartist from 'chartist';
 })
 export class HomeComponent implements OnInit {
 
-  recentHeppenings: String = "Your request with reference number 00483680 for Make a Payment is Cancelled.";
+  recentHeppenings: any = [];
+  isUserSignedIn: boolean = false;
 
-  constructor() { }
+  constructor(private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService,) { }
 
-  recentHappeningsChanger() {
-    if (this.recentHeppenings == "More Details") {
-      this.recentHeppenings = "Your request with reference number 00483680 for Make a Payment is Cancelled.";
+  isUserSignOut() {
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
     } else {
-      this.recentHeppenings = "More Details";
+      this.isUserSignedIn = false;
+      this.router.navigate(['/login']);
     }
   }
+
 
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
@@ -76,7 +82,22 @@ export class HomeComponent implements OnInit {
 
     seq2 = 0;
   };
+
+  getUserRecentHappenings() {
+    var data = localStorage.getItem('currentUser');
+    var user = JSON.parse(data);
+    var userId = user[0]["id"];
+
+    this.apiService.getUserRecentHappenings(userId).subscribe((data: any) => {
+      this.recentHeppenings = data;
+    });
+
+  }
+
   ngOnInit() {
+    this.isUserSignOut();
+    this.getUserRecentHappenings();
+
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
     const dataDailySalesChart: any = {

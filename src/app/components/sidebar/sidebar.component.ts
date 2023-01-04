@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../../../models/user/user.model';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -36,10 +37,12 @@ export class SidebarComponent implements OnInit {
   homeRoute: any[];
   serviceRoute: any[];
   menuItems: any[];
+  user: User;
 
   constructor() { }
 
   ngOnInit() {
+    this.getUserDataFromLocal();
     this.homeRoute = HOMEROUTE.filter(menuItem => menuItem);
     // this.serviceRoute = SERVICEROUTE.filter(menuItem => menuItem);
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -50,4 +53,18 @@ export class SidebarComponent implements OnInit {
     }
     return true;
   };
+
+  getUserDataFromLocal() {
+    var data = localStorage.getItem('currentUser');
+    var user = JSON.parse(data);
+
+    this.user = new User(
+      user[0]["id"],
+      user[0]["username"],
+      user[0]["firstname"],
+      user[0]["lastname"],
+      user[0]["password"],
+      user[0]["token"],
+    )
+  }
 }

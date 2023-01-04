@@ -14,7 +14,7 @@
     padding-top: 20px;
 
     .card-header {
-        .homePage-more-info-link{
+        .homePage-more-info-link {
             color: white;
         }
 
@@ -55,6 +55,14 @@
     box-shadow: 0px 0px 276px -86px rgba(0, 0, 0, 0.63);
     -webkit-box-shadow: 0px 0px 276px -86px rgba(0, 0, 0, 0.63);
     -moz-box-shadow: 0px 0px 276px -86px rgba(0, 0, 0, 0.63);
+
+    .card-body {
+        .table-responsive {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+
 
     .recent-happening-icon {
         position: absolute;

@@ -17,3 +17,28 @@
         }
     }
 }
+
+.profile-dropdown{
+    cursor: pointer;
+}
+
+.profile-dropdown-div{
+    margin: 10px;
+
+    .profile-dropdown-btn{
+        margin: 10px;
+        width: 110px;
+        background-color: #d3ab33;
+        color: white;
+
+        &:hover{
+            background-color: white;
+            color: #d3ab33;
+        }
+
+        .profile-dropdown-btn-icon{
+            font-size: 15px;
+            padding-right: 5px;
+        }
+    }
+}

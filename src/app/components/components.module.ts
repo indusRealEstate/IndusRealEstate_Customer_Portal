@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { TableComponent } from './table/table.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -28,6 +29,7 @@ import { MatTableModule } from '@angular/material/table';
         ReactiveFormsModule,
         MatCardModule,
         MatTableModule,
+        MatButtonModule,
     ],
     declarations: [
         FooterComponent,

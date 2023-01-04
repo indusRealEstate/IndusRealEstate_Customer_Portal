@@ -6,10 +6,6 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { HomeComponent } from '../../home/home.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { ReportsComponent } from '../../reports/reports.component';
-import { TypographyComponent } from '../../typography/typography.component';
-import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
@@ -65,6 +61,8 @@ import { StepperThirdComponent } from 'app/new_payment/components/stepper_03/ste
 import { StepperFourthComponent } from 'app/new_payment/components/stepper_04/stepper_fourth';
 import { StepperFifthComponent } from 'app/new_payment/components/stepper_05/stepper_fifth';
 import { StepperSixthComponent } from 'app/new_payment/components/stepper_06/stepper_sixth';
+import { ModalComponentDate } from 'app/appointments/show_modal_date/modal-date';
+import { ModalComponent } from 'app/appointments/show_model_event/modal';
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -127,10 +125,6 @@ import { StepperSixthComponent } from 'app/new_payment/components/stepper_06/ste
     HomeComponent,
     UserProfileComponent,
     ReportsComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
     counterComponent,
     MyRequestsComponent,
     MyPropertiesComponent,
@@ -143,6 +137,8 @@ import { StepperSixthComponent } from 'app/new_payment/components/stepper_06/ste
     StepperFourthComponent,
     StepperFifthComponent,
     StepperSixthComponent,
+    ModalComponent,
+    ModalComponentDate,
     // cdk steps components for new payments
 
   ]

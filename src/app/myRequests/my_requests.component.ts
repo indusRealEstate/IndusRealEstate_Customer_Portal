@@ -1,18 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-
-const ELEMENT_DATA: any = [
-  { caseNumber: '00123456780', reqType: 'Make a payment', propertyName: 'undefined', status: 'Closed', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Make a payment', propertyName: 'undefined', status: 'Pending', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Make a payment', propertyName: 'undefined', status: 'Closed', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Make a payment', propertyName: 'undefined', status: 'Cancelled', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Tenant move-in request', propertyName: 'undefined', status: 'Closed', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Tenant move-in request', propertyName: 'undefined', status: 'Pending', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Tenent Registration', propertyName: 'undefined', status: 'Closed', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Make a payment', propertyName: 'undefined', status: 'Cancelled', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Make a payment', propertyName: 'undefined', status: 'Closed', createdDate: '01/01/2023' },
-  { caseNumber: '00123456780', reqType: 'Tenent Registration', propertyName: 'undefined', status: 'Closed', createdDate: '01/01/2023' },
-];
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { ApiService } from 'app/services/api.service';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 @Component({
   selector: 'app-myRequests',
@@ -22,10 +12,38 @@ const ELEMENT_DATA: any = [
 export class MyRequestsComponent implements OnInit {
   selectedEntry: any = '10';
 
-  constructor() { }
+  dataSource = new MatTableDataSource<any>();
+
+  isUserSignedIn: boolean = false;
+
+  constructor(private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService,) { }
+
+  isUserSignOut() {
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+    } else {
+      this.isUserSignedIn = false;
+      this.router.navigate(['/login']);
+    }
+  }
+
   ngOnInit() {
+    this.isUserSignOut();
+    this.getUserRequestDetails();
   }
   displayedColumns: string[] = ['case-number', 'request-type', 'property-name', 'status', 'created-date'];
-  dataSource = ELEMENT_DATA;
+
+  getUserRequestDetails() {
+    var data = localStorage.getItem('currentUser');
+    var user = JSON.parse(data);
+    var userId = user[0]["id"];
+
+    this.apiService.getUserRequestDetails(userId).subscribe((data: any) => {
+      // console.log(JSON.stringify(data));
+      // console.log(data);
+      this.dataSource.data = data;
+    });
+  }
+
 
 }

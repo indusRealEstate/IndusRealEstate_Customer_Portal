@@ -125,57 +125,18 @@
                         <table class="table table-hover">
 
                             <tbody>
-                                <tr (click)="recentHappeningsChanger()">
+                                <tr *ngFor="let e of recentHeppenings" class="recent-happenings-home">
+                                    <!-- <td>
+                                        {{e["user_id"]}}
+                                    </td> -->
                                     <td>
-                                        1
+                                        {{e["content"]}}
                                     </td>
                                     <td>
-                                        {{recentHeppenings}}
-                                    </td>
-                                    <td>
-                                        01/01/2023
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>
-                                        Your request with reference number 00483677 for Make a Payment is Closed.
-                                    </td>
-                                    <td>
-                                        01/01/2023
+                                        {{e["date"]}}
                                     </td>
 
                                 </tr>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>
-                                        Thank you for submitting your Make a Payment request. Your reference number is
-                                        00483680. Your request now is Pending for Payment.
-                                    </td>
-                                    <td>
-                                        01/01/2023
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>
-                                        Thank you for submitting your Make a Payment request. Your reference number is
-                                        00483677. Your request now is Pending for Payment.
-                                    </td>
-                                    <td>
-                                        01/01/2023
-                                    </td>
-
-                                </tr>
-
                             </tbody>
                         </table>
                     </div>

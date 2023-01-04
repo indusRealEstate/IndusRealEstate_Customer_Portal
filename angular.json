@@ -83,6 +83,7 @@
           }
         },
         "serve": {
+          "proxyConfig": "proxy.conf.json",
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "indus_real_estate_customer_portal:build"
