@@ -115,6 +115,7 @@ export class NavbarComponent implements OnInit {
 
     getTitle() {
         var titlee = this.location.prepareExternalUrl(this.location.path());
+
         if (titlee.charAt(0) === '#') {
             titlee = titlee.slice(1);
         }
@@ -122,13 +123,15 @@ export class NavbarComponent implements OnInit {
         for (var item = 0; item < this.listTitles.length; item++) {
             if (this.listTitles[item].path === titlee) {
                 return this.listTitles[item].title;
+                
             }
         }
-        if (titlee == '/my-properties') {
+        
+        if (titlee.split('/')[1] == 'my-properties') {
             return 'My Properties'
-        } else if (titlee == '/documents') {
+        } else if (titlee.split('/')[1] == 'documents') {
             return 'Documents'
-        } else if(titlee == '/user-profile') {
+        } else if (titlee.split('/')[1] == 'user-profile') {
             return 'User profile'
         }
         return 'Home';
@@ -143,14 +146,14 @@ export class NavbarComponent implements OnInit {
     getUserDataFromLocal() {
         var data = localStorage.getItem('currentUser');
         var user = JSON.parse(data);
-    
+
         this.user = new User(
-          user[0]["id"],
-          user[0]["username"],
-          user[0]["firstname"],
-          user[0]["lastname"],
-          user[0]["password"],
-          user[0]["token"],
+            user[0]["id"],
+            user[0]["username"],
+            user[0]["firstname"],
+            user[0]["lastname"],
+            user[0]["password"],
+            user[0]["token"],
         )
-      }
+    }
 }

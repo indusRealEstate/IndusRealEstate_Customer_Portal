@@ -34,10 +34,6 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   user: User;
 
-  HOMEROUTE: RouteInfo[] = [
-    { path: '/home', title: 'Home', icon: 'home', class: '' },
-  ];
-
   constructor(private authService : AuthenticationService) { }
 
   ngOnInit() {
@@ -54,8 +50,6 @@ export class SidebarComponent implements OnInit {
       for(let e of this.menuItems){
         e["path"] = `${e["path"]}/${user[0]["id"]}`
       }
-
-      console.log(this.menuItems);
     }
 
   }
