@@ -72,11 +72,11 @@
 <mat-menu #facilityMenu="matMenu" [overlapTrigger]="false">
   <div class="dropdown-facility" (mouseenter)="menu2enter()"
     (mouseleave)="menu2Leave(menuTrigger,facilityMenuTrigger, button)">
-    <button mat-menu-item class="dropdown-facility-ind" routerLink="/fm-maintanence-request">FM-MAINTENANCE REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request">OWNER MOVE-IN REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-out-request">OWNER MOVE-OUT REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind" routerLink="/tenant-move-out-request">TENANT MOVE-OUT REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind" routerLink="/tenant-registration">TENANT REGISTRATION</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/fm-maintanence-request/{{user.id}}">FM-MAINTENANCE REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request/{{user.id}}">OWNER MOVE-IN REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-out-request/{{user.id}}">OWNER MOVE-OUT REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/tenant-move-out-request/{{user.id}}">TENANT MOVE-OUT REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/tenant-registration/{{user.id}}">TENANT REGISTRATION</button>
   </div>
 </mat-menu>
 
@@ -99,7 +99,7 @@
 <mat-menu #myDocMenu="matMenu" [overlapTrigger]="false">
   <div class="dropdown-myDoc-items" (mouseenter)="menuenter()" (mouseleave)="menuLeave(myDocMenuTrigger, button)">
 
-    <button mat-menu-item class="dropdown-myDoc-items-ind" routerLink="/documents">DOCUMENTS</button>
+    <button mat-menu-item class="dropdown-myDoc-items-ind" routerLink="/documents/{{user.id}}">DOCUMENTS</button>
 
     <button mat-menu-item class="dropdown-myDoc-items-ind">TEMPLATES</button>
   </div>

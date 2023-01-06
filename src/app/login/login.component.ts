@@ -56,8 +56,9 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe(
             data => {
-                // console.log(data);
-                this.router.navigate([this.returnUrl]);
+                var userData = localStorage.getItem('currentUser');
+                var user = JSON.parse(userData);
+                this.router.navigate([`/home/${user[0]["id"]}`]);
             },
             error => {
                 if (error["statusText"] == 'Not Found') {

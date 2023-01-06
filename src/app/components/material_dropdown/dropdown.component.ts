@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { User } from '../../../../models/user/user.model';
 
 
 /**
@@ -10,11 +11,12 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
     styleUrls: ['./dropdown.component.scss']
 })
 export class DropdownMaterial implements OnInit {
-    
+
     enteredButton = false;
     isMatMenuOpen = false;
     isMatMenu2Open = false;
     prevButtonTrigger;
+    user: User;
 
     isMobileMenu() {
         if ($(window).width() > 991) {
@@ -33,6 +35,7 @@ export class DropdownMaterial implements OnInit {
 
 
     ngOnInit() {
+        this.getUserDataFromLocal();
     }
 
     menuenter() {
@@ -102,6 +105,19 @@ export class DropdownMaterial implements OnInit {
                 this.enteredButton = false;
             }
         }, 100)
+    }
+    getUserDataFromLocal() {
+        var data = localStorage.getItem('currentUser');
+        var user = JSON.parse(data);
+
+        this.user = new User(
+            user[0]["id"],
+            user[0]["username"],
+            user[0]["firstname"],
+            user[0]["lastname"],
+            user[0]["password"],
+            user[0]["token"],
+        )
     }
 
 }

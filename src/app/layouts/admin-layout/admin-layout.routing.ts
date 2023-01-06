@@ -16,62 +16,23 @@ import { Owner_Move_in_Request } from 'app/indus_services/facility_management/ow
 import { Owner_Move_out_Request } from 'app/indus_services/facility_management/owner_move-out_request/owner_move-out_request.component';
 import { Tenant_Move_out_Request } from 'app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component';
 import { Tenant_Registration } from 'app/indus_services/facility_management/tenant_registration/tenant_registration.component';
+import { DirectAccessGaurd } from 'app/routeGaurd';
+
 
 export const AdminLayoutRoutes: Routes = [
-    // {
-    //   path: '',
-    //   children: [ {
-    //     path: 'dashboard',
-    //     component: DashboardComponent
-    // }]}, {
-    // path: '',
-    // children: [ {
-    //   path: 'userprofile',
-    //   component: UserProfileComponent
-    // }]
-    // }, {
-    //   path: '',
-    //   children: [ {
-    //     path: 'icons',
-    //     component: IconsComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'notifications',
-    //         component: NotificationsComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'maps',
-    //         component: MapsComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'typography',
-    //         component: TypographyComponent
-    //     }]
-    // }, {
-    //     path: '',
-    //     children: [ {
-    //         path: 'upgrade',
-    //         component: UpgradeComponent
-    //     }]
-    // }
-    { path: 'home', component: HomeComponent },
-    { path: 'user-profile', component: UserProfileComponent },
-    { path: 'reports', component: ReportsComponent },
-    { path: 'counter', component: counterComponent },
-    { path: 'my-requests', component: MyRequestsComponent },
-    { path: 'my-properties', component: MyPropertiesComponent },
-    { path: 'appointments', component: AppointmentsComponent },
-    { path: 'documents', component: DocumentsComponent },
-    { path: 'new-payment', component: NewPaymentComponent },
-    { path: 'fm-maintanence-request', component: FM_MaintananceRequest },
-    { path: 'owner-move-in-request', component: Owner_Move_in_Request },
-    { path: 'owner-move-out-request', component: Owner_Move_out_Request },
-    { path: 'tenant-move-out-request', component: Tenant_Move_out_Request },
-    { path: 'tenant-registration', component: Tenant_Registration },
+
+    { path: 'home/:id', component: HomeComponent},
+    { path: 'user-profile/:id', component: UserProfileComponent },
+    { path: 'reports/:id', component: ReportsComponent },
+    { path: 'counter/:id', component: counterComponent },
+    { path: 'my-requests/:id', component: MyRequestsComponent },
+    { path: 'my-properties/:id', component: MyPropertiesComponent },
+    { path: 'appointments/:id', component: AppointmentsComponent },
+    { path: 'documents/:id', component: DocumentsComponent },
+    { path: 'new-payment/:id', component: NewPaymentComponent },
+    { path: 'fm-maintanence-request/:id', component: FM_MaintananceRequest },
+    { path: 'owner-move-in-request/:id', component: Owner_Move_in_Request },
+    { path: 'owner-move-out-request/:id', component: Owner_Move_out_Request },
+    { path: 'tenant-move-out-request/:id', component: Tenant_Move_out_Request },
+    { path: 'tenant-registration/:id', component: Tenant_Registration },
 ];

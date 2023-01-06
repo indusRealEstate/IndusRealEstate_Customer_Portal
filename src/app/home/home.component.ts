@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'app/services/api.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import * as Chartist from 'chartist';
+import { User } from '../../../models/user/user.model';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
 
   recentHeppenings: any = [];
   isUserSignedIn: boolean = false;
+  user : User;
 
   constructor(private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService,) { }
 
@@ -96,6 +98,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.isUserSignOut();
+    this.getUserDataFromLocal();
     this.getUserRecentHappenings();
 
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
@@ -177,6 +180,20 @@ export class HomeComponent implements OnInit {
 
     //start animation for the Emails Subscription Chart
     this.startAnimationForBarChart(websiteViewsChart);
+  }
+
+  getUserDataFromLocal() {
+    var data = localStorage.getItem('currentUser');
+    var user = JSON.parse(data);
+
+    this.user = new User(
+      user[0]["id"],
+      user[0]["username"],
+      user[0]["firstname"],
+      user[0]["lastname"],
+      user[0]["password"],
+      user[0]["token"],
+    )
   }
 
 }

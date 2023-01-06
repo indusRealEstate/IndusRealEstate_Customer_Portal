@@ -17,7 +17,9 @@ export class AdminLayoutComponent implements OnInit {
     private yScrollStack: number[] = [];
     isUserSignedIn: boolean = false;
 
-    constructor(public location: Location, private router: Router, private authenticationService: AuthenticationService,) { }
+    constructor(public location: Location, private router: Router, private authenticationService: AuthenticationService,) {
+
+    }
 
     ngOnInit() {
         this.isUserSignOut();
@@ -132,7 +134,7 @@ export class AdminLayoutComponent implements OnInit {
     ngAfterViewInit() {
         this.runOnRouteChange();
     }
-    
+
     runOnRouteChange(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
@@ -151,9 +153,22 @@ export class AdminLayoutComponent implements OnInit {
     isUserSignOut() {
         if (this.authenticationService.currentUserValue) {
             this.isUserSignedIn = true;
+            this.isUrlFault();
         } else {
             this.isUserSignedIn = false;
             this.router.navigate(['/login']);
+        }
+    }
+
+    isUrlFault() {
+        if (this.authenticationService.currentUserValue) {
+            var userData = localStorage.getItem('currentUser');
+            var user = JSON.parse(userData);
+            var currentPath = this.router.url.split('/')[1];
+            var urlId = this.router.url.split('/')[2];
+            if (user[0]["id"] != urlId) {
+                this.router.navigate([`/${currentPath}/${user[0]["id"]}`]);
+            }
         }
     }
 
