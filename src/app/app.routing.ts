@@ -6,10 +6,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
+
+var userData = localStorage.getItem('currentUser');
+var user = JSON.parse(userData);
+
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home/',
+    redirectTo: userData == null ? 'login' : `home/${user[0]["id"]}` ,
     pathMatch: 'full',
   }, 
   {
