@@ -6,23 +6,6 @@
                     <div class="card-header card-appointments-head">
                         <tr>
                             <td>
-                                <i class="material-icons appointments-icon">calendar_month</i>
-                            </td>
-                            <td>
-                                <h4 class="card-title mt-0 tableList-title">Calendar</h4>
-                            </td>
-                        </tr>
-
-                    </div>
-                    <div class="calendar-wrapper">
-                        <full-calendar #calendar [options]="calendarOptions" class="calendar-appointents"></full-calendar>
-                    </div>
-
-                </div>
-                <div class="card card-appointments">
-                    <div class="card-header card-appointments-head">
-                        <tr>
-                            <td>
                                 <i class="material-icons appointments-icon">app_registration</i>
                             </td>
                             <td>
@@ -32,7 +15,10 @@
 
                     </div>
                     <div class="appointments-table" *ngIf="eventsCurrentMonth.length == 0">
-                        <p>No Appointments for this month</p>
+                        <p *ngIf="isLoading == false">No Appointments for this month</p>
+                        <div class="spinner-loader" style="width:800px; margin:0 auto;" *ngIf="isLoading == true">
+                            <mat-spinner [diameter]="40"></mat-spinner>
+                        </div>
                     </div>
 
                     <div class="appointments-table" *ngIf="eventsCurrentMonth.length != 0">
@@ -43,6 +29,25 @@
                     </div>
 
                 </div>
+                <div class="card card-appointments">
+                    <div class="card-header card-appointments-head">
+                        <tr>
+                            <td>
+                                <i class="material-icons appointments-icon">calendar_month</i>
+                            </td>
+                            <td>
+                                <h4 class="card-title mt-0 tableList-title">Calendar</h4>
+                            </td>
+                        </tr>
+
+                    </div>
+                    <div class="calendar-wrapper">
+                        <full-calendar #calendar [options]="calendarOptions"
+                            class="calendar-appointents"></full-calendar>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>

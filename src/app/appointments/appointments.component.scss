@@ -41,6 +41,12 @@
     }
 }
 
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #000000;
+}
+
+
 ::ng-deep .fc {
 
     & .fc-daygrid-day {
@@ -98,7 +104,8 @@
     }
 
     & .fc-daygrid-event {
-        color: #2B333E !important;
+        background-color: #2B333E !important;
+        color: white !important;
         font-size: 13px !important;
     }
 

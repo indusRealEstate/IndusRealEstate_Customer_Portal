@@ -1,0 +1,76 @@
+<div class="main-content reports-bg">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-payment">
+                    <div class="card-header card-payment-head">
+                        <tr>
+                            <td>
+                                <i class="material-icons payment-icon">text_snippet</i>
+                            </td>
+                            <td>
+                                <h4 class="card-title mt-0 tableList-title">Request Submission - Tenant Move-out Request
+                                </h4>
+                            </td>
+                        </tr>
+
+                    </div>
+
+                    <div class="new-payment-wrapper">
+                        <mat-horizontal-stepper #stepper [selectedIndex]="selectedIndex" labelPosition="bottom"
+                            linear="true">
+
+                            <mat-step label="Introduction" [stepControl]="oneForm">
+                                <ng-template matStepperIcon="edit">
+
+                                    <mat-icon>done</mat-icon>
+                                </ng-template>
+                                <div class="upper-box text-right">
+                                    <button mat-raised-button type="submit" class="btn-next" matStepperNext
+                                        (click)="stateDone()">
+                                        Next
+                                    </button>
+                                </div>
+                                <tenant_move-out_request-stepper-one #one></tenant_move-out_request-stepper-one>
+
+                            </mat-step>
+                            <mat-step label="Move-out Details" [stepControl]="twoForm">
+                                <ng-template matStepperIcon="edit">
+                                    <mat-icon>done</mat-icon>
+                                </ng-template>
+                                <tenant_move-out_request-stepper-two #two></tenant_move-out_request-stepper-two>
+                            </mat-step>
+                            <!-- <mat-step label="Request Details Page 2" [stepControl]="threeForm">
+                                <ng-template matStepperIcon="edit">
+                                    <mat-icon>done</mat-icon>
+                                </ng-template>
+                                <fm-maintanence-stepper-three #three></fm-maintanence-stepper-three>
+                            </mat-step> -->
+                            <mat-step label="Attactments" [stepControl]="fourForm">
+                                <ng-template matStepperIcon="edit">
+                                    <mat-icon>done</mat-icon>
+                                </ng-template>
+                                <tenant_move-out_request-stepper-four #four></tenant_move-out_request-stepper-four>
+                            </mat-step>
+                            <mat-step label="Preview and Submit" [stepControl]="fiveForm">
+                                <ng-template matStepperIcon="edit">
+                                    <mat-icon>done</mat-icon>
+                                </ng-template>
+                                <tenant_move-out_request-stepper-five #five></tenant_move-out_request-stepper-five>
+                            </mat-step>
+                            <mat-step label="Comfirmation" [stepControl]="sixForm">
+                                <ng-template matStepperIcon="edit">
+                                    <mat-icon>done</mat-icon>
+                                </ng-template>
+                                <tenant_move-out_request-stepper-six #six></tenant_move-out_request-stepper-six>
+                            </mat-step>
+                        </mat-horizontal-stepper>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

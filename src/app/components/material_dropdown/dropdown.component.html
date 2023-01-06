@@ -72,11 +72,11 @@
 <mat-menu #facilityMenu="matMenu" [overlapTrigger]="false">
   <div class="dropdown-facility" (mouseenter)="menu2enter()"
     (mouseleave)="menu2Leave(menuTrigger,facilityMenuTrigger, button)">
-    <button mat-menu-item class="dropdown-facility-ind">FM-MAINTENANCE REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind">OWNER MOVE-IN REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind">OWNER MOVE-OUT REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind">TENANT MOVE-OUT REQUEST</button>
-    <button mat-menu-item class="dropdown-facility-ind">TENANT REGISTRATION</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/fm-maintanence-request">FM-MAINTENANCE REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request">OWNER MOVE-IN REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-out-request">OWNER MOVE-OUT REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/tenant-move-out-request">TENANT MOVE-OUT REQUEST</button>
+    <button mat-menu-item class="dropdown-facility-ind" routerLink="/tenant-registration">TENANT REGISTRATION</button>
   </div>
 </mat-menu>
 

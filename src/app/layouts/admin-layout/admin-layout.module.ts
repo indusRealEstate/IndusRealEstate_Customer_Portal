@@ -63,6 +63,41 @@ import { StepperFifthComponent } from 'app/new_payment/components/stepper_05/ste
 import { StepperSixthComponent } from 'app/new_payment/components/stepper_06/stepper_sixth';
 import { ModalComponentDate } from 'app/appointments/show_modal_date/modal-date';
 import { ModalComponent } from 'app/appointments/show_model_event/modal';
+import { FM_MaintananceRequest } from 'app/indus_services/facility_management/fm-maintanence_request/fm-maintanence_request.component';
+import { FM_MaintananceRequest_Stepper_First } from 'app/indus_services/facility_management/fm-maintanence_request/components/stepper_01/fm-maintanence-first';
+import { FM_MaintananceRequest_Stepper_Second } from 'app/indus_services/facility_management/fm-maintanence_request/components/stepper_02/fm-maintanence-second';
+import { FM_MaintananceRequest_Stepper_Third } from 'app/indus_services/facility_management/fm-maintanence_request/components/stepper_03/fm-maintanence-third';
+import { FM_MaintananceRequest_Stepper_Fourth } from 'app/indus_services/facility_management/fm-maintanence_request/components/stepper_04/fm-maintanence-fourth';
+import { FM_MaintananceRequest_Stepper_Fifth } from 'app/indus_services/facility_management/fm-maintanence_request/components/stepper_05/fm-maintanence-fifth';
+import { FM_MaintananceRequest_Stepper_Sixth } from 'app/indus_services/facility_management/fm-maintanence_request/components/stepper_06/fm-maintanence-sixth';
+import { Owner_Move_in_Request } from 'app/indus_services/facility_management/owner_move-in_request/owner_move-in_request.component';
+import { Owner_Move_in_Request_Stepper_First } from 'app/indus_services/facility_management/owner_move-in_request/components/stepper_01/owner_move-in_request-first';
+import { Owner_Move_in_Request_Stepper_Second } from 'app/indus_services/facility_management/owner_move-in_request/components/stepper_02/owner_move-in_request-second';
+import { Owner_Move_in_Request_Stepper_Third } from 'app/indus_services/facility_management/owner_move-in_request/components/stepper_03/owner_move-in_request-third';
+import { Owner_Move_in_Request_Stepper_Fourth } from 'app/indus_services/facility_management/owner_move-in_request/components/stepper_04/owner_move-in_request-fourth';
+import { Owner_Move_in_Request_Stepper_Fifth } from 'app/indus_services/facility_management/owner_move-in_request/components/stepper_05/owner_move-in_request-fifth';
+import { Owner_Move_in_Request_Stepper_Sixth } from 'app/indus_services/facility_management/owner_move-in_request/components/stepper_06/owner_move-in_request-sixth';
+import { Owner_Move_out_Request } from 'app/indus_services/facility_management/owner_move-out_request/owner_move-out_request.component';
+import { Owner_Move_out_Request_Stepper_First } from 'app/indus_services/facility_management/owner_move-out_request/components/stepper_01/owner_move-out_request-first';
+import { Owner_Move_out_Request_Stepper_Second } from 'app/indus_services/facility_management/owner_move-out_request/components/stepper_02/owner_move-out_request-second';
+import { Owner_Move_out_Request_Stepper_Third } from 'app/indus_services/facility_management/owner_move-out_request/components/stepper_03/owner_move-out_request-third';
+import { Owner_Move_out_Request_Stepper_Fourth } from 'app/indus_services/facility_management/owner_move-out_request/components/stepper_04/owner_move-out_request-fourth';
+import { Owner_Move_out_Request_Stepper_Fifth } from 'app/indus_services/facility_management/owner_move-out_request/components/stepper_05/owner_move-out_request-fifth';
+import { Owner_Move_out_Request_Stepper_Sixth } from 'app/indus_services/facility_management/owner_move-out_request/components/stepper_06/owner_move-out_request-sixth';
+import { Tenant_Move_out_Request } from 'app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component';
+import { Tenant_Move_out_Request_Stepper_First } from 'app/indus_services/facility_management/tenant_move-out_request/components/stepper_01/tenant_move-out_request-first';
+import { Tenant_Move_out_Request_Stepper_Second } from 'app/indus_services/facility_management/tenant_move-out_request/components/stepper_02/tenant_move-out_request-second';
+import { Tenant_Move_out_Request_Stepper_Third } from 'app/indus_services/facility_management/tenant_move-out_request/components/stepper_03/tenant_move-out_request-third';
+import { Tenant_Move_out_Request_Stepper_Fourth } from 'app/indus_services/facility_management/tenant_move-out_request/components/stepper_04/tenant_move-out_request-fourth';
+import { Tenant_Move_out_Request_Stepper_Fifth } from 'app/indus_services/facility_management/tenant_move-out_request/components/stepper_05/tenant_move-out_request-fifth';
+import { Tenant_Move_out_Request_Stepper_Sixth } from 'app/indus_services/facility_management/tenant_move-out_request/components/stepper_06/tenant_move-out_request-sixth';
+import { Tenant_Registration } from 'app/indus_services/facility_management/tenant_registration/tenant_registration.component';
+import { Tenant_Registration_Stepper_First } from 'app/indus_services/facility_management/tenant_registration/components/stepper_01/tenant_registration-first';
+import { Tenant_Registration_Stepper_Second } from 'app/indus_services/facility_management/tenant_registration/components/stepper_02/tenant_registration-second';
+import { Tenant_Registration_Stepper_Third } from 'app/indus_services/facility_management/tenant_registration/components/stepper_03/tenant_registration-third';
+import { Tenant_Registration_Stepper_Fourth } from 'app/indus_services/facility_management/tenant_registration/components/stepper_04/tenant_registration-fourth';
+import { Tenant_Registration_Stepper_Fifth } from 'app/indus_services/facility_management/tenant_registration/components/stepper_05/tenant_registration-fifth';
+import { Tenant_Registration_Stepper_Sixth } from 'app/indus_services/facility_management/tenant_registration/components/stepper_06/tenant_registration-sixth';
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -130,6 +165,11 @@ import { ModalComponent } from 'app/appointments/show_model_event/modal';
     MyPropertiesComponent,
     AppointmentsComponent,
     DocumentsComponent,
+
+    ModalComponent,
+    ModalComponentDate,
+
+    // cdk steps components for new payments
     NewPaymentComponent,
     StepperFirstComponent,
     StepperSecondComponent,
@@ -137,9 +177,51 @@ import { ModalComponent } from 'app/appointments/show_model_event/modal';
     StepperFourthComponent,
     StepperFifthComponent,
     StepperSixthComponent,
-    ModalComponent,
-    ModalComponentDate,
-    // cdk steps components for new payments
+
+    // cdk steps components for fm maintanence request
+    FM_MaintananceRequest,
+    FM_MaintananceRequest_Stepper_First,
+    FM_MaintananceRequest_Stepper_Second,
+    FM_MaintananceRequest_Stepper_Third,
+    FM_MaintananceRequest_Stepper_Fourth,
+    FM_MaintananceRequest_Stepper_Fifth,
+    FM_MaintananceRequest_Stepper_Sixth,
+
+    // cdk steps components for owner move-in request
+    Owner_Move_in_Request,
+    Owner_Move_in_Request_Stepper_First,
+    Owner_Move_in_Request_Stepper_Second,
+    Owner_Move_in_Request_Stepper_Third,
+    Owner_Move_in_Request_Stepper_Fourth,
+    Owner_Move_in_Request_Stepper_Fifth,
+    Owner_Move_in_Request_Stepper_Sixth,
+
+    // cdk steps components for owner move-in request
+    Owner_Move_out_Request,
+    Owner_Move_out_Request_Stepper_First,
+    Owner_Move_out_Request_Stepper_Second,
+    Owner_Move_out_Request_Stepper_Third,
+    Owner_Move_out_Request_Stepper_Fourth,
+    Owner_Move_out_Request_Stepper_Fifth,
+    Owner_Move_out_Request_Stepper_Sixth,
+
+    // cdk steps components for tenant move-in request
+    Tenant_Move_out_Request,
+    Tenant_Move_out_Request_Stepper_First,
+    Tenant_Move_out_Request_Stepper_Second,
+    Tenant_Move_out_Request_Stepper_Third,
+    Tenant_Move_out_Request_Stepper_Fourth,
+    Tenant_Move_out_Request_Stepper_Fifth,
+    Tenant_Move_out_Request_Stepper_Sixth,
+
+    // cdk steps components for tenant registration
+    Tenant_Registration,
+    Tenant_Registration_Stepper_First,
+    Tenant_Registration_Stepper_Second,
+    Tenant_Registration_Stepper_Third,
+    Tenant_Registration_Stepper_Fourth,
+    Tenant_Registration_Stepper_Fifth,
+    Tenant_Registration_Stepper_Sixth,
 
   ]
 })

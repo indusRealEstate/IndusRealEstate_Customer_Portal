@@ -29,6 +29,7 @@ export class AppointmentsComponent implements OnInit {
   showEventModel: boolean = false;
   eventDetails: any;
   rawEventData: any[] = [];
+  isLoading: boolean = false;
 
 
   calendarOptions: CalendarOptions = {
@@ -61,6 +62,7 @@ export class AppointmentsComponent implements OnInit {
     this.isUserSignOut();
     this.getUserAppointments();
     this.changeCalendarOptionsView();
+    this.isLoading = true;
     setTimeout(() => {
       this.getAllEventsCurrentMonth();
     }, 600);
@@ -124,6 +126,7 @@ export class AppointmentsComponent implements OnInit {
         });
       }
     }
+    this.isLoading = false;
 
   }
 
