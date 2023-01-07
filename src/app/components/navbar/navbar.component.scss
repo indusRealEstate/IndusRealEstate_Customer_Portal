@@ -1,6 +1,13 @@
-.navbar{
-    background-color: #2B333E !important;
-    color: white !important;
+.navbar {
+    color: #2B333E !important;
+    background-image: linear-gradient(to bottom, rgba(243, 243, 243, 0.797) 50%, rgba(243, 243, 243, 0.797) 80%), url('../../../assets/img/bg/navbar_bg.jfif') !important;
+    box-shadow: 0 3px 3px 3px rgba(107, 107, 107, 0.048) !important;
+
+
+    .navbar-brand {
+        font-size: 20px !important;
+        font-weight: 600 !important;
+    }
 }
 
 .navBar-main-top {
@@ -18,25 +25,29 @@
     }
 }
 
-.profile-dropdown{
+.profile-dropdown {
     cursor: pointer;
 }
 
-.profile-dropdown-div{
+::ng-deep .mat-menu-panel {
+    margin-top: 25px !important;
+}
+
+.profile-dropdown-div {
     margin: 10px;
 
-    .profile-dropdown-btn{
+    .profile-dropdown-btn {
         margin: 10px;
         width: 110px;
         background-color: #d3ab33;
         color: white;
 
-        &:hover{
+        &:hover {
             background-color: white;
             color: #d3ab33;
         }
 
-        .profile-dropdown-btn-icon{
+        .profile-dropdown-btn-icon {
             font-size: 15px;
             padding-right: 5px;
         }
