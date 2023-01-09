@@ -14,7 +14,7 @@ $decodedData = json_decode($postdata, true);
 
 if (isset($postdata) && !empty($postdata)) {
 
-    $result = $dbase->execute("SELECT * FROM `user_recent_happenings` WHERE `user_id` = '{$decodedData["userId"]}'");
+    $result = $dbase->execute("SELECT * FROM `user_recent_happenings` WHERE `user_id` = '{$decodedData["userId"]}'  ORDER BY `content_id` DESC LIMIT 10");
 
     if ($result->num_rows != 0) {
         $rows = array();

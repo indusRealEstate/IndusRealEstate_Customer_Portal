@@ -78,7 +78,11 @@ export class AppointmentsComponent implements OnInit {
         eventClick: (e) => {
           for (let ev of this.rawEventData) {
             if (ev["event_name"] == e.event.title) {
-              this.openModalEvent(e.event.title, e.event.start, ev["event_id"]);
+              var dateDay = Number(e.event.start.toISOString().split("T")[0].split("-")[2]);
+              var currentDate = e.event.start.toISOString().split("T")[0].split("-")[0] + '-' + e.event.start.toISOString().split("T")[0].split("-")[1] + '-' + dateDay.toString();
+
+              this.openModalEvent(e.event.title, e.event.start, ev["event_id"], currentDate);
+
             }
           }
 
@@ -156,11 +160,11 @@ export class AppointmentsComponent implements OnInit {
   modalDialog: MatDialogRef<ModalComponent, any> | undefined;
   modalDialogDate: MatDialogRef<ModalComponentDate, any> | undefined;
 
-  openModalEvent(title: any, start: any, eventId: any) {
+  openModalEvent(title: any, start: any, eventId: any, date: any) {
     this.dialogConfig.id = "modal-component";
     // this.dialogConfig.height = "300px";
     this.dialogConfig.width = "550px";
-    this.dialogConfig.data = { "title": title, "start": start, "event_id": eventId };
+    this.dialogConfig.data = { "title": title, "start": start, "event_id": eventId, "date": date };
     this.modalDialog = this.matDialog.open(ModalComponent, this.dialogConfig);
   }
 

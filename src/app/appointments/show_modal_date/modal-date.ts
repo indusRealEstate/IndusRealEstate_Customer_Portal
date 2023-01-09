@@ -70,10 +70,22 @@ export class ModalComponentDate implements OnInit {
         "event_id": eventId,
       }
 
+      let now = new Date();
+      var dateDay = Number(now.toISOString().split("T")[0].split("-")[2]);
+      var currentDate = now.toISOString().split("T")[0].split("-")[0] + '-' + now.toISOString().split("T")[0].split("-")[1] + '-' + dateDay.toString();
+
+      var recentHapenings_event_added = {
+        "user_id": userId,
+        "content": `You have added an appointment on ${this.data["date"]} named ${this.newEvent}`,
+        "date": currentDate,
+      }
+
       try {
         this.apiService.addAppointment(eventData).subscribe(data => {
-          console.log(data);
         });
+
+        this.apiService.addUserRecentHappenings(recentHapenings_event_added).subscribe(data=>{});
+        
         this.closeModal();
         location.reload();
       } catch (error) {

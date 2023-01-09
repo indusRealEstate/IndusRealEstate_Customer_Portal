@@ -40,6 +40,12 @@ export class ApiService {
     }));
   }
 
+  addUserRecentHappenings(data: any) {
+    const url = `${API_URL}/addRecentHappenings.php?apikey=1`;
+    return this.http
+      .post(url, data).pipe(catchError(this.handleError('addUserRecentHappenings', [])))
+  }
+
   getUserRequestDetails(userId: any) {
     const url = `${API_URL}/getRequestDetails.php?apikey=1`;
     return this.http.post<any>(url, { 'userId': userId }).pipe(map(data => {

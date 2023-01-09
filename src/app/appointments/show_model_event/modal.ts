@@ -27,9 +27,28 @@ export class ModalComponent implements OnInit {
   }
 
   deleteEvent() {
+
+    var userData = localStorage.getItem('currentUser');
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+
+    let now = new Date();
+    var dateDay = Number(now.toISOString().split("T")[0].split("-")[2]);
+    var currentDate = now.toISOString().split("T")[0].split("-")[0] + '-' + now.toISOString().split("T")[0].split("-")[1] + '-' + dateDay.toString();
+
+    var recentHapenings_event_removed = {
+      "user_id": userId,
+      "content": `You have removed an appointment on ${this.data["date"]} named ${this.data["title"]}`,
+      "date": currentDate,
+    }
+
     try {
       this.apiService.removeAppointment({ "event_id": this.eventId }).subscribe(data => {
       });
+
+      this.apiService.addUserRecentHappenings(recentHapenings_event_removed).subscribe(data => { });
+
+      
       this.closeModal();
       location.reload();
     } catch (error) {
