@@ -141,6 +141,7 @@ export class NavbarComponent implements OnInit {
         this.authenticationService.logout();
         localStorage.clear();
         location.reload();
+        sessionStorage.clear();
     }
 
     getUserDataFromLocal() {

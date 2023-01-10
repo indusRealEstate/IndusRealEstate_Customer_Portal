@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'app/services/api.service';
+import { OtherServices } from 'app/services/other.service';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.html',
@@ -15,6 +16,8 @@ export class ModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ModalComponent>,
     private apiService: ApiService,
+    private otherService: OtherServices,
+
   ) { }
   ngOnInit(): void {
     this.title = this.data["title"]
@@ -24,6 +27,7 @@ export class ModalComponent implements OnInit {
 
   closeModal() {
     this.dialogRef.close();
+    this.otherService.isDialogClosed = true;
   }
 
   deleteEvent() {
@@ -45,14 +49,18 @@ export class ModalComponent implements OnInit {
     try {
       this.apiService.removeAppointment({ "event_id": this.eventId }).subscribe(data => {
       });
+      sessionStorage.removeItem('allEvents');
+      sessionStorage.removeItem('currentMonthEvents');
 
       this.apiService.addUserRecentHappenings(recentHapenings_event_removed).subscribe(data => { });
 
-      
+
       this.closeModal();
-      location.reload();
+      // this.otherService.isUserAppointmentUpdated = true;
     } catch (error) {
       console.log(error);
+    } finally {
+      this.otherService.isDialogClosed = false;
     }
 
   }

@@ -1,6 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Host, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'app/services/api.service';
+import { OtherServices } from 'app/services/other.service';
+import * as uuid from 'uuid';
+import { AppointmentsComponent } from '../appointments.component';
+
 
 @Component({
   selector: 'app-modal-date',
@@ -8,6 +12,7 @@ import { ApiService } from 'app/services/api.service';
   styleUrls: ['./modal-date.scss']
 })
 export class ModalComponentDate implements OnInit {
+
 
   date: any;
   events = [];
@@ -20,6 +25,8 @@ export class ModalComponentDate implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ModalComponentDate>,
     private apiService: ApiService,
+    private otherService: OtherServices,
+    // @Output() private parentComp: AppointmentsComponent,
   ) { }
 
   ngOnInit() {
@@ -45,10 +52,11 @@ export class ModalComponentDate implements OnInit {
 
   closeModal() {
     this.dialogRef.close();
+    this.otherService.isDialogClosed = true;
   }
 
   getRandomId() {
-    return Math.floor((Math.random() * 6) + 1);
+    return Math.floor((Math.random() * 1453) + 10);
   }
 
   addEvent() {
@@ -59,8 +67,8 @@ export class ModalComponentDate implements OnInit {
       var user = JSON.parse(userData);
       var userId = user[0]["id"];
 
-      var eventId = this.getRandomId();
-      console.log(eventId);
+      var eventId = uuid.v4();
+
       var timeStamp = this.data["date"] + " " + this.time + ":00";
       var eventData = {
         "user_id": userId,
@@ -83,13 +91,19 @@ export class ModalComponentDate implements OnInit {
       try {
         this.apiService.addAppointment(eventData).subscribe(data => {
         });
+        sessionStorage.removeItem('allEvents');
+        sessionStorage.removeItem('currentMonthEvents');
 
-        this.apiService.addUserRecentHappenings(recentHapenings_event_added).subscribe(data=>{});
-        
+        this.apiService.addUserRecentHappenings(recentHapenings_event_added).subscribe(data => { });
+
         this.closeModal();
-        location.reload();
+
+
+
       } catch (error) {
         console.log(error);
+      } finally {
+        this.otherService.isDialogClosed = false;
       }
 
     } else {

@@ -1,6 +1,6 @@
 
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CalendarOptions, EventInput, } from '@fullcalendar/core'; // useful for typechecking
@@ -13,6 +13,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { ModalComponent } from './show_model_event/modal';
 import { ModalComponentDate } from './show_modal_date/modal-date';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { OtherServices } from 'app/services/other.service';
 
 
 @Component({
@@ -24,8 +25,11 @@ export class AppointmentsComponent implements OnInit {
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
+  @ViewChildren('calendar')
+  cal: QueryList<ElementRef>;
+
   events: any[] = [];
-  eventsCurrentMonth: any[] = [];
+  currentMonthEvents: any[] = [];
   showEventModel: boolean = false;
   eventDetails: any;
   rawEventData: any[] = [];
@@ -33,6 +37,7 @@ export class AppointmentsComponent implements OnInit {
 
 
   calendarOptions: CalendarOptions = {
+    editable: true,
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
   };
@@ -47,6 +52,7 @@ export class AppointmentsComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     public http: HttpClient,
     public matDialog: MatDialog,
+    private otherServices: OtherServices,
   ) { }
 
   isUserSignOut() {
@@ -58,20 +64,54 @@ export class AppointmentsComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  initFunction() {
     this.isUserSignOut();
-    this.getUserAppointments();
-    this.changeCalendarOptionsView();
-    this.isLoading = true;
-    setTimeout(() => {
-      this.getAllEventsCurrentMonth();
-    }, 600);
 
+    var sessionData = sessionStorage.getItem('allEvents');
+    var sessionDataCurrentMonth = sessionStorage.getItem('currentMonthEvents');
+    if (sessionData != null) {
+      var rawData = JSON.parse(sessionData);
+      this.events = rawData;
+      console.log("from session");
+
+      var data = localStorage.getItem('currentUser');
+      var user = JSON.parse(data);
+      var userId = user[0]["id"];
+
+      this.apiService.getUserAppoinments(userId).subscribe(data => {
+        for (let e of data) {
+          this.rawEventData.push(e);
+        }
+      });
+
+    } else {
+      this.getUserAppointments();
+      console.log("from api");
+    }
+
+    this.changeCalendarOptionsView();
+
+    if (sessionDataCurrentMonth != null) {
+      var rawData = JSON.parse(sessionDataCurrentMonth);
+
+      this.currentMonthEvents = rawData;
+    } else {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.getCurrentMonthEvents();
+      }, 600);
+    }
+  }
+
+  ngOnInit() {
+    this.initFunction();
   }
 
   changeCalendarOptionsView() {
+    var sessionData = sessionStorage.getItem('allEvents');
     setTimeout(() => {
       this.calendarOptions = {
+        editable: true,
         initialView: 'dayGridMonth',
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         events: this.events,
@@ -108,30 +148,40 @@ export class AppointmentsComponent implements OnInit {
           }
         },
         datesSet: () => {
-          this.getAllEventsCurrentMonth();
+          this.getCurrentMonthEvents();
         },
 
       };
-    }, 500);
+    }, sessionData != null ? 0 : 500);
   }
 
-  getAllEventsCurrentMonth() {
-    this.eventsCurrentMonth.length = 0;
+  getCurrentMonth() {
+    let calendarApi = this.calendarComponent.getApi();
+    let currentData = calendarApi.getCurrentData();
+    let month = currentData.viewTitle;
+
+    return month;
+  }
+
+  getCurrentMonthEvents() {
+    this.currentMonthEvents.length = 0;
 
     let calendarApi = this.calendarComponent.getApi();
     let currentData = calendarApi.getCurrentData();
     let month = currentData.viewTitle;
-    for (let e of this.events) {
-      var eventMonth = this.getMonthByNumber(new Date(e["start"]).getMonth());
-      if (month == eventMonth) {
-        this.eventsCurrentMonth.push({
-          title: e["title"],
-          start: e["start"],
+
+    this.events.map(data => {
+      if (month == data["month"]) {
+        this.currentMonthEvents.push({
+          title: data["title"],
+          start: data["start"],
         });
       }
-    }
+    });
+
     this.isLoading = false;
 
+    sessionStorage.setItem('currentMonthEvents', JSON.stringify(this.currentMonthEvents));
   }
 
   getUserAppointments() {
@@ -139,18 +189,24 @@ export class AppointmentsComponent implements OnInit {
     var user = JSON.parse(data);
     var userId = user[0]["id"];
 
-    this.apiService.getUserAppoinments(userId).subscribe((data: any) => {
+    this.apiService.getUserAppoinments(userId).subscribe((data: any[]) => {
       if (data != null) {
         data.sort((a: any, b: any) => new Date(a["time"]).getTime() - new Date(b["time"]).getTime());
 
         for (let e of data) {
+          var eventMonth = this.getMonthByNumber(new Date(e["time"]).getMonth());
           this.rawEventData.push(e);
           this.events.push({
             title: e["event_name"],
             start: e["time"],
+            month: eventMonth,
           })
 
         }
+      }
+
+      if (data.length == this.events.length) {
+        sessionStorage.setItem('allEvents', JSON.stringify(this.events));
       }
 
     });
@@ -166,6 +222,19 @@ export class AppointmentsComponent implements OnInit {
     this.dialogConfig.width = "550px";
     this.dialogConfig.data = { "title": title, "start": start, "event_id": eventId, "date": date };
     this.modalDialog = this.matDialog.open(ModalComponent, this.dialogConfig);
+
+    this.modalDialog.afterClosed().subscribe(() => {
+      if (this.otherServices.isDialogClosed == false) {
+        this.isLoading = true;
+        this.events.length = 0;
+        this.currentMonthEvents.length = 0;
+
+        this.initFunction();
+        let calendarApi = this.calendarComponent.getApi();
+        calendarApi.refetchEvents();
+      }
+
+    });
   }
 
   openModalDate(dateString: any, events: any[], date: any) {
@@ -174,6 +243,18 @@ export class AppointmentsComponent implements OnInit {
     this.dialogConfig.width = "550px";
     this.dialogConfig.data = { "dateString": dateString, "events": events, "date": date };
     this.modalDialogDate = this.matDialog.open(ModalComponentDate, this.dialogConfig);
+
+    this.modalDialogDate.afterClosed().subscribe(() => {
+      if (this.otherServices.isDialogClosed == false) {
+        this.isLoading = true;
+        this.events.length = 0;
+        this.currentMonthEvents.length = 0;
+        
+        this.initFunction();
+        this.calendarComponent.ngAfterContentChecked();
+
+      }
+    });
   }
 
   getMonthByNumber(number: number) {
