@@ -67,6 +67,13 @@ export class ApiService {
     }));
   }
 
+  getUserProperties(userId: any) {
+    const url = `${API_URL}/getProperties.php?apikey=1`;
+    return this.http.post<any>(url, { 'userId': userId }).pipe(map(data => {
+      return data;
+    }));
+  }
+
   addProperty(data: string) {
     const url = `${API_URL}/addProperty.php?apikey=1`;
     return this.http

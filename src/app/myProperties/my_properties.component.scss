@@ -1,0 +1,31 @@
+::ng-deep .spinner-loader {
+  width: 100% !important;
+  text-align: -webkit-center !important;
+  margin-top: 400px !important;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #d3ab33 !important;
+}
+
+.no-properties-text {
+  text-align: center;
+  margin-top: 400px;
+  font-size: 25px;
+  font-weight: 500;
+  color: #d3ab33;
+}
+
+.card-deck {
+  .card-img-top {
+    height: 170px;
+    width: auto;
+    max-width: 500px;
+  }
+
+  .card-title{
+    font-size: 20px;
+    font-weight: 500;
+  }
+}

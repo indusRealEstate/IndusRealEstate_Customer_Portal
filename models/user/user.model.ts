@@ -1,14 +1,14 @@
 import { Deserializable } from "./deserializable.model";
 
 export class User implements Deserializable {
-    id: number;
+    id: string;
     username: string;
     password: string;
     firstname: string;
     lastname: string;
     token: string;
 
-    constructor(id: number, username: string, firstname: string, lastname, password: string, token: string) {
+    constructor(id: string, username: string, firstname: string, lastname, password: string, token: string) {
         this.id = id;
         this.username = username;
         this.firstname = firstname;

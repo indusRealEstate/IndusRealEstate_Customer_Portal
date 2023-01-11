@@ -1,42 +1,27 @@
 <div class="main-content">
-  <div class="card">
-      <!-- <div class="card-body">
-          <h5 class="text-lg-start">Properties</h5>
-      </div> -->
+  <div *ngIf="properties.length == 0">
+    <p *ngIf="isLoading == false" class="no-properties-text">You have'nt listed any property.</p>
+    <div
+      class="spinner-loader"
+      *ngIf="isLoading == true"
+    >
+      <mat-spinner [diameter]="40"></mat-spinner>
     </div>
-    <div class="card-deck">
-      <div class="card">
-        <img class="card-img-top" src="assets/img/properties/Akoya-Cuatro-12.jpg" alt="Card image cap">
+  </div>
+  <div class="card-deck" style="margin: 20px;">
+    <div *ngFor="let property of properties">
+      <div class="card" style="width: 18rem; height: 430px;">
+        <img
+          class="card-img-top"
+          src="{{ property.images }}"
+          alt="Card image cap"
+        />
         <div class="card-body">
-          <h5 class="card-title">Property Name</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <a href="#" class="btn btn-primary">Update</a>
-          <a href="#" class="btn btn-primary">Actions</a>
-          <a href="#" class="btn btn-primary">Remove</a>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="assets/img/properties/Akoya-Cuatro-12.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Property Name</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Update</a>
-          <a href="#" class="btn btn-primary">Actions</a>
-          <a href="#" class="btn btn-primary">Remove</a>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="assets/img/properties/Akoya-Cuatro-12.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Property Name</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          <a href="#" class="btn btn-primary">Update</a>
+          <h5 class="card-title">{{ property.property_name }}</h5>
+          <p class="card-text">
+            {{ property.property_address }}
+          </p>
+          <a href="#" class="btn btn-primary">Update</a>`
           <a href="#" class="btn btn-primary">Actions</a>
           <a href="#" class="btn btn-primary">Remove</a>
         </div>
@@ -45,10 +30,5 @@
         </div>
       </div>
     </div>
+  </div>
 </div>
-
-
-
-
-
-
