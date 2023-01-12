@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 import * as Chartist from "chartist";
 import { User } from "../../../models/user/user.model";
 
@@ -14,12 +15,23 @@ export class HomeComponent implements OnInit {
   recentHeppenings: any[] = [];
   isUserSignedIn: boolean = false;
   user: User;
+  isLandlord: boolean = false;
 
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService
-  ) {}
+    private authenticationService: AuthenticationService,
+    private otherService: OtherServices
+  ) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    if (user[0]["auth_type"] == "landlord") {
+      this.isLandlord = true;
+    } else {
+      this.isLandlord = false;
+    }
+  }
 
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
@@ -95,6 +107,7 @@ export class HomeComponent implements OnInit {
 
     this.user = new User(
       user[0]["id"],
+      user[0]["auth_type"],
       user[0]["username"],
       user[0]["firstname"],
       user[0]["lastname"],

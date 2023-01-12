@@ -159,6 +159,7 @@ export class NavbarComponent implements OnInit {
 
     this.user = new User(
       user[0]["id"],
+      user[0]["auth_type"],
       user[0]["username"],
       user[0]["firstname"],
       user[0]["lastname"],

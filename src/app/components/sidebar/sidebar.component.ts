@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 import { User } from "../../../../models/user/user.model";
 
 declare const $: any;
@@ -43,7 +44,9 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   user: User;
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(
+    private authService: AuthenticationService,
+  ) {}
 
   ngOnInit() {
     this.getUserDataFromLocal();
@@ -55,10 +58,18 @@ export class SidebarComponent implements OnInit {
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
 
-      for (let e of this.menuItems) {
-        e["path"] = `${e["path"]}/${user[0]["id"]}`;
+      if (user[0]["auth_type"] == 'landlord') {
+        for (let e of this.homeRoute) {
+          e["path"] = `${e["path"]}/${user[0]["id"]}`;
+        }
+      } else {
+        this.homeRoute.pop();
+        this.homeRoute.forEach((route) => {
+          route["path"] = `home/${user[0]["id"]}`;
+        });
       }
-      for (let e of this.homeRoute) {
+
+      for (let e of this.menuItems) {
         e["path"] = `${e["path"]}/${user[0]["id"]}`;
       }
     }
@@ -76,6 +87,7 @@ export class SidebarComponent implements OnInit {
 
     this.user = new User(
       user[0]["id"],
+      user[0]["auth_type"],
       user[0]["username"],
       user[0]["firstname"],
       user[0]["lastname"],
