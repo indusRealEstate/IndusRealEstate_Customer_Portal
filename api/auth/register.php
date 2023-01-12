@@ -14,8 +14,8 @@ $data = file_get_contents("php://input");
 if ($data != null) {
     $decodedData = json_decode($data, true);
 
-    $stmt = $dbase->execute("INSERT INTO `user`(`username`, `password`, `firstname`, `lastname`, `token`) 
-                             VALUES ('{$decodedData["username"]}','{$decodedData["password"]}','{$decodedData["firstname"]}',
+    $stmt = $dbase->execute("INSERT INTO `user`(`id`, `auth_type`,`username`, `password`, `firstname`, `lastname`, `token`) 
+                             VALUES ('{$decodedData["id"]}','{$decodedData["auth_type"]}','{$decodedData["username"]}','{$decodedData["password"]}','{$decodedData["firstname"]}',
                             '{$decodedData["lastname"]}','{$decodedData["token"]}')");
 }
 

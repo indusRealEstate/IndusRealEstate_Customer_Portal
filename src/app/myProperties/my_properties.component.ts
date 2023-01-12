@@ -3,6 +3,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 import { Property } from "../../../models/property/property";
 
 @Component({
@@ -19,8 +20,16 @@ export class MyPropertiesComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService // private sanitizer: DomSanitizer
-  ) {}
+    private authenticationService: AuthenticationService,
+    private otherServices: OtherServices
+  ) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    if (user[0]["auth_type"] != "landlord") {
+      router.navigateByUrl(`/home/${user[0]["id"]}`);
+    }
+  }
 
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
