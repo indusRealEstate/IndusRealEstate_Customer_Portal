@@ -6,7 +6,7 @@ import {
   HttpErrorResponse,
 } from "@angular/common/http";
 import { catchError, tap, map } from "rxjs/operators";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -111,7 +111,7 @@ export class ApiService {
       .pipe(catchError(this.handleError("removeAppointment", [])));
   }
 
-  downloadFile(data: Blob, filename: string, extension: string) {
-    saveAs(data, `${filename}.${extension}`);
-  }
+  // downloadFile(data: Blob, filename: string, extension: string) {
+  //   saveAs(data, `${filename}.${extension}`);
+  // }
 }
