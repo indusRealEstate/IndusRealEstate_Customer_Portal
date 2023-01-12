@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -13,11 +14,12 @@ export class MyPropertiesComponent implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
   properties: Property[] = [];
+  propertyImages: any[] = [];
 
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService // private sanitizer: DomSanitizer
   ) {}
 
   isUserSignOut() {
@@ -31,10 +33,28 @@ export class MyPropertiesComponent implements OnInit {
 
   ngOnInit() {
     this.isUserSignOut();
-    this.isLoading = true;
-    setTimeout(() => {
-      this.getProperties();
-    }, 600);
+    this.initFunction();
+  }
+
+  initFunction() {
+    var propertiesdata = sessionStorage.getItem("properties");
+    if (propertiesdata != null) {
+      var decodedData = JSON.parse(propertiesdata);
+      this.properties = decodedData;
+    } else {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.getProperties();
+      }, 300);
+    }
+  }
+
+  openMatMenu(trigger) {
+    trigger.openMenu();
+  }
+
+  closeMatMenu(trigger) {
+    trigger.closeMenu();
   }
 
   getProperties() {
@@ -44,14 +64,17 @@ export class MyPropertiesComponent implements OnInit {
 
     try {
       this.apiService.getUserProperties(userId).subscribe((data) => {
+        // console.log(data);
         for (let e of data) {
+          let objectURL = "data:image/jpeg;base64," + e["image"];
+
           this.properties.push(
             new Property(
               e["user_id"],
               e["property_id"],
               e["property_name"],
               e["property_address"],
-              e["images"],
+              objectURL,
               e["rented"],
               e["leased"],
               e["sold"],
@@ -63,11 +86,12 @@ export class MyPropertiesComponent implements OnInit {
         }
       });
     } catch (error) {
+      console.log(error);
     } finally {
       setTimeout(() => {
         this.isLoading = false;
-      }, 100);
-      
+        sessionStorage.setItem("properties", JSON.stringify(this.properties));
+      }, 1000);
     }
   }
 }

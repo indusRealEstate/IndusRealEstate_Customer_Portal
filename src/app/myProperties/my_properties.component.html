@@ -1,29 +1,62 @@
 <div class="main-content">
   <div *ngIf="properties.length == 0">
-    <p *ngIf="isLoading == false" class="no-properties-text">You have'nt listed any property.</p>
-    <div
-      class="spinner-loader"
-      *ngIf="isLoading == true"
-    >
+    <p *ngIf="isLoading == false" class="no-properties-text">
+      You have'nt listed any property.
+    </p>
+    <div class="spinner-loader" *ngIf="isLoading == true">
       <mat-spinner [diameter]="40"></mat-spinner>
     </div>
   </div>
-  <div class="card-deck" style="margin: 20px;">
+  <div class="card-deck" style="margin: 20px">
     <div *ngFor="let property of properties">
-      <div class="card" style="width: 18rem; height: 430px;">
+      <div class="card">
         <img
+          *ngIf="property.image != ''"
           class="card-img-top"
-          src="{{ property.images }}"
+          src="{{ property.image }}"
           alt="Card image cap"
         />
+        
+        <div *ngIf="property.image == ''">
+          <ngx-skeleton-loader
+            appearance="square"
+            [theme]="{ width: '288px', height: '170px' }"
+          >
+          </ngx-skeleton-loader>
+        </div>
+
         <div class="card-body">
           <h5 class="card-title">{{ property.property_name }}</h5>
           <p class="card-text">
             {{ property.property_address }}
           </p>
-          <a href="#" class="btn btn-primary">Update</a>`
-          <a href="#" class="btn btn-primary">Actions</a>
-          <a href="#" class="btn btn-primary">Remove</a>
+          <a
+            [matMenuTriggerFor]="aboutProperty"
+            #propertyAboutTrigger="matMenuTrigger"
+            (mouseenter)="openMatMenu(propertyAboutTrigger)"
+            (mouseleave)="closeMatMenu(propertyAboutTrigger)"
+            class="btn btn-primary details-btn"
+            >Info
+            <i class="material-icons info-icon">info_outline</i>
+          </a>
+          <mat-menu
+            #aboutProperty="matMenu"
+            [hasBackdrop]="false"
+            [overlapTrigger]="false"
+          >
+            <div class="mat-menu-wrapper">
+              <th>
+                <span class="menu-header">Info</span>
+              </th>
+
+              <tr>
+                <span class="menu-content"
+                  >Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry.</span
+                >
+              </tr>
+            </div>
+          </mat-menu>
         </div>
         <div class="card-footer">
           <small class="text-muted">Last updated 3 mins ago</small>

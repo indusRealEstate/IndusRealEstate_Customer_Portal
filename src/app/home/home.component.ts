@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
         JSON.stringify(new Date().getMinutes())
       );
 
-      console.log('refreshed- recent');
+      console.log("refreshed- recent");
     }
   }
 

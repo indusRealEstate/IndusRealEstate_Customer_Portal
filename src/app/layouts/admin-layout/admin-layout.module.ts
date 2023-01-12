@@ -98,6 +98,7 @@ import { Tenant_Registration_Stepper_Third } from 'app/indus_services/facility_m
 import { Tenant_Registration_Stepper_Fourth } from 'app/indus_services/facility_management/tenant_registration/components/stepper_04/tenant_registration-fourth';
 import { Tenant_Registration_Stepper_Fifth } from 'app/indus_services/facility_management/tenant_registration/components/stepper_05/tenant_registration-fifth';
 import { Tenant_Registration_Stepper_Sixth } from 'app/indus_services/facility_management/tenant_registration/components/stepper_06/tenant_registration-sixth';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -151,6 +152,7 @@ import { Tenant_Registration_Stepper_Sixth } from 'app/indus_services/facility_m
     MatTreeModule,
     MatNativeDateModule,
     FullCalendarModule,
+    NgxSkeletonLoaderModule
     // NgbModalModule,
     // FlatpickrModule.forRoot(),
     // BrowserModule,

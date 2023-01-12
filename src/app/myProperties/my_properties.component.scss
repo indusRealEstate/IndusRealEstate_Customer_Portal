@@ -18,14 +18,69 @@
 }
 
 .card-deck {
+  .card {
+    cursor: pointer;
+    width: 18rem;
+    height: 430px;
+    transition: 0.3s ease-out;
+
+    &:hover {
+      transform: translateY(5px);
+      box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+    }
+
+    .info-icon {
+      color: #d3ab33;
+      padding-left: 5px;
+    }
+  }
+
   .card-img-top {
     height: 170px;
     width: auto;
     max-width: 500px;
   }
 
-  .card-title{
+  .card-title {
     font-size: 20px;
     font-weight: 500;
+  }
+
+  .details-btn {
+    bottom: 0;
+    position: absolute;
+    background-color: #2b333e;
+    color: white;
+
+    &:hover {
+      background-color: #d3ab33;
+      color: white;
+
+      .info-icon {
+        color: white;
+      }
+    }
+  }
+
+  .card-footer {
+    .text-muted {
+      padding-left: 6px;
+    }
+  }
+}
+
+.mat-menu-wrapper {
+  width: 200px;
+  margin: 10px;
+  padding-left: 5px;
+
+  .menu-header {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .menu-content {
+    font-size: 14px;
+    padding-top: 10px;
   }
 }
