@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
@@ -13,8 +14,10 @@ $postdata = file_get_contents("php://input");
 $decodedData = json_decode($postdata, true);
 
 if (isset($postdata) && !empty($postdata)) {
-
-    $result = $dbase->execute("SELECT * FROM `user` where `username` ='{$decodedData["username"]}' and `password`='{$decodedData["password"]}'");
+    $result = $dbase->execute("SELECT *
+                               FROM   `user`
+                               WHERE  `username` = '{$decodedData["username"]}'
+                                      AND `password` = '{$decodedData["password"]}' ");
 
     if ($result->num_rows != 0) {
         $rows = array();
@@ -26,4 +29,3 @@ if (isset($postdata) && !empty($postdata)) {
         http_response_code(404);
     }
 }
-?>

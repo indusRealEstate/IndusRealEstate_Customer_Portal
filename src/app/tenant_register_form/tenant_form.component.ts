@@ -8,6 +8,8 @@ import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
 import * as CryptoJS from "crypto-js";
 import { first } from "rxjs";
+import { interval as observableInterval } from "rxjs";
+import { takeWhile, scan, tap } from "rxjs/operators";
 
 @Component({
   selector: "tenant-register-form",
@@ -19,6 +21,9 @@ export class TenantFormComponent implements OnInit {
   registerForm: FormGroup;
   auth_type: any = "";
   fullName: string = "";
+  profileImg: string = "";
+  rawJson: any;
+  isLoading: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -42,42 +47,68 @@ export class TenantFormComponent implements OnInit {
       ) {
         router.navigateByUrl("/register");
       } else {
-        var rawJson = JSON.parse(formData);
+        this.rawJson = JSON.parse(formData);
 
         this.registerForm = this.formBuilder.group({
-          firstname: [rawJson["firstname"]],
-          lastname: [rawJson["lastname"]],
-          username: [rawJson["username"]],
-          password: [rawJson["password"]],
+          firstname: [this.rawJson["firstname"]],
+          lastname: [this.rawJson["lastname"]],
+          username: [this.rawJson["username"]],
+          password: [this.rawJson["password"]],
         });
 
         this.auth_type = authTypeData;
-        this.fullName = rawJson["firstname"] + " " + rawJson["lastname"];
+        this.fullName =
+          this.rawJson["firstname"] + " " + this.rawJson["lastname"];
       }
     });
   }
 
   ngOnInit() {
-    console.log(this.registerForm.value);
-    console.log(this.auth_type);
+    // console.log(this.registerForm.value);
+    // console.log(this.auth_type);
   }
 
-  // this.loading = true;
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
   onSubmit() {
-    this.userService
-      .register(this.registerForm.value, this.auth_type)
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          // this.alertService.success("Registration successful", true);
-          this.router.navigate(["/login"]);
-        },
-        (error) => {
-          // this.alertService.error(error);
-          console.log(error);
-          // this.loading = false;
-        }
-      );
+    try {
+      this.isLoading = true;
+      this.scrollToTop();
+      if (
+        this.fullName !=
+        this.rawJson["firstname"] + " " + this.rawJson["lastname"]
+      ) {
+        var firstname = this.fullName.split(" ")[0];
+        var lastname = this.fullName.split(" ")[1];
+
+        this.registerForm.get("firstname").setValue(firstname);
+        this.registerForm.get("lastname").setValue(lastname);
+      }
+
+      setTimeout(() => {
+        this.userService
+          .register(this.registerForm.value, this.auth_type)
+          .pipe(first())
+          .subscribe(
+            (data) => {
+              // this.alertService.success("Registration successful", true);
+              this.router.navigate(["/login"]);
+            },
+            (error) => {
+              // this.alertService.error(error);
+              console.log(error);
+              // this.loading = false;
+            }
+          );
+      }, 1000);
+    } catch (error) {
+    } finally {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 500);
+    }
   }
 
   decrypt(textToDecrypt: string) {
@@ -91,17 +122,14 @@ export class TenantFormComponent implements OnInit {
     }
   }
 
-  readFile(event: any) {
+  pickImg(event: any) {
     var file = event.target.files[0];
-
     var reader = new FileReader();
-    reader.readAsArrayBuffer(file);
+    // reader.readAsArrayBuffer(file);
+    reader.readAsDataURL(file);
 
     reader.onloadend = (e) => {
-      var buffer = e.target.result;
-      var blob = new Blob([buffer], { type: "image/jpeg" });
-
-      console.log(blob);
+      this.profileImg = e.target.result.toString();
 
       // this.apiService.downloadFile(blob, "profile-img", "jpg");
     };

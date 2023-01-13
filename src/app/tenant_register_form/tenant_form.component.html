@@ -1,12 +1,60 @@
 <div class="main-content">
   <div class="container-fluid">
+    <div class="spinner-loader" *ngIf="isLoading == true">
+      <mat-spinner [diameter]="40"></mat-spinner>
+      <span class="spinner-leading-text">Saving...</span>
+    </div>
     <div>
       <h1 class="tenant-form-heading">Tenant Register Form</h1>
       <div class="container1">
+        <div>
+          <img
+            *ngIf="profileImg == ''"
+            mat-card-avatar
+            class="tenant-reg-card-avatar"
+            src="assets/img/faces/avatar.png"
+            alt="User Avatar"
+          />
+          <img
+            *ngIf="profileImg != ''"
+            mat-card-avatar
+            class="tenant-reg-card-avatar"
+            src="{{ profileImg }}"
+            alt="User Avatar"
+          />
+          <div class="add-icon-img-div">
+            <mat-icon
+              class="add-icon-img"
+              mat-card-avatar
+              (click)="fileInput.click()"
+            >
+              <input
+                #fileInput
+                type="file"
+                (change)="pickImg($event)"
+                style="display: none"
+              />
+
+              add</mat-icon
+            >
+            <span class="tooltiptext" *ngIf="profileImg == ''"
+              >Upload Image</span
+            >
+            <span class="tooltiptext" *ngIf="profileImg != ''"
+              >Change Image</span
+            >
+          </div>
+        </div>
         <form action="submit_phpcrm_form.php" method="post">
           <br />
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" value="{{fullName}}" required />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="fullName"
+            required
+          />
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required />
           <label><b>Address</b></label
@@ -246,20 +294,16 @@
             style="margin-left: 13px"
           />
           Other<label for="other"></label><br /><br />
-          <input type="submit" value="SUBMIT" class="btn" />
+          <input
+            type="submit"
+            value="SUBMIT"
+            class="btn"
+            (click)="onSubmit()"
+          />
         </form>
       </div>
     </div>
 
-    <!-- <button type="button" (click)="fileInput.click()">
-      <span>Upload</span>
-      <input
-        #fileInput
-        type="file"
-        (change)="readFile($event)"
-        style="display: none"
-      />
-    </button> -->
     <!-- <button mat-raised-button (click)="onSubmit()">Submit</button> -->
   </div>
 </div>

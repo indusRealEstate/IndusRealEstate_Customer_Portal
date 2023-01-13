@@ -30,6 +30,16 @@ export class AdminLayoutComponent implements OnInit {
     this.isUserSignOut();
   }
 
+  onActivate(event) {
+    // window.scroll(0,0);
+ 
+    window.scroll({ 
+            top: 0, 
+            left: 0, 
+            behavior: 'smooth' 
+     });
+ }
+
   ngOnInit() {
     // this.isUserSignOut();
     const isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;

@@ -2,10 +2,83 @@
   margin-top: -25px;
 }
 
-.tenant-form-heading{
-    margin-top: -90px;
-    margin-bottom: 45px;
-    font-weight: 500;
+.spinner-leading-text {
+  padding-left: 12px;
+  color: #d3ab33;
+  font-weight: 600;
+}
+
+::ng-deep .spinner-loader {
+  width: 100% !important;
+  text-align: -webkit-center !important;
+  position: absolute !important;
+  padding-top: 450px;
+  padding-right: 65px;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #d3ab33 !important;
+}
+
+.tenant-form-heading {
+  margin-top: -90px;
+  margin-bottom: 45px;
+  font-weight: 500;
+}
+
+.tenant-reg-card-avatar {
+  border: solid 0.5px #00000045;
+  margin-left: 0;
+  border-radius: 50%;
+  width: 100px;
+  margin-bottom: 10px;
+  margin-top: 25px;
+}
+
+.add-icon-img-div {
+  .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  &:hover {
+    & .tooltiptext {
+      visibility: visible !important;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+    }
+  }
+  .add-icon-img {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    padding-top: 2px;
+    padding-left: 1px;
+    position: absolute;
+    margin-top: -35px;
+    margin-left: 13px;
+    background-color: white;
+  }
 }
 
 * {
