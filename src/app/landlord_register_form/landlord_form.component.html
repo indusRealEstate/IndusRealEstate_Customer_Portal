@@ -1,0 +1,16 @@
+<div class="main-content reports-bg">
+  <div class="container-fluid">
+    <h1>Landlord register form...!</h1>
+
+    <button type="button" (click)="fileInput.click()">
+      <span>Upload</span>
+      <input
+        #fileInput
+        type="file"
+        (change)="readFile($event)"
+        style="display: none"
+      />
+    </button>
+    <button mat-raised-button (click)="onSubmit()">Submit</button>
+  </div>
+</div>

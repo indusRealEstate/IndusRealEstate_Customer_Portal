@@ -179,9 +179,20 @@
     }
 }
 
-.dropdown-facility {
+.dropdown-facility-tenant {
     width: 260px;
-    height: 240px;
+    // height: 240px;
+
+    .dropdown-facility-ind {
+        &:hover {
+            background-color: #2B333E;
+            color: white;
+        }
+    }
+}
+.dropdown-facility-landlord {
+    width: 260px;
+    // height: 240px;
 
     .dropdown-facility-ind {
         &:hover {
