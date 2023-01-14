@@ -5,7 +5,12 @@ import {
   PathLocationStrategy,
   PopStateEvent,
 } from "@angular/common";
-import { Router, NavigationEnd, NavigationStart } from "@angular/router";
+import {
+  Router,
+  NavigationEnd,
+  NavigationStart,
+  ActivatedRoute,
+} from "@angular/router";
 import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { filter, Subscription } from "rxjs";
@@ -25,20 +30,22 @@ export class AdminLayoutComponent implements OnInit {
   constructor(
     public location: Location,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private route: ActivatedRoute
   ) {
     this.isUserSignOut();
+
   }
 
   onActivate(event) {
     // window.scroll(0,0);
- 
-    window.scroll({ 
-            top: 0, 
-            left: 0, 
-            behavior: 'smooth' 
-     });
- }
+
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
 
   ngOnInit() {
     // this.isUserSignOut();
@@ -187,22 +194,9 @@ export class AdminLayoutComponent implements OnInit {
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
-      this.isUrlFault();
     } else {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
-    }
-  }
-
-  isUrlFault() {
-    if (this.authenticationService.currentUserValue) {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-      var currentPath = this.router.url.split("/")[1];
-      var urlId = this.router.url.split("/")[2];
-      if (user[0]["id"] != urlId) {
-        this.router.navigate([`/${currentPath}/${user[0]["id"]}`]);
-      }
     }
   }
 }

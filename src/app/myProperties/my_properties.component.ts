@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
@@ -21,13 +21,26 @@ export class MyPropertiesComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
+    private route: ActivatedRoute
   ) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
     if (user[0]["auth_type"] != "landlord") {
       router.navigateByUrl(`/home/${user[0]["id"]}`);
+    } else {
+      this.route.queryParams.subscribe((e) => {
+        if (e == null) {
+          router.navigate([`/my-properties`], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        } else if (e != user[0]["id"]) {
+          router.navigate([`/my-properties`], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        }
+      });
     }
   }
 

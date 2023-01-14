@@ -28,7 +28,11 @@ export class LoginComponent implements OnInit {
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
-      this.router.navigate(["/"]);
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      this.router.navigate([`/home`], {
+        queryParams: { uid: user[0]["id"] },
+      });
     }
   }
   ngOnInit() {
@@ -63,7 +67,9 @@ export class LoginComponent implements OnInit {
         (data) => {
           var userData = localStorage.getItem("currentUser");
           var user = JSON.parse(userData);
-          this.router.navigate([`/home/${user[0]["id"]}`]);
+          this.router.navigate([`/home`], {
+            queryParams: { uid: user[0]["id"] },
+          });
         },
         (error) => {
           if (error["statusText"] == "Not Found") {
@@ -75,5 +81,4 @@ export class LoginComponent implements OnInit {
         }
       );
   }
-
 }

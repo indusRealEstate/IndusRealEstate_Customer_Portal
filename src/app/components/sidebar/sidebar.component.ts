@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { User } from "../../../../models/user/user.model";
@@ -46,6 +47,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -53,32 +56,18 @@ export class SidebarComponent implements OnInit {
     this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
     // this.serviceRoute = SERVICEROUTE.filter(menuItem => menuItem);
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
-
-    if (this.authService.currentUserValue) {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-
-      if (user[0]["auth_type"] == 'landlord') {
-        for (let e of this.homeRoute) {
-          e["path"] = `${e["path"]}/${user[0]["id"]}`;
-        }
-      } else {
-        this.homeRoute.pop();
-        this.homeRoute.forEach((route) => {
-          route["path"] = `home/${user[0]["id"]}`;
-        });
-      }
-
-      for (let e of this.menuItems) {
-        e["path"] = `${e["path"]}/${user[0]["id"]}`;
-      }
-    }
   }
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
     }
     return true;
+  }
+
+  isLinkActive(url): boolean {
+    const baseUrl = this.router.url.split("?")[0];
+
+    return baseUrl == url;
   }
 
   getUserDataFromLocal() {

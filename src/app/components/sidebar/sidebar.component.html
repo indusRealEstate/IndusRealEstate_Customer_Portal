@@ -91,7 +91,8 @@
   <ul class="nav">
     <a
       class="user-profile-logo-sidebar"
-      routerLink="/user-profile/{{ user.id }}"
+      routerLink="/user-profile"
+      queryParams="{uid: user.id}"
     >
       <div>
         <img
@@ -107,24 +108,32 @@
     </a>
 
     <li
-      routerLinkActive="active"
       *ngFor="let item of homeRoute"
       class="{{ item.class }} nav-item sideBarNav-Item"
     >
-      <a class="nav-link" [routerLink]="[item.path]">
+      <a
+        class="nav-link"
+        [routerLink]="[item.path]"
+        [queryParams]="{ uid: user.id }"
+        [class.active]="isLinkActive(item.path)"
+      >
         <i class="material-icons">{{ item.icon }}</i>
         <p class="nav-item-title">{{ item.title }}</p>
       </a>
     </li>
-    <li routerLinkActive="active" class="nav-item dropdown-btn-services">
+    <li class="nav-item dropdown-btn-services">
       <dropdown-btn></dropdown-btn>
     </li>
     <li
-      routerLinkActive="active"
       *ngFor="let menuItem of menuItems"
       class="{{ menuItem.class }} nav-item sideBarNav-Item"
     >
-      <a class="nav-link" [routerLink]="[menuItem.path]">
+      <a
+        class="nav-link"
+        [routerLink]="[menuItem.path]"
+        [queryParams]="{ uid: user.id }"
+        [class.active]="isLinkActive(menuItem.path)"
+      >
         <i class="material-icons">{{ menuItem.icon }}</i>
         <p class="nav-item-title">{{ menuItem.title }}</p>
       </a>

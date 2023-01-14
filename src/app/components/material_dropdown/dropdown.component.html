@@ -121,15 +121,17 @@
     <button
       mat-menu-item
       class="dropdown-facility-ind"
-      routerLink="/fm-maintanence-request/{{ user.id }}"
+      routerLink="/fm-maintanence-request"
+      queryParams="{uid: userId}"
     >
       FM-MAINTENANCE REQUEST
     </button>
-    <!-- <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request/{{user.id}}">OWNER MOVE-IN REQUEST</button> -->
+    <!-- <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request/{{userId}}">OWNER MOVE-IN REQUEST</button> -->
     <button
       mat-menu-item
       class="dropdown-facility-ind"
-      routerLink="/owner-move-out-request/{{ user.id }}"
+      routerLink="/owner-move-out-request"
+      queryParams="{uid: userId}"
       *ngIf="isLandlord"
     >
       LANDLORD MOVE-OUT REQUEST
@@ -137,7 +139,8 @@
     <button
       mat-menu-item
       class="dropdown-facility-ind"
-      routerLink="/tenant-move-out-request/{{ user.id }}"
+      routerLink="/tenant-move-out-request"
+      queryParams="{uid: userId}"
       *ngIf="isTenant"
     >
       TENANT MOVE-OUT REQUEST
@@ -145,7 +148,8 @@
     <button
       mat-menu-item
       class="dropdown-facility-ind"
-      routerLink="/tenant-registration/{{ user.id }}"
+      routerLink="/tenant-registration"
+      queryParams="{uid: userId}"
       *ngIf="isTenant"
     >
       TENANT REGISTRATION
@@ -190,7 +194,8 @@
     <button
       mat-menu-item
       class="dropdown-myDoc-items-ind"
-      routerLink="/documents/{{ user.id }}"
+      routerLink="/documents"
+      queryParams="{uid: userId}"
     >
       DOCUMENTS
     </button>

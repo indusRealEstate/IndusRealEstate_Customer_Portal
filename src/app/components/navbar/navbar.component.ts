@@ -130,26 +130,40 @@ export class NavbarComponent implements OnInit {
       titlee = titlee.slice(1);
     }
 
-    for (var item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === titlee) {
-        return this.listTitles[item].title;
-      }
+    switch (titlee.split("?")[0]) {
+      case "/my-properties":
+        return "My Properties";
+      case "/documents":
+        return "Documents";
+      case "/user-profile":
+        return "User profile";
+      case "/my-requests":
+        return "My Requests";
+      case "/new-payment":
+        return "Payment";
+      case "/reports":
+        return "Reports";
+      case "/appointments":
+        return "Appointments";
+      case "/fm-maintanence-request":
+        return "FM Maintanence Request";
+      case "/owner-move-in-request":
+        return "Landlord Move-in Request";
+      case "/owner-move-out-request":
+        return "Landlord Move-out Request";
+      case "/tenant-move-out-request":
+        return "Tenant Move-out Request";
+      case "/tenant-registration":
+        return "Tenant Registration";
+      case "/404":
+        return "";
+      default:
+        return "Home";
     }
-
-    if (titlee.split("/")[1] == "my-properties") {
-      return "My Properties";
-    } else if (titlee.split("/")[1] == "documents") {
-      return "Documents";
-    } else if (titlee.split("/")[1] == "user-profile") {
-      return "User profile";
-    }
-    return "Home";
   }
 
   userLogOut() {
     location.reload();
-    localStorage.clear();
-    sessionStorage.clear();
     this.authenticationService.logout();
   }
 

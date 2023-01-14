@@ -1,21 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StepperFirstComponent } from './components/stepper_01/stepper_first';
-import { StepperThirdComponent } from './components/stepper_03/stepper_third';
-import { StepperSecondComponent } from './components/stepper_02/stepper_second';
-import { StepperFourthComponent } from './components/stepper_04/stepper_fourth';
-import { StepperFifthComponent } from './components/stepper_05/stepper_fifth';
-import { StepperSixthComponent } from './components/stepper_06/stepper_sixth';
-import { ApiService } from 'app/services/api.service';
-import { AuthenticationService } from 'app/services/authentication.service';
-
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { MatStepper } from "@angular/material/stepper";
+import { ActivatedRoute, Router } from "@angular/router";
+import { StepperFirstComponent } from "./components/stepper_01/stepper_first";
+import { StepperThirdComponent } from "./components/stepper_03/stepper_third";
+import { StepperSecondComponent } from "./components/stepper_02/stepper_second";
+import { StepperFourthComponent } from "./components/stepper_04/stepper_fourth";
+import { StepperFifthComponent } from "./components/stepper_05/stepper_fifth";
+import { StepperSixthComponent } from "./components/stepper_06/stepper_sixth";
+import { ApiService } from "app/services/api.service";
+import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
-  selector: 'app-newPayment',
-  templateUrl: './new_payment.component.html',
-  styleUrls: ['./new_payment.component.scss']
+  selector: "app-newPayment",
+  templateUrl: "./new_payment.component.html",
+  styleUrls: ["./new_payment.component.scss"],
 })
 export class NewPaymentComponent implements OnInit {
   @ViewChild(StepperFirstComponent) oneComponent: StepperFirstComponent;
@@ -36,7 +35,7 @@ export class NewPaymentComponent implements OnInit {
   sixForm: FormGroup;
 
   //-------
-  stateForm1: String = '';
+  stateForm1: String = "";
   stateForm2: String;
   stateForm3: String;
   stateForm4: String;
@@ -46,31 +45,42 @@ export class NewPaymentComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService,) { }
+    private authenticationService: AuthenticationService
+  ) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.route.queryParams.subscribe((e) => {
+      if (e == null) {
+        router.navigate([`/new-payment`], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      } else if (e != user[0]["id"]) {
+        router.navigate([`/new-payment`], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      }
+    });
+  }
 
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
     } else {
       this.isUserSignedIn = false;
-      this.router.navigate(['/login']);
+      this.router.navigate(["/login"]);
     }
   }
 
-
   stateDone() {
-    this.stateForm1 = 'done';
+    this.stateForm1 = "done";
   }
 
   ngOnInit(): void {
     this.isUserSignOut();
     this.selectedIndex = 0;
-    this.activatedRoute.params.subscribe(async (params) => {
-      this.id = +params?.id;
-    });
   }
 
   ngAfterViewInit(): void {
@@ -81,5 +91,4 @@ export class NewPaymentComponent implements OnInit {
     this.fiveForm = this.fiveComponent.form;
     this.sixForm = this.sixComponent.form;
   }
-
 }

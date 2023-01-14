@@ -14,7 +14,7 @@ export class DropdownMaterial implements OnInit {
   isMatMenuOpen = false;
   isMatMenu2Open = false;
   prevButtonTrigger;
-  user: User;
+  userId: any;
   isLandlord: boolean = false;
   isTenant: boolean = false;
 
@@ -29,6 +29,8 @@ export class DropdownMaterial implements OnInit {
       this.isTenant = true;
       this.isLandlord = false;
     }
+
+    this.userId = user[0]["id"];
   }
 
   isMobileMenu() {
@@ -46,7 +48,7 @@ export class DropdownMaterial implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDataFromLocal();
+    // this.getUserDataFromLocal();
   }
 
   menuenter() {
@@ -116,18 +118,18 @@ export class DropdownMaterial implements OnInit {
       }
     }, 100);
   }
-  getUserDataFromLocal() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
+  // getUserDataFromLocal() {
+  //   var data = localStorage.getItem("currentUser");
+  //   var user = JSON.parse(data);
 
-    this.user = new User(
-      user[0]["id"],
-      user[0]["auth_type"],
-      user[0]["username"],
-      user[0]["firstname"],
-      user[0]["lastname"],
-      user[0]["password"],
-      user[0]["token"]
-    );
-  }
+  //   this.user = new User(
+  //     user[0]["id"],
+  //     user[0]["auth_type"],
+  //     user[0]["username"],
+  //     user[0]["firstname"],
+  //     user[0]["lastname"],
+  //     user[0]["password"],
+  //     user[0]["token"]
+  //   );
+  // }
 }
