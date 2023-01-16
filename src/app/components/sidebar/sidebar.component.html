@@ -98,9 +98,16 @@
         <img
           mat-card-avatar
           class="sidebar-card-avatar"
-          src="{{userProfilePic}}"
+          src="{{ userProfilePic }}"
           alt="User Avatar"
         />
+
+        <span
+          *ngIf="profilePicUpdatingLoader == true"
+          class="spinner-border spinner-border-m mr-2"
+          style="position: absolute; right: 115px; top: 70px; color: #d3ab33"
+        >
+        </span>
       </div>
       <div>
         <span class="sidebar-card-avatar-title">{{ user.firstname }}</span>

@@ -46,6 +46,7 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   user: User;
   userProfilePic: any;
+  profilePicUpdatingLoader: boolean = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -56,11 +57,17 @@ export class SidebarComponent implements OnInit {
   ) {
     this.otherServices.isProfilePicUpdated.subscribe((e) => {
       if (e == true) {
-        this.getUserDataFromLocal();
-
+        this.profilePicUpdatingLoader = true;
+        var data = localStorage.getItem("currentUser");
+        var user = JSON.parse(data);
         setTimeout(() => {
-          this.otherServices.isProfilePicUpdated.next(false);
-        }, 200);
+          this.getUserDetails(user[0]["id"]);
+        }, 1000);
+
+        this.otherServices.isProfilePicUpdated.next(false);
+        setTimeout(() => {
+          this.profilePicUpdatingLoader = false;
+        }, 1000);
       }
     });
   }
