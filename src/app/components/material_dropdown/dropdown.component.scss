@@ -1,203 +1,186 @@
 .services-dropdown-mobile {
-
-    .services-dropdown-mobile-link {
-
-        &:hover>a,
-        & .dropdown-menu a:hover,
-        & .dropdown-menu a:focus,
-        &.active>[data-toggle="collapse"] {
-            background-color: rgba(200, 200, 200, 0);
-            color: black;
-            box-shadow: none;
-        }
-
+  .services-dropdown-mobile-link {
+    &:hover > a,
+    & .dropdown-menu a:hover,
+    & .dropdown-menu a:focus,
+    &.active > [data-toggle="collapse"] {
+      background-color: rgba(200, 200, 200, 0);
+      color: black;
+      box-shadow: none;
     }
+  }
 
+  .services-dropdown-mobile-title {
+    padding-top: 2px;
+    position: absolute;
+    color: white;
+    font-size: medium;
+    font-weight: 400;
+  }
 
+  .service-dropdown-arrow-icon-mobile {
+    padding-left: 120px;
+    margin: 0;
+  }
 
-    .services-dropdown-mobile-title {
-        padding-top: 2px;
-        position: absolute;
-        color: white;
-        font-size: medium;
-        font-weight: 400;
+  .services-dropdown-items {
+    a {
+      color: white;
+      padding-left: 22px;
     }
-
-    .service-dropdown-arrow-icon-mobile {
-        padding-left: 120px;
-        margin: 0;
-    }
-
-    .services-dropdown-items {
-
-        a {
-            color: white;
-            padding-left: 22px;
-        }
-
-    }
+  }
 }
 
 .dropdown-myDocuments {
-    padding-top: 10px;
+  cursor: pointer;
+  .nav-link {
+    margin-left: 15px;
+    height: 53px;
+    padding-top: 14px;
+    margin-top: 0;
+  }
+
+  &:hover {
+    .nav-link {
+      background-color: #484e5bd0;
+    }
+  }
+
+  .myDocuments-hiddenMenu-mobile {
+    height: 0;
+    margin: 0;
+  }
+
+  .dropdown-myDocuments-icon {
+    margin: 0;
+  }
+
+  .myDocuments-dropdown-arrow-icon {
+    position: absolute;
+    align-self: flex-end;
+    padding-left: 23px;
+    font-size: 20px;
+  }
+
+  .dropdown-myDocuments-btn {
+    padding-top: 2px;
+    font-size: medium;
+    font-weight: 400;
+    padding-left: 15px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
     color: white;
-    padding-left: 30px;
-
-    &:hover {
-        background-color: #484e5bd0;
-    }
-
-    .myDocuments-hiddenMenu-mobile {
-        height: 0;
-        margin: 0;
-    }
-
-    .myDocuments-Menu-pc {
-        height: 45px;
-        cursor: pointer;
-        padding-top: 10px;
-    }
-
-    .dropdown-myDocuments-icon {
-        margin: 0;
-    }
-
-    .myDocuments-dropdown-arrow-icon {
-        position: absolute;
-        align-self: flex-end;
-        padding-left: 23px;
-        font-size: 20px;
-    }
-
-    .dropdown-myDocuments-btn {
-        padding-top: 2px;
-        font-size: medium;
-        font-weight: 400;
-        padding-left: 15px;
-        border: none;
-        background-color: rgba(255, 255, 255, 0);
-        color: white;
-    }
+  }
 }
 
 .dropdown-services {
-    &:hover {
-        background-color: #484e5bd0;
+  cursor: pointer;
+  .nav-link {
+    margin-left: 15px;
+    height: 52px;
+    padding-top: 13px;
+    margin-top: 0;
+  }
+
+  &:hover {
+    .nav-link {
+      background-color: #484e5bd0;
     }
+  }
 
-    .services-hiddenMenu-mobile {
-        height: 0;
-        margin: 0;
-    }
+  .services-hiddenMenu-mobile {
+    height: 0;
+    margin: 0;
+  }
 
-    .services-Menu-pc {
-        height: 45px;
-        cursor: pointer;
-        padding-top: 10px;
-    }
+  .service-dropdown-arrow-icon {
+    position: absolute;
+    align-self: flex-end;
+    padding-left: 70px;
+    font-size: 20px;
+  }
 
-    .service-dropdown-arrow-icon {
-        position: absolute;
-        align-self: flex-end;
-        padding-left: 70px;
-        font-size: 20px;
-    }
+  .dropdown-services-icon {
+    margin: 0;
+  }
 
-    .dropdown-services-icon {
-        margin: 0;
-    }
-
-    .dropdown-services-btn {
-        padding-top: 2px;
-        font-size: medium;
-        font-weight: 400;
-        padding-left: 15px;
-        border: none;
-        background-color: rgba(255, 255, 255, 0);
-        color: white;
-    }
-
-    .dropdown-services-icon-end {
-        position: absolute;
-        left: 220px;
-        right: 0px;
-        margin: 0;
-
-    }
-
-
+  .dropdown-services-btn {
+    padding-top: 2px;
+    font-size: medium;
+    font-weight: 400;
+    padding-left: 15px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
     color: white;
-    padding-left: 30px;
+  }
 
-    // &:hover {
-    //     background-color: #484e5bd0;
-    // }
-
+  .dropdown-services-icon-end {
+    position: absolute;
+    left: 220px;
+    right: 0px;
+    margin: 0;
+  }
 }
 
 .dropdown-servives-items {
-    width: 260px;
-    height: 145px;
+  width: 260px;
+  height: 145px;
 
-    .dropdown-servives-items-ind {
-        padding-left: 30px;
+  .dropdown-servives-items-ind {
+    padding-left: 30px;
 
-        &:hover {
-            background-color: #2B333E;
-            color: white;
-        }
+    &:hover {
+      background-color: #2b333e;
+      color: white;
     }
-
-
+  }
 }
 
 .dropdown-myDoc-items {
-    width: 260px;
-    height: 100px;
+  width: 260px;
+  height: 100px;
 
-    .dropdown-myDoc-items-ind {
-        padding-left: 30px;
+  .dropdown-myDoc-items-ind {
+    padding-left: 30px;
 
-        &:hover {
-            background-color: #2B333E;
-            color: white;
-        }
+    &:hover {
+      background-color: #2b333e;
+      color: white;
     }
-
-
+  }
 }
 
 .dropdown-customerCare {
-    width: 260px;
-    height: 100px;
+  width: 260px;
+  height: 100px;
 
-    .dropdown-customer-care-ind {
-        &:hover {
-            background-color: #2B333E;
-            color: white;
-        }
+  .dropdown-customer-care-ind {
+    &:hover {
+      background-color: #2b333e;
+      color: white;
     }
+  }
 }
 
 .dropdown-facility-tenant {
-    width: 260px;
-    // height: 240px;
+  width: 260px;
+  // height: 240px;
 
-    .dropdown-facility-ind {
-        &:hover {
-            background-color: #2B333E;
-            color: white;
-        }
+  .dropdown-facility-ind {
+    &:hover {
+      background-color: #2b333e;
+      color: white;
     }
+  }
 }
 .dropdown-facility-landlord {
-    width: 260px;
-    // height: 240px;
+  width: 260px;
+  // height: 240px;
 
-    .dropdown-facility-ind {
-        &:hover {
-            background-color: #2B333E;
-            color: white;
-        }
+  .dropdown-facility-ind {
+    &:hover {
+      background-color: #2b333e;
+      color: white;
     }
+  }
 }

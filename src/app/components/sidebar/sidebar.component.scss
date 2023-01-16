@@ -69,7 +69,9 @@
 
   .sideBarNav-Item {
     &:hover {
-      background-color: #484e5bd0;
+      .nav-link {
+        background-color: #484e5bd0;
+      }
     }
   }
 

@@ -49,17 +49,19 @@
       *ngIf="isPCMenu()"
       [ngClass]="isPCMenu() ? 'services-Menu-pc' : 'services-hiddenMenu-mobile'"
     >
-      <i class="material-icons dropdown-services-icon">assignment</i>
-      <tr>
-        <td>
-          <button class="dropdown-services-btn">Services</button>
-        </td>
-        <td>
-          <i class="material-icons service-dropdown-arrow-icon"
-            >keyboard_arrow_down</i
-          >
-        </td>
-      </tr>
+      <a class="nav-link">
+        <i class="material-icons dropdown-services-icon">assignment</i>
+        <tr>
+          <td>
+            <button class="dropdown-services-btn">Services</button>
+          </td>
+          <td>
+            <i class="material-icons service-dropdown-arrow-icon"
+              >keyboard_arrow_down</i
+            >
+          </td>
+        </tr>
+      </a>
     </div>
   </div>
 </ng-container>
@@ -170,17 +172,19 @@
         isPCMenu() ? 'myDocuments-Menu-pc' : 'myDocuments-hiddenMenu-mobile'
       "
     >
-      <i class="material-icons dropdown-myDocuments-icon">folder_copy</i>
-      <tr>
-        <td>
-          <button class="dropdown-myDocuments-btn">My Documents</button>
-        </td>
-        <td>
-          <i class="material-icons myDocuments-dropdown-arrow-icon"
-            >keyboard_arrow_down</i
-          >
-        </td>
-      </tr>
+      <a class="nav-link">
+        <i class="material-icons dropdown-myDocuments-icon">folder_copy</i>
+        <tr>
+          <td>
+            <button class="dropdown-myDocuments-btn">My Documents</button>
+          </td>
+          <td>
+            <i class="material-icons myDocuments-dropdown-arrow-icon"
+              >keyboard_arrow_down</i
+            >
+          </td>
+        </tr>
+      </a>
     </div>
   </div>
 </ng-container>
