@@ -1,5 +1,6 @@
 <div class="wrapper" *ngIf="isUserSignedIn == true">
   <div
+    *ngIf="isLogoutProcessing == false"
     class="sidebar"
     data-color="danger"
     data-background-color="white"
@@ -11,7 +12,7 @@
       style="background-image: url(./assets/img/sidebar-4.jpg)"
     ></div>
   </div>
-  <div class="main-panel">
+  <div class="main-panel" *ngIf="isLogoutProcessing == false">
     <app-navbar></app-navbar>
 
     <router-outlet (activate)="onActivate($event)"> </router-outlet>
