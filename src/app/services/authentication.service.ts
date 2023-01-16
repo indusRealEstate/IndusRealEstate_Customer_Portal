@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { User } from "../../../models/user/user.model";
+import { OtherServices } from "./other.service";
 
 const API_URL = "http://127.0.0.1:8081/auth";
 
@@ -14,7 +15,7 @@ export class AuthenticationService {
   public user: User;
   public userDoesntExist: boolean = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private otherServices: OtherServices) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem("currentUser"))
     );
@@ -64,7 +65,12 @@ export class AuthenticationService {
     localStorage.removeItem("currentUser");
     localStorage.clear();
     sessionStorage.clear();
-    // localStorage.setItem("userLoggedOut", JSON.stringify(true));
-    this.currentUserSubject.next(null);
+
+    setTimeout(() => {
+      location.reload();
+      window.location.replace(`/login`);
+      this.currentUserSubject.next(null);
+      this.otherServices.isLogoutProcessing.next(false);
+    }, 500);
   }
 }

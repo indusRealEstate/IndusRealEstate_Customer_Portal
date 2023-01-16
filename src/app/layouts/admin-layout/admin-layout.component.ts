@@ -15,6 +15,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { filter, Subscription } from "rxjs";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "app-admin-layout",
@@ -26,15 +27,19 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
   isUserSignedIn: boolean = false;
+  isLogoutProcessing: boolean = false;
 
   constructor(
     public location: Location,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     this.isUserSignOut();
-
+    this.otherServices.isLogoutProcessing.subscribe((e) => {
+      this.isLogoutProcessing = e;
+    });
   }
 
   onActivate(event) {

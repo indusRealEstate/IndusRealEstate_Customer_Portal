@@ -33,5 +33,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: "tenant-move-out-request", component: Tenant_Move_out_Request },
   { path: "tenant-registration", component: Tenant_Registration },
   { path: "404", component: PageNotFoundComponent },
-  // { path: "**", redirectTo: "/404" },
+  { path: "**", redirectTo: "/404" },
 ];

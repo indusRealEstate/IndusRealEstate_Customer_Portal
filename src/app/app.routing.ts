@@ -12,35 +12,36 @@ var user = JSON.parse(userData);
 const routes: Routes = [
   {
     path: "",
-    redirectTo: userData == null ? "login" : `home/${user[0]["id"]}`,
+    redirectTo: userData == null ? "login" : `home?uid=${user[0]["id"]}`,
     pathMatch: "full",
   },
-  {
-    path: "",
-    component: AdminLayoutComponent,
-    children: [
-      {
+  userData != null
+    ? {
         path: "",
-        loadChildren: () =>
-          import("./layouts/admin-layout/admin-layout.module").then(
-            (m) => m.AdminLayoutModule
-          ),
-      },
-    ],
-  },
-  {
-    path: "",
-    component: AuthLayoutComponent,
-    children: [
-      {
+        component: AdminLayoutComponent,
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./layouts/admin-layout/admin-layout.module").then(
+                (m) => m.AdminLayoutModule
+              ),
+          },
+        ],
+      }
+    : {
         path: "",
-        loadChildren: () =>
-          import("./layouts/auth-layout/auth-layout.module").then(
-            (m) => m.AuthLayoutModule
-          ),
+        component: AuthLayoutComponent,
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./layouts/auth-layout/auth-layout.module").then(
+                (m) => m.AuthLayoutModule
+              ),
+          },
+        ],
       },
-    ],
-  }
 ];
 
 @NgModule({

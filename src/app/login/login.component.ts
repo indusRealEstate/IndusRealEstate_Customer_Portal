@@ -67,9 +67,12 @@ export class LoginComponent implements OnInit {
         (data) => {
           var userData = localStorage.getItem("currentUser");
           var user = JSON.parse(userData);
-          this.router.navigate([`/home`], {
-            queryParams: { uid: user[0]["id"] },
-          });
+
+          setTimeout(() => {
+            location.reload();
+            window.location.replace(`/home?uid=${user[0]["id"]}`);
+          }, 500);
+          
         },
         (error) => {
           if (error["statusText"] == "Not Found") {

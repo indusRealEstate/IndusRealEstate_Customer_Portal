@@ -8,6 +8,7 @@ import {
 import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 import { User } from "../../../../models/user/user.model";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "app-navbar",
@@ -26,7 +27,8 @@ export class NavbarComponent implements OnInit {
     location: Location,
     private element: ElementRef,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private otherServices: OtherServices
   ) {
     this.location = location;
     this.sidebarVisible = false;
@@ -163,7 +165,7 @@ export class NavbarComponent implements OnInit {
   }
 
   userLogOut() {
-    location.reload();
+    this.otherServices.isLogoutProcessing.next(true);
     this.authenticationService.logout();
   }
 
