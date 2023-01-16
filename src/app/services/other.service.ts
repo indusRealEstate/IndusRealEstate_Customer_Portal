@@ -25,4 +25,7 @@ export class OtherServices {
   public isDialogClosed: boolean = false;
   public isLogoutProcessing: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
+
+  public isProfilePicUpdated: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 }

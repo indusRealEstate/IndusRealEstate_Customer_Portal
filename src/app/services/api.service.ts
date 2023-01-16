@@ -97,6 +97,13 @@ export class ApiService {
       .pipe(catchError(this.handleError("addProperty", [])));
   }
 
+  updateUserProfilePic(data: string) {
+    const url = `${API_URL}/changeUserProfilePic.php?apikey=1`;
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("updateUserProfilePic", [])));
+  }
+
   addAppointment(data: any) {
     const url = `${API_URL}/addAppointment.php?apikey=1`;
     return this.http

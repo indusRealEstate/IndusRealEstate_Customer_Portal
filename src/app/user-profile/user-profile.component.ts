@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "app-user-profile",
@@ -16,12 +17,14 @@ export class UserProfileComponent implements OnInit {
   address: string;
   phone_number: number;
   lan_number: number;
+  userProfilePic: string = "";
 
   constructor(
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -38,6 +41,33 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  pickImg(event: any) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = (e) => {
+      this.userProfilePic = e.target.result.toString();
+
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      var userId = user[0]["id"];
+
+      var updatedUserProfileData = {
+        user_id: userId,
+        profile_photo: this.userProfilePic.split(",")[1],
+      };
+
+      this.apiService
+        .updateUserProfilePic(JSON.stringify(updatedUserProfileData))
+        .subscribe((e) => {});
+
+      this.otherServices.isProfilePicUpdated.next(true);
+
+      sessionStorage.removeItem("userDetails");
+    };
+  }
+
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -49,12 +79,31 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.isUserSignOut();
-    this.getUserDetails();
+
+    var userDetailsDataSession = sessionStorage.getItem("userDetails");
+    var sessionDataJSON = JSON.parse(userDetailsDataSession);
+
+    if (userDetailsDataSession == null) {
+      console.log("user details from api");
+      this.getUserDetails();
+    } else {
+      console.log("user details from session");
+
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      this.username = user[0]["username"];
+      this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];
+
+      this.email = sessionDataJSON["email"];
+      this.address = sessionDataJSON["address"];
+      this.phone_number = sessionDataJSON["phone_number"];
+      this.userProfilePic = sessionDataJSON["userProfilePic"];
+    }
   }
 
   getUserDetails() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
     var userId = user[0]["id"];
     this.username = user[0]["username"];
     this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];
@@ -63,6 +112,19 @@ export class UserProfileComponent implements OnInit {
       this.email = data[0]["email"];
       this.address = data[0]["address"];
       this.phone_number = data[0]["phone_number"];
+      this.userProfilePic = "data:image/jpg;base64," + data[0]["profile_photo"];
     });
+
+    setTimeout(() => {
+      sessionStorage.setItem(
+        "userDetails",
+        JSON.stringify({
+          email: this.email,
+          address: this.address,
+          phone_number: this.phone_number,
+          userProfilePic: this.userProfilePic,
+        })
+      );
+    }, 2000);
   }
 }
