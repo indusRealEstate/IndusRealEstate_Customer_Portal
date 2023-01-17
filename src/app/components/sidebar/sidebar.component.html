@@ -96,16 +96,23 @@
     >
       <div>
         <img
+          *ngIf="userProfileFetching == false"
           mat-card-avatar
           class="sidebar-card-avatar"
           src="{{ userProfilePic }}"
           alt="User Avatar"
         />
+        <ngx-skeleton-loader
+          *ngIf="userProfileFetching == true"
+          appearance="circle"
+          [theme]="{ width: '95px', height: '90px', left: '65px' }"
+        >
+        </ngx-skeleton-loader>
 
         <span
           *ngIf="profilePicUpdatingLoader == true"
           class="spinner-border spinner-border-m mr-2"
-          style="position: absolute; right: 115px; top: 70px; color: #d3ab33"
+          style="position: absolute; right: 118px; top: 73px; color: #d3ab33"
         >
         </span>
       </div>

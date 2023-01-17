@@ -47,6 +47,7 @@ export class SidebarComponent implements OnInit {
   user: User;
   userProfilePic: any;
   profilePicUpdatingLoader: boolean = false;
+  userProfileFetching: boolean = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -57,6 +58,7 @@ export class SidebarComponent implements OnInit {
   ) {
     this.otherServices.isProfilePicUpdated.subscribe((e) => {
       if (e == true) {
+        this.userProfileFetching = true;
         this.profilePicUpdatingLoader = true;
         var data = localStorage.getItem("currentUser");
         var user = JSON.parse(data);
@@ -74,6 +76,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.getUserDataFromLocal();
+
     this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
     // this.serviceRoute = SERVICEROUTE.filter(menuItem => menuItem);
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
@@ -109,12 +112,24 @@ export class SidebarComponent implements OnInit {
       user[0]["token"]
     );
 
-    this.getUserDetails(user[0]["id"]);
+    var userDetailsSessionData = sessionStorage.getItem("userDetails");
+    var jsonUserDetails = JSON.parse(userDetailsSessionData);
+
+    if (userDetailsSessionData != null) {
+      this.userProfilePic = jsonUserDetails["userProfilePic"];
+    } else {
+      this.userProfileFetching = true;
+      this.getUserDetails(user[0]["id"]);
+    }
   }
 
   getUserDetails(userId: any) {
     this.apiServices.getUserDetails(userId).subscribe((e: any) => {
       this.userProfilePic = "data:image/jpg;base64," + e[0]["profile_photo"];
     });
+
+    setTimeout(() => {
+      this.userProfileFetching = false;
+    }, 500);
   }
 }

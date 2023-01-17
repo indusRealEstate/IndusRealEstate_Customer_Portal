@@ -18,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   phone_number: number;
   lan_number: number;
   userProfilePic: string = "";
+  userProfileFetching: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -65,6 +66,10 @@ export class UserProfileComponent implements OnInit {
       this.otherServices.isProfilePicUpdated.next(true);
 
       sessionStorage.removeItem("userDetails");
+
+      setTimeout(() => {
+        this.getUserDetails();
+      }, 500);
     };
   }
 
@@ -85,6 +90,7 @@ export class UserProfileComponent implements OnInit {
 
     if (userDetailsDataSession == null) {
       console.log("user details from api");
+      this.userProfileFetching = true;
       this.getUserDetails();
     } else {
       console.log("user details from session");
@@ -125,6 +131,7 @@ export class UserProfileComponent implements OnInit {
           userProfilePic: this.userProfilePic,
         })
       );
-    }, 2000);
+      this.userProfileFetching = false;
+    }, 1000);
   }
 }
