@@ -57,10 +57,20 @@ export class TenantFormComponent implements OnInit {
         });
 
         this.auth_type = authTypeData;
-        this.fullName =
-          this.rawJson["firstname"] + " " + this.rawJson["lastname"];
+
+        var firstnameCapitalized = this.titleCaseWord(
+          this.rawJson["firstname"]
+        );
+        var lastnameCapitalized = this.titleCaseWord(this.rawJson["lastname"]);
+
+        this.fullName = firstnameCapitalized + " " + lastnameCapitalized;
       }
     });
+  }
+
+  titleCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toUpperCase() + word.substr(1).toLowerCase();
   }
 
   ngOnInit() {
