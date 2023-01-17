@@ -20,6 +20,28 @@ export class UserProfileComponent implements OnInit {
   userProfilePic: string = "";
   userProfileFetching: boolean = false;
 
+  ///----
+
+  isOverviewTabActive: boolean = true;
+  isDocDetailsTabActive: boolean = false;
+  isPropertiesTabActive: boolean = false;
+
+  isOverviewTabClicked() {
+    this.isOverviewTabActive = true;
+    this.isDocDetailsTabActive = false;
+    this.isPropertiesTabActive = false;
+  }
+  isDocDetailsTabClicked() {
+    this.isDocDetailsTabActive = true;
+    this.isPropertiesTabActive = false;
+    this.isOverviewTabActive = false;
+  }
+  isPropertiesTabClicked() {
+    this.isPropertiesTabActive = true;
+    this.isOverviewTabActive = false;
+    this.isDocDetailsTabActive = false;
+  }
+
   constructor(
     private apiService: ApiService,
     private router: Router,
