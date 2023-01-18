@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit {
   userProfileFetching: boolean = false;
   properties: Property[] = [];
   isLoading: boolean = false;
+  isLandlord: boolean = false;
 
   ///----
 
@@ -149,6 +150,20 @@ export class UserProfileComponent implements OnInit {
           this.getUserProperties(user[0]["id"]);
         }
       }
+    }
+  }
+
+  getAuthType() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    if (user[0]["auth_type"] == "landlord") {
+      this.isLandlord = true;
+      return "Property Owner";
+    } else if (user[0]["auth_type"] == "tenant") {
+      return "Tenant";
+    } else {
+      return "Admin";
     }
   }
 

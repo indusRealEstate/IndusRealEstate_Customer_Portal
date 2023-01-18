@@ -9,38 +9,47 @@
               style="margin: 30px; margin-bottom: 10px"
             >
               <div class="row">
-                <img
-                  *ngIf="userProfileFetching == false"
-                  src="{{ userProfilePic }}"
-                  alt="avatar"
-                  class="rounded-circle img-fluid"
-                  style="width: 110px"
-                />
-                <div
-                  class="change-img-btn"
-                  (click)="fileInput.click()"
-                  *ngIf="userProfileFetching == false"
-                >
-                  <i class="material-icons">camera_alt</i>
-                  <span class="tooltiptext">Change Image</span>
-
-                  <input
-                    #fileInput
-                    type="file"
-                    (change)="pickImg($event)"
-                    style="display: none"
+                <div class="row">
+                  <img
+                    *ngIf="userProfileFetching == false"
+                    src="{{ userProfilePic }}"
+                    alt="avatar"
+                    class="rounded-circle img-fluid"
+                    style="width: 110px; pointer-events: none"
                   />
+                  <div
+                    class="change-img-btn"
+                    (click)="fileInput.click()"
+                    *ngIf="userProfileFetching == false"
+                  >
+                    <i class="material-icons">camera_alt</i>
+                    <span class="tooltiptext">Change Image</span>
+
+                    <input
+                      #fileInput
+                      type="file"
+                      (change)="pickImg($event)"
+                      style="display: none"
+                    />
+                  </div>
+
+                  <ngx-skeleton-loader
+                    *ngIf="userProfileFetching == true"
+                    appearance="circle"
+                    [theme]="{ width: '107px', height: '107px' }"
+                  >
+                  </ngx-skeleton-loader>
+                  <div class="col-xs">
+                    <p class="fullName-user">{{ full_name }}</p>
+                    <p class="user-name-subtitle">{{ getAuthType() }}</p>
+                  </div>
                 </div>
 
-                <ngx-skeleton-loader
-                  *ngIf="userProfileFetching == true"
-                  appearance="circle"
-                  [theme]="{ width: '107px', height: '107px' }"
-                >
-                </ngx-skeleton-loader>
-                <div class="col-xs">
-                  <p class="fullName-user">{{ full_name }}</p>
-                  <p class="user-name-subtitle">Property Owner</p>
+                <div class="col text-right">
+                  <button class="btn buttons-user-profile-card">
+                    <i class="material-icons">mode_edit</i>
+                    Edit Profile
+                  </button>
                 </div>
               </div>
 
@@ -75,6 +84,7 @@
                   Document Details
                 </button>
                 <button
+                  *ngIf="isLandlord == true"
                   type="button"
                   class="btn"
                   [ngClass]="
@@ -343,6 +353,7 @@
                       class="property-img-user-profile"
                       src="{{ property.image }}"
                       alt=""
+                      style="pointer-events: none"
                     />
 
                     <div class="col-xs">
