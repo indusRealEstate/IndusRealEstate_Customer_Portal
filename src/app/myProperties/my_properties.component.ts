@@ -15,7 +15,6 @@ export class MyPropertiesComponent implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
   properties: Property[] = [];
-  propertyImages: any[] = [];
 
   constructor(
     private apiService: ApiService,

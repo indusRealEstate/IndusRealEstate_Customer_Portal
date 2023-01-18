@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import { Property } from "../../../models/property/property";
 
 @Component({
   selector: "app-user-profile",
@@ -19,6 +20,8 @@ export class UserProfileComponent implements OnInit {
   lan_number: number;
   userProfilePic: string = "";
   userProfileFetching: boolean = false;
+  properties: Property[] = [];
+  isLoading: boolean = false;
 
   ///----
 
@@ -107,18 +110,30 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.isUserSignOut();
 
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
     var userDetailsDataSession = sessionStorage.getItem("userDetails");
     var sessionDataJSON = JSON.parse(userDetailsDataSession);
+
+    var userPropertiesDataSession = sessionStorage.getItem("properties");
+    var sessionDataJSONPropertes = JSON.parse(userPropertiesDataSession);
 
     if (userDetailsDataSession == null) {
       console.log("user details from api");
       this.userProfileFetching = true;
       this.getUserDetails();
+
+      if (user[0]["auth_type"] == "landlord") {
+        if (userPropertiesDataSession != null) {
+          this.properties = sessionDataJSONPropertes;
+        } else {
+          this.getUserProperties(user[0]["id"]);
+        }
+      }
     } else {
       console.log("user details from session");
 
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
       this.username = user[0]["username"];
       this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];
 
@@ -126,6 +141,48 @@ export class UserProfileComponent implements OnInit {
       this.address = sessionDataJSON["address"];
       this.phone_number = sessionDataJSON["phone_number"];
       this.userProfilePic = sessionDataJSON["userProfilePic"];
+
+      if (user[0]["auth_type"] == "landlord") {
+        if (userPropertiesDataSession != null) {
+          this.properties = sessionDataJSONPropertes;
+        } else {
+          this.getUserProperties(user[0]["id"]);
+        }
+      }
+    }
+  }
+
+  getUserProperties(userId: any) {
+    try {
+      this.apiService.getUserProperties(userId).subscribe((data) => {
+        // console.log(data);
+        for (let e of data) {
+          let objectURL = "data:image/jpeg;base64," + e["image"];
+
+          this.properties.push(
+            new Property(
+              e["user_id"],
+              e["property_id"],
+              e["property_name"],
+              e["property_address"],
+              objectURL,
+              e["rented"],
+              e["leased"],
+              e["sold"],
+              e["rent_details"],
+              e["lease_details"],
+              e["sold_details"]
+            )
+          );
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setTimeout(() => {
+        this.isLoading = false;
+        sessionStorage.setItem("properties", JSON.stringify(this.properties));
+      }, 1000);
     }
   }
 

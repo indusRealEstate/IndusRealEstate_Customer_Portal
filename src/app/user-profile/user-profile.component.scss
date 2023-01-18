@@ -1,4 +1,110 @@
 .user-profile-wrap {
+  .property-card-user-profile {
+    height: auto;
+    background-color: #edebebd9;
+    width: 97%;
+    margin-left: 25px;
+
+    .property-card-footer-p {
+      margin-top: -6px;
+      margin-left: 17px;
+      font-size: 12px;
+      color: #808080c7;
+    }
+
+    .property-card-horizontal-divider {
+      width: 98%;
+      margin-left: 2px;
+      border-width: 1.5px;
+      background-color: #d9d8d899;
+      border-radius: 50px;
+      margin-top: 0px;
+    }
+
+    .property-img-user-profile {
+      object-fit: cover;
+      overflow: hidden;
+      border-radius: 7px;
+      max-width: 170px;
+      min-width: 160px;
+      max-height: 130px;
+      min-height: 120px;
+      margin-bottom: 15px;
+    }
+
+    .property-id {
+      margin-left: 15px;
+      margin-top: 7px;
+      margin-bottom: 5px;
+      font-weight: 800;
+      color: #d3ab33;
+      max-width: 195px;
+      min-width: 195px;
+    }
+    .property-name {
+      margin-left: 15px;
+      margin-bottom: 0px;
+      font-weight: 600;
+      max-width: 195px;
+      min-width: 195px;
+    }
+
+    .property-address {
+      margin-left: 15px;
+      font-weight: 500;
+      color: #808080c7;
+      max-width: 195px;
+      min-width: 195px;
+    }
+
+    .vl {
+      border-left: 2px solid rgb(159 159 159 / 28%);
+      margin-left: 50px;
+      margin-top: 4px;
+      height: 120px;
+    }
+
+    .property-status {
+      margin-left: 55px;
+      margin-top: 7px;
+      font-weight: 800;
+      color: #808080bf;
+    }
+    .property-status-active {
+      font-size: 13px;
+      font-weight: 500;
+      &::marker {
+        color: #8ae16b;
+        font-size: 20px;
+      }
+    }
+    .property-status-tours {
+      font-size: 13px;
+      font-weight: 500;
+      &::marker {
+        color: #8ae16b;
+        font-size: 20px;
+      }
+    }
+    .property-status-payments {
+      font-size: 13px;
+      font-weight: 500;
+      &::marker {
+        color: #d4aa32;
+        font-size: 20px;
+      }
+    }
+
+    .btn-property-card {
+      height: 33px;
+      padding-top: 9px;
+      border-radius: 10px;
+      width: 130px;
+      background-color: #80808042;
+      color: gray;
+    }
+  }
+
   hr {
     width: 92%;
     margin-left: 30px;
@@ -119,10 +225,18 @@
       color: gray;
       background-color: white;
 
-      &:hover {
-        background-color: #d3ab33;
-        color: white;
+      i {
+        padding-right: 8px;
       }
+    }
+
+    .buttons-user-profile-card-active {
+      margin-right: 15px;
+      padding-left: 17px;
+      padding-right: 17px;
+      border-radius: 10px;
+      background-color: #d3ab33;
+      color: white;
 
       i {
         padding-right: 8px;
