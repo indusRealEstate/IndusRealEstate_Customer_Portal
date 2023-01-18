@@ -7,15 +7,13 @@
     data-image="./assets/img/sidebar-1.jpg"
   >
     <app-sidebar></app-sidebar>
-    <div
-      class="sidebar-background"
-      style="background-image: url(./assets/img/sidebar-4.jpg)"
-    ></div>
+    <div class="sidebar-background"></div>
   </div>
   <div class="main-panel" *ngIf="isLogoutProcessing == false">
     <app-navbar></app-navbar>
 
     <router-outlet (activate)="onActivate($event)"> </router-outlet>
+    <app-footer></app-footer>
   </div>
   <div
     class="spinner-loader"
