@@ -1,73 +1,115 @@
 <div class="main-content reports-bg">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-reports">
-                    <div class="card-header card-reports-head">
-                        <tr>
-                            <td>
-                                <i class="material-icons reports-icon">notes</i>
-                            </td>
-                            <td>
-                                <h4 class="card-title mt-0 tableList-title">Choose Report</h4>
-                            </td>
-                        </tr>
-
-                    </div>
-                    <ng-container class="card-body ">
-                        <tr class="reports-row-body">
-                            <td class="reports-row-ind">
-                                <p>Choose report</p>
-                                <mat-form-field appearance="fill">
-                                    <mat-select [(value)]="selectedReport">
-                                        <mat-option value="--None--">--None--</mat-option>
-                                        <mat-option value="option1">My properties Report</mat-option>
-                                        <mat-option value="option2">All Outstanding Payment Reports</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="reports-row-ind">
-                                <p>Date Range</p>
-                                <mat-form-field appearance="fill">
-                                    <mat-select [(value)]="selectedDateRange">
-                                        <mat-option value="--None--">--None--</mat-option>
-                                        <mat-option value="option1">Custom Date Range</mat-option>
-                                        <mat-option value="option2">Current Year</mat-option>
-                                        <mat-option value="option3">Current Month</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-
-                        </tr>
-                        <tr class="custom-date-range" *ngIf="selectedDateRange === 'option1'">
-                            <td class="custom-date-range-ind">
-                                <p>Start Date</p>
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                            </td>
-                            <td class="custom-date-range-ind">
-                                <p>End Date</p>
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                            </td>
-
-                        </tr>
-                        <tr class="reports-show">
-                            <button mat-raised-button type="submit" class="show-reports-btn" (click)="connectBackend()">
-                                Show
-                                <mat-icon>arrow_right</mat-icon>
-                            </button>
-                        </tr>
-                    </ng-container>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-reports">
+          <div class="card-header card-reports-head">
+            <div class="row">
+              <img
+                class="home-card-icon-main"
+                src="assets/img/svg/reports/textalign-justifyleft.svg"
+                style="
+                  filter: brightness(0) invert(1);
+                  margin-left: 15px;
+                  width: 22px;
+                  margin-top: -5px;
+                "
+              />
+              <h4
+                class="card-title mt-0 tableList-title"
+                style="padding-left: 20px"
+              >
+                Choose Report
+              </h4>
             </div>
-
+          </div>
+          <ng-container class="card-body">
+            <tr class="reports-row-body">
+              <td class="reports-row-ind">
+                <p>Choose report</p>
+                <mat-form-field appearance="fill">
+                  <mat-select [(value)]="selectedReport">
+                    <mat-option value="--None--">--None--</mat-option>
+                    <mat-option value="option1"
+                      >My properties Report</mat-option
+                    >
+                    <mat-option value="option2"
+                      >All Outstanding Payment Reports</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td class="reports-row-ind">
+                <p>Date Range</p>
+                <mat-form-field appearance="fill">
+                  <mat-select [(value)]="selectedDateRange">
+                    <mat-option value="--None--">--None--</mat-option>
+                    <mat-option value="option1">Custom Date Range</mat-option>
+                    <mat-option value="option2">Current Year</mat-option>
+                    <mat-option value="option3">Current Month</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr
+              class="custom-date-range"
+              *ngIf="selectedDateRange === 'option1'"
+            >
+              <td class="custom-date-range-ind">
+                <p>Start Date</p>
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="MM/DD/YYYY"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <td class="custom-date-range-ind">
+                <p>End Date</p>
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="MM/DD/YYYY"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr class="reports-show">
+              <button
+                mat-raised-button
+                type="submit"
+                class="show-reports-btn"
+                (click)="connectBackend()"
+                style="width: 100px"
+              >
+                Show
+                <img
+                  class="home-card-icon-main"
+                  src="assets/img/svg/reports/arrow-circle-down.svg"
+                  style="
+                    filter: brightness(0) invert(1);
+                    width: 18px;
+                    margin-top: -3px;
+                    margin-left: 5px;
+                  "
+                />
+              </button>
+            </tr>
+          </ng-container>
         </div>
+      </div>
     </div>
+  </div>
 </div>

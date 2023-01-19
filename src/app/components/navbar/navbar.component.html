@@ -27,7 +27,11 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="javascript:void(0)">
-            <i class="material-icons">mail</i>
+            <img
+              class="navbar-svg-icons"
+              src="assets/img/svg/navbar/message.svg"
+              alt=""
+            />
             <p>
               <span class="d-lg-none d-md-block">Stats</span>
             </p>
@@ -42,7 +46,11 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <i class="material-icons">notifications</i>
+            <img
+              class="navbar-svg-icons"
+              src="assets/img/svg/navbar/notification.svg"
+              alt=""
+            />
             <span class="notification">5</span>
             <p>
               <span class="d-lg-none d-md-block">Some Actions</span>
@@ -73,7 +81,11 @@
             [matMenuTriggerFor]="menuHero"
             ng-init
           >
-            <i class="material-icons">person</i>
+            <img
+              class="navbar-svg-icons"
+              src="assets/img/svg/navbar/user-square.svg"
+              alt=""
+            />
             <p>
               <span class="d-lg-none d-md-block">Account</span>
             </p>
@@ -97,7 +109,11 @@
                   (click)="userLogOut()"
                   routerLink="/login"
                 >
-                  <i class="material-icons profile-dropdown-btn-icon">logout</i>
+                  <img
+                    class="navbar-svg-icon-logout"
+                    src="assets/img/svg/navbar/logout-1.svg"
+                    alt=""
+                  />
                   Logout
                 </button>
               </div>

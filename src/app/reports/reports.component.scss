@@ -1,56 +1,58 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
 .reports-bg {
-    background-color: #2B333E03;
+  background-color: #2b333e03;
 }
 
 .card-reports {
+  .reports-icon {
+    position: absolute;
+    justify-self: center;
+    margin: 0;
+    color: white;
+  }
 
-    .reports-icon {
-        position: absolute;
-        justify-self: center;
-        margin: 0;
-        color: white;
+  .card-reports-head {
+    background-color: #2b333e;
+
+    .card-title {
+      color: white;
+      padding-left: 40px;
     }
-
-    .card-reports-head {
-        background-color: #2B333E;
-
-        .card-title {
-            color: white;
-            padding-left: 40px;
-        }
-    }
+  }
 }
 
 .reports-row-body {
-    width: 94%;
-    margin: 30px;
+  width: 94%;
+  margin: 30px;
 
-    .reports-row-ind {
-        padding-left: 20px;
-        width: 1%;
-    }
+  .reports-row-ind {
+    padding-left: 20px;
+    width: 1%;
+  }
 }
-
-
 
 .custom-date-range {
-    width: 94%;
-    margin: 30px;
-    
-    .custom-date-range-ind {
-        width: 1%;
-        padding-left: 20px;
-    }
+  width: 94%;
+  margin: 30px;
 
+  .custom-date-range-ind {
+    width: 1%;
+    padding-left: 20px;
+  }
 }
 
-.reports-show{
-    text-align: center;
-    margin: 20px;
-    .show-reports-btn{
-        font-size: 16px;
-        background-color: #d3ab33;
-        color: white;
-        width: 90px;
-    }
+.reports-show {
+  text-align: center;
+  margin: 20px;
+  .show-reports-btn {
+    font-size: 16px;
+    background-color: #d3ab33;
+    color: white;
+    width: 90px;
+  }
 }

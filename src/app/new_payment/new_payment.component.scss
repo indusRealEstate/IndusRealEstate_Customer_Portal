@@ -1,5 +1,10 @@
-.card-payment {
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 
+* {
+  font-family: "Montserrat";
+}
+
+.card-payment {
   .payment-icon {
     position: absolute;
     justify-self: center;
@@ -8,7 +13,7 @@
   }
 
   .card-payment-head {
-    background-color: #2B333E;
+    background-color: #2b333e;
 
     .card-title {
       color: white;
@@ -34,15 +39,13 @@
       }
     }
 
-    .not-done{
+    .not-done {
       background-color: white;
     }
-    .done{
+    .done {
       background-color: green;
     }
-
   }
-
 }
 
 ::ng-deep .mat-step-header .mat-step-icon {
@@ -57,7 +60,6 @@
   border-radius: 6px !important;
 }
 
-
 ::ng-deep .mat-step-header .mat-step-icon-selected {
   border-color: #d3ab33;
 }
@@ -67,10 +69,14 @@
   height: auto !important;
 }
 
-::ng-deep .mat-stepper-horizontal .mat-horizontal-stepper-header:not(:last-child)::after {
+::ng-deep
+  .mat-stepper-horizontal
+  .mat-horizontal-stepper-header:not(:last-child)::after {
   right: -20px !important;
 }
 
-::ng-deep .mat-stepper-horizontal .mat-horizontal-stepper-header:not(:first-child)::before {
+::ng-deep
+  .mat-stepper-horizontal
+  .mat-horizontal-stepper-header:not(:first-child)::before {
   left: -20px !important;
 }
