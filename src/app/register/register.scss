@@ -1,3 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
 $bg: #edf2f0;
 
 $neu-1: #ecf0f3;
@@ -301,7 +307,6 @@ body {
 }
 
 ::ng-deep .mat-radio-checked {
-
   & .mat-radio-inner-circle {
     background-color: #d3ab33 !important;
   }

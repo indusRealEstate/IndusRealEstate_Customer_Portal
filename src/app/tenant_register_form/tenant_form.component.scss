@@ -1,3 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
 .main-content {
   margin-top: -25px;
 }
@@ -121,7 +127,7 @@
 .container1 {
   background-color: #f2f2f2;
   padding: 5px 20px 15px 20px;
-  border: 1px solid #2B333E;
+  border: 1px solid #2b333e;
   border-radius: 5px;
   max-width: 1000px;
   margin: auto;
