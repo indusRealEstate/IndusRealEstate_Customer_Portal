@@ -1,5 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError, Subscription } from "rxjs";
+import {
+  Observable,
+  of,
+  throwError,
+  Subscription,
+  BehaviorSubject,
+} from "rxjs";
 import {
   HttpClient,
   HttpHeaders,
@@ -17,4 +23,9 @@ export class OtherServices {
   constructor(public http: HttpClient) {}
 
   public isDialogClosed: boolean = false;
+  public isLogoutProcessing: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public isProfilePicUpdated: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 }

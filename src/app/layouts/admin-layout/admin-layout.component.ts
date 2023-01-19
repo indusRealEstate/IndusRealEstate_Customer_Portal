@@ -5,11 +5,17 @@ import {
   PathLocationStrategy,
   PopStateEvent,
 } from "@angular/common";
-import { Router, NavigationEnd, NavigationStart } from "@angular/router";
+import {
+  Router,
+  NavigationEnd,
+  NavigationStart,
+  ActivatedRoute,
+} from "@angular/router";
 import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { filter, Subscription } from "rxjs";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "app-admin-layout",
@@ -21,136 +27,152 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
   isUserSignedIn: boolean = false;
+  isLogoutProcessing: boolean = false;
 
   constructor(
     public location: Location,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     this.isUserSignOut();
+    this.otherServices.isLogoutProcessing.subscribe((e) => {
+      this.isLogoutProcessing = e;
+    });
+  }
+
+  onActivate(event) {
+    // window.scroll(0,0);
+
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
 
   ngOnInit() {
     // this.isUserSignOut();
     const isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
 
-    if (
-      isWindows &&
-      !document
-        .getElementsByTagName("body")[0]
-        .classList.contains("sidebar-mini")
-    ) {
-      // if we are on windows OS we activate the perfectScrollbar function
+    // if (
+    //   isWindows &&
+    //   !document
+    //     .getElementsByTagName("body")[0]
+    //     .classList.contains("sidebar-mini")
+    // ) {
+    //   // if we are on windows OS we activate the perfectScrollbar function
 
-      document
-        .getElementsByTagName("body")[0]
-        .classList.add("perfect-scrollbar-on");
-    } else {
-      document
-        .getElementsByTagName("body")[0]
-        .classList.remove("perfect-scrollbar-off");
-    }
-    const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
-    const elemSidebar = <HTMLElement>(
-      document.querySelector(".sidebar .sidebar-wrapper")
-    );
+    //   document
+    //     .getElementsByTagName("body")[0]
+    //     .classList.add("perfect-scrollbar-on");
+    // } else {
+    //   document
+    //     .getElementsByTagName("body")[0]
+    //     .classList.remove("perfect-scrollbar-off");
+    // }
+    // const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
+    // const elemSidebar = <HTMLElement>(
+    //   document.querySelector(".sidebar .sidebar-wrapper")
+    // );
 
-    this.location.subscribe((ev: PopStateEvent) => {
-      this.lastPoppedUrl = ev.url;
-    });
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationStart) {
-        if (event.url != this.lastPoppedUrl)
-          this.yScrollStack.push(window.scrollY);
-      } else if (event instanceof NavigationEnd) {
-        if (event.url == this.lastPoppedUrl) {
-          this.lastPoppedUrl = undefined;
-          window.scrollTo(0, this.yScrollStack.pop());
-        } else window.scrollTo(0, 0);
-      }
-    });
-    this._router = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        elemMainPanel.scrollTop = 0;
-        elemSidebar.scrollTop = 0;
-      });
-    if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      let ps = new PerfectScrollbar(elemMainPanel);
-      ps = new PerfectScrollbar(elemSidebar);
-    }
+    // this.location.subscribe((ev: PopStateEvent) => {
+    //   this.lastPoppedUrl = ev.url;
+    // });
+    // this.router.events.subscribe((event: any) => {
+    //   if (event instanceof NavigationStart) {
+    //     if (event.url != this.lastPoppedUrl)
+    //       this.yScrollStack.push(window.scrollY);
+    //   } else if (event instanceof NavigationEnd) {
+    //     if (event.url == this.lastPoppedUrl) {
+    //       this.lastPoppedUrl = undefined;
+    //       window.scrollTo(0, this.yScrollStack.pop());
+    //     } else window.scrollTo(0, 0);
+    //   }
+    // });
+    // this._router = this.router.events
+    //   .pipe(filter((event) => event instanceof NavigationEnd))
+    //   .subscribe((event: NavigationEnd) => {
+    //     elemMainPanel.scrollTop = 0;
+    //     elemSidebar.scrollTop = 0;
+    //   });
+    // if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+    //   let ps = new PerfectScrollbar(elemMainPanel);
+    //   ps = new PerfectScrollbar(elemSidebar);
+    // }
 
-    const window_width = $(window).width();
-    let $sidebar = $(".sidebar");
-    let $sidebar_responsive = $("body > .navbar-collapse");
-    let $sidebar_img_container = $sidebar.find(".sidebar-background");
+    // const window_width = $(window).width();
+    // let $sidebar = $(".sidebar");
+    // let $sidebar_responsive = $("body > .navbar-collapse");
+    // let $sidebar_img_container = $sidebar.find(".sidebar-background");
 
-    if (window_width > 767) {
-      if ($(".fixed-plugin .dropdown").hasClass("show-dropdown")) {
-        $(".fixed-plugin .dropdown").addClass("open");
-      }
-    }
+    // if (window_width > 767) {
+    //   if ($(".fixed-plugin .dropdown").hasClass("show-dropdown")) {
+    //     $(".fixed-plugin .dropdown").addClass("open");
+    //   }
+    // }
 
-    $(".fixed-plugin a").click(function (event) {
-      // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-      if ($(this).hasClass("switch-trigger")) {
-        if (event.stopPropagation) {
-          event.stopPropagation();
-        } else if (window.event) {
-          window.event.cancelBubble = true;
-        }
-      }
-    });
+    // $(".fixed-plugin a").click(function (event) {
+    //   // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+    //   if ($(this).hasClass("switch-trigger")) {
+    //     if (event.stopPropagation) {
+    //       event.stopPropagation();
+    //     } else if (window.event) {
+    //       window.event.cancelBubble = true;
+    //     }
+    //   }
+    // });
 
-    $(".fixed-plugin .badge").click(function () {
-      let $full_page_background = $(".full-page-background");
+    // $(".fixed-plugin .badge").click(function () {
+    //   let $full_page_background = $(".full-page-background");
 
-      $(this).siblings().removeClass("active");
-      $(this).addClass("active");
+    //   $(this).siblings().removeClass("active");
+    //   $(this).addClass("active");
 
-      var new_color = $(this).data("color");
+    //   var new_color = $(this).data("color");
 
-      if ($sidebar.length !== 0) {
-        $sidebar.attr("data-color", new_color);
-      }
+    //   if ($sidebar.length !== 0) {
+    //     $sidebar.attr("data-color", new_color);
+    //   }
 
-      if ($sidebar_responsive.length != 0) {
-        $sidebar_responsive.attr("data-color", new_color);
-      }
-    });
+    //   if ($sidebar_responsive.length != 0) {
+    //     $sidebar_responsive.attr("data-color", new_color);
+    //   }
+    // });
 
-    $(".fixed-plugin .img-holder").click(function () {
-      let $full_page_background = $(".full-page-background");
+    // $(".fixed-plugin .img-holder").click(function () {
+    //   let $full_page_background = $(".full-page-background");
 
-      $(this).parent("li").siblings().removeClass("active");
-      $(this).parent("li").addClass("active");
+    //   $(this).parent("li").siblings().removeClass("active");
+    //   $(this).parent("li").addClass("active");
 
-      var new_image = $(this).find("img").attr("src");
+    //   var new_image = $(this).find("img").attr("src");
 
-      if ($sidebar_img_container.length != 0) {
-        $sidebar_img_container.fadeOut("fast", function () {
-          $sidebar_img_container.css(
-            "background-image",
-            'url("' + new_image + '")'
-          );
-          $sidebar_img_container.fadeIn("fast");
-        });
-      }
+    //   if ($sidebar_img_container.length != 0) {
+    //     $sidebar_img_container.fadeOut("fast", function () {
+    //       $sidebar_img_container.css(
+    //         "background-image",
+    //         'url("' + new_image + '")'
+    //       );
+    //       $sidebar_img_container.fadeIn("fast");
+    //     });
+    //   }
 
-      if ($full_page_background.length != 0) {
-        $full_page_background.fadeOut("fast", function () {
-          $full_page_background.css(
-            "background-image",
-            'url("' + new_image + '")'
-          );
-          $full_page_background.fadeIn("fast");
-        });
-      }
+    //   if ($full_page_background.length != 0) {
+    //     $full_page_background.fadeOut("fast", function () {
+    //       $full_page_background.css(
+    //         "background-image",
+    //         'url("' + new_image + '")'
+    //       );
+    //       $full_page_background.fadeIn("fast");
+    //     });
+    //   }
 
-      if ($sidebar_responsive.length != 0) {
-        $sidebar_responsive.css("background-image", 'url("' + new_image + '")');
-      }
-    });
+    //   if ($sidebar_responsive.length != 0) {
+    //     $sidebar_responsive.css("background-image", 'url("' + new_image + '")');
+    //   }
+    // });
   }
   ngAfterViewInit() {
     this.runOnRouteChange();
@@ -177,22 +199,9 @@ export class AdminLayoutComponent implements OnInit {
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
-      this.isUrlFault();
     } else {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
-    }
-  }
-
-  isUrlFault() {
-    if (this.authenticationService.currentUserValue) {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-      var currentPath = this.router.url.split("/")[1];
-      var urlId = this.router.url.split("/")[2];
-      if (user[0]["id"] != urlId) {
-        this.router.navigate([`/${currentPath}/${user[0]["id"]}`]);
-      }
     }
   }
 }

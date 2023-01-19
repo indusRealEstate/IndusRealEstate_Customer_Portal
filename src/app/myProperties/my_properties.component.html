@@ -15,8 +15,9 @@
           class="card-img-top"
           src="{{ property.image }}"
           alt="Card image cap"
+          style="pointer-events: none"
         />
-        
+
         <div *ngIf="property.image == ''">
           <ngx-skeleton-loader
             appearance="square"

@@ -20,7 +20,15 @@ export class AuthLayoutComponent implements OnInit {
     ngAfterViewInit() {
     }
 
-
+    onActivate(event) {
+        // window.scroll(0,0);
+     
+        window.scroll({ 
+                top: 0, 
+                left: 0, 
+                behavior: 'smooth' 
+         });
+     }
 
     isUserSignOut() {
         if (this.authenticationService.currentUserValue) {

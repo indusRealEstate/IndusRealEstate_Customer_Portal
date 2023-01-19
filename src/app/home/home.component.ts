@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherService: OtherServices
+    private otherService: OtherServices,
+    private route: ActivatedRoute
   ) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -31,6 +32,20 @@ export class HomeComponent implements OnInit {
     } else {
       this.isLandlord = false;
     }
+
+    this.route.queryParams.subscribe((e) => {
+      if (e == null) {
+        router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
+      } else if (e != user[0]["id"]) {
+        router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
+      }
+    });
+
+    this.scrollToTop();
+  }
+
+  scrollToTop() {
+    // window.scrollTo(0, 0);
   }
 
   isUserSignOut() {

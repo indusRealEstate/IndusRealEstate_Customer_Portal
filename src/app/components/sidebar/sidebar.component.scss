@@ -1,102 +1,97 @@
 .sizedBox-div {
-    height: 20px;
+  height: 20px;
 }
 
 .nav-mobile-menu {
-    padding-top: 25px;
+  padding-top: 25px;
 }
 
 .logo:after {
-    background-color: #00000000;
+  background-color: #00000000;
 }
 
 .logo {
-    .logo-img-div {
-        .logo-img {
-            padding-left: 60px;
-            width: 180px;
-            margin-bottom: 20px;
-            margin-top: 20px;
-        }
+  .logo-img-div {
+    .logo-img {
+      padding-left: 60px;
+      width: 180px;
+      margin-bottom: 20px;
+      margin-top: 20px;
     }
-
+  }
 }
 
 .sideBar-main {
-    background-color: #2B333E;
+  background-color: #2b333e;
 
-    .sideBarMobile-navbar-buttons {
-        color: white;
-        font-size: medium;
-        font-weight: 400;
+  .sideBarMobile-navbar-buttons {
+    color: white;
+    font-size: medium;
+    font-weight: 400;
+  }
+
+  .notification-dropdown-sidebar-mobile {
+    .notification-dropdown-item-sidebar-mobile {
+      color: white;
     }
 
-    .notification-dropdown-sidebar-mobile {
-        .notification-dropdown-item-sidebar-mobile {
-            color: white;
-        }
-
-        .notification-count-sidebar-mobile {
-            color: #d3ab33;
-            font-weight: 400;
-        }
-
-        .sideBarMobile-navbar-dropdown-btn {
-            color: white;
-            font-size: medium;
-            font-weight: 400;
-        }
-
-
-
+    .notification-count-sidebar-mobile {
+      color: #d3ab33;
+      font-weight: 400;
     }
+
+    .sideBarMobile-navbar-dropdown-btn {
+      color: white;
+      font-size: medium;
+      font-weight: 400;
+    }
+  }
 }
 
 .nav {
-    .user-profile-logo-sidebar{
-        cursor: pointer;
-    }
-    .sidebar-card-avatar {
-        border: solid 0.5px black;
-        margin-left: 70px;
-        border-radius: 50%;
-        width: 100px;
-        margin-bottom: 10px;
-    }
+  .user-profile-logo-sidebar {
+    cursor: pointer;
+  }
+  .sidebar-card-avatar {
+    border: solid 2px #d3ab33;
+    margin-left: 70px;
+    border-radius: 50%;
+    width: 100px;
+    margin-bottom: 10px;
+  }
 
-    .sidebar-card-avatar-title {
-        padding-left: 95px;
-        color: white;
-        font-size: large;
-        font-weight: 500;
-    }
+  .sidebar-card-avatar-title {
+    padding-left: 95px;
+    color: white;
+    font-size: large;
+    font-weight: 500;
+  }
 
-    .sideBarNav-Item {
-        &:hover {
-            background-color: #484e5bd0;
-        }
-    }
-
-    .nav-item {
-        .nav-item-title {
-            font-size: medium;
-            font-weight: 400;
-            color: white;
-        }
-
-
-    }
-
-    .dropdown-btn-services {
-        padding-top: 10px;
-    }
-
-    .active {
+  .sideBarNav-Item {
+    &:hover {
+      .nav-link {
         background-color: #484e5bd0;
+      }
     }
+  }
 
-    .nav-link {
-        background-color: rgba(0, 0, 0, 0);
-        box-shadow: none;
+  .nav-item {
+    .nav-item-title {
+      font-size: medium;
+      font-weight: 400;
+      color: white;
     }
+    .active {
+      background-color: #484e5bd0;
+    }
+  }
+
+  .dropdown-btn-services {
+    padding-top: 10px;
+  }
+
+  .nav-link {
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+  }
 }

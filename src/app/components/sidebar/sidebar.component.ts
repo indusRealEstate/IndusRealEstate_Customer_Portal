@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { User } from "../../../../models/user/user.model";
@@ -43,35 +45,44 @@ export class SidebarComponent implements OnInit {
   serviceRoute: any[];
   menuItems: any[];
   user: User;
+  userProfilePic: any;
+  profilePicUpdatingLoader: boolean = false;
+  userProfileFetching: boolean = false;
 
   constructor(
     private authService: AuthenticationService,
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiServices: ApiService,
+    private otherServices: OtherServices
+  ) {
+    this.otherServices.isProfilePicUpdated.subscribe((e) => {
+      if (e == true) {
+        this.userProfileFetching = true;
+        this.profilePicUpdatingLoader = true;
+        var data = localStorage.getItem("currentUser");
+        var user = JSON.parse(data);
+        setTimeout(() => {
+          this.getUserDetails(user[0]["id"]);
+        }, 1000);
+
+        this.otherServices.isProfilePicUpdated.next(false);
+        setTimeout(() => {
+          this.profilePicUpdatingLoader = false;
+        }, 1000);
+      }
+    });
+  }
 
   ngOnInit() {
     this.getUserDataFromLocal();
+
     this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
     // this.serviceRoute = SERVICEROUTE.filter(menuItem => menuItem);
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
 
-    if (this.authService.currentUserValue) {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-
-      if (user[0]["auth_type"] == 'landlord') {
-        for (let e of this.homeRoute) {
-          e["path"] = `${e["path"]}/${user[0]["id"]}`;
-        }
-      } else {
-        this.homeRoute.pop();
-        this.homeRoute.forEach((route) => {
-          route["path"] = `home/${user[0]["id"]}`;
-        });
-      }
-
-      for (let e of this.menuItems) {
-        e["path"] = `${e["path"]}/${user[0]["id"]}`;
-      }
+    if (this.user.auth_type != "landlord") {
+      this.homeRoute.pop();
     }
   }
   isMobileMenu() {
@@ -79,6 +90,12 @@ export class SidebarComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  isLinkActive(url): boolean {
+    const baseUrl = this.router.url.split("?")[0];
+
+    return baseUrl == url;
   }
 
   getUserDataFromLocal() {
@@ -94,5 +111,25 @@ export class SidebarComponent implements OnInit {
       user[0]["password"],
       user[0]["token"]
     );
+
+    var userDetailsSessionData = sessionStorage.getItem("userDetails");
+    var jsonUserDetails = JSON.parse(userDetailsSessionData);
+
+    if (userDetailsSessionData != null) {
+      this.userProfilePic = jsonUserDetails["userProfilePic"];
+    } else {
+      this.userProfileFetching = true;
+      this.getUserDetails(user[0]["id"]);
+    }
+  }
+
+  getUserDetails(userId: any) {
+    this.apiServices.getUserDetails(userId).subscribe((e: any) => {
+      this.userProfilePic = "data:image/jpg;base64," + e[0]["profile_photo"];
+    });
+
+    setTimeout(() => {
+      this.userProfileFetching = false;
+    }, 500);
   }
 }

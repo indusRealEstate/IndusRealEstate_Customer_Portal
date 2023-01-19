@@ -1,178 +1,423 @@
-<section style="background-color: #eee;">
-  <div class="container py-5 ">
-    <!-- <div class="row">
-      <div class="col">
-        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">User</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-          </ol>
-        </nav>
-      </div>
-    </div> -->
-
+<div class="main-content">
+  <div class="container-fluid">
     <div class="row user-profile-wrap">
-      <div class="col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body text-center">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-              class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">{{username}}</h5>
-            <!-- <p class="text-muted mb-1">Full Stack Developer</p>
-            <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> -->
-            <div class="d-flex justify-content-center mb-2">
-              <button type="button" class="btn btn-primary">Follow</button>
-              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-            </div>
-          </div>
-        </div>
-        <div class="card mb-4 mb-lg-0">
-          <div class="card-body p-0">
-            <ul class="list-group list-group-flush rounded-3">
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fas fa-globe fa-lg text-warning"></i>
-                <p class="mb-0">https://mdbootstrap.com</p>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                <p class="mb-0">mdbootstrap</p>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                <p class="mb-0">@mdbootstrap</p>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                <p class="mb-0">mdbootstrap</p>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                <p class="mb-0">mdbootstrap</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Full Name</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{full_name}}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Email</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{email}}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Phone</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0" *ngIf="lan_number == null">-</p>
-                <p class="text-muted mb-0">{{lan_number}}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Mobile</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">+971 {{phone_number}}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Address</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{address}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="col-lg">
         <div class="row">
-          <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+          <div class="card user-profile-top-card col-sm" style="margin: 25px">
+            <div
+              class="card-body text-left"
+              style="margin: 30px; margin-bottom: 10px"
+            >
+              <div class="row">
+                <div class="row">
+                  <img
+                    *ngIf="userProfileFetching == false"
+                    src="{{ userProfilePic }}"
+                    alt="avatar"
+                    class="rounded-circle img-fluid"
+                    style="width: 110px; pointer-events: none"
+                  />
+                  <div
+                    class="change-img-btn"
+                    (click)="fileInput.click()"
+                    *ngIf="userProfileFetching == false"
+                  >
+                    <i class="material-icons">camera_alt</i>
+                    <span class="tooltiptext">Change Image</span>
+
+                    <input
+                      #fileInput
+                      type="file"
+                      (change)="pickImg($event)"
+                      style="display: none"
+                    />
+                  </div>
+
+                  <ngx-skeleton-loader
+                    *ngIf="userProfileFetching == true"
+                    appearance="circle"
+                    [theme]="{ width: '107px', height: '107px' }"
+                  >
+                  </ngx-skeleton-loader>
+                  <div class="col-xs">
+                    <p class="fullName-user">{{ full_name }}</p>
+                    <p class="user-name-subtitle">{{ getAuthType() }}</p>
+                  </div>
                 </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+
+                <div class="col text-right">
+                  <button class="btn buttons-user-profile-card">
+                    <i class="material-icons">mode_edit</i>
+                    Edit Profile
+                  </button>
                 </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+              </div>
+
+              <div
+                class="d-flex justify-content-left mb-2"
+                style="margin-top: 30px; margin-left: -12px"
+              >
+                <button
+                  type="button"
+                  class="btn"
+                  [ngClass]="
+                    isOverviewTabActive == true
+                      ? 'buttons-user-profile-card-active'
+                      : 'buttons-user-profile-card'
+                  "
+                  (click)="isOverviewTabClicked()"
+                >
+                  <i class="material-icons">auto_awesome_mosaic</i>
+                  Overview
+                </button>
+                <button
+                  type="button"
+                  class="btn"
+                  [ngClass]="
+                    isDocDetailsTabActive == true
+                      ? 'buttons-user-profile-card-active'
+                      : 'buttons-user-profile-card'
+                  "
+                  (click)="isDocDetailsTabClicked()"
+                >
+                  <i class="material-icons">article</i>
+                  Document Details
+                </button>
+                <button
+                  *ngIf="isLandlord == true"
+                  type="button"
+                  class="btn"
+                  [ngClass]="
+                    isPropertiesTabActive == true
+                      ? 'buttons-user-profile-card-active'
+                      : 'buttons-user-profile-card'
+                  "
+                  (click)="isPropertiesTabClicked()"
+                >
+                  <i class="material-icons">maps_home_work</i>
+                  My Properties
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card col-sm-3 inbox-user-profile">
+            <p>Inbox</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- ------------------------Overview-------------------------------------- -->
+          <!-- ------------------------Overview-------------------------------------- -->
+          <!-- ------------------------Overview-------------------------------------- -->
+          <div
+            class="card col-sm"
+            style="margin: 25px; padding: 35px"
+            *ngIf="isOverviewTabActive == true"
+          >
+            <span class="personal-info-title">All Personal Information</span>
+            <div class="row" style="margin-top: 20px">
+              <div
+                class="col-xs"
+                style="margin-right: 120px; margin-left: 25px"
+              >
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">account_circle</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ full_name }}</p>
+                    <p class="info-card-little-type">Passport Name</p>
+                  </div>
                 </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">mail</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ email }}</p>
+                    <p class="info-card-little-type">Mail Address</p>
+                  </div>
                 </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+              </div>
+
+              <div class="col-xs">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">smartphone</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">
+                      +971 {{ phone_number }}
+                    </p>
+                    <p class="info-card-little-type">UAE Personal Number</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">phone</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">04123134234</p>
+                    <p class="info-card-little-type">Home Number</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="row" style="margin-top: 0px">
+              <div class="col-xs" style="margin-right: 40px; margin-left: 25px">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">home</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ address }}</p>
+                    <p class="info-card-little-type">Home Address</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">location_pin</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">R1234214</p>
+                    <p class="info-card-little-type">P.O Box No</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">work</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">CEO</p>
+                    <p class="info-card-little-type">Employment</p>
+                  </div>
+                </div>
+                <!-- <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">account_circle</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ full_name }}</p>
+                    <p class="info-card-little-type">Passport Name</p>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ------------------------Doc Details-------------------------------------- -->
+          <!-- ------------------------Doc Details-------------------------------------- -->
+          <!-- ------------------------Doc Details-------------------------------------- -->
+
+          <div
+            class="card col-sm"
+            style="margin: 25px; padding: 35px"
+            *ngIf="isDocDetailsTabActive == true"
+          >
+            <span class="personal-info-title">Passport Details</span>
+            <div class="row" style="margin-top: 20px">
+              <div
+                class="col-xs"
+                style="margin-right: 120px; margin-left: 25px"
+              >
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">account_circle</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">AE123423982</p>
+                    <p class="info-card-little-type">Passport Number</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">mail</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ email }}</p>
+                    <p class="info-card-little-type">Mail Address</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">smartphone</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">
+                      +971 {{ phone_number }}
+                    </p>
+                    <p class="info-card-little-type">UAE Personal Number</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">phone</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">04123134234</p>
+                    <p class="info-card-little-type">Home Number</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+            <span class="personal-info-title" style="margin-top: 10px"
+              >Visa Details</span
+            >
+            <div class="row" style="margin-top: 0px">
+              <div class="col-xs" style="margin-right: 40px; margin-left: 25px">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">home</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ address }}</p>
+                    <p class="info-card-little-type">Home Address</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">location_pin</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">R1234214</p>
+                    <p class="info-card-little-type">P.O Box No</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">work</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">CEO</p>
+                    <p class="info-card-little-type">Employment</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <i class="material-icons">account_circle</i>
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">01/01/2024</p>
+                    <p class="info-card-little-type">Visa Expiry Date</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+
+          <!-- ------------------------My Properties-------------------------------------- -->
+          <!-- ------------------------My Properties-------------------------------------- -->
+          <!-- ------------------------My Properties-------------------------------------- -->
+
+          <div
+            class="card col-sm"
+            style="margin: 25px; padding: 35px"
+            *ngIf="isPropertiesTabActive == true"
+          >
+            <span class="personal-info-title">Properties</span>
+            <div class="card-deck" *ngFor="let property of properties">
+              <div class="card text-left property-card-user-profile">
+                <div class="col" style="margin: 20px; margin-left: 5px">
+                  <div class="row" style="margin-left: 1px; margin-right: 6px">
+                    <img
+                      class="property-img-user-profile"
+                      src="{{ property.image }}"
+                      alt=""
+                      style="pointer-events: none"
+                    />
+
+                    <div class="col-xs">
+                      <p class="property-id">3432987</p>
+                      <p class="property-name">{{ property.property_name }}</p>
+                      <p class="property-address">
+                        {{ property.property_address }}
+                      </p>
+                    </div>
+
+                    <!---------------- vertical divider --------------------->
+
+                    <div class="vl"></div>
+
+                    <div class="col-xs">
+                      <p class="property-status">Status</p>
+                      <ul style="margin-top: -10px">
+                        <li class="property-status-active">
+                          Active (8 months)
+                        </li>
+                        <li class="property-status-tours">Tours Enabled</li>
+                        <li class="property-status-payments">Payments</li>
+                      </ul>
+                    </div>
+
+                    <!---------------- vertical divider --------------------->
+
+                    <div class="vl" style="margin-left: 70px"></div>
+
+                    <div
+                      class="text-right"
+                      style="width: auto; margin-left: 20px"
+                    >
+                      <div class="col-xs" style="width: 150px">
+                        <div class="btn btn-property-card">Edit</div>
+                        <div class="btn btn-property-card">Actions</div>
+                        <div class="btn btn-property-card">Remove</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="property-card-horizontal-divider" />
+
+                  <div class="row" style="height: 5px">
+                    <p class="property-card-footer-p">
+                      Uploaded on: 01/02/2022 9:23 AM
+                    </p>
+                    <p class="property-card-footer-p" style="margin-left: 50px">
+                      Last Updated on: 12/11/2022 9:23 AM
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div
+            class="card col-sm-3 newsLetter-user-profile"
+            style="height: 400px"
+          >
+            <p>News Letter</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>

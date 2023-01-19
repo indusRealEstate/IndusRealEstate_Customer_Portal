@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
@@ -14,10 +15,19 @@ $data = file_get_contents("php://input");
 if ($data != null) {
     $decodedData = json_decode($data, true);
 
-    $stmt = $dbase->execute("INSERT INTO `user`(`id`, `auth_type`,`username`, `password`, `firstname`, `lastname`, `token`) 
-                             VALUES ('{$decodedData["id"]}','{$decodedData["auth_type"]}','{$decodedData["username"]}','{$decodedData["password"]}','{$decodedData["firstname"]}',
-                            '{$decodedData["lastname"]}','{$decodedData["token"]}')");
+    $stmt = $dbase->execute("INSERT INTO user
+                                          (`id`,
+                                           `auth_type`,
+                                           `username`,
+                                           `password`,
+                                           `firstname`,
+                                           `lastname`,
+                                           `token`)
+                             VALUES      ('{$decodedData["id"]}',
+                                           '{$decodedData["auth_type"]}',
+                                           '{$decodedData["username"]}',
+                                           '{$decodedData["password"]}',
+                                           '{$decodedData["firstname"]}',
+                                           '{$decodedData["lastname"]}',
+                                           '{$decodedData["token"]}')");
 }
-
-
-?>
