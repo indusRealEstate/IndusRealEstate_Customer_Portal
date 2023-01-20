@@ -102,8 +102,28 @@
       font-weight: 600;
       margin-top: 10px;
       box-shadow: 6px 6px 11px #3a3a3a, -6px -6px 11px #464646;
-
       border-radius: 18px;
+      transition: 0.3s ease-out;
+      &:hover {
+        transform: translateY(5px);
+        color: #d3ab33;
+
+        .add-property-card-svg-icon {
+          filter: invert(61%) sepia(37%) saturate(734%) hue-rotate(7deg)
+            brightness(104%) contrast(93%);
+          width: 25px;
+          margin-left: 60px;
+          margin-top: 15px;
+        }
+      }
+
+      .add-property-card-svg-icon {
+        width: 25px;
+        margin-left: 60px;
+        margin-top: 15px;
+        filter: invert(70%) sepia(5%) saturate(55%) hue-rotate(251deg)
+          brightness(89%) contrast(91%);
+      }
     }
 
     .add-property-card-text-bottom {

@@ -112,7 +112,7 @@ export class MyPropertiesComponent implements OnInit {
       setTimeout(() => {
         this.isLoading = false;
         sessionStorage.setItem("properties", JSON.stringify(this.properties));
-      }, 1000);
+      }, 800);
     }
   }
 }

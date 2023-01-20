@@ -67,20 +67,17 @@
         </div>
       </div>
     </div>
-    <div class="card property-add-card">
+    <div class="card property-add-card" *ngIf="properties.length != 0">
       <div class="text-center">
-        <div class="card add-property-inner-card">
+        <div
+          class="card add-property-inner-card"
+          routerLink="/add-property-form"
+          queryParams="{uid: user.id}"
+        >
           Add Properties
           <img
-            class="info-icon"
+            class="add-property-card-svg-icon"
             src="assets/img/svg/my-properties/add-square.svg"
-            style="
-              width: 25px;
-              margin-left: 60px;
-              margin-top: 15px;
-              filter: invert(70%) sepia(5%) saturate(55%) hue-rotate(251deg)
-                brightness(89%) contrast(91%);
-            "
           />
         </div>
         <p class="add-property-card-text-bottom">
