@@ -15,9 +15,16 @@
     margin: 20px;
     filter: brightness(0) invert(1);
     width: 35px;
+    transition: 0.3s ease-out;
   }
 
   padding-top: 20px;
+
+  &:hover {
+    .home-card-icon-main {
+      transform: scaleY(1.2) scaleX(1.2);
+    }
+  }
 
   .card-header {
     .homePage-more-info-link {
@@ -29,6 +36,13 @@
       font-size: 9px;
       filter: brightness(0) invert(1);
       width: 30px;
+      transition: 0.3s ease-out;
+    }
+
+    &:hover {
+      .arrow_icon_more_info {
+        transform: translateX(5px);
+      }
     }
   }
 
