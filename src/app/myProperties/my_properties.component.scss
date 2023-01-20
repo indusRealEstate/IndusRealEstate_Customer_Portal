@@ -23,7 +23,7 @@
 }
 
 .card-deck {
-  .card {
+  .property-listed-card {
     border-radius: 10px;
     cursor: pointer;
     width: 18rem;
@@ -79,6 +79,39 @@
   .card-footer {
     .text-muted {
       padding-left: 6px;
+    }
+  }
+
+  .property-add-card {
+    width: 290px !important;
+    height: 430px;
+    flex: none;
+    background-color: #404040;
+    justify-content: center;
+
+    .add-property-inner-card {
+      cursor: pointer;
+      background-color: #404040;
+      color: #9f9e9f;
+      margin: 0px;
+      height: 120px;
+      width: 165px;
+      margin-left: 63px;
+      font-size: 20px;
+      padding: 10px;
+      font-weight: 600;
+      margin-top: 10px;
+      box-shadow: 6px 6px 11px #3a3a3a, -6px -6px 11px #464646;
+
+      border-radius: 18px;
+    }
+
+    .add-property-card-text-bottom {
+      color: #9f9e9f;
+      padding-top: 30px;
+      margin-left: 30px;
+      margin-right: 30px;
+      margin-bottom: -59px;
     }
   }
 }
