@@ -15,7 +15,13 @@
                     src="{{ userProfilePic }}"
                     alt="avatar"
                     class="rounded-circle img-fluid"
-                    style="width: 110px; pointer-events: none"
+                    style="
+                      min-height: 110px;
+                      min-width: 110px;
+                      max-width: 110px;
+                      max-height: 110px;
+                      pointer-events: none;
+                    "
                   />
                   <div
                     class="change-img-btn"
@@ -316,165 +322,165 @@
           <!-- ------------------------Doc Details-------------------------------------- -->
 
           <div
-          class="card col-sm"
-          style="margin: 25px; padding: 35px"
-          *ngIf="isDocDetailsTabActive == true"
-        >
-          <span class="personal-info-title">Passport Details</span>
-          <div class="row" style="margin-top: 20px">
-            <div
-              class="col-xs"
-              style="margin-right: 120px; margin-left: 25px"
-            >
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/user.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 13px;
-                      width: 20px;
-                    "
-                  />
-                </div>
+            class="card col-sm"
+            style="margin: 25px; padding: 35px"
+            *ngIf="isDocDetailsTabActive == true"
+          >
+            <span class="personal-info-title">Passport Details</span>
+            <div class="row" style="margin-top: 20px">
+              <div
+                class="col-xs"
+                style="margin-right: 120px; margin-left: 25px"
+              >
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/user.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 13px;
+                        width: 20px;
+                      "
+                    />
+                  </div>
 
-                <div class="col-xs">
-                  <p class="info-card-little-content">{{ full_name }}</p>
-                  <p class="info-card-little-type">Passport Name</p>
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ full_name }}</p>
+                    <p class="info-card-little-type">Passport Name</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/directbox-notif.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 13px;
+                        width: 20px;
+                      "
+                    />
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ email }}</p>
+                    <p class="info-card-little-type">Mail Address</p>
+                  </div>
                 </div>
               </div>
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/directbox-notif.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 13px;
-                      width: 20px;
-                    "
-                  />
-                </div>
 
-                <div class="col-xs">
-                  <p class="info-card-little-content">{{ email }}</p>
-                  <p class="info-card-little-type">Mail Address</p>
-                </div>
-              </div>
-            </div>
+              <div class="col-xs">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/mobile.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 15px;
+                        width: 15px;
+                      "
+                    />
+                  </div>
 
-            <div class="col-xs">
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/mobile.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 15px;
-                      width: 15px;
-                    "
-                  />
+                  <div class="col-xs">
+                    <p class="info-card-little-content">
+                      +971 {{ phone_number }}
+                    </p>
+                    <p class="info-card-little-type">UAE Personal Number</p>
+                  </div>
                 </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/call.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 13px;
+                        width: 20px;
+                      "
+                    />
+                  </div>
 
-                <div class="col-xs">
-                  <p class="info-card-little-content">
-                    +971 {{ phone_number }}
-                  </p>
-                  <p class="info-card-little-type">UAE Personal Number</p>
-                </div>
-              </div>
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/call.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 13px;
-                      width: 20px;
-                    "
-                  />
-                </div>
-
-                <div class="col-xs">
-                  <p class="info-card-little-content">04123134234</p>
-                  <p class="info-card-little-type">Home Number</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <hr />
-          <span class="personal-info-title">Visa Details</span>
-          <div class="row" style="margin-top: 0px">
-            <div class="col-xs" style="margin-right: 40px; margin-left: 25px">
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/house.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 13px;
-                      width: 20px;
-                    "
-                  />
-                </div>
-
-                <div class="col-xs">
-                  <p class="info-card-little-content">{{ address }}</p>
-                  <p class="info-card-little-type">Home Address</p>
-                </div>
-              </div>
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/location.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 13px;
-                      width: 20px;
-                    "
-                  />
-                </div>
-
-                <div class="col-xs">
-                  <p class="info-card-little-content">R1234214</p>
-                  <p class="info-card-little-type">P.O Box No</p>
+                  <div class="col-xs">
+                    <p class="info-card-little-content">04123134234</p>
+                    <p class="info-card-little-type">Home Number</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xs">
-              <div class="row" style="margin: 20px">
-                <div class="info-card-little">
-                  <img
-                    src="assets/img/svg/user-profile/briefcase.svg"
-                    alt=""
-                    style="
-                      filter: invert(52%) sepia(0%) saturate(1013%)
-                        hue-rotate(146deg) brightness(96%) contrast(89%);
-                      margin: 13px;
-                      width: 20px;
-                    "
-                  />
-                </div>
+            <hr />
+            <span class="personal-info-title">Visa Details</span>
+            <div class="row" style="margin-top: 0px">
+              <div class="col-xs" style="margin-right: 40px; margin-left: 25px">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/house.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 13px;
+                        width: 20px;
+                      "
+                    />
+                  </div>
 
-                <div class="col-xs">
-                  <p class="info-card-little-content">CEO</p>
-                  <p class="info-card-little-type">Employment</p>
+                  <div class="col-xs">
+                    <p class="info-card-little-content">{{ address }}</p>
+                    <p class="info-card-little-type">Home Address</p>
+                  </div>
+                </div>
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/location.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 13px;
+                        width: 20px;
+                      "
+                    />
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">R1234214</p>
+                    <p class="info-card-little-type">P.O Box No</p>
+                  </div>
                 </div>
               </div>
-              <!-- <div class="row" style="margin: 20px">
+
+              <div class="col-xs">
+                <div class="row" style="margin: 20px">
+                  <div class="info-card-little">
+                    <img
+                      src="assets/img/svg/user-profile/briefcase.svg"
+                      alt=""
+                      style="
+                        filter: invert(52%) sepia(0%) saturate(1013%)
+                          hue-rotate(146deg) brightness(96%) contrast(89%);
+                        margin: 13px;
+                        width: 20px;
+                      "
+                    />
+                  </div>
+
+                  <div class="col-xs">
+                    <p class="info-card-little-content">CEO</p>
+                    <p class="info-card-little-type">Employment</p>
+                  </div>
+                </div>
+                <!-- <div class="row" style="margin: 20px">
                 <div class="info-card-little">
                   <i class="material-icons">account_circle</i>
                 </div>
@@ -484,9 +490,9 @@
                   <p class="info-card-little-type">Passport Name</p>
                 </div>
               </div> -->
+              </div>
             </div>
           </div>
-        </div>
 
           <!-- ------------------------My Properties-------------------------------------- -->
           <!-- ------------------------My Properties-------------------------------------- -->

@@ -16,6 +16,11 @@
   font-weight: 500;
   color: #d3ab33;
 }
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
 
 .card-deck {
   .card {
@@ -31,8 +36,11 @@
     }
 
     .info-icon {
-      color: #d3ab33;
-      padding-left: 5px;
+      filter: invert(62%) sepia(67%) saturate(434%) hue-rotate(7deg)
+        brightness(96%) contrast(92%);
+      margin-left: 5px;
+      width: 20px;
+      margin-top: -2px;
     }
   }
 
@@ -60,7 +68,10 @@
       color: white;
 
       .info-icon {
-        color: white;
+        filter: brightness(0) invert(1);
+        margin-left: 5px;
+        width: 20px;
+        margin-top: -2px;
       }
     }
   }
