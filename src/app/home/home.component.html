@@ -1,148 +1,199 @@
 <div class="main-content home-bg">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header ">
-                        <!-- <div class="card-icon home-card-icons">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header">
+            <!-- <div class="card-icon home-card-icons">
                             <i class="material-icons ">article</i>
                         </div> -->
-                        <h3 class="card-title">01</h3>
-                        <p class="card-heading">My Requests</p>
-                        <tr>
-                            <td>
-                                <a routerLink="/my-requests" queryParams="{uid: user.id}" class="homePage-more-info-link">More info</a>
-                            </td>
-                            <td>
-                                <i class="material-icons arrow_icon_more_info">arrow_forward_ios</i>
-                            </td>
-                        </tr>
+            <h3 class="card-title">01</h3>
+            <p class="card-heading">My Requests</p>
+            <tr>
+              <td>
+                <a
+                  routerLink="/my-requests"
+                  queryParams="{uid: user.id}"
+                  class="homePage-more-info-link"
+                  >More info</a
+                >
+              </td>
+              <td>
+                <img
+                  class="arrow_icon_more_info"
+                  src="assets/img/svg/home-page/arrow-right-1.svg"
+                  alt=""
+                />
+              </td>
+            </tr>
+          </div>
+          <img
+            class="home-card-icon-main"
+            src="assets/img/svg/home-page/note-2.svg"
+            alt=""
+          />
 
-
-                    </div>
-                    <i class="material-icons home-card-icon-main">article</i>
-                    <!-- <div class="card-footer">
+          <!-- <div class="card-footer">
                         <div class="stats">
                             <a href="javascript:void(0)">More info</a>
                         </div>
                     </div> -->
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isLandlord">
-                <div class="card card-stats">
-                    <div class="card-header card-header ">
-                        <!-- <div class="card-icon home-card-icons">
-                            <i class="material-icons ">article</i>
-                        </div> -->
-                        <h3 class="card-title">01</h3>
-                        <p class="card-heading">My Properties</p>
-                        <tr>
-                            <td>
-                                <a routerLink="/my-properties" queryParams="{uid: user.id}" class="homePage-more-info-link">More info</a>
-                            </td>
-                            <td>
-                                <i class="material-icons arrow_icon_more_info">arrow_forward_ios</i>
-                            </td>
-                        </tr>
-
-                    </div>
-                    <i class="material-icons home-card-icon-main">maps_home_work</i>
-                    <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header ">
-                        <!-- <div class="card-icon home-card-icons">
-                            <i class="material-icons ">article</i>
-                        </div> -->
-                        <h3 class="card-title">01</h3>
-                        <p class="card-heading">Upcoming Payments</p>
-                        <tr>
-                            <td>
-                                <a routerLink="/reports" queryParams="{uid: user.id}" class="homePage-more-info-link">More info</a>
-                            </td>
-                            <td>
-                                <i class="material-icons arrow_icon_more_info">arrow_forward_ios</i>
-                            </td>
-                        </tr>
-
-                    </div>
-                    <i class="material-icons home-card-icon-main">payment</i>
-                    <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header ">
-                        <!-- <div class="card-icon home-card-icons">
-                            <i class="material-icons ">article</i>
-                        </div> -->
-                        <h3 class="card-title">01</h3>
-                        <p class="card-heading">Total Appointment</p>
-                        <tr>
-                            <td>
-                                <a routerLink="/appointments" queryParams="{uid: user.id}" class="homePage-more-info-link">More info</a>
-                            </td>
-                            <td>
-                                <i class="material-icons arrow_icon_more_info">arrow_forward_ios</i>
-                            </td>
-                        </tr>
-
-                    </div>
-                    <i class="material-icons home-card-icon-main">calendar_month</i>
-                    <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
         </div>
-        <div class="col-md-12">
-            <div class="card card-plain card-recent-happenings">
-                <div class="card-header card-recent-happenings-head">
-                    <tr>
-                        <td>
-                            <i class="material-icons recent-happening-icon">view_list</i>
-                        </td>
-                        <td>
-                            <h4 class="card-title mt-0 tableList-title"> Recent Happenings</h4>
-                        </td>
-                    </tr>
-
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-
-                            <tbody>
-                                <tr *ngFor="let e of recentHeppenings" class="recent-happenings-home">
-                                    <!-- <td>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isLandlord">
+        <div class="card card-stats">
+          <div class="card-header card-header">
+            <!-- <div class="card-icon home-card-icons">
+                            <i class="material-icons ">article</i>
+                        </div> -->
+            <h3 class="card-title">01</h3>
+            <p class="card-heading">My Properties</p>
+            <tr>
+              <td>
+                <a
+                  routerLink="/my-properties"
+                  queryParams="{uid: user.id}"
+                  class="homePage-more-info-link"
+                  >More info</a
+                >
+              </td>
+              <td>
+                <img
+                  class="arrow_icon_more_info"
+                  src="assets/img/svg/home-page/arrow-right-1.svg"
+                  alt=""
+                />
+              </td>
+            </tr>
+          </div>
+          <img
+            class="home-card-icon-main"
+            src="assets/img/svg/home-page/building-4.svg"
+            alt=""
+          />
+          <!-- <div class="card-footer">
+                        <div class="stats">
+                            <a href="javascript:void(0)">More info</a>
+                        </div>
+                    </div> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header">
+            <!-- <div class="card-icon home-card-icons">
+                            <i class="material-icons ">article</i>
+                        </div> -->
+            <h3 class="card-title">01</h3>
+            <p class="card-heading">Upcoming Payments</p>
+            <tr>
+              <td>
+                <a
+                  routerLink="/reports"
+                  queryParams="{uid: user.id}"
+                  class="homePage-more-info-link"
+                  >More info</a
+                >
+              </td>
+              <td>
+                <img
+                  class="arrow_icon_more_info"
+                  src="assets/img/svg/home-page/arrow-right-1.svg"
+                  alt=""
+                />
+              </td>
+            </tr>
+          </div>
+          <img
+            class="home-card-icon-main"
+            src="assets/img/svg/home-page/card-pos.svg"
+            alt=""
+          />
+          <!-- <div class="card-footer">
+                        <div class="stats">
+                            <a href="javascript:void(0)">More info</a>
+                        </div>
+                    </div> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header">
+            <!-- <div class="card-icon home-card-icons">
+                            <i class="material-icons ">article</i>
+                        </div> -->
+            <h3 class="card-title">01</h3>
+            <p class="card-heading">Total Appointment</p>
+            <tr>
+              <td>
+                <a
+                  routerLink="/appointments"
+                  queryParams="{uid: user.id}"
+                  class="homePage-more-info-link"
+                  >More info</a
+                >
+              </td>
+              <td>
+                <img
+                  class="arrow_icon_more_info"
+                  src="assets/img/svg/home-page/arrow-right-1.svg"
+                  alt=""
+                />
+              </td>
+            </tr>
+          </div>
+          <img
+            class="home-card-icon-main"
+            src="assets/img/svg/home-page/calendar.svg"
+            alt=""
+          />
+          <!-- <div class="card-footer">
+                        <div class="stats">
+                            <a href="javascript:void(0)">More info</a>
+                        </div>
+                    </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card card-plain card-recent-happenings">
+        <div class="card-header card-recent-happenings-head">
+          <tr>
+            <td>
+              <img
+                class="recent-happening-icon"
+                src="assets/img/svg/home-page/programming-arrows.svg"
+                alt=""
+              />
+            </td>
+            <td>
+              <h4 class="card-title mt-0 tableList-title">Recent Happenings</h4>
+            </td>
+          </tr>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <tbody>
+                <tr
+                  *ngFor="let e of recentHeppenings"
+                  class="recent-happenings-home"
+                >
+                  <!-- <td>
                                         {{e["user_id"]}}
                                     </td> -->
-                                    <td>
-                                        {{e["content"]}}
-                                    </td>
-                                    <td>
-                                        {{e["date"]}}
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                  <td>
+                    {{ e["content"] }}
+                  </td>
+                  <td>
+                    {{ e["date"] }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        
+      </div>
     </div>
+  </div>
 </div>

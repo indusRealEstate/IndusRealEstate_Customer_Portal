@@ -14,23 +14,43 @@ declare interface RouteInfo {
 }
 
 export const HOMEROUTE: RouteInfo[] = [
-  { path: "/home", title: "Home", icon: "home", class: "" },
+  {
+    path: "/home",
+    title: "Home",
+    icon: "assets/img/svg/sidebar/home.svg",
+    class: "",
+  },
   {
     path: "/my-properties",
     title: "My Properties",
-    icon: "maps_home_work",
+    icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
 ];
 
 export const ROUTES: RouteInfo[] = [
-  { path: "/my-requests", title: "My Requests", icon: "list_alt", class: "" },
-  { path: "/new-payment", title: "Payment", icon: "payments", class: "" },
-  { path: "/reports", title: "Reports", icon: "notes", class: "" },
+  {
+    path: "/my-requests",
+    title: "My Requests",
+    icon: "assets/img/svg/sidebar/menu.svg",
+    class: "",
+  },
+  {
+    path: "/new-payment",
+    title: "Payment",
+    icon: "assets/img/svg/sidebar/empty-wallet.svg",
+    class: "",
+  },
+  {
+    path: "/reports",
+    title: "Reports",
+    icon: "assets/img/svg/sidebar/document-filter.svg",
+    class: "",
+  },
   {
     path: "/appointments",
     title: "Appointments",
-    icon: "calendar_month",
+    icon: "assets/img/svg/sidebar/menu-board.svg",
     class: "",
   },
 ];

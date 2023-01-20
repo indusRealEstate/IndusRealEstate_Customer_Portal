@@ -1,16 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
 .navbar {
   color: #2b333e !important;
   background-image: linear-gradient(
       to bottom,
-      rgba(243, 243, 243, 0.797) 50%,
-      rgba(243, 243, 243, 0.797) 80%
+      rgb(243 243 243 / 89%) 50%,
+      rgb(243 243 243 / 90%) 80%
     ),
     url("../../../assets/img/bg/navbar_bg.jfif") !important;
   box-shadow: 0 3px 3px 3px rgba(107, 107, 107, 0.048) !important;
 
   .navbar-brand {
     font-size: 20px !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
+  }
+
+  .navbar-svg-icons {
+    filter: blur(3px);
+    filter: grayscale(1);
+    filter: saturate(2.2);
+
+    filter: none;
   }
 }
 
@@ -51,11 +65,21 @@
     &:hover {
       background-color: white;
       color: #d3ab33;
+
+      .navbar-svg-icon-logout {
+        filter: invert(66%) sepia(37%) saturate(772%) hue-rotate(7deg)
+          brightness(97%) contrast(88%);
+        width: 20px;
+        margin-left: -3px;
+        margin-right: 2px;
+      }
     }
 
-    .profile-dropdown-btn-icon {
-      font-size: 15px;
-      padding-right: 5px;
+    .navbar-svg-icon-logout {
+      filter: brightness(0) invert(1);
+      width: 20px;
+      margin-left: -3px;
+      margin-right: 2px;
     }
   }
 }

@@ -50,17 +50,19 @@
       [ngClass]="isPCMenu() ? 'services-Menu-pc' : 'services-hiddenMenu-mobile'"
     >
       <a class="nav-link">
-        <i class="material-icons dropdown-services-icon">assignment</i>
-        <tr>
-          <td>
-            <button class="dropdown-services-btn">Services</button>
-          </td>
-          <td>
-            <i class="material-icons service-dropdown-arrow-icon"
-              >keyboard_arrow_down</i
-            >
-          </td>
-        </tr>
+        <div class="row">
+          <img
+            class="sidebar-dropdown-icons"
+            src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
+            alt="hello"
+          />
+          <button class="dropdown-services-btn">Services</button>
+          <img
+            class="sidebar-dropdown-icon-arrow"
+            src="assets/img/svg/home-page/arrow-down.svg"
+            alt="hello"
+          />
+        </div>
       </a>
     </div>
   </div>
@@ -173,17 +175,19 @@
       "
     >
       <a class="nav-link">
-        <i class="material-icons dropdown-myDocuments-icon">folder_copy</i>
-        <tr>
-          <td>
-            <button class="dropdown-myDocuments-btn">My Documents</button>
-          </td>
-          <td>
-            <i class="material-icons myDocuments-dropdown-arrow-icon"
-              >keyboard_arrow_down</i
-            >
-          </td>
-        </tr>
+        <div class="row">
+          <img
+            class="sidebar-dropdown-icons"
+            src="assets/img/svg/home-page/note-2.svg"
+            alt="hello"
+          />
+          <button class="dropdown-myDocuments-btn">My Documents</button>
+          <img
+            class="sidebar-dropdown-icon-arrow"
+            src="assets/img/svg/home-page/arrow-down.svg"
+            alt="hello"
+          />
+        </div>
       </a>
     </div>
   </div>

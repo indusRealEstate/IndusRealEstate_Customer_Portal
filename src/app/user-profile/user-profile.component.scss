@@ -1,3 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
 .user-profile-wrap {
   .property-card-user-profile {
     height: auto;
@@ -159,8 +165,8 @@
   .user-profile-top-card {
     background-image: linear-gradient(
         to bottom,
-        rgb(223 221 221 / 90%) 50%,
-        rgb(223 221 221 / 90%) 50%
+        rgb(243 243 243 / 89%) 50%,
+        rgb(243 243 243 / 90%) 80%
       ),
       url("../../assets/img/bg/navbar_bg.jfif") !important;
 
@@ -225,8 +231,12 @@
       color: gray;
       background-color: white;
 
-      i {
+      .user-profile-tab-svg {
         padding-right: 8px;
+        filter: invert(52%) sepia(0%) saturate(1013%) hue-rotate(146deg)
+          brightness(96%) contrast(89%);
+        width: 25px;
+        margin-top: -4px;
       }
     }
 
@@ -238,8 +248,11 @@
       background-color: #d3ab33;
       color: white;
 
-      i {
+      .user-profile-tab-svg {
         padding-right: 8px;
+        filter: brightness(0) invert(1);
+        width: 25px;
+        margin-top: -4px;
       }
     }
   }
