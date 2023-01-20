@@ -15,6 +15,7 @@ export class MyPropertiesComponent implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
   properties: Property[] = [];
+  mouseEnterAddPropertyCard: boolean = false;
 
   constructor(
     private apiService: ApiService,
