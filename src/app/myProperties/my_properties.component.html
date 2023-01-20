@@ -9,7 +9,7 @@
   </div>
   <div class="card-deck" style="margin: 20px">
     <div *ngFor="let property of properties">
-      <div class="card">
+      <div class="card property-listed-card">
         <img
           *ngIf="property.image != ''"
           class="card-img-top"
@@ -65,6 +65,24 @@
         <div class="card-footer">
           <small class="text-muted">Last updated 3 mins ago</small>
         </div>
+      </div>
+    </div>
+    <div class="card property-add-card" *ngIf="properties.length != 0">
+      <div class="text-center">
+        <div
+          class="card add-property-inner-card"
+          routerLink="/add-property-form"
+          queryParams="{uid: user.id}"
+        >
+          Add Properties
+          <img
+            class="add-property-card-svg-icon"
+            src="assets/img/svg/my-properties/add-square.svg"
+          />
+        </div>
+        <p class="add-property-card-text-bottom">
+          List more of your properties through our Property Management
+        </p>
       </div>
     </div>
   </div>

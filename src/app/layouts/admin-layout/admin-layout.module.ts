@@ -100,6 +100,7 @@ import { Tenant_Registration_Stepper_Fifth } from "app/indus_services/facility_m
 import { Tenant_Registration_Stepper_Sixth } from "app/indus_services/facility_management/tenant_registration/components/stepper_06/tenant_registration-sixth";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
+import { AddPropertyForm } from "app/add-property-form/add_property_from";
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -169,6 +170,7 @@ import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found
     AppointmentsComponent,
     DocumentsComponent,
     PageNotFoundComponent,
+    AddPropertyForm,
 
     ModalComponent,
     ModalComponentDate,
