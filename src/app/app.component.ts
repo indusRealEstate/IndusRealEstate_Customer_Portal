@@ -33,6 +33,7 @@ export class AppComponent {
       if (now - setupTime > hours * 60 * 60 * 1000) {
         console.log("cleared now");
         localStorage.clear();
+        sessionStorage.clear();
         localStorage.setItem("setupTime", JSON.stringify(now));
 
         window.location.replace("/login");
