@@ -1,0 +1,24 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
+.footer {
+  background-color: #404040;
+  padding: 5px !important;
+  border-top: 25px solid rgb(238 238 238) !important;
+
+  .contact-us-link-footer {
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .right-reserved-text-footer {
+    color: white;
+    margin: 0px;
+    font-size: 12px;
+  }
+}
