@@ -12,6 +12,7 @@ export class AddPropertyForm implements OnInit {
   selectedReport: any = "--None--";
   selectedDateRange: any = "--None--";
   isUserSignedIn: boolean = false;
+  textareaValue: any = "hello";
 
   constructor(
     private apiService: ApiService,
@@ -34,9 +35,7 @@ export class AddPropertyForm implements OnInit {
         }
       });
     } else {
-      router.navigate([`/home`], {
-        queryParams: { uid: user[0]["id"] },
-      });
+      router.navigate([`/404`]);
     }
   }
 

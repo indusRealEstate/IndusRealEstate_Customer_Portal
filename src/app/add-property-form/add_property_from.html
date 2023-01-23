@@ -28,6 +28,582 @@
       <div class="card-body">
         <p class="card-body-title">PROPERTY DETAILS</p>
         <hr class="card-divider" />
+        <p class="grey-text-form">
+          Please Enter every detail correctly and according to the following
+        </p>
+        <div class="row" style="margin-left: 0px; margin-top: 10px">
+          <div class="row" style="margin-left: 0px">
+            <p class="grey-text-form">For Rent</p>
+
+            <ngx-checkbox
+              [iconClass]="'fas fa-check'"
+              [focusClass]="'custom-focus'"
+            >
+            </ngx-checkbox>
+          </div>
+          <div class="row" style="margin-left: 50px">
+            <p class="grey-text-form">For Sale</p>
+
+            <ngx-checkbox
+              [iconClass]="'fas fa-check'"
+              [focusClass]="'custom-focus'"
+            >
+            </ngx-checkbox>
+          </div>
+
+          <div
+            class="col h-100 d-flex justify-content-end"
+            style="padding-right: 30px"
+          >
+            <div class="row" style="margin-left: 0px">
+              <p class="grey-text-form" style="margin-right: 30px">
+                Offer validity:
+              </p>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div
+            class="row"
+            style="margin-left: 0px; width: -webkit-fill-available"
+          >
+            <p class="grey-text-form" style="margin-right: 30px">
+              Furnish Details
+            </p>
+            <mat-form-field
+              style="width: -webkit-fill-available; margin-right: 30px"
+            >
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div class="col" style="padding: 0px">
+            <p class="grey-text-form" style="margin-right: 30px">
+              Tittle Deed Number
+            </p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <p class="grey-text-form" style="margin-right: 30px">
+              Project Name
+            </p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div class="col" style="padding: 0px">
+            <p class="grey-text-form" style="margin-right: 30px">Community</p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <p class="grey-text-form" style="margin-right: 30px">
+              Building Name
+            </p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div class="col" style="padding: 0px">
+            <p class="grey-text-form" style="margin-right: 30px">Size Area</p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <p class="grey-text-form" style="margin-right: 30px">
+              No. of Bedrooms
+            </p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div class="col" style="padding: 0px">
+            <p class="grey-text-form" style="margin-right: 30px">Unit Number</p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <p class="grey-text-form" style="margin-right: 30px">
+              No. of Carparking
+            </p>
+            <mat-form-field>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div
+            class="row"
+            style="margin-left: 0px; width: -webkit-fill-available"
+          >
+            <p class="grey-text-form" style="margin-right: 30px">
+              Addtional Information
+            </p>
+            <div
+              class="description-field"
+              style="
+                width: -webkit-fill-available;
+                margin-right: 30px;
+                border-radius: 5px;
+                height: 100px;
+              "
+            >
+              <textarea
+                matInput
+                style="
+                  height: 80px !important;
+                  padding: 10px !important;
+                  width: -webkit-fill-available !important;
+                "
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-left: 0px; margin-top: 80px">
+          <div class="row" style="margin-left: -10px">
+            <div class="col">
+              <p style="margin-bottom: 0px; font-weight: 600">
+                Upload Images of the Property:
+              </p>
+              <p class="grey-text-form">*Clear Images required*</p>
+            </div>
+
+            <button
+              style="
+                width: 65px;
+                height: 40px;
+                background-color: #d4aa32;
+                border-radius: 8px;
+                margin-top: 4px;
+                border: none;
+              "
+            >
+              <img
+                src="assets/img/svg/add-property-form/document-upload.svg"
+                style="
+                  filter: brightness(0) invert(1);
+                  width: 21px;
+                  margin-top: -4px;
+                "
+              />
+            </button>
+          </div>
+
+          <div
+            class="col h-100 d-flex justify-content-end"
+            style="margin-right: 15px"
+          >
+            <div class="row">
+              <div class="col">
+                <p style="margin-bottom: 0px; font-weight: 600">
+                  Upload Required Documents:
+                </p>
+                <p class="grey-text-form">Sale Deed, Possession letter, etc</p>
+              </div>
+
+              <button
+                style="
+                  width: 250px;
+                  height: 40px;
+                  background-color: #d4aa32;
+                  border-radius: 8px;
+                  margin-top: 4px;
+                  border: none;
+                "
+              >
+                <div class="row">
+                  <div style="width: 55px; margin-left: 9px">
+                    <img
+                      src="assets/img/svg/add-property-form/document-upload.svg"
+                      style="
+                        filter: brightness(0) invert(1);
+                        width: 21px;
+                        padding-top: 8px;
+                      "
+                    />
+                  </div>
+
+                  <div
+                    style="
+                      border-start-end-radius: 6px;
+                      background-color: #d9d9d9;
+                      color: #a3a3a3;
+                      height: 40px;
+                      margin-top: -1px;
+                      width: 195px;
+                      border-bottom-right-radius: 6px;
+                      padding-top: 7px;
+                    "
+                  >
+                    No attachments found
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <p class="card-body-title" style="margin-top: 65px">
+          MARKETING/ADVERTISING
+        </p>
+        <hr class="card-divider" />
+
+        <p class="grey-text-form">
+          Please Enter every detail correctly and according to the following
+        </p>
+
+        <div class="row" style="margin-left: 0px; margin-top: 35px">
+          <div class="col" style="padding: 0px">
+            <div class="row" style="margin-left: 0px">
+              <p class="grey-text-form">
+                Through Electronic, Media & Social Media
+              </p>
+
+              <ngx-checkbox
+                [iconClass]="'fas fa-check'"
+                [focusClass]="'custom-focus'"
+              >
+              </ngx-checkbox>
+            </div>
+            <div
+              class="description-field"
+              style="
+                width: -webkit-fill-available;
+                margin-right: 20px;
+                border-radius: 5px;
+                height: 100px;
+              "
+            >
+              <textarea
+                matInput
+                style="
+                  height: 80px !important;
+                  padding: 10px !important;
+                  width: -webkit-fill-available !important;
+                "
+              ></textarea>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row" style="margin-left: 0px">
+              <p class="grey-text-form">Through Hoardings, panaflex & Boards</p>
+
+              <ngx-checkbox
+                [iconClass]="'fas fa-check'"
+                [focusClass]="'custom-focus'"
+              >
+              </ngx-checkbox>
+            </div>
+            <div
+              class="description-field"
+              style="
+                width: -webkit-fill-available;
+                margin-left: 20px;
+                border-radius: 5px;
+                height: 100px;
+              "
+            >
+              <textarea
+                matInput
+                style="
+                  height: 80px !important;
+                  padding: 10px !important;
+                  width: -webkit-fill-available !important;
+                "
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-left: 0px; margin-top: 20px">
+          <div
+            class="row"
+            style="margin-left: 0px; width: -webkit-fill-available"
+          >
+            <div class="row" style="margin-left: 0px">
+              <p class="grey-text-form">Others</p>
+
+              <ngx-checkbox
+                [iconClass]="'fas fa-check'"
+                [focusClass]="'custom-focus'"
+              >
+              </ngx-checkbox>
+            </div>
+            <div
+              class="description-field"
+              style="
+                width: -webkit-fill-available;
+                margin-right: 30px;
+                border-radius: 5px;
+                height: 100px;
+              "
+            >
+              <textarea
+                matInput
+                style="
+                  height: 80px !important;
+                  padding: 10px !important;
+                  width: -webkit-fill-available !important;
+                "
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 50px">
+          <p class="grey-text-form" style="margin-left: 17px; max-width: 600px">
+            Both Parties are mutually agreed upon that First Party (The broker)
+            is authorize / allowed to advertise the said property
+          </p>
+
+          <div
+            class="col h-100 d-flex justify-content-end"
+            style="margin-right: 15px"
+          >
+            <div class="row" style="margin-left: 0px">
+              <p class="grey-text-form" style="margin-right: 30px">
+                Valid Until:
+              </p>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker2" />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <p class="card-body-title" style="margin-top: 65px">
+          SIGNATURE OF PARTIES
+        </p>
+        <hr class="card-divider" />
+
+        <div class="col d-flex justify-content-center">
+          <div class="row">
+            <div class="col">
+              <p class="grey-text-form">First Party (The Broker)</p>
+              <div
+                style="
+                  background-color: white;
+                  height: 130px;
+                  border-radius: 6px;
+                  width: 329px;
+                "
+              >
+                <img
+                  src="assets/img/logo/indus-logo.png"
+                  alt=""
+                  style="margin: 42px; margin-left: 140px"
+                />
+              </div>
+
+              <div class="row" style="margin-top: 20px">
+                <button
+                  style="
+                    margin-left: 15px;
+                    width: 100px;
+                    height: 40px;
+                    background-color: #343b44;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    margin-top: 4px;
+                  "
+                >
+                  Clear
+                </button>
+
+                <button
+                  style="
+                    width: 215px;
+                    height: 40px;
+                    background-color: #d4aa32;
+                    border-radius: 8px;
+                    margin-top: 4px;
+                    border: none;
+                    margin-left: 15px;
+                  "
+                >
+                  <div class="row">
+                    <div style="width: 55px; margin-left: 9px">
+                      <img
+                        src="assets/img/svg/add-property-form/document-upload.svg"
+                        style="
+                          filter: brightness(0) invert(1);
+                          width: 21px;
+                          padding-top: 8px;
+                        "
+                      />
+                    </div>
+
+                    <div
+                      style="
+                        border-start-end-radius: 8px;
+                        background-color: #343b44;
+                        color: #ffffff;
+                        height: 40px;
+                        margin-top: -1px;
+                        width: 160px;
+                        border-bottom-right-radius: 8px;
+                        padding-top: 7px;
+                      "
+                    >
+                      Upload Signature
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div
+              style="
+                border-right: 2px solid #a3a3a3;
+                margin-left: 100px;
+                margin-right: 100px;
+                height: 195px;
+                margin-top: 15px;
+                border-radius: 5px;
+              "
+            ></div>
+
+            <div class="col">
+              <p class="grey-text-form">
+                Second Party (Property Owner/Legal Rep)
+              </p>
+              <div
+                style="
+                  background-color: white;
+                  height: 130px;
+                  border-radius: 6px;
+                  width: 329px;
+                "
+              >
+                <p
+                  style="color: #a3a3a3; text-align: center; padding-top: 50px"
+                >
+                  Signing with E-Stamp
+                </p>
+              </div>
+
+              <div class="row" style="margin-top: 20px">
+                <button
+                  style="
+                    margin-left: 15px;
+                    width: 100px;
+                    height: 40px;
+                    background-color: #343b44;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    margin-top: 4px;
+                  "
+                >
+                  Clear
+                </button>
+
+                <button
+                  style="
+                    width: 215px;
+                    height: 40px;
+                    background-color: #d4aa32;
+                    border-radius: 8px;
+                    margin-top: 4px;
+                    border: none;
+                    margin-left: 15px;
+                  "
+                >
+                  <div class="row">
+                    <div style="width: 55px; margin-left: 9px">
+                      <img
+                        src="assets/img/svg/add-property-form/document-upload.svg"
+                        style="
+                          filter: brightness(0) invert(1);
+                          width: 21px;
+                          padding-top: 8px;
+                        "
+                      />
+                    </div>
+
+                    <div
+                      style="
+                        border-start-end-radius: 8px;
+                        background-color: #343b44;
+                        color: #ffffff;
+                        height: 40px;
+                        margin-top: -1px;
+                        width: 160px;
+                        border-bottom-right-radius: 8px;
+                        padding-top: 7px;
+                      "
+                    >
+                      Upload Signature
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="card-divider" style="margin-top: 40px" />
+
+        <div class="row" style="margin-top: 50px">
+          <p class="grey-text-form" style="margin-left: 17px; max-width: 600px">
+            By submitting this property I have agreed with the terms and
+            conditions and have followed every required documents to be uploaded
+          </p>
+
+          <div
+            class="col h-100 d-flex justify-content-end"
+            style="margin-right: 15px"
+          >
+            <button
+              class="btn"
+              style="
+                background-image: linear-gradient(
+                    to bottom,
+                    rgb(243 243 243 / 34%) 50%,
+                    rgb(243 243 243 / 32%) 80%
+                  ),
+                  url('assets/img/bg/navbar_bg.jfif');
+                background-size: cover;
+                width: 175px;
+                height: 55px;
+              "
+            >
+              <span style="color: #d4aa32; font-size: 17px; font-weight: 900"
+                >Submit</span
+              >
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
