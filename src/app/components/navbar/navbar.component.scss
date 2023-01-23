@@ -1,11 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
+
 * {
   font-family: "Montserrat";
 }
 
 .navbar {
-  color: #2b333e !important;
+  color: #2B333E !important;
   background-image: linear-gradient(
       to bottom,
       rgb(243 243 243 / 89%) 50%,
@@ -16,7 +17,7 @@
 
   .navbar-brand {
     font-size: 20px !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
   }
 
   .navbar-svg-icons {
