@@ -9,10 +9,13 @@ import { AuthenticationService } from "app/services/authentication.service";
   styleUrls: ["./add_property_from.scss"],
 })
 export class AddPropertyForm implements OnInit {
-  selectedReport: any = "--None--";
-  selectedDateRange: any = "--None--";
   isUserSignedIn: boolean = false;
   textareaValue: any = "hello";
+  propertyState: "sale" | "rent" = "rent";
+
+  marketingSocialMedia: boolean = false;
+  marketingBoards: boolean = false;
+  marketingOthers: boolean = false;
 
   constructor(
     private apiService: ApiService,

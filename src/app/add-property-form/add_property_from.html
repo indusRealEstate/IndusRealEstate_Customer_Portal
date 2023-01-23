@@ -35,20 +35,28 @@
           <div class="row" style="margin-left: 0px">
             <p class="grey-text-form">For Rent</p>
 
-            <ngx-checkbox
-              [iconClass]="'fas fa-check'"
-              [focusClass]="'custom-focus'"
+            <mat-radio-group
+              [(ngModel)]="propertyState"
+              style="margin-left: 15px"
             >
-            </ngx-checkbox>
+              <mat-radio-button
+                class="example-margin"
+                value="rent"
+              ></mat-radio-button>
+            </mat-radio-group>
           </div>
           <div class="row" style="margin-left: 50px">
             <p class="grey-text-form">For Sale</p>
 
-            <ngx-checkbox
-              [iconClass]="'fas fa-check'"
-              [focusClass]="'custom-focus'"
+            <mat-radio-group
+              [(ngModel)]="propertyState"
+              style="margin-left: 15px"
             >
-            </ngx-checkbox>
+              <mat-radio-button
+                class="example-margin"
+                value="sale"
+              ></mat-radio-button>
+            </mat-radio-group>
           </div>
 
           <div
@@ -283,11 +291,10 @@
                 Through Electronic, Media & Social Media
               </p>
 
-              <ngx-checkbox
-                [iconClass]="'fas fa-check'"
-                [focusClass]="'custom-focus'"
-              >
-              </ngx-checkbox>
+              <mat-checkbox
+                [(ngModel)]="marketingSocialMedia"
+                style="margin-left: 10px"
+              ></mat-checkbox>
             </div>
             <div
               class="description-field"
@@ -312,11 +319,10 @@
             <div class="row" style="margin-left: 0px">
               <p class="grey-text-form">Through Hoardings, panaflex & Boards</p>
 
-              <ngx-checkbox
-                [iconClass]="'fas fa-check'"
-                [focusClass]="'custom-focus'"
-              >
-              </ngx-checkbox>
+              <mat-checkbox
+                [(ngModel)]="marketingBoards"
+                style="margin-left: 10px"
+              ></mat-checkbox>
             </div>
             <div
               class="description-field"
@@ -347,11 +353,10 @@
             <div class="row" style="margin-left: 0px">
               <p class="grey-text-form">Others</p>
 
-              <ngx-checkbox
-                [iconClass]="'fas fa-check'"
-                [focusClass]="'custom-focus'"
-              >
-              </ngx-checkbox>
+              <mat-checkbox
+                [(ngModel)]="marketingOthers"
+                style="margin-left: 10px"
+              ></mat-checkbox>
             </div>
             <div
               class="description-field"
