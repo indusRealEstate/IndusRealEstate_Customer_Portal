@@ -82,6 +82,7 @@
       class="user-profile-logo-sidebar"
       routerLink="/user-profile"
       queryParams="{uid: user.id}"
+      style="text-align: -webkit-center"
     >
       <div>
         <img
@@ -90,12 +91,12 @@
           class="sidebar-card-avatar"
           src="{{ userProfilePic }}"
           alt="User Avatar"
-          style="pointer-events: none"
+          style="pointer-events: none; margin-left: 0px"
         />
         <ngx-skeleton-loader
           *ngIf="userProfileFetching == true"
           appearance="circle"
-          [theme]="{ width: '95px', height: '90px', left: '65px' }"
+          [theme]="{ width: '95px', height: '90px', left: '0px' }"
         >
         </ngx-skeleton-loader>
 
@@ -107,7 +108,9 @@
         </span>
       </div>
       <div>
-        <span class="sidebar-card-avatar-title">{{ user.firstname }}</span>
+        <span class="sidebar-card-avatar-title" style="padding-left: 0px">{{
+          user.firstname
+        }}</span>
       </div>
     </a>
     <div style="margin-top: 30px"></div>
