@@ -28,6 +28,7 @@ export class AdminLayoutComponent implements OnInit {
   private yScrollStack: number[] = [];
   isUserSignedIn: boolean = false;
   isLogoutProcessing: boolean = false;
+  notificationMessage: any;
 
   constructor(
     public location: Location,
@@ -39,6 +40,10 @@ export class AdminLayoutComponent implements OnInit {
     this.isUserSignOut();
     this.otherServices.isLogoutProcessing.subscribe((e) => {
       this.isLogoutProcessing = e;
+    });
+
+    this.otherServices.messages.subscribe((e) => {
+      this.notificationMessage = e[0];
     });
   }
 

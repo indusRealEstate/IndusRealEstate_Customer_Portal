@@ -13,6 +13,46 @@
     <app-navbar></app-navbar>
 
     <router-outlet (activate)="onActivate($event)"> </router-outlet>
+
+    <!-- success toast -->
+    <div
+      *ngIf="notificationMessage != null"
+      style="
+        position: fixed;
+        width: 70%;
+        background-color: #699d69;
+        height: 60px;
+        border-radius: 10px;
+        bottom: 50px;
+        color: white;
+        z-index: 100;
+        margin-left: 140px;
+      "
+    >
+      <div class="row" style="margin-left: 40px">
+        <img
+          src="assets/img/svg/admin-layout/tick-circle.svg"
+          style="filter: brightness(0) invert(1); width: 35px; margin-top: 2px"
+        />
+        <p
+          style="
+            margin-left: 25px;
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: 500;
+          "
+        >
+          {{ notificationMessage.message }} :
+        </p>
+        <p style="margin-left: 20px; margin-top: 15px">
+          {{ notificationMessage.description }}
+        </p>
+      </div>
+    </div>
+    
+    <!-- success toast end -->
+
+
     <app-footer></app-footer>
   </div>
   <div

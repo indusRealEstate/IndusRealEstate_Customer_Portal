@@ -111,6 +111,13 @@ export class ApiService {
       .pipe(catchError(this.handleError("addAppointments", [])));
   }
 
+  requestAddPropertyLandlord(data: any) {
+    const url = `${API_URL}/requestAddProperty.php?apikey=1`;
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("requestAddPropertyLandlord", [])));
+  }
+
   removeAppointment(data: any) {
     const url = `${API_URL}/removeAppointment.php?apikey=1`;
     return this.http
