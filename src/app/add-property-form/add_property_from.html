@@ -687,14 +687,17 @@
                     border-radius: 6px;
                     width: 329px;
                     text-align-last: center;
-                    padding: 15px;
                   "
                 >
                   <img
                     src="{{'data:image/png;base64,' + SecondPartySignature}}"
                     alt=""
                     *ngIf="SecondPartySignature != ''"
-                    style="max-width: 100px; max-height: 100px !important"
+                    style="
+                      max-width: 150px;
+                      max-height: 110px !important;
+                      margin-top: 15px;
+                    "
                   />
                   <p
                     *ngIf="SecondPartySignature == ''"

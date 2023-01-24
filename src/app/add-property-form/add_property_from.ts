@@ -187,19 +187,23 @@ export class AddPropertyForm implements OnInit {
         second_party_signature: this.SecondPartySignature,
       };
 
+      var encodedData = JSON.stringify(jsonData);
+
       try {
         setTimeout(() => {
           this.apiService
-            .requestAddPropertyLandlord(jsonData)
+            .requestAddPropertyLandlord(encodedData)
             .subscribe((e) => {
               this.isLoading = false;
-              this.otherServices.addMessage([
-                {
+
+              if (this.otherServices.gotError.value == false) {
+                this.otherServices.addMessage({
                   message: "Success",
                   description:
                     "The request to add property has been successfully sented",
-                },
-              ]);
+                });
+              }
+
               this.router.navigate(["/my-properties"], {
                 queryParams: { uid: user[0]["id"] },
               });

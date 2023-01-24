@@ -7,6 +7,7 @@ import {
 } from "@angular/common/http";
 import { catchError, tap, map } from "rxjs/operators";
 import { saveAs } from "file-saver";
+import { OtherServices } from "./other.service";
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -16,10 +17,20 @@ const API_URL = "http://127.0.0.1:8081/user";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private otherServices: OtherServices) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
+      this.otherServices.gotError.next(true);
+      this.otherServices.addMessage({
+        message: "Error",
+        description: "Oh No! Something went wrong.",
+      });
+
+      setTimeout(() => {
+        this.otherServices.clearMessage();
+      }, 8000);
+
       return of(result as T);
     };
   }

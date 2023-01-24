@@ -16,7 +16,7 @@
 
     <!-- success toast -->
     <div
-      *ngIf="notificationMessage != null"
+      *ngIf="successNotificationMessage != null"
       style="
         position: fixed;
         width: 70%;
@@ -42,16 +42,54 @@
             font-weight: 500;
           "
         >
-          {{ notificationMessage.message }} :
+          {{ successNotificationMessage.message }} :
         </p>
         <p style="margin-left: 20px; margin-top: 15px">
-          {{ notificationMessage.description }}
+          {{ successNotificationMessage.description }}
         </p>
       </div>
     </div>
-    
+
     <!-- success toast end -->
 
+    <!-- error toast -->
+
+    <div
+      *ngIf="errorNotificationMessage != null"
+      style="
+        position: fixed;
+        width: 70%;
+        background-color: #a14d50;
+        height: 60px;
+        border-radius: 10px;
+        bottom: 50px;
+        color: white;
+        z-index: 100;
+        margin-left: 140px;
+      "
+    >
+      <div class="row" style="margin-left: 40px">
+        <img
+          src="assets/img/svg/admin-layout/danger.svg"
+          style="filter: brightness(0) invert(1); width: 35px; margin-top: 1px"
+        />
+        <p
+          style="
+            margin-left: 25px;
+            margin-top: 16px;
+            font-size: 20px;
+            font-weight: 500;
+          "
+        >
+          {{ errorNotificationMessage.message }} :
+        </p>
+        <p style="margin-left: 20px; margin-top: 15px">
+          {{ errorNotificationMessage.description }}
+        </p>
+      </div>
+    </div>
+
+    <!-- error toast end-->
 
     <app-footer></app-footer>
   </div>

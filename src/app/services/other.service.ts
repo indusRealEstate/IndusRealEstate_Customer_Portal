@@ -29,13 +29,18 @@ export class OtherServices {
   public isProfilePicUpdated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  public messages: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public messages: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  public addMessage(data: any[]) {
+  public gotError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  public addMessage(data: any) {
     this.messages.next(data);
   }
 
   public clearMessage() {
-    this.messages.next([]);
+    this.gotError.next(false);
+    this.messages.next(null);
   }
 }
