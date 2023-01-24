@@ -89,7 +89,7 @@
   border-radius: 5px !important;
 }
 
-::ng-deep .mat-checkbox-checked .mat-checkbox-background, 
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
   background-color: #d4aa32 !important;
   border-radius: 5px !important;
@@ -107,4 +107,25 @@
   margin-top: -8px !important;
   height: 40px !important;
   padding-left: 10px !important;
+  font-size: 17px !important;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-top: -3px !important;
+}
+
+::ng-deep .mat-datepicker-toggle-default-icon {
+  width: 20px !important;
+  margin-bottom: 5px !important;
+  color: #d4aa32 !important;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
