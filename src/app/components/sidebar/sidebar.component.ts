@@ -101,7 +101,17 @@ export class SidebarComponent implements OnInit {
     // this.serviceRoute = SERVICEROUTE.filter(menuItem => menuItem);
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
 
-    if (this.user.auth_type != "landlord") {
+    if (this.user.auth_type == "admin") {
+      this.homeRoute.pop();
+      this.homeRoute.push({
+        path: "/admin-requests",
+        title: "Requests",
+        icon: "assets/img/svg/sidebar/notification-status.svg",
+        class: "",
+      });
+
+      this.menuItems.length = 0;
+    } else if (this.user.auth_type == "tenant") {
       this.homeRoute.pop();
     }
   }

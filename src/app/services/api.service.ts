@@ -83,6 +83,15 @@ export class ApiService {
     );
   }
 
+  getUser(userId: any) {
+    const url = `${API_URL}/getUser.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  
   getUserDetails(userId: any) {
     const url = `${API_URL}/getUserDetails.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
