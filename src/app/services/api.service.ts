@@ -91,6 +91,15 @@ export class ApiService {
       })
     );
   }
+
+  getProperty(property_id: any) {
+    const url = `${API_URL}/getProperty.php?apikey=1`;
+    return this.http.post<any>(url, { propertyId: property_id }).pipe(
+      map((data) => {
+        return data[0];
+      })
+    );
+  }
   
   getUserDetails(userId: any) {
     const url = `${API_URL}/getUserDetails.php?apikey=1`;

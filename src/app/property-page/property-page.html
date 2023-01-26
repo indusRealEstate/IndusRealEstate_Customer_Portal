@@ -1,0 +1,231 @@
+<div class="main-content reports-bg">
+  <div class="container-fluid h-100 d-flex justify-content-center">
+    <span
+      *ngIf="isLoading == true"
+      class="spinner-border spinner-border-m mr-2"
+      style="position: absolute; top: 480px; left: 800px; color: #d4aa32"
+    >
+    </span>
+
+    <div class="card" *ngIf="isLoading == false">
+      <img
+        src="{{propertyImage}}"
+        class="card-img-top"
+        alt="image"
+        style="max-height: 480px; object-fit: cover; overflow: hidden"
+      />
+
+      <div
+        class="row"
+        style="
+          top: 420px;
+          position: absolute;
+          left: 15px;
+          background-color: #0000008c;
+          padding: 5px;
+          border-radius: 8px;
+          margin: 0;
+          padding-top: 2px;
+          padding-bottom: 2px;
+        "
+      >
+        <div class="btn floor-plan-btn">
+          <div class="row" style="margin: 0; width: max-content">
+            <img src="assets/img/svg/property-page/pen-tool.svg" />
+            <p>Floor Plan</p>
+          </div>
+        </div>
+        <div class="btn edit-property-btn">
+          <div class="row" style="margin: 0; width: max-content">
+            <p>Edit</p>
+            <img src="assets/img/svg/property-page/edit.svg" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body" style="padding: 100px">
+        <div class="row">
+          <div class="col">
+            <div style="max-width: 500px">
+              <p style="color: #a3a3a3">Dubai Land, cluster area</p>
+              <h6
+                style="
+                  color: #404040;
+                  font-size: 40px;
+                  font-weight: 600;
+                  line-height: 1;
+                "
+              >
+                THE VILLAS MARCEDONA
+              </h6>
+              <p style="color: #d4aa32; font-size: 30px; margin-top: 20px">
+                AED 2,300,000
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <p style="color: #a3a3a3; margin-top: 20px">
+              Nor again is there anyone who loves or pursues or desires to
+              obtain pain of itself, because it is pain, but because
+              occasionally circumstances occur in which toil and pain can
+              procure him some great pleasure. To take a trivial example, which
+              of us ever undertakes
+            </p>
+          </div>
+        </div>
+        <div
+          class="row"
+          style="
+            margin-top: 50px;
+            margin-left: 0px;
+            margin-right: 0px;
+            justify-content: space-between;
+          "
+        >
+          <div class="row" style="margin-left: 0px; margin-right: 0px">
+            <img
+              src="assets/img/svg/property-page/floor-plan-icon.svg"
+              style="width: 55px"
+            />
+            <div class="col">
+              <p style="margin: 0; font-weight: 600">PROPERTY SIZE</p>
+              <p style="margin: 0; font-weight: 600">174,000 SQFT</p>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 0px">
+            <img
+              src="assets/img/svg/property-page/price-tag-us-dollar-icon.svg"
+              style="width: 25px"
+            />
+            <div class="col">
+              <p style="margin: 0; font-weight: 600">PRICE RANGE</p>
+              <p style="margin: 0; font-weight: 600">AED 500K- AED 900K</p>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 0px">
+            <img
+              src="assets/img/svg/property-page/property-icon.svg"
+              style="width: 50px"
+            />
+            <div class="col">
+              <p style="margin: 0; font-weight: 600">TYPE</p>
+              <p style="margin: 0; font-weight: 600">VILLA</p>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 0px">
+            <img
+              src="assets/img/svg/property-page/architecture-plan-icon.svg"
+              style="width: 55px"
+            />
+            <div class="col">
+              <p style="margin: 0; font-weight: 600">COMPLETION</p>
+              <p style="margin: 0; font-weight: 600">READY TO SELL</p>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 0px">
+            <img
+              src="assets/img/svg/property-page/kitchen-icon.svg"
+              style="width: 45px"
+            />
+            <div class="col">
+              <p style="margin: 0; font-weight: 600">FINISH TYPE</p>
+              <p style="margin: 0; font-weight: 600">FURNISHED</p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="row"
+          style="margin-top: 100px; margin-left: 0; margin-right: 0"
+        >
+
+
+
+
+
+
+          <div class="col">
+
+
+            
+          </div>
+
+
+
+
+
+
+
+
+          <div class="col">
+            <p style="color: #404040; font-size: 30px; font-weight: 600">
+              PROPERTY DETAILS
+            </p>
+            <div
+              class="row"
+              style="
+                margin-left: 0;
+                margin-right: 0;
+                margin-top: 40px;
+                justify-content: space-between;
+              "
+            >
+              <div class="col">
+                <div class="row">
+                  <p style="color: #a3a3a3">Community</p>
+                  <p
+                    style="margin-left: 15px; color: #404040; font-weight: 600"
+                  >
+                    Marcedona
+                  </p>
+                </div>
+                <div class="row">
+                  <p style="color: #a3a3a3">Project Name</p>
+                  <p
+                    style="margin-left: 15px; color: #404040; font-weight: 600"
+                  >
+                    Emirates Hills
+                  </p>
+                </div>
+                <div class="row">
+                  <p style="color: #a3a3a3">Ownership</p>
+                  <p
+                    style="margin-left: 15px; color: #404040; font-weight: 600"
+                  >
+                    Freehold
+                  </p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="row">
+                  <p style="color: #a3a3a3">Reference No</p>
+                  <p
+                    style="margin-left: 15px; color: #404040; font-weight: 600"
+                  >
+                    Indus-ax1-3213
+                  </p>
+                </div>
+                <div class="row">
+                  <p style="color: #a3a3a3">Purpose</p>
+                  <p
+                    style="margin-left: 15px; color: #404040; font-weight: 600"
+                  >
+                    For Sale
+                  </p>
+                </div>
+                <div class="row">
+                  <p style="color: #a3a3a3">Developer</p>
+                  <p
+                    style="margin-left: 15px; color: #404040; font-weight: 600"
+                  >
+                    Emaar
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

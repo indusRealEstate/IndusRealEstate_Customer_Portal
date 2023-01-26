@@ -9,7 +9,7 @@
   </div>
   <div class="card-deck" style="margin: 20px">
     <div *ngFor="let property of properties">
-      <div class="card property-listed-card">
+      <div class="card property-listed-card" (click)="goToPropertyPage(property)">
         <img
           *ngIf="property.image != ''"
           class="card-img-top"

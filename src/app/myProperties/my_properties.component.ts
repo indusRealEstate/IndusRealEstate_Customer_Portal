@@ -79,6 +79,12 @@ export class MyPropertiesComponent implements OnInit {
     trigger.closeMenu();
   }
 
+  goToPropertyPage(property: any) {
+    this.router.navigate(["/property-page"], {
+      queryParams: { propertyId: property["property_id"] },
+    });
+  }
+
   getProperties() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
