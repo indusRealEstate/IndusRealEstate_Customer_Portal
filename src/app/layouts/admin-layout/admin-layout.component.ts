@@ -28,6 +28,8 @@ export class AdminLayoutComponent implements OnInit {
   private yScrollStack: number[] = [];
   isUserSignedIn: boolean = false;
   isLogoutProcessing: boolean = false;
+  successNotificationMessage: any;
+  errorNotificationMessage: any;
 
   constructor(
     public location: Location,
@@ -39,6 +41,19 @@ export class AdminLayoutComponent implements OnInit {
     this.isUserSignOut();
     this.otherServices.isLogoutProcessing.subscribe((e) => {
       this.isLogoutProcessing = e;
+    });
+
+    this.otherServices.messages.subscribe((e) => {
+      if (e != null) {
+        if (e["message"] == "Error") {
+          this.errorNotificationMessage = e;
+        } else {
+          this.successNotificationMessage = e;
+        }
+      } else {
+        this.errorNotificationMessage = null;
+        this.successNotificationMessage = null;
+      }
     });
   }
 

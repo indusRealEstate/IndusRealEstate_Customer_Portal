@@ -73,6 +73,8 @@
           class="card add-property-inner-card"
           routerLink="/add-property-form"
           queryParams="{uid: user.id}"
+          (mouseenter)="mouseEnterAddPropertyCard = true"
+          (mouseleave)="mouseEnterAddPropertyCard = false"
         >
           Add Properties
           <img
@@ -80,7 +82,13 @@
             src="assets/img/svg/my-properties/add-square.svg"
           />
         </div>
-        <p class="add-property-card-text-bottom">
+        <p
+          [ngClass]="
+            mouseEnterAddPropertyCard == true
+              ? 'add-property-card-text-bottom-mouseEnter'
+              : 'add-property-card-text-bottom-mouseLeave'
+          "
+        >
           List more of your properties through our Property Management
         </p>
       </div>

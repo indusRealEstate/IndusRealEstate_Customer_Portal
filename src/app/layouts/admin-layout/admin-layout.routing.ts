@@ -17,6 +17,7 @@ import { Tenant_Registration } from "app/indus_services/facility_management/tena
 import { DirectAccessGaurd } from "app/routeGaurd";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
+import { AdminRequests } from "app/admin-requests/admin-requests";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -34,6 +35,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "tenant-move-out-request", component: Tenant_Move_out_Request },
   { path: "tenant-registration", component: Tenant_Registration },
   { path: "add-property-form", component: AddPropertyForm },
+  { path: "admin-requests", component: AdminRequests },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },
 ];

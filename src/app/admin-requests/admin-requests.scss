@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
+.request-card {
+  width: 600px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  .card-header {
+    background-color: #2b333e;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+  }
+
+  .card-body {
+    padding: 20px;
+
+    .user-info {
+      margin-bottom: 20px;
+
+      .user-name,
+      .user-email {
+        font-weight: bold;
+      }
+    }
+
+    .user-request {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  }
+}
+
+

@@ -101,6 +101,9 @@ import { Tenant_Registration_Stepper_Sixth } from "app/indus_services/facility_m
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
+import { NgxCheckboxModule } from "ngx-checkbox";
+import { AdminRequests } from "app/admin-requests/admin-requests";
+
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -155,6 +158,7 @@ import { AddPropertyForm } from "app/add-property-form/add_property_from";
     MatNativeDateModule,
     FullCalendarModule,
     NgxSkeletonLoaderModule,
+    NgxCheckboxModule,
     // NgbModalModule,
     // FlatpickrModule.forRoot(),
     // BrowserModule,
@@ -171,6 +175,7 @@ import { AddPropertyForm } from "app/add-property-form/add_property_from";
     DocumentsComponent,
     PageNotFoundComponent,
     AddPropertyForm,
+    AdminRequests,
 
     ModalComponent,
     ModalComponentDate,

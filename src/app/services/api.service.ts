@@ -6,7 +6,8 @@ import {
   HttpErrorResponse,
 } from "@angular/common/http";
 import { catchError, tap, map } from "rxjs/operators";
-// import { saveAs } from "file-saver";
+import { saveAs } from "file-saver";
+import { OtherServices } from "./other.service";
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -16,10 +17,20 @@ const API_URL = "http://127.0.0.1:8081/user";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private otherServices: OtherServices) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
+      this.otherServices.gotError.next(true);
+      this.otherServices.addMessage({
+        message: "Error",
+        description: "Oh No! Something went wrong.",
+      });
+
+      setTimeout(() => {
+        this.otherServices.clearMessage();
+      }, 8000);
+
       return of(result as T);
     };
   }
@@ -72,6 +83,15 @@ export class ApiService {
     );
   }
 
+  getUser(userId: any) {
+    const url = `${API_URL}/getUser.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  
   getUserDetails(userId: any) {
     const url = `${API_URL}/getUserDetails.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
@@ -109,6 +129,22 @@ export class ApiService {
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("addAppointments", [])));
+  }
+
+  requestAddPropertyLandlord(data: any) {
+    const url = `${API_URL}/requestAddProperty.php?apikey=1`;
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("requestAddPropertyLandlord", [])));
+  }
+
+  getAddPropertyRequests() {
+    const url = `${API_URL}/getAddPropertyRequests.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
   }
 
   removeAppointment(data: any) {

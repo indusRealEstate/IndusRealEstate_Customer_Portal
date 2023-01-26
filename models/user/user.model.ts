@@ -2,7 +2,7 @@ import { Deserializable } from "./deserializable.model";
 
 export class User implements Deserializable {
   id: string;
-  auth_type: string;
+  auth_type: "landlord" | "tenant" | "admin";
   username: string;
   password: string;
   firstname: string;
@@ -11,7 +11,7 @@ export class User implements Deserializable {
 
   constructor(
     id: string,
-    auth_type: string,
+    auth_type: "landlord" | "tenant" | "admin",
     username: string,
     firstname: string,
     lastname,
