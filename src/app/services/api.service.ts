@@ -14,6 +14,7 @@ const httpOptions = {
 };
 
 const API_URL = "http://127.0.0.1:8081/user";
+const BASE_URL_IMAGES = "http://127.0.0.1:8081/img/properties";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -34,11 +35,11 @@ export class ApiService {
       return of(result as T);
     };
   }
+  
 
-  // getProperties() {
-  //   const url = `${API_URL}/getproperties.php?apikey=1`;
-  //   return this.http.get<any>(url).pipe(catchError(this.handleError('getProperties', [])));
-  // }
+  getBaseUrlImages(){
+    return BASE_URL_IMAGES;
+  }
 
   getUserDocuments(userId: any) {
     const url = `${API_URL}/getDocuments.php?apikey=1`;
@@ -100,7 +101,7 @@ export class ApiService {
       })
     );
   }
-  
+
   getUserDetails(userId: any) {
     const url = `${API_URL}/getUserDetails.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
@@ -111,19 +112,12 @@ export class ApiService {
   }
 
   getUserProperties(userId: any) {
-    const url = `${API_URL}/getProperties.php?apikey=1`;
+    const url = `${API_URL}/getUserProperties.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
       })
     );
-  }
-
-  addProperty(data: string) {
-    const url = `${API_URL}/addProperty.php?apikey=1`;
-    return this.http
-      .post(url, data)
-      .pipe(catchError(this.handleError("addProperty", [])));
   }
 
   updateUserProfilePic(data: string) {

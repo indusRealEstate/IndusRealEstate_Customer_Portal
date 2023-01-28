@@ -18,7 +18,7 @@ import { DirectAccessGaurd } from "app/routeGaurd";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { AdminRequests } from "app/admin-requests/admin-requests";
-import { PropertyPage } from "app/property-page/property-page";
+import { PropertyPage } from "app/property-page/property-page.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },

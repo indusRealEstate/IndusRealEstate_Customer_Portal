@@ -1,14 +1,34 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import {
+  ChartComponent,
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexDataLabels,
+  ApexTitleSubtitle,
+  ApexStroke,
+  ApexGrid,
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  dataLabels: ApexDataLabels;
+  grid: ApexGrid;
+  stroke: ApexStroke;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: "property-page",
-  templateUrl: "./property-page.html",
-  styleUrls: ["./property-page.scss"],
+  templateUrl: "./property-page.component.html",
+  styleUrls: ["./property-page.component.scss"],
 })
 export class PropertyPage implements OnInit {
   isUserSignedIn: boolean = false;
@@ -16,6 +36,10 @@ export class PropertyPage implements OnInit {
   isLoading: boolean = false;
   propertyData: any;
   propertyImage: any = "";
+  imagesUrl: any = "";
+
+  public chartOptions: Partial<ChartOptions>;
+  @ViewChild("chart") chart: ChartComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,6 +59,57 @@ export class PropertyPage implements OnInit {
     } else {
       router.navigate([`/404`]);
     }
+
+    this.chartOptions = {
+      series: [
+        {
+          name: "Price",
+          data: [
+            2000000, 2170000, 2174500, 2175000, 2179999, 2189500, 2189500,
+            2189900, 2199000, 2205000, 2300000,
+          ],
+        },
+      ],
+      chart: {
+        fontFamily: "Montserrat",
+        height: 350,
+        type: "line",
+        zoom: {
+          enabled: false,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "straight",
+      },
+      title: {
+        text: "Price Trends",
+        align: "left",
+      },
+      grid: {
+        row: {
+          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          opacity: 0.5,
+        },
+      },
+      xaxis: {
+        categories: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Nov",
+          "Dec",
+        ],
+      },
+    };
   }
 
   initFunction(e) {
@@ -58,18 +133,8 @@ export class PropertyPage implements OnInit {
       }
 
       setTimeout(() => {
-        // console.log(this.propertyData);
-        var imageData = (this.propertyData["image"] += "");
-        if (imageData.includes("data:image/jpeg;base64,") == false) {
-          this.propertyImage = "data:image/jpeg;base64," + imageData;
-        } else {
-          this.propertyImage = imageData;
-        }
-
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 300);
-      }, 300);
+        this.isLoading = false;
+      }, 500);
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +148,14 @@ export class PropertyPage implements OnInit {
       this.router.navigate(["/login"]);
     }
   }
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.imagesUrl = this.apiService.getBaseUrlImages();
+  }
+
+  ngAfterViewInit() {
+    console.log(this.propertyData);
+  }
 
   ngOnDestroy() {}
 }

@@ -9,10 +9,10 @@
 
     <div class="card" *ngIf="isLoading == false">
       <img
-        src="{{propertyImage}}"
+        src="{{ imagesUrl }}/{{ propertyData.image1 }}"
         class="card-img-top"
         alt="image"
-        style="max-height: 480px; object-fit: cover; overflow: hidden"
+        style="max-height: 500px; object-fit: cover; overflow: hidden"
       />
 
       <div
@@ -47,7 +47,9 @@
         <div class="row">
           <div class="col">
             <div style="max-width: 500px">
-              <p style="color: #a3a3a3">Dubai Land, cluster area</p>
+              <p style="color: #a3a3a3; max-width: 300px">
+                {{ propertyData.property_address }}
+              </p>
               <h6
                 style="
                   color: #404040;
@@ -56,7 +58,7 @@
                   line-height: 1;
                 "
               >
-                THE VILLAS MARCEDONA
+                {{ propertyData.property_name }}
               </h6>
               <p style="color: #d4aa32; font-size: 30px; margin-top: 20px">
                 AED 2,300,000
@@ -89,7 +91,9 @@
             />
             <div class="col">
               <p style="margin: 0; font-weight: 600">PROPERTY SIZE</p>
-              <p style="margin: 0; font-weight: 600">174,000 SQFT</p>
+              <p style="margin: 0; font-weight: 600">
+                {{ propertyData.property_size }} SQFT
+              </p>
             </div>
           </div>
           <div class="row" style="margin-left: 0px">
@@ -99,7 +103,9 @@
             />
             <div class="col">
               <p style="margin: 0; font-weight: 600">PRICE RANGE</p>
-              <p style="margin: 0; font-weight: 600">AED 500K- AED 900K</p>
+              <p style="margin: 0; font-weight: 600">
+                {{ propertyData.price_range }}
+              </p>
             </div>
           </div>
           <div class="row" style="margin-left: 0px">
@@ -109,7 +115,9 @@
             />
             <div class="col">
               <p style="margin: 0; font-weight: 600">TYPE</p>
-              <p style="margin: 0; font-weight: 600">VILLA</p>
+              <p style="margin: 0; font-weight: 600">
+                {{ propertyData.property_type }}
+              </p>
             </div>
           </div>
           <div class="row" style="margin-left: 0px">
@@ -119,7 +127,9 @@
             />
             <div class="col">
               <p style="margin: 0; font-weight: 600">COMPLETION</p>
-              <p style="margin: 0; font-weight: 600">READY TO SELL</p>
+              <p style="margin: 0; font-weight: 600">
+                {{ propertyData.completion }}
+              </p>
             </div>
           </div>
           <div class="row" style="margin-left: 0px">
@@ -129,7 +139,9 @@
             />
             <div class="col">
               <p style="margin: 0; font-weight: 600">FINISH TYPE</p>
-              <p style="margin: 0; font-weight: 600">FURNISHED</p>
+              <p style="margin: 0; font-weight: 600">
+                {{ propertyData.furnish_type }}
+              </p>
             </div>
           </div>
         </div>
@@ -138,24 +150,7 @@
           class="row"
           style="margin-top: 100px; margin-left: 0; margin-right: 0"
         >
-
-
-
-
-
-
-          <div class="col">
-
-
-            
-          </div>
-
-
-
-
-
-
-
+          <div class="col"></div>
 
           <div class="col">
             <p style="color: #404040; font-size: 30px; font-weight: 600">
@@ -176,7 +171,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    Marcedona
+                    {{ propertyData.community_name }}
                   </p>
                 </div>
                 <div class="row">
@@ -184,7 +179,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    Emirates Hills
+                    {{ propertyData.project_name }}
                   </p>
                 </div>
                 <div class="row">
@@ -192,7 +187,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    Freehold
+                    {{ propertyData.ownership }}
                   </p>
                 </div>
               </div>
@@ -202,7 +197,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    Indus-ax1-3213
+                    {{ propertyData.ref_no }}
                   </p>
                 </div>
                 <div class="row">
@@ -210,7 +205,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    For Sale
+                    {{ propertyData.purpose }}
                   </p>
                 </div>
                 <div class="row">
@@ -218,11 +213,27 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    Emaar
+                    {{ propertyData.developer }}
                   </p>
                 </div>
               </div>
             </div>
+
+            <!-- chart starting......................................... -->
+
+            <div id="chart" style="margin-top: 60px; margin-left: -18px">
+              <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [xaxis]="chartOptions.xaxis"
+                [dataLabels]="chartOptions.dataLabels"
+                [grid]="chartOptions.grid"
+                [stroke]="chartOptions.stroke"
+                [title]="chartOptions.title"
+              ></apx-chart>
+            </div>
+
+            <!-- chart ended......................................... -->
           </div>
         </div>
       </div>

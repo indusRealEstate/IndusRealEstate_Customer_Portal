@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -14,15 +15,19 @@ import { Property } from "../../../models/property/property";
 export class MyPropertiesComponent implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
-  properties: Property[] = [];
+  properties: any[] = [];
   mouseEnterAddPropertyCard: boolean = false;
+  propertyImages: any[] = [];
+
+  imagesUrl: any = "";
 
   constructor(
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private otherServices: OtherServices,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient
   ) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -56,6 +61,8 @@ export class MyPropertiesComponent implements OnInit {
   ngOnInit() {
     this.isUserSignOut();
     this.initFunction();
+
+    this.imagesUrl = this.apiService.getBaseUrlImages();
   }
 
   initFunction() {
@@ -63,10 +70,12 @@ export class MyPropertiesComponent implements OnInit {
     if (propertiesdata != null) {
       var decodedData = JSON.parse(propertiesdata);
       this.properties = decodedData;
+      console.log("session_properties");
     } else {
       this.isLoading = true;
       setTimeout(() => {
         this.getProperties();
+        console.log("api_properties");
       }, 300);
     }
   }
@@ -92,33 +101,16 @@ export class MyPropertiesComponent implements OnInit {
 
     try {
       this.apiService.getUserProperties(userId).subscribe((data) => {
-        // console.log(data);
-        for (let e of data) {
-          let objectURL = "data:image/jpeg;base64," + e["image"];
-
-          this.properties.push(
-            new Property(
-              e["user_id"],
-              e["property_id"],
-              e["property_name"],
-              e["property_address"],
-              objectURL,
-              e["rented"],
-              e["leased"],
-              e["sold"],
-              e["rent_details"],
-              e["lease_details"],
-              e["sold_details"]
-            )
-          );
-        }
+        this.properties = data;
       });
     } catch (error) {
       console.log(error);
     } finally {
       setTimeout(() => {
-        this.isLoading = false;
-        sessionStorage.setItem("properties", JSON.stringify(this.properties));
+        if (this.properties.length != 0) {
+          this.isLoading = false;
+          sessionStorage.setItem("properties", JSON.stringify(this.properties));
+        }
       }, 800);
     }
   }

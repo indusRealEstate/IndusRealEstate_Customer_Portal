@@ -9,16 +9,19 @@
   </div>
   <div class="card-deck" style="margin: 20px">
     <div *ngFor="let property of properties">
-      <div class="card property-listed-card" (click)="goToPropertyPage(property)">
+      <div
+        class="card property-listed-card"
+        (click)="goToPropertyPage(property)"
+      >
         <img
-          *ngIf="property.image != ''"
+          *ngIf="property.image1 != ''"
           class="card-img-top"
-          src="{{ property.image }}"
+          src="{{imagesUrl}}/{{property.image1}}"
           alt="Card image cap"
           style="pointer-events: none"
         />
 
-        <div *ngIf="property.image == ''">
+        <div *ngIf="property.image1 == ''">
           <ngx-skeleton-loader
             appearance="square"
             [theme]="{ width: '288px', height: '170px' }"
