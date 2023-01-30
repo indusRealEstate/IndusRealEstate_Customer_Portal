@@ -14,16 +14,15 @@
         (click)="goToPropertyPage(property)"
       >
         <img
-          *ngIf="property.image1 != ''"
+          *ngIf="isImagesLoading == false"
           class="card-img-top"
-          src="{{imagesUrl}}/{{property.image1}}"
+          src="{{ imagesUrl }}/{{ property.image1 }}"
           alt="Card image cap"
           style="pointer-events: none"
         />
 
-        <div *ngIf="property.image1 == ''">
+        <div *ngIf="isImagesLoading == true" style="height: 170px;">
           <ngx-skeleton-loader
-            appearance="square"
             [theme]="{ width: '288px', height: '170px' }"
           >
           </ngx-skeleton-loader>

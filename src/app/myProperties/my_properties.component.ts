@@ -15,6 +15,7 @@ import { Property } from "../../../models/property/property";
 export class MyPropertiesComponent implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
+  isImagesLoading: boolean = false;
   properties: any[] = [];
   mouseEnterAddPropertyCard: boolean = false;
   propertyImages: any[] = [];
@@ -61,8 +62,14 @@ export class MyPropertiesComponent implements OnInit {
   ngOnInit() {
     this.isUserSignOut();
     this.initFunction();
+  }
 
+  getImagesUrl() {
+    this.isImagesLoading = true;
     this.imagesUrl = this.apiService.getBaseUrlImages();
+    setTimeout(() => {
+      this.isImagesLoading = false;
+    }, 500);
   }
 
   initFunction() {
@@ -70,12 +77,12 @@ export class MyPropertiesComponent implements OnInit {
     if (propertiesdata != null) {
       var decodedData = JSON.parse(propertiesdata);
       this.properties = decodedData;
-      console.log("session_properties");
+
+      this.getImagesUrl();
     } else {
       this.isLoading = true;
       setTimeout(() => {
         this.getProperties();
-        console.log("api_properties");
       }, 300);
     }
   }
@@ -108,6 +115,7 @@ export class MyPropertiesComponent implements OnInit {
     } finally {
       setTimeout(() => {
         if (this.properties.length != 0) {
+          this.getImagesUrl();
           this.isLoading = false;
           sessionStorage.setItem("properties", JSON.stringify(this.properties));
         }

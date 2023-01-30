@@ -63,6 +63,7 @@ export class PropertyPage implements OnInit {
     this.chartOptions = {
       series: [
         {
+          color: "#d3ab33",
           name: "Price",
           data: [
             2000000, 2170000, 2174500, 2175000, 2179999, 2189500, 2189500,
@@ -82,6 +83,7 @@ export class PropertyPage implements OnInit {
         enabled: false,
       },
       stroke: {
+        colors: ["#d3ab33"],
         curve: "straight",
       },
       title: {

@@ -14,7 +14,7 @@ const httpOptions = {
 };
 
 const API_URL = "http://127.0.0.1:8081/user";
-const BASE_URL_IMAGES = "http://127.0.0.1:8081/img/properties";
+const BASE_URL_IMAGES = "http://127.0.0.1:8081/upload/img/properties";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -25,7 +25,7 @@ export class ApiService {
       this.otherServices.gotError.next(true);
       this.otherServices.addMessage({
         message: "Error",
-        description: "Oh No! Something went wrong.",
+        description: error.error.error,
       });
 
       setTimeout(() => {
@@ -35,9 +35,8 @@ export class ApiService {
       return of(result as T);
     };
   }
-  
 
-  getBaseUrlImages(){
+  getBaseUrlImages() {
     return BASE_URL_IMAGES;
   }
 
@@ -139,6 +138,14 @@ export class ApiService {
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("requestAddPropertyLandlord", [])));
+  }
+
+  saveImgInServer(data: any) {
+    const url = `http://127.0.0.1:8081/uploader.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("saveImgInServer", [])));
   }
 
   getAddPropertyRequests() {

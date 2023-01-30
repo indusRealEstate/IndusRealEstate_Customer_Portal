@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
@@ -55,22 +56,19 @@ VALUES      (
      '{$decodedData["unit_number"]}',
      '{$decodedData["car_parking_no"]}',
      '{$decodedData["additional_info"]}',
-     '{$decodedData["property_image_1"]}',
-     '{$decodedData["property_image_2"]}',
-     '{$decodedData["property_image_3"]}',
-     '{$decodedData["property_image_4"]}',
-     '{$decodedData["property_image_5"]}',
-     '{$decodedData["property_doc_1"]}',
-     '{$decodedData["property_doc_2"]}',
-     '{$decodedData["property_doc_3"]}',
-     '{$decodedData["property_doc_4"]}',
+     '{$decodedData["property_image_1_name"]}',
+     '{$decodedData["property_image_2_name"]}',
+     '{$decodedData["property_image_3_name"]}',
+     '{$decodedData["property_image_4_name"]}',
+     '{$decodedData["property_image_5_name"]}',
+     '{$decodedData["property_doc_1_name"]}',
+     '{$decodedData["property_doc_2_name"]}',
+     '{$decodedData["property_doc_3_name"]}',
+     '{$decodedData["property_doc_4_name"]}',
      '{$decodedData["social_media_marketing_info"]}',
      '{$decodedData["board_marketing_info"]}',
      '{$decodedData["others_marketing_info"]}',
      '{$decodedData["valid_until"]}',
-     '{$decodedData["second_party_signature"]}') ");
-
+     '{$decodedData["second_party_signature_name"]}') ");
+     
 }
-
-
-?>

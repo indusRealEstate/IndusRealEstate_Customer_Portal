@@ -22,9 +22,15 @@ export class AddPropertyForm implements OnInit {
 
   uploadedDocCount: string = "No attachments found";
   uploadedImgCount: string = "No Images found";
+
   propertyImages: any[] = [];
+  propertyImagesNames: any[] = [];
+
   propertyDocs: any[] = [];
-  SecondPartySignature: any = "";
+  propertyDocsNames: any[] = [];
+
+  secondPartySignature: any = "";
+  secondPartySignatureName: any = "";
 
   moreThan4PropertyDocs: boolean = false;
   moreThan5PropertyImages: boolean = false;
@@ -123,7 +129,7 @@ export class AddPropertyForm implements OnInit {
       this.addPropertyForm.value["AdditionalInformation"] == "" ||
       this.propertyImages.length == 0 ||
       this.propertyDocs.length == 0 ||
-      this.SecondPartySignature == ""
+      this.secondPartySignature == ""
     ) {
       this.formNotCompletelyFilled = true;
 
@@ -154,26 +160,35 @@ export class AddPropertyForm implements OnInit {
         unit_number: this.addPropertyForm.value["UnitNumber"],
         car_parking_no: this.addPropertyForm.value["NumberOfCarParking"],
         additional_info: this.addPropertyForm.value["AdditionalInformation"],
+
         // property images
-        property_image_1:
-          this.propertyImages.length < 1 ? "" : this.propertyImages[0],
-        property_image_2:
-          this.propertyImages.length < 2 ? "" : this.propertyImages[1],
-        property_image_3:
-          this.propertyImages.length < 3 ? "" : this.propertyImages[2],
-        property_image_4:
-          this.propertyImages.length < 4 ? "" : this.propertyImages[3],
-        property_image_5:
-          this.propertyImages.length < 5 ? "" : this.propertyImages[4],
+        property_image_1_name:
+          this.propertyImages.length < 1 ? "" : this.propertyImagesNames[0],
+
+        property_image_2_name:
+          this.propertyImages.length < 2 ? "" : this.propertyImagesNames[1],
+
+        property_image_3_name:
+          this.propertyImages.length < 3 ? "" : this.propertyImagesNames[2],
+
+        property_image_4_name:
+          this.propertyImages.length < 4 ? "" : this.propertyImagesNames[3],
+
+        property_image_5_name:
+          this.propertyImages.length < 5 ? "" : this.propertyImagesNames[4],
         // property docs
-        property_doc_1:
-          this.propertyDocs.length < 1 ? "" : this.propertyDocs[0],
-        property_doc_2:
-          this.propertyDocs.length < 2 ? "" : this.propertyDocs[1],
-        property_doc_3:
-          this.propertyDocs.length < 3 ? "" : this.propertyDocs[2],
-        property_doc_4:
-          this.propertyDocs.length < 4 ? "" : this.propertyDocs[3],
+
+        property_doc_1_name:
+          this.propertyDocs.length < 1 ? "" : this.propertyDocsNames[0],
+
+        property_doc_2_name:
+          this.propertyDocs.length < 2 ? "" : this.propertyDocsNames[1],
+
+        property_doc_3_name:
+          this.propertyDocs.length < 3 ? "" : this.propertyDocsNames[2],
+
+        property_doc_4_name:
+          this.propertyDocs.length < 4 ? "" : this.propertyDocsNames[3],
 
         social_media_marketing_info:
           this.addPropertyForm.value["SocialMediaMarketingDetails"],
@@ -184,7 +199,7 @@ export class AddPropertyForm implements OnInit {
 
         valid_until: this.validUntil,
 
-        second_party_signature: this.SecondPartySignature,
+        second_party_signature_name: this.secondPartySignatureName,
       };
 
       var encodedData = JSON.stringify(jsonData);
@@ -213,12 +228,27 @@ export class AddPropertyForm implements OnInit {
         setTimeout(() => {
           this.otherServices.clearMessage();
         }, 10000);
+
+        setTimeout(() => {
+          this.apiService
+            .saveImgInServer({
+              images: this.propertyImages,
+              imageNames: this.propertyImagesNames,
+              docs: this.propertyDocs,
+              docsNames: this.propertyDocsNames,
+              sign: this.secondPartySignature,
+              signName: this.secondPartySignatureName,
+            })
+            .subscribe((res) => {
+              console.log(res);
+            });
+        }, 2000);
       } catch (error) {}
     }
   }
 
   clearSignature() {
-    this.SecondPartySignature = "";
+    this.secondPartySignature = "";
   }
 
   onOfferValidityDate(event): void {
@@ -250,17 +280,20 @@ export class AddPropertyForm implements OnInit {
   }
 
   pickImg(event: any) {
-    if (this.propertyImages.length < 5) {
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      // reader.readAsDataURL(file);
+    var file = event.target.files[0];
+    var reader = new FileReader();
 
+    if (this.propertyImages.length < 5) {
       reader.readAsDataURL(file);
 
       try {
         reader.onloadend = (e) => {
-          var img = e.target.result.toString().split(",")[1];
-          this.propertyImages.push(img);
+          this.propertyImages.push(e.target.result);
+          this.propertyImagesNames.push(
+            this.addPropertyForm.value["ProjectName"] +
+              "-" +
+              this.propertyImages.length
+          );
         };
       } catch (error) {
       } finally {
@@ -283,8 +316,9 @@ export class AddPropertyForm implements OnInit {
     reader.readAsDataURL(file);
 
     reader.onloadend = (e) => {
-      var signature = e.target.result.toString().split(",")[1];
-      this.SecondPartySignature = signature;
+      this.secondPartySignature = e.target.result;
+      this.secondPartySignatureName =
+        this.addPropertyForm.value["ProjectName"] + "-" + "signature";
     };
   }
 
@@ -292,14 +326,17 @@ export class AddPropertyForm implements OnInit {
     if (this.propertyDocs.length < 4) {
       var file = event.target.files[0];
       var reader = new FileReader();
-      // reader.readAsDataURL(file);
 
       reader.readAsDataURL(file);
 
       try {
         reader.onloadend = (e) => {
-          var doc = e.target.result.toString().split(",")[1];
-          this.propertyDocs.push(doc);
+          this.propertyDocs.push(e.target.result);
+          this.propertyDocsNames.push(
+            this.addPropertyForm.value["ProjectName"] +
+              "-" +
+              this.propertyDocs.length
+          );
         };
       } catch (error) {
       } finally {
