@@ -106,6 +106,7 @@ import { AdminRequests } from "app/admin-requests/admin-requests";
 import { PropertyPage } from "app/property-page/property-page.component";
 import { GoogleMapsModule } from "@angular/google-maps";
 import { NgApexchartsModule } from "ng-apexcharts";
+import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -182,6 +183,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
     PropertyPage,
     AddPropertyForm,
     AdminRequests,
+    AdminDashboardComponent,
 
     ModalComponent,
     ModalComponentDate,

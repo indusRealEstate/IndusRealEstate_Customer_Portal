@@ -28,6 +28,21 @@ export const HOMEROUTE: RouteInfo[] = [
   },
 ];
 
+export const ADMINROUTES: RouteInfo[] = [
+  {
+    path: "/admin-dashboard",
+    title: "Dashboard",
+    icon: "assets/img/svg/sidebar/home.svg",
+    class: "",
+  },
+  {
+    path: "/admin-requests",
+    title: "Requests",
+    icon: "assets/img/svg/sidebar/notification-status.svg",
+    class: "",
+  },
+];
+
 export const ROUTES: RouteInfo[] = [
   {
     path: "/my-requests",
@@ -97,22 +112,15 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.getUserDataFromLocal();
 
-    this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
-    // this.serviceRoute = SERVICEROUTE.filter(menuItem => menuItem);
-    this.menuItems = ROUTES.filter((menuItem) => menuItem);
-
     if (this.user.auth_type == "admin") {
-      this.homeRoute.pop();
-      this.homeRoute.push({
-        path: "/admin-requests",
-        title: "Requests",
-        icon: "assets/img/svg/sidebar/notification-status.svg",
-        class: "",
-      });
-
-      this.menuItems.length = 0;
+      this.homeRoute = ADMINROUTES.filter((menuItem) => menuItem);
     } else if (this.user.auth_type == "tenant") {
+      this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
       this.homeRoute.pop();
+      this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    } else {
+      this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
+      this.menuItems = ROUTES.filter((menuItem) => menuItem);
     }
   }
   isMobileMenu() {

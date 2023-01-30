@@ -79,6 +79,7 @@
 
   <ul class="nav" style="margin-top: 50px">
     <a
+      *ngIf="user.auth_type != 'admin'"
       class="user-profile-logo-sidebar"
       routerLink="/user-profile"
       queryParams="{uid: user.id}"
@@ -113,6 +114,21 @@
         }}</span>
       </div>
     </a>
+
+    <div
+      *ngIf="user.auth_type == 'admin'"
+      style="
+        text-align: -webkit-center;
+        color: #a3a3a3;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 100px;
+        margin-top: 100px;
+      "
+    >
+      <p>Admin Panel</p>
+    </div>
+
     <div style="margin-top: 30px"></div>
     <li
       *ngFor="let item of homeRoute"
@@ -131,7 +147,10 @@
         </div>
       </a>
     </li>
-    <li class="nav-item dropdown-btn-services">
+    <li
+      class="nav-item dropdown-btn-services"
+      *ngIf="user.auth_type != 'admin'"
+    >
       <dropdown-btn></dropdown-btn>
     </li>
     <li
