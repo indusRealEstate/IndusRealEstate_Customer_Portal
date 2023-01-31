@@ -109,6 +109,12 @@
       background-color: #80808042;
       color: gray;
     }
+
+    transition: 0.3s ease-out;
+    &:hover {
+      background-color: rgb(211 171 51 / 18%);
+      transform: scaleY(1.02) scaleX(1.02);
+    }
   }
 
   hr {
