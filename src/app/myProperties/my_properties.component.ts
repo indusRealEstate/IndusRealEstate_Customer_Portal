@@ -119,7 +119,7 @@ export class MyPropertiesComponent implements OnInit {
           this.isLoading = false;
           sessionStorage.setItem("properties", JSON.stringify(this.properties));
         }
-      }, 800);
+      }, 2000);
     }
   }
 }
