@@ -4,9 +4,8 @@
   font-family: "Montserrat";
 }
 
-
 ::ng-deep .mat-progress-bar-fill::after {
-  background-color: #FFFFFF !important;
+  background-color: #ffffff !important;
 }
 
 ::ng-deep .mat-progress-bar-buffer {
@@ -16,4 +15,27 @@
 ::ng-deep .mat-progress-bar {
   border-radius: 5px !important;
   height: 7px !important;
+}
+
+.more-btn-request-Overview {
+  cursor: pointer;
+  margin: 0;
+
+  p {
+    margin: 0;
+    margin-right: 10px;
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  img {
+    width: 15px;
+    transition: 0.3s ease-out;
+  }
+
+  &:hover {
+    img {
+      transform: translateX(3px);
+    }
+  }
 }
