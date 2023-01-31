@@ -161,6 +161,8 @@ export class NavbarComponent implements OnInit {
         return "Your Property";
       case "/add-property-form":
         return "Add Property";
+      case "/admin-dashboard":
+        return "Admin Dashboard";
       case "/admin-requests":
         return "Requests";
       case "/404":

@@ -14,6 +14,8 @@ import { User } from "../../../models/user/user.model";
 export class AdminDashboardComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
+  requestOverviewPeoples : any[] = [1,2,3,4];
+
   constructor(
     private apiService: ApiService,
     private router: Router,
