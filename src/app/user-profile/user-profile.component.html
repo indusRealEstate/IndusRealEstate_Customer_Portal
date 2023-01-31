@@ -505,15 +505,37 @@
           >
             <span class="personal-info-title">Properties</span>
             <div class="card-deck" *ngFor="let property of properties">
-              <div class="card text-left property-card-user-profile">
+              <div
+                class="card text-left property-card-user-profile"
+                (click)="goToPropertyPage(property)"
+                style="cursor: pointer"
+              >
                 <div class="col" style="margin: 20px; margin-left: 5px">
                   <div class="row" style="margin-left: 1px; margin-right: 6px">
                     <img
+                      *ngIf="propertiesImagesLoading != true"
                       class="property-img-user-profile"
-                      src="{{ property.image }}"
+                      src="{{ propertiesImagesUrl }}/{{ property.image1 }}"
                       alt=""
                       style="pointer-events: none"
                     />
+
+                    <div
+                      *ngIf="propertiesImagesLoading == true"
+                      style="
+                        border-radius: 7px;
+                        max-width: 170px;
+                        min-width: 160px;
+                        max-height: 130px;
+                        min-height: 120px;
+                        margin-bottom: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '170px', height: '130px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
 
                     <div class="col-xs">
                       <p class="property-id">3432987</p>

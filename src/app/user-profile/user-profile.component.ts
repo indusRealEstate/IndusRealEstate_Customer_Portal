@@ -24,6 +24,9 @@ export class UserProfileComponent implements OnInit {
   isLoading: boolean = false;
   isLandlord: boolean = false;
 
+  propertiesImagesLoading: boolean = false;
+  propertiesImagesUrl: any = "";
+
   ///----
 
   isOverviewTabActive: boolean = true;
@@ -109,7 +112,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.propertiesImagesLoading = true;
     this.isUserSignOut();
+    this.initFunction();
+  }
+
+  initFunction() {
+    this.propertiesImagesUrl = this.apiService.getBaseUrlImages();
 
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -151,6 +160,10 @@ export class UserProfileComponent implements OnInit {
         }
       }
     }
+
+    setTimeout(() => {
+      this.propertiesImagesLoading = false;
+    }, 800);
   }
 
   getAuthType() {
@@ -165,6 +178,12 @@ export class UserProfileComponent implements OnInit {
     } else {
       return "Admin";
     }
+  }
+
+  goToPropertyPage(property: any) {
+    this.router.navigate(["/property-page"], {
+      queryParams: { propertyId: property["property_id"] },
+    });
   }
 
   getUserProperties(userId: any) {
