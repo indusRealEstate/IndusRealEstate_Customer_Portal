@@ -49,11 +49,5 @@ export class ReportsComponent implements OnInit {
     // });
   }
 
-  connectBackend() {
-    try {
-      this.apiService.addProperty("hello").subscribe();
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
 }

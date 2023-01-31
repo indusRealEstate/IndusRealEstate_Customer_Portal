@@ -690,9 +690,9 @@
                   "
                 >
                   <img
-                    src="{{'data:image/png;base64,' + SecondPartySignature}}"
+                    src="{{secondPartySignature}}"
                     alt=""
-                    *ngIf="SecondPartySignature != ''"
+                    *ngIf="secondPartySignature != ''"
                     style="
                       max-width: 150px;
                       max-height: 110px !important;
@@ -700,7 +700,7 @@
                     "
                   />
                   <p
-                    *ngIf="SecondPartySignature == ''"
+                    *ngIf="secondPartySignature == ''"
                     style="
                       color: #a3a3a3;
                       text-align: center;
@@ -768,7 +768,7 @@
                       </div>
 
                       <div
-                        *ngIf="SecondPartySignature == ''"
+                        *ngIf="secondPartySignature == ''"
                         style="
                           border-start-end-radius: 6px;
                           background-color: #343b44;
@@ -784,7 +784,7 @@
                         Upload Signature
                       </div>
                       <div
-                        *ngIf="SecondPartySignature != ''"
+                        *ngIf="secondPartySignature != ''"
                         style="
                           border-start-end-radius: 6px;
                           background-color: #343b44;

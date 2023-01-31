@@ -29,17 +29,28 @@ export class HomeComponent implements OnInit {
 
     if (user[0]["auth_type"] == "landlord") {
       this.isLandlord = true;
+      this.route.queryParams.subscribe((e) => {
+        if (e == null) {
+          router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
+        } else if (e != user[0]["id"]) {
+          router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
+        }
+      });
+    } else if (user[0]["auth_type"] == "tenant") {
+      this.isLandlord = false;
+      this.route.queryParams.subscribe((e) => {
+        if (e == null) {
+          router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
+        } else if (e != user[0]["id"]) {
+          router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
+        }
+      });
     } else {
       this.isLandlord = false;
+      router.navigate(["/admin-dashboard"], {
+        queryParams: { uid: user[0]["id"] },
+      });
     }
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
-      } else if (e != user[0]["id"]) {
-        router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
-      }
-    });
 
     this.scrollToTop();
   }

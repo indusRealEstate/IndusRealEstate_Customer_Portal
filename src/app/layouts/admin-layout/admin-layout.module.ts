@@ -103,6 +103,10 @@ import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { NgxCheckboxModule } from "ngx-checkbox";
 import { AdminRequests } from "app/admin-requests/admin-requests";
+import { PropertyPage } from "app/property-page/property-page.component";
+import { GoogleMapsModule } from "@angular/google-maps";
+import { NgApexchartsModule } from "ng-apexcharts";
+import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -159,6 +163,8 @@ import { AdminRequests } from "app/admin-requests/admin-requests";
     FullCalendarModule,
     NgxSkeletonLoaderModule,
     NgxCheckboxModule,
+    GoogleMapsModule,
+    NgApexchartsModule,
     // NgbModalModule,
     // FlatpickrModule.forRoot(),
     // BrowserModule,
@@ -174,8 +180,10 @@ import { AdminRequests } from "app/admin-requests/admin-requests";
     AppointmentsComponent,
     DocumentsComponent,
     PageNotFoundComponent,
+    PropertyPage,
     AddPropertyForm,
     AdminRequests,
+    AdminDashboardComponent,
 
     ModalComponent,
     ModalComponentDate,
