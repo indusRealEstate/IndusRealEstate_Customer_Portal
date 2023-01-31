@@ -60,12 +60,12 @@ export class MyPropertiesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isImagesLoading = true;
     this.isUserSignOut();
     this.initFunction();
   }
 
   getImagesUrl() {
-    this.isImagesLoading = true;
     this.imagesUrl = this.apiService.getBaseUrlImages();
     setTimeout(() => {
       this.isImagesLoading = false;

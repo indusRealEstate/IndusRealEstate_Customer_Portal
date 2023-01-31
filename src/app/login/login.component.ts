@@ -70,7 +70,12 @@ export class LoginComponent implements OnInit {
 
           setTimeout(() => {
             location.reload();
-            window.location.replace(`/home?uid=${user[0]["id"]}`);
+            if(user[0]["auth_type"] != "admin"){
+              window.location.replace(`/home?uid=${user[0]["id"]}`);
+            }else{
+              window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
+            }
+            
           }, 500);
           
         },
