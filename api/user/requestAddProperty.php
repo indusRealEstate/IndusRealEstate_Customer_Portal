@@ -16,6 +16,7 @@ $decodedData = json_decode($postdata, true);
 if ($postdata != null) {
     $stmt = $dbase->execute("INSERT INTO `landlord_add_property_request`
     (`user_id`,
+     `request_type`,
      `property_state`,
      `offer_validity`,
      `furnish_details`,
@@ -41,9 +42,11 @@ if ($postdata != null) {
      `board_marketing_info`,
      `others_marketing_info`,
      `valid_until`,
-     `second_party_signature`)
+     `second_party_signature`,
+     `approved`)
 VALUES      (
      '{$decodedData["user_id"]}',
+     '{$decodedData["request_type"]}',
      '{$decodedData["property_state"]}',
      '{$decodedData["offer_validity"]}',
      '{$decodedData["furnish_details"]}',
@@ -69,6 +72,6 @@ VALUES      (
      '{$decodedData["board_marketing_info"]}',
      '{$decodedData["others_marketing_info"]}',
      '{$decodedData["valid_until"]}',
-     '{$decodedData["second_party_signature_name"]}') ");
-     
+     '{$decodedData["second_party_signature_name"]}',
+     '{$decodedData["approved"]}') ");
 }

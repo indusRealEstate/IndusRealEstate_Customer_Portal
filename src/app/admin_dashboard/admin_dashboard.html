@@ -14,7 +14,7 @@
             <img
               class="sidebar-dropdown-icons"
               src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
-              alt="hello"
+              alt=""
               style="
                 filter: brightness(0) invert(1);
                 width: 40px;
@@ -35,19 +35,20 @@
               <mat-progress-bar
                 style="margin-bottom: 10px; margin-top: -5px"
                 mode="determinate"
-                value="40"
+                value="{{requestPercentage}}"
               ></mat-progress-bar>
 
-              <p>36 more in comparison to last monhts request</p>
-              <a style="color: white; text-decoration: underline"
-                >View Requests</a
-              >
+              <p>
+                Out of {{totalRequests}} requests
+                {{totalRequests-approvedRequests}} are remaining unapproved.
+              </p>
+              <a class="view-request-link">View Requests</a>
             </div>
             <div style="position: absolute; right: 80px">
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
-                alt="hello"
+                alt=""
                 style="
                   filter: invert(14%) sepia(37%) saturate(343%) hue-rotate(7deg)
                     brightness(85%) contrast(76%);
@@ -62,7 +63,7 @@
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
-                alt="hello"
+                alt=""
                 style="
                   filter: invert(14%) sepia(37%) saturate(343%) hue-rotate(7deg)
                     brightness(85%) contrast(76%);
@@ -84,7 +85,7 @@
                 z-index: 1;
               "
             >
-              102
+              {{totalRequests}}
             </p>
           </div>
         </div>
@@ -112,7 +113,7 @@
                   <p
                     style="font-size: 40px; margin-top: 30px; font-weight: 900"
                   >
-                    13
+                    {{salePropertiesLength}}
                   </p>
                   <p
                     style="margin-bottom: 0; font-size: 15px; font-weight: 600"
@@ -126,7 +127,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/house.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 45px;
                     filter: invert(58%) sepia(62%) saturate(495%)
@@ -139,7 +140,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/house.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 30px;
                     margin-right: 20px;
@@ -154,7 +155,7 @@
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
-                alt="hello"
+                alt=""
                 style="
                   width: 20px;
                   align-self: self-end;
@@ -177,7 +178,7 @@
                   <p
                     style="font-size: 40px; margin-top: 30px; font-weight: 900"
                   >
-                    13
+                    {{rentPropertiesLength}}
                   </p>
                   <p
                     style="margin-bottom: 0; font-size: 15px; font-weight: 600"
@@ -191,7 +192,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/house.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 45px;
                     filter: invert(58%) sepia(62%) saturate(495%)
@@ -204,7 +205,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/house.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 30px;
                     margin-right: 20px;
@@ -219,7 +220,7 @@
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
-                alt="hello"
+                alt=""
                 style="
                   width: 20px;
                   align-self: self-end;
@@ -261,7 +262,7 @@
                   <p
                     style="font-size: 40px; margin-top: 30px; font-weight: 900"
                   >
-                    13
+                    {{landlordClient}}
                   </p>
                   <p
                     style="margin-bottom: 0; font-size: 15px; font-weight: 600"
@@ -275,7 +276,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/profile-2user.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 55px;
                     margin-top: 13px;
@@ -289,7 +290,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/profile-2user.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 45px;
                     filter: invert(58%) sepia(62%) saturate(495%)
@@ -304,7 +305,7 @@
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
-                alt="hello"
+                alt=""
                 style="
                   width: 20px;
                   align-self: self-end;
@@ -329,7 +330,7 @@
                   <p
                     style="font-size: 40px; margin-top: 30px; font-weight: 900"
                   >
-                    13
+                    {{tenantClient}}
                   </p>
                   <p
                     style="margin-bottom: 0; font-size: 15px; font-weight: 600"
@@ -343,7 +344,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/profile-2user.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 55px;
                     margin-top: 13px;
@@ -357,7 +358,7 @@
                 <img
                   class="sidebar-dropdown-icons"
                   src="assets/img/svg/admin-dashboard/profile-2user.svg"
-                  alt="hello"
+                  alt=""
                   style="
                     width: 45px;
                     filter: invert(58%) sepia(62%) saturate(495%)
@@ -372,7 +373,7 @@
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
-                alt="hello"
+                alt=""
                 style="
                   width: 20px;
                   align-self: self-end;
@@ -420,19 +421,31 @@
               <img
                 class="sidebar-dropdown-icons"
                 src="assets/img/svg/admin-dashboard/menu-1.svg"
-                alt="hello"
+                alt=""
                 style="width: 20px; user-select: none; pointer-events: none"
               />
             </div>
           </div>
           <div class="card-body">
-            <div *ngFor="let pp of requestOverviewPeoples; let last = last;">
+            <div
+              *ngFor="let pp of requestOverview; let last = last;let index = index;"
+            >
               <div
                 class="row"
                 style="margin: 0; margin-left: 10px; margin-top: 20px"
               >
+                <div
+                  *ngIf="isRequestOverviewLoading == true"
+                  style="max-width: 75px; max-height: 75px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '75px', height: '75px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
                 <img
-                  src="assets/img/faces/profile_sample.jpg"
+                  *ngIf="isRequestOverviewLoading == false"
+                  src="{{'data:image/jpeg;base64,' + requestOverviewClientsPhoto[index]}}"
                   alt=""
                   style="
                     max-width: 75px;
@@ -453,10 +466,10 @@
                         margin-right: 15px;
                       "
                     >
-                      Ajeer
+                      {{requestOverviewClients[index]['firstname']}}
                     </p>
                     <p style="margin: 0; font-weight: 900; color: #d4aa32">
-                      Landlord
+                      {{requestOverviewClients[index]['auth_type']}}
                     </p>
                   </div>
                   <p style="margin: 0; margin-top: 10px">

@@ -17,6 +17,17 @@
   height: 7px !important;
 }
 
+.view-request-link {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: #d4aa32;
+    text-decoration: none;
+  }
+}
+
 .more-btn-request-Overview {
   cursor: pointer;
   margin: 0;
