@@ -182,7 +182,7 @@ export class AdminDashboardComponent implements OnInit {
           requestOverviewClientsPhoto: this.requestOverviewClientsPhoto,
         })
       );
-    }, 2000);
+    }, 3000);
   }
 
   getAllProperties(userId) {

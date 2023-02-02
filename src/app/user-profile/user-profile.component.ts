@@ -20,7 +20,7 @@ export class UserProfileComponent implements OnInit {
   lan_number: number;
   userProfilePic: string = "";
   userProfileFetching: boolean = false;
-  properties: Property[] = [];
+  properties: any[] = [];
   isLoading: boolean = false;
   isLandlord: boolean = false;
 
@@ -137,8 +137,14 @@ export class UserProfileComponent implements OnInit {
       if (user[0]["auth_type"] == "landlord") {
         if (userPropertiesDataSession != null) {
           this.properties = sessionDataJSONPropertes;
+          setTimeout(() => {
+            this.propertiesImagesLoading = false;
+          }, 500);
         } else {
           this.getUserProperties(user[0]["id"]);
+          setTimeout(() => {
+            this.propertiesImagesLoading = false;
+          }, 3000);
         }
       }
     } else {
@@ -155,15 +161,17 @@ export class UserProfileComponent implements OnInit {
       if (user[0]["auth_type"] == "landlord") {
         if (userPropertiesDataSession != null) {
           this.properties = sessionDataJSONPropertes;
+          setTimeout(() => {
+            this.propertiesImagesLoading = false;
+          }, 500);
         } else {
           this.getUserProperties(user[0]["id"]);
+          setTimeout(() => {
+            this.propertiesImagesLoading = false;
+          }, 3000);
         }
       }
     }
-
-    setTimeout(() => {
-      this.propertiesImagesLoading = false;
-    }, 800);
   }
 
   getAuthType() {
@@ -189,26 +197,7 @@ export class UserProfileComponent implements OnInit {
   getUserProperties(userId: any) {
     try {
       this.apiService.getUserProperties(userId).subscribe((data) => {
-        // console.log(data);
-        for (let e of data) {
-          let objectURL = "data:image/jpeg;base64," + e["image"];
-
-          this.properties.push(
-            new Property(
-              e["user_id"],
-              e["property_id"],
-              e["property_name"],
-              e["property_address"],
-              objectURL,
-              e["rented"],
-              e["leased"],
-              e["sold"],
-              e["rent_details"],
-              e["lease_details"],
-              e["sold_details"]
-            )
-          );
-        }
+        this.properties = data;
       });
     } catch (error) {
       console.log(error);
