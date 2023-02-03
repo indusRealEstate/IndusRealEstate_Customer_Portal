@@ -17,6 +17,17 @@
   height: 7px !important;
 }
 
+.view-request-link {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: #d4aa32;
+    text-decoration: none;
+  }
+}
+
 .more-btn-request-Overview {
   cursor: pointer;
   margin: 0;
@@ -37,5 +48,16 @@
     img {
       transform: translateX(3px);
     }
+  }
+}
+
+.dashboard-sm-card {
+  transition: 0.3s ease-out;
+  cursor: pointer;
+  &:hover {
+    transform: scaleY(1.001) scaleX(1.001);
+    box-shadow: -1px 2px 26px -9px rgba(0, 0, 0, 0.74);
+    -webkit-box-shadow: -1px 2px 26px -9px rgba(0, 0, 0, 0.74);
+    -moz-box-shadow: -1px 2px 26px -9px rgba(0, 0, 0, 0.74);
   }
 }

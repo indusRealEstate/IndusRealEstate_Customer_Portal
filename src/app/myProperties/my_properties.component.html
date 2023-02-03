@@ -21,10 +21,8 @@
           style="pointer-events: none"
         />
 
-        <div *ngIf="isImagesLoading == true" style="height: 170px;">
-          <ngx-skeleton-loader
-            [theme]="{ width: '288px', height: '170px' }"
-          >
+        <div *ngIf="isImagesLoading == true" style="height: 170px">
+          <ngx-skeleton-loader [theme]="{ width: '288px', height: '170px' }">
           </ngx-skeleton-loader>
         </div>
 

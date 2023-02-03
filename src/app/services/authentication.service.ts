@@ -70,7 +70,10 @@ export class AuthenticationService {
       location.reload();
       window.location.replace(`/login`);
       this.currentUserSubject.next(null);
-      this.otherServices.isLogoutProcessing.next(false);
+
+      setTimeout(() => {
+        this.otherServices.isLogoutProcessing.next(false);
+      }, 500);
     }, 500);
   }
 }
