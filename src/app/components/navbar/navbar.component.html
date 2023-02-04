@@ -92,7 +92,7 @@
           </a>
           <mat-menu #menuHero="matMenu" class="uxg-user-profile">
             <div class="profile-dropdown-div">
-              <div>
+              <div *ngIf="isUserAdmin == false">
                 <button
                   mat-raised-button
                   class="profile-dropdown-btn"

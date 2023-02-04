@@ -23,6 +23,8 @@ export class NavbarComponent implements OnInit {
   private sidebarVisible: boolean;
   user: User;
 
+  isUserAdmin: boolean = false;
+
   constructor(
     location: Location,
     private element: ElementRef,
@@ -35,7 +37,15 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDataFromLocal();
+    var data = localStorage.getItem("currentUser");
+    var user = JSON.parse(data);
+
+    if (user[0]["auth_type"] == "admin") {
+      this.isUserAdmin = true;
+    }
+    this.getUserDataFromLocal(user);
+
+    ///--------------
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName("navbar-toggler")[0];
@@ -177,10 +187,7 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  getUserDataFromLocal() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
-
+  getUserDataFromLocal(user) {
     this.user = new User(
       user[0]["id"],
       user[0]["auth_type"],
