@@ -60,15 +60,11 @@
   .user-profile-logo-sidebar {
     cursor: pointer;
   }
-  .sidebar-card-avatar {
-    border: solid 2px #d3ab33;
-    margin-left: 70px;
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    margin-bottom: 10px;
-    min-height: 100px;
-    min-width: 100px;
-    max-width: 100px;
-    max-height: 100px;
   }
 
   .sidebar-card-avatar-title {
