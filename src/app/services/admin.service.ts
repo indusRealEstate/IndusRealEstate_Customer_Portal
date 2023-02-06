@@ -53,8 +53,17 @@ export class AdminService {
       })
     );
   }
-  getAllRequests(userId: any) {
-    const url = `${API_URL}/getAllRequests.php?apikey=1`;
+  getAllAddPropertyRequests(userId: any) {
+    const url = `${API_URL}/getAllAddPropertyRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllPaymentRequests(userId: any) {
+    const url = `${API_URL}/getAllPaymentRequests.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;

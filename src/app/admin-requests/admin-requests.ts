@@ -18,6 +18,9 @@ export class AdminRequests implements OnInit {
 
   allRequests: any[] = [];
 
+  isLandlordRequestsEmpty: boolean = false;
+  isTenantRequestsEmpty: boolean = false;
+
   categoryAllRequests: "fixtures" | "payments" | "cat_3" | "cat_4" = "fixtures";
   propertyTypeAllRequests: "all" | "villa" | "appartment" = "all";
 
@@ -63,23 +66,56 @@ export class AdminRequests implements OnInit {
     this.fetchAllRequests(user[0]["id"]);
 
     setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
+      this.checkRequestsEmpty();
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1500);
+    }, 1500);
   }
 
   fetchAllRequests(userId) {
-    this.adminService.getAllRequests(userId).subscribe((e: Array<any>) => {
-      this.allRequests = e;
+    this.adminService
+      .getAllAddPropertyRequests(userId)
+      .subscribe((prop_req: Array<any>) => {
+        this.allRequests = prop_req;
 
-      setTimeout(() => {
-        for (let req of this.allRequests) {
-          this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
-            if (req) {
-              Object.assign(req, { userData: userDetails[0] });
-            }
-          });
-        }
-      }, 1000);
-    });
+        setTimeout(() => {
+          for (let req of this.allRequests) {
+            this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
+              if (req) {
+                Object.assign(req, { userData: userDetails[0] });
+              }
+            });
+          }
+        }, 500);
+      });
+
+    // this.adminService
+    //   .getAllPaymentRequests(userId)
+    //   .subscribe((payment_req: Array<any>) => {
+        
+    //   });
+  }
+
+  checkRequestsEmpty() {
+    var tenantReqs = 0;
+    var landlordReqs = 0;
+    for (let req of this.allRequests) {
+      if (req.userData.auth_type == "landlord") {
+        landlordReqs++;
+      } else if (req.userData.auth_type == "tenant") {
+        tenantReqs++;
+      }
+    }
+
+    setTimeout(() => {
+      if (landlordReqs == 0) {
+        this.isLandlordRequestsEmpty = true;
+      }
+      if (tenantReqs == 0) {
+        this.isTenantRequestsEmpty = true;
+      }
+    }, 1000);
   }
 }

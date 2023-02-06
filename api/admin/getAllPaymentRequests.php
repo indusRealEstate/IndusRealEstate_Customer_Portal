@@ -26,7 +26,7 @@ if (isset($postdata) && !empty($postdata)) {
         $userDecoded = json_decode($userEncoded);
 
         if ($userDecoded[0]->auth_type == 'admin') {
-            $propertiesData = $dbase->execute("SELECT * FROM `admin_requests`");
+            $propertiesData = $dbase->execute("SELECT * FROM `payment_req`");
 
             if ($propertiesData->num_rows != 0) {
                 $prRows = array();

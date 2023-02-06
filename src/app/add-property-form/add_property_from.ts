@@ -114,8 +114,6 @@ export class AddPropertyForm implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    const REQUEST_TYPE = "ADD_PROPERTY";
-
     if (
       this.propertyState == null ||
       this.offerValidity == "" ||
@@ -150,7 +148,6 @@ export class AddPropertyForm implements OnInit {
 
       var jsonData = {
         user_id: user[0]["id"],
-        request_type: REQUEST_TYPE,
         property_state: this.propertyState,
         offer_validity: this.offerValidity,
         furnish_details: this.addPropertyForm.value["furnishDetails"],

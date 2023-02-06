@@ -215,7 +215,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   getAllRequests(userId) {
-    this.adminService.getAllRequests(userId).subscribe((e: Array<any>) => {
+    this.adminService.getAllAddPropertyRequests(userId).subscribe((e: Array<any>) => {
       var limit = 0;
       for (let req of e) {
         limit++;
