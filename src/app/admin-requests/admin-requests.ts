@@ -71,7 +71,7 @@ export class AdminRequests implements OnInit {
       setTimeout(() => {
         this.isLoading = false;
       }, 1500);
-    }, 1500);
+    }, 2000);
   }
 
   fetchAllRequests(userId) {
@@ -79,23 +79,25 @@ export class AdminRequests implements OnInit {
       .getAllAddPropertyRequests(userId)
       .subscribe((prop_req: Array<any>) => {
         this.allRequests = prop_req;
-
-        setTimeout(() => {
-          for (let req of this.allRequests) {
-            this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
-              if (req) {
-                Object.assign(req, { userData: userDetails[0] });
-              }
-            });
-          }
-        }, 500);
       });
 
-    // this.adminService
-    //   .getAllPaymentRequests(userId)
-    //   .subscribe((payment_req: Array<any>) => {
-        
-    //   });
+    this.adminService
+      .getAllPaymentRequests(userId)
+      .subscribe((payment_req: Array<any>) => {
+        for (let p of payment_req) {
+          this.allRequests.push(p);
+        }
+      });
+
+    setTimeout(() => {
+      for (let req of this.allRequests) {
+        this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
+          if (req) {
+            Object.assign(req, { userData: userDetails[0] });
+          }
+        });
+      }
+    }, 1500);
   }
 
   checkRequestsEmpty() {

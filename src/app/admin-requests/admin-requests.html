@@ -240,6 +240,7 @@
                           "
                         />
                         <p
+                          *ngIf="allReq.userData.auth_type == 'landlord'"
                           style="
                             margin-bottom: 0;
                             margin-left: 10px;
@@ -247,6 +248,16 @@
                           "
                         >
                           {{allReq.building_name}}
+                        </p>
+                        <p
+                          *ngIf="allReq.userData.auth_type == 'tenant'"
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.property_name}}
                         </p>
                       </div>
                     </div>
@@ -600,7 +611,7 @@
                         font-weight: 600;
                       "
                     >
-                      {{allReq.building_name}}
+                      {{allReq.property_name}}
                     </p>
                   </div>
                 </div>

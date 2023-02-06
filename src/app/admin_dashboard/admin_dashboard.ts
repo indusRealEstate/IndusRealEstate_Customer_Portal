@@ -29,9 +29,11 @@ export class AdminDashboardComponent implements OnInit {
 
   requestPercentage: number = 0;
 
+  isLoading: boolean = false;
+
+  allRequests: any[] = [];
+
   requestOverview: any[] = [];
-  requestOverviewClients: any[] = [];
-  requestOverviewClientsPhoto: any[] = [];
 
   isRequestOverviewLoading: boolean = false;
 
@@ -43,6 +45,7 @@ export class AdminDashboardComponent implements OnInit {
     private otherService: OtherServices,
     private route: ActivatedRoute
   ) {
+    this.isLoading = true;
     if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
       this.isRequestOverviewLoading = true;
     }
@@ -99,9 +102,7 @@ export class AdminDashboardComponent implements OnInit {
       this.requestPercentage = sessionData["requestPercentage"];
       this.approvedRequests = sessionData["approvedRequests"];
       this.requestOverview = sessionData["requestOverview"];
-      this.requestOverviewClients = sessionData["requestOverviewClients"];
-      this.requestOverviewClientsPhoto =
-        sessionData["requestOverviewClientsPhoto"];
+      this.isLoading = false;
     } else {
       this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
@@ -122,7 +123,7 @@ export class AdminDashboardComponent implements OnInit {
         JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
       );
 
-    if (diff >= 1) {
+    if (diff >= 2) {
       this.clearAllVariables();
       sessionStorage.removeItem("admin_dashboard_fetched_time");
       sessionStorage.removeItem("admin_dashboard_session_data");
@@ -152,14 +153,15 @@ export class AdminDashboardComponent implements OnInit {
     this.approvedRequests = 0;
     this.requestPercentage = 0;
     this.requestOverview.length = 0;
-    this.requestOverviewClients.length = 0;
-    this.requestOverviewClientsPhoto.length = 0;
   }
 
   initFunction(userId) {
     this.getAllProperties(userId);
     this.getAllRequests(userId);
-    this.getAllClients(userId);
+
+    setTimeout(() => {
+      this.getAllClients(userId);
+    }, 3000);
 
     setTimeout(() => {
       sessionStorage.setItem(
@@ -173,11 +175,13 @@ export class AdminDashboardComponent implements OnInit {
           approvedRequests: this.approvedRequests,
           requestPercentage: this.requestPercentage,
           requestOverview: this.requestOverview,
-          requestOverviewClients: this.requestOverviewClients,
-          requestOverviewClientsPhoto: this.requestOverviewClientsPhoto,
         })
       );
-    }, 3000);
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
+    }, 4000);
   }
 
   getAllProperties(userId) {
@@ -200,38 +204,61 @@ export class AdminDashboardComponent implements OnInit {
         } else if (cl["auth_type"] == "tenant") {
           this.tenantClient++;
         }
-
-        for (let ovr of this.requestOverview) {
-          if (ovr["user_id"] == cl["id"]) {
-            this.requestOverviewClients.push(cl);
-
-            this.apiService.getUserDetails(cl["id"]).subscribe((usdet) => {
-              this.requestOverviewClientsPhoto.push(usdet[0]["profile_photo"]);
-            });
-          }
-        }
       }
     });
   }
 
   getAllRequests(userId) {
-    this.adminService.getAllAddPropertyRequests(userId).subscribe((e: Array<any>) => {
+    this.adminService
+      .getAllAddPropertyRequests(userId)
+      .subscribe((prop_req: Array<any>) => {
+        this.allRequests = prop_req;
+      });
+
+    setTimeout(() => {
+      this.adminService
+        .getAllPaymentRequests(userId)
+        .subscribe((pay_req: Array<any>) => {
+          for (let pay of pay_req) {
+            this.allRequests.push(pay);
+          }
+        });
+    }, 1000);
+
+    setTimeout(() => {
       var limit = 0;
-      for (let req of e) {
+      for (let req of this.allRequests) {
         limit++;
         this.totalRequests++;
         if (limit < 5) {
           this.requestOverview.push(req);
         }
-
         if (req["approved"] == "true") {
           this.approvedRequests++;
         }
       }
-    });
+    }, 1500);
 
     setTimeout(() => {
-      this.calculateRequests();
-    }, 200);
+      for (let req of this.allRequests) {
+        this.apiService.getUser(req["user_id"]).subscribe((userData) => {
+          if (req) {
+            Object.assign(req, { userData: userData[0] });
+          }
+        });
+
+        this.apiService
+          .getUserDetails(req["user_id"])
+          .subscribe((userDetails) => {
+            if (req) {
+              Object.assign(req, { userDetails: userDetails[0] });
+            }
+          });
+      }
+
+      setTimeout(() => {
+        this.calculateRequests();
+      }, 1500);
+    }, 2500);
   }
 }
