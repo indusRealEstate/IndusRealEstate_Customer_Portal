@@ -13,8 +13,8 @@ const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
 };
 
-const API_URL = "http://127.0.0.1:8081/user";
-const BASE_URL_IMAGES = "http://127.0.0.1:8081/upload/img/properties";
+const API_URL = "https://www.ireproperty.com/app/user";
+const BASE_URL_IMAGES = "https://www.ireproperty.com/app/upload/img/properties";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {

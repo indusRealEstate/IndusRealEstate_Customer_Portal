@@ -16,7 +16,7 @@ const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
 };
 
-const API_URL = "http://127.0.0.1:8081/user";
+const API_URL = "https://www.ireproperty.com/app/user";
 
 @Injectable({ providedIn: "root" })
 export class OtherServices {

@@ -13,7 +13,7 @@ const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
 };
 
-const API_URL = "http://127.0.0.1:8081/admin";
+const API_URL = "https://www.ireproperty.com/app/admin";
 
 @Injectable({ providedIn: "root" })
 export class AdminService {
