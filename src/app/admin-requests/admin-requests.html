@@ -1,6 +1,12 @@
 <div class="main-content reports-bg">
   <div class="container-fluid h-100 d-flex justify-content-center">
-    <div class="card">
+    <span
+      *ngIf="isLoading == true"
+      class="spinner-border spinner-border-m mr-2"
+      style="color: #d4aa32; margin-top: 365px"
+    >
+    </span>
+    <div class="card" *ngIf="isLoading == false">
       <div class="card-header" style="background-color: #2b333e; color: white">
         <p
           style="
@@ -13,41 +19,280 @@
           Requests
         </p>
       </div>
-
-      <div class="card-body" style="padding: 35px">
-        <div class="col">
-          <p style="font-size: 20px; color: #a3a3a3">Landlord Requests</p>
-          <hr style="border: 2px solid #d3ab33; border-radius: 50px" />
-
-          <div class="h-100 d-flex justify-content-center">
-            <div class="card request-card">
-              <div class="card-header">
-                <h3>User Request</h3>
+      <mat-tab-group>
+        <mat-tab label="All Requests">
+          <div
+            class="card-body"
+            style="background-color: #ffffff; color: #404040; padding: 30px"
+          >
+            <div class="row" style="margin: 0">
+              <div class="col-sm-2">
+                <p
+                  style="
+                    margin-bottom: -10px;
+                    font-size: 15px;
+                    font-weight: 600;
+                  "
+                >
+                  Category
+                </p>
+                <mat-radio-group
+                  [(ngModel)]="categoryAllRequests"
+                  style="margin-left: 15px"
+                >
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="fixtures"></mat-radio-button>
+                    <p>Fixtures</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="payments"></mat-radio-button>
+                    <p>Payments</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="cat_3"></mat-radio-button>
+                    <p>Category 3</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="cat_4"></mat-radio-button>
+                    <p>Category 4</p>
+                  </div>
+                </mat-radio-group>
+                <p
+                  style="
+                    margin-bottom: -10px;
+                    font-size: 15px;
+                    font-weight: 600;
+                    margin-top: 15px;
+                  "
+                >
+                  Property Type
+                </p>
+                <mat-radio-group
+                  [(ngModel)]="propertyTypeAllRequests"
+                  style="margin-left: 15px"
+                >
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="all"></mat-radio-button>
+                    <p>All</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="villa"></mat-radio-button>
+                    <p>Villa</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="appartment"></mat-radio-button>
+                    <p>Appartment</p>
+                  </div>
+                </mat-radio-group>
+                <p
+                  style="
+                    font-size: 15px;
+                    font-weight: 600;
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+                  "
+                >
+                  Reset Filters
+                </p>
+                <button
+                  class="btn"
+                  style="
+                    padding: 10px;
+                    width: 170px;
+                    background-color: #343b44;
+                    border-radius: 7px;
+                  "
+                >
+                  Approved Requests
+                </button>
+                <button
+                  class="btn"
+                  style="
+                    padding: 10px;
+                    width: 170px;
+                    background-color: #343b44;
+                    border-radius: 7px;
+                  "
+                >
+                  Denied Requests
+                </button>
               </div>
-              <div class="card-body">
-                <div class="user-info">
-                  <h4>User Information</h4>
-                  <p>Name: <span class="user-name">John Doe</span></p>
-                  <p>
-                    Email:
-                    <span class="user-email">johndoe@example.com</span>
-                  </p>
-                </div>
-                <div class="user-request">
-                  <h4>Request</h4>
-                  <p class="user-request-text">
-                    I would like to request a new feature for the website.
-                  </p>
+              <div class="col">
+                <div class="card-wrapper" *ngFor="let allReq of allRequests">
+                  <div
+                    class="card"
+                    style="
+                      background-color: #f4f4f4;
+                      padding: 20px;
+                      padding-bottom: 10px;
+                    "
+                  >
+                    <p
+                      *ngIf="allReq.request_type == 'ADD_PROPERTY'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
+                    >
+                      Add Property Request
+                    </p>
+                    <p
+                      *ngIf="allReq.request_type == 'PAYMENT'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
+                    >
+                      Payment Request
+                    </p>
+                    <p
+                      *ngIf="allReq.request_type == 'OTHER'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
+                    >
+                      Other Request
+                    </p>
+                    <p style="color: #707070">{{allReq.additional_info}}</p>
+
+                    <div
+                      class="row"
+                      style="
+                        margin: 0;
+                        justify-content: space-between;
+                        width: 40%;
+                      "
+                    >
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/user.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.userData.firstname + " " +
+                          allReq.userData.lastname}}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/document-copy.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.userData.auth_type}}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/house-2.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.building_name}}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr
+                      style="
+                        border: 1px solid #d4aa32;
+                        border-radius: 15px;
+                        margin-bottom: 5px;
+                      "
+                    />
+
+                    <div class="row" style="margin: 0">
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Review Request</p>
+                      </div>
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Accept Request</p>
+                      </div>
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Decline Request</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <p style="font-size: 20px; color: #a3a3a3">Tenant Requests</p>
-          <hr style="border: 2px solid #d3ab33; border-radius: 50px" />
-        </div>
-      </div>
+        </mat-tab>
+        <mat-tab label="Landlord Requests">
+          <div
+            class="card-body"
+            style="background-color: #ffffff; color: #404040"
+          >
+            tab 2
+          </div>
+        </mat-tab>
+        <mat-tab label="Tenant Requests">
+          <div
+            class="card-body"
+            style="background-color: #ffffff; color: #404040"
+          >
+            tab 3
+          </div></mat-tab
+        >
+      </mat-tab-group>
     </div>
   </div>
 </div>

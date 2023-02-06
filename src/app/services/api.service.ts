@@ -23,14 +23,14 @@ export class ApiService {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
       this.otherServices.gotError.next(true);
-      this.otherServices.addMessage({
-        message: "Error",
-        description: error.error.error,
-      });
+      // this.otherServices.addMessage({
+      //   message: "Error",
+      //   description: error.error.error,
+      // });
 
-      setTimeout(() => {
-        this.otherServices.clearMessage();
-      }, 8000);
+      // setTimeout(() => {
+      //   this.otherServices.clearMessage();
+      // }, 8000);
 
       return of(result as T);
     };
@@ -146,15 +146,6 @@ export class ApiService {
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("saveImgInServer", [])));
-  }
-
-  getAddPropertyRequests() {
-    const url = `${API_URL}/getAddPropertyRequests.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
   }
 
   removeAppointment(data: any) {

@@ -29,8 +29,6 @@ export class AdminDashboardComponent implements OnInit {
 
   requestPercentage: number = 0;
 
-  dataFetchedTime: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
   requestOverview: any[] = [];
   requestOverviewClients: any[] = [];
   requestOverviewClientsPhoto: any[] = [];
@@ -118,25 +116,22 @@ export class AdminDashboardComponent implements OnInit {
 
     var now = new Date().getMinutes();
 
-    this.dataFetchedTime.next(
+    var diff =
       now -
-        Number(
-          JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
-        )
-    );
+      Number(
+        JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
+      );
 
-    this.dataFetchedTime.subscribe((e) => {
-      if (e >= 2) {
-        this.clearAllVariables();
-        sessionStorage.removeItem("admin_dashboard_fetched_time");
-        sessionStorage.removeItem("admin_dashboard_session_data");
-        this.initFunction(user[0]["id"]);
-        sessionStorage.setItem(
-          "admin_dashboard_fetched_time",
-          JSON.stringify(new Date().getMinutes())
-        );
-      }
-    });
+    if (diff >= 1) {
+      this.clearAllVariables();
+      sessionStorage.removeItem("admin_dashboard_fetched_time");
+      sessionStorage.removeItem("admin_dashboard_session_data");
+      this.initFunction(user[0]["id"]);
+      sessionStorage.setItem(
+        "admin_dashboard_fetched_time",
+        JSON.stringify(new Date().getMinutes())
+      );
+    }
   }
 
   calculateRequests() {

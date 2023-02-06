@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
@@ -15,7 +16,10 @@ export class AdminRequests implements OnInit {
 
   isLoading: boolean = false;
 
-  addPropertyRequests: any[] = [];
+  allRequests: any[] = [];
+
+  categoryAllRequests: "fixtures" | "payments" | "cat_3" | "cat_4" = "fixtures";
+  propertyTypeAllRequests: "all" | "villa" | "appartment" = "all";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,8 +27,9 @@ export class AdminRequests implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private otherServices: OtherServices
+    private adminService: AdminService
   ) {
+    this.isLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     if (user[0]["auth_type"] == "admin") {
@@ -53,18 +58,28 @@ export class AdminRequests implements OnInit {
     }
   }
   ngOnInit() {
-    this.fetchLandlordAddPropertyRequets();
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.fetchAllRequests(user[0]["id"]);
 
-    console.log(this.addPropertyRequests);
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
   }
 
-  fetchLandlordAddPropertyRequets() {
-    this.apiService.getAddPropertyRequests().subscribe((e) => {
-      for (let adpr of e) {
-        this.apiService.getUser(adpr["user_id"]).subscribe((user) => {
-          console.log(user);
-        });
-      }
+  fetchAllRequests(userId) {
+    this.adminService.getAllRequests(userId).subscribe((e: Array<any>) => {
+      this.allRequests = e;
+
+      setTimeout(() => {
+        for (let req of this.allRequests) {
+          this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
+            if (req) {
+              Object.assign(req, { userData: userDetails[0] });
+            }
+          });
+        }
+      }, 1000);
     });
   }
 }
