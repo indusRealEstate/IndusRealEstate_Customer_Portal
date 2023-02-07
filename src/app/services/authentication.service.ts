@@ -5,7 +5,7 @@ import { catchError, map } from "rxjs/operators";
 import { User } from "../../../models/user/user.model";
 import { OtherServices } from "./other.service";
 
-const API_URL = "https://www.ireproperty.com/portal/auth";
+const API_URL = "https://www.ireproperty.com/portal/api/auth";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
