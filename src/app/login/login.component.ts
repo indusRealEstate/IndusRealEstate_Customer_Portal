@@ -80,11 +80,11 @@ export class LoginComponent implements OnInit {
           
         },
         (error) => {
+          console.log(error)
           if (error["statusText"] == "Not Found") {
             this.invaliduser = true;
           }
           console.log(this.invaliduser);
-          this.alertService.error(error);
           this.loading = false;
         }
       );

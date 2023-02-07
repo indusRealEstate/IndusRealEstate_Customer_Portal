@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
           "recentHeppenings",
           JSON.stringify(this.recentHeppenings)
         );
-      }, 200);
+      }, 3000);
     }
   }
 

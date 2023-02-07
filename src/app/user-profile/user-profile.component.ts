@@ -234,6 +234,6 @@ export class UserProfileComponent implements OnInit {
         })
       );
       this.userProfileFetching = false;
-    }, 1000);
+    }, 3000);
   }
 }

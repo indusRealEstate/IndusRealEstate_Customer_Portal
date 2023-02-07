@@ -5,7 +5,7 @@ import { catchError, map } from "rxjs/operators";
 import { User } from "../../../models/user/user.model";
 import { OtherServices } from "./other.service";
 
-const API_URL = "https://www.ireproperty.com/app/auth";
+const API_URL = "https://www.ireproperty.com/portal/auth";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
@@ -48,6 +48,7 @@ export class AuthenticationService {
       .post<any>(url, { username: username, password: password })
       .pipe(
         map((userData) => {
+          console.log(userData);
           // login successful if there's a jwt token in the response
           if (userData && userData[0]["token"]) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

@@ -168,6 +168,6 @@ export class SidebarComponent implements OnInit {
 
     setTimeout(() => {
       this.userProfileFetching = false;
-    }, 500);
+    }, 1000);
   }
 }
