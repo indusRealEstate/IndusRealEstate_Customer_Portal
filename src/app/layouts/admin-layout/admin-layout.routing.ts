@@ -41,6 +41,6 @@ export const AdminLayoutRoutes: Routes = [
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "admin-requests", component: AdminRequests },
-  { path: "404", component: PageNotFoundComponent },
-  { path: "**", redirectTo: "/404" },
+  // { path: "404", component: PageNotFoundComponent },
+  // { path: "**", redirectTo: "/404" },
 ];

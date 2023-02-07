@@ -92,6 +92,8 @@ export class HomeComponent implements OnInit {
     this.isUserSignOut();
     this.getUserDataFromLocal();
     this.initFunction();
+
+    console.log(window.location)
   }
 
   initFunction() {

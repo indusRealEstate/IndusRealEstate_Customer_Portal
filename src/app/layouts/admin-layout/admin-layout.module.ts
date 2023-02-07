@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { HomeComponent } from "../../home/home.component";
@@ -242,5 +246,6 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
     Tenant_Registration_Stepper_Fifth,
     Tenant_Registration_Stepper_Sixth,
   ],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
 export class AdminLayoutModule {}

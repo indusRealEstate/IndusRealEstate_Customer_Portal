@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
@@ -110,5 +114,6 @@ import { TenantFormComponent } from "app/tenant_register_form/tenant_form.compon
     LandlordFormComponent,
     TenantFormComponent,
   ],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
 export class AuthLayoutModule {}

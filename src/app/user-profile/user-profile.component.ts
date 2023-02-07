@@ -148,7 +148,7 @@ export class UserProfileComponent implements OnInit {
         }
       }
     } else {
-      console.log("user details from session");
+      console.log("user details from S-NEWR-Session");
 
       this.username = user[0]["username"];
       this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];

@@ -69,18 +69,23 @@ export class LoginComponent implements OnInit {
           var user = JSON.parse(userData);
 
           setTimeout(() => {
-            location.reload();
-            if(user[0]["auth_type"] != "admin"){
-              window.location.replace(`/home?uid=${user[0]["id"]}`);
-            }else{
-              window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
+            if (user[0]["auth_type"] != "admin") {
+              // window.location.replace(`/home?uid=${user[0]["id"]}`);
+              this.router.navigate(["/home"], {
+                // replaceUrl: true,
+                queryParams: { uid: user[0]["id"] },
+              });
+            } else {
+              // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
+              this.router.navigate(["/admin-dashboard"], {
+                // replaceUrl: true,
+                queryParams: { uid: user[0]["id"] },
+              });
             }
-            
           }, 500);
-          
         },
         (error) => {
-          console.log(error)
+          console.log(error);
           if (error["statusText"] == "Not Found") {
             this.invaliduser = true;
           }
