@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
   user: User;
   isLandlord: boolean = false;
 
+  isRecentHappeningsLoading: boolean = false;
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -24,6 +26,7 @@ export class HomeComponent implements OnInit {
     private otherService: OtherServices,
     private route: ActivatedRoute
   ) {
+    this.isRecentHappeningsLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -93,7 +96,7 @@ export class HomeComponent implements OnInit {
     this.getUserDataFromLocal();
     this.initFunction();
 
-    console.log(window.location)
+    console.log(window.location);
   }
 
   initFunction() {
@@ -103,12 +106,17 @@ export class HomeComponent implements OnInit {
     if (recentHeppeningsSessionData != null) {
       var data = JSON.parse(recentHeppeningsSessionData);
       this.recentHeppenings = data;
+      this.isRecentHappeningsLoading = false;
     } else {
       this.getUserRecentHappenings();
       sessionStorage.setItem(
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())
       );
+
+      setTimeout(() => {
+        this.isRecentHappeningsLoading = false;
+      }, 2000);
     }
 
     var now = new Date().getMinutes();
@@ -117,6 +125,7 @@ export class HomeComponent implements OnInit {
       now - Number(JSON.parse(sessionStorage.getItem("recentHappeningsDiff")));
 
     if (diff >= 3) {
+      this.isRecentHappeningsLoading = true;
       sessionStorage.removeItem("recentHappeningsDiff");
       sessionStorage.removeItem("recentHeppenings");
       this.getUserRecentHappenings();
@@ -124,7 +133,9 @@ export class HomeComponent implements OnInit {
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())
       );
-
+      setTimeout(() => {
+        this.isRecentHappeningsLoading = false;
+      }, 2000);
       console.log("refreshed- recent");
     }
   }

@@ -171,17 +171,184 @@
             </td>
           </tr>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="background-color: #ffffff94">
           <div class="table-responsive">
-            <table class="table table-hover">
+            <table
+              class="table table-hover"
+              *ngIf="isRecentHappeningsLoading == true"
+            >
+              <tbody>
+                <tr class="recent-happenings-home">
+                  <td>
+                    <div
+                      style="
+                        max-width: 850px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '850px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        max-width: 150px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '150px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="recent-happenings-home">
+                  <td>
+                    <div
+                      style="
+                        max-width: 850px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '850px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        max-width: 150px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '150px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="recent-happenings-home">
+                  <td>
+                    <div
+                      style="
+                        max-width: 850px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '850px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        max-width: 150px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '150px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="recent-happenings-home">
+                  <td>
+                    <div
+                      style="
+                        max-width: 850px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '850px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        max-width: 150px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '150px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="recent-happenings-home">
+                  <td>
+                    <div
+                      style="
+                        max-width: 850px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '850px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        max-width: 150px;
+                        max-height: 30px;
+                        border-radius: 9px;
+                        margin-top: 15px;
+                      "
+                    >
+                      <ngx-skeleton-loader
+                        [theme]="{ width: '150px', height: '30px' }"
+                      >
+                      </ngx-skeleton-loader>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table
+              class="table table-hover"
+              *ngIf="isRecentHappeningsLoading == false"
+            >
               <tbody>
                 <tr
                   *ngFor="let e of recentHeppenings"
                   class="recent-happenings-home"
                 >
-                  <!-- <td>
-                                        {{e["user_id"]}}
-                                    </td> -->
                   <td>
                     {{ e["content"] }}
                   </td>
