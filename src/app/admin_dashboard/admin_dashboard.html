@@ -434,14 +434,15 @@
           </div>
           <div class="card-body">
             <div
-              *ngFor="let pp of requestOverview; let last = last;let index = index;"
+              class="col"
+              style="padding: 0"
+              *ngIf="isRequestOverviewLoading == true"
             >
               <div
                 class="row"
-                style="margin: 0; margin-left: 10px; margin-top: 20px"
+                style="margin: 0; margin-left: 14px; margin-top: 20px"
               >
                 <div
-                  *ngIf="isRequestOverviewLoading == true"
                   style="max-width: 75px; max-height: 75px; border-radius: 9px"
                 >
                   <ngx-skeleton-loader
@@ -449,8 +450,94 @@
                   >
                   </ngx-skeleton-loader>
                 </div>
+                <div class="col" style="padding: 0">
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '200px', height: '30px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '290px', height: '24px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+              <hr
+                style="margin-bottom: 0; margin-left: 15px; margin-right: 22px"
+              />
+              <div
+                class="row"
+                style="margin: 0; margin-left: 14px; margin-top: 20px"
+              >
+                <div
+                  style="max-width: 75px; max-height: 75px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '75px', height: '75px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+                <div class="col" style="padding: 0">
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '200px', height: '30px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '290px', height: '24px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              *ngFor="let pp of requestOverview; let last = last;let index = index;"
+            >
+              <div
+                *ngIf="isRequestOverviewLoading == false"
+                class="row"
+                style="margin: 0; margin-left: 10px; margin-top: 20px"
+              >
                 <img
-                  *ngIf="isRequestOverviewLoading == false"
                   src="{{'data:image/jpeg;base64,' + pp.userDetails.profile_photo}}"
                   alt=""
                   style="
@@ -484,10 +571,16 @@
                   </p>
                 </div>
               </div>
-              <hr
-                *ngIf="!last"
-                style="margin-bottom: 0; margin-left: 15px; margin-right: 22px"
-              />
+              <div *ngIf="isRequestOverviewLoading == false">
+                <hr
+                  *ngIf="!last"
+                  style="
+                    margin-bottom: 0;
+                    margin-left: 15px;
+                    margin-right: 22px;
+                  "
+                />
+              </div>
             </div>
 
             <div

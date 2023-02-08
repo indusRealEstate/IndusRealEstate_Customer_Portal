@@ -15,6 +15,7 @@ export class AdminRequests implements OnInit {
   isUserSignedIn: boolean = false;
 
   isLoading: boolean = false;
+  isContentLoading: boolean = false;
 
   allRequests: any[] = [];
 
@@ -33,6 +34,7 @@ export class AdminRequests implements OnInit {
     private adminService: AdminService
   ) {
     this.isLoading = true;
+    this.isContentLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     if (user[0]["auth_type"] == "admin") {
@@ -63,15 +65,59 @@ export class AdminRequests implements OnInit {
   ngOnInit() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    this.fetchAllRequests(user[0]["id"]);
+
+    var adminReqDataSession = JSON.parse(
+      sessionStorage.getItem("admin_reqs_session")
+    );
+
+    if (adminReqDataSession != null) {
+      this.allRequests = adminReqDataSession["allRequests"];
+      this.isLandlordRequestsEmpty =
+        adminReqDataSession["isLandlordRequestsEmpty"];
+      this.isTenantRequestsEmpty = adminReqDataSession["isTenantRequestsEmpty"];
+      this.isLoading = false;
+      this.isContentLoading = false;
+    } else {
+      this.initFunction(user[0]["id"]);
+      sessionStorage.setItem(
+        "admin_reqs_fetched_time",
+        JSON.stringify(new Date().getMinutes())
+      );
+    }
+
+    var now = new Date().getMinutes();
+
+    var diff =
+      now -
+      Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
+
+    if (diff >= 5) {
+      this.isLoading = true;
+      this.isContentLoading = true;
+      this.clearAllVariables();
+      sessionStorage.removeItem("admin_reqs_fetched_time");
+      sessionStorage.removeItem("admin_reqs_session");
+      this.initFunction(user[0]["id"]);
+      sessionStorage.setItem(
+        "admin_reqs_fetched_time",
+        JSON.stringify(new Date().getMinutes())
+      );
+    }
+  }
+
+  clearAllVariables() {
+    this.allRequests.length = 0;
+  }
+
+  initFunction(userId) {
+    this.fetchAllRequests(userId);
 
     setTimeout(() => {
-      this.checkRequestsEmpty();
-
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1500);
+      this.isLoading = false;
     }, 2000);
+    setTimeout(() => {
+      this.isContentLoading = false;
+    }, 11000);
   }
 
   fetchAllRequests(userId) {
@@ -81,13 +127,15 @@ export class AdminRequests implements OnInit {
         this.allRequests = prop_req;
       });
 
-    this.adminService
-      .getAllPaymentRequests(userId)
-      .subscribe((payment_req: Array<any>) => {
-        for (let p of payment_req) {
-          this.allRequests.push(p);
-        }
-      });
+    setTimeout(() => {
+      this.adminService
+        .getAllPaymentRequests(userId)
+        .subscribe((payment_req: Array<any>) => {
+          for (let p of payment_req) {
+            this.allRequests.push(p);
+          }
+        });
+    }, 500);
 
     setTimeout(() => {
       for (let req of this.allRequests) {
@@ -97,7 +145,22 @@ export class AdminRequests implements OnInit {
           }
         });
       }
-    }, 1500);
+    }, 4000);
+
+    setTimeout(() => {
+      this.checkRequestsEmpty();
+    }, 5500);
+
+    setTimeout(() => {
+      sessionStorage.setItem(
+        "admin_reqs_session",
+        JSON.stringify({
+          allRequests: this.allRequests,
+          isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
+          isTenantRequestsEmpty: this.isTenantRequestsEmpty,
+        })
+      );
+    }, 7500);
   }
 
   checkRequestsEmpty() {

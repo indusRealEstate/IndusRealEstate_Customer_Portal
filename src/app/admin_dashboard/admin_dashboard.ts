@@ -46,9 +46,9 @@ export class AdminDashboardComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.isLoading = true;
-    if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
-      this.isRequestOverviewLoading = true;
-    }
+    // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
+    this.isRequestOverviewLoading = true;
+    // }
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -103,6 +103,7 @@ export class AdminDashboardComponent implements OnInit {
       this.approvedRequests = sessionData["approvedRequests"];
       this.requestOverview = sessionData["requestOverview"];
       this.isLoading = false;
+      this.isRequestOverviewLoading = false;
     } else {
       this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
@@ -112,7 +113,7 @@ export class AdminDashboardComponent implements OnInit {
 
       setTimeout(() => {
         this.isRequestOverviewLoading = false;
-      }, 2000);
+      }, 10000);
     }
 
     var now = new Date().getMinutes();
@@ -123,7 +124,9 @@ export class AdminDashboardComponent implements OnInit {
         JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
       );
 
-    if (diff >= 2) {
+    if (diff >= 5) {
+      this.isRequestOverviewLoading = true;
+      this.isLoading = true;
       this.clearAllVariables();
       sessionStorage.removeItem("admin_dashboard_fetched_time");
       sessionStorage.removeItem("admin_dashboard_session_data");
@@ -132,6 +135,10 @@ export class AdminDashboardComponent implements OnInit {
         "admin_dashboard_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
+
+      setTimeout(() => {
+        this.isRequestOverviewLoading = false;
+      }, 10000);
     }
   }
 
@@ -157,11 +164,14 @@ export class AdminDashboardComponent implements OnInit {
 
   initFunction(userId) {
     this.getAllProperties(userId);
-    this.getAllRequests(userId);
+    this.getAllClients(userId);
+    setTimeout(() => {
+      this.getAllRequests(userId);
+    }, 1000);
 
     setTimeout(() => {
-      this.getAllClients(userId);
-    }, 3000);
+      this.isLoading = false;
+    }, 1500);
 
     setTimeout(() => {
       sessionStorage.setItem(
@@ -177,11 +187,7 @@ export class AdminDashboardComponent implements OnInit {
           requestOverview: this.requestOverview,
         })
       );
-
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1000);
-    }, 4000);
+    }, 12000);
   }
 
   getAllProperties(userId) {
@@ -223,7 +229,7 @@ export class AdminDashboardComponent implements OnInit {
             this.allRequests.push(pay);
           }
         });
-    }, 1000);
+    }, 500);
 
     setTimeout(() => {
       var limit = 0;
@@ -237,7 +243,7 @@ export class AdminDashboardComponent implements OnInit {
           this.approvedRequests++;
         }
       }
-    }, 1500);
+    }, 3000);
 
     setTimeout(() => {
       for (let req of this.allRequests) {
@@ -258,7 +264,7 @@ export class AdminDashboardComponent implements OnInit {
 
       setTimeout(() => {
         this.calculateRequests();
-      }, 1500);
-    }, 2500);
+      }, 2500);
+    }, 5000);
   }
 }
