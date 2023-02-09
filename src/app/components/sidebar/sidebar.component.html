@@ -174,5 +174,41 @@
         </div>
       </a>
     </li>
+    <p
+      *ngIf="user.auth_type == 'admin'"
+      style="
+        color: white;
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-align: -webkit-center;
+        margin-top: 485px;
+      "
+    >
+      {{ appVersion }}
+    </p>
+    <p
+      *ngIf="user.auth_type == 'landlord'"
+      style="
+        color: white;
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-align: -webkit-center;
+        margin-top: 140px;
+      "
+    >
+      {{ appVersion }}
+    </p>
+    <p
+      *ngIf="user.auth_type == 'tenant'"
+      style="
+        color: white;
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-align: -webkit-center;
+        margin-top: 190px;
+      "
+    >
+      {{ appVersion }}
+    </p>
   </ul>
 </div>
