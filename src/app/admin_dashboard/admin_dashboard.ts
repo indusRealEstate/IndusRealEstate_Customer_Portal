@@ -166,13 +166,7 @@ export class AdminDashboardComponent implements OnInit {
     await this.getAllProperties(userId);
     await this.getAllClients(userId);
 
-    await this.getAllRequests(userId).then((req_len) => {
-      if (req_len == this.allRequests.length) {
-        setTimeout(() => {
-          this.calculateRequests();
-        }, 1000);
-      }
-    });
+    await this.getAllRequests(userId);
 
     setTimeout(() => {
       this.isLoading = false;
@@ -220,13 +214,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async getAllRequests(userId) {
-    var reqLen = 0;
-
     this.adminService
       .getAllAddPropertyRequests(userId)
       .subscribe((prop_req: Array<any>) => {
         this.allRequests = prop_req;
-        reqLen = prop_req.length;
 
         setTimeout(() => {
           this.adminService
@@ -242,7 +233,6 @@ export class AdminDashboardComponent implements OnInit {
 
               if (pay_req.length == i) {
                 await this.assignUserData();
-                reqLen = reqLen + pay_req.length;
                 var limit = 0;
                 for (let req of this.allRequests) {
                   limit++;
@@ -253,12 +243,13 @@ export class AdminDashboardComponent implements OnInit {
                     this.approvedRequests++;
                   }
                 }
+                if (limit == this.allRequests.length) {
+                  this.calculateRequests();
+                }
               }
             });
         }, 500);
       });
-
-    return reqLen;
   }
 
   async assignUserData() {

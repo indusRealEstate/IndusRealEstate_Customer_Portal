@@ -269,7 +269,18 @@
                       >
                         Other Request
                       </p>
-                      <p style="color: #707070">{{allReq.additional_info}}</p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'ADD_PROPERTY'"
+                      >
+                        {{allReq.additional_info}}
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'PAYMENT'"
+                      >
+                        {{allReq.payment_details}}
+                      </p>
 
                       <div
                         class="row"
@@ -846,7 +857,12 @@
                   >
                     Other Request
                   </p>
-                  <p style="color: #707070">{{allReq.additional_info}}</p>
+                  <p
+                    style="color: #707070"
+                    *ngIf="allReq.request_type == 'PAYMENT'"
+                  >
+                    {{allReq.payment_details}}
+                  </p>
 
                   <div
                     class="row"

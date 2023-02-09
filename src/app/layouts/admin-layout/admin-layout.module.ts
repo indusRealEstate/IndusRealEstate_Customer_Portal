@@ -16,7 +16,6 @@ import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
-import { counterComponent } from "app/counter/counter.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatCardModule } from "@angular/material/card";
 import { A11yModule } from "@angular/cdk/a11y";
@@ -178,7 +177,6 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
     HomeComponent,
     UserProfileComponent,
     ReportsComponent,
-    counterComponent,
     MyRequestsComponent,
     MyPropertiesComponent,
     AppointmentsComponent,
