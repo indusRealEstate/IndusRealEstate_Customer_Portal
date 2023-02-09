@@ -84,7 +84,7 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -105,15 +105,15 @@ export class AdminDashboardComponent implements OnInit {
       this.isLoading = false;
       this.isRequestOverviewLoading = false;
     } else {
-      this.initFunction(user[0]["id"]);
+      await this.initFunction(user[0]["id"]).then(() => {
+        setTimeout(() => {
+          this.isRequestOverviewLoading = false;
+        }, 5000);
+      });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
-
-      setTimeout(() => {
-        this.isRequestOverviewLoading = false;
-      }, 10000);
     }
 
     var now = new Date().getMinutes();
@@ -130,15 +130,15 @@ export class AdminDashboardComponent implements OnInit {
       this.clearAllVariables();
       sessionStorage.removeItem("admin_dashboard_fetched_time");
       sessionStorage.removeItem("admin_dashboard_session_data");
-      this.initFunction(user[0]["id"]);
+      await this.initFunction(user[0]["id"]).then(() => {
+        setTimeout(() => {
+          this.isRequestOverviewLoading = false;
+        }, 5000);
+      });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
-
-      setTimeout(() => {
-        this.isRequestOverviewLoading = false;
-      }, 10000);
     }
   }
 
@@ -162,12 +162,17 @@ export class AdminDashboardComponent implements OnInit {
     this.requestOverview.length = 0;
   }
 
-  initFunction(userId) {
-    this.getAllProperties(userId);
-    this.getAllClients(userId);
-    setTimeout(() => {
-      this.getAllRequests(userId);
-    }, 1000);
+  async initFunction(userId) {
+    await this.getAllProperties(userId);
+    await this.getAllClients(userId);
+
+    await this.getAllRequests(userId).then((req_len) => {
+      if (req_len == this.allRequests.length) {
+        setTimeout(() => {
+          this.calculateRequests();
+        }, 1000);
+      }
+    });
 
     setTimeout(() => {
       this.isLoading = false;
@@ -187,10 +192,10 @@ export class AdminDashboardComponent implements OnInit {
           requestOverview: this.requestOverview,
         })
       );
-    }, 12000);
+    }, 10000);
   }
 
-  getAllProperties(userId) {
+  async getAllProperties(userId) {
     this.adminService.getAllProperties(userId).subscribe((e: Array<any>) => {
       for (let pr of e) {
         if (pr["property_state"] == "rent") {
@@ -202,7 +207,7 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  getAllClients(userId) {
+  async getAllClients(userId) {
     this.adminService.getAllClients(userId).subscribe((e: Array<any>) => {
       for (let cl of e) {
         if (cl["auth_type"] == "landlord") {
@@ -214,57 +219,63 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  getAllRequests(userId) {
+  async getAllRequests(userId) {
+    var reqLen = 0;
+
     this.adminService
       .getAllAddPropertyRequests(userId)
       .subscribe((prop_req: Array<any>) => {
         this.allRequests = prop_req;
+        reqLen = prop_req.length;
+
+        setTimeout(() => {
+          this.adminService
+            .getAllPaymentRequests(userId)
+            .subscribe(async (pay_req: Array<any>) => {
+              this.totalRequests = this.allRequests.length;
+              var i = 0;
+              for (let pay of pay_req) {
+                i++;
+                this.totalRequests++;
+                this.allRequests.push(pay);
+              }
+
+              if (pay_req.length == i) {
+                await this.assignUserData();
+                reqLen = reqLen + pay_req.length;
+                var limit = 0;
+                for (let req of this.allRequests) {
+                  limit++;
+                  if (limit < 5) {
+                    this.requestOverview.push(req);
+                  }
+                  if (req["approved"] == "true") {
+                    this.approvedRequests++;
+                  }
+                }
+              }
+            });
+        }, 500);
       });
 
-    setTimeout(() => {
-      this.adminService
-        .getAllPaymentRequests(userId)
-        .subscribe((pay_req: Array<any>) => {
-          for (let pay of pay_req) {
-            this.allRequests.push(pay);
-          }
-        });
-    }, 500);
+    return reqLen;
+  }
 
-    setTimeout(() => {
-      var limit = 0;
-      for (let req of this.allRequests) {
-        limit++;
-        this.totalRequests++;
-        if (limit < 5) {
-          this.requestOverview.push(req);
+  async assignUserData() {
+    for (let req of this.allRequests) {
+      this.apiService.getUser(req["user_id"]).subscribe((userData) => {
+        if (req) {
+          Object.assign(req, { userData: userData[0] });
         }
-        if (req["approved"] == "true") {
-          this.approvedRequests++;
-        }
-      }
-    }, 3000);
+      });
 
-    setTimeout(() => {
-      for (let req of this.allRequests) {
-        this.apiService.getUser(req["user_id"]).subscribe((userData) => {
+      this.apiService
+        .getUserDetails(req["user_id"])
+        .subscribe((userDetails) => {
           if (req) {
-            Object.assign(req, { userData: userData[0] });
+            Object.assign(req, { userDetails: userDetails[0] });
           }
         });
-
-        this.apiService
-          .getUserDetails(req["user_id"])
-          .subscribe((userDetails) => {
-            if (req) {
-              Object.assign(req, { userDetails: userDetails[0] });
-            }
-          });
-      }
-
-      setTimeout(() => {
-        this.calculateRequests();
-      }, 2500);
-    }, 5000);
+    }
   }
 }
