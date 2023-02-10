@@ -78,52 +78,53 @@
   <div class="sizedBox-div"></div>
 
   <ul class="nav" style="margin-top: 50px">
-    <a
-      *ngIf="user.auth_type != 'admin'"
-      class="user-profile-logo-sidebar"
-      routerLink="/user-profile"
-      queryParams="{uid: user.id}"
-      style="text-align: -webkit-center"
-    >
-      <div
-        class="profile-image"
-        style="
+    <div class="d-flex justify-content-center">
+      <a
+        *ngIf="user.auth_type != 'admin'"
+        class="user-profile-logo-sidebar"
+        routerLink="/user-profile"
+        queryParams="{uid: user.id}"
+      >
+        <div
+          class="profile-image"
+          style="
           background-image: url('{{ userProfilePic }}');
           background-size: cover;
           background-position: center;
           pointer-events: none;
         "
-      >
-        <ngx-skeleton-loader
-          *ngIf="userProfileFetching == true"
-          appearance="circle"
-          [theme]="{
-            width: '100px',
-            height: '100px',
-            right: '5px',
-            top: '-5px'
-          }"
         >
-        </ngx-skeleton-loader>
+          <ngx-skeleton-loader
+            *ngIf="userProfileFetching == true"
+            appearance="circle"
+            [theme]="{
+              width: '100px',
+              height: '100px',
+              right: '5px',
+              top: '-5px'
+            }"
+          >
+          </ngx-skeleton-loader>
 
-        <span
-          *ngIf="profilePicUpdatingLoader == true"
-          class="spinner-border spinner-border-m mr-2"
-          style="position: absolute; right: 106px; top: 105px; color: #d3ab33"
-        >
-        </span>
-      </div>
-      <div style="margin-top: 10px">
-        <span class="sidebar-card-avatar-title" style="padding-left: 0px">{{
-          user.firstname
-        }}</span>
-      </div>
-    </a>
+          <span
+            *ngIf="profilePicUpdatingLoader == true"
+            class="spinner-border spinner-border-m mr-2"
+            style="position: absolute; right: 106px; top: 105px; color: #d3ab33"
+          >
+          </span>
+        </div>
+        <div style="margin-top: 10px; text-align: center">
+          <span class="sidebar-card-avatar-title" style="padding-left: 0px">{{
+            user.firstname
+          }}</span>
+        </div>
+      </a>
+    </div>
 
     <div
       *ngIf="user.auth_type == 'admin'"
+      class="d-flex justify-content-center"
       style="
-        text-align: -webkit-center;
         color: #a3a3a3;
         font-size: 17px;
         font-weight: 600;
@@ -176,11 +177,11 @@
     </li>
     <p
       *ngIf="user.auth_type == 'admin'"
+      class="d-flex justify-content-center"
       style="
         color: white;
         font-size: 8px;
         letter-spacing: 1px;
-        text-align: -webkit-center;
         margin-top: 485px;
       "
     >
@@ -188,11 +189,11 @@
     </p>
     <p
       *ngIf="user.auth_type == 'landlord'"
+      class="d-flex justify-content-center"
       style="
         color: white;
         font-size: 8px;
         letter-spacing: 1px;
-        text-align: -webkit-center;
         margin-top: 140px;
       "
     >
@@ -200,11 +201,11 @@
     </p>
     <p
       *ngIf="user.auth_type == 'tenant'"
+      class="d-flex justify-content-center"
       style="
         color: white;
         font-size: 8px;
         letter-spacing: 1px;
-        text-align: -webkit-center;
         margin-top: 190px;
       "
     >
