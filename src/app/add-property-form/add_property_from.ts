@@ -206,32 +206,30 @@ export class AddPropertyForm implements OnInit {
         approved: "false",
       };
 
-      var encodedData = JSON.stringify(jsonData);
-
       try {
         setTimeout(() => {
           this.apiService
-            .requestAddPropertyLandlord(encodedData)
+            .requestAddPropertyLandlord(JSON.stringify(jsonData))
             .subscribe((e) => {
               this.isLoading = false;
 
-              if (this.otherServices.gotError.value == false) {
-                this.otherServices.addMessage({
-                  message: "Success",
-                  description:
-                    "The request to add property has been successfully sented",
-                });
-              }
+              // if (this.otherServices.gotError.value == false) {
+              //   this.otherServices.addMessage({
+              //     message: "Success",
+              //     description:
+              //       "The request to add property has been successfully sented",
+              //   });
+              // }
 
               this.router.navigate(["/my-properties"], {
                 queryParams: { uid: user[0]["id"] },
               });
             });
-        }, 4000);
+        }, 6000);
 
-        setTimeout(() => {
-          this.otherServices.clearMessage();
-        }, 10000);
+        // setTimeout(() => {
+        //   this.otherServices.clearMessage();
+        // }, 10000);
 
         setTimeout(() => {
           this.apiService
@@ -296,7 +294,9 @@ export class AddPropertyForm implements OnInit {
           this.propertyImagesNames.push(
             this.addPropertyForm.value["ProjectName"] +
               "-" +
-              this.propertyImages.length
+              this.propertyImages.length +
+              "." +
+              file["type"].split("/")[1]
           );
         };
       } catch (error) {
@@ -322,7 +322,11 @@ export class AddPropertyForm implements OnInit {
     reader.onloadend = (e) => {
       this.secondPartySignature = e.target.result;
       this.secondPartySignatureName =
-        this.addPropertyForm.value["ProjectName"] + "-" + "signature";
+        this.addPropertyForm.value["ProjectName"] +
+        "-" +
+        "signature" +
+        "." +
+        file["type"].split("/")[1];
     };
   }
 
@@ -339,7 +343,9 @@ export class AddPropertyForm implements OnInit {
           this.propertyDocsNames.push(
             this.addPropertyForm.value["ProjectName"] +
               "-" +
-              this.propertyDocs.length
+              this.propertyDocs.length +
+              "." +
+              file["type"].split("/")[1]
           );
         };
       } catch (error) {

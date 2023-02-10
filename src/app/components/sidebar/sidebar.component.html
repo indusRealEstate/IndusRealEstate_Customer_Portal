@@ -85,19 +85,24 @@
       queryParams="{uid: user.id}"
       style="text-align: -webkit-center"
     >
-      <div>
-        <img
-          *ngIf="userProfileFetching == false"
-          mat-card-avatar
-          class="sidebar-card-avatar"
-          src="{{ userProfilePic }}"
-          alt="User Avatar"
-          style="pointer-events: none; margin-left: 0px"
-        />
+      <div
+        class="profile-image"
+        style="
+          background-image: url('{{ userProfilePic }}');
+          background-size: cover;
+          background-position: center;
+          pointer-events: none;
+        "
+      >
         <ngx-skeleton-loader
           *ngIf="userProfileFetching == true"
           appearance="circle"
-          [theme]="{ width: '95px', height: '90px', left: '0px' }"
+          [theme]="{
+            width: '100px',
+            height: '100px',
+            right: '5px',
+            top: '-5px'
+          }"
         >
         </ngx-skeleton-loader>
 
@@ -108,7 +113,7 @@
         >
         </span>
       </div>
-      <div>
+      <div style="margin-top: 10px">
         <span class="sidebar-card-avatar-title" style="padding-left: 0px">{{
           user.firstname
         }}</span>
@@ -169,5 +174,41 @@
         </div>
       </a>
     </li>
+    <p
+      *ngIf="user.auth_type == 'admin'"
+      style="
+        color: white;
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-align: -webkit-center;
+        margin-top: 485px;
+      "
+    >
+      {{ appVersion }}
+    </p>
+    <p
+      *ngIf="user.auth_type == 'landlord'"
+      style="
+        color: white;
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-align: -webkit-center;
+        margin-top: 140px;
+      "
+    >
+      {{ appVersion }}
+    </p>
+    <p
+      *ngIf="user.auth_type == 'tenant'"
+      style="
+        color: white;
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-align: -webkit-center;
+        margin-top: 190px;
+      "
+    >
+      {{ appVersion }}
+    </p>
   </ul>
 </div>

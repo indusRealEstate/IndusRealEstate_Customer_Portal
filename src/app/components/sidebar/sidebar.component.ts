@@ -84,6 +84,9 @@ export class SidebarComponent implements OnInit {
   profilePicUpdatingLoader: boolean = false;
   userProfileFetching: boolean = false;
 
+  ///////////////--App Version--////////////////////
+  appVersion: any = "VERSION PROD v.0.1";
+
   constructor(
     private authService: AuthenticationService,
     private route: ActivatedRoute,
@@ -168,6 +171,6 @@ export class SidebarComponent implements OnInit {
 
     setTimeout(() => {
       this.userProfileFetching = false;
-    }, 500);
+    }, 1000);
   }
 }

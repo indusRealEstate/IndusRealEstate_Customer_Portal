@@ -4,8 +4,9 @@ import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { User } from "../../../models/user/user.model";
 import { OtherServices } from "./other.service";
+import { Router } from "@angular/router";
 
-const API_URL = "http://127.0.0.1:8081/auth";
+const API_URL = "https://www.ireproperty.com/portal/api/auth";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
@@ -15,7 +16,11 @@ export class AuthenticationService {
   public user: User;
   public userDoesntExist: boolean = false;
 
-  constructor(private http: HttpClient, private otherServices: OtherServices) {
+  constructor(
+    private http: HttpClient,
+    private otherServices: OtherServices,
+    private router: Router
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem("currentUser"))
     );
@@ -48,6 +53,7 @@ export class AuthenticationService {
       .post<any>(url, { username: username, password: password })
       .pipe(
         map((userData) => {
+          console.log(userData);
           // login successful if there's a jwt token in the response
           if (userData && userData[0]["token"]) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -67,13 +73,12 @@ export class AuthenticationService {
     sessionStorage.clear();
 
     setTimeout(() => {
-      location.reload();
-      window.location.replace(`/login`);
+      this.router.navigate(["/login"]);
       this.currentUserSubject.next(null);
 
       setTimeout(() => {
         this.otherServices.isLogoutProcessing.next(false);
-      }, 500);
+      }, 1000);
     }, 500);
   }
 }

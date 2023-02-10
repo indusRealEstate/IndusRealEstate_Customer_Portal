@@ -13,8 +13,8 @@ const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
 };
 
-const API_URL = "http://127.0.0.1:8081/user";
-const BASE_URL_IMAGES = "http://127.0.0.1:8081/upload/img/properties";
+const API_URL = "https://www.ireproperty.com/portal/api/user";
+const BASE_URL_IMAGES = "https://www.ireproperty.com/portal/api/upload/img/properties";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -23,14 +23,14 @@ export class ApiService {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
       this.otherServices.gotError.next(true);
-      this.otherServices.addMessage({
-        message: "Error",
-        description: error.error.error,
-      });
+      // this.otherServices.addMessage({
+      //   message: "Error",
+      //   description: error.error.error,
+      // });
 
-      setTimeout(() => {
-        this.otherServices.clearMessage();
-      }, 8000);
+      // setTimeout(() => {
+      //   this.otherServices.clearMessage();
+      // }, 8000);
 
       return of(result as T);
     };
@@ -141,20 +141,11 @@ export class ApiService {
   }
 
   saveImgInServer(data: any) {
-    const url = `http://127.0.0.1:8081/uploader.php?apikey=1`;
+    const url = `https://www.ireproperty.com/portal/uploader.php?apikey=1`;
 
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("saveImgInServer", [])));
-  }
-
-  getAddPropertyRequests() {
-    const url = `${API_URL}/getAddPropertyRequests.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
   }
 
   removeAppointment(data: any) {

@@ -3,7 +3,6 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "../../home/home.component";
 import { UserProfileComponent } from "../../user-profile/user-profile.component";
 import { ReportsComponent } from "../../reports/reports.component";
-import { counterComponent } from "../../counter/counter.component";
 import { MyRequestsComponent } from "app/myRequests/my_requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { AppointmentsComponent } from "app/appointments/appointments.component";
@@ -25,7 +24,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "user-profile", component: UserProfileComponent },
   { path: "reports", component: ReportsComponent },
-  { path: "counter", component: counterComponent },
   { path: "my-requests", component: MyRequestsComponent },
   { path: "my-properties", component: MyPropertiesComponent },
   { path: "appointments", component: AppointmentsComponent },
@@ -41,6 +39,6 @@ export const AdminLayoutRoutes: Routes = [
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "admin-requests", component: AdminRequests },
-  { path: "404", component: PageNotFoundComponent },
-  { path: "**", redirectTo: "/404" },
+  // { path: "404", component: PageNotFoundComponent },
+  // { path: "**", redirectTo: "/404" },
 ];

@@ -15,33 +15,32 @@ const routes: Routes = [
     redirectTo: userData == null ? "login" : `home?uid=${user[0]["id"]}`,
     pathMatch: "full",
   },
-  userData != null
-    ? {
+  {
+    path: "",
+    component: AdminLayoutComponent,
+    children: [
+      {
         path: "",
-        component: AdminLayoutComponent,
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./layouts/admin-layout/admin-layout.module").then(
-                (m) => m.AdminLayoutModule
-              ),
-          },
-        ],
-      }
-    : {
-        path: "",
-        component: AuthLayoutComponent,
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./layouts/auth-layout/auth-layout.module").then(
-                (m) => m.AuthLayoutModule
-              ),
-          },
-        ],
+        loadChildren: () =>
+          import("./layouts/admin-layout/admin-layout.module").then(
+            (m) => m.AdminLayoutModule
+          ),
       },
+    ],
+  },
+  {
+    path: "",
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./layouts/auth-layout/auth-layout.module").then(
+            (m) => m.AuthLayoutModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({

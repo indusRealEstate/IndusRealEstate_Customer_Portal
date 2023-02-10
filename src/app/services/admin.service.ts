@@ -13,7 +13,7 @@ const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
 };
 
-const API_URL = "http://127.0.0.1:8081/admin";
+const API_URL = "https://www.ireproperty.com/portal/api/admin";
 
 @Injectable({ providedIn: "root" })
 export class AdminService {
@@ -53,8 +53,17 @@ export class AdminService {
       })
     );
   }
-  getAllRequests(userId: any) {
-    const url = `${API_URL}/getAllRequests.php?apikey=1`;
+  getAllAddPropertyRequests(userId: any) {
+    const url = `${API_URL}/getAllAddPropertyRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllPaymentRequests(userId: any) {
+    const url = `${API_URL}/getAllPaymentRequests.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;

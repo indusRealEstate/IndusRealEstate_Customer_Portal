@@ -29,11 +29,11 @@ export class AdminDashboardComponent implements OnInit {
 
   requestPercentage: number = 0;
 
-  dataFetchedTime: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  isLoading: boolean = false;
+
+  allRequests: any[] = [];
 
   requestOverview: any[] = [];
-  requestOverviewClients: any[] = [];
-  requestOverviewClientsPhoto: any[] = [];
 
   isRequestOverviewLoading: boolean = false;
 
@@ -45,9 +45,10 @@ export class AdminDashboardComponent implements OnInit {
     private otherService: OtherServices,
     private route: ActivatedRoute
   ) {
-    if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
-      this.isRequestOverviewLoading = true;
-    }
+    this.isLoading = true;
+    // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
+    this.isRequestOverviewLoading = true;
+    // }
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -83,7 +84,7 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -101,42 +102,44 @@ export class AdminDashboardComponent implements OnInit {
       this.requestPercentage = sessionData["requestPercentage"];
       this.approvedRequests = sessionData["approvedRequests"];
       this.requestOverview = sessionData["requestOverview"];
-      this.requestOverviewClients = sessionData["requestOverviewClients"];
-      this.requestOverviewClientsPhoto =
-        sessionData["requestOverviewClientsPhoto"];
+      this.isLoading = false;
+      this.isRequestOverviewLoading = false;
     } else {
-      this.initFunction(user[0]["id"]);
+      await this.initFunction(user[0]["id"]).then(() => {
+        setTimeout(() => {
+          this.isRequestOverviewLoading = false;
+        }, 5000);
+      });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
-
-      setTimeout(() => {
-        this.isRequestOverviewLoading = false;
-      }, 2000);
     }
 
     var now = new Date().getMinutes();
 
-    this.dataFetchedTime.next(
+    var diff =
       now -
-        Number(
-          JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
-        )
-    );
+      Number(
+        JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
+      );
 
-    this.dataFetchedTime.subscribe((e) => {
-      if (e >= 2) {
-        this.clearAllVariables();
-        sessionStorage.removeItem("admin_dashboard_fetched_time");
-        sessionStorage.removeItem("admin_dashboard_session_data");
-        this.initFunction(user[0]["id"]);
-        sessionStorage.setItem(
-          "admin_dashboard_fetched_time",
-          JSON.stringify(new Date().getMinutes())
-        );
-      }
-    });
+    if (diff >= 5) {
+      this.isRequestOverviewLoading = true;
+      this.isLoading = true;
+      this.clearAllVariables();
+      sessionStorage.removeItem("admin_dashboard_fetched_time");
+      sessionStorage.removeItem("admin_dashboard_session_data");
+      await this.initFunction(user[0]["id"]).then(() => {
+        setTimeout(() => {
+          this.isRequestOverviewLoading = false;
+        }, 5000);
+      });
+      sessionStorage.setItem(
+        "admin_dashboard_fetched_time",
+        JSON.stringify(new Date().getMinutes())
+      );
+    }
   }
 
   calculateRequests() {
@@ -157,14 +160,17 @@ export class AdminDashboardComponent implements OnInit {
     this.approvedRequests = 0;
     this.requestPercentage = 0;
     this.requestOverview.length = 0;
-    this.requestOverviewClients.length = 0;
-    this.requestOverviewClientsPhoto.length = 0;
   }
 
-  initFunction(userId) {
-    this.getAllProperties(userId);
-    this.getAllRequests(userId);
-    this.getAllClients(userId);
+  async initFunction(userId) {
+    await this.getAllProperties(userId);
+    await this.getAllClients(userId);
+
+    await this.getAllRequests(userId);
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500);
 
     setTimeout(() => {
       sessionStorage.setItem(
@@ -178,14 +184,12 @@ export class AdminDashboardComponent implements OnInit {
           approvedRequests: this.approvedRequests,
           requestPercentage: this.requestPercentage,
           requestOverview: this.requestOverview,
-          requestOverviewClients: this.requestOverviewClients,
-          requestOverviewClientsPhoto: this.requestOverviewClientsPhoto,
         })
       );
-    }, 3000);
+    }, 10000);
   }
 
-  getAllProperties(userId) {
+  async getAllProperties(userId) {
     this.adminService.getAllProperties(userId).subscribe((e: Array<any>) => {
       for (let pr of e) {
         if (pr["property_state"] == "rent") {
@@ -197,7 +201,7 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  getAllClients(userId) {
+  async getAllClients(userId) {
     this.adminService.getAllClients(userId).subscribe((e: Array<any>) => {
       for (let cl of e) {
         if (cl["auth_type"] == "landlord") {
@@ -205,38 +209,64 @@ export class AdminDashboardComponent implements OnInit {
         } else if (cl["auth_type"] == "tenant") {
           this.tenantClient++;
         }
-
-        for (let ovr of this.requestOverview) {
-          if (ovr["user_id"] == cl["id"]) {
-            this.requestOverviewClients.push(cl);
-
-            this.apiService.getUserDetails(cl["id"]).subscribe((usdet) => {
-              this.requestOverviewClientsPhoto.push(usdet[0]["profile_photo"]);
-            });
-          }
-        }
       }
     });
   }
 
-  getAllRequests(userId) {
-    this.adminService.getAllRequests(userId).subscribe((e: Array<any>) => {
-      var limit = 0;
-      for (let req of e) {
-        limit++;
-        this.totalRequests++;
-        if (limit < 5) {
-          this.requestOverview.push(req);
-        }
+  async getAllRequests(userId) {
+    this.adminService
+      .getAllAddPropertyRequests(userId)
+      .subscribe((prop_req: Array<any>) => {
+        this.allRequests = prop_req;
 
-        if (req["approved"] == "true") {
-          this.approvedRequests++;
-        }
-      }
-    });
+        setTimeout(() => {
+          this.adminService
+            .getAllPaymentRequests(userId)
+            .subscribe(async (pay_req: Array<any>) => {
+              this.totalRequests = this.allRequests.length;
+              var i = 0;
+              for (let pay of pay_req) {
+                i++;
+                this.totalRequests++;
+                this.allRequests.push(pay);
+              }
 
-    setTimeout(() => {
-      this.calculateRequests();
-    }, 200);
+              if (pay_req.length == i) {
+                await this.assignUserData();
+                var limit = 0;
+                for (let req of this.allRequests) {
+                  limit++;
+                  if (limit < 5) {
+                    this.requestOverview.push(req);
+                  }
+                  if (req["approved"] == "true") {
+                    this.approvedRequests++;
+                  }
+                }
+                if (limit == this.allRequests.length) {
+                  this.calculateRequests();
+                }
+              }
+            });
+        }, 500);
+      });
+  }
+
+  async assignUserData() {
+    for (let req of this.allRequests) {
+      this.apiService.getUser(req["user_id"]).subscribe((userData) => {
+        if (req) {
+          Object.assign(req, { userData: userData[0] });
+        }
+      });
+
+      this.apiService
+        .getUserDetails(req["user_id"])
+        .subscribe((userDetails) => {
+          if (req) {
+            Object.assign(req, { userDetails: userDetails[0] });
+          }
+        });
+    }
   }
 }

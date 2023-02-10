@@ -4,38 +4,57 @@
   font-family: "Montserrat";
 }
 
-.request-card {
-  width: 600px;
-  padding: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+.request-approve-btns {
+  background: transparent;
+  color: black;
+  box-shadow: none;
 
-  .card-header {
-    background-color: #2b333e;
-    padding: 20px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    color: white;
-  }
-
-  .card-body {
-    padding: 20px;
-
-    .user-info {
-      margin-bottom: 20px;
-
-      .user-name,
-      .user-email {
-        font-weight: bold;
-      }
-    }
-
-    .user-request {
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 5px;
-    }
+  &:hover {
+    box-shadow: 0 2px 2px 0 rgb(153 153 153 / 14%),
+      0 3px 1px -2px rgb(153 153 153 / 20%), 0 1px 5px 0 rgb(153 153 153 / 12%);
+    color: #d4aa32;
   }
 }
 
+::ng-deep .mat-tab-header {
+  background-color: #2b333e !important;
+}
+::ng-deep .mat-tab-label {
+  color: #ffffff !important;
+  font-family: "Montserrat" !important;
+}
+::ng-deep .mat-tab-label-active {
+  color: #d3ab33 !important;
+  font-family: "Montserrat" !important;
+}
+::ng-deep .mat-ink-bar {
+  background-color: #d3ab33 !important;
+  width: 110px !important;
+  margin-left: 25px !important;
+}
 
+::ng-deep .mat-radio-outer-circle {
+  border-radius: 6px !important;
+  width: 20px !important;
+  height: 20px !important;
+  border: 2px solid #404040ad !important;
+  background-color: white !important;
+}
+
+::ng-deep .mat-radio-container {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+::ng-deep .mat-radio-inner-circle {
+  border-radius: 9px !important;
+  width: 34px !important;
+  margin-left: -7.5px !important;
+  height: 33.5px !important;
+  margin-top: -7px !important;
+  background-color: #d4aa32 !important;
+}
+
+::ng-deep .mat-ripple-element {
+  background-color: #edcf7c23 !important;
+}

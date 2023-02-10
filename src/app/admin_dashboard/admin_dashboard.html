@@ -1,6 +1,12 @@
 <div class="main-content home-bg">
   <div class="container-fluid" style="margin-top: 25px">
-    <div class="row" style="margin: 0">
+    <span
+      *ngIf="isLoading == true"
+      class="spinner-border spinner-border-m mr-2"
+      style="color: #d4aa32; margin-top: 365px; margin-left: 750px"
+    >
+    </span>
+    <div class="row" style="margin: 0" *ngIf="isLoading == false">
       <div class="col-lg-7">
         <div
           style="
@@ -428,14 +434,15 @@
           </div>
           <div class="card-body">
             <div
-              *ngFor="let pp of requestOverview; let last = last;let index = index;"
+              class="col"
+              style="padding: 0"
+              *ngIf="isRequestOverviewLoading == true"
             >
               <div
                 class="row"
-                style="margin: 0; margin-left: 10px; margin-top: 20px"
+                style="margin: 0; margin-left: 14px; margin-top: 20px"
               >
                 <div
-                  *ngIf="isRequestOverviewLoading == true"
                   style="max-width: 75px; max-height: 75px; border-radius: 9px"
                 >
                   <ngx-skeleton-loader
@@ -443,9 +450,95 @@
                   >
                   </ngx-skeleton-loader>
                 </div>
+                <div class="col" style="padding: 0">
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '200px', height: '30px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '290px', height: '24px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+              <hr
+                style="margin-bottom: 0; margin-left: 15px; margin-right: 22px"
+              />
+              <div
+                class="row"
+                style="margin: 0; margin-left: 14px; margin-top: 20px"
+              >
+                <div
+                  style="max-width: 75px; max-height: 75px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '75px', height: '75px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+                <div class="col" style="padding: 0">
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '200px', height: '30px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                  <div
+                    style="
+                      max-width: 200px;
+                      max-height: 30px;
+                      border-radius: 9px;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                    "
+                  >
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '290px', height: '24px' }"
+                    >
+                    </ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              *ngFor="let pp of requestOverview; let last = last;let index = index;"
+            >
+              <div
+                *ngIf="isRequestOverviewLoading == false"
+                class="row"
+                style="margin: 0; margin-left: 10px; margin-top: 20px"
+              >
                 <img
-                  *ngIf="isRequestOverviewLoading == false"
-                  src="{{'data:image/jpeg;base64,' + requestOverviewClientsPhoto[index]}}"
+                  src="{{'data:image/jpeg;base64,' + pp.userDetails.profile_photo}}"
                   alt=""
                   style="
                     max-width: 75px;
@@ -466,10 +559,10 @@
                         margin-right: 15px;
                       "
                     >
-                      {{requestOverviewClients[index]['firstname']}}
+                      {{pp.userData.firstname}}
                     </p>
                     <p style="margin: 0; font-weight: 900; color: #d4aa32">
-                      {{requestOverviewClients[index]['auth_type']}}
+                      {{pp.userData.auth_type}}
                     </p>
                   </div>
                   <p style="margin: 0; margin-top: 10px">
@@ -478,10 +571,16 @@
                   </p>
                 </div>
               </div>
-              <hr
-                *ngIf="!last"
-                style="margin-bottom: 0; margin-left: 15px; margin-right: 22px"
-              />
+              <div *ngIf="isRequestOverviewLoading == false">
+                <hr
+                  *ngIf="!last"
+                  style="
+                    margin-bottom: 0;
+                    margin-left: 15px;
+                    margin-right: 22px;
+                  "
+                />
+              </div>
             </div>
 
             <div

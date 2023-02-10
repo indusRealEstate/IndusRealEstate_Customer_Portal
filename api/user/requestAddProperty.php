@@ -14,7 +14,7 @@ $postdata = file_get_contents("php://input");
 $decodedData = json_decode($postdata, true);
 
 if ($postdata != null) {
-    $stmt = $dbase->execute("INSERT INTO `landlord_add_property_request`
+    $stmt = $dbase->execute("INSERT INTO `add_property_req`
     (`user_id`,
      `request_type`,
      `property_state`,
@@ -44,8 +44,8 @@ if ($postdata != null) {
      `valid_until`,
      `second_party_signature`,
      `approved`)
-VALUES      (
-     '{$decodedData["user_id"]}',
+VALUES
+    ('{$decodedData["user_id"]}',
      '{$decodedData["request_type"]}',
      '{$decodedData["property_state"]}',
      '{$decodedData["offer_validity"]}',

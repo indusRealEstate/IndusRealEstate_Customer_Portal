@@ -4,7 +4,7 @@ import { User } from "../../../models/user/user.model";
 import { catchError, Observable, of } from "rxjs";
 import * as uuid from "uuid";
 
-const API_URL = "http://127.0.0.1:8081/auth";
+const API_URL = "https://www.ireproperty.com/portal/api/auth";
 
 @Injectable({ providedIn: "root" })
 export class UserService {

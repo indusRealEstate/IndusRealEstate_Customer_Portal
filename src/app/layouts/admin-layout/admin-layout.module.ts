@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { HomeComponent } from "../../home/home.component";
@@ -12,7 +16,6 @@ import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
-import { counterComponent } from "app/counter/counter.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatCardModule } from "@angular/material/card";
 import { A11yModule } from "@angular/cdk/a11y";
@@ -174,7 +177,6 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
     HomeComponent,
     UserProfileComponent,
     ReportsComponent,
-    counterComponent,
     MyRequestsComponent,
     MyPropertiesComponent,
     AppointmentsComponent,
@@ -242,5 +244,6 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
     Tenant_Registration_Stepper_Fifth,
     Tenant_Registration_Stepper_Sixth,
   ],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
 export class AdminLayoutModule {}
