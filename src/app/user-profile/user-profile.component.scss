@@ -106,14 +106,39 @@
       padding-top: 9px;
       border-radius: 10px;
       width: 130px;
-      background-color: #80808042;
-      color: gray;
+      background-color: white;
+      color: #404040;
+
+      &:hover{
+        background-color: #d3ab33;
+        color: white;
+      }
     }
 
     transition: 0.3s ease-out;
     &:hover {
-      background-color: rgb(211 171 51 / 18%);
-      transform: scaleY(1.02) scaleX(1.02);
+        background-color: #575757 ;
+        transform: scaleY(1.02) scaleX(1.02);
+
+        .property-status-payments,
+        .property-status-active,
+        .property-status,
+        .property-status-tours,
+        .property-card-horizontal-divider,
+        .property-card-footer-p,
+        .property-address,
+        .property-name{
+          color: white;
+        }
+        
+
+        // .vl{
+        //   border-left: 2px solid rgb(255, 255, 255);
+        // }
+
+        // .btn-property-card {
+        //   // background-color: black;
+        // }
     }
   }
 

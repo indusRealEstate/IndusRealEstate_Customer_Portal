@@ -155,7 +155,7 @@ export class ApiService {
       .pipe(catchError(this.handleError("removeAppointment", [])));
   }
 
-  downloadFile(data: Blob, filename: string, extension: string) {
-    saveAs(data, `${filename}.${extension}`);
-  }
+  // downloadFile(data: Blob, filename: string, extension: string) {
+  //   saveAs(data, `${filename}.${extension}`);
+  // }
 }
