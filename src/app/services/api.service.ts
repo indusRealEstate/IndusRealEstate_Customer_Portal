@@ -13,8 +13,8 @@ const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" }),
 };
 
-const API_URL = "https://www.ireproperty.com/portal/api/user";
-const BASE_URL_IMAGES = "https://www.ireproperty.com/portal/api/upload/img/properties";
+const API_URL = "https://indusre.app/api/user";
+const BASE_URL_IMAGES = "https://indusre.app/api/upload/img/properties";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -141,7 +141,7 @@ export class ApiService {
   }
 
   saveImgInServer(data: any) {
-    const url = `https://www.ireproperty.com/portal/api/uploader.php?apikey=1`;
+    const url = `https://indusre.app/api/uploader.php?apikey=1`;
 
     return this.http
       .post(url, data)

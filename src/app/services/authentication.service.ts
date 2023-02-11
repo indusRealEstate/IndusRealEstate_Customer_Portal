@@ -6,7 +6,7 @@ import { User } from "../../../models/user/user.model";
 import { OtherServices } from "./other.service";
 import { Router } from "@angular/router";
 
-const API_URL = "https://www.ireproperty.com/portal/api/auth";
+const API_URL = "https://indusre.app/api/auth";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
