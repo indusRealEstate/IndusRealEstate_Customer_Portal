@@ -18,6 +18,7 @@ export class AdminRequests implements OnInit {
   isContentLoading: boolean = false;
 
   allRequests: any[] = [];
+  imagesUrl: any;
 
   isLandlordRequestsEmpty: boolean = false;
   isTenantRequestsEmpty: boolean = false;
@@ -63,7 +64,13 @@ export class AdminRequests implements OnInit {
     }
   }
 
+  getImageExtension(img: string) {
+    var ext = img.split(".")[1];
+    return ext;
+  }
+
   async ngOnInit() {
+    this.imagesUrl = this.apiService.getBaseUrlImages();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -170,9 +177,54 @@ export class AdminRequests implements OnInit {
       this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
         if (req) {
           Object.assign(req, { userData: userDetails[0] });
+          Object.assign(req, { show_more: false });
         }
       });
     }
+  }
+
+  expandRequestCard(index) {
+    if (this.allRequests[index].show_more == false) {
+      this.allRequests[index].show_more = true;
+    } else {
+      this.allRequests[index].show_more = false;
+    }
+  }
+
+  getRequestDocsAndImages(req) {
+    // imgs
+    var imgCount = 0;
+    if (req.property_image_1 != "") {
+      imgCount++;
+    }
+    if (req.property_image_2 != "") {
+      imgCount++;
+    }
+    if (req.property_image_3 != "") {
+      imgCount++;
+    }
+    if (req.property_image_4 != "") {
+      imgCount++;
+    }
+    if (req.property_image_5 != "") {
+      imgCount++;
+    }
+
+    // docs
+    var docCount = 0;
+    if (req.property_doc_1 != "") {
+      docCount++;
+    }
+    if (req.property_doc_2 != "") {
+      docCount++;
+    }
+    if (req.property_doc_3 != "") {
+      docCount++;
+    }
+    if (req.property_doc_4 != "") {
+      docCount++;
+    }
+    return `${imgCount} Images & ${docCount} pdf`;
   }
 
   checkRequestsEmpty() {

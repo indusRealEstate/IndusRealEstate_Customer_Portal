@@ -229,15 +229,18 @@
                 >
                   This may take a while. Please wait :)
                 </p>
+
+                <!------------------------------------ All Requests ----------------------------------------------------->
+                <!------------------------------------ All Requests ----------------------------------------------------->
+                <!------------------------------------ All Requests ----------------------------------------------------->
                 <div *ngIf="isContentLoading == false">
-                  <div class="card-wrapper" *ngFor="let allReq of allRequests">
+                  <div
+                    class="card-wrapper"
+                    *ngFor="let allReq of allRequests; let index = index"
+                  >
                     <div
                       class="card"
-                      style="
-                        background-color: #f4f4f4;
-                        padding: 20px;
-                        padding-bottom: 10px;
-                      "
+                      [ngClass]="allReq.show_more == true ? 'all-req-card-admin-expanded': 'all-req-card-admin' "
                     >
                       <p
                         *ngIf="allReq.request_type == 'ADD_PROPERTY'"
@@ -271,16 +274,79 @@
                       </p>
                       <p
                         style="color: #707070"
-                        *ngIf="allReq.request_type == 'ADD_PROPERTY'"
+                        *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
                       >
                         {{allReq.additional_info}}
                       </p>
                       <p
                         style="color: #707070"
-                        *ngIf="allReq.request_type == 'PAYMENT'"
+                        *ngIf="allReq.request_type == 'PAYMENT' && allReq.show_more == false"
                       >
                         {{allReq.payment_details}}
                       </p>
+                      <div
+                        *ngIf="allReq.show_more == true"
+                        class="description-req-card"
+                      >
+                        <p style="font-weight: 800">Description</p>
+                        <div
+                          class="row"
+                          style="margin: 0; justify-content: space-between"
+                        >
+                          <p style="max-width: 500px">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit
+                          </p>
+
+                          <img
+                            src="{{ imagesUrl }}/{{ allReq.property_image_1 }}"
+                            alt=""
+                            style="
+                              min-width: 20%;
+                              max-width: 23%;
+                              border-radius: 8px;
+                              margin-right: 50px;
+                            "
+                          />
+                        </div>
+                        <p style="font-weight: 800">
+                          Provided Alteration Document
+                        </p>
+                        <div
+                          style="
+                            background-color: #ffffff;
+                            width: 250px;
+                            border-radius: 5px;
+                            padding: 10px;
+                            padding-left: 20px;
+                            padding-right: 25px;
+                          "
+                        >
+                          <div
+                            class="row"
+                            style="margin: 0; justify-content: space-between"
+                          >
+                            <p style="margin: 0; font-weight: 600">
+                              {{getRequestDocsAndImages(allReq)}}
+                            </p>
+                            <img
+                              class="arrow_icon_more_info"
+                              src="assets/img/svg/admin-requests/document-download.svg"
+                              alt=""
+                              style="
+                                width: 15px;
+                                filter: invert(63%) sepia(76%) saturate(389%)
+                                  hue-rotate(7deg) brightness(93%) contrast(93%);
+                                margin-left: 2px;
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
 
                       <div
                         class="row"
@@ -288,6 +354,7 @@
                           margin: 0;
                           justify-content: space-between;
                           width: 40%;
+                          margin-top: 20px;
                         "
                       >
                         <div
@@ -406,8 +473,43 @@
                       />
 
                       <div class="row" style="margin: 0">
-                        <div class="btn request-approve-btns">
-                          <p style="margin-bottom: 0">Review Request</p>
+                        <div
+                          *ngIf="allReq.show_more == false"
+                          class="btn request-approve-btns"
+                          (click)="expandRequestCard(index)"
+                        >
+                          <div class="row" style="margin: 0">
+                            <p style="margin-bottom: 0">view more</p>
+                            <img
+                              src="assets/img/svg/admin-requests/arrow-down.svg"
+                              alt=""
+                              style="
+                                width: 10px;
+                                margin-left: 15px;
+                                user-select: none;
+                                pointer-events: none;
+                              "
+                            />
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="allReq.show_more == true"
+                          class="btn request-approve-btns"
+                          (click)="expandRequestCard(index)"
+                        >
+                          <div class="row" style="margin: 0">
+                            <p style="margin-bottom: 0">view less</p>
+                            <img
+                              src="assets/img/svg/admin-requests/arrow-up-1.svg"
+                              alt=""
+                              style="
+                                width: 10px;
+                                margin-left: 15px;
+                                user-select: none;
+                                pointer-events: none;
+                              "
+                            />
+                          </div>
                         </div>
                         <div class="btn request-approve-btns">
                           <p style="margin-bottom: 0">Accept Request</p>
@@ -423,6 +525,10 @@
             </div>
           </div>
         </mat-tab>
+
+        <!------------------------------------ Landlord Requests ----------------------------------------------------->
+        <!------------------------------------ Landlord Requests ----------------------------------------------------->
+        <!------------------------------------ Landlord Requests ----------------------------------------------------->
         <mat-tab label="Landlord Requests">
           <div
             class="card-body"
@@ -707,6 +813,10 @@
             </div>
           </div>
         </mat-tab>
+
+        <!------------------------------------ Tenant Requests ----------------------------------------------------->
+        <!------------------------------------ Tenant Requests ----------------------------------------------------->
+        <!------------------------------------ Tenant Requests ----------------------------------------------------->
         <mat-tab label="Tenant Requests">
           <div
             class="card-body"

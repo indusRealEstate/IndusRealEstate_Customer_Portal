@@ -4,6 +4,26 @@
   font-family: "Montserrat";
 }
 
+.all-req-card-admin {
+  background-color: #f4f4f4;
+  padding: 20px;
+  padding-bottom: 10px;
+  transition: width 600ms ease-out, height 600ms ease-out;
+  height: 240px;
+}
+.all-req-card-admin-expanded {
+  background-color: #f4f4f4;
+  padding: 20px;
+  padding-bottom: 10px;
+  height: 520px;
+  transition: width 600ms ease-out, height 600ms ease-out;
+
+  .description-req-card {
+    transition: width 600ms ease-out, height 600ms ease-out;
+    height: 320px;
+  }
+}
+
 .request-approve-btns {
   background: transparent;
   color: black;

@@ -59,6 +59,12 @@
 .nav {
   .user-profile-logo-sidebar {
     cursor: pointer;
+
+    .profile-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
   }
   .sidebar-card-avatar {
     border: solid 2px #1f262f;

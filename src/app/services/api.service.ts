@@ -141,7 +141,7 @@ export class ApiService {
   }
 
   saveImgInServer(data: any) {
-    const url = `https://www.ireproperty.com/portal/uploader.php?apikey=1`;
+    const url = `https://www.ireproperty.com/portal/api/uploader.php?apikey=1`;
 
     return this.http
       .post(url, data)

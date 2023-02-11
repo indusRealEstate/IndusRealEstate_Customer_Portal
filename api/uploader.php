@@ -18,7 +18,7 @@ if (!empty($postdata)) {
         $image_parts = explode(";base64,", $request->images[$i]);
         $image_type_aux = explode("/", $image_parts[0]);
         $image_base64 = base64_decode($image_parts[1]);
-        $imgFile = $folderPathImage.$request->imageNames[$i] .'.'. $image_type_aux[1];
+        $imgFile = $folderPathImage.$request->imageNames[$i];
         if (file_put_contents($imgFile, $image_base64)) {
             $response[] = array('sts'=>true,'msg'=>'Successfully uploaded');
         }

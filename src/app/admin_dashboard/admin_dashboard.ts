@@ -269,4 +269,11 @@ export class AdminDashboardComponent implements OnInit {
         });
     }
   }
+
+  moreRequestClicked() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+    this.router.navigate(["/admin-requests"], { queryParams: { uid: userId } });
+  }
 }
