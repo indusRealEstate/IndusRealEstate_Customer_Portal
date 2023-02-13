@@ -301,8 +301,22 @@
                             incididunt ut labore et dolore magna aliqua. Lorem
                             ipsum dolor sit amet, consectetur adipiscing elit
                           </p>
-
+                          <div
+                            *ngIf="show_more_imgLoading[index] == true"
+                            style="
+                              min-width: 20%;
+                              max-width: 23%;
+                              border-radius: 8px;
+                              margin-right: 50px;
+                            "
+                          >
+                            <ngx-skeleton-loader
+                              [theme]="{ width: '250px', height: '160px' }"
+                            >
+                            </ngx-skeleton-loader>
+                          </div>
                           <img
+                            *ngIf="show_more_imgLoading[index] == false"
                             src="{{ imagesUrl }}/{{ allReq.property_image_1 }}"
                             alt=""
                             style="

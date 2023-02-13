@@ -19,6 +19,7 @@ export class AdminRequests implements OnInit {
 
   allRequests: any[] = [];
   imagesUrl: any;
+  show_more_imgLoading: boolean[] = [];
 
   isLandlordRequestsEmpty: boolean = false;
   isTenantRequestsEmpty: boolean = false;
@@ -80,6 +81,9 @@ export class AdminRequests implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession["allRequests"];
+      for (let index = 0; index < this.allRequests.length; index++) {
+        this.show_more_imgLoading[index] = false;
+      }
       this.isLandlordRequestsEmpty =
         adminReqDataSession["isLandlordRequestsEmpty"];
       this.isTenantRequestsEmpty = adminReqDataSession["isTenantRequestsEmpty"];
@@ -99,7 +103,7 @@ export class AdminRequests implements OnInit {
       now -
       Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
 
-    if (diff >= 5) {
+    if (diff >= 10) {
       this.isLoading = true;
       this.isContentLoading = true;
       this.clearAllVariables();
@@ -122,24 +126,23 @@ export class AdminRequests implements OnInit {
       if (req_len == this.allRequests.length) {
         setTimeout(() => {
           this.isContentLoading = false;
-        }, 3000);
+          setTimeout(() => {
+            sessionStorage.setItem(
+              "admin_reqs_session",
+              JSON.stringify({
+                allRequests: this.allRequests,
+                isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
+                isTenantRequestsEmpty: this.isTenantRequestsEmpty,
+              })
+            );
+          }, 500);
+        }, 3500);
       }
     });
 
     setTimeout(() => {
       this.isLoading = false;
     }, 1000);
-
-    setTimeout(() => {
-      sessionStorage.setItem(
-        "admin_reqs_session",
-        JSON.stringify({
-          allRequests: this.allRequests,
-          isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
-          isTenantRequestsEmpty: this.isTenantRequestsEmpty,
-        })
-      );
-    }, 10000);
   }
 
   async fetchAllRequests(userId) {
@@ -174,20 +177,54 @@ export class AdminRequests implements OnInit {
 
   async assignUsersData() {
     for (let req of this.allRequests) {
-      this.apiService.getUser(req["user_id"]).subscribe((userDetails) => {
+      this.apiService.getUser(req["user_id"]).subscribe(async (userDetails) => {
         if (req) {
-          Object.assign(req, { userData: userDetails[0] });
-          Object.assign(req, { show_more: false });
+          await Object.assign(req, { userData: userDetails[0] });
+          await Object.assign(req, { show_more: false });
         }
       });
     }
   }
 
   expandRequestCard(index) {
+    this.show_more_imgLoading[index] = true;
+    var sessionDataReqs = JSON.parse(
+      sessionStorage.getItem("admin_reqs_session")
+    );
     if (this.allRequests[index].show_more == false) {
       this.allRequests[index].show_more = true;
+
+      if (sessionDataReqs != null) {
+        sessionDataReqs["allRequests"][index]["show_more"] = true;
+
+        setTimeout(() => {
+          sessionStorage.setItem(
+            "admin_reqs_session",
+            JSON.stringify(sessionDataReqs)
+          );
+        }, 50);
+      }
+
+      setTimeout(() => {
+        this.show_more_imgLoading[index] = false;
+      }, 500);
     } else {
       this.allRequests[index].show_more = false;
+
+      if (sessionDataReqs != null) {
+        sessionDataReqs["allRequests"][index]["show_more"] = false;
+
+        setTimeout(() => {
+          sessionStorage.setItem(
+            "admin_reqs_session",
+            JSON.stringify(sessionDataReqs)
+          );
+        }, 50);
+      }
+
+      setTimeout(() => {
+        this.show_more_imgLoading[index] = false;
+      }, 500);
     }
   }
 

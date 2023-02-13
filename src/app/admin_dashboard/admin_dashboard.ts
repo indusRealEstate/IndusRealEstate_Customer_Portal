@@ -108,7 +108,7 @@ export class AdminDashboardComponent implements OnInit {
       await this.initFunction(user[0]["id"]).then(() => {
         setTimeout(() => {
           this.isRequestOverviewLoading = false;
-        }, 5000);
+        }, 6000);
       });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
@@ -124,7 +124,7 @@ export class AdminDashboardComponent implements OnInit {
         JSON.parse(sessionStorage.getItem("admin_dashboard_fetched_time"))
       );
 
-    if (diff >= 5) {
+    if (diff >= 10) {
       this.isRequestOverviewLoading = true;
       this.isLoading = true;
       this.clearAllVariables();
@@ -133,7 +133,7 @@ export class AdminDashboardComponent implements OnInit {
       await this.initFunction(user[0]["id"]).then(() => {
         setTimeout(() => {
           this.isRequestOverviewLoading = false;
-        }, 5000);
+        }, 6000);
       });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
@@ -254,17 +254,17 @@ export class AdminDashboardComponent implements OnInit {
 
   async assignUserData() {
     for (let req of this.allRequests) {
-      this.apiService.getUser(req["user_id"]).subscribe((userData) => {
+      this.apiService.getUser(req["user_id"]).subscribe(async (userData) => {
         if (req) {
-          Object.assign(req, { userData: userData[0] });
+          await Object.assign(req, { userData: userData[0] });
         }
       });
 
       this.apiService
         .getUserDetails(req["user_id"])
-        .subscribe((userDetails) => {
+        .subscribe(async (userDetails) => {
           if (req) {
-            Object.assign(req, { userDetails: userDetails[0] });
+            await Object.assign(req, { userDetails: userDetails[0] });
           }
         });
     }
