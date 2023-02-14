@@ -321,3 +321,11 @@ body {
   color: rgba(255, 0, 0, 0.85);
   font-size: 14px;
 }
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px 65px 4px #ecf0f3 !important;
+}

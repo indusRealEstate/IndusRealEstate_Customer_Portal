@@ -28,7 +28,6 @@ export class UserProfileComponent implements OnInit {
   propertiesImagesLoading: boolean = false;
   propertiesImagesUrl: any = "";
 
-
   ///----
 
   isOverviewTabActive: boolean = true;
@@ -58,7 +57,6 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
-    this.userDetailsFetching = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.route.queryParams.subscribe((e) => {
@@ -135,6 +133,7 @@ export class UserProfileComponent implements OnInit {
     if (userDetailsDataSession == null) {
       console.log("user details from api");
       this.userProfileFetching = true;
+      this.userDetailsFetching = true;
       await this.getUserDetails();
 
       if (user[0]["auth_type"] == "landlord") {
@@ -208,7 +207,7 @@ export class UserProfileComponent implements OnInit {
       setTimeout(() => {
         this.isLoading = false;
         sessionStorage.setItem("properties", JSON.stringify(this.properties));
-      }, 1000);
+      }, 10000);
     }
   }
 
@@ -223,12 +222,12 @@ export class UserProfileComponent implements OnInit {
       this.email = data[0]["email"];
       this.address = data[0]["address"];
       this.phone_number = data[0]["phone_number"];
-      if(data[0]["profile_photo"] != ''){
-        this.userProfilePic = "data:image/jpg;base64," + data[0]["profile_photo"];
-      }else{
+      if (data[0]["profile_photo"] != "") {
+        this.userProfilePic =
+          "data:image/jpg;base64," + data[0]["profile_photo"];
+      } else {
         this.userProfilePic = false;
       }
-      
     });
 
     setTimeout(() => {
@@ -242,6 +241,7 @@ export class UserProfileComponent implements OnInit {
         })
       );
       this.userProfileFetching = false;
+      this.userDetailsFetching = false;
     }, 3000);
   }
 }

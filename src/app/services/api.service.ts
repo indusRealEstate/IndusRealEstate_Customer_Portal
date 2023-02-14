@@ -115,7 +115,7 @@ export class ApiService {
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
-      })
+      }),
     );
   }
 

@@ -344,7 +344,7 @@
               class="table table-hover"
               *ngIf="isRecentHappeningsLoading == false"
             >
-              <tbody>
+              <tbody *ngIf="recentHeppenings.length != 0">
                 <tr
                   *ngFor="let e of recentHeppenings"
                   class="recent-happenings-home"
@@ -357,6 +357,16 @@
                   </td>
                 </tr>
               </tbody>
+              <div *ngIf="isRecentHappeningsLoading == false">
+                <tbody
+                  *ngIf="recentHeppenings.length == 0"
+                  style="display: flex; justify-content: center"
+                >
+                  <p style="font-size: 20px; margin-top: 15px; color: #d3ab33">
+                    No Recent Happenings
+                  </p>
+                </tbody>
+              </div>
             </table>
           </div>
         </div>

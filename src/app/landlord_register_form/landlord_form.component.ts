@@ -76,11 +76,12 @@ export class LandlordFormComponent implements OnInit {
       .subscribe(
         (data) => {
           // this.alertService.success("Registration successful", true);
-          // this.router.navigate(["/login"]);
 
           if (data == null) {
             this.userService.addUserDetails(userDetails).subscribe((e) => {
-              console.log(e);
+              if (e == true) {
+                this.router.navigate(["/login"]);
+              }
             });
           }
         },

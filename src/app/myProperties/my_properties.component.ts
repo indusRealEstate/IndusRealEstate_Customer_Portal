@@ -59,10 +59,10 @@ export class MyPropertiesComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.isImagesLoading = true;
     this.isUserSignOut();
-    this.initFunction();
+    await this.initFunction();
   }
 
   getImagesUrl() {
@@ -72,7 +72,7 @@ export class MyPropertiesComponent implements OnInit {
     }, 500);
   }
 
-  initFunction() {
+  async initFunction() {
     var propertiesdata = sessionStorage.getItem("properties");
     if (propertiesdata != null) {
       var decodedData = JSON.parse(propertiesdata);
@@ -81,9 +81,8 @@ export class MyPropertiesComponent implements OnInit {
       this.getImagesUrl();
     } else {
       this.isLoading = true;
-      setTimeout(() => {
-        this.getProperties();
-      }, 300);
+
+      await this.getProperties();
     }
   }
 
@@ -101,7 +100,7 @@ export class MyPropertiesComponent implements OnInit {
     });
   }
 
-  getProperties() {
+  async getProperties() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
@@ -111,15 +110,16 @@ export class MyPropertiesComponent implements OnInit {
         this.properties = data;
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setTimeout(() => {
+        this.isLoading = false;
+
         if (this.properties.length != 0) {
           this.getImagesUrl();
-          this.isLoading = false;
           sessionStorage.setItem("properties", JSON.stringify(this.properties));
         }
-      }, 2000);
+      }, 3000);
     }
   }
 }
