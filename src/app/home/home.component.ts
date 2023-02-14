@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getUserRecentHappenings() {
+  async getUserRecentHappenings() {
     var data = localStorage.getItem("currentUser");
     var user = JSON.parse(data);
     var userId = user[0]["id"];
@@ -87,19 +87,19 @@ export class HomeComponent implements OnInit {
           "recentHeppenings",
           JSON.stringify(this.recentHeppenings)
         );
-      }, 3000);
+      }, 2000);
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.isUserSignOut();
     this.getUserDataFromLocal();
-    this.initFunction();
+    await this.initFunction();
 
     console.log(window.location);
   }
 
-  initFunction() {
+  async initFunction() {
     var recentHeppeningsSessionData =
       sessionStorage.getItem("recentHeppenings");
 
@@ -108,15 +108,15 @@ export class HomeComponent implements OnInit {
       this.recentHeppenings = data;
       this.isRecentHappeningsLoading = false;
     } else {
-      this.getUserRecentHappenings();
+      await this.getUserRecentHappenings().then(() => {
+        setTimeout(() => {
+          this.isRecentHappeningsLoading = false;
+        }, 800);
+      });
       sessionStorage.setItem(
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())
       );
-
-      setTimeout(() => {
-        this.isRecentHappeningsLoading = false;
-      }, 2000);
     }
 
     var now = new Date().getMinutes();
@@ -135,7 +135,7 @@ export class HomeComponent implements OnInit {
       );
       setTimeout(() => {
         this.isRecentHappeningsLoading = false;
-      }, 2000);
+      }, 800);
       console.log("refreshed- recent");
     }
   }

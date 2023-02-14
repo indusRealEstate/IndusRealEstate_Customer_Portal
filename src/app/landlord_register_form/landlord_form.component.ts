@@ -7,6 +7,7 @@ import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
 import * as CryptoJS from "crypto-js";
 import { first } from "rxjs";
+import * as uuid from "uuid";
 
 @Component({
   selector: "landlord-register-form",
@@ -60,13 +61,28 @@ export class LandlordFormComponent implements OnInit {
 
   // this.loading = true;
   onSubmit() {
+    var userId = uuid.v4();
+    var userDetails = {
+      user_id: userId,
+      email: "example123@gmail.com",
+      phone_number: "0123456789",
+      address: "Dubai, JLT",
+      profile_photo: "",
+    };
+
     this.userService
-      .register(this.registerForm.value, this.auth_type)
+      .register(this.registerForm.value, userId, this.auth_type, userDetails)
       .pipe(first())
       .subscribe(
         (data) => {
           // this.alertService.success("Registration successful", true);
-          this.router.navigate(["/login"]);
+          // this.router.navigate(["/login"]);
+
+          if (data == null) {
+            this.userService.addUserDetails(userDetails).subscribe((e) => {
+              console.log(e);
+            });
+          }
         },
         (error) => {
           // this.alertService.error(error);

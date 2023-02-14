@@ -20,18 +20,28 @@ export class UserService {
     return this.http.get<User[]>(`/users`);
   }
 
-  register(user: User, auth_type: any) {
-    const possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,./;'[]=-)(*&^%$#@!~`";
-    const lengthOfCode = 40;
-    var token = this.makeRandom(lengthOfCode, possible);
+  register(user: User, user_id: any, auth_type?: any, userDetails?: any) {
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    var token = possible;
     user.token = token;
-    user.id = uuid.v4();
+    user.id = user_id;
     user.auth_type = auth_type;
     const url = `${API_URL}/register.php?apikey=1`;
+
+    try {
+      var res = this.http
+        .post(url, user)
+        .pipe(catchError(this.handleError("register", [])));
+
+      return res;
+    } catch (error) {}
+  }
+
+  addUserDetails(userDetails) {
+    const url = `${API_URL}/addUserDetails.php?apikey=1`;
     return this.http
-      .post(url, user)
-      .pipe(catchError(this.handleError("register", [])));
+      .post(url, JSON.stringify(userDetails))
+      .pipe(catchError(this.handleError("addUserDetails", [])));
   }
 
   delete(id: number) {

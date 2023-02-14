@@ -24,6 +24,8 @@ export class AdminRequests implements OnInit {
   isLandlordRequestsEmpty: boolean = false;
   isTenantRequestsEmpty: boolean = false;
 
+  contentLoadingTime: any = 2000;
+
   categoryAllRequests: "fixtures" | "payments" | "cat_3" | "cat_4" = "fixtures";
   propertyTypeAllRequests: "all" | "villa" | "appartment" = "all";
 
@@ -53,6 +55,33 @@ export class AdminRequests implements OnInit {
       });
     } else {
       router.navigate([`/404`]);
+    }
+  }
+
+  async ngDoCheck() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    if (this.isContentLoading == false) {
+      for (let index = 0; index < this.allRequests.length; index++) {
+        if (
+          this.allRequests[index]["userData"] == null ||
+          this.allRequests[index]["userData"] == undefined
+        ) {
+          console.log("issue spotted -- reloading");
+          this.contentLoadingTime = this.contentLoadingTime + 1000;
+          this.isContentLoading = true;
+          this.clearAllVariables();
+          sessionStorage.removeItem("admin_reqs_fetched_time");
+          sessionStorage.removeItem("admin_reqs_session");
+          await this.initFunction(user[0]["id"]);
+          sessionStorage.setItem(
+            "admin_reqs_fetched_time",
+            JSON.stringify(new Date().getMinutes())
+          );
+        } else {
+          console.log("no issue");
+        }
+      }
     }
   }
 
@@ -136,7 +165,7 @@ export class AdminRequests implements OnInit {
               })
             );
           }, 500);
-        }, 3500);
+        }, this.contentLoadingTime);
       }
     });
 

@@ -71,6 +71,33 @@ export class AdminDashboardComponent implements OnInit {
     // this.scrollToTop();
   }
 
+  async ngDoCheck() {
+    if (this.isRequestOverviewLoading == false) {
+      if (this.requestOverview.length != 0) {
+        for (let index = 0; index < this.requestOverview.length; index++) {
+          if (
+            this.requestOverview[index]["userData"] == null ||
+            this.requestOverview[index]["userDetails"] == null
+          ) {
+            this.isRequestOverviewLoading = true;
+            console.log("issue spotted -- reloading");
+            await this.assignUserData().then(() => {
+              setTimeout(() => {
+                this.isRequestOverviewLoading = false;
+              }, 6000);
+
+              setTimeout(() => {
+                this.cacheInSession();
+              }, 7000);
+            });
+          } else {
+            console.log("no issue");
+          }
+        }
+      }
+    }
+  }
+
   scrollToTop() {
     // window.scrollTo(0, 0);
   }
@@ -108,7 +135,7 @@ export class AdminDashboardComponent implements OnInit {
       await this.initFunction(user[0]["id"]).then(() => {
         setTimeout(() => {
           this.isRequestOverviewLoading = false;
-        }, 6000);
+        }, 5000);
       });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
@@ -133,7 +160,7 @@ export class AdminDashboardComponent implements OnInit {
       await this.initFunction(user[0]["id"]).then(() => {
         setTimeout(() => {
           this.isRequestOverviewLoading = false;
-        }, 6000);
+        }, 5000);
       });
       sessionStorage.setItem(
         "admin_dashboard_fetched_time",
@@ -173,20 +200,24 @@ export class AdminDashboardComponent implements OnInit {
     }, 1500);
 
     setTimeout(() => {
-      sessionStorage.setItem(
-        "admin_dashboard_session_data",
-        JSON.stringify({
-          rentProperties: this.rentPropertiesLength,
-          saleProperties: this.salePropertiesLength,
-          landlords: this.landlordClient,
-          tenants: this.tenantClient,
-          totalRequests: this.totalRequests,
-          approvedRequests: this.approvedRequests,
-          requestPercentage: this.requestPercentage,
-          requestOverview: this.requestOverview,
-        })
-      );
-    }, 10000);
+      this.cacheInSession();
+    }, 12000);
+  }
+
+  cacheInSession() {
+    sessionStorage.setItem(
+      "admin_dashboard_session_data",
+      JSON.stringify({
+        rentProperties: this.rentPropertiesLength,
+        saleProperties: this.salePropertiesLength,
+        landlords: this.landlordClient,
+        tenants: this.tenantClient,
+        totalRequests: this.totalRequests,
+        approvedRequests: this.approvedRequests,
+        requestPercentage: this.requestPercentage,
+        requestOverview: this.requestOverview,
+      })
+    );
   }
 
   async getAllProperties(userId) {
@@ -232,7 +263,6 @@ export class AdminDashboardComponent implements OnInit {
               }
 
               if (pay_req.length == i) {
-                await this.assignUserData();
                 var limit = 0;
                 for (let req of this.allRequests) {
                   limit++;
@@ -244,6 +274,7 @@ export class AdminDashboardComponent implements OnInit {
                   }
                 }
                 if (limit == this.allRequests.length) {
+                  await this.assignUserData();
                   this.calculateRequests();
                 }
               }
@@ -253,7 +284,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async assignUserData() {
-    for (let req of this.allRequests) {
+    for (let req of this.requestOverview) {
       this.apiService.getUser(req["user_id"]).subscribe(async (userData) => {
         if (req) {
           await Object.assign(req, { userData: userData[0] });

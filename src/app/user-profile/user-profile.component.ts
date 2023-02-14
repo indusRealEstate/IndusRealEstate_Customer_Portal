@@ -18,14 +18,16 @@ export class UserProfileComponent implements OnInit {
   address: string;
   phone_number: number;
   lan_number: number;
-  userProfilePic: string = "";
+  userProfilePic: any = false;
   userProfileFetching: boolean = false;
+  userDetailsFetching: boolean = false;
   properties: any[] = [];
   isLoading: boolean = false;
   isLandlord: boolean = false;
 
   propertiesImagesLoading: boolean = false;
   propertiesImagesUrl: any = "";
+
 
   ///----
 
@@ -56,6 +58,7 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
+    this.userDetailsFetching = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.route.queryParams.subscribe((e) => {
@@ -111,13 +114,13 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.propertiesImagesLoading = true;
     this.isUserSignOut();
-    this.initFunction();
+    await this.initFunction();
   }
 
-  initFunction() {
+  async initFunction() {
     this.propertiesImagesUrl = this.apiService.getBaseUrlImages();
 
     var userData = localStorage.getItem("currentUser");
@@ -132,7 +135,7 @@ export class UserProfileComponent implements OnInit {
     if (userDetailsDataSession == null) {
       console.log("user details from api");
       this.userProfileFetching = true;
-      this.getUserDetails();
+      await this.getUserDetails();
 
       if (user[0]["auth_type"] == "landlord") {
         if (userPropertiesDataSession != null) {
@@ -141,7 +144,7 @@ export class UserProfileComponent implements OnInit {
             this.propertiesImagesLoading = false;
           }, 500);
         } else {
-          this.getUserProperties(user[0]["id"]);
+          await this.getUserProperties(user[0]["id"]);
           setTimeout(() => {
             this.propertiesImagesLoading = false;
           }, 3000);
@@ -165,7 +168,7 @@ export class UserProfileComponent implements OnInit {
             this.propertiesImagesLoading = false;
           }, 500);
         } else {
-          this.getUserProperties(user[0]["id"]);
+          await this.getUserProperties(user[0]["id"]);
           setTimeout(() => {
             this.propertiesImagesLoading = false;
           }, 3000);
@@ -194,7 +197,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  getUserProperties(userId: any) {
+  async getUserProperties(userId: any) {
     try {
       this.apiService.getUserProperties(userId).subscribe((data) => {
         this.properties = data;
@@ -209,7 +212,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  getUserDetails() {
+  async getUserDetails() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
@@ -220,7 +223,12 @@ export class UserProfileComponent implements OnInit {
       this.email = data[0]["email"];
       this.address = data[0]["address"];
       this.phone_number = data[0]["phone_number"];
-      this.userProfilePic = "data:image/jpg;base64," + data[0]["profile_photo"];
+      if(data[0]["profile_photo"] != ''){
+        this.userProfilePic = "data:image/jpg;base64," + data[0]["profile_photo"];
+      }else{
+        this.userProfilePic = false;
+      }
+      
     });
 
     setTimeout(() => {

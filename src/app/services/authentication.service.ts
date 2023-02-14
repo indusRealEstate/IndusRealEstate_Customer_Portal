@@ -61,7 +61,11 @@ export class AuthenticationService {
             this.currentUserSubject.next(userData);
           }
 
-          return userData;
+          if (userData != null) {
+            return userData;
+          } else {
+            return "invalid-user";
+          }
         })
       );
   }

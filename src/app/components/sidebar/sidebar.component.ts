@@ -80,12 +80,12 @@ export class SidebarComponent implements OnInit {
   serviceRoute: any[];
   menuItems: any[];
   user: User;
-  userProfilePic: any;
+  userProfilePic: any = false;
   profilePicUpdatingLoader: boolean = false;
   userProfileFetching: boolean = false;
 
   ///////////////--App Version--////////////////////
-  appVersion: any = "VERSION PROD v.0.1.4";
+  appVersion: any = "VERSION PROD v.0.1.4 AOT";
 
   constructor(
     private authService: AuthenticationService,
@@ -94,6 +94,7 @@ export class SidebarComponent implements OnInit {
     private apiServices: ApiService,
     private otherServices: OtherServices
   ) {
+    this.userProfileFetching = true;
     this.otherServices.isProfilePicUpdated.subscribe((e) => {
       if (e == true) {
         this.userProfileFetching = true;
@@ -158,19 +159,23 @@ export class SidebarComponent implements OnInit {
 
     if (userDetailsSessionData != null) {
       this.userProfilePic = jsonUserDetails["userProfilePic"];
+      this.userProfileFetching = false;
     } else {
-      this.userProfileFetching = true;
       this.getUserDetails(user[0]["id"]);
     }
   }
 
   getUserDetails(userId: any) {
     this.apiServices.getUserDetails(userId).subscribe((e: any) => {
-      this.userProfilePic = "data:image/jpg;base64," + e[0]["profile_photo"];
+      if (e[0]["profile_photo"] != "") {
+        this.userProfilePic = "data:image/jpg;base64," + e[0]["profile_photo"];
+      } else {
+        this.userProfilePic = false;
+      }
     });
 
     setTimeout(() => {
       this.userProfileFetching = false;
-    }, 1000);
+    }, 2000);
   }
 }

@@ -10,11 +10,10 @@ include "../dBase.php";
 $dbase = new dBase();
 $tcon = $dbase->con;
 
-$data = file_get_contents("php://input");
+$postdata = file_get_contents("php://input");
+$decodedData = json_decode($postdata, true);
 
-if ($data != null) {
-    $decodedData = json_decode($data, true);
-
+if (isset($postdata) && !empty($postdata)) {
     $stmt = $dbase->execute("INSERT INTO user
                                           (`id`,
                                            `auth_type`,

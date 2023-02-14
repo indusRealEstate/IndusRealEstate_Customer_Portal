@@ -65,24 +65,29 @@ export class LoginComponent implements OnInit {
       .login(this.f.username.value, this.f.password.value)
       .subscribe(
         (data) => {
-          var userData = localStorage.getItem("currentUser");
-          var user = JSON.parse(userData);
+          if (data == "invalid-user") {
+            this.invaliduser = true;
+            this.loading = false;
+          } else {
+            var userData = localStorage.getItem("currentUser");
+            var user = JSON.parse(userData);
 
-          setTimeout(() => {
-            if (user[0]["auth_type"] != "admin") {
-              // window.location.replace(`/home?uid=${user[0]["id"]}`);
-              this.router.navigate(["/home"], {
-                // replaceUrl: true,
-                queryParams: { uid: user[0]["id"] },
-              });
-            } else {
-              // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
-              this.router.navigate(["/admin-dashboard"], {
-                // replaceUrl: true,
-                queryParams: { uid: user[0]["id"] },
-              });
-            }
-          }, 500);
+            setTimeout(() => {
+              if (user[0]["auth_type"] != "admin") {
+                // window.location.replace(`/home?uid=${user[0]["id"]}`);
+                this.router.navigate(["/home"], {
+                  // replaceUrl: true,
+                  queryParams: { uid: user[0]["id"] },
+                });
+              } else {
+                // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
+                this.router.navigate(["/admin-dashboard"], {
+                  // replaceUrl: true,
+                  queryParams: { uid: user[0]["id"] },
+                });
+              }
+            }, 500);
+          }
         },
         (error) => {
           console.log(error);
