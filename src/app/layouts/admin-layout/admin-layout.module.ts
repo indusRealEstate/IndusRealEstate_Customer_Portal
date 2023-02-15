@@ -110,6 +110,9 @@ import { PropertyPage } from "app/property-page/property-page.component";
 import { GoogleMapsModule } from "@angular/google-maps";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
+import { StepperLandlordRegisterFirst } from "app/reports/components/stepper_01_reg_landlord/stepper_first_reg_landlord";
+import { StepperLandlordRegisterSecond } from "app/reports/components/stepper_02_reg_landlord/stepper_second_reg_landlord";
+import { StepperLandlordRegisterThird } from "app/reports/components/stepper_03_reg_landlord/stepper_third_reg_landlord";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -243,6 +246,11 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
     Tenant_Registration_Stepper_Fourth,
     Tenant_Registration_Stepper_Fifth,
     Tenant_Registration_Stepper_Sixth,
+
+    // Landlord Reg
+    StepperLandlordRegisterFirst,
+    StepperLandlordRegisterSecond,
+    StepperLandlordRegisterThird,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
