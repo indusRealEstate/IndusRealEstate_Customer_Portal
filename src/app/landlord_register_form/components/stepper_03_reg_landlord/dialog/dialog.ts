@@ -17,7 +17,7 @@ export class DocUploadDialogLandlordRegister implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DocUploadDialogLandlordRegister>
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.docName = this.data["upload"];
@@ -28,7 +28,17 @@ export class DocUploadDialogLandlordRegister implements OnInit {
   }
 
   submitEditedData() {
-    this.dialogRef.close({});
+    if (this.docName == "passport" || this.docName == "emirates_id") {
+      if (this.files.length < 3) {
+        this.dialogRef.close(this.files);
+      }else{
+        this.isDocsExceededMoreThan2 = true;
+
+        setTimeout(() => {
+          this.isDocsExceededMoreThan2 = false;
+        }, 4000);
+      }
+    }
   }
 
   pickDoc(doc) {
@@ -48,11 +58,7 @@ export class DocUploadDialogLandlordRegister implements OnInit {
           }
         };
       } else {
-        this.isDocsExceededMoreThan2 = true;
-
-        setTimeout(() => {
-          this.isDocsExceededMoreThan2 = false;
-        }, 4000);
+        
       }
     } else {
       reader.onloadend = (e) => {
@@ -62,8 +68,8 @@ export class DocUploadDialogLandlordRegister implements OnInit {
   }
 
   /**
-  * on file drop handler
-  */
+   * on file drop handler
+   */
   onFileDropped($event) {
     this.prepareFilesList($event);
   }
@@ -122,12 +128,12 @@ export class DocUploadDialogLandlordRegister implements OnInit {
    */
   formatBytes(bytes, decimals) {
     if (bytes === 0) {
-      return '0 Bytes';
+      return "0 Bytes";
     }
     const k = 1024;
     const dm = decimals <= 0 ? 0 : decimals || 2;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 }
