@@ -1,0 +1,113 @@
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'passport'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Passport
+</h3>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'emirates_id'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Emirates ID
+</h3>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'sales_deed'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Sales Deed
+</h3>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'ownership_doc'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Ownership
+</h3>
+
+<input #upload type="file" (change)="pickDoc($event)" style="display: none" />
+
+<div
+  style="
+    width: 100%;
+    height: 180px;
+    border: 1px solid black;
+    border-style: dashed;
+    display: flex;
+    border-radius: 7px;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <p style="font-size: 19px; font-weight: 600; color: #80808069">
+    Drag file here.
+  </p>
+  <input type="file" (change)="pickDoc($event)" style="display: none" />
+</div>
+
+<div style="width: 100%; display: flex; justify-content: center">
+  <div
+    class="btn"
+    (click)="upload.click()"
+    style="margin-top: 20px; background-color: #343b44"
+  >
+    <p style="margin-bottom: 0">Upload</p>
+  </div>
+</div>
+
+<div mat-dialog-actions style="justify-content: end; margin-top: 50px">
+  <button
+    style="
+      background-color: #a3a3a3;
+      width: 120px;
+      height: 43px;
+      font-size: 17px;
+    "
+    mat-raised-button
+    color="warn"
+    (click)="onCloseDialog()"
+    class="cancel-btn"
+  >
+    Cancel
+  </button>
+  <button
+    style="
+      background-color: #d4aa32;
+      width: 120px;
+      height: 43px;
+      font-size: 17px;
+    "
+    mat-raised-button
+    color="primary"
+    (click)="submitEditedData()"
+    class="submit-btn"
+  >
+    Submit
+  </button>
+</div>

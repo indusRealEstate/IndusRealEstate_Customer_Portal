@@ -151,6 +151,7 @@ export class AddPropertyForm implements OnInit {
       var jsonData = {
         user_id: user[0]["id"],
         request_type: REQUEST_TYPE,
+        unique_id: '',
         property_state: this.propertyState,
         offer_validity: this.offerValidity,
         furnish_details: this.addPropertyForm.value["furnishDetails"],

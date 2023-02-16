@@ -14,7 +14,7 @@ $postdata = file_get_contents("php://input");
 $decodedData = json_decode($postdata, true);
 
 if ($postdata != null) {
-    $stmt = $dbase->execute("INSERT INTO `user_details`(`user_id`, `email`, `phone_number`, `address`, `profile_photo`) 
-                             VALUES ('{$decodedData["user_id"]}','{$decodedData["email"]}','{$decodedData["phone_number"]}',
+    $stmt = $dbase->execute("INSERT INTO `user_details`(`user_id`, `email`, `nationality`,`passport_no`,`passport_exp`,`phone_number`, `address`, `profile_photo`) 
+                             VALUES ('{$decodedData["user_id"]}','{$decodedData["email"]}','{$decodedData["nationality"]}','{$decodedData["passport_no"]}','{$decodedData["passport_exp"]}','{$decodedData["phone_number"]}',
                              '{$decodedData["address"]}','{$decodedData["profile_photo"]}')");
 }

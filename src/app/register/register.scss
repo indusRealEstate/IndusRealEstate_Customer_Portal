@@ -298,24 +298,3 @@ body {
 .register-radio-btns-title {
   margin-right: 30px;
 }
-
-::ng-deep .mat-radio-button {
-  padding-bottom: 15px !important;
-  padding-right: 10px !important;
-  padding-left: 25px !important;
-  padding-top: 15px !important;
-}
-
-::ng-deep .mat-radio-checked {
-  & .mat-radio-inner-circle {
-    background-color: #d3ab33 !important;
-  }
-
-  & .mat-radio-outer-circle {
-    border: 2px solid #d3ab33 !important;
-  }
-
-  & .mat-radio-ripple .mat-ripple-element {
-    background-color: #d3ab33 !important;
-  }
-}

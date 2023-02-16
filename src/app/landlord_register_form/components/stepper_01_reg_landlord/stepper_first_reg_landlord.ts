@@ -21,8 +21,6 @@ export class StepperLandlordRegisterFirst {
       city: ["", [Validators.required]],
       state: ["", [Validators.required]],
       address: ["", [Validators.required]],
-      password: ["", [Validators.required]],
-      passwordRetype: ["", [Validators.required]],
       passportNo: ["", [Validators.required]],
       passportExpiry: ["", [Validators.required]],
     });

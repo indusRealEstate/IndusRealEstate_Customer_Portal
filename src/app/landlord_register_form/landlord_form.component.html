@@ -1,8 +1,6 @@
-<div class="main-content reports-bg">
+<div style="margin-top: 0; width: 75%">
   <div class="container-fluid">
-    <h1>Landlord register form...!</h1>
-
-    <button type="button" (click)="fileInput.click()">
+    <!-- <button type="button" (click)="fileInput.click()">
       <span>Upload</span>
       <input
         #fileInput
@@ -11,6 +9,237 @@
         style="display: none"
       />
     </button>
-    <button mat-raised-button (click)="onSubmit()">Submit</button>
+    <button mat-raised-button (click)="onSubmit()">Submit</button> -->
+
+    <div class="card" style="margin-top: 0; text-align: initial">
+      <div
+        class="card-header"
+        style="
+          border-bottom: 1px solid #dfdfdf;
+          background-image: linear-gradient(
+              to bottom,
+              rgb(255 255 255 / 73%) 50%,
+              rgb(255 255 255 / 76%) 80%
+            ),
+            url('assets/img/bg/navbar_bg.jfif');
+        "
+      >
+        <p
+          style="
+            margin: 0;
+            font-size: 22px;
+            margin-top: 20px;
+            margin-left: 10px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: #686868;
+          "
+        >
+          Landlord Registration
+        </p>
+      </div>
+      <div class="card-body" style="padding: 0; background-color: #fbfafa">
+        <mat-horizontal-stepper
+          #LandlordRegStepper
+          [selectedIndex]="selectedIndex"
+          labelPosition="bottom"
+          linear="true"
+        >
+          <mat-step
+            #one
+            [stepControl]="LandlordRegStep01Form"
+            state="default01"
+          >
+            <stepper-one-landlord-reg></stepper-one-landlord-reg>
+          </mat-step>
+          <mat-step
+            #two
+            [stepControl]="LandlordRegStep02Form"
+            state="default02"
+          >
+            <stepper-two-landlord-reg></stepper-two-landlord-reg>
+          </mat-step>
+          <mat-step
+            #three
+            [stepControl]="LandlordRegStep03Form"
+            state="default03"
+          >
+            <stepper-three-landlord-reg></stepper-three-landlord-reg>
+          </mat-step>
+
+          <!-- Replace icon mat-step -->
+          <ng-template matStepperIcon="done">
+            <div class="row">
+              <img
+                src="assets/img/svg/landlord-register-form/tick-circle.svg"
+                alt=""
+                style="
+                  width: 35px;
+                  filter: invert(65%) sepia(98%) saturate(334%) hue-rotate(3deg)
+                    brightness(89%) contrast(89%);
+                "
+              />
+            </div>
+          </ng-template>
+          <ng-template matStepperIcon="default01">
+            <p
+              style="
+                color: #a3a3a3;
+                font-size: 18px;
+                font-weight: 600;
+                padding-top: 10px;
+              "
+            >
+              Personal Details
+            </p>
+          </ng-template>
+          <ng-template matStepperIcon="default02">
+            <p
+              style="
+                color: #a3a3a3;
+                font-size: 18px;
+                font-weight: 600;
+                padding-top: 10px;
+              "
+            >
+              Property Details
+            </p>
+          </ng-template>
+          <ng-template matStepperIcon="default03">
+            <p
+              style="
+                color: #a3a3a3;
+                font-size: 18px;
+                font-weight: 600;
+                padding-top: 10px;
+              "
+            >
+              Document Attachments
+            </p>
+          </ng-template>
+          <ng-template matStepperIcon="edit" #stepperIcon>
+            <img
+              src="assets/img/svg/landlord-register-form/edit.svg"
+              alt=""
+              style="
+                width: 35px;
+                filter: invert(64%) sepia(84%) saturate(0%) hue-rotate(165deg)
+                  brightness(86%) contrast(95%);
+              "
+            />
+          </ng-template>
+          <!-- Replace icon mat-step -->
+        </mat-horizontal-stepper>
+
+        <p
+          *ngIf="isFormNotFilled == true"
+          style="
+            color: #ff4646a3;
+            text-align: end;
+            padding-right: 35px;
+            font-size: 12px;
+            font-weight: 600;
+            padding-top: 10px;
+          "
+        >
+          Please fill the form completely
+        </p>
+
+        <div
+          class="row"
+          style="
+            margin: 0;
+            display: flex;
+            justify-content: end;
+            padding: 30px;
+            margin-top: 20px;
+          "
+        >
+          <div
+            (click)="cancelRegistration()"
+            *ngIf="currentIndex == 0"
+            class="btn"
+            style="
+              font-size: 18px;
+              font-weight: 600;
+              padding-top: 15px;
+              background-color: #a3a3a3;
+            "
+          >
+            CANCEL
+          </div>
+          <div
+            (click)="stepperPreviousClick()"
+            *ngIf="currentIndex == 1 || currentIndex == 2"
+            class="btn"
+            style="
+              font-size: 18px;
+              font-weight: 600;
+              padding-top: 15px;
+              background-color: #a3a3a3;
+            "
+          >
+            BACK
+          </div>
+
+          <div
+            *ngIf="currentIndex != 2"
+            class="btn"
+            style="background-color: #d4aa32; margin-left: 10px"
+            (click)="stepperNextClick()"
+          >
+            <div class="row" style="margin: 0">
+              <p
+                style="
+                  margin-bottom: 0;
+                  font-size: 18px;
+                  font-weight: 600;
+                  padding-top: 3px;
+                "
+              >
+                CONTINUE
+              </p>
+              <img
+                src="assets/img/svg/landlord-register-form/arrow-right.svg"
+                alt=""
+                style="
+                  width: 30px;
+                  filter: brightness(0) invert(1);
+                  margin-left: 15px;
+                "
+              />
+            </div>
+          </div>
+          <div
+            *ngIf="currentIndex == 2"
+            class="btn"
+            style="background-color: #d4aa32; margin-left: 10px"
+            (click)="register()"
+          >
+            <div class="row" style="margin: 0">
+              <p
+                style="
+                  margin-bottom: 0;
+                  font-size: 18px;
+                  font-weight: 600;
+                  padding-top: 3px;
+                "
+              >
+                FINISH
+              </p>
+              <img
+                src="assets/img/svg/landlord-register-form/arrow-right.svg"
+                alt=""
+                style="
+                  width: 30px;
+                  filter: brightness(0) invert(1);
+                  margin-left: 15px;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

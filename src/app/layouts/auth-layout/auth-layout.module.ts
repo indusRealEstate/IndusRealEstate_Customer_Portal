@@ -54,6 +54,10 @@ import { RegisterComponent } from "app/register/register.component";
 import { AuthLayoutRoutes } from "./auth-layout.routing";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
 import { TenantFormComponent } from "app/tenant_register_form/tenant_form.component";
+import { StepperLandlordRegisterFirst } from "app/landlord_register_form/components/stepper_01_reg_landlord/stepper_first_reg_landlord";
+import { StepperLandlordRegisterSecond } from "app/landlord_register_form/components/stepper_02_reg_landlord/stepper_second_reg_landlord";
+import { StepperLandlordRegisterThird } from "app/landlord_register_form/components/stepper_03_reg_landlord/stepper_third_reg_landlord";
+import { DocUploadDialogLandlordRegister } from "app/landlord_register_form/components/stepper_03_reg_landlord/dialog/dialog";
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -113,6 +117,13 @@ import { TenantFormComponent } from "app/tenant_register_form/tenant_form.compon
     RegisterComponent,
     LandlordFormComponent,
     TenantFormComponent,
+
+    // Landlord Reg
+    StepperLandlordRegisterFirst,
+    StepperLandlordRegisterSecond,
+    StepperLandlordRegisterThird,
+
+    DocUploadDialogLandlordRegister,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
