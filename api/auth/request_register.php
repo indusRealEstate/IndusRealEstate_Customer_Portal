@@ -16,6 +16,7 @@ $decodedData = json_decode($postdata, true);
 if (isset($postdata) && !empty($postdata)) {
     $stmt = $dbase->execute("INSERT INTO `create_ac_req`
     (
+     `request_type`,
      `firstname`,
      `lastname`,
      `auth_type`,
@@ -31,8 +32,10 @@ if (isset($postdata) && !empty($postdata)) {
      `passport_pics`,
      `emirates_id_pics`,
      `ownership_doc`,
-     `sales_deed_doc`)
+     `sales_deed_doc`,
+     `approved`)
 VALUES      (
+     '{$decodedData["request_type"]}',
      '{$decodedData["firstname"]}',
      '{$decodedData["lastname"]}',
      '{$decodedData["auth_type"]}',
@@ -48,5 +51,6 @@ VALUES      (
      '{$decodedData["passport_pics"]}',
      '{$decodedData["emirates_id_pics"]}',
      '{$decodedData["ownership_doc"]}',
-     '{$decodedData["sales_deed_doc"]}') ");
+     '{$decodedData["sales_deed_doc"]}',
+     '{$decodedData["approved"]}') ");
 }

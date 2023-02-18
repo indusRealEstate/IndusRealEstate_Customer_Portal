@@ -18,6 +18,7 @@ export class AdminRequests implements OnInit {
   isContentLoading: boolean = false;
 
   allRequests: any[] = [];
+  allNewLandLordACCRequests: any[] = [];
   imagesUrl: any;
   show_more_imgLoading: boolean[] = [];
 
@@ -181,12 +182,20 @@ export class AdminRequests implements OnInit {
       .subscribe((prop_req: Array<any>) => {
         this.allRequests = prop_req;
         reqLen = prop_req.length;
+
+        for (let index = 0; index < this.allRequests.length; index++) {
+          if (this.allRequests[index].request_type == "NEW_LANDLORD_ACC") {
+            this.allNewLandLordACCRequests.push(this.allRequests[index]);
+            this.allRequests.splice(index, 1);
+            reqLen--;
+          }
+        }
       });
 
     setTimeout(() => {
       this.adminService
         .getAllPaymentRequests(userId)
-        .subscribe(async (payment_req: Array<any>) => {
+        .subscribe((payment_req: Array<any>) => {
           var i = 0;
           for (let p of payment_req) {
             i++;
@@ -194,24 +203,48 @@ export class AdminRequests implements OnInit {
           }
 
           if (payment_req.length == i) {
-            reqLen = reqLen + payment_req.length;
-            await this.assignUsersData();
-            this.checkRequestsEmpty();
+            this.adminService
+              .getAllNewLandlordACCRequest(userId)
+              .subscribe(async (new_landlord_req: Array<any>) => {
+                var j = 0;
+                for (let req of new_landlord_req) {
+                  j++;
+                  this.allRequests.push(req);
+                }
+
+                if (new_landlord_req.length == j) {
+                  reqLen =
+                    reqLen + payment_req.length + new_landlord_req.length;
+                  await this.assignUsersData();
+                  this.checkRequestsEmpty();
+                }
+              });
           }
         });
-    }, 300);
+    }, 600);
 
     return reqLen;
   }
 
   async assignUsersData() {
     for (let req of this.allRequests) {
-      this.apiService.getUser(req["user_id"]).subscribe(async (userDetails) => {
-        if (req) {
-          await Object.assign(req, { userData: userDetails[0] });
-          await Object.assign(req, { show_more: false });
+      if (req.request_type != "NEW_LANDLORD_ACC") {
+        this.apiService
+          .getUser(req["user_id"])
+          .subscribe(async (userDetails) => {
+            if (req) {
+              await Object.assign(req, { userData: userDetails[0] });
+              await Object.assign(req, { show_more: false });
+            }
+          });
+      } else {
+        for (let new_lndlrd_req of this.allNewLandLordACCRequests) {
+          if (req.request_details_id == new_lndlrd_req.unique_id) {
+            await Object.assign(req, { propertyData: new_lndlrd_req });
+            await Object.assign(req, { show_more: false });
+          }
         }
-      });
+      }
     }
   }
 

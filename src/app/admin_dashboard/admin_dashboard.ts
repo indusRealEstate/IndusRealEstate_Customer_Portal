@@ -31,7 +31,7 @@ export class AdminDashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  allRequests: any[] = [];
+  // allRequests: any[] = [];
 
   requestOverview: any[] = [];
 
@@ -248,36 +248,63 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService
       .getAllAddPropertyRequests(userId)
       .subscribe((prop_req: Array<any>) => {
-        this.allRequests = prop_req;
+        this.totalRequests = prop_req.length;
+
+        for (let index = 0; index < prop_req.length; index++) {
+          if (index >= 5) {
+            break;
+          } else {
+            if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
+              this.requestOverview.push(prop_req[index]);
+            }
+          }
+
+          if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
+            if (prop_req[index]["approved"] == "true") {
+              this.approvedRequests++;
+            }
+          } else {
+            this.totalRequests--;
+          }
+        }
 
         setTimeout(() => {
           this.adminService
             .getAllPaymentRequests(userId)
             .subscribe(async (pay_req: Array<any>) => {
-              this.totalRequests = this.allRequests.length;
-              var i = 0;
-              for (let pay of pay_req) {
-                i++;
+              for (let req of pay_req) {
                 this.totalRequests++;
-                this.allRequests.push(pay);
+                if (req["approved"] == "true") {
+                  this.approvedRequests++;
+                }
               }
 
-              if (pay_req.length == i) {
-                var limit = 0;
-                for (let req of this.allRequests) {
-                  limit++;
-                  if (limit < 5) {
-                    this.requestOverview.push(req);
+              if (this.requestOverview.length < 4) {
+                for (let index = 0; index < pay_req.length; index++) {
+                  if (this.requestOverview.length >= 4) {
+                    break;
+                  } else {
+                    this.requestOverview.push(pay_req[index]);
                   }
-                  if (req["approved"] == "true") {
-                    this.approvedRequests++;
-                  }
-                }
-                if (limit == this.allRequests.length) {
-                  await this.assignUserData();
-                  this.calculateRequests();
                 }
               }
+
+              this.adminService
+                .getAllNewLandlordACCRequest(userId)
+                .subscribe(async (new_landlord_ac_req) => {
+                  for (let req of new_landlord_ac_req) {
+                    this.totalRequests++;
+                    if (req["approved"] == "true") {
+                      this.approvedRequests++;
+                    }
+                  }
+
+                  if (this.requestOverview.length == 4) {
+                    await this.assignUserData().then(() => {
+                      this.calculateRequests();
+                    });
+                  }
+                });
             });
         }, 500);
       });

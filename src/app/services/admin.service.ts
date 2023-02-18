@@ -34,7 +34,6 @@ export class AdminService {
       return of(result as T);
     };
   }
-  
 
   getAllProperties(userId: any) {
     const url = `${API_URL}/getAllProperties.php?apikey=1`;
@@ -70,5 +69,13 @@ export class AdminService {
       })
     );
   }
-  
+
+  getAllNewLandlordACCRequest(userId: any) {
+    const url = `${API_URL}/getAllNewLandlordACCRequest.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

@@ -216,6 +216,7 @@ export class LandlordFormComponent implements OnInit {
       var ownershipDocExt = this.thirdStepper.ownerShipDoc["ext"];
 
       var requestDetails = {
+        request_type: REQUEST_TYPE,
         firstname: this.firstStepper.form.value.firstname,
         lastname: this.firstStepper.form.value.lastname,
         auth_type: "landlord",
@@ -239,6 +240,7 @@ export class LandlordFormComponent implements OnInit {
         }),
         ownership_doc: unique_id + "/" + "ownership" + "." + ownershipDocExt,
         sales_deed_doc: unique_id + "/" + "sales_deed" + "." + salesDeedExt,
+        approved: "false",
       };
 
       await this.uploadFiles(allDocFiles).then(() => {
