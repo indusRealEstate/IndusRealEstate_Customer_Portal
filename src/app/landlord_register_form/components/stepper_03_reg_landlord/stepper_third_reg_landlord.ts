@@ -12,32 +12,14 @@ import { DocUploadDialogLandlordRegister } from "./dialog/dialog";
 export class StepperLandlordRegisterThird {
   form: FormGroup;
 
-  passPortPic_front: any;
-  passPortPic_back: any;
-  emiratesIDPics_front: any;
-  emiratesIDPics_back: any;
-  ownerShipDoc: any;
-  salesDeedDoc: any;
-
-  isPassportUploaded: boolean = false;
-
-  allDocsCollected: boolean = false;
+  passPortPics: any[] = [];
+  emiratesIDPics: any[] = [];
+  ownerShipDoc: any = "";
+  salesDeedDoc: any = "";
+  
   constructor(private formBuilder: FormBuilder, private dialog?: MatDialog) {}
 
   ngOnInit(): void {}
-
-  // pickPassport(event: any) {
-  //   var file = event.target.files[0];
-  //   var reader = new FileReader();
-  //   reader.readAsDataURL(file);
-
-  //   reader.onloadend = (e) => {
-  //     this.secondPartySignature = e.target.result;
-
-  //     this.secondPartySignatureName =
-  //       this.form.value["projectName"] + "-" + "signature";
-  //   };
-  // }
 
   openDialog(upload: any) {
     this.dialog
@@ -48,7 +30,31 @@ export class StepperLandlordRegisterThird {
       })
       .afterClosed()
       .subscribe((res) => {
-        console.log(res);
+        if (res["doc"] == "passport") {
+          for (let e of res["data"]) {
+            this.passPortPics.push(e);
+          }
+        } else if (res["doc"] == "emirates_id") {
+          for (let e of res["data"]) {
+            this.emiratesIDPics.push(e);
+          }
+        } else if (res["doc"] == "sales_deed") {
+          this.salesDeedDoc = res["data"];
+        } else {
+          this.ownerShipDoc = res["data"];
+        }
       });
+  }
+
+  clearDocs(docName) {
+    if (docName == "passport") {
+      this.passPortPics.length = 0;
+    } else if (docName == "emirates_id") {
+      this.emiratesIDPics.length = 0;
+    } else if (docName == "sales_deed") {
+      this.salesDeedDoc = "";
+    } else {
+      this.ownerShipDoc = "";
+    }
   }
 }

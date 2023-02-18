@@ -5,6 +5,10 @@ header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 header("Content-Type: application/json; charset=UTF-8");
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', FALSE);
+header('Pragma: no-cache');
 
 include "../dBase.php";
 $dbase = new dBase();
@@ -17,6 +21,7 @@ if ($postdata != null) {
     $stmt = $dbase->execute("INSERT INTO `add_property_req`
     (`user_id`,
      `request_type`,
+     `unique_id`,
      `property_state`,
      `offer_validity`,
      `furnish_details`,
@@ -47,6 +52,7 @@ if ($postdata != null) {
 VALUES
     ('{$decodedData["user_id"]}',
      '{$decodedData["request_type"]}',
+     '{$decodedData["unique_id"]}',
      '{$decodedData["property_state"]}',
      '{$decodedData["offer_validity"]}',
      '{$decodedData["furnish_details"]}',

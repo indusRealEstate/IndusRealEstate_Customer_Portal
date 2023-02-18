@@ -12,7 +12,7 @@ export class StepperLandlordRegisterSecond {
   offerValidity: any;
   validUntil: any;
   secondPartySignature: any = "";
-  secondPartySignatureName: any = "";
+  secondPartySignatureExt: any = "";
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -71,9 +71,8 @@ export class StepperLandlordRegisterSecond {
 
     reader.onloadend = (e) => {
       this.secondPartySignature = e.target.result;
-
-      this.secondPartySignatureName =
-        this.form.value["projectName"] + "-" + "signature";
+      var signPart1 = e.target.result.toString().split(';base64,')[0];
+      this.secondPartySignatureExt = signPart1.split('/')[1];
     };
   }
 

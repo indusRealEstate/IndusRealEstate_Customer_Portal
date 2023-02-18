@@ -3,44 +3,197 @@
 </p>
 <div class="row" style="margin: 0">
   <div class="col" style="padding-left: 0">
-    <div class="btn upload-btns" (click)="openDialog('passport')">
-      <div class="row" style="margin: 0; justify-content: space-between">
-        <p class="upload-btn-title">Passport Front & Back</p>
-        <img
-          class="upload-btn-icon"
-          src="assets/img/svg/landlord-register-form/document-upload.svg"
-        />
+    <div class="col" style="padding-left: 0; padding-right: 0">
+      <div class="btn upload-btns" (click)="openDialog('passport')">
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <p class="upload-btn-title">Passport Front & Back</p>
+          <img
+            class="upload-btn-icon"
+            src="assets/img/svg/landlord-register-form/document-upload.svg"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="passPortPics.length != 0"
+        class="row"
+        style="margin: 0; justify-content: space-between"
+      >
+        <p
+          *ngIf="passPortPics.length == 2"
+          style="
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d4aa32;
+            font-weight: 400;
+          "
+        >
+          Uploaded 2 documents of Passport.
+        </p>
+        <p
+          *ngIf="passPortPics.length  == 1"
+          style="
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d4aa32;
+            font-weight: 400;
+          "
+        >
+          Uploaded 1 document of Passport.
+        </p>
+        <div
+          (click)="clearDocs('passport')"
+          class="btn"
+          style="
+            padding: 4px 15px;
+            height: 24px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #343b44b5;
+          "
+        >
+          Clear
+        </div>
       </div>
     </div>
 
-    <div class="btn upload-btns" (click)="openDialog('ownership_doc')">
-      <div class="row" style="margin: 0; justify-content: space-between">
-        <p class="upload-btn-title">Ownership</p>
-        <img
-          src="assets/img/svg/landlord-register-form/document-upload.svg"
-          class="upload-btn-icon"
-        />
+    <div class="col" style="padding-left: 0; padding-right: 0">
+      <div class="btn upload-btns" (click)="openDialog('ownership_doc')">
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <p class="upload-btn-title">Ownership</p>
+          <img
+            src="assets/img/svg/landlord-register-form/document-upload.svg"
+            class="upload-btn-icon"
+          />
+        </div>
+      </div>
+
+      <div
+        *ngIf="ownerShipDoc != ''"
+        class="row"
+        style="margin: 0; justify-content: space-between"
+      >
+        <p
+          style="
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d4aa32;
+            font-weight: 400;
+          "
+        >
+          Uploaded 1 document of Ownership.
+        </p>
+        <div
+          (click)="clearDocs('ownership_doc')"
+          class="btn"
+          style="
+            padding: 4px 15px;
+            height: 24px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #343b44b5;
+          "
+        >
+          Clear
+        </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="btn upload-btns" (click)="openDialog('emirates_id')">
-      <div class="row" style="margin: 0; justify-content: space-between">
-        <p class="upload-btn-title">Emirates ID Front & Back</p>
-        <img
-          src="assets/img/svg/landlord-register-form/document-upload.svg"
-          class="upload-btn-icon"
-        />
+    <div class="col" style="padding-left: 0; padding-right: 0">
+      <div class="btn upload-btns" (click)="openDialog('emirates_id')">
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <p class="upload-btn-title">Emirates ID Front & Back</p>
+          <img
+            src="assets/img/svg/landlord-register-form/document-upload.svg"
+            class="upload-btn-icon"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="emiratesIDPics.length != 0"
+        class="row"
+        style="margin: 0; justify-content: space-between"
+      >
+        <p
+          *ngIf="emiratesIDPics.length == 2"
+          style="
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d4aa32;
+            font-weight: 400;
+          "
+        >
+          Uploaded 2 documents of Emirates ID.
+        </p>
+        <p
+          *ngIf="emiratesIDPics.length  == 1"
+          style="
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d4aa32;
+            font-weight: 400;
+          "
+        >
+          Uploaded 1 document of Emirates ID.
+        </p>
+        <div
+          (click)="clearDocs('emirates_id')"
+          class="btn"
+          style="
+            padding: 4px 15px;
+            height: 24px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #343b44b5;
+          "
+        >
+          Clear
+        </div>
       </div>
     </div>
 
-    <div class="btn upload-btns" (click)="openDialog('sales_deed')">
-      <div class="row" style="margin: 0; justify-content: space-between">
-        <p class="upload-btn-title">Sales deed</p>
-        <img
-          src="assets/img/svg/landlord-register-form/document-upload.svg"
-          class="upload-btn-icon"
-        />
+    <div class="col" style="padding-left: 0; padding-right: 0">
+      <div class="btn upload-btns" (click)="openDialog('sales_deed')">
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <p class="upload-btn-title">Sales deed</p>
+          <img
+            src="assets/img/svg/landlord-register-form/document-upload.svg"
+            class="upload-btn-icon"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="salesDeedDoc != ''"
+        class="row"
+        style="margin: 0; justify-content: space-between"
+      >
+        <p
+          style="
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d4aa32;
+            font-weight: 400;
+          "
+        >
+          Uploaded 1 document of Sales Deed.
+        </p>
+        <div
+          (click)="clearDocs('sales_deed')"
+          class="btn"
+          style="
+            padding: 4px 15px;
+            height: 24px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #343b44b5;
+          "
+        >
+          Clear
+        </div>
       </div>
     </div>
   </div>

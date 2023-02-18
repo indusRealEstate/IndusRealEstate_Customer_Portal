@@ -38,7 +38,27 @@
           Landlord Registration
         </p>
       </div>
-      <div class="card-body" style="padding: 0; background-color: #fbfafa">
+      <div
+        *ngIf="isRegistering == true"
+        style="
+          display: flex;
+          justify-content: center;
+          height: 500px;
+          align-items: center;
+        "
+      >
+        <span
+          class="spinner-border spinner-border-m mr-2"
+          style="color: #d4aa32"
+        >
+        </span>
+      </div>
+
+      <div
+        class="card-body"
+        style="padding: 0; background-color: #fbfafa"
+        *ngIf="isRegistering == false"
+      >
         <mat-horizontal-stepper
           #LandlordRegStepper
           [selectedIndex]="selectedIndex"
@@ -142,7 +162,20 @@
             padding-top: 10px;
           "
         >
-          Please fill the form completely
+          Please fill the form completely.
+        </p>
+        <p
+          *ngIf="isAllDocumentsNotUploaded == true"
+          style="
+            color: #ff4646a3;
+            text-align: end;
+            padding-right: 35px;
+            font-size: 12px;
+            font-weight: 600;
+            padding-top: 10px;
+          "
+        >
+          Please upload all required Documents.
         </p>
 
         <div

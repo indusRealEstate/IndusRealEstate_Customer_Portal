@@ -97,22 +97,22 @@ export class TenantFormComponent implements OnInit {
         this.registerForm.get("lastname").setValue(lastname);
       }
 
-      setTimeout(() => {
-        this.userService
-          .register(this.registerForm.value, this.auth_type)
-          .pipe(first())
-          .subscribe(
-            (data) => {
-              // this.alertService.success("Registration successful", true);
-              this.router.navigate(["/login"]);
-            },
-            (error) => {
-              // this.alertService.error(error);
-              console.log(error);
-              // this.loading = false;
-            }
-          );
-      }, 1000);
+      // setTimeout(() => {
+      //   this.userService
+      //     .register(this.registerForm.value, this.auth_type)
+      //     .pipe(first())
+      //     .subscribe(
+      //       (data) => {
+      //         // this.alertService.success("Registration successful", true);
+      //         this.router.navigate(["/login"]);
+      //       },
+      //       (error) => {
+      //         // this.alertService.error(error);
+      //         console.log(error);
+      //         // this.loading = false;
+      //       }
+      //     );
+      // }, 1000);
     } catch (error) {
     } finally {
       setTimeout(() => {

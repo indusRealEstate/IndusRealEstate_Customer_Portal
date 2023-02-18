@@ -60,6 +60,7 @@ import { StepperLandlordRegisterThird } from "app/landlord_register_form/compone
 import { DocUploadDialogLandlordRegister } from "app/landlord_register_form/components/stepper_03_reg_landlord/dialog/dialog";
 import { DndDirective } from "app/landlord_register_form/components/stepper_03_reg_landlord/dialog/dnd.directive";
 import { ProgressComponent } from "app/landlord_register_form/components/stepper_03_reg_landlord/progressbar/progress";
+import { SuccessDialogLandLordRegister } from "app/landlord_register_form/components/success-dialog/success_dialog";
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -128,7 +129,8 @@ import { ProgressComponent } from "app/landlord_register_form/components/stepper
     DocUploadDialogLandlordRegister,
     DndDirective,
     ProgressComponent,
+    SuccessDialogLandLordRegister,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
-export class AuthLayoutModule { }
+export class AuthLayoutModule {}

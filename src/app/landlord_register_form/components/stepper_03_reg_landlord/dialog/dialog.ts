@@ -12,7 +12,10 @@ export class DocUploadDialogLandlordRegister implements OnInit {
   singleDoc: any;
 
   isDocsExceededMoreThan2: boolean = false;
+  isDocsExceededMoreThan1: boolean = false;
+  isDocsEmpty: boolean = false;
   files: any[] = [];
+  base64files: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,41 +32,55 @@ export class DocUploadDialogLandlordRegister implements OnInit {
 
   submitEditedData() {
     if (this.docName == "passport" || this.docName == "emirates_id") {
-      if (this.files.length < 3) {
-        this.dialogRef.close(this.files);
-      }else{
-        this.isDocsExceededMoreThan2 = true;
-
-        setTimeout(() => {
-          this.isDocsExceededMoreThan2 = false;
-        }, 4000);
-      }
-    }
-  }
-
-  pickDoc(doc) {
-    var file = doc.target.files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    console.log(file);
-
-    if (this.docName == "passport" || this.docName == "emirates_id") {
-      if (this.docs.length < 3) {
-        reader.onloadend = (e) => {
-          if (this.docs.length == 0) {
-            this.docs[0] = e.target.result;
-          } else {
-            this.docs[1] = e.target.result;
-          }
-        };
+      if (this.files.length < 3 && this.files.length != 0) {
+        if (this.docName == "passport") {
+          this.dialogRef.close({ doc: "passport", data: this.base64files });
+        } else {
+          this.dialogRef.close({ doc: "emirates_id", data: this.base64files });
+        }
       } else {
-        
+        if (this.files.length == 0) {
+          this.isDocsEmpty = true;
+
+          setTimeout(() => {
+            this.isDocsEmpty = false;
+          }, 4000);
+        } else {
+          this.isDocsExceededMoreThan2 = true;
+
+          setTimeout(() => {
+            this.isDocsExceededMoreThan2 = false;
+          }, 4000);
+        }
       }
     } else {
-      reader.onloadend = (e) => {
-        this.singleDoc = e.target.result;
-      };
+      if (this.files.length < 2 && this.files.length != 0) {
+        if (this.docName == "sales_deed") {
+          this.dialogRef.close({
+            doc: "sales_deed",
+            data: this.base64files[0],
+          });
+        } else {
+          this.dialogRef.close({
+            doc: "ownership_doc",
+            data: this.base64files[0],
+          });
+        }
+      } else {
+        if (this.files.length >= 2) {
+          this.isDocsExceededMoreThan1 = true;
+
+          setTimeout(() => {
+            this.isDocsExceededMoreThan1 = false;
+          }, 4000);
+        } else {
+          this.isDocsEmpty = true;
+
+          setTimeout(() => {
+            this.isDocsEmpty = false;
+          }, 4000);
+        }
+      }
     }
   }
 
@@ -117,6 +134,17 @@ export class DocUploadDialogLandlordRegister implements OnInit {
     for (const item of files) {
       item.progress = 0;
       this.files.push(item);
+
+      var reader = new FileReader();
+      reader.readAsDataURL(item);
+
+      reader.onloadend = (e) => {
+        var part1 = e.target.result.toString().split(";base64,")[0];
+        this.base64files.push({
+          data: e.target.result,
+          ext: part1.split("/")[1],
+        });
+      };
     }
     this.uploadFilesSimulator(0);
   }

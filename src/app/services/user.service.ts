@@ -20,18 +20,13 @@ export class UserService {
     return this.http.get<User[]>(`/users`);
   }
 
-  register(user: User, user_id: any, auth_type?: any, userDetails?: any) {
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    var token = possible;
-    user.token = token;
-    user.id = user_id;
-    user.auth_type = auth_type;
-    const url = `${API_URL}/register.php?apikey=1`;
+  request_register(data: any) {
+    const url = `${API_URL}/request_register.php?apikey=1`;
 
     try {
       var res = this.http
-        .post(url, user)
-        .pipe(catchError(this.handleError("register", [])));
+        .post(url, data)
+        .pipe(catchError(this.handleError("request_register", [])));
 
       return res;
     } catch (error) {}

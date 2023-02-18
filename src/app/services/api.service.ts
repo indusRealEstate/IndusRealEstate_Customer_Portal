@@ -115,7 +115,7 @@ export class ApiService {
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
-      }),
+      })
     );
   }
 
@@ -146,6 +146,16 @@ export class ApiService {
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("saveImgInServer", [])));
+  }
+
+  saveLandlordRegisterUploadFiles(data: any) {
+    const url = `https://indusre.app/api/register_files_uploader.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(
+        catchError(this.handleError("saveLandlordRegisterUploadFiles", []))
+      );
   }
 
   removeAppointment(data: any) {

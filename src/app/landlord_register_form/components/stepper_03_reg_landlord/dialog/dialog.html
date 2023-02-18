@@ -204,6 +204,40 @@
   </div>
 </div>
 
+<p
+  *ngIf="isDocsExceededMoreThan2 == true"
+  style="
+    text-align: center;
+    font-weight: 400;
+    color: #ff2929d4;
+    font-size: 15px;
+  "
+>
+  You cannot add more than 2 files
+</p>
+<p
+  *ngIf="isDocsExceededMoreThan1 == true"
+  style="
+    text-align: center;
+    font-weight: 400;
+    color: #ff2929d4;
+    font-size: 15px;
+  "
+>
+  You cannot add more than 1 file
+</p>
+<p
+  *ngIf="isDocsEmpty == true"
+  style="
+    text-align: center;
+    font-weight: 400;
+    color: #ff2929d4;
+    font-size: 15px;
+  "
+>
+  Please add atleast 1 file
+</p>
+
 <div mat-dialog-actions style="justify-content: end; margin-top: 50px">
   <button
     style="
