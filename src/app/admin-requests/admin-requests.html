@@ -273,6 +273,16 @@
                         Other Request
                       </p>
                       <p
+                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
+                        style="
+                          color: #404040;
+                          font-size: 18px;
+                          font-weight: 600;
+                        "
+                      >
+                        Request for new Landlord Sign-up.
+                      </p>
+                      <p
                         style="color: #707070"
                         *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
                       >
@@ -283,6 +293,12 @@
                         *ngIf="allReq.request_type == 'PAYMENT' && allReq.show_more == false"
                       >
                         {{allReq.payment_details}}
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' && allReq.show_more == false"
+                      >
+                        Requesting landlord registration.
                       </p>
                       <div
                         *ngIf="allReq.show_more == true"
@@ -372,6 +388,7 @@
                         "
                       >
                         <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -404,6 +421,39 @@
                           </p>
                         </div>
                         <div
+                          *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/user.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.firstname + " " + allReq.lastname}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -435,6 +485,7 @@
                           </p>
                         </div>
                         <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -525,7 +576,7 @@
                             />
                           </div>
                         </div>
-                        <div class="btn request-approve-btns">
+                        <div class="btn request-approve-btns" (click)="acceptRequest(allReq)">
                           <p style="margin-bottom: 0">Accept Request</p>
                         </div>
                         <div class="btn request-approve-btns">
@@ -670,156 +721,158 @@
             </div>
             <div *ngIf="isContentLoading == false">
               <div class="card-wrapper" *ngFor="let allReq of allRequests">
-                <div
-                  *ngIf="allReq.userData.auth_type == 'landlord'"
-                  class="card"
-                  style="
-                    background-color: #f4f4f4;
-                    padding: 20px;
-                    padding-bottom: 10px;
-                  "
-                >
-                  <p
-                    *ngIf="allReq.request_type == 'ADD_PROPERTY'"
-                    style="color: #404040; font-size: 18px; font-weight: 600"
-                  >
-                    Add Property Request
-                  </p>
-                  <p
-                    *ngIf="allReq.request_type == 'PAYMENT'"
-                    style="color: #404040; font-size: 18px; font-weight: 600"
-                  >
-                    Payment Request
-                  </p>
-                  <p
-                    *ngIf="allReq.request_type == 'OTHER'"
-                    style="color: #404040; font-size: 18px; font-weight: 600"
-                  >
-                    Other Request
-                  </p>
-                  <p style="color: #707070">{{allReq.additional_info}}</p>
-
+                <div *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'">
                   <div
-                    class="row"
+                    *ngIf="allReq.userData.auth_type == 'landlord'"
+                    class="card"
                     style="
-                      margin: 0;
-                      justify-content: space-between;
-                      width: 35%;
+                      background-color: #f4f4f4;
+                      padding: 20px;
+                      padding-bottom: 10px;
                     "
                   >
-                    <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        background-color: #ffffff;
-                        color: #000000;
-                        padding: 10px;
-                        border-radius: 10px;
-                      "
+                    <p
+                      *ngIf="allReq.request_type == 'ADD_PROPERTY'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
                     >
-                      <img
-                        class="arrow_icon_more_info"
-                        src="assets/img/svg/admin-requests/user.svg"
-                        alt=""
-                        style="
-                          width: 15px;
-                          filter: invert(63%) sepia(76%) saturate(389%)
-                            hue-rotate(7deg) brightness(93%) contrast(93%);
-                          margin-left: 2px;
-                        "
-                      />
-                      <p
-                        style="
-                          margin-bottom: 0;
-                          margin-left: 10px;
-                          font-weight: 600;
-                        "
-                      >
-                        {{allReq.userData.firstname + " " +
-                        allReq.userData.lastname}}
-                      </p>
-                    </div>
-                    <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        background-color: #ffffff;
-                        color: #000000;
-                        padding: 10px;
-                        border-radius: 10px;
-                      "
+                      Add Property Request
+                    </p>
+                    <p
+                      *ngIf="allReq.request_type == 'PAYMENT'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
                     >
-                      <img
-                        class="arrow_icon_more_info"
-                        src="assets/img/svg/admin-requests/document-copy.svg"
-                        alt=""
-                        style="
-                          width: 15px;
-                          filter: invert(63%) sepia(76%) saturate(389%)
-                            hue-rotate(7deg) brightness(93%) contrast(93%);
-                          margin-left: 2px;
-                        "
-                      />
-                      <p
-                        style="
-                          margin-bottom: 0;
-                          margin-left: 10px;
-                          font-weight: 600;
-                        "
-                      >
-                        {{allReq.userData.auth_type}}
-                      </p>
-                    </div>
-                    <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        background-color: #ffffff;
-                        color: #000000;
-                        padding: 10px;
-                        border-radius: 10px;
-                      "
+                      Payment Request
+                    </p>
+                    <p
+                      *ngIf="allReq.request_type == 'OTHER'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
                     >
-                      <img
-                        class="arrow_icon_more_info"
-                        src="assets/img/svg/admin-requests/house-2.svg"
-                        alt=""
-                        style="
-                          width: 15px;
-                          filter: invert(63%) sepia(76%) saturate(389%)
-                            hue-rotate(7deg) brightness(93%) contrast(93%);
-                          margin-left: 2px;
-                        "
-                      />
-                      <p
-                        style="
-                          margin-bottom: 0;
-                          margin-left: 10px;
-                          font-weight: 600;
-                        "
-                      >
-                        {{allReq.building_name}}
-                      </p>
-                    </div>
-                  </div>
+                      Other Request
+                    </p>
+                    <p style="color: #707070">{{allReq.additional_info}}</p>
 
-                  <hr
-                    style="
-                      border: 1px solid #d4aa32;
-                      border-radius: 15px;
-                      margin-bottom: 5px;
-                    "
-                  />
+                    <div
+                      class="row"
+                      style="
+                        margin: 0;
+                        justify-content: space-between;
+                        width: 35%;
+                      "
+                    >
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/user.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.userData.firstname + " " +
+                          allReq.userData.lastname}}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/document-copy.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.userData.auth_type}}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/house-2.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.building_name}}
+                        </p>
+                      </div>
+                    </div>
 
-                  <div class="row" style="margin: 0">
-                    <div class="btn request-approve-btns">
-                      <p style="margin-bottom: 0">Review Request</p>
-                    </div>
-                    <div class="btn request-approve-btns">
-                      <p style="margin-bottom: 0">Accept Request</p>
-                    </div>
-                    <div class="btn request-approve-btns">
-                      <p style="margin-bottom: 0">Decline Request</p>
+                    <hr
+                      style="
+                        border: 1px solid #d4aa32;
+                        border-radius: 15px;
+                        margin-bottom: 5px;
+                      "
+                    />
+
+                    <div class="row" style="margin: 0">
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Review Request</p>
+                      </div>
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Accept Request</p>
+                      </div>
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Decline Request</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -958,161 +1011,163 @@
             </div>
             <div *ngIf="isContentLoading == false">
               <div class="card-wrapper" *ngFor="let allReq of allRequests">
-                <div
-                  *ngIf="allReq.userData.auth_type == 'tenant'"
-                  class="card"
-                  style="
-                    background-color: #f4f4f4;
-                    padding: 20px;
-                    padding-bottom: 10px;
-                  "
-                >
-                  <p
-                    *ngIf="allReq.request_type == 'ADD_PROPERTY'"
-                    style="color: #404040; font-size: 18px; font-weight: 600"
-                  >
-                    Add Property Request
-                  </p>
-                  <p
-                    *ngIf="allReq.request_type == 'PAYMENT'"
-                    style="color: #404040; font-size: 18px; font-weight: 600"
-                  >
-                    Payment Request
-                  </p>
-                  <p
-                    *ngIf="allReq.request_type == 'OTHER'"
-                    style="color: #404040; font-size: 18px; font-weight: 600"
-                  >
-                    Other Request
-                  </p>
-                  <p
-                    style="color: #707070"
-                    *ngIf="allReq.request_type == 'PAYMENT'"
-                  >
-                    {{allReq.payment_details}}
-                  </p>
-
+                <div *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'">
                   <div
-                    class="row"
+                    *ngIf="allReq.userData.auth_type == 'tenant'"
+                    class="card"
                     style="
-                      margin: 0;
-                      justify-content: space-between;
-                      width: 35%;
+                      background-color: #f4f4f4;
+                      padding: 20px;
+                      padding-bottom: 10px;
                     "
                   >
-                    <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        background-color: #ffffff;
-                        color: #000000;
-                        padding: 10px;
-                        border-radius: 10px;
-                      "
+                    <p
+                      *ngIf="allReq.request_type == 'ADD_PROPERTY'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
                     >
-                      <img
-                        class="arrow_icon_more_info"
-                        src="assets/img/svg/admin-requests/user.svg"
-                        alt=""
-                        style="
-                          width: 15px;
-                          filter: invert(63%) sepia(76%) saturate(389%)
-                            hue-rotate(7deg) brightness(93%) contrast(93%);
-                          margin-left: 2px;
-                        "
-                      />
-                      <p
-                        style="
-                          margin-bottom: 0;
-                          margin-left: 10px;
-                          font-weight: 600;
-                        "
-                      >
-                        {{allReq.userData.firstname + " " +
-                        allReq.userData.lastname}}
-                      </p>
-                    </div>
-                    <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        background-color: #ffffff;
-                        color: #000000;
-                        padding: 10px;
-                        border-radius: 10px;
-                      "
+                      Add Property Request
+                    </p>
+                    <p
+                      *ngIf="allReq.request_type == 'PAYMENT'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
                     >
-                      <img
-                        class="arrow_icon_more_info"
-                        src="assets/img/svg/admin-requests/document-copy.svg"
-                        alt=""
-                        style="
-                          width: 15px;
-                          filter: invert(63%) sepia(76%) saturate(389%)
-                            hue-rotate(7deg) brightness(93%) contrast(93%);
-                          margin-left: 2px;
-                        "
-                      />
-                      <p
-                        style="
-                          margin-bottom: 0;
-                          margin-left: 10px;
-                          font-weight: 600;
-                        "
-                      >
-                        {{allReq.userData.auth_type}}
-                      </p>
-                    </div>
-                    <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        background-color: #ffffff;
-                        color: #000000;
-                        padding: 10px;
-                        border-radius: 10px;
-                      "
+                      Payment Request
+                    </p>
+                    <p
+                      *ngIf="allReq.request_type == 'OTHER'"
+                      style="color: #404040; font-size: 18px; font-weight: 600"
                     >
-                      <img
-                        class="arrow_icon_more_info"
-                        src="assets/img/svg/admin-requests/house-2.svg"
-                        alt=""
-                        style="
-                          width: 15px;
-                          filter: invert(63%) sepia(76%) saturate(389%)
-                            hue-rotate(7deg) brightness(93%) contrast(93%);
-                          margin-left: 2px;
-                        "
-                      />
-                      <p
-                        style="
-                          margin-bottom: 0;
-                          margin-left: 10px;
-                          font-weight: 600;
-                        "
-                      >
-                        {{allReq.property_name}}
-                      </p>
-                    </div>
-                  </div>
+                      Other Request
+                    </p>
+                    <p
+                      style="color: #707070"
+                      *ngIf="allReq.request_type == 'PAYMENT'"
+                    >
+                      {{allReq.payment_details}}
+                    </p>
 
-                  <hr
-                    style="
-                      border: 1px solid #d4aa32;
-                      border-radius: 15px;
-                      margin-bottom: 5px;
-                    "
-                  />
+                    <div
+                      class="row"
+                      style="
+                        margin: 0;
+                        justify-content: space-between;
+                        width: 35%;
+                      "
+                    >
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/user.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.userData.firstname + " " +
+                          allReq.userData.lastname}}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/document-copy.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.userData.auth_type}}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          background-color: #ffffff;
+                          color: #000000;
+                          padding: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <img
+                          class="arrow_icon_more_info"
+                          src="assets/img/svg/admin-requests/house-2.svg"
+                          alt=""
+                          style="
+                            width: 15px;
+                            filter: invert(63%) sepia(76%) saturate(389%)
+                              hue-rotate(7deg) brightness(93%) contrast(93%);
+                            margin-left: 2px;
+                          "
+                        />
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            font-weight: 600;
+                          "
+                        >
+                          {{allReq.property_name}}
+                        </p>
+                      </div>
+                    </div>
 
-                  <div class="row" style="margin: 0">
-                    <div class="btn request-approve-btns">
-                      <p style="margin-bottom: 0">Review Request</p>
-                    </div>
-                    <div class="btn request-approve-btns">
-                      <p style="margin-bottom: 0">Accept Request</p>
-                    </div>
-                    <div class="btn request-approve-btns">
-                      <p style="margin-bottom: 0">Decline Request</p>
+                    <hr
+                      style="
+                        border: 1px solid #d4aa32;
+                        border-radius: 15px;
+                        margin-bottom: 5px;
+                      "
+                    />
+
+                    <div class="row" style="margin: 0">
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Review Request</p>
+                      </div>
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Accept Request</p>
+                      </div>
+                      <div class="btn request-approve-btns">
+                        <p style="margin-bottom: 0">Decline Request</p>
+                      </div>
                     </div>
                   </div>
                 </div>

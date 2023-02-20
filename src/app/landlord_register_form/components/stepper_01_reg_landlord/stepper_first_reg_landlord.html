@@ -78,13 +78,25 @@
         formControlName="passportNo"
         class="form-input"
       />
-      <input
+      <!-- <input
         autocomplete="off"
         matInput
         placeholder="Passport Expiry"
         formControlName="passportExpiry"
         class="form-input"
-      />
+      /> -->
+      <mat-form-field class="form-input" style="width: 104%">
+        <input
+          matInput
+          formControlName="passportExpiry"
+          placeholder="Passport Expiry"
+          [matDatepicker]="picker"
+          [(ngModel)]="passportExpiry"
+          (dateChange)="onPassportExpiryDateChange($event)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
   </div>
 

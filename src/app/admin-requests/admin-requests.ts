@@ -1,10 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { EmailServices } from "app/services/email.service";
 import { OtherServices } from "app/services/other.service";
+import { AcceptRequestConfirmDialog } from "./accept_req_dialog/acspt_req_dialog";
 
 @Component({
   selector: "admin-requests",
@@ -36,7 +39,9 @@ export class AdminRequests implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private dialog?: MatDialog,
+    private emailServices?: EmailServices
   ) {
     this.isLoading = true;
     this.isContentLoading = true;
@@ -64,23 +69,44 @@ export class AdminRequests implements OnInit {
     var user = JSON.parse(userData);
     if (this.isContentLoading == false) {
       for (let index = 0; index < this.allRequests.length; index++) {
-        if (
-          this.allRequests[index]["userData"] == null ||
-          this.allRequests[index]["userData"] == undefined
-        ) {
-          console.log("issue spotted -- reloading");
-          this.contentLoadingTime = this.contentLoadingTime + 1000;
-          this.isContentLoading = true;
-          this.clearAllVariables();
-          sessionStorage.removeItem("admin_reqs_fetched_time");
-          sessionStorage.removeItem("admin_reqs_session");
-          await this.initFunction(user[0]["id"]);
-          sessionStorage.setItem(
-            "admin_reqs_fetched_time",
-            JSON.stringify(new Date().getMinutes())
-          );
+        if (this.allRequests[index].request_type != "NEW_LANDLORD_ACC") {
+          if (
+            this.allRequests[index]["userData"] == null ||
+            this.allRequests[index]["userData"] == undefined
+          ) {
+            console.log("issue spotted -- reloading");
+            this.contentLoadingTime = this.contentLoadingTime + 1000;
+            this.isContentLoading = true;
+            this.clearAllVariables();
+            sessionStorage.removeItem("admin_reqs_fetched_time");
+            sessionStorage.removeItem("admin_reqs_session");
+            await this.initFunction(user[0]["id"]);
+            sessionStorage.setItem(
+              "admin_reqs_fetched_time",
+              JSON.stringify(new Date().getMinutes())
+            );
+          } else {
+            console.log("no issue");
+          }
         } else {
-          console.log("no issue");
+          if (
+            this.allRequests[index]["propertyData"] == null ||
+            this.allRequests[index]["propertyData"] == undefined
+          ) {
+            console.log("issue spotted -- reloading");
+            this.contentLoadingTime = this.contentLoadingTime + 1000;
+            this.isContentLoading = true;
+            this.clearAllVariables();
+            sessionStorage.removeItem("admin_reqs_fetched_time");
+            sessionStorage.removeItem("admin_reqs_session");
+            await this.initFunction(user[0]["id"]);
+            sessionStorage.setItem(
+              "admin_reqs_fetched_time",
+              JSON.stringify(new Date().getMinutes())
+            );
+          } else {
+            console.log("no issue");
+          }
         }
       }
     }
@@ -221,7 +247,7 @@ export class AdminRequests implements OnInit {
               });
           }
         });
-    }, 600);
+    }, 1000);
 
     return reqLen;
   }
@@ -290,40 +316,79 @@ export class AdminRequests implements OnInit {
     }
   }
 
-  getRequestDocsAndImages(req) {
-    // imgs
-    var imgCount = 0;
-    if (req.property_image_1 != "") {
-      imgCount++;
-    }
-    if (req.property_image_2 != "") {
-      imgCount++;
-    }
-    if (req.property_image_3 != "") {
-      imgCount++;
-    }
-    if (req.property_image_4 != "") {
-      imgCount++;
-    }
-    if (req.property_image_5 != "") {
-      imgCount++;
-    }
+  acceptRequest(req) {
+    this.dialog
+      .open(AcceptRequestConfirmDialog, {
+        width: "400px",
+        height: "250px",
+        data: {
+          req_type: req.request_type,
+        },
+      })
+      .afterClosed()
+      .subscribe(async (res) => {
+        if (res == true) {
+          if (req.request_type == "NEW_LANDLORD_ACC") {
+            await this.acceptedNewLandlordAccRequest(req);
+          }
+        }
+      });
+  }
 
-    // docs
-    var docCount = 0;
-    if (req.property_doc_1 != "") {
-      docCount++;
+  getRequestDocsAndImages(req) {
+    if (req.request_type == "ADD_PROPERTY") {
+      // imgs
+      var imgCount = 0;
+      if (req.property_image_1 != "") {
+        imgCount++;
+      }
+      if (req.property_image_2 != "") {
+        imgCount++;
+      }
+      if (req.property_image_3 != "") {
+        imgCount++;
+      }
+      if (req.property_image_4 != "") {
+        imgCount++;
+      }
+      if (req.property_image_5 != "") {
+        imgCount++;
+      }
+
+      // docs
+      var docCount = 0;
+      if (req.property_doc_1 != "") {
+        docCount++;
+      }
+      if (req.property_doc_2 != "") {
+        docCount++;
+      }
+      if (req.property_doc_3 != "") {
+        docCount++;
+      }
+      if (req.property_doc_4 != "") {
+        docCount++;
+      }
+      return `${imgCount} Images & ${docCount} pdf`;
+    } else if (req.request_type == "NEW_LANDLORD_ACC") {
+      var passport = JSON.parse(req.passport_pics);
+      var emirates_id = JSON.parse(req.emirates_id_pics);
+      var passportPicCount = 0;
+      var emirates_idPicCount = 0;
+      if (passport.pic2 != null || passport.pic2 != undefined) {
+        passportPicCount = 2;
+      } else {
+        passportPicCount = 1;
+      }
+
+      if (emirates_id.pic2 != null || emirates_id.pic2 != undefined) {
+        emirates_idPicCount = 2;
+      } else {
+        emirates_idPicCount = 1;
+      }
+
+      return `${passportPicCount + emirates_idPicCount + 2} Documents`;
     }
-    if (req.property_doc_2 != "") {
-      docCount++;
-    }
-    if (req.property_doc_3 != "") {
-      docCount++;
-    }
-    if (req.property_doc_4 != "") {
-      docCount++;
-    }
-    return `${imgCount} Images & ${docCount} pdf`;
   }
 
   checkRequestsEmpty() {
@@ -345,5 +410,20 @@ export class AdminRequests implements OnInit {
         this.isTenantRequestsEmpty = true;
       }
     }, 1000);
+  }
+
+  async acceptedNewLandlordAccRequest(req) {
+    var email_data = {
+      mail: req.email,
+      name: req.firstname,
+      unique_id: req.request_details_id,
+    };
+
+    // console.log(email_data);
+    this.emailServices
+      .sendEmail(JSON.stringify(email_data))
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }

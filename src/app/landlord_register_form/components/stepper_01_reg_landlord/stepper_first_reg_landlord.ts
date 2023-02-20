@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class StepperLandlordRegisterFirst {
   form: FormGroup;
+  passportExpiry: any;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -24,5 +25,19 @@ export class StepperLandlordRegisterFirst {
       passportNo: ["", [Validators.required]],
       passportExpiry: ["", [Validators.required]],
     });
+  }
+
+  onPassportExpiryDateChange(event): void {
+    var date = new Date(event["value"]);
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]) + 1;
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    this.passportExpiry = currentDate;
   }
 }

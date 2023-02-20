@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { EmailVerification } from "app/email_verficitaion/email_verficitaion";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
 
 import { LoginComponent } from "app/login/login.component";
@@ -10,4 +11,5 @@ export const AuthLayoutRoutes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },
   { path: "tenant-register-form", component: TenantFormComponent },
+  { path: "email-verification", component: EmailVerification },
 ];

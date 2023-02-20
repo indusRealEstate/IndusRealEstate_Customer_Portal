@@ -110,6 +110,7 @@ import { PropertyPage } from "app/property-page/property-page.component";
 import { GoogleMapsModule } from "@angular/google-maps";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
+import { AcceptRequestConfirmDialog } from "app/admin-requests/accept_req_dialog/acspt_req_dialog";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -243,6 +244,8 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
     Tenant_Registration_Stepper_Fourth,
     Tenant_Registration_Stepper_Fifth,
     Tenant_Registration_Stepper_Sixth,
+
+    AcceptRequestConfirmDialog,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

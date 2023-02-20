@@ -230,14 +230,27 @@ export class LandlordFormComponent implements OnInit {
         state: this.firstStepper.form.value.state,
 
         request_details_id: unique_id,
-        passport_pics: JSON.stringify({
-          pic1: unique_id + "/" + "passport_1" + "." + passportPic1Ext,
-          pic2: unique_id + "/" + "passport_2" + "." + passportPic2Ext,
-        }),
-        emirates_id_pics: JSON.stringify({
-          pic1: unique_id + "/" + "emirates_id_1" + "." + emiratesIDPic1Ext,
-          pic2: unique_id + "/" + "emirates_id_2" + "." + emiratesIDPic2Ext,
-        }),
+        passport_pics:
+          this.thirdStepper.passPortPics.length == 2
+            ? JSON.stringify({
+                pic1: unique_id + "/" + "passport_1" + "." + passportPic1Ext,
+                pic2: unique_id + "/" + "passport_2" + "." + passportPic2Ext,
+              })
+            : JSON.stringify({
+                pic1: unique_id + "/" + "passport_1" + "." + passportPic1Ext,
+              }),
+        emirates_id_pics:
+          this.thirdStepper.emiratesIDPics.length == 2
+            ? JSON.stringify({
+                pic1:
+                  unique_id + "/" + "emirates_id_1" + "." + emiratesIDPic1Ext,
+                pic2:
+                  unique_id + "/" + "emirates_id_2" + "." + emiratesIDPic2Ext,
+              })
+            : JSON.stringify({
+                pic1:
+                  unique_id + "/" + "emirates_id_1" + "." + emiratesIDPic1Ext,
+              }),
         ownership_doc: unique_id + "/" + "ownership" + "." + ownershipDocExt,
         sales_deed_doc: unique_id + "/" + "sales_deed" + "." + salesDeedExt,
         approved: "false",
