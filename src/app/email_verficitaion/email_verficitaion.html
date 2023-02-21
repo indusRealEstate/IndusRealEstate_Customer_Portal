@@ -1,11 +1,114 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="spinner-loader" *ngIf="isLoading == true">
-      <mat-spinner [diameter]="40"></mat-spinner>
+    <div
+      *ngIf="isLoading == true"
+      style="
+        display: flex;
+        justify-content: center;
+        height: 900px;
+        align-items: center;
+      "
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
     </div>
-    <div>
-      <h1 class="tenant-form-heading">Tenant Register Form</h1>
-      
+    <div
+      *ngIf="isLoading == false"
+      style="
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        height: 900px;
+        align-items: center;
+      "
+    >
+      <h3 *ngIf="isTokenVerified == false">Token invalid :(</h3>
+      <div
+        *ngIf="isTokenVerified == true"
+        class="card"
+        style="width: 45%; height: 600px; background-color: #fdfdfdbf"
+      >
+        <form
+          [formGroup]="registerForm"
+          style="padding: 70px; text-align: center"
+        >
+          <div style="width: 100%; display: block">
+            <div style="width: 100%; display: flex; justify-content: center">
+              <img src="assets/img/logo/indus-logo.png" alt="" />
+            </div>
+
+            <div style="width: 100%; display: flex; justify-content: center">
+              <p
+                style="
+                  margin-top: 30px;
+                  font-size: 20px;
+                  font-weight: 900;
+                  max-width: 350px;
+                  text-align: center;
+                "
+              >
+                Please create your new username and password
+              </p>
+            </div>
+          </div>
+
+          <div class="col">
+            <input
+              autocomplete="chrome-off"
+              matInput
+              placeholder="Username"
+              formControlName="username"
+              class="form-input"
+            />
+            <input
+              autocomplete="chrome-off"
+              matInput
+              placeholder="Password"
+              formControlName="pass"
+              class="form-input"
+            />
+            <input
+              autocomplete="chrome-off"
+              matInput
+              placeholder="Password Retype"
+              formControlName="pass_retype"
+              class="form-input"
+            />
+          </div>
+          <p
+            *ngIf="isUsernameNotAvailable == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Username not available
+          </p>
+          <p
+            *ngIf="isPasswordNot6letters == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Password must be 6 letters
+          </p>
+          <p
+            *ngIf="isRetypePassWrong == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Please retype the same password
+          </p>
+          <p
+            *ngIf="isFormEmpty == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Please fill the form
+          </p>
+
+          <div
+            class="btn"
+            (click)="onSubmit()"
+            style="margin-top: 70px; background-color: #d3ab33"
+          >
+            Submit
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

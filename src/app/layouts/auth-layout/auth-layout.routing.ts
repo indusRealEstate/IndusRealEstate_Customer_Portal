@@ -11,5 +11,4 @@ export const AuthLayoutRoutes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },
   { path: "tenant-register-form", component: TenantFormComponent },
-  { path: "email-verification", component: EmailVerification },
 ];

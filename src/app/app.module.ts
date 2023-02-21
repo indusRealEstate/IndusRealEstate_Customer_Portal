@@ -8,6 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { EmailVerification } from './email_verficitaion/email_verficitaion';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    EmailVerification,
   ],
   providers: [],
   bootstrap: [AppComponent]

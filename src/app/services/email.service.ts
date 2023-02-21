@@ -33,4 +33,26 @@ export class EmailServices {
       console.log(error);
     }
   }
+
+  public getAllNewAuthRequests() {
+    const url = `${API_URL}/auth/getAllNewAuthRequests.php?apikey=1`;
+    try {
+      return this.http
+        .get(url)
+        .pipe(catchError(this.handleError("getAllNewAuthRequests", [])));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public getAllUsersForChecking() {
+    const url = `${API_URL}/auth/getAllUsersForChecking.php?apikey=1`;
+    try {
+      return this.http
+        .get(url)
+        .pipe(catchError(this.handleError("getAllUsersForChecking", [])));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

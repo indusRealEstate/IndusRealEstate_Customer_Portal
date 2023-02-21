@@ -18,7 +18,10 @@ if (!empty($postdata)) {
 
     $htmlContent = file_get_contents('html_templates/landlord_reg.html');
 
-    $replacedContent = print_processed_html($htmlContent, $request->name, $request->unique_id);
+    $rawContent = print_processed_html($htmlContent, $request->name, $request->unique_id);
+
+    $jsContent = json_decode($rawContent);
+
 
     // Set content-type header for sending HTML email
     $headers = "MIME-Version: 1.0" . "\r\n";
@@ -30,8 +33,8 @@ if (!empty($postdata)) {
     $headers .= "Bcc: welcome2@example.com" . "\r\n";
 
     // Send email
-    if (mail($to, $subject, $replacedContent, $headers)) {
-        echo "Email has sent successfully.";
+    if (mail($to, $subject, $jsContent->replacedString, $headers)) {
+        echo $jsContent->enc;
     } else {
         echo "Email sending failed.";
     }
@@ -44,7 +47,7 @@ function print_processed_html($string, $name, $unique_id)
 
     $processed_string = str_replace($search, $replace , $string);
 
-    $ciphering = "AES-128-CTR";
+    $ciphering = "AES-128-CBC";
   
     // Use OpenSSl Encryption method
     $iv_length = openssl_cipher_iv_length($ciphering);
@@ -54,18 +57,46 @@ function print_processed_html($string, $name, $unique_id)
     $encryption_iv = 'Zq4t7w9z$C&F)J@N';
   
     // Store the encryption key
-    $encryption_key = "jXnZr4u7x!A%D*G-KaPdSgVkYp3s5v8y";
+    $encryption_key = "McQfTjWnZr4u7x!A";
   
     // Use openssl_encrypt() function to encrypt the data
     $encryption = openssl_encrypt($unique_id, $ciphering,
     $encryption_key, $options, $encryption_iv);
 
+    $replacedEnc = replaceEncBase64($encryption);
+
+
     $search2  = "href='#'";
-    $replace2 = "href='http://localhost:4200/#/email-verification?token=$encryption'";
+    $replace2 = "href='http://localhost:4200/#/email-verification?token=$replacedEnc'";
 
     $processed_string2 = str_replace($search2, $replace2 , $processed_string);
 
-    return $processed_string2;
+    $myObj->enc = $encryption;
+    $myObj->replacedString = $processed_string2;
+
+    $myJSON = json_encode($myObj);
+
+    return $myJSON;
+ }
+
+ function replaceEncBase64($enc){
+   $search1 = "/";
+   $replace1 = "-";
+   
+   $processed_string1 = str_replace($search1, $replace1 , $enc);
+
+   $search2 = "+";
+   $replace2 = "#";
+   
+   $processed_string2 = str_replace($search2, $replace2 , $processed_string1);
+
+   $search3 = "=";
+   $replace3 = "&";
+   
+   $processed_string3 = str_replace($search3, $replace3 , $processed_string2);
+
+   return $processed_string3;
+
  }
 
 ?>
