@@ -242,46 +242,148 @@
                       class="card"
                       [ngClass]="allReq.show_more == true ? 'all-req-card-admin-expanded': 'all-req-card-admin' "
                     >
-                      <p
+                      <div
                         *ngIf="allReq.request_type == 'ADD_PROPERTY'"
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
                       >
-                        Add Property Request
-                      </p>
-                      <p
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Add Property Request
+                        </p>
+
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
                         *ngIf="allReq.request_type == 'PAYMENT'"
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
                       >
-                        Payment Request
-                      </p>
-                      <p
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Payment Request
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
                         *ngIf="allReq.request_type == 'OTHER'"
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
                       >
-                        Other Request
-                      </p>
-                      <p
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Other Request
+                        </p>
+
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
                         *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
                       >
-                        Request for new Landlord Sign-up.
-                      </p>
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Request for new Landlord Sign-up.
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                      </div>
+
                       <p
                         style="color: #707070"
                         *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
@@ -576,10 +678,17 @@
                             />
                           </div>
                         </div>
-                        <div class="btn request-approve-btns" (click)="acceptRequest(allReq)">
+                        <div
+                          *ngIf="allReq.approved != 'true'"
+                          class="btn request-approve-btns"
+                          (click)="acceptRequest(allReq)"
+                        >
                           <p style="margin-bottom: 0">Accept Request</p>
                         </div>
-                        <div class="btn request-approve-btns">
+                        <div
+                          *ngIf="allReq.approved != 'true'"
+                          class="btn request-approve-btns"
+                        >
                           <p style="margin-bottom: 0">Decline Request</p>
                         </div>
                       </div>
@@ -731,24 +840,112 @@
                       padding-bottom: 10px;
                     "
                   >
-                    <p
+                    <div
                       *ngIf="allReq.request_type == 'ADD_PROPERTY'"
-                      style="color: #404040; font-size: 18px; font-weight: 600"
+                      class="row"
+                      style="margin: 0; justify-content: space-between"
                     >
-                      Add Property Request
-                    </p>
-                    <p
+                      <p
+                        style="
+                          color: #404040;
+                          font-size: 18px;
+                          font-weight: 600;
+                        "
+                      >
+                        Add Property Request
+                      </p>
+                      <div
+                        *ngIf="allReq.approved == 'true'"
+                        style="
+                          width: 85px;
+                          height: 27px;
+                          border-radius: 5px;
+                          background-color: #d3ab33;
+                        "
+                      >
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            color: white;
+                            margin-left: 9px;
+                          "
+                        >
+                          approved
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
                       *ngIf="allReq.request_type == 'PAYMENT'"
-                      style="color: #404040; font-size: 18px; font-weight: 600"
+                      class="row"
+                      style="margin: 0; justify-content: space-between"
                     >
-                      Payment Request
-                    </p>
-                    <p
+                      <p
+                        style="
+                          color: #404040;
+                          font-size: 18px;
+                          font-weight: 600;
+                        "
+                      >
+                        Payment Request
+                      </p>
+                      <div
+                        *ngIf="allReq.approved == 'true'"
+                        style="
+                          width: 85px;
+                          height: 27px;
+                          border-radius: 5px;
+                          background-color: #d3ab33;
+                        "
+                      >
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            color: white;
+                            margin-left: 9px;
+                          "
+                        >
+                          approved
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
                       *ngIf="allReq.request_type == 'OTHER'"
-                      style="color: #404040; font-size: 18px; font-weight: 600"
+                      class="row"
+                      style="margin: 0; justify-content: space-between"
                     >
-                      Other Request
-                    </p>
+                      <p
+                        style="
+                          color: #404040;
+                          font-size: 18px;
+                          font-weight: 600;
+                        "
+                      >
+                        Other Request
+                      </p>
+
+                      <div
+                        *ngIf="allReq.approved == 'true'"
+                        style="
+                          width: 85px;
+                          height: 27px;
+                          border-radius: 5px;
+                          background-color: #d3ab33;
+                        "
+                      >
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            color: white;
+                            margin-left: 9px;
+                          "
+                        >
+                          approved
+                        </p>
+                      </div>
+                    </div>
+
                     <p style="color: #707070">{{allReq.additional_info}}</p>
 
                     <div
@@ -867,10 +1064,16 @@
                       <div class="btn request-approve-btns">
                         <p style="margin-bottom: 0">Review Request</p>
                       </div>
-                      <div class="btn request-approve-btns">
+                      <div
+                        class="btn request-approve-btns"
+                        *ngIf="allReq.approved != 'true'"
+                      >
                         <p style="margin-bottom: 0">Accept Request</p>
                       </div>
-                      <div class="btn request-approve-btns">
+                      <div
+                        class="btn request-approve-btns"
+                        *ngIf="allReq.approved != 'true'"
+                      >
                         <p style="margin-bottom: 0">Decline Request</p>
                       </div>
                     </div>
@@ -1021,24 +1224,76 @@
                       padding-bottom: 10px;
                     "
                   >
-                    <p
-                      *ngIf="allReq.request_type == 'ADD_PROPERTY'"
-                      style="color: #404040; font-size: 18px; font-weight: 600"
-                    >
-                      Add Property Request
-                    </p>
-                    <p
+                    <div
                       *ngIf="allReq.request_type == 'PAYMENT'"
-                      style="color: #404040; font-size: 18px; font-weight: 600"
+                      class="row"
+                      style="margin: 0; justify-content: space-between"
                     >
-                      Payment Request
-                    </p>
-                    <p
+                      <p
+                        style="
+                          color: #404040;
+                          font-size: 18px;
+                          font-weight: 600;
+                        "
+                      >
+                        Payment Request
+                      </p>
+                      <div
+                        *ngIf="allReq.approved == 'true'"
+                        style="
+                          width: 85px;
+                          height: 27px;
+                          border-radius: 5px;
+                          background-color: #d3ab33;
+                        "
+                      >
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            color: white;
+                            margin-left: 9px;
+                          "
+                        >
+                          approved
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
                       *ngIf="allReq.request_type == 'OTHER'"
-                      style="color: #404040; font-size: 18px; font-weight: 600"
+                      class="row"
+                      style="margin: 0; justify-content: space-between"
                     >
-                      Other Request
-                    </p>
+                      <p
+                        style="
+                          color: #404040;
+                          font-size: 18px;
+                          font-weight: 600;
+                        "
+                      >
+                        Other Request
+                      </p>
+                      <div
+                        *ngIf="allReq.approved == 'true'"
+                        style="
+                          width: 85px;
+                          height: 27px;
+                          border-radius: 5px;
+                          background-color: #d3ab33;
+                        "
+                      >
+                        <p
+                          style="
+                            margin-bottom: 0;
+                            color: white;
+                            margin-left: 9px;
+                          "
+                        >
+                          approved
+                        </p>
+                      </div>
+                    </div>
+
                     <p
                       style="color: #707070"
                       *ngIf="allReq.request_type == 'PAYMENT'"
@@ -1162,10 +1417,16 @@
                       <div class="btn request-approve-btns">
                         <p style="margin-bottom: 0">Review Request</p>
                       </div>
-                      <div class="btn request-approve-btns">
+                      <div
+                        class="btn request-approve-btns"
+                        *ngIf="allReq.approved != 'true'"
+                      >
                         <p style="margin-bottom: 0">Accept Request</p>
                       </div>
-                      <div class="btn request-approve-btns">
+                      <div
+                        class="btn request-approve-btns"
+                        *ngIf="allReq.approved != 'true'"
+                      >
                         <p style="margin-bottom: 0">Decline Request</p>
                       </div>
                     </div>

@@ -9,13 +9,53 @@
 
     <div class="card" *ngIf="isLoading == false">
       <img
+        *ngIf="propertyData.image1 != ''"
         src="{{ imagesUrl }}/{{ propertyData.image1 }}"
         class="card-img-top"
         alt="image"
         style="max-height: 500px; object-fit: cover; overflow: hidden"
       />
+      <img
+        *ngIf="propertyData.image1 == ''"
+        src="assets/img/properties/property_placeholder.png"
+        alt="image"
+        style="
+          height: 600px;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        "
+      />
 
       <div
+        *ngIf="propertyData.image1 == ''"
+        class="row"
+        style="
+          top: 540px;
+          position: absolute;
+          left: 15px;
+          background-color: #0000008c;
+          padding: 5px;
+          border-radius: 8px;
+          margin: 0;
+          padding-top: 2px;
+          padding-bottom: 2px;
+        "
+      >
+        <div class="btn floor-plan-btn">
+          <div class="row" style="margin: 0; width: max-content">
+            <img src="assets/img/svg/property-page/pen-tool.svg" />
+            <p>Floor Plan</p>
+          </div>
+        </div>
+        <div class="btn edit-property-btn" style="width: 165px">
+          <div class="row" style="margin: 0; width: max-content">
+            <p>Request for Images</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="propertyData.image1 != ''"
         class="row"
         style="
           top: 420px;

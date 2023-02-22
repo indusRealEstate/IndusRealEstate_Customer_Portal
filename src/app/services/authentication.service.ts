@@ -85,7 +85,18 @@ export class AuthenticationService {
     try {
       return this.http
         .post(url, data)
-        .pipe(catchError(this.handleError("mail-sender", [])));
+        .pipe(catchError(this.handleError("fetchNewLandlordAllDetails", [])));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public addNewLandlord(data: any) {
+    const url = `${API_URL}/addNewLandlord.php?apikey=1`;
+    try {
+      return this.http
+        .post(url, data)
+        .pipe(catchError(this.handleError("addNewLandlord", [])));
     } catch (error) {
       console.log(error);
     }

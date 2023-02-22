@@ -16,13 +16,29 @@
         class="card property-listed-card"
         (click)="goToPropertyPage(property)"
       >
-        <img
-          *ngIf="isImagesLoading == false"
-          class="card-img-top"
-          src="{{ imagesUrl }}/{{ property.image1 }}"
-          alt="Card image cap"
-          style="pointer-events: none"
-        />
+        <div *ngIf="isImagesLoading == false">
+          <img
+            *ngIf="property.image1 != ''"
+            class="card-img-top"
+            src="{{ imagesUrl }}/{{ property.image1 }}"
+            alt=""
+            style="pointer-events: none"
+          />
+          <img
+            *ngIf="property.image1 == ''"
+            src="assets/img/properties/property_placeholder.png"
+            alt=""
+            style="
+              pointer-events: none;
+              border-top-left-radius: 10px;
+              border-top-right-radius: 10px;
+              border-bottom: 1px solid #80808061;
+              height: 193px;
+              width: auto;
+              max-width: 500px;
+            "
+          />
+        </div>
 
         <div *ngIf="isImagesLoading == true" style="height: 170px">
           <ngx-skeleton-loader [theme]="{ width: '288px', height: '170px' }">

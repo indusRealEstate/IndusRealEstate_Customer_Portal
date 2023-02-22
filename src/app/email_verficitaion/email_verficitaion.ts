@@ -1,5 +1,7 @@
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "app/services/alert.service";
@@ -11,6 +13,8 @@ import * as CryptoJS from "crypto-js";
 import { first } from "rxjs";
 import { interval as observableInterval } from "rxjs";
 import { takeWhile, scan, tap } from "rxjs/operators";
+import { RegisterSuccessDialog } from "./register_success_dialog/register_success_dialog";
+// import { RegisterSuccessDialog } from "./register_success_dialog/register_success_dialog";
 
 @Component({
   selector: "email-verficitaion",
@@ -22,6 +26,8 @@ export class EmailVerification implements OnInit {
 
   isLoading: boolean = false;
   isTokenVerified: boolean = false;
+  isTokenExpired: boolean = false;
+
   isUsernameNotAvailable: boolean = false;
   isPasswordNot6letters: boolean = false;
   isRetypePassWrong: boolean = false;
@@ -36,7 +42,8 @@ export class EmailVerification implements OnInit {
     private emailService: EmailServices,
     private authServices: AuthenticationService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog?: MatDialog
   ) {
     this.isLoading = true;
     var userData = localStorage.getItem("currentUser");
@@ -102,6 +109,9 @@ export class EmailVerification implements OnInit {
       });
 
     setTimeout(() => {
+      if (this.currentNewUserAllDetails.expired == "true") {
+        this.isTokenExpired = true;
+      }
       this.isLoading = false;
     }, 2000);
   }
@@ -150,7 +160,25 @@ export class EmailVerification implements OnInit {
                 this.isRetypePassWrong = false;
               }, 3000);
             } else {
-              console.log("gooood.....");
+              this.isLoading = true;
+              var data = this.setOutData();
+
+              this.authServices.addNewLandlord(data).subscribe((res) => {
+                console.log(res);
+              });
+
+              var expireToken_data = {
+                expired: "true",
+                unique_id: this.currentNewUserAllDetails.request_details_id,
+              };
+              this.emailService
+                .expireRegisterToken(JSON.stringify(expireToken_data))
+                .subscribe((e) => {});
+
+              this.dialog.open(RegisterSuccessDialog, {
+                width: "400px",
+                height: "260px",
+              });
             }
           }
         }
@@ -174,5 +202,80 @@ export class EmailVerification implements OnInit {
     } catch (error) {
       return "decryption-failed";
     }
+  }
+
+  setOutData() {
+    console.log(this.currentNewUserAllDetails);
+    var user_data = {
+      unique_id: this.currentNewUserAllDetails.request_details_id,
+      auth_type: "landlord",
+      username: this.registerForm.value.username,
+      password: this.registerForm.value.pass,
+      firstname: this.currentNewUserAllDetails.firstname,
+      lastname: this.currentNewUserAllDetails.lastname,
+      token: "012345",
+    };
+
+    var user_details = {
+      unique_id: this.currentNewUserAllDetails.request_details_id,
+      email: this.currentNewUserAllDetails.email,
+      nationality: this.currentNewUserAllDetails.nationality,
+      passport_no: this.currentNewUserAllDetails.passport_no,
+      passport_exp: this.currentNewUserAllDetails.passport_exp,
+      phone_number: this.currentNewUserAllDetails.mobile_no,
+      address: this.currentNewUserAllDetails.address,
+      profile_photo: "",
+    };
+
+    var property_data = {
+      unique_id: this.currentNewUserAllDetails.request_details_id,
+      property_id: "012345ABCDEFG",
+      property_name: this.currentNewUserAllDetails.propertyDetails.project_name,
+      property_address: "",
+      property_state:
+        this.currentNewUserAllDetails.propertyDetails.property_state,
+      image1: "",
+      image2: "",
+      image3: "",
+      image4: "",
+      image5: "",
+      property_doc1: "",
+      property_doc2: "",
+      property_doc3: "",
+      property_doc4: "",
+      property_size: this.currentNewUserAllDetails.propertyDetails.size_area,
+      price_range: "",
+      property_type: "",
+      completion: "",
+      furnish_details:
+        this.currentNewUserAllDetails.propertyDetails.furnish_details,
+      furnish_type: "",
+      community_name: this.currentNewUserAllDetails.propertyDetails.community,
+      project_name: this.currentNewUserAllDetails.propertyDetails.project_name,
+      ownership: "",
+      title_deed_number:
+        this.currentNewUserAllDetails.propertyDetails.title_deed_number,
+      ref_no: "",
+      purpose: "",
+      developer: "",
+      chart_data: "",
+      map_data: "",
+      social_media_marketing_info:
+        this.currentNewUserAllDetails.propertyDetails
+          .social_media_marketing_info,
+      board_marketing_info:
+        this.currentNewUserAllDetails.propertyDetails.board_marketing_info,
+      others_marketing_info:
+        this.currentNewUserAllDetails.propertyDetails.others_marketing_info,
+      bedroom_no: this.currentNewUserAllDetails.propertyDetails.bedroom_no,
+      unit_no: this.currentNewUserAllDetails.propertyDetails.unit_number,
+      parking_no: this.currentNewUserAllDetails.propertyDetails.car_parking_no,
+    };
+
+    return JSON.stringify({
+      user_data: user_data,
+      user_details: user_details,
+      property_data: property_data,
+    });
   }
 }

@@ -111,12 +111,14 @@ import { GoogleMapsModule } from "@angular/google-maps";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AcceptRequestConfirmDialog } from "app/admin-requests/accept_req_dialog/acspt_req_dialog";
+import { HttpClientModule } from "@angular/common/http";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
+    HttpClientModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,

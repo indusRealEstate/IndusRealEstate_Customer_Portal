@@ -254,6 +254,7 @@ export class LandlordFormComponent implements OnInit {
         ownership_doc: unique_id + "/" + "ownership" + "." + ownershipDocExt,
         sales_deed_doc: unique_id + "/" + "sales_deed" + "." + salesDeedExt,
         approved: "false",
+        expired: "false",
       };
 
       await this.uploadFiles(allDocFiles).then(() => {

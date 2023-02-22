@@ -659,13 +659,27 @@
                       class="row"
                       style="margin-left: 1px; margin-right: 6px"
                     >
-                      <img
-                        *ngIf="propertiesImagesLoading != true"
-                        class="property-img-user-profile"
-                        src="{{ propertiesImagesUrl }}/{{ property.image1 }}"
-                        alt=""
-                        style="pointer-events: none"
-                      />
+                      <div *ngIf="propertiesImagesLoading != true">
+                        <img
+                          *ngIf="property.image1 != ''"
+                          class="property-img-user-profile"
+                          src="{{ propertiesImagesUrl }}/{{ property.image1 }}"
+                          alt=""
+                          style="pointer-events: none"
+                        />
+
+                        <img
+                          *ngIf="property.image1 == ''"
+                          src="assets/img/properties/property_placeholder.png"
+                          alt=""
+                          style="
+                            pointer-events: none;
+                            border-radius: 7px;
+                            height: 130px;
+                            margin-bottom: 10px;
+                          "
+                        />
+                      </div>
 
                       <div
                         *ngIf="propertiesImagesLoading == true"

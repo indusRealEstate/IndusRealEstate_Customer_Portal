@@ -33,7 +33,8 @@ if (isset($postdata) && !empty($postdata)) {
      `emirates_id_pics`,
      `ownership_doc`,
      `sales_deed_doc`,
-     `approved`)
+     `approved`,
+     `expired`)
 VALUES      (
      '{$decodedData["request_type"]}',
      '{$decodedData["firstname"]}',
@@ -52,5 +53,6 @@ VALUES      (
      '{$decodedData["emirates_id_pics"]}',
      '{$decodedData["ownership_doc"]}',
      '{$decodedData["sales_deed_doc"]}',
-     '{$decodedData["approved"]}') ");
+     '{$decodedData["approved"]}',
+     '{$decodedData["expired"]}') ");
 }

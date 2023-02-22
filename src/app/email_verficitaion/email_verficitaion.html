@@ -23,8 +23,9 @@
       "
     >
       <h3 *ngIf="isTokenVerified == false">Token invalid :(</h3>
+      <h3 *ngIf="isTokenExpired == true">Token Expired :(</h3>
       <div
-        *ngIf="isTokenVerified == true"
+        *ngIf="isTokenVerified == true && isTokenExpired == false"
         class="card"
         style="width: 45%; height: 600px; background-color: #fdfdfdbf"
       >
@@ -41,6 +42,19 @@
               <p
                 style="
                   margin-top: 30px;
+                  font-size: 20px;
+                  font-weight: 900;
+                  max-width: 350px;
+                  text-align: center;
+                "
+              >
+                Hi {{currentNewUserAllDetails.firstname}}!
+              </p>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center">
+              <p
+                style="
+                  margin-top: 10px;
                   font-size: 20px;
                   font-weight: 900;
                   max-width: 350px;

@@ -61,11 +61,13 @@ import { DocUploadDialogLandlordRegister } from "app/landlord_register_form/comp
 import { DndDirective } from "app/landlord_register_form/components/stepper_03_reg_landlord/dialog/dnd.directive";
 import { ProgressComponent } from "app/landlord_register_form/components/stepper_03_reg_landlord/progressbar/progress";
 import { SuccessDialogLandLordRegister } from "app/landlord_register_form/components/success-dialog/success_dialog";
+import { HttpClientModule } from "@angular/common/http";
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
+    HttpClientModule,
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
@@ -130,6 +132,7 @@ import { SuccessDialogLandLordRegister } from "app/landlord_register_form/compon
     DndDirective,
     ProgressComponent,
     SuccessDialogLandLordRegister,
+    // RegisterSuccessDialog,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

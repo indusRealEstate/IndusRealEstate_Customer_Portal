@@ -78,4 +78,13 @@ export class AdminService {
       })
     );
   }
+
+  approveRequest(data: any) {
+    const url = `${API_URL}/changeRequestApproval.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

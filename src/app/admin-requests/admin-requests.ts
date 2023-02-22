@@ -495,5 +495,23 @@ export class AdminRequests implements OnInit {
       .subscribe((res) => {
         console.log(res);
       });
+    var user = JSON.parse(localStorage.getItem("currentUser"));
+
+    var admin_data = {
+      admin_id: user[0]["id"],
+      req_type_name: "create_ac_req",
+      approved: "true",
+      unique_id: req.request_details_id,
+    };
+
+    this.adminService
+      .approveRequest(JSON.stringify(admin_data))
+      .subscribe((res) => {
+        console.log(res);
+      });
+    sessionStorage.removeItem("admin_reqs_session");
+    this.allRequests.length = 0;
+    this.isContentLoading = true;
+    await this.ngOnInit();
   }
 }
