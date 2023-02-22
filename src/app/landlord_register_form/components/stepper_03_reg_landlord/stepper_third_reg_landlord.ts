@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { DocUploadDialogLandlordRegister } from "./dialog/dialog";
+import { DocUploadDialogRegister } from "app/components/dialog/dialog";
 
 @Component({
   selector: "stepper-three-landlord-reg",
@@ -23,7 +23,7 @@ export class StepperLandlordRegisterThird {
 
   openDialog(upload: any) {
     this.dialog
-      .open(DocUploadDialogLandlordRegister, {
+      .open(DocUploadDialogRegister, {
         width: "700px",
         height: "450px",
         data: { upload: upload },

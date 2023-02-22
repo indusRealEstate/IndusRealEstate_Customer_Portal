@@ -134,7 +134,7 @@ export class AdminRequests implements OnInit {
                         isTenantRequestsEmpty: this.isTenantRequestsEmpty,
                       })
                     );
-                  }, 500);
+                  }, 3000);
                 }, this.contentLoadingTime);
               }
             );

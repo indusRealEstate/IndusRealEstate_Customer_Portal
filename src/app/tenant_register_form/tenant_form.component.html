@@ -1,309 +1,270 @@
-<div class="main-content">
-  <div class="container-fluid">
-    <div class="spinner-loader" *ngIf="isLoading == true">
-      <mat-spinner [diameter]="40"></mat-spinner>
-      <span class="spinner-leading-text">Saving...</span>
-    </div>
-    <div>
-      <h1 class="tenant-form-heading">Tenant Register Form</h1>
-      <div class="container1">
-        <div>
-          <img
-            *ngIf="profileImg == ''"
-            mat-card-avatar
-            class="tenant-reg-card-avatar"
-            src="assets/img/faces/avatar.png"
-            alt="User Avatar"
-          />
-          <img
-            *ngIf="profileImg != ''"
-            mat-card-avatar
-            class="tenant-reg-card-avatar"
-            src="{{ profileImg }}"
-            alt="User Avatar"
-          />
-          <div class="add-icon-img-div">
-            <mat-icon
-              class="add-icon-img"
-              mat-card-avatar
-              (click)="fileInput.click()"
-            >
-              <input
-                #fileInput
-                type="file"
-                (change)="pickImg($event)"
-                style="display: none"
-              />
+<div style="margin-top: 0; width: 100%; display: flex; justify-content: center">
+  <div class="container-fluid" style="max-width: 70%">
+    <!-- <button type="button" (click)="fileInput.click()">
+      <span>Upload</span>
+      <input
+        #fileInput
+        type="file"
+        (change)="readFile($event)"
+        style="display: none"
+      />
+    </button>
+    <button mat-raised-button (click)="onSubmit()">Submit</button> -->
 
-              add</mat-icon
+    <div class="card" style="margin-top: 0; text-align: initial">
+      <div
+        class="card-header"
+        style="
+          border-bottom: 1px solid #dfdfdf;
+          background-image: linear-gradient(
+              to bottom,
+              rgb(255 255 255 / 73%) 50%,
+              rgb(255 255 255 / 76%) 80%
+            ),
+            url('assets/img/bg/navbar_bg.jfif');
+        "
+      >
+        <p
+          style="
+            margin: 0;
+            font-size: 22px;
+            margin-top: 20px;
+            margin-left: 10px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: #686868;
+          "
+        >
+          Tenant Registration
+        </p>
+      </div>
+      <div
+        *ngIf="isRegistering == true"
+        style="
+          display: flex;
+          justify-content: center;
+          height: 500px;
+          align-items: center;
+        "
+      >
+        <span
+          class="spinner-border spinner-border-m mr-2"
+          style="color: #d4aa32"
+        >
+        </span>
+      </div>
+
+      <div
+        class="card-body"
+        style="padding: 0; background-color: #fbfafa"
+        *ngIf="isRegistering == false"
+      >
+        <mat-horizontal-stepper
+          #tenantRegStepper
+          [selectedIndex]="selectedIndex"
+          labelPosition="bottom"
+          linear="true"
+        >
+          <mat-step #one [stepControl]="tenantRegStep01Form" state="default01">
+            <stepper-one-tenant-reg></stepper-one-tenant-reg>
+          </mat-step>
+          <mat-step #two [stepControl]="tenantRegStep02Form" state="default02">
+            <stepper-two-tenant-reg></stepper-two-tenant-reg>
+          </mat-step>
+          <mat-step
+            #three
+            [stepControl]="tenantRegStep03Form"
+            state="default03"
+          >
+            <stepper-three-tenant-reg></stepper-three-tenant-reg>
+          </mat-step>
+
+          <!-- Replace icon mat-step -->
+          <ng-template matStepperIcon="done">
+            <div class="row">
+              <img
+                src="assets/img/svg/landlord-register-form/tick-circle.svg"
+                alt=""
+                style="
+                  width: 35px;
+                  filter: invert(65%) sepia(98%) saturate(334%) hue-rotate(3deg)
+                    brightness(89%) contrast(89%);
+                "
+              />
+            </div>
+          </ng-template>
+          <ng-template matStepperIcon="default01">
+            <p
+              style="
+                color: #a3a3a3;
+                font-size: 18px;
+                font-weight: 600;
+                padding-top: 10px;
+              "
             >
-            <span class="tooltiptext" *ngIf="profileImg == ''"
-              >Upload Image</span
+              Personal Details
+            </p>
+          </ng-template>
+          <ng-template matStepperIcon="default02">
+            <p
+              style="
+                color: #a3a3a3;
+                font-size: 18px;
+                font-weight: 600;
+                padding-top: 10px;
+              "
             >
-            <span class="tooltiptext" *ngIf="profileImg != ''"
-              >Change Image</span
+              Property Contract
+            </p>
+          </ng-template>
+          <ng-template matStepperIcon="default03">
+            <p
+              style="
+                color: #a3a3a3;
+                font-size: 18px;
+                font-weight: 600;
+                padding-top: 10px;
+              "
             >
+              Document Attachments
+            </p>
+          </ng-template>
+          <ng-template matStepperIcon="edit" #stepperIcon>
+            <img
+              src="assets/img/svg/landlord-register-form/edit.svg"
+              alt=""
+              style="
+                width: 35px;
+                filter: invert(64%) sepia(84%) saturate(0%) hue-rotate(165deg)
+                  brightness(86%) contrast(95%);
+              "
+            />
+          </ng-template>
+          <!-- Replace icon mat-step -->
+        </mat-horizontal-stepper>
+
+        <p
+          *ngIf="isFormNotFilled == true"
+          style="
+            color: #ff4646a3;
+            text-align: end;
+            padding-right: 35px;
+            font-size: 12px;
+            font-weight: 600;
+            padding-top: 10px;
+          "
+        >
+          Please fill the form completely.
+        </p>
+        <p
+          *ngIf="isAllDocumentsNotUploaded == true"
+          style="
+            color: #ff4646a3;
+            text-align: end;
+            padding-right: 35px;
+            font-size: 12px;
+            font-weight: 600;
+            padding-top: 10px;
+          "
+        >
+          Please upload all required Documents.
+        </p>
+
+        <div
+          class="row"
+          style="
+            margin: 0;
+            display: flex;
+            justify-content: end;
+            padding: 30px;
+            margin-top: 20px;
+          "
+        >
+          <div
+            (click)="cancelRegistration()"
+            *ngIf="currentIndex == 0"
+            class="btn"
+            style="
+              font-size: 18px;
+              font-weight: 600;
+              padding-top: 15px;
+              background-color: #a3a3a3;
+            "
+          >
+            CANCEL
+          </div>
+          <div
+            (click)="stepperPreviousClick()"
+            *ngIf="currentIndex == 1 || currentIndex == 2"
+            class="btn"
+            style="
+              font-size: 18px;
+              font-weight: 600;
+              padding-top: 15px;
+              background-color: #a3a3a3;
+            "
+          >
+            BACK
+          </div>
+
+          <div
+            *ngIf="currentIndex != 2"
+            class="btn"
+            style="background-color: #d4aa32; margin-left: 10px"
+            (click)="stepperNextClick()"
+          >
+            <div class="row" style="margin: 0">
+              <p
+                style="
+                  margin-bottom: 0;
+                  font-size: 18px;
+                  font-weight: 600;
+                  padding-top: 3px;
+                "
+              >
+                CONTINUE
+              </p>
+              <img
+                src="assets/img/svg/landlord-register-form/arrow-right.svg"
+                alt=""
+                style="
+                  width: 30px;
+                  filter: brightness(0) invert(1);
+                  margin-left: 15px;
+                "
+              />
+            </div>
+          </div>
+          <div
+            *ngIf="currentIndex == 2"
+            class="btn"
+            style="background-color: #d4aa32; margin-left: 10px"
+            (click)="register()"
+          >
+            <div class="row" style="margin: 0">
+              <p
+                style="
+                  margin-bottom: 0;
+                  font-size: 18px;
+                  font-weight: 600;
+                  padding-top: 3px;
+                "
+              >
+                FINISH
+              </p>
+              <img
+                src="assets/img/svg/landlord-register-form/arrow-right.svg"
+                alt=""
+                style="
+                  width: 30px;
+                  filter: brightness(0) invert(1);
+                  margin-left: 15px;
+                "
+              />
+            </div>
           </div>
         </div>
-        <form action="submit_phpcrm_form.php" method="post">
-          <br />
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            [(ngModel)]="fullName"
-            required
-          />
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-          <label><b>Address</b></label
-          ><br /><br />
-          <label for="street1">Street Address</label>
-          <input type="text" id="street1" name="street1" required />
-          <label for="street2">Street Address2</label>
-          <input type="text" id="street2" name="street2" />
-          <div class="row">
-            <div class="col-50">
-              <label for="city">City</label>
-              <input type="text" id="city" name="city" required />
-              <label for="zipcode">Zip Code</label>
-              <input type="number" id="zipcode" name="zipcode" required />
-            </div>
-            <div class="col-50">
-              <label for="state">State</label>
-              <input type="text" id="state" name="state" required />
-              <label for="country">Country</label>
-              <select name="country" id="country" required>
-                <option value="India">India</option>
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-              </select>
-            </div>
-          </div>
-
-          <label for="civil">Civil Status</label>
-          <select name="civil" id="civil">
-            <option value="1">1 status</option>
-            <option value="2">2 status</option>
-            <option value="3">3 status</option>
-            <option value="4">4 status</option>
-          </select>
-          <label for="citizenship">Citizenship</label>
-          <input type="text" id="citizenship" name="citizenship" required />
-          <label for="telephone">Telephone</label>
-          <input type="number" id="telephone" name="telephone" />
-          <label for="cellphone">Cellphone</label>
-          <input type="number" id="cellphone" name="cellphone" required />
-          <label for="unit_code">Preferred Unit Code</label>
-          <input type="text" id="unit_code" name="unit_code" />
-          <hr />
-          <h4>Proposed Occupants</h4>
-          <hr />
-          <input type="text" id="occupant1" name="occupant1" />
-          <input type="text" id="occupant2" name="occupant2" />
-          <label for="date">Target Date to Move In</label>
-          <input type="date" id="date" name="date" />
-          <label>Does Applicant or any Proposed Occupant smoke?</label><br />
-          <input
-            type="radio"
-            id=" yes"
-            name="radio1"
-            value="Yes"
-            style="margin-left: 13px"
-          />
-          Yes<label for="yes"></label><br />
-          <input
-            type="radio"
-            id="no"
-            name="radio1"
-            value="No"
-            style="margin-left: 13px"
-          />
-          No<label for="no"></label><br /><br />
-          <label>Do you own a pet?</label><br />
-          <input
-            type="radio"
-            id=" yes"
-            name="radio2"
-            value="Yes"
-            style="margin-left: 13px"
-          />
-          Yes<label for="yes"></label><br />
-          <input
-            type="radio"
-            id="no"
-            name="radio2"
-            value="No"
-            style="margin-left: 13px"
-          />
-          No<label for="no"></label><br /><br />
-          <label for="number_pet">If yes, number of pets and type:</label>
-          <input type="number" id="number_pet" name="number_pet" />
-          <hr />
-          <h4>Employment</h4>
-          <hr />
-          <label for="employer">Employer</label>
-          <input type="text" id="employer" name="employer" required />
-          <label for="business_address">Business Address</label>
-          <input type="text" id="business_address" name="business_address" />
-          <label for="emp_phone">Phone</label>
-          <input type="number" id="emp_phone" name="emp_phone" />
-          <label for="emp_email">Email</label>
-          <input type="email" id="emp_email" name="emp_email" />
-          <hr />
-          <h4>Financial Info</h4>
-          <p>Have you or any proposed occupant ever:</p>
-          <hr />
-          <label>Been convicted of a felony?</label><br />
-          <input
-            type="radio"
-            id=" yes"
-            name="radio3"
-            value="Yes"
-            style="margin-left: 13px"
-          />
-          Yes<label for="yes"></label><br />
-          <input
-            type="radio"
-            id="no"
-            name="radio3"
-            value="No"
-            style="margin-left: 13px"
-          />
-          No<label for="no"></label><br /><br />
-          <label for="describe1">Describe:</label>
-          <input type="text" id="describe1" name="describe1" />
-          <label>Been evicted from a rental?</label><br />
-          <input
-            type="radio"
-            id=" yes"
-            name="radio4"
-            value="Yes"
-            style="margin-left: 13px"
-          />
-          Yes<label for="yes"></label><br />
-          <input
-            type="radio"
-            id="no"
-            name="radio4"
-            value="No"
-            style="margin-left: 13px"
-          />
-          No<label for="no"></label><br /><br />
-          <label for="describe2">Describe:</label>
-          <input type="text" id="describe2" name="describe2" />
-          <label>Defaulted on a lease?</label><br />
-          <input
-            type="radio"
-            id=" yes"
-            name="radio5"
-            value="Yes"
-            style="margin-left: 13px"
-          />
-          Yes<label for="yes"></label><br />
-          <input
-            type="radio"
-            id="no"
-            name="radio5"
-            value="No"
-            style="margin-left: 13px"
-          />
-          No<label for="no"></label><br /><br />
-          <label for="describe3">Describe:</label>
-          <input type="text" id="describe3" name="describe3" />
-          <hr />
-          <h4>Personal Info</h4>
-          <hr />
-          <label for="notify">In case of emergency, please notify:</label>
-          <input type="text" id="notify" name="notify" />
-          <label for="add_tel">His/Her Address and Telephone:</label>
-          <input type="text" id="add_tel" name="add_tel" />
-          <label for="relationship">Relationship:</label>
-          <input type="text" id="relationship" name="relationship" />
-          <label for="relocation">Reason for relocation?</label>
-          <input type="text" id="relocation" name="relocation" />
-          <hr />
-          <h4>Consent to Verification of Other Information</h4>
-          <p style="text-align: justify">
-            I warrant, to the best of my knowledge, all of the information
-            provided in this Application is true, accurate, complete and correct
-            as of the date of this Application. If any information provided by
-            me is determined to be false, such false statement will be grounds
-            for disapproval of my Application or termination of my Lease with
-            Owner. I understand and agree: (i) this is an application to rent
-            only and does not guarantee that I will be offered the Property, and
-            (ii) Lessor may accept more than one application for the Property
-            and, using their sole discretion, will select the best qualified
-            applicant. I hereby authorize the Lessor to verify the information
-            provided.
-          </p>
-
-          <label
-            >Do you read this Agreement and agree to the terms and
-            conditions</label
-          ><br />
-          <input
-            type="radio"
-            id=" yes"
-            name="radio6"
-            value="Yes"
-            style="margin-left: 13px"
-            required
-          />
-          Yes<label for="yes"></label><br />
-          <input
-            type="radio"
-            id="no"
-            name="radio6"
-            value="No"
-            style="margin-left: 13px"
-            required
-          />
-          No<label for="no"></label><br /><br />
-          <label>Where did you hear us?</label><br />
-          <input
-            type="radio"
-            id=" olx"
-            name="radio7"
-            value="OLX"
-            style="margin-left: 13px"
-          />
-          OLX<label for="olx"></label><br />
-          <input
-            type="radio"
-            id="facebook"
-            name="radio7"
-            value="Facebook"
-            style="margin-left: 13px"
-          />
-          Facebook<label for="facebook"></label><br />
-          <input
-            type="radio"
-            id=" referral"
-            name="radio7"
-            value="Referral"
-            style="margin-left: 13px"
-          />
-          Referral<label for="referral"></label><br />
-          <input
-            type="radio"
-            id="other"
-            name="radio7"
-            value="Other"
-            style="margin-left: 13px"
-          />
-          Other<label for="other"></label><br /><br />
-          <input
-            type="submit"
-            value="SUBMIT"
-            class="btn"
-            (click)="onSubmit()"
-          />
-        </form>
       </div>
     </div>
-
-    <!-- <button mat-raised-button (click)="onSubmit()">Submit</button> -->
   </div>
 </div>

@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
   styleUrls: ["./dialog.scss"],
   templateUrl: "./dialog.html",
 })
-export class DocUploadDialogLandlordRegister implements OnInit {
+export class DocUploadDialogRegister implements OnInit {
   public docName: string = "";
   docs: any[] = [];
   singleDoc: any;
@@ -19,7 +19,7 @@ export class DocUploadDialogLandlordRegister implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<DocUploadDialogLandlordRegister>
+    public dialogRef: MatDialogRef<DocUploadDialogRegister>
   ) {}
 
   ngOnInit() {

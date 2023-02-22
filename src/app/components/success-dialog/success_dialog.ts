@@ -7,10 +7,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./success_dialog.scss"],
   templateUrl: "./success_dialog.html",
 })
-export class SuccessDialogLandLordRegister implements OnInit {
+export class SuccessDialogRegister implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<SuccessDialogLandLordRegister>,
+    public dialogRef: MatDialogRef<SuccessDialogRegister>,
     private router: Router
   ) {}
 

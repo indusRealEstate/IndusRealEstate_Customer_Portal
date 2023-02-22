@@ -4,212 +4,61 @@
   font-family: "Montserrat";
 }
 
-.main-content {
-  margin-top: -25px;
-}
-
-.spinner-leading-text {
-  padding-left: 12px;
-  color: #d3ab33;
-  font-weight: 600;
-}
-
-::ng-deep .spinner-loader {
+::ng-deep .mat-step-header .mat-step-icon {
+  // margin-right: 45px !important;
+  background-color: white;
+  color: black;
   width: 100% !important;
-  text-align: -webkit-center !important;
-  position: absolute !important;
-  padding-top: 450px;
-  padding-right: 65px;
+  height: 70px !important;
+  font-size: 23px !important;
+  font-weight: 500 !important;
+  border: solid 1px #dfdfdf !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-radius: 0px;
+}
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+  padding: 0 0 !important;
+}
+::ng-deep .mat-stepper-label-position-bottom .mat-stepper-horizontal-line {
+  display: none !important;
+}
+::ng-deep
+  .mat-stepper-label-position-bottom
+  .mat-horizontal-stepper-header-container {
+  justify-content: space-between !important;
+  background-color: #fbfafa !important;
 }
 
-::ng-deep .mat-progress-spinner circle,
-.mat-spinner circle {
-  stroke: #d3ab33 !important;
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+  width: 100% !important;
+  background-color: #fbfafa !important;
 }
 
-.tenant-form-heading {
-  margin-top: -90px;
-  margin-bottom: 45px;
-  font-weight: 500;
+::ng-deep
+  .mat-stepper-horizontal
+  .mat-horizontal-stepper-header:not(:last-child)::after {
+  display: none !important;
 }
 
-.tenant-reg-card-avatar {
-  border: solid 0.5px #00000045;
-  margin-left: 0;
-  border-radius: 50%;
-  width: 100px;
-  margin-bottom: 10px;
-  margin-top: 25px;
+::ng-deep
+  .mat-stepper-horizontal
+  .mat-horizontal-stepper-header:not(:first-child)::before {
+  display: none !important;
 }
 
-.add-icon-img-div {
-  .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-  }
-
-  &:hover {
-    & .tooltiptext {
-      visibility: visible !important;
-      width: 120px;
-      background-color: black;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px 0;
-
-      /* Position the tooltip */
-      position: absolute;
-      z-index: 1;
-    }
-  }
-  .add-icon-img {
-    cursor: pointer;
-    border: 1px solid black;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    padding-top: 2px;
-    padding-left: 1px;
-    position: absolute;
-    margin-top: -35px;
-    margin-left: 13px;
-    background-color: white;
-  }
+::ng-deep .mat-stepper-label-position-bottom .mat-step-label-active {
+  background-color: #d3ab33 !important;
+  padding: 5px 0 0 0 !important;
 }
 
-* {
-  box-sizing: border-box;
+::ng-deep .mat-horizontal-content-container {
+  padding: 0px 30px 30px 30px !important;
+  background-color: #fbfafa !important;
 }
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 100%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-
-.container {
-  background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  max-width: 500px;
-  margin: auto;
-}
-
-.container1 {
-  background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid #2b333e;
-  border-radius: 5px;
-  max-width: 1000px;
-  margin: auto;
-}
-input[type="text"] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-input[type="datetime-local"] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-
-input[type="email"],
-textarea,
-select {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-
-input[type="number"] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-input[type="text"] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-input[type="time"] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-input[type="date"] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #d3ab33;
-  border-radius: 3px;
-}
-
-.btn {
-  background-color: #d3ab33;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-
-  &:hover {
-    background-color: white;
-    color: #d3ab33;
-    border: 2px solid #d3ab33;
-  }
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 400px) {
-  .row {
-    flex-direction: column;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
+::ng-deep
+  .mat-stepper-label-position-bottom
+  .mat-horizontal-stepper-header
+  .mat-step-icon {
+  background-color: #fbfafa !important;
 }

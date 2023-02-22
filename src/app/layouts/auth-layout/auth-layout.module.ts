@@ -57,11 +57,10 @@ import { TenantFormComponent } from "app/tenant_register_form/tenant_form.compon
 import { StepperLandlordRegisterFirst } from "app/landlord_register_form/components/stepper_01_reg_landlord/stepper_first_reg_landlord";
 import { StepperLandlordRegisterSecond } from "app/landlord_register_form/components/stepper_02_reg_landlord/stepper_second_reg_landlord";
 import { StepperLandlordRegisterThird } from "app/landlord_register_form/components/stepper_03_reg_landlord/stepper_third_reg_landlord";
-import { DocUploadDialogLandlordRegister } from "app/landlord_register_form/components/stepper_03_reg_landlord/dialog/dialog";
-import { DndDirective } from "app/landlord_register_form/components/stepper_03_reg_landlord/dialog/dnd.directive";
-import { ProgressComponent } from "app/landlord_register_form/components/stepper_03_reg_landlord/progressbar/progress";
-import { SuccessDialogLandLordRegister } from "app/landlord_register_form/components/success-dialog/success_dialog";
 import { HttpClientModule } from "@angular/common/http";
+import { StepperTenantRegisterFirst } from "app/tenant_register_form/components/stepper_01_reg_tenant/stepper_first_reg_tenant";
+import { StepperTenantRegisterSecond } from "app/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
+import { StepperTenantRegisterThird } from "app/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -128,11 +127,10 @@ import { HttpClientModule } from "@angular/common/http";
     StepperLandlordRegisterSecond,
     StepperLandlordRegisterThird,
 
-    DocUploadDialogLandlordRegister,
-    DndDirective,
-    ProgressComponent,
-    SuccessDialogLandLordRegister,
-    // RegisterSuccessDialog,
+    // Tenant Reg
+    StepperTenantRegisterFirst,
+    StepperTenantRegisterSecond,
+    StepperTenantRegisterThird,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

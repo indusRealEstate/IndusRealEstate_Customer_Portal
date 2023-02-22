@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SuccessDialogRegister } from "app/components/success-dialog/success_dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
@@ -14,7 +15,6 @@ import * as uuid from "uuid";
 import { StepperLandlordRegisterFirst } from "./components/stepper_01_reg_landlord/stepper_first_reg_landlord";
 import { StepperLandlordRegisterSecond } from "./components/stepper_02_reg_landlord/stepper_second_reg_landlord";
 import { StepperLandlordRegisterThird } from "./components/stepper_03_reg_landlord/stepper_third_reg_landlord";
-import { SuccessDialogLandLordRegister } from "./components/success-dialog/success_dialog";
 
 @Component({
   selector: "landlord-register-form",
@@ -272,7 +272,7 @@ export class LandlordFormComponent implements OnInit {
 
         setTimeout(() => {
           this.isRegistering = false;
-          this.dialog.open(SuccessDialogLandLordRegister, {
+          this.dialog.open(SuccessDialogRegister, {
             width: "700px",
             height: "450px",
           });
