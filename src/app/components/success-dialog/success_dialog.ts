@@ -14,10 +14,12 @@ export class SuccessDialogRegister implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
-
-  onCloseDialog() {
-    this.dialogRef.close();
-    this.router.navigate(["/login"]);
+  ngOnInit() {
+    setTimeout(() => {
+      this.dialogRef.close();
+      this.router.navigate(["/login"]);
+    }, 4000);
   }
+
+  onCloseDialog() {}
 }

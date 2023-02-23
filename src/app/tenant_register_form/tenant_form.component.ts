@@ -342,8 +342,8 @@ export class TenantFormComponent implements OnInit {
         setTimeout(() => {
           this.isRegistering = false;
           this.dialog.open(SuccessDialogRegister, {
-            width: "700px",
-            height: "450px",
+            width: "730px",
+            height: "430px",
           });
         }, 5000);
       });
