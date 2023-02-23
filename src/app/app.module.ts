@@ -10,6 +10,7 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { EmailVerification } from "./email_verficitaion/email_verficitaion";
 import { MatDialogModule } from "@angular/material/dialog";
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     AuthLayoutComponent,
     EmailVerification,
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

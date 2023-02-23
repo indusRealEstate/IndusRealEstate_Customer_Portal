@@ -79,6 +79,15 @@ export class AdminService {
     );
   }
 
+  getAllNewTenantACCRequest(userId: any) {
+    const url = `${API_URL}/getAllNewTenantACCRequest.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   approveRequest(data: any) {
     const url = `${API_URL}/changeRequestApproval.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(

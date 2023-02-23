@@ -244,69 +244,88 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  async removeAllNewLandlordAcReqs(prop_req) {
+    var new_ac_landlord_req = 0;
+    for (let index = 0; index < prop_req.length; index++) {
+      if (index >= 5) {
+        break;
+      } else {
+        if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
+          this.requestOverview.push(prop_req[index]);
+        }
+      }
+
+      if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
+        this.totalRequests++;
+        if (prop_req[index]["approved"] == "true") {
+          this.approvedRequests++;
+        }
+      } else {
+        new_ac_landlord_req++;
+      }
+    }
+  }
+
   async getAllRequests(userId) {
     this.adminService
       .getAllAddPropertyRequests(userId)
-      .subscribe((prop_req: Array<any>) => {
-        this.totalRequests = prop_req.length;
+      .subscribe(async (prop_req: Array<any>) => {
+        // this.totalRequests = prop_req.length;
 
-        for (let index = 0; index < prop_req.length; index++) {
-          if (index >= 5) {
-            break;
-          } else {
-            if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
-              this.requestOverview.push(prop_req[index]);
+        await this.removeAllNewLandlordAcReqs(prop_req);
+
+        this.adminService
+          .getAllPaymentRequests(userId)
+          .subscribe(async (pay_req: Array<any>) => {
+            for (let req of pay_req) {
+              this.totalRequests++;
+              if (req["approved"] == "true") {
+                this.approvedRequests++;
+              }
             }
-          }
 
-          if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
-            if (prop_req[index]["approved"] == "true") {
-              this.approvedRequests++;
-            }
-          } else {
-            this.totalRequests--;
-          }
-        }
-
-        setTimeout(() => {
-          this.adminService
-            .getAllPaymentRequests(userId)
-            .subscribe(async (pay_req: Array<any>) => {
-              for (let req of pay_req) {
-                this.totalRequests++;
-                if (req["approved"] == "true") {
-                  this.approvedRequests++;
+            if (this.requestOverview.length < 4) {
+              for (let index = 0; index < pay_req.length; index++) {
+                if (this.requestOverview.length >= 4) {
+                  break;
+                } else {
+                  this.requestOverview.push(pay_req[index]);
                 }
               }
+            }
 
-              if (this.requestOverview.length < 4) {
-                for (let index = 0; index < pay_req.length; index++) {
-                  if (this.requestOverview.length >= 4) {
-                    break;
-                  } else {
-                    this.requestOverview.push(pay_req[index]);
+            this.adminService
+              .getAllNewLandlordACCRequest(userId)
+              .subscribe(async (new_landlord_ac_req) => {
+                for (let req of new_landlord_ac_req) {
+                  this.totalRequests++;
+                  if (req["approved"] == "true") {
+                    this.approvedRequests++;
                   }
                 }
-              }
 
-              this.adminService
-                .getAllNewLandlordACCRequest(userId)
-                .subscribe(async (new_landlord_ac_req) => {
-                  for (let req of new_landlord_ac_req) {
-                    this.totalRequests++;
-                    if (req["approved"] == "true") {
-                      this.approvedRequests++;
-                    }
-                  }
+                if (this.requestOverview.length == 4) {
+                  await this.assignUserData();
+                }
+              });
 
-                  if (this.requestOverview.length == 4) {
-                    await this.assignUserData().then(() => {
-                      this.calculateRequests();
-                    });
+            this.adminService
+              .getAllNewTenantACCRequest(userId)
+              .subscribe(async (new_tenant_ac_req) => {
+                for (let req of new_tenant_ac_req) {
+                  this.totalRequests++;
+                  if (req["approved"] == "true") {
+                    this.approvedRequests++;
                   }
-                });
-            });
-        }, 500);
+                }
+
+                if (this.requestOverview.length == 4) {
+                  await this.assignUserData().then(() => {
+                    this.calculateRequests();
+                  });
+                }
+              });
+          });
       });
   }
 

@@ -69,12 +69,15 @@ export class AdminRequests implements OnInit {
     var user = JSON.parse(userData);
     if (this.isContentLoading == false) {
       for (let index = 0; index < this.allRequests.length; index++) {
-        if (this.allRequests[index].request_type != "NEW_LANDLORD_ACC") {
+        if (
+          this.allRequests[index].request_type != "NEW_LANDLORD_ACC" &&
+          this.allRequests[index].request_type != "NEW_TENANT_ACC"
+        ) {
           if (
             this.allRequests[index]["userData"] == null ||
             this.allRequests[index]["userData"] == undefined
           ) {
-            console.log("issue spotted -- reloading");
+            // console.log("issue spotted -- reloading");
             this.contentLoadingTime = this.contentLoadingTime + 1000;
 
             this.isContentLoading = true;
@@ -106,14 +109,14 @@ export class AdminRequests implements OnInit {
               JSON.stringify(new Date().getMinutes())
             );
           } else {
-            console.log("no issue");
+            // console.log("no issue");
           }
-        } else {
+        } else if (this.allRequests[index].request_type == "NEW_LANDLORD_ACC") {
           if (
             this.allRequests[index]["propertyData"] == null ||
             this.allRequests[index]["propertyData"] == undefined
           ) {
-            console.log("issue spotted -- reloading --landlord ac new");
+            // console.log("issue spotted -- reloading --landlord ac new");
             this.contentLoadingTime = this.contentLoadingTime + 1000;
 
             this.isContentLoading = true;
@@ -145,7 +148,11 @@ export class AdminRequests implements OnInit {
               JSON.stringify(new Date().getMinutes())
             );
           } else {
-            console.log("no issue --landlord ac new");
+            // console.log("no issue --landlord ac new");
+          }
+        } else {
+          if (this.allRequests[index].show_more == null) {
+            Object.assign(this.allRequests[index], { show_more: false });
           }
         }
       }
@@ -198,6 +205,7 @@ export class AdminRequests implements OnInit {
     );
 
     if (adminReqDataSession != null) {
+      console.log("session data available");
       this.allRequests = adminReqDataSession["allRequests"];
       for (let index = 0; index < this.allRequests.length; index++) {
         this.show_more_imgLoading[index] = false;
@@ -208,6 +216,7 @@ export class AdminRequests implements OnInit {
       this.isLoading = false;
       this.isContentLoading = false;
     } else {
+      console.log("no session data");
       await this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
         "admin_reqs_fetched_time",
@@ -240,33 +249,30 @@ export class AdminRequests implements OnInit {
   }
 
   async initFunction(userId) {
-    await this.fetchAllRequests(userId).then((req_len) => {
-      if (req_len == this.allRequests.length) {
-        setTimeout(() => {
-          this.isContentLoading = false;
-          setTimeout(() => {
-            sessionStorage.setItem(
-              "admin_reqs_session",
-              JSON.stringify({
-                allRequests: this.allRequests,
-                isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
-                isTenantRequestsEmpty: this.isTenantRequestsEmpty,
-              })
-            );
-          }, 500);
-        }, this.contentLoadingTime);
-      }
+    await this.fetchAllRequests(userId).finally(async () => {
+      await this.assignUsersData().finally(() => {
+        this.isContentLoading = false;
+      });
     });
+    
+    sessionStorage.setItem(
+      "admin_reqs_session",
+      JSON.stringify({
+        allRequests: this.allRequests,
+        isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
+        isTenantRequestsEmpty: this.isTenantRequestsEmpty,
+      })
+    );
 
     setTimeout(() => {
       this.isLoading = false;
     }, 1000);
   }
 
-  async getAllAddPropertyRequests(userId) {
+  getAllAddPropertyRequests(userId) {
     this.adminService
       .getAllAddPropertyRequests(userId)
-      .subscribe(async (prop_req: Array<any>) => {
+      .subscribe((prop_req: Array<any>) => {
         for (let index = 0; index < prop_req.length; index++) {
           if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
             this.allRequests.push(prop_req[index]);
@@ -277,54 +283,55 @@ export class AdminRequests implements OnInit {
       });
   }
 
-  async getAllPaymentRequests(userId) {
-    var len = 0;
+  getAllPaymentRequests(userId) {
     this.adminService
       .getAllPaymentRequests(userId)
       .subscribe((payment_req: Array<any>) => {
-        var i = 0;
         for (let p of payment_req) {
-          i++;
           this.allRequests.push(p);
         }
+      });
+  }
 
-        if (payment_req.length == i) {
-          this.adminService
-            .getAllNewLandlordACCRequest(userId)
-            .subscribe(async (new_landlord_req: Array<any>) => {
-              var j = 0;
-              for (let req of new_landlord_req) {
-                j++;
-                this.allRequests.push(req);
-              }
-
-              if (new_landlord_req.length == j) {
-                len = this.allRequests.length;
-                await this.assignUsersData();
-              }
-            });
+  getAllTenantNewRegReqs(userId) {
+    this.adminService
+      .getAllNewTenantACCRequest(userId)
+      .subscribe((new_tenant_req: Array<any>) => {
+        for (let req of new_tenant_req) {
+          this.allRequests.push(req);
         }
       });
+  }
 
-    return len;
+  getAllLandlordNewRegReqs(userId) {
+    this.adminService
+      .getAllNewLandlordACCRequest(userId)
+      .subscribe((new_landlord_req: Array<any>) => {
+        for (let req of new_landlord_req) {
+          this.allRequests.push(req);
+        }
+      });
   }
 
   async fetchAllRequests(userId) {
-    var reqLen = 0;
-
-    await this.getAllAddPropertyRequests(userId);
-    await this.getAllPaymentRequests(userId).then((len) => {
-      setTimeout(() => {
-        reqLen = len;
-      }, 2000);
-    });
-
-    return reqLen;
+    this.getAllAddPropertyRequests(userId);
+    this.getAllPaymentRequests(userId);
+    this.getAllTenantNewRegReqs(userId);
+    this.getAllLandlordNewRegReqs(userId);
   }
 
   async assignUsersData() {
     for (let req of this.allRequests) {
-      if (req.request_type != "NEW_LANDLORD_ACC") {
+      if (req.request_type == "NEW_LANDLORD_ACC") {
+        for (let new_lndlrd_req of this.allNewLandLordACCRequests) {
+          if (req.request_details_id == new_lndlrd_req.unique_id) {
+            Object.assign(req, { propertyData: new_lndlrd_req });
+            Object.assign(req, { show_more: false });
+          }
+        }
+      } else if (req.request_type == "NEW_TENANT_ACC") {
+        Object.assign(req, { show_more: false });
+      } else {
         this.apiService
           .getUser(req["user_id"])
           .subscribe(async (userDetails) => {
@@ -333,13 +340,6 @@ export class AdminRequests implements OnInit {
               await Object.assign(req, { show_more: false });
             }
           });
-      } else {
-        for (let new_lndlrd_req of this.allNewLandLordACCRequests) {
-          if (req.request_details_id == new_lndlrd_req.unique_id) {
-            await Object.assign(req, { propertyData: new_lndlrd_req });
-            await Object.assign(req, { show_more: false });
-          }
-        }
       }
     }
   }
@@ -400,6 +400,8 @@ export class AdminRequests implements OnInit {
         if (res == true) {
           if (req.request_type == "NEW_LANDLORD_ACC") {
             await this.acceptedNewLandlordAccRequest(req);
+          } else if (req.request_type == "NEW_TENANT_ACC"){
+            
           }
         }
       });

@@ -384,6 +384,41 @@
                         </div>
                       </div>
 
+                      <div
+                        *ngIf="allReq.request_type == 'NEW_TENANT_ACC'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Request for new Tenant Sign-up.
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                      </div>
+
                       <p
                         style="color: #707070"
                         *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
@@ -401,6 +436,12 @@
                         *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' && allReq.show_more == false"
                       >
                         Requesting landlord registration.
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'NEW_TENANT_ACC' && allReq.show_more == false"
+                      >
+                        Requesting Tenant registration.
                       </p>
                       <div
                         *ngIf="allReq.show_more == true"
@@ -490,7 +531,7 @@
                         "
                       >
                         <div
-                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'"
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -523,7 +564,7 @@
                           </p>
                         </div>
                         <div
-                          *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
+                          *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' || allReq.request_type == 'NEW_TENANT_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -555,7 +596,7 @@
                           </p>
                         </div>
                         <div
-                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'"
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -587,7 +628,7 @@
                           </p>
                         </div>
                         <div
-                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'"
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
                           class="row"
                           style="
                             margin: 0;
@@ -830,7 +871,9 @@
             </div>
             <div *ngIf="isContentLoading == false">
               <div class="card-wrapper" *ngFor="let allReq of allRequests">
-                <div *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'">
+                <div
+                  *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                >
                   <div
                     *ngIf="allReq.userData.auth_type == 'landlord'"
                     class="card"
@@ -1214,7 +1257,9 @@
             </div>
             <div *ngIf="isContentLoading == false">
               <div class="card-wrapper" *ngFor="let allReq of allRequests">
-                <div *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC'">
+                <div
+                  *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                >
                   <div
                     *ngIf="allReq.userData.auth_type == 'tenant'"
                     class="card"
