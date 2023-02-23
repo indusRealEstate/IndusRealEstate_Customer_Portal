@@ -10,6 +10,7 @@ export class DocUploadDialogRegister implements OnInit {
   public docName: string = "";
   docs: any[] = [];
   singleDoc: any;
+  auth_type: any = "";
 
   isDocsExceededMoreThan2: boolean = false;
   isDocsExceededMoreThan1: boolean = false;
@@ -24,6 +25,7 @@ export class DocUploadDialogRegister implements OnInit {
 
   ngOnInit() {
     this.docName = this.data["upload"];
+    this.auth_type = this.data["auth"];
   }
 
   onCloseDialog() {
@@ -63,6 +65,90 @@ export class DocUploadDialogRegister implements OnInit {
         } else {
           this.dialogRef.close({
             doc: "ownership_doc",
+            data: this.base64files[0],
+          });
+        }
+      } else {
+        if (this.files.length >= 2) {
+          this.isDocsExceededMoreThan1 = true;
+
+          setTimeout(() => {
+            this.isDocsExceededMoreThan1 = false;
+          }, 4000);
+        } else {
+          this.isDocsEmpty = true;
+
+          setTimeout(() => {
+            this.isDocsEmpty = false;
+          }, 4000);
+        }
+      }
+    }
+  }
+
+  submitDataTenant() {
+    if (
+      this.docName == "tenant_passport" ||
+      this.docName == "landlord_passport" ||
+      this.docName == "tenant_emirates_id"
+    ) {
+      if (this.files.length < 3 && this.files.length != 0) {
+        if (this.docName == "tenant_passport") {
+          this.dialogRef.close({
+            doc: "tenant_passport",
+            data: this.base64files,
+          });
+        } else if (this.docName == "landlord_passport") {
+          this.dialogRef.close({
+            doc: "landlord_passport",
+            data: this.base64files,
+          });
+        } else {
+          this.dialogRef.close({
+            doc: "tenant_emirates_id",
+            data: this.base64files,
+          });
+        }
+      } else {
+        if (this.files.length == 0) {
+          this.isDocsEmpty = true;
+
+          setTimeout(() => {
+            this.isDocsEmpty = false;
+          }, 4000);
+        } else {
+          this.isDocsExceededMoreThan2 = true;
+
+          setTimeout(() => {
+            this.isDocsExceededMoreThan2 = false;
+          }, 4000);
+        }
+      }
+    } else {
+      if (this.files.length < 2 && this.files.length != 0) {
+        if (this.docName == "tenant_visa") {
+          this.dialogRef.close({
+            doc: "tenant_visa",
+            data: this.base64files[0],
+          });
+        } else if (this.docName == "title_deed_doc") {
+          this.dialogRef.close({
+            doc: "title_deed_doc",
+            data: this.base64files[0],
+          });
+        } else if (this.docName == "power_of_attorney") {
+          this.dialogRef.close({
+            doc: "power_of_attorney",
+            data: this.base64files[0],
+          });
+        } else if (this.docName == "security_deposit") {
+          this.dialogRef.close({
+            doc: "security_deposit",
+            data: this.base64files[0],
+          });
+        } else if (this.docName == "tenancy_contract") {
+          this.dialogRef.close({
+            doc: "tenancy_contract",
             data: this.base64files[0],
           });
         }

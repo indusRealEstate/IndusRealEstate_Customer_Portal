@@ -17,6 +17,64 @@
 >
   Please add front and back pictures of the passport.
 </p>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'tenant_passport'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Tenant Passport
+</h3>
+<p
+  *ngIf="docName == 'tenant_passport'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add front and back pictures of the passport.
+</p>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'landlord_passport'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Landlord Passport
+</h3>
+<p
+  *ngIf="docName == 'landlord_passport'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add front and back pictures of the passport.
+</p>
+
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'tenant_emirates_id'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Tenant Emirates ID
+</h3>
+<p
+  *ngIf="docName == 'tenant_emirates_id'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add front and back pictures of the Emirates ID.
+</p>
 
 <h3
   mat-dialog-title
@@ -55,6 +113,103 @@
   style="text-align: center; margin-top: -10px; margin-bottom: 20px"
 >
   Please add the picture of Sales Deed Document.
+</p>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'tenant_visa'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Tenants Visa Copy
+</h3>
+<p
+  *ngIf="docName == 'tenant_visa'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add the picture of Tenants Visa.
+</p>
+
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'title_deed_doc'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Title Deed Document
+</h3>
+<p
+  *ngIf="docName == 'title_deed_doc'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add the picture of Title Deed Document.
+</p>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'power_of_attorney'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Power of attorney document
+</h3>
+<p
+  *ngIf="docName == 'power_of_attorney'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add the Copy of a valid power of attorney document.
+</p>
+
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'security_deposit'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Security Deposit reciept
+</h3>
+<p
+  *ngIf="docName == 'security_deposit'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add the Copy of Security Deposit reciept.
+</p>
+<h3
+  mat-dialog-title
+  *ngIf="docName == 'tenancy_contract'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Original Tenancy Contract
+</h3>
+<p
+  *ngIf="docName == 'tenancy_contract'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add the Copy of Original Tenancy Contract.
 </p>
 
 <h3
@@ -258,6 +413,7 @@
     Cancel
   </button>
   <button
+    *ngIf="auth_type == 'landlord'"
     style="
       background-color: #d4aa32;
       width: 120px;
@@ -267,6 +423,21 @@
     mat-raised-button
     color="primary"
     (click)="submitEditedData()"
+    class="submit-btn"
+  >
+    Submit
+  </button>
+  <button
+    *ngIf="auth_type == 'tenant'"
+    style="
+      background-color: #d4aa32;
+      width: 120px;
+      height: 43px;
+      font-size: 17px;
+    "
+    mat-raised-button
+    color="primary"
+    (click)="submitDataTenant()"
     class="submit-btn"
   >
     Submit

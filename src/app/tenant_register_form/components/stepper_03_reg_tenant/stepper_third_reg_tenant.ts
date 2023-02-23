@@ -15,12 +15,14 @@ export class StepperTenantRegisterThird {
   original_tenancy_contract: any = "";
   security_Deposit_reciept: any = "";
   copy_of_valid_power_of_attorney_document: any = "";
+  tenants_Visa_Copy: any = "";
+  title_Deed_doc: any = "";
+  
   tenant_emiratesIDPics: any[] = [];
   landlord_passPortPics: any[] = [];
   tenant_passPortPics: any[] = [];
 
-  tenants_Visa_Copy: any = "";
-  title_Deed_doc: any = "";
+  
 
   constructor(private formBuilder: FormBuilder, private dialog?: MatDialog) {}
 
@@ -31,7 +33,7 @@ export class StepperTenantRegisterThird {
       .open(DocUploadDialogRegister, {
         width: "700px",
         height: "450px",
-        data: { upload: upload },
+        data: { upload: upload, auth: "tenant" },
       })
       .afterClosed()
       .subscribe((res) => {

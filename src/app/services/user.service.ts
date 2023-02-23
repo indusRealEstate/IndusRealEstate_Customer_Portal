@@ -32,6 +32,18 @@ export class UserService {
     } catch (error) {}
   }
 
+  request_register_tenant(data: any) {
+    const url = `${API_URL}/request_register_tenant.php?apikey=1`;
+
+    try {
+      var res = this.http
+        .post(url, data)
+        .pipe(catchError(this.handleError("request_register_tenant", [])));
+
+      return res;
+    } catch (error) {}
+  }
+
   addUserDetails(userDetails) {
     const url = `${API_URL}/addUserDetails.php?apikey=1`;
     return this.http

@@ -16,7 +16,7 @@ export class StepperLandlordRegisterThird {
   emiratesIDPics: any[] = [];
   ownerShipDoc: any = "";
   salesDeedDoc: any = "";
-  
+
   constructor(private formBuilder: FormBuilder, private dialog?: MatDialog) {}
 
   ngOnInit(): void {}
@@ -26,7 +26,7 @@ export class StepperLandlordRegisterThird {
       .open(DocUploadDialogRegister, {
         width: "700px",
         height: "450px",
-        data: { upload: upload },
+        data: { upload: upload, auth: "landlord" },
       })
       .afterClosed()
       .subscribe((res) => {

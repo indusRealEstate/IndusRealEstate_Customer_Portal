@@ -158,6 +158,16 @@ export class ApiService {
       );
   }
 
+  saveTenantRegisterUploadFiles(data: any) {
+    const url = `https://indusre.app/api/register_files_uploader_tenant.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(
+        catchError(this.handleError("saveLandlordRegisterUploadFiles", []))
+      );
+  }
+
   removeAppointment(data: any) {
     const url = `${API_URL}/removeAppointment.php?apikey=1`;
     return this.http
