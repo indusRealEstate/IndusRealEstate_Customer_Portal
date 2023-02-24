@@ -198,6 +198,8 @@ export class LandlordFormComponent implements OnInit {
           "." +
           this.secondStepper.secondPartySignatureExt,
         approved: "false",
+        expired: "false",
+        declined: "false",
       };
 
       var passportPic1Ext = this.thirdStepper.passPortPics[0]["ext"];
@@ -255,6 +257,7 @@ export class LandlordFormComponent implements OnInit {
         sales_deed_doc: unique_id + "/" + "sales_deed" + "." + salesDeedExt,
         approved: "false",
         expired: "false",
+        declined: "false",
       };
 
       await this.uploadFiles(allDocFiles).then(() => {

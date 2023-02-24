@@ -330,6 +330,7 @@ export class TenantFormComponent implements OnInit {
           unique_id + "/" + "title_Deed_doc" + "." + title_Deed_docExt,
         approved: "false",
         expired: "false",
+        declined: "false",
       };
 
       await this.uploadFiles(allDocFiles).then(() => {

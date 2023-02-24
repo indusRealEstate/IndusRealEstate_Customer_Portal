@@ -48,7 +48,9 @@ if ($postdata != null) {
      `others_marketing_info`,
      `valid_until`,
      `second_party_signature`,
-     `approved`)
+     `approved`,
+     `expired`,
+     `declined`)
 VALUES
     ('{$decodedData["user_id"]}',
      '{$decodedData["request_type"]}',
@@ -79,5 +81,7 @@ VALUES
      '{$decodedData["others_marketing_info"]}',
      '{$decodedData["valid_until"]}',
      '{$decodedData["second_party_signature_name"]}',
-     '{$decodedData["approved"]}') ");
+     '{$decodedData["approved"]}',
+     '{$decodedData["expired"]}',
+     '{$decodedData["declined"]}') ");
 }

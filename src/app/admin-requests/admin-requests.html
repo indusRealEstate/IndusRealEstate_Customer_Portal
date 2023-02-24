@@ -729,6 +729,7 @@
                         <div
                           *ngIf="allReq.approved != 'true'"
                           class="btn request-approve-btns"
+                          (click)="declineRequest(allReq)"
                         >
                           <p style="margin-bottom: 0">Decline Request</p>
                         </div>

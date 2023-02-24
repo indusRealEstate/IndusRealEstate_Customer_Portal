@@ -205,6 +205,8 @@ export class AddPropertyForm implements OnInit {
 
         second_party_signature_name: this.secondPartySignatureName,
         approved: "false",
+        expired: "false",
+        declined: "false",
       };
 
       try {

@@ -112,6 +112,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AcceptRequestConfirmDialog } from "app/admin-requests/accept_req_dialog/acspt_req_dialog";
 import { HttpClientModule } from "@angular/common/http";
+import { DeclineRequestConfirmDialog } from "app/admin-requests/decline_req_dialog/decline_req_dialog";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -248,6 +249,7 @@ import { HttpClientModule } from "@angular/common/http";
     Tenant_Registration_Stepper_Sixth,
 
     AcceptRequestConfirmDialog,
+    DeclineRequestConfirmDialog,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
