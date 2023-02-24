@@ -169,9 +169,20 @@ export class AdminRequests implements OnInit {
           this.allRequestsBH.subscribe(async (req) => {
             var res = await this.checkEveryDataPresent(req).finally(
               async () => {
-                if (res == false) {
+                if (res == true) {
                   await this.assignUsersData().finally(() => {
                     this.allRequestsBH.next(this.allRequests);
+                    setTimeout(() => {
+                      this.isContentLoading = false;
+                      sessionStorage.setItem(
+                        "admin_reqs_session",
+                        JSON.stringify({
+                          allRequests: this.allRequests,
+                          isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
+                          isTenantRequestsEmpty: this.isTenantRequestsEmpty,
+                        })
+                      );
+                    }, 4000);
                   });
                 } else {
                   setTimeout(() => {
@@ -487,7 +498,6 @@ export class AdminRequests implements OnInit {
       .subscribe(async (res) => {
         if (res == true) {
           if (req.request_type == "NEW_LANDLORD_ACC") {
-            
           } else if (req.request_type == "NEW_TENANT_ACC") {
           }
         }
