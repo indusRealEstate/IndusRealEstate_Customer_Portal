@@ -22,7 +22,7 @@ export class AdminRequests implements OnInit {
   isLoading: boolean = false;
   isContentLoading: boolean = false;
 
-  ngDoCheckInitiaized: boolean = false;
+  everyDataInitialized: boolean = false;
 
   allDataAssigned: boolean = false;
 
@@ -203,7 +203,7 @@ export class AdminRequests implements OnInit {
     this.isNewLandlordReqFinised.next(false);
     this.isNewTenantReqFinised.next(false);
     this.noDataPresent.next(false);
-    this.ngDoCheckInitiaized = false;
+    this.everyDataInitialized = false;
     this.allRequestsLen = 0;
     this.allNewLandLordACCRequests.length = 0;
     this.show_more_imgLoading.length = 0;
@@ -259,19 +259,22 @@ export class AdminRequests implements OnInit {
                     await this.assignUsersData();
                   } else {
                     console.log("got data...");
-
-                    setTimeout(() => {
-                      this.isContentLoading = false;
-                      sessionStorage.setItem(
-                        "admin_reqs_session",
-                        JSON.stringify({
-                          allRequests: this.allRequests,
-                          isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
-                          isTenantRequestsEmpty: this.isTenantRequestsEmpty,
-                        })
-                      );
-                      this.ngOnDestroy();
-                    }, 1000);
+                    if (this.everyDataInitialized == false) {
+                      setTimeout(() => {
+                        this.isContentLoading = false;
+                        this.everyDataInitialized = true;
+                        sessionStorage.setItem(
+                          "admin_reqs_session",
+                          JSON.stringify({
+                            allRequests: this.allRequests,
+                            isLandlordRequestsEmpty:
+                              this.isLandlordRequestsEmpty,
+                            isTenantRequestsEmpty: this.isTenantRequestsEmpty,
+                          })
+                        );
+                        // this.ngOnDestroy();
+                      }, 1000);
+                    }
                   }
                 });
               }
