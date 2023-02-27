@@ -1,5 +1,9 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";
 
@@ -18,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: "email-verification",
-    component : EmailVerification,
+    component: EmailVerification,
     pathMatch: "full",
   },
   {
@@ -58,5 +62,6 @@ const routes: Routes = [
     }),
   ],
   exports: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
 export class AppRoutingModule {}

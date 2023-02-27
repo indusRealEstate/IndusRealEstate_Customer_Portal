@@ -13,7 +13,6 @@ import { Owner_Move_in_Request } from "app/indus_services/facility_management/ow
 import { Owner_Move_out_Request } from "app/indus_services/facility_management/owner_move-out_request/owner_move-out_request.component";
 import { Tenant_Move_out_Request } from "app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component";
 import { Tenant_Registration } from "app/indus_services/facility_management/tenant_registration/tenant_registration.component";
-import { DirectAccessGaurd } from "app/routeGaurd";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { AdminRequests } from "app/admin-requests/admin-requests";

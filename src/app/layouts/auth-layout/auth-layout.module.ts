@@ -61,6 +61,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { StepperTenantRegisterFirst } from "app/tenant_register_form/components/stepper_01_reg_tenant/stepper_first_reg_tenant";
 import { StepperTenantRegisterSecond } from "app/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
 import { StepperTenantRegisterThird } from "app/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
+import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -131,6 +132,8 @@ import { StepperTenantRegisterThird } from "app/tenant_register_form/components/
     StepperTenantRegisterFirst,
     StepperTenantRegisterSecond,
     StepperTenantRegisterThird,
+
+    CountryDropdown,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

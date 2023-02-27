@@ -19,6 +19,7 @@ import { DocUploadDialogRegister } from "./dialog/dialog";
 import { ProgressComponent } from "./progressbar/progress";
 import { SuccessDialogRegister } from "./success-dialog/success_dialog";
 import { DndDirective } from "./dialog/dnd.directive";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { DndDirective } from "./dialog/dnd.directive";
     RouterModule,
     FormsModule,
     MatMenuModule,
+    MatFormFieldModule,
     MatListModule,
     MatNativeDateModule,
     ReactiveFormsModule,

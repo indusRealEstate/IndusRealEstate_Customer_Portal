@@ -190,7 +190,7 @@
         >
           <div
             (click)="cancelRegistration()"
-            *ngIf="currentIndex == 0"
+            *ngIf="selectedIndex == 0"
             class="btn"
             style="
               font-size: 18px;
@@ -203,7 +203,7 @@
           </div>
           <div
             (click)="stepperPreviousClick()"
-            *ngIf="currentIndex == 1 || currentIndex == 2"
+            *ngIf="selectedIndex == 1 || selectedIndex == 2"
             class="btn"
             style="
               font-size: 18px;
@@ -216,7 +216,7 @@
           </div>
 
           <div
-            *ngIf="currentIndex != 2"
+            *ngIf="selectedIndex != 2"
             class="btn"
             style="background-color: #d4aa32; margin-left: 10px"
             (click)="stepperNextClick()"
@@ -244,7 +244,7 @@
             </div>
           </div>
           <div
-            *ngIf="currentIndex == 2"
+            *ngIf="selectedIndex == 2"
             class="btn"
             style="background-color: #d4aa32; margin-left: 10px"
             (click)="register()"

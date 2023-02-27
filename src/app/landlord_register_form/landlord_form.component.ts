@@ -54,7 +54,7 @@ export class LandlordFormComponent implements OnInit {
   isAllDocumentsNotUploaded: boolean = false;
 
   selectedIndex: number;
-  currentIndex: number;
+  // currentIndex: number;
 
   isRegistering: boolean = false;
 
@@ -69,15 +69,15 @@ export class LandlordFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.currentIndex = 0;
-    // this.selectedIndex = 2;
+    // this.currentIndex = 0;
+    this.selectedIndex = 0;
   }
 
-  ngDoCheck() {
-    if (this.stepperInitialized == true) {
-      this.currentIndex = this.stepper.selectedIndex;
-    }
-  }
+  // ngDoCheck() {
+  //   if (this.stepperInitialized == true && this.isRegistering == false) {
+  //     this.currentIndex = this.stepper.selectedIndex;
+  //   }
+  // }
 
   ngAfterViewInit(): void {
     this.LandlordRegStep01Form = this.firstStepper.form;
@@ -92,10 +92,10 @@ export class LandlordFormComponent implements OnInit {
 
   stepperPreviousClick() {
     this.stepper.previous();
-    if (this.currentIndex == 1) {
-      this.currentIndex = 0;
-    } else if (this.currentIndex == 2) {
-      this.currentIndex = 1;
+    if (this.selectedIndex == 1) {
+      this.selectedIndex = 0;
+    } else if (this.selectedIndex == 2) {
+      this.selectedIndex = 1;
     }
   }
 
@@ -104,10 +104,10 @@ export class LandlordFormComponent implements OnInit {
   }
 
   stepperNextClick() {
-    if (this.currentIndex == 0) {
+    if (this.selectedIndex == 0) {
       if (this.firstStepper.form.valid) {
         this.isFormNotFilled = false;
-        this.currentIndex = 1;
+        this.selectedIndex = 1;
         this.stepper.next();
       } else {
         this.isFormNotFilled = true;
@@ -116,10 +116,10 @@ export class LandlordFormComponent implements OnInit {
           this.isFormNotFilled = false;
         }, 4000);
       }
-    } else if (this.currentIndex == 1) {
+    } else if (this.selectedIndex == 1) {
       if (this.secondStepper.form.valid) {
         this.isFormNotFilled = false;
-        this.currentIndex = 2;
+        this.selectedIndex = 2;
         this.stepper.next();
       } else {
         this.isFormNotFilled = true;
@@ -274,7 +274,9 @@ export class LandlordFormComponent implements OnInit {
           });
 
         setTimeout(() => {
-          this.isRegistering = false;
+          setTimeout(() => {
+            this.isRegistering = false;
+          }, 2000);
           this.dialog.open(SuccessDialogRegister, {
             width: "730px",
             height: "430px",
