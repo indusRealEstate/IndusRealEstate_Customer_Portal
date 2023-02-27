@@ -96,4 +96,13 @@ export class AdminService {
       })
     );
   }
+
+  declineRegisterToken(data: any) {
+    const url = `${API_URL}/register_token_decline.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

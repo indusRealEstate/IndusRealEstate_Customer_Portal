@@ -35,6 +35,10 @@ export class OtherServices {
     false
   );
 
+  public adminRequestGotApproved: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
   public addMessage(data: any) {
     this.messages.next(data);
   }

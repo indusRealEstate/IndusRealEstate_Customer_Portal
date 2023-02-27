@@ -61,7 +61,8 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private otherService: OtherServices,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     this.isLoading = true;
     // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
@@ -86,7 +87,25 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
 
-    // this.scrollToTop();
+    // otherService.adminRequestGotApproved.subscribe(async (val) => {
+    //   if (val == true) {
+    //     console.log("got approved");
+    //     this.isRequestOverviewLoading = true;
+    //     this.isLoading = true;
+    //     this.clearAllVariables();
+    //     sessionStorage.removeItem("admin_dashboard_fetched_time");
+    //     sessionStorage.removeItem("admin_dashboard_session_data");
+    //     await this.initFunction(user[0]["id"]);
+    //     sessionStorage.setItem(
+    //       "admin_dashboard_fetched_time",
+    //       JSON.stringify(new Date().getMinutes())
+    //     );
+
+    //     setTimeout(() => {
+    //       this.otherServices.adminRequestGotApproved.next(false);
+    //     }, 1000);
+    //   }
+    // });
   }
 
   // async ngDoCheck() {
@@ -130,6 +149,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.isRequestOverviewLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -197,6 +217,13 @@ export class AdminDashboardComponent implements OnInit {
     this.approvedRequests = 0;
     this.requestPercentage = 0;
     this.requestOverview.length = 0;
+
+    this.new_ac_landlord_req_len.next(0);
+    this.isNew_ac_landlord_reqsFinished.next(false);
+    this.isPaymentReqFinished.next(false);
+    this.isNewLandlordReqFinised.next(false);
+    this.isNewTenantReqFinised.next(false);
+    this.isReqOverviewFullyAdded.next(false);
   }
 
   async initFunction(userId) {
@@ -254,24 +281,26 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService
       .getAllAddPropertyRequests(userId)
       .subscribe((prop_req: Array<any>) => {
-        var i = 0;
-        for (let index = 0; index < prop_req.length; index++) {
-          i++;
+        if (prop_req.length != 0) {
+          var i = 0;
+          for (let index = 0; index < prop_req.length; index++) {
+            i++;
 
-          if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
-            this.totalRequests++;
-            if (prop_req[index]["approved"] == "true") {
-              this.approvedRequests++;
+            if (prop_req[index].request_type != "NEW_LANDLORD_ACC") {
+              this.totalRequests++;
+              if (prop_req[index]["approved"] == "true") {
+                this.approvedRequests++;
+              }
+            } else {
+              this.new_ac_landlord_req_len.next(
+                this.new_ac_landlord_req_len.getValue() + 1
+              );
             }
-          } else {
-            this.new_ac_landlord_req_len.next(
-              this.new_ac_landlord_req_len.getValue() + 1
-            );
-          }
-          if (i == prop_req.length) {
-            setTimeout(() => {
-              this.isNew_ac_landlord_reqsFinished.next(true);
-            }, 1000);
+            if (i == prop_req.length) {
+              setTimeout(() => {
+                this.isNew_ac_landlord_reqsFinished.next(true);
+              }, 1000);
+            }
           }
         }
 
@@ -291,27 +320,29 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService
       .getAllPaymentRequests(userId)
       .subscribe(async (pay_req: Array<any>) => {
-        var i = 0;
-        for (let req of pay_req) {
-          i++;
-          this.totalRequests++;
-          if (req["approved"] == "true") {
-            this.approvedRequests++;
-          }
-        }
-
-        if (this.requestOverview.length < 4) {
-          for (let index = 0; index < pay_req.length; index++) {
-            if (this.requestOverview.length >= 4) {
-              break;
-            } else {
-              this.requestOverview.push(pay_req[index]);
+        if (pay_req.length != 0) {
+          var i = 0;
+          for (let req of pay_req) {
+            i++;
+            this.totalRequests++;
+            if (req["approved"] == "true") {
+              this.approvedRequests++;
             }
           }
-        }
 
-        if (i == pay_req.length) {
-          this.isPaymentReqFinished.next(true);
+          if (this.requestOverview.length < 4) {
+            for (let index = 0; index < pay_req.length; index++) {
+              if (this.requestOverview.length >= 4) {
+                break;
+              } else {
+                this.requestOverview.push(pay_req[index]);
+              }
+            }
+          }
+
+          if (i == pay_req.length) {
+            this.isPaymentReqFinished.next(true);
+          }
         }
       });
   }
@@ -320,17 +351,19 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService
       .getAllNewLandlordACCRequest(userId)
       .subscribe((new_landlord_ac_req: Array<any>) => {
-        var i = 0;
-        for (let req of new_landlord_ac_req) {
-          i++;
-          this.totalRequests++;
-          if (req["approved"] == "true") {
-            this.approvedRequests++;
+        if (new_landlord_ac_req.length != 0) {
+          var i = 0;
+          for (let req of new_landlord_ac_req) {
+            i++;
+            this.totalRequests++;
+            if (req["approved"] == "true") {
+              this.approvedRequests++;
+            }
           }
-        }
 
-        if (i == new_landlord_ac_req.length) {
-          this.isNewLandlordReqFinised.next(true);
+          if (i == new_landlord_ac_req.length) {
+            this.isNewLandlordReqFinised.next(true);
+          }
         }
       });
   }
@@ -339,17 +372,19 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService
       .getAllNewTenantACCRequest(userId)
       .subscribe((new_tenant_ac_req: Array<any>) => {
-        var i = 0;
-        for (let req of new_tenant_ac_req) {
-          i++;
-          this.totalRequests++;
-          if (req["approved"] == "true") {
-            this.approvedRequests++;
+        if (new_tenant_ac_req.length != 0) {
+          var i = 0;
+          for (let req of new_tenant_ac_req) {
+            i++;
+            this.totalRequests++;
+            if (req["approved"] == "true") {
+              this.approvedRequests++;
+            }
           }
-        }
 
-        if (i == new_tenant_ac_req.length) {
-          this.isNewTenantReqFinised.next(true);
+          if (i == new_tenant_ac_req.length) {
+            this.isNewTenantReqFinised.next(true);
+          }
         }
       });
   }

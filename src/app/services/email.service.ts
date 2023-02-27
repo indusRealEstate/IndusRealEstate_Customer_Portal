@@ -56,7 +56,7 @@ export class EmailServices {
     }
   }
 
- public expireRegisterToken(data: any) {
+  public expireRegisterToken(data: any) {
     const url = `${API_URL}/auth/register_token_runOut.php?apikey=1`;
     try {
       return this.http

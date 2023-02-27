@@ -14,7 +14,15 @@ $postdata = file_get_contents("php://input");
 $decodedData = json_decode($postdata, true);
 
 if ($postdata != null) {
-    $stmt = $dbase->execute("UPDATE `create_ac_req`
-    SET `expired`='{$decodedData["expired"]}'
-    WHERE `request_details_id` = '{$decodedData["unique_id"]}'");
+
+    if($decodedData["auth_type"] == "landlord"){
+        $stmt = $dbase->execute("UPDATE `create_ac_req`
+        SET `expired`='{$decodedData["expired"]}'
+        WHERE `request_details_id` = '{$decodedData["unique_id"]}'");
+    }elseif($decodedData["auth_type"] == "tenant"){
+        $stmt = $dbase->execute("UPDATE `create_ac_req_tenant`
+        SET `expired`='{$decodedData["expired"]}'
+        WHERE `request_details_id` = '{$decodedData["unique_id"]}'");
+    }
+    
 }

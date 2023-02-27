@@ -31,22 +31,22 @@ if (isset($postdata) && !empty($postdata)) {
         if ($userDecoded[0]->auth_type == "admin") {
             if ($decodedData["req_type_name"] == "create_ac_req") {
                 $stmt = $dbase->execute("UPDATE `create_ac_req`
-                                        SET `approved`='{$decodedData["approved"]}'
+                                        SET `declined`='{$decodedData["declined"]}'
                                         WHERE `request_details_id` = '{$decodedData["unique_id"]}'");
                 echo json_encode("success");
             } elseif ($decodedData["req_type_name"] == "payment_req") {
                 $stmt = $dbase->execute("UPDATE `payment_req`
-                                        SET `approved`='{$decodedData["approved"]}'
+                                        SET `declined`='{$decodedData["declined"]}'
                                         WHERE `user_id` = '{$decodedData["user_id"]}'");
                 echo json_encode("success");
             } elseif ($decodedData["req_type_name"] == "add_property_req") {
                 $stmt = $dbase->execute("UPDATE `add_property_req`
-                                        SET `approved`='{$decodedData["approved"]}'
+                                        SET `declined`='{$decodedData["declined"]}'
                                         WHERE `user_id` = '{$decodedData["user_id"]}'");
                 echo json_encode("success");
             } elseif ($decodedData["req_type_name"] == "create_ac_req_tenant") {
                 $stmt = $dbase->execute("UPDATE `create_ac_req_tenant`
-                                        SET `approved`='{$decodedData["approved"]}'
+                                        SET `declined`='{$decodedData["declined"]}'
                                         WHERE `request_details_id` = '{$decodedData["unique_id"]}'");
                 echo json_encode("success");
             }

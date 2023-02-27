@@ -276,6 +276,26 @@
                             approved
                           </p>
                         </div>
+
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
                       </div>
 
                       <div
@@ -309,6 +329,25 @@
                             "
                           >
                             approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
                           </p>
                         </div>
                       </div>
@@ -347,6 +386,25 @@
                             approved
                           </p>
                         </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
                       </div>
 
                       <div
@@ -382,6 +440,25 @@
                             approved
                           </p>
                         </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
                       </div>
 
                       <div
@@ -415,6 +492,25 @@
                             "
                           >
                             approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
                           </p>
                         </div>
                       </div>
@@ -720,14 +816,14 @@
                           </div>
                         </div>
                         <div
-                          *ngIf="allReq.approved != 'true'"
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
                           class="btn request-approve-btns"
                           (click)="acceptRequest(allReq)"
                         >
                           <p style="margin-bottom: 0">Accept Request</p>
                         </div>
                         <div
-                          *ngIf="allReq.approved != 'true'"
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
                           class="btn request-approve-btns"
                           (click)="declineRequest(allReq)"
                         >

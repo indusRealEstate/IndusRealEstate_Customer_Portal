@@ -18,7 +18,7 @@ if (!empty($postdata)) {
 
     $htmlContent = file_get_contents('html_templates/landlord_reg.html');
 
-    $rawContent = print_processed_html($htmlContent, $request->name, $request->unique_id);
+    $rawContent = print_processed_html($htmlContent, $request->name, $request->unique_id, $request->auth_type);
 
     $jsContent = json_decode($rawContent);
 
@@ -40,7 +40,7 @@ if (!empty($postdata)) {
     }
 }
 
-function print_processed_html($string, $name, $unique_id)
+function print_processed_html($string, $name, $unique_id, $auth_type)
 { 
     $search  = "[name]";
     $replace = $name;
@@ -58,16 +58,19 @@ function print_processed_html($string, $name, $unique_id)
   
     // Store the encryption key
     $encryption_key = "McQfTjWnZr4u7x!A";
+
+    $enc->unique_id = $unique_id;
+    $enc->auth_type = $auth_type;
   
     // Use openssl_encrypt() function to encrypt the data
-    $encryption = openssl_encrypt($unique_id, $ciphering,
+    $encryption = openssl_encrypt(json_encode($enc), $ciphering,
     $encryption_key, $options, $encryption_iv);
 
     $replacedEnc = replaceEncBase64($encryption);
 
 
     $search2  = "href='#'";
-    $replace2 = "href='http://localhost:4200/#/email-verification?token=$replacedEnc'";
+    $replace2 = "href='https://indusre.app/#/email-verification?token=$replacedEnc'";
 
     $processed_string2 = str_replace($search2, $replace2 , $processed_string);
 
