@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* Indus Real Estate Customer - v0.1.9
+* Indus Real Estate Customer Portal - v0.1.9
 =========================================================
 
 * Coded by Ajeer
