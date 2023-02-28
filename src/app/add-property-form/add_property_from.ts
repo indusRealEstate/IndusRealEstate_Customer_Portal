@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
+// import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "add-property",
@@ -48,7 +48,7 @@ export class AddPropertyForm implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private otherServices: OtherServices
+    // private otherServices: OtherServices
   ) {
     this.pageLoading = true;
     var userData = localStorage.getItem("currentUser");

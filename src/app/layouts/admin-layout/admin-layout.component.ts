@@ -33,26 +33,13 @@ export class AdminLayoutComponent implements OnInit {
       otherServices.isUserSignedOut.next(true);
       this.router.navigate(["/login"]);
     }
-    
+
     otherServices.isUserSignedOut.subscribe((val) => {
       this.isUserSignedOut = val;
     });
 
     this.otherServices.isLogoutProcessing.subscribe((e) => {
       this.isLogoutProcessing = e;
-    });
-
-    this.otherServices.messages.subscribe((e) => {
-      if (e != null) {
-        if (e["message"] == "Error") {
-          this.errorNotificationMessage = e;
-        } else {
-          this.successNotificationMessage = e;
-        }
-      } else {
-        this.errorNotificationMessage = null;
-        this.successNotificationMessage = null;
-      }
     });
   }
 
