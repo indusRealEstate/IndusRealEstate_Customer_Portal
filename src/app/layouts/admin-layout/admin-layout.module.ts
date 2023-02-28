@@ -113,6 +113,17 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AcceptRequestConfirmDialog } from "app/admin-requests/accept_req_dialog/acspt_req_dialog";
 import { HttpClientModule } from "@angular/common/http";
 import { DeclineRequestConfirmDialog } from "app/admin-requests/decline_req_dialog/decline_req_dialog";
+import { LoginComponent } from "app/login/login.component";
+import { RegisterComponent } from "app/register/register.component";
+import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
+import { TenantFormComponent } from "app/tenant_register_form/tenant_form.component";
+import { StepperLandlordRegisterFirst } from "app/landlord_register_form/components/stepper_01_reg_landlord/stepper_first_reg_landlord";
+import { StepperLandlordRegisterSecond } from "app/landlord_register_form/components/stepper_02_reg_landlord/stepper_second_reg_landlord";
+import { StepperLandlordRegisterThird } from "app/landlord_register_form/components/stepper_03_reg_landlord/stepper_third_reg_landlord";
+import { StepperTenantRegisterFirst } from "app/tenant_register_form/components/stepper_01_reg_tenant/stepper_first_reg_tenant";
+import { StepperTenantRegisterSecond } from "app/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
+import { StepperTenantRegisterThird } from "app/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
+import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -250,6 +261,23 @@ import { DeclineRequestConfirmDialog } from "app/admin-requests/decline_req_dial
 
     AcceptRequestConfirmDialog,
     DeclineRequestConfirmDialog,
+
+    LoginComponent,
+    RegisterComponent,
+    LandlordFormComponent,
+    TenantFormComponent,
+
+    // Landlord Reg
+    StepperLandlordRegisterFirst,
+    StepperLandlordRegisterSecond,
+    StepperLandlordRegisterThird,
+
+    // Tenant Reg
+    StepperTenantRegisterFirst,
+    StepperTenantRegisterSecond,
+    StepperTenantRegisterThird,
+
+    CountryDropdown,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
             this.invaliduser = true;
             this.loading = false;
           } else {
+            this.otherServices.isUserSignedOut.next(false);
             var userData = localStorage.getItem("currentUser");
             var user = JSON.parse(userData);
 

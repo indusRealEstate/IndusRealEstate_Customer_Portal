@@ -29,6 +29,9 @@ export class OtherServices {
   public isProfilePicUpdated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  public isUserSignedOut: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   public messages: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   public gotError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(

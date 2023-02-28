@@ -185,6 +185,10 @@ export class NavbarComponent implements OnInit {
   userLogOut() {
     this.otherServices.isLogoutProcessing.next(true);
     this.authenticationService.logout();
+
+    setTimeout(() => {
+      this.otherServices.isUserSignedOut.next(true);
+    }, 1500);
   }
 
   getUserDataFromLocal(user) {

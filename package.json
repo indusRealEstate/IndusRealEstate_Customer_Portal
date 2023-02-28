@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --vendor-chunk",
+    "build": "ng build --aot && tar -zcvf archive.tar.gz dist/*",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

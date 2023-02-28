@@ -18,6 +18,10 @@ import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { AdminRequests } from "app/admin-requests/admin-requests";
 import { PropertyPage } from "app/property-page/property-page.component";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
+import { LoginComponent } from "app/login/login.component";
+import { RegisterComponent } from "app/register/register.component";
+import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
+import { TenantFormComponent } from "app/tenant_register_form/tenant_form.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -40,4 +44,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-requests", component: AdminRequests },
   // { path: "404", component: PageNotFoundComponent },
   // { path: "**", redirectTo: "/404" },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
+  { path: "landlord-register-form", component: LandlordFormComponent },
+  { path: "tenant-register-form", component: TenantFormComponent },
 ];

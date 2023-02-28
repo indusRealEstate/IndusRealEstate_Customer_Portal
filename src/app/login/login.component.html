@@ -29,7 +29,11 @@
           formControlName="username"
           [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
         />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div
+          *ngIf="submitted && f.username.errors"
+          class="invalid-feedback"
+          style="display: flex; justify-content: center"
+        >
           <div *ngIf="f.username.errors.required">Username is required</div>
         </div>
         <input
@@ -39,7 +43,11 @@
           formControlName="password"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
         />
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+        <div
+          *ngIf="submitted && f.password.errors"
+          class="invalid-feedback"
+          style="display: flex; justify-content: center"
+        >
           <div *ngIf="f.password.errors.required">Password is required</div>
         </div>
         <div *ngIf="invaliduser === true" class="invalid-user">
@@ -58,12 +66,23 @@
         </button>
       </form>
     </div>
-    <div class="switch" id="switch-cnt">
-      <img
+    <div
+      class="switch"
+      id="switch-cnt"
+      style="
+        background-image: linear-gradient(
+            to bottom,
+            rgb(236 240 243 / 80%) 50%,
+            rgb(236 240 243 / 80%) 80%
+          ),
+          url(assets/img/bg/navbar_bg.webp);
+      "
+    >
+      <!-- <img
         src="assets/img/bg/navbar_bg.webp"
         alt=""
         style="opacity: 25%; width: 160%; height: 130%"
-      />
+      /> -->
       <div class="switch__circle"></div>
       <div class="switch__circle switch__circle--t"></div>
 
@@ -71,7 +90,7 @@
         <img
           class="logo-img"
           src="https://www.indusre.com/images/indus-logo.png"
-          style="width: 58%; height: 44px"
+          style="width: 60%"
           alt="logo"
         />
         <a routerLink="/register">
