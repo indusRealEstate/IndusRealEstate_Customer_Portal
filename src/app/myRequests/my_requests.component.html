@@ -75,6 +75,20 @@
 
             <div class="col" style="width: 100%; padding-right: 0">
               <div
+                *ngIf="dataSource.length == 0"
+                class="btn"
+                style="
+                  width: 100%;
+                  background-color: #939393;
+                  margin-top: 0;
+                  height: 40px;
+                  border-radius: 7px;
+                "
+              >
+                <p>Search</p>
+              </div>
+              <div
+                *ngIf="dataSource.length != 0"
                 class="btn"
                 (click)="searchRequest()"
                 style="
@@ -153,54 +167,187 @@
         </div>
 
         <div *ngIf="isLoading == false">
-          <div *ngIf="isSearchBtnClicked == true">
-            <div
-              *ngIf="searchResult.length == 0"
-              style="
-                width: 100%;
-                height: 340px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <p style="font-size: 20px; font-weight: 600; color: #808080c2">
-                No Results Found
-              </p>
+          <div
+            *ngIf="dataSource.length == 0"
+            style="
+              width: 100%;
+              height: 340px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+              You don't have requests.
+            </p>
+          </div>
+          <div *ngIf="dataSource.length != 0">
+            <div *ngIf="isSearchBtnClicked == true">
+              <div
+                *ngIf="searchResult.length == 0"
+                style="
+                  width: 100%;
+                  height: 340px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+                  No Results Found
+                </p>
+              </div>
+
+              <table
+                *ngIf="searchResult.length != 0"
+                mat-table
+                [dataSource]="searchResult"
+                class="mat-elevation-z8 demo-table"
+              >
+                <!-- Position Column -->
+                <!-- <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Name
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="row" style="margin: 10px">
+                  <div
+                    style="
+                      width: 60px;
+                      height: 60px;
+                      border-radius: 50%;
+                      background-color: black;
+                    "
+                  ></div>
+                  <div class="col">
+                    <p style="margin-bottom: 0; font-weight: 600">
+                      {{ element.name }}
+                    </p>
+                    <p style="margin-bottom: 0; color: #a3a3a3; font-weight: 600">
+                      {{ element.request_no }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+            </ng-container> -->
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="requestNo">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Request No.
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="font-weight: 600; color: #a3a3a3"
+                  >
+                    {{ element.request_no }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="requestType">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Request Type
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.request_type }}
+                  </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="propertyName">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Property Name
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.property_name }}
+                  </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="status">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Status
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    [ngClass]="requestStatusFont(element.status)"
+                  >
+                    {{ element.status }}
+                  </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="createdDate">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Created Date
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.created_date }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
             </div>
 
             <table
-              *ngIf="searchResult.length != 0"
+              *ngIf="isSearchBtnClicked == false"
               mat-table
-              [dataSource]="searchResult"
+              [dataSource]="dataSource"
               class="mat-elevation-z8 demo-table"
             >
               <!-- Position Column -->
               <!-- <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef class="table-header-font">
-              Name
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <div class="row" style="margin: 10px">
-                <div
-                  style="
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 50%;
-                    background-color: black;
-                  "
-                ></div>
-                <div class="col">
-                  <p style="margin-bottom: 0; font-weight: 600">
-                    {{ element.name }}
-                  </p>
-                  <p style="margin-bottom: 0; color: #a3a3a3; font-weight: 600">
-                    {{ element.request_no }}
-                  </p>
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Name
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="row" style="margin: 10px">
+                  <div
+                    style="
+                      width: 60px;
+                      height: 60px;
+                      border-radius: 50%;
+                      background-color: black;
+                    "
+                  ></div>
+                  <div class="col">
+                    <p style="margin-bottom: 0; font-weight: 600">
+                      {{ element.name }}
+                    </p>
+                    <p style="margin-bottom: 0; color: #a3a3a3; font-weight: 600">
+                      {{ element.request_no }}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </ng-container> -->
+              </td>
+            </ng-container> -->
 
               <!-- Name Column -->
               <ng-container matColumnDef="requestNo">
@@ -263,100 +410,6 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
           </div>
-
-          <table
-            *ngIf="isSearchBtnClicked == false"
-            mat-table
-            [dataSource]="dataSource"
-            class="mat-elevation-z8 demo-table"
-          >
-            <!-- Position Column -->
-            <!-- <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef class="table-header-font">
-              Name
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <div class="row" style="margin: 10px">
-                <div
-                  style="
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 50%;
-                    background-color: black;
-                  "
-                ></div>
-                <div class="col">
-                  <p style="margin-bottom: 0; font-weight: 600">
-                    {{ element.name }}
-                  </p>
-                  <p style="margin-bottom: 0; color: #a3a3a3; font-weight: 600">
-                    {{ element.request_no }}
-                  </p>
-                </div>
-              </div>
-            </td>
-          </ng-container> -->
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="requestNo">
-              <th mat-header-cell *matHeaderCellDef class="table-header-font">
-                Request No.
-              </th>
-              <td
-                mat-cell
-                *matCellDef="let element"
-                style="font-weight: 600; color: #a3a3a3"
-              >
-                {{ element.request_no }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="requestType">
-              <th mat-header-cell *matHeaderCellDef class="table-header-font">
-                Request Type
-              </th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.request_type }}
-              </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="propertyName">
-              <th mat-header-cell *matHeaderCellDef class="table-header-font">
-                Property Name
-              </th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.property_name }}
-              </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef class="table-header-font">
-                Status
-              </th>
-              <td
-                mat-cell
-                *matCellDef="let element"
-                [ngClass]="requestStatusFont(element.status)"
-              >
-                {{ element.status }}
-              </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="createdDate">
-              <th mat-header-cell *matHeaderCellDef class="table-header-font">
-                Created Date
-              </th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.created_date }}
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
         </div>
       </div>
     </div>

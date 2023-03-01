@@ -164,16 +164,23 @@ export class MyRequestsComponent implements OnInit {
 
     this.apiService.getUserRequestDetails(userId).subscribe((data: any[]) => {
       this.dataSource = data;
-
-      setTimeout(() => {
-        this.isLoading = false;
+    });
+    setTimeout(() => {
+      this.isLoading = false;
+      if (this.dataSource.length != 0) {
         sessionStorage.setItem(
           "my-requests-session",
           JSON.stringify({
-            data: data,
+            data: this.dataSource,
           })
         );
-      }, 3000);
-    });
+      }
+    }, 3000);
+
+    // setTimeout(() => {
+    //   if(this.isLoading == false){
+    //     if(this.dataSource.)
+    //   }
+    // }, 3500);
   }
 }
