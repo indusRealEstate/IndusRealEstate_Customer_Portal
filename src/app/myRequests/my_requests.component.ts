@@ -10,11 +10,38 @@ import { AuthenticationService } from "app/services/authentication.service";
   styleUrls: ["./my_requests.component.scss"],
 })
 export class MyRequestsComponent implements OnInit {
-  selectedEntry: any = "10";
+  selectedSearchType: any;
 
-  dataSource = new MatTableDataSource<any>();
+  searchText: any;
+
+  searchResult: any[] = [];
 
   isUserSignedIn: boolean = false;
+
+  isSearchTypeNotSelected: boolean = false;
+  isSearchTextEmpty: boolean = false;
+
+  isSearchBtnClicked: boolean = false;
+
+  isLoading: boolean = false;
+
+  displayedColumns: string[] = [
+    // "name",
+    "requestNo",
+    "requestType",
+    "propertyName",
+    "status",
+    "createdDate",
+  ];
+  dataSource: any[] = [];
+
+  searchType: any[] = [
+    // "Name",
+    "Request number",
+    "Request type",
+    "Property name",
+    // "Created date",
+  ];
 
   constructor(
     private apiService: ApiService,
@@ -22,6 +49,7 @@ export class MyRequestsComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute
   ) {
+    this.isLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -38,6 +66,75 @@ export class MyRequestsComponent implements OnInit {
     });
   }
 
+  requestStatusFont(status) {
+    switch (status) {
+      case "Requesting Approval":
+        return "request-approval";
+      case "Approved":
+        return "approved";
+      case "Denied":
+        return "denied";
+      default:
+        break;
+    }
+  }
+
+  searchRequest() {
+    if (this.selectedSearchType == null) {
+      this.isSearchTypeNotSelected = true;
+
+      setTimeout(() => {
+        this.isSearchTypeNotSelected = false;
+      }, 2500);
+    } else if (this.searchText == null || this.searchText == "") {
+      this.isSearchTextEmpty = true;
+
+      setTimeout(() => {
+        this.isSearchTextEmpty = false;
+      }, 2500);
+    } else {
+      this.isSearchBtnClicked = true;
+      if (this.selectedSearchType == "Request number") {
+        this.searchResult.length = 0;
+        this.dataSource.map((val) => {
+          if (
+            new String(val.request_no).trim().toLowerCase() ==
+            new String(this.searchText).trim().toLowerCase()
+          ) {
+            return this.searchResult.push(val);
+          }
+        });
+      } else if (this.selectedSearchType == "Request type") {
+        this.searchResult.length = 0;
+        this.dataSource.map((val) => {
+          if (
+            new String(val.request_type).trim().toLowerCase() ==
+            new String(this.searchText).trim().toLowerCase()
+          ) {
+            return this.searchResult.push(val);
+          }
+        });
+        console.log(this.searchResult);
+      } else if (this.selectedSearchType == "Property name") {
+        this.searchResult.length = 0;
+        this.dataSource.map((val) => {
+          if (
+            new String(val.property_name).trim().toLowerCase() ==
+            new String(this.searchText).trim().toLowerCase()
+          ) {
+            return this.searchResult.push(val);
+          }
+        });
+        console.log(this.searchResult);
+      }
+    }
+  }
+
+  closeResults() {
+    this.searchResult.length = 0;
+    this.isSearchBtnClicked = false;
+  }
+
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -49,25 +146,34 @@ export class MyRequestsComponent implements OnInit {
 
   ngOnInit() {
     this.isUserSignOut();
-    this.getUserRequestDetails();
+
+    var sessionData = JSON.parse(sessionStorage.getItem("my-requests-session"));
+
+    if (sessionData != null) {
+      this.dataSource = sessionData["data"];
+      this.isLoading = false;
+    } else {
+      this.getUserRequestDetails();
+    }
   }
-  displayedColumns: string[] = [
-    "case-number",
-    "request-type",
-    "property-name",
-    "status",
-    "created-date",
-  ];
 
   getUserRequestDetails() {
     var data = localStorage.getItem("currentUser");
     var user = JSON.parse(data);
     var userId = user[0]["id"];
 
-    this.apiService.getUserRequestDetails(userId).subscribe((data: any) => {
-      // console.log(JSON.stringify(data));
-      // console.log(data);
-      this.dataSource.data = data;
+    this.apiService.getUserRequestDetails(userId).subscribe((data: any[]) => {
+      this.dataSource = data;
+
+      setTimeout(() => {
+        this.isLoading = false;
+        sessionStorage.setItem(
+          "my-requests-session",
+          JSON.stringify({
+            data: data,
+          })
+        );
+      }, 3000);
     });
   }
 }

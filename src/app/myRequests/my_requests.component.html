@@ -1,88 +1,223 @@
 <div class="main-content reports-bg">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card card-requestDetails">
-          <div class="card-header card-requestDetails-head">
-            <div class="row">
-              <img
-                class="home-card-icon-main"
-                src="assets/img/svg/req-details/note-text.svg"
+    <div class="card">
+      <div
+        class="card-header"
+        style="
+          border-bottom: 1px solid #e1e1e1;
+          background-image: linear-gradient(
+              to bottom,
+              rgb(255 255 255 / 73%) 50%,
+              rgb(255 255 255 / 76%) 80%
+            ),
+            url('assets/img/bg/navbar_bg.webp');
+        "
+      >
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <p
+            style="
+              margin: 0;
+              font-size: 22px;
+              margin-top: 20px;
+              margin-left: 10px;
+              font-weight: 900;
+              margin-bottom: 15px;
+            "
+          >
+            Requests
+          </p>
+        </div>
+
+        <div
+          style="
+            width: 70%;
+            height: 60px;
+            border-radius: 10px;
+            position: absolute;
+            background-color: #2b333e;
+            left: 15%;
+            top: 55px;
+            padding: 10px;
+          "
+        >
+          <div class="row" style="margin: 0; justify-content: space-between">
+            <div
+              class="col"
+              style="padding-left: 0; width: 100%; padding-right: 0"
+            >
+              <input
+                [(ngModel)]="searchText"
+                type="text"
+                placeholder="Search"
                 style="
-                  filter: brightness(0) invert(1);
-                  margin-left: 15px;
-                  width: 22px;
-                  margin-top: -5px;
+                  border-radius: 7px;
+                  border: none;
+                  height: 40px;
+                  width: 100%;
+                  padding-left: 15px;
+                  padding-right: 15px;
                 "
               />
-              <h4
-                class="card-title mt-0 tableList-title"
-                style="padding-left: 20px"
+            </div>
+
+            <div class="col" style="width: 100%; padding-right: 0">
+              <mat-form-field appearance="fill">
+                <mat-select
+                  [(ngModel)]="selectedSearchType"
+                  placeholder="Search Type"
+                >
+                  <mat-option *ngFor="let s of searchType" [value]="s">
+                    {{ s }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col" style="width: 100%; padding-right: 0">
+              <div
+                class="btn"
+                (click)="searchRequest()"
+                style="
+                  width: 100%;
+                  background-color: #d4aa32;
+                  margin-top: 0;
+                  height: 40px;
+                  border-radius: 7px;
+                "
               >
-                Request Details
-              </h4>
+                <p>Search</p>
+              </div>
             </div>
           </div>
-          <table class="requestDetails-table-top-row">
-            <tr>
-              <td class="Entries-row">
-                <p>Select Entries Count</p>
-                <mat-form-field appearance="fill" class="entries-row-dropdown">
-                  <mat-select [(value)]="selectedEntry">
-                    <mat-option value="10">10</mat-option>
-                    <mat-option value="15">15</mat-option>
-                    <mat-option value="20">20</mat-option>
-                    <mat-option value="30">30</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-              <td class="Search-row">
-                <p class="serach-row-title">Search</p>
-                <mat-form-field
-                  appearance="none"
-                  [style.fontSize]="20"
-                  appearance="fill"
-                  class="search-row-textfield"
-                >
-                  <textarea
-                    matInput
-                    cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"
-                  ></textarea>
-                </mat-form-field>
-              </td>
-            </tr>
-          </table>
+        </div>
+      </div>
 
-          <div class="request-details-main-table">
+      <div class="card-body" style="padding: 50px">
+        <div *ngIf="isSearchBtnClicked == true">
+          <div
+            style="
+              background-color: #d4aa32;
+              height: 30px;
+              width: 155px;
+              border-radius: 6px;
+              color: white;
+              margin-top: 20px;
+            "
+          >
+            <div class="row" style="margin: 0">
+              <p style="margin-bottom: 0; margin-left: 10px; padding-top: 2px">
+                Search Results
+              </p>
+              <img
+                (click)="closeResults()"
+                src="assets/img/svg/req-details/close-circle.svg"
+                alt=""
+                class="close-results"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="width: 100%; display: flex; justify-content: center"
+          *ngIf="isSearchTypeNotSelected == true"
+        >
+          <p style="margin-bottom: 0; color: #ff0000cc">
+            Please select a Search type.
+          </p>
+        </div>
+        <div
+          style="width: 100%; display: flex; justify-content: center"
+          *ngIf="isSearchTextEmpty == true"
+        >
+          <p style="margin-bottom: 0; color: #ff0000cc">
+            Please enter something to search.
+          </p>
+        </div>
+
+        <div
+          *ngIf="isLoading == true"
+          style="
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <span
+            class="spinner-border spinner-border-m mr-2"
+            style="color: #d4aa32; margin-top: 50px"
+          >
+          </span>
+        </div>
+
+        <div *ngIf="isLoading == false">
+          <div *ngIf="isSearchBtnClicked == true">
+            <div
+              *ngIf="searchResult.length == 0"
+              style="
+                width: 100%;
+                height: 340px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+                No Results Found
+              </p>
+            </div>
+
             <table
+              *ngIf="searchResult.length != 0"
               mat-table
-              [dataSource]="dataSource"
+              [dataSource]="searchResult"
               class="mat-elevation-z8 demo-table"
             >
               <!-- Position Column -->
-              <ng-container matColumnDef="case-number">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="request-details-table-header"
-                >
-                  Case Number
+              <!-- <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Name
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="row" style="margin: 10px">
+                <div
+                  style="
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background-color: black;
+                  "
+                ></div>
+                <div class="col">
+                  <p style="margin-bottom: 0; font-weight: 600">
+                    {{ element.name }}
+                  </p>
+                  <p style="margin-bottom: 0; color: #a3a3a3; font-weight: 600">
+                    {{ element.request_no }}
+                  </p>
+                </div>
+              </div>
+            </td>
+          </ng-container> -->
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="requestNo">
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                  Request No.
                 </th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.case_number }}
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="font-weight: 600; color: #a3a3a3"
+                >
+                  {{ element.request_no }}
                 </td>
               </ng-container>
 
-              <!-- Name Column -->
-              <ng-container matColumnDef="request-type">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="request-details-table-header"
-                >
+              <ng-container matColumnDef="requestType">
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
                   Request Type
                 </th>
                 <td mat-cell *matCellDef="let element">
@@ -91,12 +226,8 @@
               </ng-container>
 
               <!-- Weight Column -->
-              <ng-container matColumnDef="property-name">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="request-details-table-header"
-                >
+              <ng-container matColumnDef="propertyName">
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
                   Property Name
                 </th>
                 <td mat-cell *matCellDef="let element">
@@ -106,23 +237,22 @@
 
               <!-- Symbol Column -->
               <ng-container matColumnDef="status">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="request-details-table-header"
-                >
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
                   Status
                 </th>
-                <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-              </ng-container>
-              <!-- Symbol Column -->
-              <ng-container matColumnDef="created-date">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  class="request-details-table-header"
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="requestStatusFont(element.status)"
                 >
-                  Created date
+                  {{ element.status }}
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="createdDate">
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                  Created Date
                 </th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.created_date }}
@@ -134,15 +264,99 @@
             </table>
           </div>
 
-          <div class="table-paginator">
-            <mat-paginator
-              [length]="60"
-              [pageSize]="10"
-              [pageSizeOptions]="[10, 20, 30]"
-              aria-label="Select page"
-            >
-            </mat-paginator>
-          </div>
+          <table
+            *ngIf="isSearchBtnClicked == false"
+            mat-table
+            [dataSource]="dataSource"
+            class="mat-elevation-z8 demo-table"
+          >
+            <!-- Position Column -->
+            <!-- <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Name
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="row" style="margin: 10px">
+                <div
+                  style="
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background-color: black;
+                  "
+                ></div>
+                <div class="col">
+                  <p style="margin-bottom: 0; font-weight: 600">
+                    {{ element.name }}
+                  </p>
+                  <p style="margin-bottom: 0; color: #a3a3a3; font-weight: 600">
+                    {{ element.request_no }}
+                  </p>
+                </div>
+              </div>
+            </td>
+          </ng-container> -->
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="requestNo">
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Request No.
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                style="font-weight: 600; color: #a3a3a3"
+              >
+                {{ element.request_no }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="requestType">
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Request Type
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.request_type }}
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="propertyName">
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Property Name
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.property_name }}
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Status
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                [ngClass]="requestStatusFont(element.status)"
+              >
+                {{ element.status }}
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="createdDate">
+              <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                Created Date
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.created_date }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
         </div>
       </div>
     </div>
