@@ -1,29 +1,29 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid,
-} from "ng-apexcharts";
+// import {
+//   ChartComponent,
+//   ApexAxisChartSeries,
+//   ApexChart,
+//   ApexXAxis,
+//   ApexDataLabels,
+//   ApexTitleSubtitle,
+//   ApexStroke,
+//   ApexGrid,
+// } from "ng-apexcharts";
 
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-};
+// export type ChartOptions = {
+//   series: ApexAxisChartSeries;
+//   chart: ApexChart;
+//   xaxis: ApexXAxis;
+//   dataLabels: ApexDataLabels;
+//   grid: ApexGrid;
+//   stroke: ApexStroke;
+//   title: ApexTitleSubtitle;
+// };
 
 @Component({
   selector: "property-page",
@@ -38,8 +38,8 @@ export class PropertyPage implements OnInit {
   propertyImage: any = "";
   imagesUrl: any = "";
 
-  public chartOptions: Partial<ChartOptions>;
-  @ViewChild("chart") chart: ChartComponent;
+  // public chartOptions: Partial<ChartOptions>;
+  // @ViewChild("chart") chart: ChartComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,58 +60,58 @@ export class PropertyPage implements OnInit {
       router.navigate([`/404`]);
     }
 
-    this.chartOptions = {
-      series: [
-        {
-          color: "#d3ab33",
-          name: "Price",
-          data: [
-            2000000, 2170000, 2174500, 2175000, 2179999, 2189500, 2189500,
-            2189900, 2199000, 2205000, 2300000,
-          ],
-        },
-      ],
-      chart: {
-        fontFamily: "Montserrat",
-        height: 350,
-        type: "line",
-        zoom: {
-          enabled: false,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        colors: ["#d3ab33"],
-        curve: "straight",
-      },
-      title: {
-        text: "Price Trends",
-        align: "left",
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Nov",
-          "Dec",
-        ],
-      },
-    };
+    // this.chartOptions = {
+    //   series: [
+    //     {
+    //       color: "#d3ab33",
+    //       name: "Price",
+    //       data: [
+    //         2000000, 2170000, 2174500, 2175000, 2179999, 2189500, 2189500,
+    //         2189900, 2199000, 2205000, 2300000,
+    //       ],
+    //     },
+    //   ],
+    //   chart: {
+    //     fontFamily: "Montserrat",
+    //     height: 350,
+    //     type: "line",
+    //     zoom: {
+    //       enabled: false,
+    //     },
+    //   },
+    //   dataLabels: {
+    //     enabled: false,
+    //   },
+    //   stroke: {
+    //     colors: ["#d3ab33"],
+    //     curve: "straight",
+    //   },
+    //   title: {
+    //     text: "Price Trends",
+    //     align: "left",
+    //   },
+    //   grid: {
+    //     row: {
+    //       colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+    //       opacity: 0.5,
+    //     },
+    //   },
+    //   xaxis: {
+    //     categories: [
+    //       "Jan",
+    //       "Feb",
+    //       "Mar",
+    //       "Apr",
+    //       "May",
+    //       "Jun",
+    //       "Jul",
+    //       "Aug",
+    //       "Sep",
+    //       "Nov",
+    //       "Dec",
+    //     ],
+    //   },
+    // };
   }
 
   initFunction(e) {
@@ -120,7 +120,6 @@ export class PropertyPage implements OnInit {
         var propertiesDataSession = JSON.parse(
           sessionStorage.getItem("properties")
         );
-
         this.propertyData = propertiesDataSession.find(
           (x) => x.property_id == e["propertyId"]
         );

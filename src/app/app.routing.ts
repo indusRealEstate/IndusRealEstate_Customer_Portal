@@ -8,7 +8,7 @@ import {
 import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";
 
-import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
+import { AdminLayoutComponent } from "./layouts/admin-layout.component";
 import { EmailVerification } from "./email_verficitaion/email_verficitaion";
 
 var userData = localStorage.getItem("currentUser");
@@ -32,7 +32,7 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: () =>
-          import("./layouts/admin-layout/admin-layout.module").then(
+          import("./layouts/admin-layout.module").then(
             (m) => m.AdminLayoutModule
           ),
       },

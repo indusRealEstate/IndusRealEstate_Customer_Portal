@@ -75,6 +75,7 @@ export class MyPropertiesComponent implements OnInit {
   async initFunction() {
     var propertiesdata = sessionStorage.getItem("properties");
     if (propertiesdata != null) {
+      
       var decodedData = JSON.parse(propertiesdata);
       this.properties = decodedData;
 

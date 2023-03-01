@@ -1,8 +1,8 @@
 import { Routes } from "@angular/router";
 
-import { HomeComponent } from "../../home/home.component";
-import { UserProfileComponent } from "../../user-profile/user-profile.component";
-import { ReportsComponent } from "../../reports/reports.component";
+import { HomeComponent } from "../home/home.component";
+import { UserProfileComponent } from "../user-profile/user-profile.component";
+import { ReportsComponent } from "../reports/reports.component";
 import { MyRequestsComponent } from "app/myRequests/my_requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { AppointmentsComponent } from "app/appointments/appointments.component";

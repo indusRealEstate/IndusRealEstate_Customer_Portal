@@ -7,9 +7,9 @@ import {
 } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
-import { HomeComponent } from "../../home/home.component";
-import { UserProfileComponent } from "../../user-profile/user-profile.component";
-import { ReportsComponent } from "../../reports/reports.component";
+import { HomeComponent } from "../home/home.component";
+import { UserProfileComponent } from "../user-profile/user-profile.component";
+import { ReportsComponent } from "../reports/reports.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
@@ -38,9 +38,9 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 // import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-// import { MatMenuModule } from "@angular/material/menu";
+import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginatorModule } from "@angular/material/paginator";
-// import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatRadioModule } from "@angular/material/radio";
 // import { MatSidenavModule } from "@angular/material/sidenav";
@@ -50,8 +50,8 @@ import { MatRadioModule } from "@angular/material/radio";
 // import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatTreeModule } from "@angular/material/tree";
+// import { MatToolbarModule } from "@angular/material/toolbar";
+// import { MatTreeModule } from "@angular/material/tree";
 import { MyRequestsComponent } from "app/myRequests/my_requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { AppointmentsComponent } from "app/appointments/appointments.component";
@@ -108,7 +108,7 @@ import { NgxCheckboxModule } from "ngx-checkbox";
 import { AdminRequests } from "app/admin-requests/admin-requests";
 import { PropertyPage } from "app/property-page/property-page.component";
 // import { GoogleMapsModule } from "@angular/google-maps";
-import { NgApexchartsModule } from "ng-apexcharts";
+// import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AcceptRequestConfirmDialog } from "app/admin-requests/accept_req_dialog/acspt_req_dialog";
 import { HttpClientModule } from "@angular/common/http";
@@ -163,9 +163,9 @@ import { CountryDropdown } from "app/components/country-dropdown/country-dropdow
     // MatGridListModule,
     MatIconModule,
     MatListModule,
-    // MatMenuModule,
+    MatMenuModule,
     MatPaginatorModule,
-    // MatProgressBarModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
     // MatSidenavModule,
@@ -182,7 +182,7 @@ import { CountryDropdown } from "app/components/country-dropdown/country-dropdow
     NgxSkeletonLoaderModule,
     NgxCheckboxModule,
     // GoogleMapsModule,
-    NgApexchartsModule,
+    // NgApexchartsModule,
     // NgbModalModule,
     // FlatpickrModule.forRoot(),
     // BrowserModule,
