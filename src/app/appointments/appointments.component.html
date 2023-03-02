@@ -28,13 +28,11 @@
             *ngIf="currentMonthEvents.length == 0"
           >
             <p *ngIf="isLoading == false">No Appointments for this month</p>
-            <div
-              class="spinner-loader"
-              style="width: 800px; margin: 0 auto"
-              *ngIf="isLoading == true"
+            <span
+              class="spinner-border spinner-border-m mr-2"
+              style="color: #d4aa32"
             >
-              <mat-spinner [diameter]="40"></mat-spinner>
-            </div>
+            </span>
           </div>
 
           <div

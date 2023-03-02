@@ -183,4 +183,10 @@ export class MyRequestsComponent implements OnInit {
     //   }
     // }, 3500);
   }
+
+  navigateToRequestPage(req_no) {
+    this.router.navigate(["/request-page"], {
+      queryParams: { "req-no": req_no },
+    });
+  }
 }

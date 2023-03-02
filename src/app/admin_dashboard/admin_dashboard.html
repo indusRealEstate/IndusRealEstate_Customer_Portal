@@ -1,11 +1,18 @@
 <div class="main-content home-bg">
   <div class="container-fluid" style="margin-top: 25px">
-    <span
+    <div
       *ngIf="isLoading == true"
-      class="spinner-border spinner-border-m mr-2"
-      style="color: #d4aa32; margin-top: 365px; margin-left: 750px"
+      style="
+        display: flex;
+        width: 100%;
+        height: 800px;
+        justify-content: center;
+        align-items: center;
+      "
     >
-    </span>
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
     <div class="row" style="margin: 0" *ngIf="isLoading == false">
       <div class="col-lg-7">
         <div
@@ -48,7 +55,9 @@
                 Out of {{totalRequests}} requests
                 {{totalRequests-approvedRequests}} are remaining unapproved.
               </p>
-              <a class="view-request-link" (click)="moreRequestClicked()">View Requests</a>
+              <a class="view-request-link" (click)="moreRequestClicked()"
+                >View Requests</a
+              >
             </div>
             <div style="position: absolute; right: 80px">
               <img
@@ -592,7 +601,10 @@
                 margin-bottom: 20px;
               "
             >
-              <div class="row more-btn-request-Overview" (click)="moreRequestClicked()">
+              <div
+                class="row more-btn-request-Overview"
+                (click)="moreRequestClicked()"
+              >
                 <p>More</p>
                 <img
                   src="assets/img/svg/admin-dashboard/arrow-right-1.svg"

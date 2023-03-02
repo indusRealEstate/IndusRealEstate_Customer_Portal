@@ -71,11 +71,11 @@ export class AuthenticationService {
     sessionStorage.clear();
 
     setTimeout(() => {
-      this.router.navigate(["/login"]);
       this.currentUserSubject.next(null);
 
       setTimeout(() => {
         this.otherServices.isLogoutProcessing.next(false);
+        this.router.navigate(["/login"]);
       }, 1000);
     }, 500);
   }

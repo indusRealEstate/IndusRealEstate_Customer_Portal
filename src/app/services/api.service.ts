@@ -101,6 +101,15 @@ export class ApiService {
     );
   }
 
+  getRequestLandlord(request_no: any) {
+    const url = `${API_URL}/getRequest_landlord.php?apikey=1`;
+    return this.http.post<any>(url, { request_no: request_no }).pipe(
+      map((data) => {
+        return data[0];
+      })
+    );
+  }
+
   getUserDetails(userId: any) {
     const url = `${API_URL}/getUserDetails.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(

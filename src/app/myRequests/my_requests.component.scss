@@ -9,6 +9,24 @@
   margin-top: 20px;
   box-shadow: none;
 
+  .mat-row {
+    height: 70px;
+    &:hover {
+      background-color: #2b333e;
+      .req-type {
+        color: white;
+      }
+
+      .property-name {
+        color: white;
+      }
+
+      .created-date {
+        color: white;
+      }
+    }
+  }
+
   .table-header-font {
     font-size: 15px;
     color: black;

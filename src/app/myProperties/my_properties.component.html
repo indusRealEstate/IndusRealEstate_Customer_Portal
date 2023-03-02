@@ -3,11 +3,19 @@
     <p *ngIf="isLoading == false" class="no-properties-text">
       You have'nt listed any property.
     </p>
+
     <div
-      class="spinner-loader d-flex justify-content-center"
       *ngIf="isLoading == true"
+      style="
+        display: flex;
+        width: 100%;
+        height: 800px;
+        justify-content: center;
+        align-items: center;
+      "
     >
-      <mat-spinner [diameter]="40"></mat-spinner>
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
     </div>
   </div>
   <div class="card-deck" style="margin: 20px" *ngIf="properties.length != 0">

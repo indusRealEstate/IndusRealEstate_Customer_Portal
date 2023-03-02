@@ -168,13 +168,15 @@ export class NavbarComponent implements OnInit {
       case "/tenant-registration":
         return "Tenant Registration";
       case "/property-page":
-        return "Your Property";
+        return "Property details Page";
       case "/add-property-form":
         return "Add Property";
       case "/admin-dashboard":
         return "Admin Dashboard";
       case "/admin-requests":
         return "Requests";
+      case "/request-page":
+        return "Request Details Page";
       case "/404":
         return "";
       default:

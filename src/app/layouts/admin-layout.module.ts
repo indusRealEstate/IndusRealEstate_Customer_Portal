@@ -41,7 +41,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+// import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatRadioModule } from "@angular/material/radio";
 // import { MatSidenavModule } from "@angular/material/sidenav";
 // import { MatSliderModule } from "@angular/material/slider";
@@ -124,6 +124,8 @@ import { StepperTenantRegisterFirst } from "app/tenant_register_form/components/
 import { StepperTenantRegisterSecond } from "app/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
 import { StepperTenantRegisterThird } from "app/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
 import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
+import { RequestPage } from "app/request-page/request-page";
+import { BackButtonDirective } from "app/request-page/back-navigation.directive";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -166,7 +168,7 @@ import { CountryDropdown } from "app/components/country-dropdown/country-dropdow
     MatMenuModule,
     MatPaginatorModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule,
+    // MatProgressSpinnerModule,
     MatRadioModule,
     // MatSidenavModule,
     // MatSliderModule,
@@ -278,6 +280,8 @@ import { CountryDropdown } from "app/components/country-dropdown/country-dropdow
     StepperTenantRegisterThird,
 
     CountryDropdown,
+    RequestPage,
+    BackButtonDirective,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
