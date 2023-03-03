@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import PerfectScrollbar from "perfect-scrollbar";
@@ -10,6 +10,7 @@ import { OtherServices } from "app/services/other.service";
 @Component({
   selector: "app-admin-layout",
   templateUrl: "./admin-layout.component.html",
+  styleUrls: ["./admin-layout.component.scss"],
 })
 export class AdminLayoutComponent implements OnInit {
   // private _router: Subscription;
@@ -19,6 +20,8 @@ export class AdminLayoutComponent implements OnInit {
   isLogoutProcessing: boolean = false;
   successNotificationMessage: any;
   errorNotificationMessage: any;
+  screenHeight: number;
+  screenWidth: number;
 
   constructor(
     public location: Location,
@@ -51,6 +54,22 @@ export class AdminLayoutComponent implements OnInit {
       left: 0,
       behavior: "smooth",
     });
+  }
+
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+  }
+
+  decideScreenRatio() {
+    this.getScreenSize();
+
+    if (this.screenWidth <= 425) {
+      return "mobile-class";
+    } else {
+      return "pc-class";
+    }
   }
 
   ngOnInit() {

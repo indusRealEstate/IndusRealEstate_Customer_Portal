@@ -45,7 +45,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatRadioModule } from "@angular/material/radio";
 // import { MatSidenavModule } from "@angular/material/sidenav";
 // import { MatSliderModule } from "@angular/material/slider";
-// import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 // import { MatSnackBarModule } from "@angular/material/snack-bar";
 // import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
@@ -172,7 +172,7 @@ import { BackButtonDirective } from "app/request-page/back-navigation.directive"
     MatRadioModule,
     // MatSidenavModule,
     // MatSliderModule,
-    // MatSlideToggleModule,
+    MatSlideToggleModule,
     // MatSnackBarModule,
     // MatSortModule,
     MatTableModule,

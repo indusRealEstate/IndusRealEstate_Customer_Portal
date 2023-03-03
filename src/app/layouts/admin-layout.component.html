@@ -1,14 +1,5 @@
 <div class="wrapper" *ngIf="isUserSignedOut == true">
-  <div
-    class="main-panel"
-    style="
-      width: 100%;
-      height: 100%;
-      justify-content: center;
-      display: flex;
-      align-items: center;
-    "
-  >
+  <div class="main-panel" [ngClass]="decideScreenRatio()">
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
 </div>

@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-local": "ng serve --host 0.0.0.0",
     "build": "ng build && tar -zcvf archive.tar.gz dist/*",
     "build-stats": "ng build --stats-json",
     "build-stats-json-run": "webpack-bundle-analyzer dist/stats.json",

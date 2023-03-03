@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
@@ -18,6 +18,14 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   invaliduser: boolean = false;
 
+  screenHeight: number;
+  screenWidth: number;
+
+  isPasswordHidden: boolean = true;
+
+  color = "accent";
+  checked: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -26,6 +34,7 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService,
     private otherServices: OtherServices
   ) {
+    this.getScreenSize();
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       var userData = localStorage.getItem("currentUser");
@@ -35,6 +44,29 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+
+  changed() {
+    if (this.checked == true) {
+      this.checked = false;
+    } else {
+      this.checked = true;
+    }
+  }
+
+  hidePassword() {
+    if (this.isPasswordHidden == true) {
+      this.isPasswordHidden = false;
+    } else {
+      this.isPasswordHidden = true;
+    }
+  }
+
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+  }
+
   ngOnInit() {
     this.invaliduser = false;
     this.loginForm = this.formBuilder.group({
