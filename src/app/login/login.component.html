@@ -110,14 +110,72 @@
   *ngIf="screenWidth <= 425"
   [ngStyle]="{ width: screenWidth + 'px', height: screenHeight + 'px' }"
 >
-  <div class="col" style="width: 100%; height: 100%; background-color: #d4aa32">
+  <div
+    class="col"
+    style="
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(
+          to bottom,
+          rgb(255 255 255 / 73%) 50%,
+          rgb(255 255 255 / 76%) 80%
+        ),
+        url('assets/img/bg/navbar_bg.webp');
+    "
+  >
+    <p
+      style="
+        margin-bottom: 0;
+        font-size: 40px;
+        font-weight: 900;
+        text-align: center;
+        padding-top: 10%;
+        color: #d4aa32;
+      "
+    >
+      INDUS
+    </p>
+    <p
+      style="
+        margin-bottom: 0;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        padding-top: 13px;
+        color: #d4aa32;
+      "
+    >
+      REAL ESTATE LLC
+    </p>
+    <img
+      src="assets/img/pngs/login-png-02.png"
+      alt=""
+      style="width: 40%; position: absolute; left: 30%; top: 13%"
+    />
+    <img
+      src="assets/img/pngs/login-png-01.png"
+      alt=""
+      style="
+        width: 37%;
+        position: absolute;
+        left: -68px;
+        top: 2%;
+        z-index: 1;
+        transform: rotate(190deg);
+      "
+    />
+    <img
+      src="assets/img/pngs/login-png-01.png"
+      alt=""
+      style="width: 30%; position: absolute; right: -63px; top: 27%; z-index: 1"
+    />
     <div
       style="
         height: 65%;
         width: 100%;
         display: flex;
         justify-content: center;
-        background-color: #ebebeb;
+        background-color: #d4aa32;
         position: absolute;
         bottom: 0;
         border-top-right-radius: 20px;
@@ -126,7 +184,7 @@
     >
       <p
         style="
-          color: #686868;
+          color: white;
           margin-top: 20px;
           font-size: 20px;
           font-weight: 600;
@@ -158,7 +216,7 @@
             formControlName="username"
           />
           <input
-            type="text"
+            [type]="isPasswordHidden ? 'password' : 'text'"
             placeholder="Password"
             class="login-input-mobile"
             formControlName="password"
@@ -172,17 +230,26 @@
               width: 17px;
               position: absolute;
               right: 15px;
-              bottom: 270px;
+              margin-top: 15px;
               filter: brightness(0) saturate(100%) invert(98%) sepia(1%)
                 saturate(16%) hue-rotate(314deg) brightness(87%) contrast(100%);
               cursor: pointer;
             "
           />
           <img
+            (click)="hidePassword()"
             src="assets/img/svg/login/eye-slash.svg"
             alt=""
             *ngIf="isPasswordHidden == false"
-            style="width: 15px"
+            style="
+              width: 17px;
+              position: absolute;
+              right: 15px;
+              margin-top: 15px;
+              filter: brightness(0) saturate(100%) invert(98%) sepia(1%)
+                saturate(16%) hue-rotate(314deg) brightness(87%) contrast(100%);
+              cursor: pointer;
+            "
           />
         </form>
         <div class="row" style="margin: 0; justify-content: space-between">
@@ -192,6 +259,7 @@
           <p class="forgot-password-mobile">Forgot Password?</p>
         </div>
         <div
+          (click)="onSubmit()"
           class="btn"
           style="
             margin-top: 60px;
@@ -203,6 +271,10 @@
             background-color: #d4aa32;
           "
         >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
           login
         </div>
         <div
@@ -210,7 +282,9 @@
           style="margin: 0; justify-content: center; margin-top: 45px"
         >
           <span style="font-size: 12px">Don't have an account?</span>
-          <span class="register-link-mobile">Register here</span>
+          <span class="register-link-mobile" routerLink="/register"
+            >Register here</span
+          >
         </div>
       </div>
     </div>

@@ -264,6 +264,7 @@ body {
   box-shadow: none !important;
   padding-left: 15px;
   padding-right: 15px;
+  font-size: 14px;
 
   &:focus {
     border: 1.5px solid #d4aa32;
@@ -288,6 +289,22 @@ body {
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+::ng-deep
+  .mat-slide-toggle.mat-checked:not(.mat-disabled)
+  .mat-slide-toggle-bar {
+  background-color: #efd897;
+}
+
+::ng-deep
+  .mat-slide-toggle.mat-checked:not(.mat-disabled)
+  .mat-slide-toggle-thumb {
+  background-color: #d4aa32;
+}
+
+::ng-deep .mat-ripple-element {
+  background-color: #d4aa32 !important;
 }
 
 // /**/
