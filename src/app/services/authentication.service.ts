@@ -65,7 +65,7 @@ export class AuthenticationService {
   }
 
   async getIPAddress() {
-    return this.http.get("http://api.ipify.org/?format=json").pipe(
+    return this.http.get("https://api.ipify.org/?format=json").pipe(
       map((res) => {
         return res;
       })
