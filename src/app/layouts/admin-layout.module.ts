@@ -126,6 +126,8 @@ import { StepperTenantRegisterThird } from "app/tenant_register_form/components/
 import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 import { RequestPage } from "app/request-page/request-page";
 import { BackButtonDirective } from "app/request-page/back-navigation.directive";
+import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_clients";
+import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_clients";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -278,6 +280,9 @@ import { BackButtonDirective } from "app/request-page/back-navigation.directive"
     StepperTenantRegisterFirst,
     StepperTenantRegisterSecond,
     StepperTenantRegisterThird,
+
+    AdminLandlordClients,
+    AdminTenantClients,
 
     CountryDropdown,
     RequestPage,

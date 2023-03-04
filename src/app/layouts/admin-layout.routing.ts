@@ -23,6 +23,8 @@ import { RegisterComponent } from "app/register/register.component";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
 import { TenantFormComponent } from "app/tenant_register_form/tenant_form.component";
 import { RequestPage } from "app/request-page/request-page";
+import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_clients";
+import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_clients";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -50,4 +52,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },
   { path: "tenant-register-form", component: TenantFormComponent },
+  { path: "admin-tenant-clients", component: AdminTenantClients },
+  { path: "admin-landlord-clients", component: AdminLandlordClients },
 ];

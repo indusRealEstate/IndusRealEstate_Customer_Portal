@@ -280,6 +280,20 @@ export class EmailVerification implements OnInit {
     }
   }
 
+  getCurrentDate() {
+    var date = new Date();
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return currentDate;
+  }
+
   setOutTenantdata() {
     var user_data = {
       unique_id: this.currentNewUserAllDetails.request_details_id,
@@ -291,6 +305,8 @@ export class EmailVerification implements OnInit {
       token: "012345",
     };
 
+    var currentDate = this.getCurrentDate();
+
     var user_details = {
       unique_id: this.currentNewUserAllDetails.request_details_id,
       email: this.currentNewUserAllDetails.email,
@@ -300,6 +316,7 @@ export class EmailVerification implements OnInit {
       phone_number: this.currentNewUserAllDetails.mobile_no,
       address: this.currentNewUserAllDetails.address,
       profile_photo: "",
+      joined_date: currentDate,
     };
 
     return JSON.stringify({
@@ -319,6 +336,7 @@ export class EmailVerification implements OnInit {
       lastname: this.currentNewUserAllDetails.lastname,
       token: "012345",
     };
+    var currentDate = this.getCurrentDate();
 
     var user_details = {
       unique_id: this.currentNewUserAllDetails.request_details_id,
@@ -329,6 +347,7 @@ export class EmailVerification implements OnInit {
       phone_number: this.currentNewUserAllDetails.mobile_no,
       address: this.currentNewUserAllDetails.address,
       profile_photo: "",
+      joined_date: currentDate,
     };
 
     var property_data = {

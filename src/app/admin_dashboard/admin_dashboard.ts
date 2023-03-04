@@ -477,4 +477,13 @@ export class AdminDashboardComponent implements OnInit {
     var userId = user[0]["id"];
     this.router.navigate(["/admin-requests"], { queryParams: { uid: userId } });
   }
+
+  navigateToTotalLandlordCleints() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+    this.router.navigate(["/admin-landlord-clients"], {
+      queryParams: { uid: userId },
+    });
+  }
 }

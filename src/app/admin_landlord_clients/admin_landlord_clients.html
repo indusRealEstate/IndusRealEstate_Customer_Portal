@@ -1,0 +1,130 @@
+<div class="main-content home-bg">
+  <div class="container-fluid" style="margin-top: 25px">
+    <div
+      *ngIf="isLoading == true"
+      style="
+        display: flex;
+        width: 100%;
+        height: 800px;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+
+    <div
+      class="col"
+      style="width: 100%; height: 100%; padding: 0 100px"
+      *ngIf="isLoading == false"
+    >
+      <div class="row back-btn-row" navigateBack>
+        <img src="assets/img/svg/request-page/arrow-left.svg" alt="" />
+        <p style="margin-bottom: 0">Back</p>
+      </div>
+      <p
+        style="
+          font-size: 25px;
+          margin-top: 10px;
+          font-weight: 600;
+          margin-bottom: 10px;
+        "
+      >
+        Clients
+      </p>
+      <div
+        class="row"
+        style="margin: 0; width: 13%; justify-content: space-between"
+      >
+        <p style="color: #d4aa32; font-weight: 500">Dasboard</p>
+        <p>></p>
+        <p>Landlord</p>
+      </div>
+
+      <div class="card" style="width: 100%; background-color: #ffffff">
+        <div *ngFor="let client of allLandlordClients; let last = last;">
+          <div class="row" style="margin: 0; padding: 25px">
+            <img
+              *ngIf="client.user_details.profile_photo != ''"
+              src="data:image/jpg;base64,{{client.user_details.profile_photo}}"
+              alt=""
+              style="
+                max-width: 100px;
+                min-width: 100px;
+                max-height: 100px;
+                min-height: 100px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+            <img
+              *ngIf="client.user_details.profile_photo == ''"
+              src="assets/img/faces/avatar.webp"
+              alt=""
+              style="
+                max-width: 100px;
+                min-width: 100px;
+                max-height: 100px;
+                min-height: 100px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+            <div class="col">
+              <p style="margin-bottom: 0; color: #d4aa32; font-weight: 500">
+                #123423
+              </p>
+              <p
+                style="
+                  margin-bottom: 4px;
+                  font-size: 20px;
+                  margin-top: 3px;
+                  font-weight: 600;
+                "
+              >
+                {{client.firstname}}
+              </p>
+              <p style="color: #a3a3a3">
+                Joined on {{client.user_details.joined_date}}
+              </p>
+            </div>
+
+            <div class="col">
+              <p style="margin-bottom: 8px; color: #707070">Location</p>
+              <p style="font-size: 15px; font-weight: 600">
+                {{client.user_details.address}}
+              </p>
+            </div>
+
+            <div class="col">
+              <p style="margin-bottom: 8px; color: #707070">Phone Number</p>
+              <p style="font-size: 15px; font-weight: 600">
+                {{client.user_details.phone_number}}
+              </p>
+            </div>
+
+            <div class="col">
+              <p style="margin-bottom: 8px; color: #707070">Email Address</p>
+              <p style="font-size: 15px; font-weight: 600">
+                {{client.user_details.email}}
+              </p>
+            </div>
+
+            <div class="col">
+              <div
+                class="btn"
+                style="padding: 12px 25px; background-color: #d4aa32"
+              >
+                Show Requests
+              </div>
+            </div>
+          </div>
+          <hr *ngIf="!last" style="margin: 0" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -52,6 +52,16 @@ export class AdminService {
       })
     );
   }
+
+  getAllClientsDetails(userId: any) {
+    const url = `${API_URL}/getAllClientsDetails.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllAddPropertyRequests(userId: any) {
     const url = `${API_URL}/getAllAddPropertyRequests.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
