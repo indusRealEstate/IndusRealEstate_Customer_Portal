@@ -64,6 +64,25 @@ export class AuthenticationService {
       );
   }
 
+  async getIPAddress() {
+    return this.http.get("http://api.ipify.org/?format=json").pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
+  public storeClientIP(data: any) {
+    const url = `${API_URL}/storeClientIP.php?apikey=1`;
+    try {
+      return this.http
+        .post(url, data)
+        .pipe(catchError(this.handleError("storeClientIP", [])));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem("currentUser");

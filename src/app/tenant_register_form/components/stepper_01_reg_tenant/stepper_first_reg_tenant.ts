@@ -49,7 +49,7 @@ export class StepperTenantRegisterFirst {
   onPassportExpiryDateChange(event): void {
     var date = new Date(event["value"]);
 
-    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]) + 1;
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
     var currentDate =
       date.toISOString().split("T")[0].split("-")[0] +
       "-" +

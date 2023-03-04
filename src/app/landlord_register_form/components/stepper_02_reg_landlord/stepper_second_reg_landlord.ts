@@ -39,7 +39,7 @@ export class StepperLandlordRegisterSecond {
   onOfferValidityDate(event): void {
     var date = new Date(event["value"]);
 
-    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]) + 1;
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
     var currentDate =
       date.toISOString().split("T")[0].split("-")[0] +
       "-" +
@@ -53,7 +53,7 @@ export class StepperLandlordRegisterSecond {
   onValidUntilDate(event): void {
     var date = new Date(event["value"]);
 
-    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]) + 1;
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
     var currentDate =
       date.toISOString().split("T")[0].split("-")[0] +
       "-" +
@@ -71,8 +71,8 @@ export class StepperLandlordRegisterSecond {
 
     reader.onloadend = (e) => {
       this.secondPartySignature = e.target.result;
-      var signPart1 = e.target.result.toString().split(';base64,')[0];
-      this.secondPartySignatureExt = signPart1.split('/')[1];
+      var signPart1 = e.target.result.toString().split(";base64,")[0];
+      this.secondPartySignatureExt = signPart1.split("/")[1];
     };
   }
 

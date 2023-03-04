@@ -83,6 +83,20 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
+  getCurrentDate() {
+    var date = new Date();
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return currentDate;
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -104,7 +118,26 @@ export class LoginComponent implements OnInit {
             var userData = localStorage.getItem("currentUser");
             var user = JSON.parse(userData);
 
-            setTimeout(() => {
+            setTimeout(async () => {
+              await this.authenticationService.getIPAddress().then((res) => {
+                var date = this.getCurrentDate();
+
+                setTimeout(() => {
+                  res.subscribe((ip) => {
+                    var ip_data = {
+                      date: date,
+                      ip: ip["ip"],
+                    };
+
+                    this.authenticationService
+                      .storeClientIP(JSON.stringify(ip_data))
+                      .subscribe((e) => {
+                        console.log(e);
+                      });
+                  });
+                }, 1000);
+              });
+
               if (user[0]["auth_type"] != "admin") {
                 // window.location.replace(`/home?uid=${user[0]["id"]}`);
                 this.router.navigate(["/home"], {
