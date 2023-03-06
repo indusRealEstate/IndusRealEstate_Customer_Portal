@@ -39,10 +39,135 @@
       >
         <p style="color: #d4aa32; font-weight: 500">Dasboard</p>
         <p>></p>
-        <p>Landlord</p>
+        <p>Landlords</p>
       </div>
 
-      <div class="card" style="width: 100%; background-color: #ffffff">
+      <div class="card" *ngIf="isContentLoading == true">
+        <div class="row" style="margin: 0; padding: 25px">
+          <div
+            style="
+              max-width: 100px;
+              max-height: 100px;
+              border-radius: 9px;
+              user-select: none;
+              pointer-events: none;
+            "
+          >
+            <ngx-skeleton-loader [theme]="{ width: '100px', height: '100px' }">
+            </ngx-skeleton-loader>
+          </div>
+
+          <div class="col">
+            <div
+              style="
+                max-width: 120px;
+                max-height: 20px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+              "
+            >
+              <ngx-skeleton-loader [theme]="{ width: '120px', height: '20px' }">
+              </ngx-skeleton-loader>
+            </div>
+
+            <div
+              style="
+                max-width: 100px;
+                max-height: 20px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+                margin-bottom: 4px;
+                margin-top: 10px;
+              "
+            >
+              <ngx-skeleton-loader [theme]="{ width: '100px', height: '20px' }">
+              </ngx-skeleton-loader>
+            </div>
+            <div
+              style="
+                max-width: 150px;
+                max-height: 20px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+                margin-bottom: 4px;
+                margin-top: 10px;
+              "
+            >
+              <ngx-skeleton-loader [theme]="{ width: '150px', height: '20px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </div>
+
+          <div class="col">
+            <p style="margin-bottom: 8px; color: #707070">Location</p>
+            <div
+              style="
+                max-width: 140px;
+                max-height: 20px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+                margin-bottom: 4px;
+              "
+            >
+              <ngx-skeleton-loader [theme]="{ width: '140px', height: '20px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </div>
+
+          <div class="col">
+            <p style="margin-bottom: 8px; color: #707070">Phone Number</p>
+            <div
+              style="
+                max-width: 140px;
+                max-height: 20px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+                margin-bottom: 4px;
+              "
+            >
+              <ngx-skeleton-loader [theme]="{ width: '140px', height: '20px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </div>
+
+          <div class="col">
+            <p style="margin-bottom: 8px; color: #707070">Email Address</p>
+            <div
+              style="
+                max-width: 140px;
+                max-height: 20px;
+                border-radius: 9px;
+                user-select: none;
+                pointer-events: none;
+                margin-bottom: 4px;
+              "
+            >
+              <ngx-skeleton-loader [theme]="{ width: '140px', height: '20px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </div>
+
+          <div class="col">
+            <div
+              class="btn"
+              style="padding: 12px 25px; background-color: #d4aa32"
+            >
+              Show Requests
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="card"
+        style="width: 100%; background-color: #ffffff"
+        *ngIf="isContentLoading == false"
+      >
         <div *ngFor="let client of allLandlordClients; let last = last;">
           <div class="row" style="margin: 0; padding: 25px">
             <img

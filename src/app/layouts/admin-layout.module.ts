@@ -128,6 +128,8 @@ import { RequestPage } from "app/request-page/request-page";
 import { BackButtonDirective } from "app/request-page/back-navigation.directive";
 import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_clients";
 import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_clients";
+import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_properties";
+import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -283,6 +285,8 @@ import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_client
 
     AdminLandlordClients,
     AdminTenantClients,
+    AdminSaleProperties,
+    AdminRentProperties,
 
     CountryDropdown,
     RequestPage,

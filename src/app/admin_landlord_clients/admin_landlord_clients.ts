@@ -12,6 +12,7 @@ import { BehaviorSubject } from "rxjs";
 export class AdminLandlordClients implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
+  isContentLoading: boolean = false;
 
   noDataPresent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -23,6 +24,7 @@ export class AdminLandlordClients implements OnInit {
     private route: ActivatedRoute
   ) {
     this.isLoading = true;
+    this.isContentLoading = true;
 
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -60,32 +62,48 @@ export class AdminLandlordClients implements OnInit {
   async ngOnInit() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    await this.getAllClients(user[0]["id"]).finally(() => {
-      console.log(this.allLandlordClients);
 
-      setTimeout(() => {
+    var sessionData = sessionStorage.getItem("all_landlord_clients");
+
+    if (sessionData != null) {
+      this.allLandlordClients = JSON.parse(sessionData);
+      this.isLoading = false;
+      this.isContentLoading = false;
+    } else {
+      await this.getAllClients(user[0]["id"]).finally(() => {
+        // console.log(this.allLandlordClients);
+
         setTimeout(() => {
-          this.noDataPresent.subscribe((val) => {
-            if (val == true) {
-              console.log("no data");
-              this.getAllClientsDetails(user[0]["id"]);
-            } else {
-              console.log("data present");
-              setTimeout(() => {
-                this.isLoading = false;
-              }, 1000);
-            }
-          });
-        }, 1000);
-      }, 2000);
-    });
+          setTimeout(() => {
+            this.noDataPresent.subscribe((val) => {
+              if (val == true) {
+                // console.log("no data");
+                this.getAllClientsDetails(user[0]["id"]);
+              } else {
+                // console.log("data present");
+                setTimeout(() => {
+                  this.isContentLoading = false;
+
+                  sessionStorage.setItem(
+                    "all_landlord_clients",
+                    JSON.stringify(this.allLandlordClients)
+                  );
+                }, 2000);
+              }
+            });
+          }, 1000);
+        }, 2000);
+      });
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
+    }
   }
 
   ngOnDestroy() {
     this.noDataPresent.unsubscribe();
   }
 
-  cacheInSession() {}
 
   async getAllClients(userId) {
     this.adminService.getAllClients(userId).subscribe(async (e: Array<any>) => {

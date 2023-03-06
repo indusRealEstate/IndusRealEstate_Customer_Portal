@@ -486,4 +486,31 @@ export class AdminDashboardComponent implements OnInit {
       queryParams: { uid: userId },
     });
   }
+
+  navigateToTotalTenantCleints() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+    this.router.navigate(["/admin-tenant-clients"], {
+      queryParams: { uid: userId },
+    });
+  }
+
+  navigateToTotalSaleProperties() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+    this.router.navigate(["/admin-properties-sale"], {
+      queryParams: { uid: userId },
+    });
+  }
+
+  navigateToTotalRentProperties() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+    this.router.navigate(["/admin-properties-rent"], {
+      queryParams: { uid: userId },
+    });
+  }
 }

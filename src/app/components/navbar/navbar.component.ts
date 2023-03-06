@@ -177,6 +177,14 @@ export class NavbarComponent implements OnInit {
         return "Requests";
       case "/request-page":
         return "Request Details Page";
+      case "/admin-landlord-clients":
+        return "All Landlord Clients";
+      case "/admin-tenant-clients":
+        return "All Tenant Clients";
+      case "/admin-properties-sale":
+        return "All Properties For Sale";
+      case "/admin-properties-rent":
+        return "All Properties For Rent";
       case "/404":
         return "";
       default:
