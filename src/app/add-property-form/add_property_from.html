@@ -43,59 +43,63 @@
         <p class="grey-text-form">
           Please Enter every detail correctly and according to the following
         </p>
-        <div class="row" style="margin-left: 0px; margin-top: 10px">
-          <div class="row" style="margin-left: 0px">
-            <p class="grey-text-form">For Rent</p>
-
-            <mat-radio-group
-              [(ngModel)]="propertyState"
-              style="margin-left: 15px"
-            >
-              <mat-radio-button
-                class="example-margin"
-                value="rent"
-              ></mat-radio-button>
-            </mat-radio-group>
-          </div>
-          <div class="row" style="margin-left: 50px">
-            <p class="grey-text-form">For Sale</p>
-
-            <mat-radio-group
-              [(ngModel)]="propertyState"
-              style="margin-left: 15px"
-            >
-              <mat-radio-button
-                class="example-margin"
-                value="sale"
-              ></mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div
-            class="col h-100 d-flex justify-content-end"
-            style="padding-right: 30px"
-          >
+        <form [formGroup]="addPropertyForm">
+          <div class="row" style="margin-left: 0px; margin-top: 10px">
             <div class="row" style="margin-left: 0px">
-              <p class="grey-text-form" style="margin-right: 30px">
-                Offer validity:
-              </p>
-              <mat-form-field>
-                <input
-                  matInput
-                  [matDatepicker]="picker"
-                  [(ngModel)]="offerValidity"
-                  (dateChange)="onOfferValidityDate($event)"
-                />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
+              <p class="grey-text-form">For Rent</p>
+
+              <mat-radio-group
+                [(ngModel)]="propertyState"
+                style="margin-left: 15px"
+                formControlName="property_state"
+              >
+                <mat-radio-button
+                  class="example-margin"
+                  value="rent"
+                ></mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="row" style="margin-left: 50px">
+              <p class="grey-text-form">For Sale</p>
+
+              <mat-radio-group
+                [(ngModel)]="propertyState"
+                style="margin-left: 15px"
+                formControlName="property_state"
+              >
+                <mat-radio-button
+                  class="example-margin"
+                  value="sale"
+                ></mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <div
+              class="col h-100 d-flex justify-content-end"
+              style="padding-right: 30px"
+            >
+              <div class="row" style="margin-left: 0px">
+                <p class="grey-text-form" style="margin-right: 30px">
+                  Offer validity:
+                </p>
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [(ngModel)]="offerValidity"
+                    (dateChange)="onOfferValidityDate($event)"
+                    formControlName="offer_validity"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
             </div>
           </div>
-        </div>
-        <form [formGroup]="addPropertyForm">
+
           <div class="row" style="margin-left: 0px; margin-top: 20px">
             <div
               class="row"
@@ -559,37 +563,42 @@
               </div>
             </div>
           </div>
-        </form>
-        <div class="row" style="margin-top: 50px">
-          <p class="grey-text-form" style="margin-left: 17px; max-width: 600px">
-            Both Parties are mutually agreed upon that First Party (The broker)
-            is authorize / allowed to advertise the said property
-          </p>
 
-          <div
-            class="col h-100 d-flex justify-content-end"
-            style="margin-right: 15px"
-          >
-            <div class="row" style="margin-left: 0px">
-              <p class="grey-text-form" style="margin-right: 30px">
-                Valid Until:
-              </p>
-              <mat-form-field>
-                <input
-                  matInput
-                  [matDatepicker]="picker2"
-                  [(ngModel)]="validUntil"
-                  (dateChange)="onValidUntilDate($event)"
-                />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker2"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
+          <div class="row" style="margin-top: 50px">
+            <p
+              class="grey-text-form"
+              style="margin-left: 17px; max-width: 600px"
+            >
+              Both Parties are mutually agreed upon that First Party (The
+              broker) is authorize / allowed to advertise the said property
+            </p>
+
+            <div
+              class="col h-100 d-flex justify-content-end"
+              style="margin-right: 15px"
+            >
+              <div class="row" style="margin-left: 0px">
+                <p class="grey-text-form" style="margin-right: 30px">
+                  Valid Until:
+                </p>
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="picker2"
+                    [(ngModel)]="validUntil"
+                    (dateChange)="onValidUntilDate($event)"
+                    formControlName="valid_until"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
 
         <p class="card-body-title" style="margin-top: 65px">
           SIGNATURE OF PARTIES

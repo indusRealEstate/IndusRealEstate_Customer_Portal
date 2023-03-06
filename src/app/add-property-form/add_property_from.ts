@@ -90,6 +90,8 @@ export class AddPropertyForm implements OnInit {
   }
   ngOnInit() {
     this.addPropertyForm = this.formBuilder.group({
+      property_state: ["sale"],
+      offer_validity: [""],
       furnishDetails: [""],
       titleDeedNumber: [""],
       ProjectName: [""],
@@ -103,6 +105,7 @@ export class AddPropertyForm implements OnInit {
       SocialMediaMarketingDetails: [""],
       BoardMarketingDetails: [""],
       OthersMarketingDetails: [""],
+      valid_until: [""],
     });
 
     setTimeout(() => {
