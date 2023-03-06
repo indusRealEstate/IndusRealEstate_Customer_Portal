@@ -1,4 +1,188 @@
-<div class="main-content home-bg">
+<div class="main-content home-bg" *ngIf="screenWidth <= 425" style="padding: 0">
+  <div class="container-fluid">
+    <div class="col" style="padding: 0">
+      <div class="row" style="margin: 0">
+        <div class="col" style="padding: 0">
+          <div
+            routerLink="/my-requests"
+            class="card"
+            style="
+              background-color: #d3ab33;
+              padding: 10px;
+              margin-bottom: 15px;
+            "
+          >
+            <div class="col" style="padding: 0; text-align: center">
+              <img
+                src="assets/img/svg/home-page/note-2.svg"
+                alt=""
+                style="filter: brightness(0) invert(1); width: 50px"
+              />
+              <p
+                style="
+                  font-size: 18px;
+                  font-weight: 900;
+                  color: white;
+                  margin-top: 10px;
+                "
+              >
+                My Requests
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="padding-right: 0">
+          <div
+            routerLink="/my-properties"
+            class="card"
+            style="
+              background-color: #d3ab33;
+              padding: 10px;
+              margin-bottom: 15px;
+            "
+          >
+            <div class="col" style="padding: 0; text-align: center">
+              <img
+                src="assets/img/svg/home-page/building-4.svg"
+                alt=""
+                style="filter: brightness(0) invert(1); width: 50px"
+              />
+              <p
+                style="
+                  font-size: 18px;
+                  font-weight: 900;
+                  color: white;
+                  margin-top: 10px;
+                "
+              >
+                My Properties
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin: 0">
+        <div class="col" style="padding: 0">
+          <div
+            routerLink="/reports"
+            class="card"
+            style="background-color: #d3ab33; padding: 10px; margin-top: 0"
+          >
+            <div class="col" style="padding: 0; text-align: center">
+              <img
+                src="assets/img/svg/home-page/card-pos.svg"
+                alt=""
+                style="filter: brightness(0) invert(1); width: 50px"
+              />
+              <p
+                style="
+                  font-size: 18px;
+                  font-weight: 900;
+                  color: white;
+                  margin-top: 10px;
+                "
+              >
+                Upcoming Payments
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="padding-right: 0">
+          <div
+            routerLink="/appointments"
+            class="card"
+            style="background-color: #d3ab33; padding: 10px; margin-top: 0"
+          >
+            <div class="col" style="padding: 0; text-align: center">
+              <img
+                src="assets/img/svg/home-page/calendar.svg"
+                alt=""
+                style="filter: brightness(0) invert(1); width: 50px"
+              />
+              <p
+                style="
+                  font-size: 18px;
+                  font-weight: 900;
+                  color: white;
+                  margin-top: 10px;
+                "
+              >
+                Total Appointment
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-plain card-recent-happenings">
+        <div class="card-header card-recent-happenings-head">
+          <tr>
+            <td>
+              <img
+                class="recent-happening-icon"
+                src="assets/img/svg/home-page/programming-arrows.svg"
+                alt=""
+              />
+            </td>
+            <td>
+              <h4 class="card-title mt-0 tableList-title">Recent Happenings</h4>
+            </td>
+          </tr>
+        </div>
+        <div class="card-body" style="background-color: #ffffff94">
+          <div class="table-responsive" style="padding: 0">
+            <div
+              *ngIf="isRecentHappeningsLoading == true"
+              style="
+                display: flex;
+                width: 100%;
+                height: 200px;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <span
+                class="spinner-border spinner-border-m mr-2"
+                style="color: #d4aa32"
+              >
+              </span>
+            </div>
+            <table
+              class="table table-hover"
+              *ngIf="isRecentHappeningsLoading == false"
+            >
+              <tbody *ngIf="recentHeppenings.length != 0">
+                <tr
+                  *ngFor="let e of recentHeppenings"
+                  class="recent-happenings-home"
+                >
+                  <td>
+                    {{ e["content"] }}
+                  </td>
+                  <td>
+                    {{ e["date"] }}
+                  </td>
+                </tr>
+              </tbody>
+              <div *ngIf="isRecentHappeningsLoading == false">
+                <tbody
+                  *ngIf="recentHeppenings.length == 0"
+                  style="display: flex; justify-content: center"
+                >
+                  <p style="font-size: 20px; margin-top: 15px; color: #d3ab33">
+                    No Recent Happenings
+                  </p>
+                </tbody>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main-content home-bg" *ngIf="screenWidth > 425">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-6">

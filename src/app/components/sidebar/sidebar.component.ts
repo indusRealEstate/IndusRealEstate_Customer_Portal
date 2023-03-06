@@ -178,4 +178,13 @@ export class SidebarComponent implements OnInit {
       this.userProfileFetching = false;
     }, 2000);
   }
+
+  userLogOut() {
+    this.otherServices.isLogoutProcessing.next(true);
+    this.authService.logout();
+
+    setTimeout(() => {
+      this.otherServices.isUserSignedOut.next(true);
+    }, 1500);
+  }
 }

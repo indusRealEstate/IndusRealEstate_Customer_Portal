@@ -1,4 +1,133 @@
-<div class="main-content">
+<div class="main-content" *ngIf="screenWidth <= 425">
+  <div *ngIf="properties.length == 0">
+    <p *ngIf="isLoading == false">You have'nt listed any property.</p>
+
+    <div
+      *ngIf="isLoading == true"
+      [ngStyle]="{
+        display: 'flex',
+        width: '100%',
+        height: screenHeight + 'px',
+        'justify-content': 'center',
+        'align-items': 'center'
+      }"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="properties.length != 0">
+    <div
+      routerLink="/add-property-form"
+      class="card"
+      style="
+        background-color: #2b333e;
+        border-radius: 7px;
+        padding: 10px 10px;
+        width: 47%;
+      "
+    >
+      <div class="row" style="margin: 0">
+        <img
+          src="assets/img/svg/my-properties/add-square.svg"
+          style="filter: brightness(0) invert(1)"
+        />
+        <p style="color: white; margin-bottom: 0; margin-left: 15px">
+          Add Property
+        </p>
+      </div>
+    </div>
+
+    <div *ngFor="let property of properties" class="col" style="padding: 0">
+      <div
+        (click)="goToPropertyPage(property)"
+        class="card"
+        style="margin-top: 5px; border-radius: 10px; padding: 10px"
+      >
+        <div
+          style="
+            position: absolute;
+            border-radius: 5px;
+            background-color: #d3ab33;
+            color: white;
+            padding: 0 10px;
+            font-size: 11px;
+            right: 20px;
+            top: 20px;
+          "
+        >
+          <p style="margin-bottom: 0">{{ property.property_size }} SQFT</p>
+        </div>
+        <img
+          src="{{ imagesUrl }}/{{ property.image1 }}"
+          alt=""
+          style="
+            height: 162.5px;
+            width: auto;
+            max-width: 500px;
+            border-radius: 8px;
+            margin-bottom: 0;
+          "
+        />
+        <p
+          style="
+            font-size: 17px;
+            margin-top: 10px;
+            font-weight: 900;
+            margin-left: 5px;
+            margin-bottom: 5px;
+          "
+        >
+          {{ property.property_name }}
+        </p>
+        <p style="margin-left: 5px; color: #a3a3a3; margin-bottom: 10px">
+          {{ property.property_address }}
+        </p>
+
+        <div
+          class="row"
+          style="margin: 0; width: 60%; margin-bottom: 10px; padding-top: 10px"
+        >
+          <div class="col" style="padding-left: 0">
+            <div
+              class="card"
+              style="
+                margin: 0;
+                text-align: center;
+                background-color: #d3ab3330;
+                color: #d3ab33;
+                box-shadow: none;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 700"
+                >{{ property.bedroom_no }} Rooms</span
+              >
+            </div>
+          </div>
+          <div class="col" style="padding-left: 0">
+            <div
+              class="card"
+              style="
+                margin: 0;
+                text-align: center;
+                background-color: #d3ab3330;
+                color: #d3ab33;
+                box-shadow: none;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 700"
+                >{{ property.parking_no }} Parking</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main-content" *ngIf="screenWidth > 425">
   <div *ngIf="properties.length == 0">
     <p *ngIf="isLoading == false" class="no-properties-text">
       You have'nt listed any property.

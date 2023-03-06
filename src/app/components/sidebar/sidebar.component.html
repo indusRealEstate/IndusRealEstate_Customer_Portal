@@ -17,13 +17,43 @@
   <div *ngIf="isMobileMenu()">
     <ul class="nav navbar-nav nav-mobile-menu">
       <li class="nav-item">
+        <a class="nav-link" (click)="userLogOut()">
+          <div class="row" style="margin: 0">
+            <img
+              style="
+                filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
+                  brightness(94%) contrast(98%);
+                width: 20px;
+              "
+              src="assets/img/svg/navbar/logout-1.svg"
+              alt=""
+            />
+            <span
+              class="d-lg-none d-md-block sideBarMobile-navbar-buttons"
+              style="margin-left: 15px"
+              >Log Out</span
+            >
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="javascript:void(0)">
-          <i class="material-icons">mail</i>
-          <p>
-            <span class="d-lg-none d-md-block sideBarMobile-navbar-buttons"
+          <div class="row" style="margin: 0">
+            <img
+              style="
+                filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
+                  brightness(94%) contrast(98%);
+                width: 20px;
+              "
+              src="assets/img/svg/sidebar/directbox-send.svg"
+              alt=""
+            />
+            <span
+              class="d-lg-none d-md-block sideBarMobile-navbar-buttons"
+              style="margin-left: 15px"
               >Mail us</span
             >
-          </p>
+          </div>
         </a>
       </li>
       <li class="nav-item dropdown notification-dropdown-sidebar-mobile">
@@ -35,43 +65,132 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <i class="material-icons">notifications</i>
-          <span class="notification notification-count-sidebar-mobile">5</span>
-          <p>
-            <span class="d-lg-none d-md-block sideBarMobile-navbar-dropdown-btn"
+          <div class="row" style="margin: 0">
+            <img
+              style="
+                filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
+                  brightness(94%) contrast(98%);
+                width: 20px;
+              "
+              src="assets/img/svg/navbar/notification.svg"
+              alt=""
+            />
+            <div
+              style="
+                position: absolute;
+                width: 23px;
+                height: 23px;
+                border-radius: 50%;
+                background-color: #d3ab33;
+                text-align: center;
+                right: 30px;
+              "
+            >
+              <span style="color: white">5</span>
+            </div>
+            <span
+              class="d-lg-none d-md-block sideBarMobile-navbar-dropdown-btn"
+              style="margin-left: 15px"
               >Notifications</span
             >
-          </p>
+          </div>
         </a>
         <div
           class="dropdown-menu dropdown-menu-right"
           aria-labelledby="navbarDropdownMenuLink"
         >
-          <a
-            class="dropdown-item notification-dropdown-item-sidebar-mobile"
-            href="#"
-            >Mike John responded to your email</a
-          >
-          <a
-            class="dropdown-item notification-dropdown-item-sidebar-mobile"
-            href="#"
-            >You have 5 new tasks</a
-          >
-          <a
-            class="dropdown-item notification-dropdown-item-sidebar-mobile"
-            href="#"
-            >You're now friend with Andrew</a
-          >
-          <a
-            class="dropdown-item notification-dropdown-item-sidebar-mobile"
-            href="#"
-            >Another Notification</a
-          >
-          <a
-            class="dropdown-item notification-dropdown-item-sidebar-mobile"
-            href="#"
-            >Another One</a
-          >
+          <div class="col" style="padding-left: 25px">
+            <div class="row" style="margin: 0">
+              <div class="col" style="padding: 0; text-align: end">
+                <span style="color: white">• </span>
+              </div>
+              <div class="col-11" style="padding: 0">
+                <a
+                  href="#"
+                  style="
+                    color: white;
+                    display: block;
+                    padding: 0;
+                    margin-left: 10px;
+                    margin-top: 0;
+                  "
+                  >Mike John responded to your email</a
+                >
+              </div>
+            </div>
+            <div class="row" style="margin: 0">
+              <div class="col" style="padding: 0; text-align: end">
+                <span style="color: white">• </span>
+              </div>
+              <div class="col-11" style="padding: 0">
+                <a
+                  href="#"
+                  style="
+                    color: white;
+                    display: block;
+                    padding: 0;
+                    margin-left: 10px;
+                    margin-top: 0;
+                  "
+                  >You have 5 new tasks</a
+                >
+              </div>
+            </div>
+            <div class="row" style="margin: 0">
+              <div class="col" style="padding: 0; text-align: end">
+                <span style="color: white">• </span>
+              </div>
+              <div class="col-11" style="padding: 0">
+                <a
+                  href="#"
+                  style="
+                    color: white;
+                    display: block;
+                    padding: 0;
+                    margin-left: 10px;
+                    margin-top: 0;
+                  "
+                  >You're now friend with Andrew</a
+                >
+              </div>
+            </div>
+            <div class="row" style="margin: 0">
+              <div class="col" style="padding: 0; text-align: end">
+                <span style="color: white">• </span>
+              </div>
+              <div class="col-11" style="padding: 0">
+                <a
+                  href="#"
+                  style="
+                    color: white;
+                    display: block;
+                    padding: 0;
+                    margin-left: 10px;
+                    margin-top: 0;
+                  "
+                  >Another Notification</a
+                >
+              </div>
+            </div>
+            <div class="row" style="margin: 0">
+              <div class="col" style="padding: 0; text-align: end">
+                <span style="color: white">• </span>
+              </div>
+              <div class="col-11" style="padding: 0">
+                <a
+                  href="#"
+                  style="
+                    color: white;
+                    display: block;
+                    padding: 0;
+                    margin-left: 10px;
+                    margin-top: 0;
+                  "
+                  >Another One</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </li>
     </ul>

@@ -37,6 +37,18 @@
   }
 }
 
+.sidebar-dropdown-icons {
+  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
+    brightness(94%) contrast(98%);
+  width: 20px;
+}
+
+.sidebar-dropdown-icon-arrow {
+  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
+    brightness(94%) contrast(98%);
+  width: 17px;
+}
+
 .dropdown-myDocuments {
   cursor: pointer;
 

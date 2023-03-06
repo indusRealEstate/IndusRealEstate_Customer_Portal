@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
@@ -22,6 +22,9 @@ export class MyPropertiesComponent implements OnInit {
 
   imagesUrl: any = "";
 
+  screenHeight: number;
+  screenWidth: number;
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -30,6 +33,7 @@ export class MyPropertiesComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient
   ) {
+    this.getScreenSize()
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -48,6 +52,12 @@ export class MyPropertiesComponent implements OnInit {
         }
       });
     }
+  }
+
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   isUserSignOut() {

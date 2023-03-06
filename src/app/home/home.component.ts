@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
 
   isRecentHappeningsLoading: boolean = false;
 
+  screenHeight: number;
+  screenWidth: number;
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -29,6 +32,8 @@ export class HomeComponent implements OnInit {
     this.isRecentHappeningsLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
+
+    this.getScreenSize();
 
     if (user[0]["auth_type"] == "landlord") {
       this.isLandlord = true;
@@ -56,6 +61,12 @@ export class HomeComponent implements OnInit {
     }
 
     this.scrollToTop();
+  }
+
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   scrollToTop() {
