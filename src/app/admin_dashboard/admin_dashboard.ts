@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
@@ -68,6 +68,8 @@ export class AdminDashboardComponent implements OnInit {
     // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
     this.isRequestOverviewLoading = true;
     // }
+
+    this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -86,54 +88,15 @@ export class AdminDashboardComponent implements OnInit {
         }
       });
     }
-
-    // otherService.adminRequestGotApproved.subscribe(async (val) => {
-    //   if (val == true) {
-    //     console.log("got approved");
-    //     this.isRequestOverviewLoading = true;
-    //     this.isLoading = true;
-    //     this.clearAllVariables();
-    //     sessionStorage.removeItem("admin_dashboard_fetched_time");
-    //     sessionStorage.removeItem("admin_dashboard_session_data");
-    //     await this.initFunction(user[0]["id"]);
-    //     sessionStorage.setItem(
-    //       "admin_dashboard_fetched_time",
-    //       JSON.stringify(new Date().getMinutes())
-    //     );
-
-    //     setTimeout(() => {
-    //       this.otherServices.adminRequestGotApproved.next(false);
-    //     }, 1000);
-    //   }
-    // });
   }
 
-  // async ngDoCheck() {
-  //   if (this.isRequestOverviewLoading == false) {
-  //     if (this.requestOverview.length != 0) {
-  //       for (let index = 0; index < this.requestOverview.length; index++) {
-  //         if (
-  //           this.requestOverview[index]["userData"] == null ||
-  //           this.requestOverview[index]["userDetails"] == null
-  //         ) {
-  //           this.isRequestOverviewLoading = true;
-  //           console.log("issue spotted -- reloading");
-  //           await this.assignUserData().then(() => {
-  //             setTimeout(() => {
-  //               this.isRequestOverviewLoading = false;
-  //             }, 6000);
-
-  //             setTimeout(() => {
-  //               this.cacheInSession();
-  //             }, 7000);
-  //           });
-  //         } else {
-  //           console.log("no issue");
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+  }
 
   scrollToTop() {
     // window.scrollTo(0, 0);
