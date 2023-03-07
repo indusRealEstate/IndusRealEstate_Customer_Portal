@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -26,6 +26,8 @@ export class AdminLandlordClients implements OnInit {
     this.isLoading = true;
     this.isContentLoading = true;
 
+    this.getScreenSize()
+
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -44,6 +46,14 @@ export class AdminLandlordClients implements OnInit {
         }
       });
     }
+  }
+
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   scrollToTop() {
@@ -103,7 +113,6 @@ export class AdminLandlordClients implements OnInit {
   ngOnDestroy() {
     this.noDataPresent.unsubscribe();
   }
-
 
   async getAllClients(userId) {
     this.adminService.getAllClients(userId).subscribe(async (e: Array<any>) => {

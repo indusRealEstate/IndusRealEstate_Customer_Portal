@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -26,6 +26,8 @@ export class AdminTenantClients implements OnInit {
     this.isLoading = true;
     this.isContentLoading = true;
 
+    this.getScreenSize()
+
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -48,6 +50,14 @@ export class AdminTenantClients implements OnInit {
 
   scrollToTop() {
     // window.scrollTo(0, 0);
+  }
+
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   isUserSignOut() {
