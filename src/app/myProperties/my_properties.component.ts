@@ -33,7 +33,7 @@ export class MyPropertiesComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient
   ) {
-    this.getScreenSize()
+    this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -79,17 +79,16 @@ export class MyPropertiesComponent implements OnInit {
     this.imagesUrl = this.apiService.getBaseUrlImages();
     setTimeout(() => {
       this.isImagesLoading = false;
-    }, 500);
+    }, 1000);
   }
 
   async initFunction() {
     var propertiesdata = sessionStorage.getItem("properties");
     if (propertiesdata != null) {
-      
       var decodedData = JSON.parse(propertiesdata);
-      this.properties = decodedData;
-
-      this.getImagesUrl();
+      this.properties = decodedData["properties"];
+      this.imagesUrl = decodedData["imgUrl"];
+      this.isImagesLoading = false;
     } else {
       this.isLoading = true;
 
@@ -128,7 +127,13 @@ export class MyPropertiesComponent implements OnInit {
 
         if (this.properties.length != 0) {
           this.getImagesUrl();
-          sessionStorage.setItem("properties", JSON.stringify(this.properties));
+          sessionStorage.setItem(
+            "properties",
+            JSON.stringify({
+              properties: this.properties,
+              imgUrl: this.imagesUrl,
+            })
+          );
         }
       }, 3000);
     }

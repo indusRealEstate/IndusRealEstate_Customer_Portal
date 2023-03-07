@@ -120,7 +120,7 @@ export class PropertyPage implements OnInit {
         var propertiesDataSession = JSON.parse(
           sessionStorage.getItem("properties")
         );
-        this.propertyData = propertiesDataSession.find(
+        this.propertyData = propertiesDataSession["properties"].find(
           (x) => x.property_id == e["propertyId"]
         );
 

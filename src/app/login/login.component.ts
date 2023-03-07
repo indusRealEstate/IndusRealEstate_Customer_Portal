@@ -119,24 +119,24 @@ export class LoginComponent implements OnInit {
             var user = JSON.parse(userData);
 
             setTimeout(async () => {
-              // await this.authenticationService.getIPAddress().then((res) => {
-              //   var date = this.getCurrentDate();
+              await this.authenticationService.getIPAddress().then((res) => {
+                var date = this.getCurrentDate();
 
-              //   setTimeout(() => {
-              //     res.subscribe((ip) => {
-              //       var ip_data = {
-              //         date: date,
-              //         ip: ip["ip"],
-              //       };
+                setTimeout(() => {
+                  res.subscribe((ip) => {
+                    var ip_data = {
+                      date: date,
+                      ip: ip["ip"],
+                    };
 
-              //       this.authenticationService
-              //         .storeClientIP(JSON.stringify(ip_data))
-              //         .subscribe((e) => {
-              //           console.log(e);
-              //         });
-              //     });
-              //   }, 1000);
-              // });
+                    this.authenticationService
+                      .storeClientIP(JSON.stringify(ip_data))
+                      .subscribe((e) => {
+                        console.log(e);
+                      });
+                  });
+                }, 1000);
+              });
 
               if (user[0]["auth_type"] != "admin") {
                 // window.location.replace(`/home?uid=${user[0]["id"]}`);

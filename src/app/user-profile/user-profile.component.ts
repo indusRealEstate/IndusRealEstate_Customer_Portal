@@ -138,7 +138,7 @@ export class UserProfileComponent implements OnInit {
 
       if (user[0]["auth_type"] == "landlord") {
         if (userPropertiesDataSession != null) {
-          this.properties = sessionDataJSONPropertes;
+          this.properties = sessionDataJSONPropertes["properties"];
           setTimeout(() => {
             this.propertiesImagesLoading = false;
           }, 500);
@@ -162,7 +162,7 @@ export class UserProfileComponent implements OnInit {
 
       if (user[0]["auth_type"] == "landlord") {
         if (userPropertiesDataSession != null) {
-          this.properties = sessionDataJSONPropertes;
+          this.properties = sessionDataJSONPropertes["properties"];
           setTimeout(() => {
             this.propertiesImagesLoading = false;
           }, 500);
@@ -206,7 +206,13 @@ export class UserProfileComponent implements OnInit {
     } finally {
       setTimeout(() => {
         this.isLoading = false;
-        sessionStorage.setItem("properties", JSON.stringify(this.properties));
+        sessionStorage.setItem(
+          "properties",
+          JSON.stringify({
+            properties: this.properties,
+            imgUrl: this.propertiesImagesUrl,
+          })
+        );
       }, 10000);
     }
   }

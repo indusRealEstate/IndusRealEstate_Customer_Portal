@@ -37,7 +37,6 @@
       >
         <a class="dropdown-item" href="#">• CUSTOMER CARE</a>
         <a class="dropdown-item" href="#">• FACILITY MANAGEMENT SERVICES</a>
-        <a class="dropdown-item" href="#">• RESIDENT SERVICES</a>
       </div>
     </li>
   </ul>
@@ -83,37 +82,12 @@
     <button
       mat-menu-item
       class="dropdown-servives-items-ind"
-      [matMenuTriggerFor]="customerCareMenu"
-      #customerCareMenuTrigger="matMenuTrigger"
-      (mouseenter)="customerCareMenuTrigger.openMenu()"
-    >
-      CUSTOMER CARE
-    </button>
-
-    <button
-      mat-menu-item
-      class="dropdown-servives-items-ind"
       [matMenuTriggerFor]="facilityMenu"
       #facilityMenuTrigger="matMenuTrigger"
       (mouseenter)="facilityMenuTrigger.openMenu()"
     >
       FACILITY MANAGEMENT SERVICES
     </button>
-
-    <button mat-menu-item class="dropdown-servives-items-ind">
-      RESIDENT SERVICES
-    </button>
-  </div>
-</mat-menu>
-
-<mat-menu #customerCareMenu="matMenu" [overlapTrigger]="false">
-  <div
-    class="dropdown-customerCare"
-    (mouseenter)="menu2enter()"
-    (mouseleave)="menu2Leave(menuTrigger, customerCareMenuTrigger, button)"
-  >
-    <button mat-menu-item class="dropdown-customer-care-ind">dropdown 1</button>
-    <button mat-menu-item class="dropdown-customer-care-ind">dropdown 2</button>
   </div>
 </mat-menu>
 
@@ -136,21 +110,13 @@
       FM-MAINTENANCE REQUEST
     </button>
     <!-- <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request/{{userId}}">OWNER MOVE-IN REQUEST</button> -->
-    <button
-      mat-menu-item
-      class="dropdown-facility-ind"
-      routerLink="/owner-move-out-request"
-      queryParams="{uid: userId}"
-      *ngIf="isLandlord"
-    >
-      LANDLORD MOVE-OUT REQUEST
-    </button>
+
     <button
       mat-menu-item
       class="dropdown-facility-ind"
       routerLink="/tenant-move-out-request"
       queryParams="{uid: userId}"
-      *ngIf="isTenant"
+      *ngIf="isLandlord"
     >
       TENANT MOVE-OUT REQUEST
     </button>
@@ -159,60 +125,9 @@
       class="dropdown-facility-ind"
       routerLink="/tenant-registration"
       queryParams="{uid: userId}"
-      *ngIf="isTenant"
+      *ngIf="isLandlord"
     >
       TENANT REGISTRATION
     </button>
-  </div>
-</mat-menu>
-
-<ng-container>
-  <div
-    #button
-    [matMenuTriggerFor]="myDocMenu"
-    class="dropdown-myDocuments"
-    #myDocMenuTrigger="matMenuTrigger"
-  >
-    <div
-      *ngIf="isPCMenu()"
-      [ngClass]="
-        isPCMenu() ? 'myDocuments-Menu-pc' : 'myDocuments-hiddenMenu-mobile'
-      "
-    >
-      <a class="nav-link">
-        <div class="row">
-          <img
-            class="sidebar-dropdown-icons"
-            src="assets/img/svg/home-page/note-2.svg"
-            alt="hello"
-          />
-          <button class="dropdown-myDocuments-btn">My Documents</button>
-          <img
-            class="sidebar-dropdown-icon-arrow"
-            src="assets/img/svg/home-page/arrow-down.svg"
-            alt="hello"
-          />
-        </div>
-      </a>
-    </div>
-  </div>
-</ng-container>
-
-<mat-menu #myDocMenu="matMenu" [overlapTrigger]="false">
-  <div
-    class="dropdown-myDoc-items"
-    (mouseenter)="menuenter()"
-    (mouseleave)="menuLeave(myDocMenuTrigger, button)"
-  >
-    <button
-      mat-menu-item
-      class="dropdown-myDoc-items-ind"
-      routerLink="/documents"
-      queryParams="{uid: userId}"
-    >
-      DOCUMENTS
-    </button>
-
-    <button mat-menu-item class="dropdown-myDoc-items-ind">TEMPLATES</button>
   </div>
 </mat-menu>

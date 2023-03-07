@@ -38,14 +38,14 @@
 }
 
 .sidebar-dropdown-icons {
-  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
-    brightness(94%) contrast(98%);
+  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg) brightness(94%)
+    contrast(98%);
   width: 20px;
 }
 
 .sidebar-dropdown-icon-arrow {
-  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
-    brightness(94%) contrast(98%);
+  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg) brightness(94%)
+    contrast(98%);
   width: 17px;
 }
 
@@ -189,38 +189,11 @@
 }
 
 .dropdown-servives-items {
-  width: 260px;
-  height: 145px;
+  // height: 95px;
 
   .dropdown-servives-items-ind {
     padding-left: 30px;
 
-    &:hover {
-      background-color: #2b333e;
-      color: white;
-    }
-  }
-}
-
-.dropdown-myDoc-items {
-  width: 260px;
-  height: 100px;
-
-  .dropdown-myDoc-items-ind {
-    padding-left: 30px;
-
-    &:hover {
-      background-color: #2b333e;
-      color: white;
-    }
-  }
-}
-
-.dropdown-customerCare {
-  width: 260px;
-  height: 100px;
-
-  .dropdown-customer-care-ind {
     &:hover {
       background-color: #2b333e;
       color: white;
@@ -249,4 +222,9 @@
       color: white;
     }
   }
+}
+
+::ng-deep .mat-menu-panel {
+  max-width: none !important;
+  left: 5px !important;
 }

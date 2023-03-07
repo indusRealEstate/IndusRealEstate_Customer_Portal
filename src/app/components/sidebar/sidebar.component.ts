@@ -45,8 +45,14 @@ export const ADMINROUTES: RouteInfo[] = [
 
 export const ROUTES: RouteInfo[] = [
   {
+    path: "/documents",
+    title: "My Documents",
+    icon: "assets/img/svg/home-page/note-2.svg",
+    class: "",
+  },
+  {
     path: "/my-requests",
-    title: "My Requests",
+    title: "Requests",
     icon: "assets/img/svg/sidebar/menu.svg",
     class: "",
   },
@@ -62,12 +68,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "assets/img/svg/sidebar/document-filter.svg",
     class: "",
   },
-  {
-    path: "/appointments",
-    title: "Appointments",
-    icon: "assets/img/svg/sidebar/menu-board.svg",
-    class: "",
-  },
+  // {
+  //   path: "/appointments",
+  //   title: "Appointments",
+  //   icon: "assets/img/svg/sidebar/menu-board.svg",
+  //   class: "",
+  // },
 ];
 
 @Component({
@@ -127,6 +133,7 @@ export class SidebarComponent implements OnInit {
       this.menuItems = ROUTES.filter((menuItem) => menuItem);
     }
   }
+  
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;

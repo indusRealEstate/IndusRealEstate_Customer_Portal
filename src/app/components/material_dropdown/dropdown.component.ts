@@ -1,5 +1,4 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { User } from "../../../../models/user/user.model";
 
 /**
  * @title Basic menu

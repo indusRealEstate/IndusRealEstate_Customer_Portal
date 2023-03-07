@@ -9,8 +9,6 @@ import { AppointmentsComponent } from "app/appointments/appointments.component";
 import { DocumentsComponent } from "app/documents/documents.component";
 import { NewPaymentComponent } from "app/new_payment/new_payment.component";
 import { FM_MaintananceRequest } from "app/indus_services/facility_management/fm-maintanence_request/fm-maintanence_request.component";
-import { Owner_Move_in_Request } from "app/indus_services/facility_management/owner_move-in_request/owner_move-in_request.component";
-import { Owner_Move_out_Request } from "app/indus_services/facility_management/owner_move-out_request/owner_move-out_request.component";
 import { Tenant_Move_out_Request } from "app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component";
 import { Tenant_Registration } from "app/indus_services/facility_management/tenant_registration/tenant_registration.component";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
@@ -38,8 +36,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "documents", component: DocumentsComponent },
   { path: "new-payment", component: NewPaymentComponent },
   { path: "fm-maintanence-request", component: FM_MaintananceRequest },
-  { path: "owner-move-in-request", component: Owner_Move_in_Request },
-  { path: "owner-move-out-request", component: Owner_Move_out_Request },
   { path: "tenant-move-out-request", component: Tenant_Move_out_Request },
   { path: "tenant-registration", component: Tenant_Registration },
   { path: "property-page", component: PropertyPage },

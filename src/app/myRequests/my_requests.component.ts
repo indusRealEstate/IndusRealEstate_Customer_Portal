@@ -16,6 +16,8 @@ export class MyRequestsComponent implements OnInit {
 
   searchResult: any[] = [];
 
+  requestType: "tenant-req" | "my-req" = "my-req";
+
   isUserSignedIn: boolean = false;
 
   isSearchTypeNotSelected: boolean = false;
@@ -64,6 +66,13 @@ export class MyRequestsComponent implements OnInit {
         });
       }
     });
+  }
+
+  my_req_clicked() {
+    this.requestType = "my-req";
+  }
+  tenant_req_clicked() {
+    this.requestType = "tenant-req";
   }
 
   requestStatusFont(status) {

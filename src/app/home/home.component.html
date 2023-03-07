@@ -1,3 +1,7 @@
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+
 <div class="main-content home-bg" *ngIf="screenWidth <= 425" style="padding: 0">
   <div class="container-fluid">
     <div class="col" style="padding: 0">
@@ -8,22 +12,24 @@
             class="card"
             style="
               background-color: #d3ab33;
-              padding: 10px;
+              padding: 20px;
               margin-bottom: 15px;
+              min-height: 130px;
             "
           >
             <div class="col" style="padding: 0; text-align: center">
               <img
                 src="assets/img/svg/home-page/note-2.svg"
                 alt=""
-                style="filter: brightness(0) invert(1); width: 50px"
+                style="filter: brightness(0) invert(1); width: 35px"
               />
               <p
                 style="
-                  font-size: 18px;
+                  font-size: 15px;
                   font-weight: 900;
                   color: white;
-                  margin-top: 10px;
+                  margin-top: 20px;
+                  margin-bottom: 0;
                 "
               >
                 My Requests
@@ -37,22 +43,24 @@
             class="card"
             style="
               background-color: #d3ab33;
-              padding: 10px;
+              padding: 20px;
               margin-bottom: 15px;
+              min-height: 130px;
             "
           >
             <div class="col" style="padding: 0; text-align: center">
               <img
                 src="assets/img/svg/home-page/building-4.svg"
                 alt=""
-                style="filter: brightness(0) invert(1); width: 50px"
+                style="filter: brightness(0) invert(1); width: 35px"
               />
               <p
                 style="
-                  font-size: 18px;
+                  font-size: 15px;
                   font-weight: 900;
                   color: white;
-                  margin-top: 10px;
+                  margin-top: 20px;
+                  margin-bottom: 0;
                 "
               >
                 My Properties
@@ -66,23 +74,29 @@
           <div
             routerLink="/reports"
             class="card"
-            style="background-color: #d3ab33; padding: 10px; margin-top: 0"
+            style="
+              background-color: #d3ab33;
+              padding: 20px;
+              margin-top: 0;
+              min-height: 130px;
+            "
           >
             <div class="col" style="padding: 0; text-align: center">
               <img
                 src="assets/img/svg/home-page/card-pos.svg"
                 alt=""
-                style="filter: brightness(0) invert(1); width: 50px"
+                style="filter: brightness(0) invert(1); width: 35px"
               />
               <p
                 style="
-                  font-size: 18px;
+                  font-size: 15px;
                   font-weight: 900;
                   color: white;
-                  margin-top: 10px;
+                  margin-top: 20px;
+                  margin-bottom: 0;
                 "
               >
-                Upcoming Payments
+                Payments
               </p>
             </div>
           </div>
@@ -91,23 +105,29 @@
           <div
             routerLink="/appointments"
             class="card"
-            style="background-color: #d3ab33; padding: 10px; margin-top: 0"
+            style="
+              background-color: #d3ab33;
+              padding: 20px;
+              margin-top: 0;
+              min-height: 130px;
+            "
           >
             <div class="col" style="padding: 0; text-align: center">
               <img
                 src="assets/img/svg/home-page/calendar.svg"
                 alt=""
-                style="filter: brightness(0) invert(1); width: 50px"
+                style="filter: brightness(0) invert(1); width: 35px"
               />
               <p
                 style="
-                  font-size: 18px;
+                  font-size: 15px;
                   font-weight: 900;
                   color: white;
-                  margin-top: 10px;
+                  margin-top: 20px;
+                  margin-bottom: 0;
                 "
               >
-                Total Appointment
+                Appointments
               </p>
             </div>
           </div>
@@ -182,6 +202,9 @@
   </div>
 </div>
 
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
 <div class="main-content home-bg" *ngIf="screenWidth > 425">
   <div class="container-fluid">
     <div class="row">
@@ -216,20 +239,11 @@
             src="assets/img/svg/home-page/note-2.svg"
             alt=""
           />
-
-          <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isLandlord">
         <div class="card card-stats">
           <div class="card-header card-header">
-            <!-- <div class="card-icon home-card-icons">
-                            <i class="material-icons ">article</i>
-                        </div> -->
             <h3 class="card-title">01</h3>
             <p class="card-heading">My Properties</p>
             <tr>
@@ -255,19 +269,11 @@
             src="assets/img/svg/home-page/building-4.svg"
             alt=""
           />
-          <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
           <div class="card-header card-header">
-            <!-- <div class="card-icon home-card-icons">
-                            <i class="material-icons ">article</i>
-                        </div> -->
             <h3 class="card-title">01</h3>
             <p class="card-heading">Upcoming Payments</p>
             <tr>
@@ -293,19 +299,11 @@
             src="assets/img/svg/home-page/card-pos.svg"
             alt=""
           />
-          <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
           <div class="card-header card-header">
-            <!-- <div class="card-icon home-card-icons">
-                            <i class="material-icons ">article</i>
-                        </div> -->
             <h3 class="card-title">01</h3>
             <p class="card-heading">Total Appointment</p>
             <tr>
@@ -331,11 +329,6 @@
             src="assets/img/svg/home-page/calendar.svg"
             alt=""
           />
-          <!-- <div class="card-footer">
-                        <div class="stats">
-                            <a href="javascript:void(0)">More info</a>
-                        </div>
-                    </div> -->
         </div>
       </div>
     </div>

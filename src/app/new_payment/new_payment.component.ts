@@ -1,68 +1,42 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { MatStepper } from "@angular/material/stepper";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { StepperFirstComponent } from "./components/stepper_01/stepper_first";
-import { StepperThirdComponent } from "./components/stepper_03/stepper_third";
-import { StepperSecondComponent } from "./components/stepper_02/stepper_second";
-import { StepperFourthComponent } from "./components/stepper_04/stepper_fourth";
-import { StepperFifthComponent } from "./components/stepper_05/stepper_fifth";
-import { StepperSixthComponent } from "./components/stepper_06/stepper_sixth";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
-  selector: "app-newPayment",
+  selector: "new_payment",
   templateUrl: "./new_payment.component.html",
   styleUrls: ["./new_payment.component.scss"],
 })
 export class NewPaymentComponent implements OnInit {
-  @ViewChild(StepperFirstComponent) oneComponent: StepperFirstComponent;
-  @ViewChild(StepperSecondComponent) twoComponent: StepperSecondComponent;
-  @ViewChild(StepperThirdComponent) threeComponent: StepperThirdComponent;
-  @ViewChild(StepperFourthComponent) fourComponent: StepperFourthComponent;
-  @ViewChild(StepperFifthComponent) fiveComponent: StepperFifthComponent;
-  @ViewChild(StepperSixthComponent) sixComponent: StepperSixthComponent;
-  @ViewChild(MatStepper) matStepper: MatStepper;
-
-  id: number;
-  selectedIndex: number;
-  oneForm: FormGroup;
-  twoForm: FormGroup;
-  threeForm: FormGroup;
-  fourForm: FormGroup;
-  fiveForm: FormGroup;
-  sixForm: FormGroup;
-
-  //-------
-  stateForm1: String = "";
-  stateForm2: String;
-  stateForm3: String;
-  stateForm4: String;
-  stateForm5: String;
-  stateForm6: String;
-
   isUserSignedIn: boolean = false;
 
+  requestData: any;
+
+  isLoading: boolean = false;
+
+  previousUrl: string;
+
   constructor(
-    private readonly route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private readonly route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/new-payment`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/new-payment`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
+    if (
+      user[0]["auth_type"] == "landlord" ||
+      user[0]["auth_type"] == "tenant"
+    ) {
+      this.isLoading = true;
+    } else {
+      router.navigate([`/404`]);
+    }
   }
 
   isUserSignOut() {
@@ -74,21 +48,15 @@ export class NewPaymentComponent implements OnInit {
     }
   }
 
-  stateDone() {
-    this.stateForm1 = "done";
+  docViewBtnClicked() {
+    console.log("doc btn");
   }
 
-  ngOnInit(): void {
-    this.isUserSignOut();
-    this.selectedIndex = 0;
+  ngOnInit() {
+    this.isLoading = false;
   }
 
-  ngAfterViewInit(): void {
-    this.oneForm = this.oneComponent.form;
-    this.twoForm = this.twoComponent.form;
-    this.threeForm = this.threeComponent.form;
-    this.fourForm = this.fourComponent.form;
-    this.fiveForm = this.fiveComponent.form;
-    this.sixForm = this.sixComponent.form;
-  }
+  ngAfterViewInit() {}
+
+  ngOnDestroy() {}
 }
