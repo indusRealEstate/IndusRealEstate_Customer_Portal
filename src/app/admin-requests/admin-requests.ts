@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -72,6 +72,8 @@ export class AdminRequests implements OnInit {
   ) {
     this.isLoading = true;
     this.isContentLoading = true;
+
+    this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     if (user[0]["auth_type"] == "admin") {
@@ -89,6 +91,14 @@ export class AdminRequests implements OnInit {
     } else {
       router.navigate([`/404`]);
     }
+  }
+
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   // async ngDoCheck() {
