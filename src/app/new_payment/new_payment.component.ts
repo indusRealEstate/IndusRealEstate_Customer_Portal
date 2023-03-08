@@ -39,6 +39,13 @@ export class NewPaymentComponent implements OnInit {
     }
   }
 
+  selectedPaymentType: any;
+  paymentType: any[] = [
+    "Payment 1",
+    "Payment 2",
+    "Payment 3",
+  ];
+
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;

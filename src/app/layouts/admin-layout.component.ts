@@ -65,7 +65,7 @@ export class AdminLayoutComponent implements OnInit {
   decideScreenRatio() {
     this.getScreenSize();
 
-    if (this.screenWidth <= 425) {
+    if (this.screenWidth <= 430) {
       return "mobile-class";
     } else {
       return "pc-class";

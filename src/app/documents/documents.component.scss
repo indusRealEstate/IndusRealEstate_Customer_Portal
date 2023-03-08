@@ -11,20 +11,21 @@
 
   .mat-row {
     height: 90px;
-    &:hover {
-      background-color: #2b333e;
-      .req-type {
-        color: white;
-      }
+    cursor: none;
+    // &:hover {
+    //   background-color: #2b333e;
+    //   .req-type {
+    //     color: white;
+    //   }
 
-      .property-name {
-        color: white;
-      }
+    //   .property-name {
+    //     color: white;
+    //   }
 
-      .created-date {
-        color: white;
-      }
-    }
+    //   .created-date {
+    //     color: white;
+    //   }
+    // }
   }
 
   .table-header-font {
@@ -65,7 +66,8 @@
   height: 40px !important;
   border-radius: 7px !important;
   background-color: white !important;
-  padding-left: 15px !important;
+  padding-left: 10px !important;
+  border: 1px solid #a3a3a3;
   // margin-top: 25px !important;
 }
 

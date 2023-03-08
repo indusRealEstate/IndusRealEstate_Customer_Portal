@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 // import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
@@ -49,7 +49,7 @@ export class DocumentsComponent implements OnInit {
     this.isLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-
+    this.getScreenSize()
     this.route.queryParams.subscribe((e) => {
       if (e == null) {
         router.navigate([`/documents`], {
@@ -61,6 +61,14 @@ export class DocumentsComponent implements OnInit {
         });
       }
     });
+  }
+
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   searchRequest() {

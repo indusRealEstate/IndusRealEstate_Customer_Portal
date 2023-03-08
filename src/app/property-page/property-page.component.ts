@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
@@ -49,6 +49,7 @@ export class PropertyPage implements OnInit {
     private readonly route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
+    this.getScreenSize()
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     if (user[0]["auth_type"] == "landlord") {
@@ -112,6 +113,14 @@ export class PropertyPage implements OnInit {
     //     ],
     //   },
     // };
+  }
+
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   initFunction(e) {

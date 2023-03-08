@@ -2,7 +2,7 @@
 <!------------------------------------ Mobile Screen ----------------------------------------------------->
 <!------------------------------------ Mobile Screen ----------------------------------------------------->
 
-<div class="main-content" *ngIf="screenWidth <= 425">
+<div class="main-content" *ngIf="screenWidth <= 430">
   <div *ngIf="properties.length == 0">
     <p *ngIf="isLoading == false">You have'nt listed any property.</p>
 
@@ -157,7 +157,7 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
-<div class="main-content" *ngIf="screenWidth > 425">
+<div class="main-content" *ngIf="screenWidth > 430">
   <div *ngIf="properties.length == 0">
     <p *ngIf="isLoading == false" class="no-properties-text">
       You have'nt listed any property.
