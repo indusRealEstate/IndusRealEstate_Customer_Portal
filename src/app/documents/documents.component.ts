@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 // import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -44,12 +46,13 @@ export class DocumentsComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.isLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    this.getScreenSize()
+    this.getScreenSize();
     this.route.queryParams.subscribe((e) => {
       if (e == null) {
         router.navigate([`/documents`], {
@@ -69,6 +72,20 @@ export class DocumentsComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  viewDoc(doc) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.dialog.open(ViewDocDialog, {
+      data: {
+        doc: doc,
+        user_id: user[0]["id"],
+        auth_type: user[0]["auth_type"],
+      },
+      width: "1300px",
+      height: "700px",
+    });
   }
 
   searchRequest() {

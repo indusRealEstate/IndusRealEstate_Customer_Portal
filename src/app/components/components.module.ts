@@ -11,7 +11,6 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatListModule } from "@angular/material/list";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatCardModule } from "@angular/material/card";
-import { TableComponent } from "./table/table.component";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
@@ -20,6 +19,8 @@ import { ProgressComponent } from "./progressbar/progress";
 import { SuccessDialogRegister } from "./success-dialog/success_dialog";
 import { DndDirective } from "./dialog/dnd.directive";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { ViewDocDialog } from "./view-doc-dialog/view-doc-dialog";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
@@ -35,17 +36,18 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatTableModule,
     MatButtonModule,
     NgxSkeletonLoaderModule,
+    PdfViewerModule
   ],
   declarations: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
     DropdownMaterial,
-    TableComponent,
     DocUploadDialogRegister,
     ProgressComponent,
     SuccessDialogRegister,
     DndDirective,
+    ViewDocDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

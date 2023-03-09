@@ -1,0 +1,51 @@
+<div class="card" style="margin: 0">
+  <div
+    class="card-header"
+    style="
+      background-image: linear-gradient(
+          to bottom,
+          rgb(255 255 255 / 73%) 50%,
+          rgb(255 255 255 / 76%) 80%
+        ),
+        url('assets/img/bg/navbar_bg.webp');
+      border-bottom: 1px solid #a3a3a3c8;
+      height: 70px;
+    "
+  >
+    <div
+      class="row"
+      style="
+        font-weight: 600;
+        margin: 0;
+        justify-content: space-between;
+        font-size: 18px;
+        margin-top: 13px;
+      "
+    >
+      {{doc_data.document_name}}
+
+      <img
+        (click)="onCloseDialog()"
+        src="assets/img/svg/success-dialog/close-square.svg"
+        alt=""
+        style="
+          cursor: pointer;
+          width: 30px;
+          filter: invert(55%) sepia(75%) saturate(380%) hue-rotate(7deg)
+            brightness(106%) contrast(97%);
+        "
+      />
+    </div>
+  </div>
+  <div
+    class="card-body"
+    style="justify-content: center; display: flex; align-items: center"
+  >
+    <pdf-viewer
+      [src]="viewDocFile"
+      [render-text]="true"
+      [original-size]="false"
+      style="width: 400px; height: 500px"
+    ></pdf-viewer>
+  </div>
+</div>

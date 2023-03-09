@@ -5,7 +5,7 @@ import {
   HttpHeaders,
   HttpErrorResponse,
 } from "@angular/common/http";
-import { catchError, Observable, of } from "rxjs";
+import { catchError, Observable, of, map } from "rxjs";
 
 const API_URL = "https://indusre.app/api";
 

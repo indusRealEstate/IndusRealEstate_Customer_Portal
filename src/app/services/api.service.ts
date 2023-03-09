@@ -83,6 +83,15 @@ export class ApiService {
     );
   }
 
+  public getDocForView(doc_data: any) {
+    const url = `${API_URL}/getDocForView.php?apikey=1`;
+    return this.http.post<any>(url, { doc_data: doc_data }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getUser(userId: any) {
     const url = `${API_URL}/getUser.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
