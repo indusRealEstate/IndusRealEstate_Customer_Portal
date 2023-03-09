@@ -62,3 +62,7 @@
   .mat-step-icon {
   background-color: #fbfafa !important;
 }
+
+:host ::ng-deep .mat-form-field-underline {
+  display: none !important;
+}

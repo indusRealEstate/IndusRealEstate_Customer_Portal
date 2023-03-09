@@ -1,5 +1,8 @@
-<div class="main-content" style="width: 100%; display: flex; justify-content: center">
-  <div class="container-fluid" style="max-width: 100%">
+<div
+  class="main-content"
+  style="width: 100%; display: flex; justify-content: center"
+>
+  <div class="container-fluid" style="width: 100%">
     <!-- <button type="button" (click)="fileInput.click()">
       <span>Upload</span>
       <input
@@ -11,7 +14,7 @@
     </button>
     <button mat-raised-button (click)="onSubmit()">Submit</button> -->
 
-    <div class="card" style="margin-top: 0; text-align: initial">
+    <div #card class="card" style="text-align: initial">
       <div
         class="card-header"
         style="
@@ -38,20 +41,22 @@
           Landlord Registration
         </p>
       </div>
-      <div
-        *ngIf="isRegistering == true"
-        style="
-          display: flex;
-          justify-content: center;
-          height: 500px;
-          align-items: center;
-        "
-      >
-        <span
-          class="spinner-border spinner-border-m mr-2"
-          style="color: #d4aa32"
+      <div class="card-body" *ngIf="isRegistering == true">
+        <div
+          style="
+            width: 950px;
+            display: flex;
+            justify-content: center;
+            height: 500px;
+            align-items: center;
+          "
         >
-        </span>
+          <span
+            class="spinner-border spinner-border-m mr-2"
+            style="color: #d4aa32"
+          >
+          </span>
+        </div>
       </div>
 
       <div
@@ -202,7 +207,7 @@
             CANCEL
           </div>
           <div
-            (click)="stepperPreviousClick()"
+            (click)="stepperPreviousClick(card)"
             *ngIf="selectedIndex == 1 || selectedIndex == 2"
             class="btn"
             style="
@@ -219,7 +224,7 @@
             *ngIf="selectedIndex != 2"
             class="btn"
             style="background-color: #d4aa32; margin-left: 10px"
-            (click)="stepperNextClick()"
+            (click)="stepperNextClick(card)"
           >
             <div class="row" style="margin: 0">
               <p

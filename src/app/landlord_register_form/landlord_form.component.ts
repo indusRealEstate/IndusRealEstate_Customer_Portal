@@ -1,5 +1,5 @@
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
@@ -101,8 +101,9 @@ export class LandlordFormComponent implements OnInit {
     }, 500);
   }
 
-  stepperPreviousClick() {
+  stepperPreviousClick(el: HTMLElement) {
     this.stepper.previous();
+    el.scrollIntoView();
     if (this.selectedIndex == 1) {
       this.selectedIndex = 0;
     } else if (this.selectedIndex == 2) {
@@ -114,12 +115,13 @@ export class LandlordFormComponent implements OnInit {
     this.router.navigate(["/register"]);
   }
 
-  stepperNextClick() {
+  stepperNextClick(el: HTMLElement) {
     if (this.selectedIndex == 0) {
       if (this.firstStepper.form.valid) {
         this.isFormNotFilled = false;
         this.selectedIndex = 1;
         this.stepper.next();
+        el.scrollIntoView();
       } else {
         this.isFormNotFilled = true;
 
@@ -132,6 +134,7 @@ export class LandlordFormComponent implements OnInit {
         this.isFormNotFilled = false;
         this.selectedIndex = 2;
         this.stepper.next();
+        el.scrollIntoView();
       } else {
         this.isFormNotFilled = true;
 
@@ -289,6 +292,7 @@ export class LandlordFormComponent implements OnInit {
             this.isRegistering = false;
           }, 2000);
           this.dialog.open(SuccessDialogRegister, {
+            data: { auth_type: "none" },
             width: "730px",
             height: "430px",
           });

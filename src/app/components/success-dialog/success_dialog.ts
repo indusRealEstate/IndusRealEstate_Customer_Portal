@@ -12,15 +12,28 @@ export class SuccessDialogRegister implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<SuccessDialogRegister>,
     private router: Router
-  ) {}
+  ) {
+    this.auth_type = data["auth_type"];
+  }
+
+  auth_type: any;
 
   ngOnInit() {
-    setTimeout(() => {
-      this.router.navigate(["/login"]);
+    if (this.auth_type == "landlord") {
       setTimeout(() => {
-        this.dialogRef.close();
-      }, 500);
-    }, 4000);
+        this.router.navigate(["/home"]);
+        setTimeout(() => {
+          this.dialogRef.close();
+        }, 500);
+      }, 4000);
+    } else {
+      setTimeout(() => {
+        this.router.navigate(["/login"]);
+        setTimeout(() => {
+          this.dialogRef.close();
+        }, 500);
+      }, 4000);
+    }
   }
 
   onCloseDialog() {}

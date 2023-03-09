@@ -15,11 +15,10 @@
         src="assets/img/logo/logo-extended.webp"
         alt=""
         style="
-          width: 150px;
-          height: 40.29px;
-          margin-top: 5px;
+          width: 100px;
+          margin-top: -25px;
           margin-left: 10px;
-          margin-bottom: 5px;
+          margin-bottom: -25px;
         "
       />
 
@@ -72,6 +71,7 @@
         we will contact you back regarding your account.
       </h3>
       <h3
+        *ngIf="auth_type != 'tenant'"
         mat-dialog-title
         style="
           font-size: 13px;

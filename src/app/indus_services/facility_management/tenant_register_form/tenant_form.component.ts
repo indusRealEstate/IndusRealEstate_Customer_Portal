@@ -364,6 +364,7 @@ export class TenantRegisterComponent implements OnInit {
             this.isRegistering = false;
           }, 2000);
           this.dialog.open(SuccessDialogRegister, {
+            data: { auth_type: "landlord" },
             width: "730px",
             height: "430px",
           });

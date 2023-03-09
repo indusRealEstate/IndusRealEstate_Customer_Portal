@@ -2,7 +2,7 @@
   class="wrapper"
   *ngIf="isUserSignedOut == true && isLogoutProcessing == false"
 >
-  <div class="main-panel" [ngClass]="decideScreenRatio()">
+  <div class="main-panel" [ngClass]="decideScreenRatio()" style="align-items: normal;">
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
 </div>
