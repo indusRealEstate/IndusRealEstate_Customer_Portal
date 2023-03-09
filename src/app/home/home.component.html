@@ -103,7 +103,7 @@
         </div>
         <div class="col" style="padding-right: 0">
           <div
-            routerLink="/appointments"
+            routerLink="/customer-care"
             class="card"
             style="
               background-color: #d3ab33;
@@ -114,7 +114,7 @@
           >
             <div class="col" style="padding: 0; text-align: center">
               <img
-                src="assets/img/svg/home-page/calendar.svg"
+                src="assets/img/svg/sidebar/device-message.svg"
                 alt=""
                 style="filter: brightness(0) invert(1); width: 35px"
               />
@@ -127,7 +127,7 @@
                   margin-bottom: 0;
                 "
               >
-                Appointments
+                Customer Care
               </p>
             </div>
           </div>
@@ -217,7 +217,8 @@
             <!-- <div class="card-icon home-card-icons">
                             <i class="material-icons ">article</i>
                         </div> -->
-            <h3 class="card-title">01</h3>
+            <h3 class="card-title" *ngIf="userRequestsCount >= 10">{{ userRequestsCount }}</h3>
+            <h3 class="card-title" *ngIf="userRequestsCount < 10">0{{ userRequestsCount }}</h3>
             <p class="card-heading">My Requests</p>
             <tr>
               <td>
@@ -247,7 +248,8 @@
       <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isLandlord">
         <div class="card card-stats">
           <div class="card-header card-header">
-            <h3 class="card-title">01</h3>
+            <h3 class="card-title" *ngIf="userPropertiesCount >= 10">{{ userPropertiesCount }}</h3>
+            <h3 class="card-title" *ngIf="userPropertiesCount < 10">0{{ userPropertiesCount }}</h3>
             <p class="card-heading">My Properties</p>
             <tr>
               <td>
@@ -305,14 +307,14 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
+        <div class="card card-stats" style="justify-content: end">
           <div class="card-header card-header">
-            <h3 class="card-title">01</h3>
-            <p class="card-heading">Total Appointment</p>
+            <!-- <h3 class="card-title">01</h3> -->
+            <p class="card-heading">Customer Care</p>
             <tr>
               <td>
                 <a
-                  routerLink="/appointments"
+                  routerLink="/customer-care"
                   queryParams="{uid: user.id}"
                   class="homePage-more-info-link"
                   >More info</a
@@ -328,8 +330,9 @@
             </tr>
           </div>
           <img
+            style="top: 25px"
             class="home-card-icon-main"
-            src="assets/img/svg/home-page/calendar.svg"
+            src="assets/img/svg/sidebar/device-message.svg"
             alt=""
           />
         </div>

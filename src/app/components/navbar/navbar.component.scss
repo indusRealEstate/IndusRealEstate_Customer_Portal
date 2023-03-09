@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 
-::ng-deep .mat-menu-panel {
+:host ::ng-deep .mat-menu-panel {
   margin-top: 25px !important;
 }
 

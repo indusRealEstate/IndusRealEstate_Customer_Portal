@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
 
   isRecentHappeningsLoading: boolean = false;
 
+  userRequestsCount: number = 0;
+  userPropertiesCount: number = 0;
+
   screenHeight: number;
   screenWidth: number;
 
@@ -96,7 +99,11 @@ export class HomeComponent implements OnInit {
       setTimeout(() => {
         sessionStorage.setItem(
           "recentHeppenings",
-          JSON.stringify(this.recentHeppenings)
+          JSON.stringify({
+            recentHap: this.recentHeppenings,
+            req_count: this.userRequestsCount,
+            prop_count: this.userPropertiesCount,
+          })
         );
       }, 2000);
     }
@@ -106,17 +113,37 @@ export class HomeComponent implements OnInit {
     this.isUserSignOut();
     this.getUserDataFromLocal();
     await this.initFunction();
+  }
 
-    console.log(window.location);
+  getUserRequestCount(userId) {
+    this.apiService.getUserRequestDetails(userId).subscribe((data: any[]) => {
+      setTimeout(() => {
+        this.userRequestsCount = data.length;
+      }, 200);
+    });
+  }
+
+  getUserPropertiesCount(userId) {
+    this.apiService.getUserProperties(userId).subscribe((data: any[]) => {
+      setTimeout(() => {
+        this.userPropertiesCount = data.length;
+      }, 200);
+    });
   }
 
   async initFunction() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var userId = user[0]["id"];
+
     var recentHeppeningsSessionData =
       sessionStorage.getItem("recentHeppenings");
 
     if (recentHeppeningsSessionData != null) {
       var data = JSON.parse(recentHeppeningsSessionData);
-      this.recentHeppenings = data;
+      this.recentHeppenings = data["recentHap"];
+      this.userRequestsCount = data["req_count"];
+      this.userPropertiesCount = data["prop_count"];
       this.isRecentHappeningsLoading = false;
     } else {
       await this.getUserRecentHappenings().then(() => {
@@ -124,6 +151,11 @@ export class HomeComponent implements OnInit {
           this.isRecentHappeningsLoading = false;
         }, 800);
       });
+      this.getUserRequestCount(userId);
+
+      if (user[0]["auth_type"] == "landlord") {
+        this.getUserPropertiesCount(userId);
+      }
       sessionStorage.setItem(
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())

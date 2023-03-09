@@ -1831,6 +1831,9 @@
                     <div class="btn request-approve-btns">
                       <p style="margin-bottom: 0">Decline Request</p>
                     </div>
+                    <div class="btn request-approve-btns">
+                      <p style="margin-bottom: 0">Send to Landlord</p>
+                    </div>
                   </div>
                 </div>
 
@@ -2439,6 +2442,12 @@
                           (click)="declineRequest(allReq)"
                         >
                           <p style="margin-bottom: 0">Decline Request</p>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                        >
+                          <p style="margin-bottom: 0">Send to Landlord</p>
                         </div>
                       </div>
                     </div>

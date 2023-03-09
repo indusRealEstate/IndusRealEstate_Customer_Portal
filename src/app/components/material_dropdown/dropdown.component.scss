@@ -224,7 +224,7 @@
   }
 }
 
-::ng-deep .mat-menu-panel {
+:host ::ng-deep .mat-menu-panel {
   max-width: none !important;
   left: 5px !important;
 }

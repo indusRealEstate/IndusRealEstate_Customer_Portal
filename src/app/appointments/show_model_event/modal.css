@@ -43,6 +43,6 @@
     margin-top: 20px;
 }
 
-::ng-deep .mat-dialog-container{
+:host ::ng-deep .mat-dialog-container{
     padding: 0px !important;
 }

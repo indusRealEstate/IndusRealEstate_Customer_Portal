@@ -27,7 +27,7 @@ import { StepperTenantRegisterThird } from "./components/stepper_03_reg_tenant/s
     },
   ],
 })
-export class TenantFormComponent implements OnInit {
+export class TenantRegisterComponent implements OnInit {
   registerForm: FormGroup;
   auth_type: any = "";
 
@@ -65,7 +65,26 @@ export class TenantFormComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private dialog?: MatDialog
-  ) {}
+  ) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    if (user != null) {
+      this.route.queryParams.subscribe((e) => {
+        if (e == null) {
+          router.navigate(["/tenant-register-form"], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        } else if (e != user[0]["id"]) {
+          router.navigate(["/tenant-register-form"], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        }
+      });
+    } else {
+      router.navigate(["/login"]);
+    }
+  }
 
   ngOnInit() {
     // this.currentIndex = 0;
@@ -99,7 +118,7 @@ export class TenantFormComponent implements OnInit {
   }
 
   cancelRegistration() {
-    this.router.navigate(["/register"]);
+    this.router.navigate(["/home"]);
   }
 
   stepperNextClick() {

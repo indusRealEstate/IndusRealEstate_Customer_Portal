@@ -1,9 +1,9 @@
-::ng-deep .spinner-loader {
+:host ::ng-deep .spinner-loader {
   width: 100% !important;
   margin-top: 400px !important;
 }
 
-::ng-deep .mat-progress-spinner circle,
+:host ::ng-deep .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: #d3ab33 !important;
 }

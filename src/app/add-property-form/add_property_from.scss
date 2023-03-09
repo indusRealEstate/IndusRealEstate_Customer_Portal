@@ -52,7 +52,7 @@
   }
 }
 
-::ng-deep .mat-radio-outer-circle {
+:host ::ng-deep .mat-radio-outer-circle {
   border-radius: 6px !important;
   width: 25px !important;
   height: 25px !important;
@@ -60,12 +60,12 @@
   background-color: white !important;
 }
 
-::ng-deep .mat-radio-container {
+:host ::ng-deep .mat-radio-container {
   width: 25px !important;
   height: 25px !important;
 }
 
-::ng-deep .mat-radio-inner-circle {
+:host ::ng-deep .mat-radio-inner-circle {
   border-radius: 9px !important;
   width: 50px !important;
   margin-left: -12px !important;
@@ -74,32 +74,32 @@
   background-color: #d4aa32 !important;
 }
 
-::ng-deep .mat-ripple-element {
+:host ::ng-deep .mat-ripple-element {
   background-color: #d4aa32 !important;
 }
 
-::ng-deep .mat-checkbox-frame {
+:host ::ng-deep .mat-checkbox-frame {
   border: none !important;
 }
 
-::ng-deep .mat-checkbox-inner-container {
+:host ::ng-deep .mat-checkbox-inner-container {
   background-color: white !important;
   width: 25px !important;
   height: 25px !important;
   border-radius: 5px !important;
 }
 
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+:host ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
   background-color: #d4aa32 !important;
   border-radius: 5px !important;
 }
 
-::ng-deep .mat-form-field-underline {
+:host ::ng-deep .mat-form-field-underline {
   display: none !important;
 }
 
-::ng-deep .mat-form-field {
+:host ::ng-deep .mat-form-field {
   background-color: white !important;
   border-radius: 5px !important;
   padding-bottom: 0px !important;
@@ -110,13 +110,13 @@
   font-size: 17px !important;
 }
 
-::ng-deep .mat-form-field-infix {
+:host ::ng-deep .mat-form-field-infix {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
   margin-top: -3px !important;
 }
 
-::ng-deep .mat-datepicker-toggle-default-icon {
+:host ::ng-deep .mat-datepicker-toggle-default-icon {
   width: 20px !important;
   margin-bottom: 5px !important;
   color: #d4aa32 !important;

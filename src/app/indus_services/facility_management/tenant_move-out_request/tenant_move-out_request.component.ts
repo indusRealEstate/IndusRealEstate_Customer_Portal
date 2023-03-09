@@ -21,17 +21,22 @@ export class Tenant_Move_out_Request implements OnInit {
   ) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/tenant-move-out-request"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate(["/tenant-move-out-request"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
+    if(user != null){
+      this.route.queryParams.subscribe((e) => {
+        if (e == null) {
+          router.navigate(["/tenant-move-out-request"], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        } else if (e != user[0]["id"]) {
+          router.navigate(["/tenant-move-out-request"], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        }
+      });
+    }else {
+      router.navigate(['/login'])
+    }
+    
   }
 
   isUserSignOut() {

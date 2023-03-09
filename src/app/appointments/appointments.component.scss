@@ -47,12 +47,12 @@
   }
 }
 
-::ng-deep .mat-progress-spinner circle,
+:host ::ng-deep .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: #000000;
 }
 
-::ng-deep .fc {
+:host ::ng-deep .fc {
   & .fc-daygrid-day {
     &.fc-day-today {
       background-color: #d3ab33 !important;

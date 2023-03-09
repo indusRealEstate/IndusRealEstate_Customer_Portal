@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
+import { Route, Router } from "@angular/router";
 
 /**
  * @title Basic menu
@@ -17,7 +18,7 @@ export class DropdownMaterial implements OnInit {
   isLandlord: boolean = false;
   isTenant: boolean = false;
 
-  constructor() {
+  constructor(private router: Router) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 

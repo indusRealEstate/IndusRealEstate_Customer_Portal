@@ -27,14 +27,15 @@
           class="form__button button register-btn"
           [disabled]="loading"
           (click)="onSubmit('landlord')"
+          style="width: 230px"
         >
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
           ></span>
-          LANDLORD
+          PROPERTY OWNER
         </button>
-        <button
+        <!-- <button
           style="margin-top: 15px"
           class="form__button button register-btn"
           [disabled]="loading"
@@ -45,7 +46,7 @@
             class="spinner-border spinner-border-sm mr-1"
           ></span>
           TENANT
-        </button>
+        </button> -->
       </form>
     </div>
     <div

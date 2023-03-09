@@ -66,7 +66,18 @@ export class LandlordFormComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private dialog?: MatDialog
-  ) {}
+  ) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    if (user != null) {
+      if (user[0]["auth_type"] != "admin") {
+        router.navigate(["/home"]);
+      } else {
+        router.navigate(["/admin-dashboard"]);
+      }
+    }
+  }
 
   ngOnInit() {
     // this.currentIndex = 0;

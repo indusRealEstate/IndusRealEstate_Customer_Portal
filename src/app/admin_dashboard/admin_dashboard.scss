@@ -4,15 +4,15 @@
   font-family: "Montserrat";
 }
 
-::ng-deep .mat-progress-bar-fill::after {
+:host ::ng-deep .mat-progress-bar-fill::after {
   background-color: #ffffff !important;
 }
 
-::ng-deep .mat-progress-bar-buffer {
+:host ::ng-deep .mat-progress-bar-buffer {
   background: #959090 !important;
 }
 
-::ng-deep .mat-progress-bar {
+:host ::ng-deep .mat-progress-bar {
   border-radius: 5px !important;
   height: 7px !important;
 }

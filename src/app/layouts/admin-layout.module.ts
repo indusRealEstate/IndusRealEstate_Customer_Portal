@@ -62,7 +62,6 @@ import { ModalComponentDate } from "app/appointments/show_modal_date/modal-date"
 import { ModalComponent } from "app/appointments/show_model_event/modal";
 import { FM_MaintananceRequest } from "app/indus_services/facility_management/fm-maintanence_request/fm-maintanence_request.component";
 import { Tenant_Move_out_Request } from "app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component";
-import { Tenant_Registration } from "app/indus_services/facility_management/tenant_registration/tenant_registration.component";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
@@ -78,13 +77,13 @@ import { DeclineRequestConfirmDialog } from "app/admin-requests/decline_req_dial
 import { LoginComponent } from "app/login/login.component";
 import { RegisterComponent } from "app/register/register.component";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
-import { TenantFormComponent } from "app/tenant_register_form/tenant_form.component";
+import { TenantRegisterComponent } from "app/indus_services/facility_management/tenant_register_form/tenant_form.component";
 import { StepperLandlordRegisterFirst } from "app/landlord_register_form/components/stepper_01_reg_landlord/stepper_first_reg_landlord";
 import { StepperLandlordRegisterSecond } from "app/landlord_register_form/components/stepper_02_reg_landlord/stepper_second_reg_landlord";
 import { StepperLandlordRegisterThird } from "app/landlord_register_form/components/stepper_03_reg_landlord/stepper_third_reg_landlord";
-import { StepperTenantRegisterFirst } from "app/tenant_register_form/components/stepper_01_reg_tenant/stepper_first_reg_tenant";
-import { StepperTenantRegisterSecond } from "app/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
-import { StepperTenantRegisterThird } from "app/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
+import { StepperTenantRegisterFirst } from "app/indus_services/facility_management/tenant_register_form/components/stepper_01_reg_tenant/stepper_first_reg_tenant";
+import { StepperTenantRegisterSecond } from "app/indus_services/facility_management/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
+import { StepperTenantRegisterThird } from "app/indus_services/facility_management/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
 import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 import { RequestPage } from "app/request-page/request-page";
 import { BackButtonDirective } from "app/request-page/back-navigation.directive";
@@ -92,6 +91,7 @@ import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_
 import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_clients";
 import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_properties";
 import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
+import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -182,16 +182,13 @@ import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_proper
     // cdk steps components for tenant move-in request
     Tenant_Move_out_Request,
 
-    // cdk steps components for tenant registration
-    Tenant_Registration,
-
     AcceptRequestConfirmDialog,
     DeclineRequestConfirmDialog,
 
     LoginComponent,
     RegisterComponent,
     LandlordFormComponent,
-    TenantFormComponent,
+    TenantRegisterComponent,
 
     // Landlord Reg
     StepperLandlordRegisterFirst,
@@ -211,6 +208,7 @@ import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_proper
     CountryDropdown,
     RequestPage,
     BackButtonDirective,
+    CustomerCareComponent,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

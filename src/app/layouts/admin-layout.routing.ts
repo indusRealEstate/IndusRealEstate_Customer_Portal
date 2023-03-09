@@ -10,7 +10,6 @@ import { DocumentsComponent } from "app/documents/documents.component";
 import { NewPaymentComponent } from "app/new_payment/new_payment.component";
 import { FM_MaintananceRequest } from "app/indus_services/facility_management/fm-maintanence_request/fm-maintanence_request.component";
 import { Tenant_Move_out_Request } from "app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component";
-import { Tenant_Registration } from "app/indus_services/facility_management/tenant_registration/tenant_registration.component";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { AdminRequests } from "app/admin-requests/admin-requests";
@@ -19,12 +18,13 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { LoginComponent } from "app/login/login.component";
 import { RegisterComponent } from "app/register/register.component";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
-import { TenantFormComponent } from "app/tenant_register_form/tenant_form.component";
+import { TenantRegisterComponent } from "app/indus_services/facility_management/tenant_register_form/tenant_form.component";
 import { RequestPage } from "app/request-page/request-page";
 import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_clients";
 import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_clients";
 import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_properties";
 import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
+import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -37,21 +37,21 @@ export const AdminLayoutRoutes: Routes = [
   { path: "new-payment", component: NewPaymentComponent },
   { path: "fm-maintanence-request", component: FM_MaintananceRequest },
   { path: "tenant-move-out-request", component: Tenant_Move_out_Request },
-  { path: "tenant-registration", component: Tenant_Registration },
   { path: "property-page", component: PropertyPage },
   { path: "request-page", component: RequestPage },
   { path: "add-property-form", component: AddPropertyForm },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "admin-requests", component: AdminRequests },
-  { path: "404", component: PageNotFoundComponent },
-  // { path: "**", redirectTo: "/404" },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },
-  { path: "tenant-register-form", component: TenantFormComponent },
+  { path: "tenant-register-form", component: TenantRegisterComponent },
   { path: "admin-tenant-clients", component: AdminTenantClients },
   { path: "admin-landlord-clients", component: AdminLandlordClients },
   { path: "admin-properties-sale", component: AdminSaleProperties },
   { path: "admin-properties-rent", component: AdminRentProperties },
+  { path: "customer-care", component: CustomerCareComponent },
+  { path: "404", component: PageNotFoundComponent },
+  { path: "**", redirectTo: "/404" },
 ];

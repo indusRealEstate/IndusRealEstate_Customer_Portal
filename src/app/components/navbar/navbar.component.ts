@@ -165,7 +165,7 @@ export class NavbarComponent implements OnInit {
         return "Landlord Move-out Request";
       case "/tenant-move-out-request":
         return "Tenant Move-out Request";
-      case "/tenant-registration":
+      case "/tenant-register-form":
         return "Tenant Registration";
       case "/property-page":
         return "Property details Page";
@@ -185,6 +185,8 @@ export class NavbarComponent implements OnInit {
         return "All Properties For Sale";
       case "/admin-properties-rent":
         return "All Properties For Rent";
+      case "/customer-care":
+        return "Customer Care";
       case "/404":
         return "";
       default:

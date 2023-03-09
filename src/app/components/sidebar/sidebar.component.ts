@@ -68,6 +68,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "assets/img/svg/sidebar/document-filter.svg",
     class: "",
   },
+  {
+    path: "/customer-care",
+    title: "Customer Care",
+    icon: "assets/img/svg/sidebar/device-message.svg",
+    class: "",
+  },
   // {
   //   path: "/appointments",
   //   title: "Appointments",
@@ -91,7 +97,7 @@ export class SidebarComponent implements OnInit {
   userProfileFetching: boolean = false;
 
   ///////////////--App Version--////////////////////
-  appVersion: any = "VERSION PROD v0.1.13";
+  appVersion: any = "VERSION PROD v0.1.14";
 
   constructor(
     private authService: AuthenticationService,
