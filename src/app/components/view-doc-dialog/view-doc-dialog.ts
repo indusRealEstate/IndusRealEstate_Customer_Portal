@@ -10,6 +10,7 @@ import { ApiService } from "app/services/api.service";
   templateUrl: "./view-doc-dialog.html",
 })
 export class ViewDocDialog implements OnInit {
+  isLoading: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewDocDialog>,
@@ -17,6 +18,7 @@ export class ViewDocDialog implements OnInit {
     private http: HttpClient,
     private service: ApiService
   ) {
+    this.isLoading = true;
     this.doc_data = data["doc"];
     this.user_id = data["user_id"];
     this.auth_type = data["auth_type"];
@@ -34,16 +36,18 @@ export class ViewDocDialog implements OnInit {
   }
 
   fetchDoc() {
-
     this.service
       .getDocForView(
         JSON.stringify({
-          file_name: "property_thumbnail.pdf",
-          user_id: "baba5cc6-a2cb-11ed-a8fc-0242ac120002",
+          file_path: this.doc_data["path"],
         })
       )
       .subscribe((res) => {
-        console.log(res);
+        this.viewDocFile = "data:application/pdf;base64," + res;
+
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       });
   }
 
