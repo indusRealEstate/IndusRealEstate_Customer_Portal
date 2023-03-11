@@ -114,6 +114,15 @@
     <button
       mat-menu-item
       class="dropdown-facility-ind"
+      routerLink="/tenant-move-in-request"
+      queryParams="{uid: userId}"
+      *ngIf="isLandlord"
+    >
+      TENANT MOVE-IN REQUEST
+    </button>
+    <button
+      mat-menu-item
+      class="dropdown-facility-ind"
       routerLink="/tenant-move-out-request"
       queryParams="{uid: userId}"
       *ngIf="isLandlord"

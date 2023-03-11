@@ -25,6 +25,7 @@ import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_
 import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_properties";
 import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
+import { Tenant_Move_in_Request } from "app/indus_services/facility_management/tenant_move-in_request/tenant_move-in_request";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -37,6 +38,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "new-payment", component: NewPaymentComponent },
   { path: "fm-maintanence-request", component: FM_MaintananceRequest },
   { path: "tenant-move-out-request", component: Tenant_Move_out_Request },
+  { path: "tenant-move-in-request", component: Tenant_Move_in_Request },
   { path: "property-page", component: PropertyPage },
   { path: "request-page", component: RequestPage },
   { path: "add-property-form", component: AddPropertyForm },

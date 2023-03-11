@@ -159,12 +159,10 @@ export class NavbarComponent implements OnInit {
         return "Appointments";
       case "/fm-maintanence-request":
         return "FM Maintanence Request";
-      case "/owner-move-in-request":
-        return "Landlord Move-in Request";
-      case "/owner-move-out-request":
-        return "Landlord Move-out Request";
       case "/tenant-move-out-request":
         return "Tenant Move-out Request";
+      case "/tenant-move-in-request":
+        return "Tenant Move-in Request";
       case "/tenant-register-form":
         return "Tenant Registration";
       case "/property-page":

@@ -27,12 +27,21 @@ export class ViewDocDialog implements OnInit {
   doc_data: any;
   user_id: any;
   auth_type: any;
+  iframePathDynamic: any;
+  iframePath: any;
 
   viewDocFile: any;
+  ext: any;
 
   ngOnInit() {
     // console.log(this.doc_data);
-    this.fetchDoc();
+    this.ext = this.doc_data["path"].split(".")[1];
+    this.iframePathDynamic = this.doc_data["path"].split(".")[0];
+
+    if (this.ext == "pdf") {
+      this.fetchDoc();
+    } else {
+    }
   }
 
   fetchDoc() {
@@ -40,6 +49,7 @@ export class ViewDocDialog implements OnInit {
       .getDocForView(
         JSON.stringify({
           file_path: this.doc_data["path"],
+          auth_type: this.auth_type,
         })
       )
       .subscribe((res) => {

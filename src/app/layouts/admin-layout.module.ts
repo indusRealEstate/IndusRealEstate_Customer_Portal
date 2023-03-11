@@ -92,6 +92,7 @@ import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_client
 import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_properties";
 import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
+import { Tenant_Move_in_Request } from "app/indus_services/facility_management/tenant_move-in_request/tenant_move-in_request";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -172,15 +173,11 @@ import { CustomerCareComponent } from "app/indus_services/customer_service/custo
 
     ModalComponent,
     ModalComponentDate,
-
-    // cdk steps components for new payments
+    
     NewPaymentComponent,
-
-    // cdk steps components for fm maintanence request
     FM_MaintananceRequest,
-
-    // cdk steps components for tenant move-in request
     Tenant_Move_out_Request,
+    Tenant_Move_in_Request,
 
     AcceptRequestConfirmDialog,
     DeclineRequestConfirmDialog,

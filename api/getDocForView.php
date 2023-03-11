@@ -5,25 +5,27 @@ header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
 header(
     "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept"
 );
-header("Content-Type: application/json; charset=UTF-8");
-
-include "../dBase.php";
-$dbase = new dBase();
-$tcon = $dbase->con;
+header("Content-type: application/pdf");
 
 $postdata = file_get_contents("php://input");
 $decodedData = json_decode($postdata, true);
 
 if (isset($postdata) && !empty($postdata)) {
-    $url = $decodedData["doc_url"];
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_HTTPGET, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response_json = curl_exec($ch);
-    curl_close($ch);
-    $response = json_decode($response_json, true);
-}
+    $raw_obj = $decodedData["doc_data"];
 
-// echo json_encode($res);
+    $json = json_decode($raw_obj, true);
+
+    if ($json["auth_type"] == "landlord") {
+        $string = "upload/doc/landlord-documents/" . $json["file_path"];
+
+        $b64Doc = chunk_split(base64_encode(file_get_contents($string)));
+    } elseif ($json["auth_type"] == "tenant") {
+        $string = "upload/doc/tenant-documents/" . $json["file_path"];
+
+        $b64Doc = chunk_split(base64_encode(file_get_contents($string)));
+    }
+
+    echo json_encode($b64Doc);
+}
 
 ?>
