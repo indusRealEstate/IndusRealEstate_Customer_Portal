@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
@@ -15,19 +14,9 @@ export class PageNotFoundComponent implements OnInit {
   userId: any;
 
   constructor(
-    private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    if (this.authenticationService.currentUserValue) {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-
-      this.userId = user[0]["id"];
-    }
-  }
-
-  isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
     } else {
@@ -36,7 +25,5 @@ export class PageNotFoundComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.isUserSignOut();
-  }
+  ngOnInit() {}
 }

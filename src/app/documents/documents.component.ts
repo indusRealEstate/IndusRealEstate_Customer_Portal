@@ -49,21 +49,31 @@ export class DocumentsComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog
   ) {
-    this.isLoading = true;
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
     this.getScreenSize();
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/documents`], {
-          queryParams: { uid: user[0]["id"] },
+    this.isLoading = true;
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      if (user[0]["auth_type"] != "admin") {
+        this.route.queryParams.subscribe((e) => {
+          if (e == null) {
+            router.navigate([`/documents`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          } else if (e != user[0]["id"]) {
+            router.navigate([`/documents`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          }
         });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/documents`], {
-          queryParams: { uid: user[0]["id"] },
-        });
+      } else {
+        router.navigate(["/admin-dashboard"]);
       }
-    });
+    } else {
+      this.isUserSignedIn = false;
+      this.router.navigate(["/login"]);
+    }
   }
 
   screenHeight: number;
@@ -122,18 +132,7 @@ export class DocumentsComponent implements OnInit {
     this.isSearchBtnClicked = false;
   }
 
-  isUserSignOut() {
-    if (this.authenticationService.currentUserValue) {
-      this.isUserSignedIn = true;
-    } else {
-      this.isUserSignedIn = false;
-      this.router.navigate(["/login"]);
-    }
-  }
-
   ngOnInit() {
-    this.isUserSignOut();
-
     var sessionData = JSON.parse(sessionStorage.getItem("my-docs-session"));
 
     if (sessionData != null) {

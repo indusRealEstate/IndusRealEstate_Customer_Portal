@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
 
 @Component({
@@ -17,7 +16,7 @@ export class StepperLandlordRegisterThird {
   ownerShipDoc: any = "";
   salesDeedDoc: any = "";
 
-  constructor(private formBuilder: FormBuilder, private dialog?: MatDialog) {}
+  constructor(private dialog?: MatDialog) {}
 
   ngOnInit(): void {}
 

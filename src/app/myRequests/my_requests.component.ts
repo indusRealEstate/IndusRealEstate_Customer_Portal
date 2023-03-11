@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -52,20 +51,30 @@ export class MyRequestsComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.isLoading = true;
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
 
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/my-requests`], {
-          queryParams: { uid: user[0]["id"] },
+      if (user[0]["auth_type"] != "admin") {
+        this.route.queryParams.subscribe((e) => {
+          if (e == null) {
+            router.navigate([`/my-requests`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          } else if (e != user[0]["id"]) {
+            router.navigate([`/my-requests`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          }
         });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/my-requests`], {
-          queryParams: { uid: user[0]["id"] },
-        });
+      } else {
+        router.navigate(["/admin-dashboard"]);
       }
-    });
+    } else {
+      this.isUserSignedIn = false;
+      this.router.navigate(["/login"]);
+    }
   }
 
   my_req_clicked() {
@@ -144,18 +153,7 @@ export class MyRequestsComponent implements OnInit {
     this.isSearchBtnClicked = false;
   }
 
-  isUserSignOut() {
-    if (this.authenticationService.currentUserValue) {
-      this.isUserSignedIn = true;
-    } else {
-      this.isUserSignedIn = false;
-      this.router.navigate(["/login"]);
-    }
-  }
-
   ngOnInit() {
-    this.isUserSignOut();
-
     var sessionData = JSON.parse(sessionStorage.getItem("my-requests-session"));
 
     if (sessionData != null) {

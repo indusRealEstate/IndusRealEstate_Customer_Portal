@@ -57,19 +57,25 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/user-profile`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/user-profile`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      this.route.queryParams.subscribe((e) => {
+        if (e == null) {
+          router.navigate([`/user-profile`], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        } else if (e != user[0]["id"]) {
+          router.navigate([`/user-profile`], {
+            queryParams: { uid: user[0]["id"] },
+          });
+        }
+      });
+    } else {
+      this.isUserSignedIn = false;
+      this.router.navigate(["/login"]);
+    }
   }
 
   pickImg(event: any) {
@@ -103,18 +109,8 @@ export class UserProfileComponent implements OnInit {
     };
   }
 
-  isUserSignOut() {
-    if (this.authenticationService.currentUserValue) {
-      this.isUserSignedIn = true;
-    } else {
-      this.isUserSignedIn = false;
-      this.router.navigate(["/login"]);
-    }
-  }
-
   async ngOnInit() {
     this.propertiesImagesLoading = true;
-    this.isUserSignOut();
     await this.initFunction();
   }
 

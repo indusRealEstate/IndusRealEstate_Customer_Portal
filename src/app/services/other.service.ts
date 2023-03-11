@@ -1,22 +1,6 @@
 import { Injectable } from "@angular/core";
-import {
-  Observable,
-  of,
-  throwError,
-  Subscription,
-  BehaviorSubject,
-} from "rxjs";
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
-} from "@angular/common/http";
-
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" }),
-};
-
-const API_URL = "https://indusre.app/api/user";
+import { BehaviorSubject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({ providedIn: "root" })
 export class OtherServices {
@@ -38,9 +22,8 @@ export class OtherServices {
     false
   );
 
-  public adminRequestGotApproved: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  public adminRequestGotApproved: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   public addMessage(data: any) {
     this.messages.next(data);

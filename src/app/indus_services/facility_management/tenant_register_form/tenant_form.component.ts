@@ -1,16 +1,13 @@
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
-import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { SuccessDialogRegister } from "app/components/success-dialog/success_dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
-import * as CryptoJS from "crypto-js";
-import { first } from "rxjs";
 import * as uuid from "uuid";
 import { StepperTenantRegisterFirst } from "./components/stepper_01_reg_tenant/stepper_first_reg_tenant";
 import { StepperTenantRegisterSecond } from "./components/stepper_02_reg_tenant/stepper_second_reg_tenant";
@@ -62,27 +59,19 @@ export class TenantRegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private dialog?: MatDialog
   ) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
+    if (this.authenticationService.currentUserValue) {
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
 
-    if (user != null) {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate(["/tenant-register-form"], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate(["/tenant-register-form"], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        }
-      });
+      if (user[0]["auth_type"] != "admin") {
+        router.navigate(["/tenant-register-form"]);
+      } else {
+        router.navigate(["/admin-dashboard"]);
+      }
     } else {
-      router.navigate(["/login"]);
+      this.router.navigate(["/login"]);
     }
   }
 
@@ -90,12 +79,6 @@ export class TenantRegisterComponent implements OnInit {
     // this.currentIndex = 0;
     this.selectedIndex = 0;
   }
-
-  // ngDoCheck() {
-  //   if (this.stepperInitialized == true) {
-  //     this.currentIndex = this.stepper.selectedIndex;
-  //   }
-  // }
 
   ngAfterViewInit(): void {
     this.tenantRegStep01Form = this.firstStepper.form;
@@ -380,20 +363,4 @@ export class TenantRegisterComponent implements OnInit {
         console.log(e);
       });
   }
-
-  // readFile(event: any) {
-  //   var file = event.target.files[0];
-
-  //   var reader = new FileReader();
-  //   reader.readAsArrayBuffer(file);
-
-  //   reader.onloadend = (e) => {
-  //     var buffer = e.target.result;
-  //     var blob = new Blob([buffer], { type: "image/jpeg" });
-
-  //     console.log(blob);
-
-  //     // this.apiService.downloadFile(blob, "profile-img", "jpg");
-  //   };
-  // }
 }

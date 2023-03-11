@@ -1,10 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
-import { ActivatedRoute, Router, RoutesRecognized } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
-import { filter, pairwise, take } from "rxjs";
 
 @Component({
   selector: "request-page",
@@ -21,25 +18,29 @@ export class RequestPage implements OnInit {
   previousUrl: string;
 
   constructor(
-    private formBuilder: FormBuilder,
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
-    private otherServices: OtherServices
+    private readonly route: ActivatedRoute
   ) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    if (
-      user[0]["auth_type"] == "landlord" ||
-      user[0]["auth_type"] == "tenant"
-    ) {
-      this.isLoading = true;
-      this.route.queryParams.subscribe((e) => {
-        this.initFunction(e);
-      });
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      if (
+        user[0]["auth_type"] == "landlord" ||
+        user[0]["auth_type"] == "tenant"
+      ) {
+        this.isLoading = true;
+        this.route.queryParams.subscribe((e) => {
+          this.initFunction(e);
+        });
+      } else {
+        router.navigate([`/admin-dashboard`]);
+      }
     } else {
-      router.navigate([`/404`]);
+      this.isUserSignedIn = false;
+      this.router.navigate(["/login"]);
     }
   }
 
@@ -70,22 +71,9 @@ export class RequestPage implements OnInit {
     }
   }
 
-  isUserSignOut() {
-    if (this.authenticationService.currentUserValue) {
-      this.isUserSignedIn = true;
-    } else {
-      this.isUserSignedIn = false;
-      this.router.navigate(["/login"]);
-    }
-  }
-
-  docViewBtnClicked(){
-    console.log("doc btn")
+  docViewBtnClicked() {
+    console.log("doc btn");
   }
 
   ngOnInit() {}
-
-  ngAfterViewInit() {}
-
-  ngOnDestroy() {}
 }

@@ -56,9 +56,6 @@ export class AdminLandlordClients implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  scrollToTop() {
-    // window.scrollTo(0, 0);
-  }
 
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {

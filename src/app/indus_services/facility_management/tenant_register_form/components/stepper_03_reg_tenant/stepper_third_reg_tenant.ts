@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
 
 @Component({
@@ -17,14 +16,12 @@ export class StepperTenantRegisterThird {
   copy_of_valid_power_of_attorney_document: any = "";
   tenants_Visa_Copy: any = "";
   title_Deed_doc: any = "";
-  
+
   tenant_emiratesIDPics: any[] = [];
   landlord_passPortPics: any[] = [];
   tenant_passPortPics: any[] = [];
 
-  
-
-  constructor(private formBuilder: FormBuilder, private dialog?: MatDialog) {}
+  constructor(private dialog?: MatDialog) {}
 
   ngOnInit(): void {}
 

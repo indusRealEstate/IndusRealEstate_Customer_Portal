@@ -3,10 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
-import * as Chartist from "chartist";
 import { BehaviorSubject } from "rxjs";
-import { User } from "../../../models/user/user.model";
 
 @Component({
   selector: "admin-dashboard",
@@ -60,9 +57,7 @@ export class AdminDashboardComponent implements OnInit {
     private adminService: AdminService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherService: OtherServices,
     private route: ActivatedRoute,
-    private otherServices: OtherServices
   ) {
     this.isLoading = true;
     // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
@@ -96,10 +91,6 @@ export class AdminDashboardComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
-  }
-
-  scrollToTop() {
-    // window.scrollTo(0, 0);
   }
 
   isUserSignOut() {

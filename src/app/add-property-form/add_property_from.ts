@@ -47,26 +47,32 @@ export class AddPropertyForm implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
-    // private otherServices: OtherServices
-  ) {
+    private readonly route: ActivatedRoute
+  ) // private otherServices: OtherServices
+  {
     this.pageLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] == "landlord") {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate([`/add-property-form`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate([`/add-property-form`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        }
-      });
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+      if (user[0]["auth_type"] == "landlord") {
+        this.route.queryParams.subscribe((e) => {
+          if (e == null) {
+            router.navigate([`/add-property-form`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          } else if (e != user[0]["id"]) {
+            router.navigate([`/add-property-form`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          }
+        });
+      } else {
+        router.navigate([`/404`]);
+      }
     } else {
-      router.navigate([`/404`]);
+      this.isUserSignedIn = false;
+      this.router.navigate(["/login"]);
     }
   }
 
@@ -154,7 +160,7 @@ export class AddPropertyForm implements OnInit {
       var jsonData = {
         user_id: user[0]["id"],
         request_type: REQUEST_TYPE,
-        unique_id: '',
+        unique_id: "",
         property_state: this.propertyState,
         offer_validity: this.offerValidity,
         furnish_details: this.addPropertyForm.value["furnishDetails"],

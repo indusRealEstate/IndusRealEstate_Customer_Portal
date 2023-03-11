@@ -2,14 +2,10 @@ import { Injectable } from "@angular/core";
 
 import {
   HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
 } from "@angular/common/http";
-import { catchError, Observable, of, map } from "rxjs";
+import { catchError, Observable, of} from "rxjs";
 
 const API_URL = "https://indusre.app/api";
-
-declare var gapi: any;
 
 @Injectable({ providedIn: "root" })
 export class EmailServices {

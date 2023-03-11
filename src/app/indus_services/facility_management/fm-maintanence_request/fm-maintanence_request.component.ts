@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
@@ -13,39 +12,36 @@ export class FM_MaintananceRequest implements OnInit {
   isUserSignedIn: boolean = false;
 
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute
   ) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/fm-maintanence-request"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate(["/fm-maintanence-request"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
-  }
-
-  isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
-      this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+
+      if (user[0]["auth_type"] != "admin") {
+        this.isUserSignedIn = true;
+
+        this.route.queryParams.subscribe((e) => {
+          if (e == null) {
+            router.navigate(["/fm-maintanence-request"], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          } else if (e != user[0]["id"]) {
+            router.navigate(["/fm-maintanence-request"], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          }
+        });
+      } else {
+        router.navigate(["/admin-dashboard"]);
+      }
     } else {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
     }
   }
 
-  stateDone() {}
-
-  ngOnInit(): void {
-    this.isUserSignOut();
-  }
+  ngOnInit(): void {}
 }

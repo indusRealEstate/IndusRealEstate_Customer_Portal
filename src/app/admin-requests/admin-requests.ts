@@ -1,12 +1,10 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { EmailServices } from "app/services/email.service";
-import { OtherServices } from "app/services/other.service";
 import { BehaviorSubject } from "rxjs";
 import { AcceptRequestConfirmDialog } from "./accept_req_dialog/acspt_req_dialog";
 import { DeclineRequestConfirmDialog } from "./decline_req_dialog/decline_req_dialog";
@@ -60,7 +58,6 @@ export class AdminRequests implements OnInit {
   propertyTypeAllRequests: "all" | "villa" | "appartment" = "all";
 
   constructor(
-    private formBuilder: FormBuilder,
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -68,7 +65,6 @@ export class AdminRequests implements OnInit {
     private adminService: AdminService,
     private dialog?: MatDialog,
     private emailServices?: EmailServices,
-    private otherServices?: OtherServices
   ) {
     this.isLoading = true;
     this.isContentLoading = true;

@@ -1,18 +1,10 @@
-import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AlertService } from "app/services/alert.service";
-import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { EmailServices } from "app/services/email.service";
-import { UserService } from "app/services/user.service";
 import * as CryptoJS from "crypto-js";
-import { first } from "rxjs";
-import { interval as observableInterval } from "rxjs";
-import { takeWhile, scan, tap } from "rxjs/operators";
 import { RegisterSuccessDialog } from "./register_success_dialog/register_success_dialog";
 // import { RegisterSuccessDialog } from "./register_success_dialog/register_success_dialog";
 
@@ -37,7 +29,6 @@ export class EmailVerification implements OnInit {
   allUserNames: any[] = [];
 
   constructor(
-    private apiService: ApiService,
     private router: Router,
     private emailService: EmailServices,
     private authServices: AuthenticationService,
@@ -91,7 +82,7 @@ export class EmailVerification implements OnInit {
           });
       });
     } else {
-      router.navigate(["/"]);
+      this.router.navigate(["/"]);
     }
   }
 

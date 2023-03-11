@@ -1,9 +1,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { first } from "rxjs/operators";
 import { AuthenticationService } from "app/services/authentication.service";
-import { AlertService } from "app/services/alert.service";
 import { OtherServices } from "app/services/other.service";
 
 @Component({
@@ -31,7 +29,6 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService,
     private otherServices: OtherServices
   ) {
     this.getScreenSize();
@@ -39,7 +36,7 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.currentUserValue) {
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
-      this.router.navigate([`/home`], {
+      this.router.navigate([`/`], {
         queryParams: { uid: user[0]["id"] },
       });
     }

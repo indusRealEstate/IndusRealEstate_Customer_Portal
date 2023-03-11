@@ -1,11 +1,7 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, HostListener, OnInit } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
-import { Property } from "../../../models/property/property";
 
 @Component({
   selector: "app-myProperties",
@@ -29,28 +25,36 @@ export class MyPropertiesComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices,
-    private route: ActivatedRoute,
-    private http: HttpClient
+    private route: ActivatedRoute
   ) {
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
+    if (this.authenticationService.currentUserValue) {
+      this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
 
-    if (user[0]["auth_type"] != "landlord") {
-      router.navigateByUrl(`/home/${user[0]["id"]}`);
-    } else {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate([`/my-properties`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate([`/my-properties`], {
-            queryParams: { uid: user[0]["id"] },
+      if (user[0]["auth_type"] != "admin") {
+        if (user[0]["auth_type"] != "landlord") {
+          router.navigateByUrl(`/home/${user[0]["id"]}`);
+        } else {
+          this.route.queryParams.subscribe((e) => {
+            if (e == null) {
+              router.navigate([`/my-properties`], {
+                queryParams: { uid: user[0]["id"] },
+              });
+            } else if (e != user[0]["id"]) {
+              router.navigate([`/my-properties`], {
+                queryParams: { uid: user[0]["id"] },
+              });
+            }
           });
         }
-      });
+      } else {
+        router.navigate(["/admin-dashboard"]);
+      }
+    } else {
+      this.isUserSignedIn = false;
+      this.router.navigate(["/login"]);
     }
   }
 
@@ -60,18 +64,8 @@ export class MyPropertiesComponent implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  isUserSignOut() {
-    if (this.authenticationService.currentUserValue) {
-      this.isUserSignedIn = true;
-    } else {
-      this.isUserSignedIn = false;
-      this.router.navigate(["/login"]);
-    }
-  }
-
   async ngOnInit() {
     this.isImagesLoading = true;
-    this.isUserSignOut();
     await this.initFunction();
   }
 

@@ -3,7 +3,6 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
-// import { Subscription } from "rxjs";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 
@@ -13,9 +12,6 @@ import { OtherServices } from "app/services/other.service";
   styleUrls: ["./admin-layout.component.scss"],
 })
 export class AdminLayoutComponent implements OnInit {
-  // private _router: Subscription;
-  // private lastPoppedUrl: string;
-  // private yScrollStack: number[] = [];
   isUserSignedOut: boolean = false;
   isLogoutProcessing: boolean = false;
   successNotificationMessage: any;
@@ -27,7 +23,6 @@ export class AdminLayoutComponent implements OnInit {
     public location: Location,
     private router: Router,
     private authenticationService: AuthenticationService,
-    // private route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
     if (this.authenticationService.currentUserValue) {

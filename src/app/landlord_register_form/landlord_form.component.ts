@@ -1,16 +1,13 @@
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
-import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { SuccessDialogRegister } from "app/components/success-dialog/success_dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
-import * as CryptoJS from "crypto-js";
-import { first } from "rxjs";
 import * as uuid from "uuid";
 import { StepperLandlordRegisterFirst } from "./components/stepper_01_reg_landlord/stepper_first_reg_landlord";
 import { StepperLandlordRegisterSecond } from "./components/stepper_02_reg_landlord/stepper_second_reg_landlord";
@@ -63,16 +60,13 @@ export class LandlordFormComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private dialog?: MatDialog
   ) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    if (user != null) {
+    if (this.authenticationService.currentUserValue) {
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
       if (user[0]["auth_type"] != "admin") {
-        router.navigate(["/home"]);
+        this.router.navigate(["/home"]);
       } else {
         router.navigate(["/admin-dashboard"]);
       }

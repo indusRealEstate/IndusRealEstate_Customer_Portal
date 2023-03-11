@@ -48,10 +48,6 @@ export class AdminTenantClients implements OnInit {
     }
   }
 
-  scrollToTop() {
-    // window.scrollTo(0, 0);
-  }
-
   screenHeight: number;
   screenWidth: number;
   @HostListener("window:resize", ["$event"])

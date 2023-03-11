@@ -1,9 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ApiService } from "app/services/api.service";
+import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "new_payment",
@@ -14,56 +11,35 @@ export class NewPaymentComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   requestData: any;
-
   isLoading: boolean = false;
-
   previousUrl: string;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
-    private otherServices: OtherServices
+    private authenticationService: AuthenticationService
   ) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    if (
-      user[0]["auth_type"] == "landlord" ||
-      user[0]["auth_type"] == "tenant"
-    ) {
-      this.isLoading = true;
-    } else {
-      router.navigate([`/404`]);
-    }
-  }
-
-  selectedPaymentType: any;
-  paymentType: any[] = [
-    "Payment 1",
-    "Payment 2",
-    "Payment 3",
-  ];
-
-  isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      if (
+        user[0]["auth_type"] == "landlord" ||
+        user[0]["auth_type"] == "tenant"
+      ) {
+        this.isLoading = true;
+      } else {
+        router.navigate([`/admin-dashboard`]);
+      }
     } else {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
     }
   }
 
-  docViewBtnClicked() {
-    console.log("doc btn");
-  }
+  selectedPaymentType: any;
+  paymentType: any[] = ["Payment 1", "Payment 2", "Payment 3"];
 
   ngOnInit() {
     this.isLoading = false;
   }
-
-  ngAfterViewInit() {}
-
-  ngOnDestroy() {}
 }

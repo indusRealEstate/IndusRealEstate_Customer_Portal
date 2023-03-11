@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { User } from "../../../models/user/user.model";
 import { catchError, Observable, of } from "rxjs";
-import * as uuid from "uuid";
 
 const API_URL = "https://indusre.app/api/auth";
 
@@ -14,10 +12,6 @@ export class UserService {
       console.error(error); // log to console instead
       return of(result as T);
     };
-  }
-
-  getAll() {
-    return this.http.get<User[]>(`/users`);
   }
 
   request_register(data: any) {
@@ -49,19 +43,5 @@ export class UserService {
     return this.http
       .post(url, JSON.stringify(userDetails))
       .pipe(catchError(this.handleError("addUserDetails", [])));
-  }
-
-  delete(id: number) {
-    return this.http.delete(`/users/${id}`);
-  }
-
-  //------------------------------------------------------
-
-  makeRandom(lengthOfCode: number, possible: string) {
-    let text = "";
-    for (let i = 0; i < lengthOfCode; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
   }
 }

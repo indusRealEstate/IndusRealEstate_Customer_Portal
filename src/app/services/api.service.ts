@@ -1,17 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError, Subscription } from "rxjs";
+import { Observable, of } from "rxjs";
 import {
   HttpClient,
   HttpHeaders,
-  HttpErrorResponse,
 } from "@angular/common/http";
-import { catchError, tap, map } from "rxjs/operators";
-import { saveAs } from "file-saver";
+import { catchError, map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
-
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" }),
-};
 
 const API_URL = "https://indusre.app/api/user";
 const BASE_URL_IMAGES = "https://indusre.app/api/upload/img/properties";

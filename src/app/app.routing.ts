@@ -3,7 +3,6 @@ import {
   CommonModule,
   HashLocationStrategy,
   LocationStrategy,
-  PathLocationStrategy,
 } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";

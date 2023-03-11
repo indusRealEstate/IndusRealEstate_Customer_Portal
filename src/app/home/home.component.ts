@@ -2,8 +2,6 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
-import * as Chartist from "chartist";
 import { User } from "../../../models/user/user.model";
 
 @Component({
@@ -29,7 +27,6 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherService: OtherServices,
     private route: ActivatedRoute
   ) {
     this.isRecentHappeningsLoading = true;
@@ -38,17 +35,11 @@ export class HomeComponent implements OnInit {
 
     this.getScreenSize();
 
-    if (user[0]["auth_type"] == "landlord") {
+    if (
+      user[0]["auth_type"] == "landlord" ||
+      user[0]["auth_type"] == "tenant"
+    ) {
       this.isLandlord = true;
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
-        } else if (e != user[0]["id"]) {
-          router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });
-        }
-      });
-    } else if (user[0]["auth_type"] == "tenant") {
-      this.isLandlord = false;
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
           router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });

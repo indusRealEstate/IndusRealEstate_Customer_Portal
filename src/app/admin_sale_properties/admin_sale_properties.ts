@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "admin_sale_properties",

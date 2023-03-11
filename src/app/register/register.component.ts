@@ -1,11 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { first } from "rxjs/operators";
+import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
-import { UserService } from "app/services/user.service";
-import { AlertService } from "app/services/alert.service";
-import * as CryptoJS from "crypto-js";
 
 @Component({
   selector: "user-register",
@@ -18,11 +13,8 @@ export class RegisterComponent implements OnInit {
   // secretKey = "fiUIXSU3ZHVtMZADtUaIGxLVUKZAjjlf";
 
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private userService: UserService,
-    private alertService: AlertService
+    private authenticationService: AuthenticationService
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
