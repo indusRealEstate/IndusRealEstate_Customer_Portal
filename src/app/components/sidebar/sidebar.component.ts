@@ -97,7 +97,7 @@ export class SidebarComponent implements OnInit {
   userProfileFetching: boolean = false;
 
   ///////////////--App Version--////////////////////
-  appVersion: any = "VERSION PROD v0.1.14";
+  appVersion: any = "VERSION PROD v0.1.15";
 
   constructor(
     private authService: AuthenticationService,

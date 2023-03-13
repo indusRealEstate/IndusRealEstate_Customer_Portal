@@ -44,7 +44,7 @@ export class EmailVerification implements OnInit {
         var replacedText = this.replaceAllStringsEnc(e["token"]);
 
         var raw_auth_data = this.decrypt(replacedText);
-        console.log(raw_auth_data);
+        console.log(replacedText);
         var auth_data = JSON.parse(raw_auth_data);
 
         // console.log(auth_data);
@@ -82,7 +82,7 @@ export class EmailVerification implements OnInit {
           });
       });
     } else {
-      this.router.navigate(["/"]);
+      this.router.navigate(["/home"]);
     }
   }
 
@@ -124,7 +124,7 @@ export class EmailVerification implements OnInit {
 
   replaceAllStringsEnc(enc: string) {
     var replaced1 = enc.replace(/-/g, "/");
-    var replaced2 = replaced1.replace(/#/g, "+");
+    var replaced2 = replaced1.replace(/@/g, "+");
     var replaced3 = replaced2.replace(/&/g, "=");
 
     return replaced3;

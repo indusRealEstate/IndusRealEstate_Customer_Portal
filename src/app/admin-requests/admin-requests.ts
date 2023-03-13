@@ -30,13 +30,13 @@ export class AdminRequests implements OnInit {
   // allRequestsBH: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   allRequestsLenBH: BehaviorSubject<number> = new BehaviorSubject<number>(100);
 
-  paymentReqsLen: number = 0;
+  // paymentReqsLen: number = 0;
   newLandlordReqsLen: number = 0;
   newTenantReqsLen: number = 0;
 
-  isPaymentReqFinished: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  // isPaymentReqFinished: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  //   false
+  // );
 
   isNewLandlordReqFinised: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
@@ -64,7 +64,7 @@ export class AdminRequests implements OnInit {
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
     private dialog?: MatDialog,
-    private emailServices?: EmailServices,
+    private emailServices?: EmailServices
   ) {
     this.isLoading = true;
     this.isContentLoading = true;
@@ -127,11 +127,22 @@ export class AdminRequests implements OnInit {
   // }
 
   ngOnDestroy() {
-    this.noDataPresent.unsubscribe();
-    this.allRequestsLenBH.unsubscribe();
-    this.isPaymentReqFinished.unsubscribe();
-    this.isNewTenantReqFinised.unsubscribe();
-    this.isNewTenantReqFinised.unsubscribe();
+    console.log("destroyed");
+    if (!this.noDataPresent.closed) {
+      this.noDataPresent.unsubscribe();
+      console.log("closed no data");
+    }
+
+    if (!this.allRequestsLenBH.closed) {
+      this.allRequestsLenBH.unsubscribe();
+    }
+
+    if (!this.isNewTenantReqFinised.closed) {
+      this.isNewTenantReqFinised.unsubscribe();
+    }
+    if (!this.isNewTenantReqFinised.closed) {
+      this.isNewTenantReqFinised.unsubscribe();
+    }
   }
 
   isUserSignOut() {
@@ -201,11 +212,11 @@ export class AdminRequests implements OnInit {
     this.allRequests.length = 0;
     // this.allRequestsBH.next([]);
     this.allRequestsLenBH.next(100);
-    this.paymentReqsLen = 0;
+    // this.paymentReqsLen = 0;
     this.newLandlordReqsLen = 0;
     this.newTenantReqsLen = 0;
 
-    this.isPaymentReqFinished.next(false);
+    // this.isPaymentReqFinished.next(false);
     this.isNewLandlordReqFinised.next(false);
     this.isNewTenantReqFinised.next(false);
     this.noDataPresent.next(false);
@@ -269,16 +280,7 @@ export class AdminRequests implements OnInit {
                       setTimeout(() => {
                         this.isContentLoading = false;
                         this.everyDataInitialized = true;
-                        sessionStorage.setItem(
-                          "admin_reqs_session",
-                          JSON.stringify({
-                            allRequests: this.allRequests,
-                            isLandlordRequestsEmpty:
-                              this.isLandlordRequestsEmpty,
-                            isTenantRequestsEmpty: this.isTenantRequestsEmpty,
-                          })
-                        );
-                        // this.ngOnDestroy();
+                        this.cacheSession();
                       }, 1000);
                     }
                   }
@@ -295,6 +297,17 @@ export class AdminRequests implements OnInit {
     setTimeout(() => {
       this.isLoading = false;
     }, 1000);
+  }
+
+  cacheSession() {
+    sessionStorage.setItem(
+      "admin_reqs_session",
+      JSON.stringify({
+        allRequests: this.allRequests,
+        isLandlordRequestsEmpty: this.isLandlordRequestsEmpty,
+        isTenantRequestsEmpty: this.isTenantRequestsEmpty,
+      })
+    );
   }
 
   async getAllAddPropertyRequests(userId) {
@@ -314,7 +327,7 @@ export class AdminRequests implements OnInit {
           }
 
           if ((i = prop_req.length)) {
-            this.getAllPaymentRequests(userId);
+            // this.getAllPaymentRequests(userId);
             this.getAllTenantNewRegReqs(userId);
             this.getAllLandlordNewRegReqs(userId);
           }
@@ -322,25 +335,25 @@ export class AdminRequests implements OnInit {
       });
   }
 
-  getAllPaymentRequests(userId) {
-    this.adminService
-      .getAllPaymentRequests(userId)
-      .subscribe((payment_req: Array<any>) => {
-        if (payment_req.length != 0) {
-          var i = 0;
-          for (let p of payment_req) {
-            i++;
-            this.allRequests.push(p);
-          }
+  // getAllPaymentRequests(userId) {
+  //   this.adminService
+  //     .getAllPaymentRequests(userId)
+  //     .subscribe((payment_req: Array<any>) => {
+  //       if (payment_req.length != 0) {
+  //         var i = 0;
+  //         for (let p of payment_req) {
+  //           i++;
+  //           this.allRequests.push(p);
+  //         }
 
-          this.paymentReqsLen = payment_req.length;
+  //         this.paymentReqsLen = payment_req.length;
 
-          if (i == payment_req.length) {
-            this.isPaymentReqFinished.next(true);
-          }
-        }
-      });
-  }
+  //         if (i == payment_req.length) {
+  //           this.isPaymentReqFinished.next(true);
+  //         }
+  //       }
+  //     });
+  // }
 
   getAllTenantNewRegReqs(userId) {
     this.adminService
@@ -384,20 +397,19 @@ export class AdminRequests implements OnInit {
 
   async fetchAllRequests(userId) {
     await this.getAllAddPropertyRequests(userId).finally(() => {
-      this.isPaymentReqFinished.subscribe((pay_val) => {
-        this.isNewTenantReqFinised.subscribe((tenant_val) => {
-          this.isNewTenantReqFinised.subscribe((landlord_val) => {
-            if (pay_val == true && tenant_val == true && landlord_val == true) {
-              this.allRequestsLenBH.next(
-                this.allRequestsLen +
-                  this.paymentReqsLen +
-                  this.newTenantReqsLen +
-                  this.newLandlordReqsLen
-              );
-            }
-          });
+      // this.isPaymentReqFinished.subscribe((pay_val) => {
+      this.isNewTenantReqFinised.subscribe((tenant_val) => {
+        this.isNewTenantReqFinised.subscribe((landlord_val) => {
+          if (tenant_val == true && landlord_val == true) {
+            this.allRequestsLenBH.next(
+              this.allRequestsLen +
+                this.newTenantReqsLen +
+                this.newLandlordReqsLen
+            );
+          }
         });
       });
+      // });
     });
   }
 
@@ -623,16 +635,19 @@ export class AdminRequests implements OnInit {
       .subscribe((res) => {
         // console.log(res);
       });
+    for (let index = 0; index < this.allRequests.length; index++) {
+      if (
+        this.allRequests[index].request_details_id == req.request_details_id
+      ) {
+        // console.log(this.allRequests[index]);
+        this.allRequests[index].approved = "true";
+      }
+    }
     sessionStorage.removeItem("admin_reqs_session");
-    this.clearAllVariables();
-    this.isContentLoading = true;
-    setTimeout(async () => {
-      await this.initFunction(user[0]["id"]);
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
-    }, 1000);
+
+    setTimeout(() => {
+      this.cacheSession();
+    }, 1500);
   }
 
   async acceptedNewTenantAccRequest(req) {
@@ -663,16 +678,19 @@ export class AdminRequests implements OnInit {
       .subscribe((res) => {
         // console.log(res);
       });
+    for (let index = 0; index < this.allRequests.length; index++) {
+      if (
+        this.allRequests[index].request_details_id == req.request_details_id
+      ) {
+        // console.log(this.allRequests[index]);
+        this.allRequests[index].approved = "true";
+      }
+    }
     sessionStorage.removeItem("admin_reqs_session");
-    this.clearAllVariables();
-    this.isContentLoading = true;
-    setTimeout(async () => {
-      await this.initFunction(user[0]["id"]);
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
-    }, 1000);
+
+    setTimeout(() => {
+      this.cacheSession();
+    }, 1500);
   }
 
   declineRequest(req) {
@@ -709,16 +727,19 @@ export class AdminRequests implements OnInit {
       .declineRegisterToken(JSON.stringify(admin_data))
       .subscribe((e) => {});
 
+    for (let index = 0; index < this.allRequests.length; index++) {
+      if (
+        this.allRequests[index].request_details_id == req.request_details_id
+      ) {
+        // console.log(this.allRequests[index]);
+        this.allRequests[index].declined = "true";
+      }
+    }
     sessionStorage.removeItem("admin_reqs_session");
-    this.clearAllVariables();
-    this.isContentLoading = true;
-    setTimeout(async () => {
-      await this.initFunction(user[0]["id"]);
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
-    }, 1000);
+
+    setTimeout(() => {
+      this.cacheSession();
+    }, 1500);
   }
 
   landlordRequestDecline(req) {
@@ -734,15 +755,18 @@ export class AdminRequests implements OnInit {
       .declineRegisterToken(JSON.stringify(admin_data))
       .subscribe((e) => {});
 
+    for (let index = 0; index < this.allRequests.length; index++) {
+      if (
+        this.allRequests[index].request_details_id == req.request_details_id
+      ) {
+        // console.log(this.allRequests[index]);
+        this.allRequests[index].declined = "true";
+      }
+    }
     sessionStorage.removeItem("admin_reqs_session");
-    this.clearAllVariables();
-    this.isContentLoading = true;
-    setTimeout(async () => {
-      await this.initFunction(user[0]["id"]);
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
-    }, 1000);
+
+    setTimeout(() => {
+      this.cacheSession();
+    }, 1500);
   }
 }
