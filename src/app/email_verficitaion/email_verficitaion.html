@@ -1,4 +1,142 @@
-<div class="main-content">
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<div
+  class="main-content"
+  *ngIf="screenWidth <= 430"
+  [ngStyle]="{
+  height: screenHeight + 'px',
+  'align-items': 'center',
+  display: 'flex'
+}"
+>
+  <div class="container-fluid">
+    <div
+      *ngIf="isLoading == true"
+      [ngStyle]="{
+        display: 'flex',
+        width: '100%',
+        height: screenHeight + 'px',
+        'justify-content': 'center',
+        'align-items': 'center'
+      }"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <div
+      *ngIf="isLoading == false"
+      style="width: 100%; display: flex; justify-content: center"
+    >
+      <h3 *ngIf="isTokenVerified == false">Token invalid :(</h3>
+      <h3 *ngIf="isTokenExpired == true">Token Expired :(</h3>
+      <div
+        *ngIf="isTokenVerified == true && isTokenExpired == false"
+        class="card"
+        style="background-color: #fdfdfdbf"
+      >
+        <form
+          [formGroup]="registerForm"
+          style="padding: 30px 10px; text-align: center"
+        >
+          <div style="width: 100%; display: block">
+            <div style="width: 100%; display: flex; justify-content: center">
+              <img src="assets/img/logo/indus-logo.webp" alt="" />
+            </div>
+
+            <div style="width: 100%; display: flex; justify-content: center">
+              <p
+                style="
+                  margin-top: 30px;
+                  font-size: 18px;
+                  font-weight: 900;
+                  max-width: 350px;
+                  text-align: center;
+                "
+              >
+                Hi {{currentNewUserAllDetails.firstname}}!
+              </p>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center">
+              <p
+                style="
+                  margin-top: 10px;
+                  font-size: 15px;
+                  font-weight: 900;
+                  max-width: 350px;
+                  text-align: center;
+                "
+              >
+                Please create your new username and password
+              </p>
+            </div>
+          </div>
+
+          <div class="col">
+            <input
+              autocomplete="chrome-off"
+              matInput
+              placeholder="Username"
+              formControlName="username"
+              class="form-input"
+            />
+            <input
+              autocomplete="chrome-off"
+              matInput
+              placeholder="Password"
+              formControlName="pass"
+              class="form-input"
+            />
+            <input
+              autocomplete="chrome-off"
+              matInput
+              placeholder="Password Retype"
+              formControlName="pass_retype"
+              class="form-input"
+            />
+          </div>
+          <p
+            *ngIf="isUsernameNotAvailable == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Username not available
+          </p>
+          <p
+            *ngIf="isPasswordNot6letters == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Password must be 6 letters
+          </p>
+          <p
+            *ngIf="isRetypePassWrong == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Please retype the same password
+          </p>
+          <p
+            *ngIf="isFormEmpty == true"
+            style="margin-bottom: -10px; margin-top: 10px; color: #ff0000d1"
+          >
+            Please fill the form
+          </p>
+
+          <div
+            class="btn"
+            (click)="onSubmit()"
+            style="margin-top: 70px; background-color: #d3ab33"
+          >
+            Submit
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<div class="main-content" *ngIf="screenWidth > 430">
   <div class="container-fluid">
     <div
       *ngIf="isLoading == true"

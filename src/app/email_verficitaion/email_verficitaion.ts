@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -37,9 +37,8 @@ export class EmailVerification implements OnInit {
     private dialog?: MatDialog
   ) {
     this.isLoading = true;
-    var userData = localStorage.getItem("currentUser");
-
-    if (userData == null) {
+    this.getScreenSize();
+    if (!this.authServices.currentUserValue) {
       this.route.queryParams.subscribe(async (e) => {
         var replacedText = this.replaceAllStringsEnc(e["token"]);
 
@@ -84,6 +83,14 @@ export class EmailVerification implements OnInit {
     } else {
       this.router.navigate(["/home"]);
     }
+  }
+
+  screenHeight: number;
+  screenWidth: number;
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
   }
 
   async fetchNewUserData(unique_id, auth_type) {
