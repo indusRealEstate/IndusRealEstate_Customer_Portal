@@ -53,28 +53,18 @@
   margin-left: 25px !important;
 }
 
-:host ::ng-deep .mat-radio-outer-circle {
-  border-radius: 6px !important;
-  width: 20px !important;
-  height: 20px !important;
-  border: 2px solid #404040ad !important;
-  background-color: white !important;
-}
+::ng-deep .filter-menu {
+  .mat-radio-inner-circle {
+    background-color: #d4aa32 !important;
+  }
 
-:host ::ng-deep .mat-radio-container {
-  width: 20px !important;
-  height: 20px !important;
-}
+  .mat-ripple-element {
+    background-color: #d4aa32 !important;
+  }
 
-:host ::ng-deep .mat-radio-inner-circle {
-  border-radius: 9px !important;
-  width: 34px !important;
-  margin-left: -7.5px !important;
-  height: 33.5px !important;
-  margin-top: -7px !important;
-  background-color: #d4aa32 !important;
-}
-
-:host ::ng-deep .mat-ripple-element {
-  background-color: #edcf7c23 !important;
+  .mat-radio-checked {
+    .mat-radio-outer-circle {
+      border-color: #d4aa32 !important;
+    }
+  }
 }

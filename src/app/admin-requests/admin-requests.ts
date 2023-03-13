@@ -49,12 +49,15 @@ export class AdminRequests implements OnInit {
   imagesUrl: any;
   show_more_imgLoading: boolean[] = [];
 
+  filters: any[] = [];
+
   isLandlordRequestsEmpty: boolean = false;
   isTenantRequestsEmpty: boolean = false;
 
   contentLoadingTime: any = 2000;
 
-  categoryAllRequests: "fixtures" | "payments" | "cat_3" | "cat_4" = "fixtures";
+  categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
+    "new_sign_ups";
   propertyTypeAllRequests: "all" | "villa" | "appartment" = "all";
 
   constructor(
@@ -125,6 +128,23 @@ export class AdminRequests implements OnInit {
   //     }, 1000);
   //   }
   // }
+
+  applyFilters(menu) {
+    menu.closeMenu();
+
+    this.filters = [
+      { filter_1: this.categoryAllRequests },
+      { filter_2: this.propertyTypeAllRequests },
+    ];
+  }
+
+  closeFilter(filter: any) {
+    for (let index = 0; index < this.filters.length; index++) {
+      if (this.filters[index] == filter) {
+        this.filters.splice(index, 1);
+      }
+    }
+  }
 
   ngOnDestroy() {
     console.log("destroyed");
