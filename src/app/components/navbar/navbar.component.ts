@@ -185,6 +185,8 @@ export class NavbarComponent implements OnInit {
         return "All Properties For Rent";
       case "/customer-care":
         return "Customer Care";
+      case "/payment-recap":
+        return "Payment Recap";
       case "/404":
         return "";
       default:

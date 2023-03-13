@@ -3,16 +3,18 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
-  selector: "new_payment",
-  templateUrl: "./new_payment.component.html",
-  styleUrls: ["./new_payment.component.scss"],
+  selector: "payment_recap",
+  templateUrl: "./payment_recap.html",
+  styleUrls: ["./payment_recap.scss"],
 })
-export class NewPaymentComponent implements OnInit {
+export class PaymentRecapComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   requestData: any;
   isLoading: boolean = false;
   previousUrl: string;
+
+  selectedPayment: string;
 
   constructor(
     private router: Router,
@@ -27,11 +29,11 @@ export class NewPaymentComponent implements OnInit {
         this.isLoading = true;
         this.route.queryParams.subscribe((e) => {
           if (e == null) {
-            router.navigate([`/new-payment`], {
+            router.navigate([`/payment-recap`], {
               queryParams: { uid: user[0]["id"] },
             });
           } else if (e != user[0]["id"]) {
-            router.navigate([`/new-payment`], {
+            router.navigate([`/payment-recap`], {
               queryParams: { uid: user[0]["id"] },
             });
           }
@@ -45,18 +47,7 @@ export class NewPaymentComponent implements OnInit {
     }
   }
 
-  selectedPaymentType: any;
-  paymentType: any[] = ["Payment 1", "Payment 2", "Payment 3"];
-
   ngOnInit() {
     this.isLoading = false;
-  }
-
-  nextBtnClicked() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.router.navigate(["/payment-recap"], {
-      queryParams: { uid: user[0]["id"] },
-    });
   }
 }

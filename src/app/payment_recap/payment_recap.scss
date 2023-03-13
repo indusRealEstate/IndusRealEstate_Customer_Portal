@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+  font-family: "Montserrat";
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.card-body {
+  .back-btn-row {
+    margin: 0;
+    width: 65px;
+    justify-content: space-between;
+
+    img {
+      width: 20px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      img {
+        transform: translateX(-2px);
+      }
+    }
+  }
+
+  .doc-view-link {
+    margin-bottom: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #a3a3a3;
+    max-width: 35px;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .payment-type-card-selected {
+    margin: 0;
+    width: 450px;
+    padding: 13px 20px;
+    margin-left: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .payment-type-card {
+    margin: 0;
+    width: 450px;
+    padding: 13px 20px;
+    margin-left: 10px;
+  }
+}
+
+:host ::ng-deep .mat-radio-inner-circle {
+  background-color: #d4aa32 !important;
+}
+
+:host ::ng-deep .mat-ripple-element {
+  background-color: #d4aa32 !important;
+}
+
+:host ::ng-deep .mat-radio-checked {
+  .mat-radio-outer-circle {
+    border-color: #d4aa32 !important;
+  }
+}

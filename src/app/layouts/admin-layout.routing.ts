@@ -26,6 +26,7 @@ import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_proper
 import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 import { Tenant_Move_in_Request } from "app/indus_services/facility_management/tenant_move-in_request/tenant_move-in_request";
+import { PaymentRecapComponent } from "app/payment_recap/payment_recap";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -54,6 +55,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-properties-sale", component: AdminSaleProperties },
   { path: "admin-properties-rent", component: AdminRentProperties },
   { path: "customer-care", component: CustomerCareComponent },
+  { path: "payment-recap", component: PaymentRecapComponent },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },
 ];

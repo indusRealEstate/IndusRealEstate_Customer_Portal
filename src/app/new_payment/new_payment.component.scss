@@ -5,25 +5,6 @@
 }
 
 .card-body {
-  .back-btn-row {
-    margin: 0;
-    width: 65px;
-    justify-content: space-between;
-
-    img {
-      width: 20px;
-      transition: all 0.3s ease-in-out;
-    }
-
-    &:hover {
-      cursor: pointer;
-
-      img {
-        transform: translateX(-2px);
-      }
-    }
-  }
-
   .doc-view-link {
     margin-bottom: 0;
     margin-bottom: 0;
@@ -44,7 +25,7 @@
   border-radius: 7px !important;
   background-color: white !important;
   padding-left: 10px !important;
-  border: 1px solid #A3A3A3;
+  border: 1px solid #a3a3a3;
   // margin-top: 25px !important;
 }
 
