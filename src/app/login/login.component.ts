@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.currentUserValue) {
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
-      this.router.navigate([`/`], {
+      this.router.navigate([`/home`], {
         queryParams: { uid: user[0]["id"] },
       });
     }
