@@ -22,11 +22,17 @@ export class AdminRequests implements OnInit {
 
   everyDataInitialized: boolean = false;
 
+  isUserSearchedRequests: boolean = false;
+  isUserSearchedEmpty: boolean = false;
+
+  searchString: any = "";
+
   allDataAssigned: boolean = false;
 
   noDataPresent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   allRequests: any[] = [];
+  allRequestsSearched: any[] = [];
   // allRequestsBH: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   allRequestsLenBH: BehaviorSubject<number> = new BehaviorSubject<number>(100);
 
@@ -130,12 +136,52 @@ export class AdminRequests implements OnInit {
   // }
 
   applyFilters(menu) {
+    this.allRequestsSearched.length = 0;
+    this.isUserSearchedRequests = true;
     menu.closeMenu();
 
     this.filters = [
       { filter_1: this.categoryAllRequests },
       { filter_2: this.propertyTypeAllRequests },
     ];
+
+    for (let index = 0; index < this.allRequests.length; index++) {
+      if (this.categoryAllRequests == "new_sign_ups") {
+        if (
+          this.allRequests[index].request_type == "NEW_LANDLORD_ACC" ||
+          this.allRequests[index].request_type == "NEW_TENANT_ACC"
+        ) {
+          this.allRequestsSearched.push(this.allRequests[index]);
+        }
+      } else if (this.categoryAllRequests == "add_new_property") {
+        if (this.allRequests[index].request_type == "ADD_PROPERTY") {
+          this.allRequestsSearched.push(this.allRequests[index]);
+        }
+      } else if (this.categoryAllRequests == "others") {
+        if (this.allRequests[index].request_type == "OTHERS") {
+          this.allRequestsSearched.push(this.allRequests[index]);
+        }
+      }
+    }
+  }
+
+  approvedAndDeniedReqsFilter(menu, req) {
+    this.allRequestsSearched.length = 0;
+    this.isUserSearchedRequests = true;
+    menu.closeMenu();
+    this.filters = [{ filter_1: req }];
+
+    for (let index = 0; index < this.allRequests.length; index++) {
+      if (req == "approved") {
+        if (this.allRequests[index].approved == "true") {
+          this.allRequestsSearched.push(this.allRequests[index]);
+        }
+      } else {
+        if (this.allRequests[index].declined == "true") {
+          this.allRequestsSearched.push(this.allRequests[index]);
+        }
+      }
+    }
   }
 
   closeFilter(filter: any) {
@@ -144,13 +190,57 @@ export class AdminRequests implements OnInit {
         this.filters.splice(index, 1);
       }
     }
+    setTimeout(() => {
+      if (this.filters.length == 0) {
+        this.isUserSearchedRequests = false;
+        if (filter.filter_1 == "search") {
+          this.searchString = "";
+          this.allRequestsSearched.length = 0;
+        }
+      } else {
+        // console.log(filter);
+        if (filter.filter_1 != null) {
+          this.isUserSearchedRequests = false;
+        }
+      }
+    }, 200);
+  }
+
+  searchBtnClicked() {
+    this.allRequestsSearched.length = 0;
+    if (this.searchString != "") {
+      this.isUserSearchedRequests = true;
+      this.filters = [{ filter_1: "search" }];
+      for (let index = 0; index < this.allRequests.length; index++) {
+        var e = JSON.stringify(this.allRequests[index])
+          .trim()
+          .replace(/ /g, "")
+          .toLowerCase()
+          .includes(
+            new String(this.searchString).trim().replace(/ /g, "").toLowerCase()
+          );
+
+        if (e == true) {
+          this.allRequestsSearched.push(this.allRequests[index]);
+        }
+      }
+
+      setTimeout(() => {
+        console.log(this.allRequestsSearched);
+      }, 2000);
+    } else {
+      this.isUserSearchedEmpty = true;
+
+      setTimeout(() => {
+        this.isUserSearchedEmpty = false;
+      }, 3000);
+    }
   }
 
   ngOnDestroy() {
     console.log("destroyed");
     if (!this.noDataPresent.closed) {
       this.noDataPresent.unsubscribe();
-      console.log("closed no data");
     }
 
     if (!this.allRequestsLenBH.closed) {

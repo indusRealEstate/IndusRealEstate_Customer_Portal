@@ -1636,87 +1636,153 @@
             class="card-body"
             style="background-color: #ffffff; color: #404040; padding: 30px"
           >
-            <div class="row" style="margin: 0; justify-content: start">
-              <div
-                #menuTrigger="matMenuTrigger"
-                [matMenuTriggerFor]="filterMenu"
-                class="btn"
-                style="
-                  background-color: #2b333e;
-                  padding: 8px 30px;
-                  max-height: 35px;
-                "
-              >
-                filter
-              </div>
-
-              <div class="row" *ngFor="let filter of filters" style="margin: 0">
+            <div class="row" style="margin: 0; justify-content: space-between">
+              <div class="row" style="margin: 0">
                 <div
-                  class="card"
+                  #menuTrigger="matMenuTrigger"
+                  [matMenuTriggerFor]="filterMenu"
+                  class="btn"
                   style="
-                    margin: 5px 0;
+                    background-color: #2b333e;
+                    padding: 8px 30px;
                     max-height: 35px;
-                    margin-left: 20px;
-                    padding: 3px 20px;
-                    background-color: #d3ab33;
-                    color: white;
                   "
                 >
+                  filter
+                </div>
+                <div
+                  class="row"
+                  *ngFor="let filter of filters"
+                  style="margin: 0"
+                >
                   <div
-                    class="row"
-                    style="margin: 0; justify-content: space-between"
+                    class="card"
+                    style="
+                      margin: 5px 0;
+                      max-height: 35px;
+                      margin-left: 20px;
+                      padding: 3px 20px;
+                      background-color: #d3ab33;
+                      color: white;
+                    "
                   >
-                    <p
-                      *ngIf="filter.filter_1 == 'new_sign_ups'"
-                      style="margin-bottom: 0"
+                    <div
+                      class="row"
+                      style="margin: 0; justify-content: space-between"
                     >
-                      New Sign Ups
-                    </p>
-                    <p
-                      *ngIf="filter.filter_1 == 'add_new_property'"
-                      style="margin-bottom: 0"
-                    >
-                      Add Property
-                    </p>
-                    <p
-                      *ngIf="filter.filter_1 == 'others'"
-                      style="margin-bottom: 0"
-                    >
-                      Others
-                    </p>
-                    <p
-                      *ngIf="filter.filter_2 == 'all'"
-                      style="margin-bottom: 0"
-                    >
-                      All Type Properties
-                    </p>
-                    <p
-                      *ngIf="filter.filter_2 == 'villa'"
-                      style="margin-bottom: 0"
-                    >
-                      Villa
-                    </p>
-                    <p
-                      *ngIf="filter.filter_2 == 'appartment'"
-                      style="margin-bottom: 0"
-                    >
-                      Appartment
-                    </p>
-                    <img
-                      (click)="closeFilter(filter)"
-                      src="assets/img/svg/req-details/close-circle.svg"
-                      alt=""
-                      style="
-                        width: 15px;
-                        filter: brightness(0) invert(1);
-                        margin-left: 20px;
-                        cursor: pointer;
-                      "
-                    />
+                      <p
+                        *ngIf="filter.filter_1 == 'new_sign_ups'"
+                        style="margin-bottom: 0"
+                      >
+                        New Sign Ups
+                      </p>
+                      <p
+                        *ngIf="filter.filter_1 == 'add_new_property'"
+                        style="margin-bottom: 0"
+                      >
+                        Add Property
+                      </p>
+                      <p
+                        *ngIf="filter.filter_1 == 'others'"
+                        style="margin-bottom: 0"
+                      >
+                        Others
+                      </p>
+                      <p
+                        *ngIf="filter.filter_2 == 'all'"
+                        style="margin-bottom: 0"
+                      >
+                        All Type Properties
+                      </p>
+                      <p
+                        *ngIf="filter.filter_2 == 'villa'"
+                        style="margin-bottom: 0"
+                      >
+                        Villa
+                      </p>
+                      <p
+                        *ngIf="filter.filter_2 == 'appartment'"
+                        style="margin-bottom: 0"
+                      >
+                        Appartment
+                      </p>
+                      <p
+                        *ngIf="filter.filter_1 == 'approved'"
+                        style="margin-bottom: 0"
+                      >
+                        Approved Requests
+                      </p>
+                      <p
+                        *ngIf="filter.filter_1 == 'declined'"
+                        style="margin-bottom: 0"
+                      >
+                        Denied Requests
+                      </p>
+                      <p
+                        *ngIf="filter.filter_1 == 'search'"
+                        style="margin-bottom: 0"
+                      >
+                        Search Results
+                      </p>
+                      <img
+                        (click)="closeFilter(filter)"
+                        src="assets/img/svg/req-details/close-circle.svg"
+                        alt=""
+                        style="
+                          width: 15px;
+                          filter: brightness(0) invert(1);
+                          margin-left: 20px;
+                          cursor: pointer;
+                        "
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div
+                class="row"
+                style="margin: 0; width: 50%; justify-content: end"
+              >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  [(ngModel)]="searchString"
+                  style="
+                    max-height: 35px;
+                    padding-left: 10px;
+                    min-width: 300px;
+                    border-radius: 7px;
+                    border: 1px solid #a3a3a39e;
+                  "
+                />
+                <div
+                  (click)="searchBtnClicked()"
+                  class="btn"
+                  style="
+                    margin: 0;
+                    margin-left: 20px;
+                    padding: 9px 36px;
+                    max-height: 35px;
+                    background-color: #d3ab33;
+                  "
+                >
+                  Search
+                </div>
+              </div>
             </div>
+            <p
+              *ngIf="isUserSearchedEmpty == true"
+              style="
+                text-align: end;
+                font-size: 13px;
+                color: #ff0000e6;
+                margin-top: 10px;
+                margin-right: 10px;
+              "
+            >
+              No words found in searchbar.
+            </p>
 
             <mat-menu style="display: none" #filterMenu="matMenu">
               <div
@@ -1804,6 +1870,7 @@
                   Reset Filters
                 </p>
                 <button
+                  (click)="approvedAndDeniedReqsFilter(menuTrigger, 'approved')"
                   class="btn"
                   style="
                     padding: 10px;
@@ -1815,6 +1882,7 @@
                   Approved Requests
                 </button>
                 <button
+                  (click)="approvedAndDeniedReqsFilter(menuTrigger, 'declined')"
                   class="btn"
                   style="
                     padding: 10px;
@@ -1944,377 +2012,413 @@
               <!------------------------------------ All Requests ----------------------------------------------------->
               <!------------------------------------ All Requests ----------------------------------------------------->
               <div *ngIf="isContentLoading == false">
-                <div
-                  class="card-wrapper"
-                  *ngFor="let allReq of allRequests; let index = index"
-                >
+                <div *ngIf="isUserSearchedRequests == false">
                   <div
-                    class="card"
-                    [ngClass]="allReq.show_more == true ? 'all-req-card-admin-expanded': 'all-req-card-admin' "
+                    class="card-wrapper"
+                    *ngFor="let allReq of allRequests; let index = index"
                   >
                     <div
-                      *ngIf="allReq.request_type == 'ADD_PROPERTY'"
-                      class="row"
-                      style="margin: 0; justify-content: space-between"
+                      class="card"
+                      [ngClass]="allReq.show_more == true ? 'all-req-card-admin-expanded': 'all-req-card-admin' "
                     >
-                      <p
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
-                      >
-                        Add Property Request
-                      </p>
-
                       <div
-                        *ngIf="allReq.approved == 'true'"
-                        style="
-                          width: 85px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #d3ab33;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          approved
-                        </p>
-                      </div>
-
-                      <div
-                        *ngIf="allReq.declined == 'true'"
-                        style="
-                          width: 79px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #f44336d9;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          declined
-                        </p>
-                      </div>
-                    </div>
-
-                    <div
-                      *ngIf="allReq.request_type == 'PAYMENT'"
-                      class="row"
-                      style="margin: 0; justify-content: space-between"
-                    >
-                      <p
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
-                      >
-                        Payment Request
-                      </p>
-                      <div
-                        *ngIf="allReq.approved == 'true'"
-                        style="
-                          width: 85px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #d3ab33;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          approved
-                        </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.declined == 'true'"
-                        style="
-                          width: 79px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #f44336d9;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          declined
-                        </p>
-                      </div>
-                    </div>
-
-                    <div
-                      *ngIf="allReq.request_type == 'OTHER'"
-                      class="row"
-                      style="margin: 0; justify-content: space-between"
-                    >
-                      <p
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
-                      >
-                        Other Request
-                      </p>
-
-                      <div
-                        *ngIf="allReq.approved == 'true'"
-                        style="
-                          width: 85px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #d3ab33;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          approved
-                        </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.declined == 'true'"
-                        style="
-                          width: 79px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #f44336d9;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          declined
-                        </p>
-                      </div>
-                    </div>
-
-                    <div
-                      *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
-                      class="row"
-                      style="margin: 0; justify-content: space-between"
-                    >
-                      <p
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
-                      >
-                        Request for new Landlord Sign-up.
-                      </p>
-                      <div
-                        *ngIf="allReq.approved == 'true'"
-                        style="
-                          width: 85px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #d3ab33;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          approved
-                        </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.declined == 'true'"
-                        style="
-                          width: 79px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #f44336d9;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          declined
-                        </p>
-                      </div>
-                    </div>
-
-                    <div
-                      *ngIf="allReq.request_type == 'NEW_TENANT_ACC'"
-                      class="row"
-                      style="margin: 0; justify-content: space-between"
-                    >
-                      <p
-                        style="
-                          color: #404040;
-                          font-size: 18px;
-                          font-weight: 600;
-                        "
-                      >
-                        Request for new Tenant Sign-up.
-                      </p>
-                      <div
-                        *ngIf="allReq.approved == 'true'"
-                        style="
-                          width: 85px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #d3ab33;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          approved
-                        </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.declined == 'true'"
-                        style="
-                          width: 79px;
-                          height: 27px;
-                          border-radius: 5px;
-                          background-color: #f44336d9;
-                        "
-                      >
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            color: white;
-                            margin-left: 9px;
-                          "
-                        >
-                          declined
-                        </p>
-                      </div>
-                    </div>
-
-                    <p
-                      style="color: #707070"
-                      *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
-                    >
-                      {{allReq.additional_info}}
-                    </p>
-                    <p
-                      style="color: #707070"
-                      *ngIf="allReq.request_type == 'PAYMENT' && allReq.show_more == false"
-                    >
-                      {{allReq.payment_details}}
-                    </p>
-                    <p
-                      style="color: #707070"
-                      *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' && allReq.show_more == false"
-                    >
-                      Requesting landlord registration.
-                    </p>
-                    <p
-                      style="color: #707070"
-                      *ngIf="allReq.request_type == 'NEW_TENANT_ACC' && allReq.show_more == false"
-                    >
-                      Requesting Tenant registration.
-                    </p>
-                    <div
-                      *ngIf="allReq.show_more == true"
-                      class="description-req-card"
-                    >
-                      <p style="font-weight: 800">Description</p>
-                      <div
+                        *ngIf="allReq.request_type == 'ADD_PROPERTY'"
                         class="row"
                         style="margin: 0; justify-content: space-between"
                       >
-                        <p style="max-width: 500px">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Lorem ipsum dolor sit amet,
-                          consectetur adipiscing elit, sed do eiusmod tempor
-                          incididunt ut labore et dolore magna aliqua. Lorem
-                          ipsum dolor sit amet, consectetur adipiscing elit
-                        </p>
-                        <div
-                          *ngIf="show_more_imgLoading[index] == true"
+                        <p
                           style="
-                            min-width: 20%;
-                            max-width: 23%;
-                            border-radius: 8px;
-                            margin-right: 50px;
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
                           "
                         >
-                          <ngx-skeleton-loader
-                            [theme]="{ width: '250px', height: '160px' }"
-                          >
-                          </ngx-skeleton-loader>
-                        </div>
-                        <img
-                          *ngIf="show_more_imgLoading[index] == false"
-                          src="{{ imagesUrl }}/{{ allReq.property_image_1 }}"
-                          alt=""
+                          Add Property Request
+                        </p>
+
+                        <div
+                          *ngIf="allReq.approved == 'true'"
                           style="
-                            min-width: 20%;
-                            max-width: 23%;
-                            border-radius: 8px;
-                            margin-right: 50px;
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
                           "
-                        />
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
                       </div>
-                      <p style="font-weight: 800">
-                        Provided Alteration Document
+
+                      <div
+                        *ngIf="allReq.request_type == 'PAYMENT'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Payment Request
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'OTHER'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Other Request
+                        </p>
+
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Request for new Landlord Sign-up.
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'NEW_TENANT_ACC'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Request for new Tenant Sign-up.
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
+                      >
+                        {{allReq.additional_info}}
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'PAYMENT' && allReq.show_more == false"
+                      >
+                        {{allReq.payment_details}}
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' && allReq.show_more == false"
+                      >
+                        Requesting landlord registration.
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'NEW_TENANT_ACC' && allReq.show_more == false"
+                      >
+                        Requesting Tenant registration.
                       </p>
                       <div
-                        style="
-                          background-color: #ffffff;
-                          width: 250px;
-                          border-radius: 5px;
-                          padding: 10px;
-                          padding-left: 20px;
-                          padding-right: 25px;
-                        "
+                        *ngIf="allReq.show_more == true"
+                        class="description-req-card"
                       >
+                        <p style="font-weight: 800">Description</p>
                         <div
                           class="row"
                           style="margin: 0; justify-content: space-between"
                         >
-                          <p style="margin: 0; font-weight: 600">
-                            {{getRequestDocsAndImages(allReq)}}
+                          <p style="max-width: 500px">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit
                           </p>
+                          <div
+                            *ngIf="show_more_imgLoading[index] == true"
+                            style="
+                              min-width: 20%;
+                              max-width: 23%;
+                              border-radius: 8px;
+                              margin-right: 50px;
+                            "
+                          >
+                            <ngx-skeleton-loader
+                              [theme]="{ width: '250px', height: '160px' }"
+                            >
+                            </ngx-skeleton-loader>
+                          </div>
+                          <img
+                            *ngIf="show_more_imgLoading[index] == false"
+                            src="{{ imagesUrl }}/{{ allReq.property_image_1 }}"
+                            alt=""
+                            style="
+                              min-width: 20%;
+                              max-width: 23%;
+                              border-radius: 8px;
+                              margin-right: 50px;
+                            "
+                          />
+                        </div>
+                        <p style="font-weight: 800">
+                          Provided Alteration Document
+                        </p>
+                        <div
+                          style="
+                            background-color: #ffffff;
+                            width: 250px;
+                            border-radius: 5px;
+                            padding: 10px;
+                            padding-left: 20px;
+                            padding-right: 25px;
+                          "
+                        >
+                          <div
+                            class="row"
+                            style="margin: 0; justify-content: space-between"
+                          >
+                            <p style="margin: 0; font-weight: 600">
+                              {{getRequestDocsAndImages(allReq)}}
+                            </p>
+                            <img
+                              class="arrow_icon_more_info"
+                              src="assets/img/svg/admin-requests/document-download.svg"
+                              alt=""
+                              style="
+                                width: 15px;
+                                filter: invert(63%) sepia(76%) saturate(389%)
+                                  hue-rotate(7deg) brightness(93%) contrast(93%);
+                                margin-left: 2px;
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="row"
+                        style="
+                          margin: 0;
+                          justify-content: space-between;
+                          width: 40%;
+                          margin-top: 20px;
+                        "
+                      >
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
                           <img
                             class="arrow_icon_more_info"
-                            src="assets/img/svg/admin-requests/document-download.svg"
+                            src="assets/img/svg/admin-requests/user.svg"
                             alt=""
                             style="
                               width: 15px;
@@ -2323,227 +2427,813 @@
                               margin-left: 2px;
                             "
                           />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.userData.firstname + " " +
+                            allReq.userData.lastname}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' || allReq.request_type == 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/user.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.firstname + " " + allReq.lastname}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/document-copy.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.userData.auth_type}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/house-2.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            *ngIf="allReq.userData.auth_type == 'landlord'"
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.building_name}}
+                          </p>
+                          <p
+                            *ngIf="allReq.userData.auth_type == 'tenant'"
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.property_name}}
+                          </p>
+                        </div>
+                      </div>
+
+                      <hr
+                        style="
+                          border: 1px solid #d4aa32;
+                          border-radius: 15px;
+                          margin-bottom: 5px;
+                        "
+                      />
+
+                      <div class="row" style="margin: 0">
+                        <div
+                          *ngIf="allReq.show_more == false"
+                          class="btn request-approve-btns"
+                          (click)="expandRequestCard(index)"
+                        >
+                          <div class="row" style="margin: 0">
+                            <p style="margin-bottom: 0">view more</p>
+                            <img
+                              src="assets/img/svg/admin-requests/arrow-down.svg"
+                              alt=""
+                              style="
+                                width: 10px;
+                                margin-left: 15px;
+                                user-select: none;
+                                pointer-events: none;
+                              "
+                            />
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="allReq.show_more == true"
+                          class="btn request-approve-btns"
+                          (click)="expandRequestCard(index)"
+                        >
+                          <div class="row" style="margin: 0">
+                            <p style="margin-bottom: 0">view less</p>
+                            <img
+                              src="assets/img/svg/admin-requests/arrow-up-1.svg"
+                              alt=""
+                              style="
+                                width: 10px;
+                                margin-left: 15px;
+                                user-select: none;
+                                pointer-events: none;
+                              "
+                            />
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                          (click)="acceptRequest(allReq)"
+                        >
+                          <p style="margin-bottom: 0">Accept Request</p>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                          (click)="declineRequest(allReq)"
+                        >
+                          <p style="margin-bottom: 0">Decline Request</p>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                        >
+                          <p style="margin-bottom: 0">Send to Landlord</p>
                         </div>
                       </div>
                     </div>
-
+                  </div>
+                </div>
+                <div *ngIf="isUserSearchedRequests == true">
+                  <div
+                    *ngIf="allRequestsSearched.length == 0"
+                    style="
+                      width: 100%;
+                      display: flex;
+                      justify-content: center;
+                      height: 400px;
+                      align-items: center;
+                    "
+                  >
+                    <p style="font-size: 20px; font-weight: 600">
+                      No Requests Found.
+                    </p>
+                  </div>
+                  <div
+                    class="card-wrapper"
+                    *ngFor="let allReq of allRequestsSearched; let index = index"
+                  >
                     <div
-                      class="row"
-                      style="
-                        margin: 0;
-                        justify-content: space-between;
-                        width: 40%;
-                        margin-top: 20px;
-                      "
+                      class="card"
+                      [ngClass]="allReq.show_more == true ? 'all-req-card-admin-expanded': 'all-req-card-admin' "
                     >
                       <div
-                        *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                        *ngIf="allReq.request_type == 'ADD_PROPERTY'"
                         class="row"
-                        style="
-                          margin: 0;
-                          background-color: #ffffff;
-                          color: #000000;
-                          padding: 10px;
-                          border-radius: 10px;
-                        "
+                        style="margin: 0; justify-content: space-between"
                       >
-                        <img
-                          class="arrow_icon_more_info"
-                          src="assets/img/svg/admin-requests/user.svg"
-                          alt=""
-                          style="
-                            width: 15px;
-                            filter: invert(63%) sepia(76%) saturate(389%)
-                              hue-rotate(7deg) brightness(93%) contrast(93%);
-                            margin-left: 2px;
-                          "
-                        />
                         <p
                           style="
-                            margin-bottom: 0;
-                            margin-left: 10px;
+                            color: #404040;
+                            font-size: 18px;
                             font-weight: 600;
                           "
                         >
-                          {{allReq.userData.firstname + " " +
-                          allReq.userData.lastname}}
+                          Add Property Request
                         </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' || allReq.request_type == 'NEW_TENANT_ACC'"
-                        class="row"
-                        style="
-                          margin: 0;
-                          background-color: #ffffff;
-                          color: #000000;
-                          padding: 10px;
-                          border-radius: 10px;
-                        "
-                      >
-                        <img
-                          class="arrow_icon_more_info"
-                          src="assets/img/svg/admin-requests/user.svg"
-                          alt=""
-                          style="
-                            width: 15px;
-                            filter: invert(63%) sepia(76%) saturate(389%)
-                              hue-rotate(7deg) brightness(93%) contrast(93%);
-                            margin-left: 2px;
-                          "
-                        />
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            margin-left: 10px;
-                            font-weight: 600;
-                          "
-                        >
-                          {{allReq.firstname + " " + allReq.lastname}}
-                        </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
-                        class="row"
-                        style="
-                          margin: 0;
-                          background-color: #ffffff;
-                          color: #000000;
-                          padding: 10px;
-                          border-radius: 10px;
-                        "
-                      >
-                        <img
-                          class="arrow_icon_more_info"
-                          src="assets/img/svg/admin-requests/document-copy.svg"
-                          alt=""
-                          style="
-                            width: 15px;
-                            filter: invert(63%) sepia(76%) saturate(389%)
-                              hue-rotate(7deg) brightness(93%) contrast(93%);
-                            margin-left: 2px;
-                          "
-                        />
-                        <p
-                          style="
-                            margin-bottom: 0;
-                            margin-left: 10px;
-                            font-weight: 600;
-                          "
-                        >
-                          {{allReq.userData.auth_type}}
-                        </p>
-                      </div>
-                      <div
-                        *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
-                        class="row"
-                        style="
-                          margin: 0;
-                          background-color: #ffffff;
-                          color: #000000;
-                          padding: 10px;
-                          border-radius: 10px;
-                        "
-                      >
-                        <img
-                          class="arrow_icon_more_info"
-                          src="assets/img/svg/admin-requests/house-2.svg"
-                          alt=""
-                          style="
-                            width: 15px;
-                            filter: invert(63%) sepia(76%) saturate(389%)
-                              hue-rotate(7deg) brightness(93%) contrast(93%);
-                            margin-left: 2px;
-                          "
-                        />
-                        <p
-                          *ngIf="allReq.userData.auth_type == 'landlord'"
-                          style="
-                            margin-bottom: 0;
-                            margin-left: 10px;
-                            font-weight: 600;
-                          "
-                        >
-                          {{allReq.building_name}}
-                        </p>
-                        <p
-                          *ngIf="allReq.userData.auth_type == 'tenant'"
-                          style="
-                            margin-bottom: 0;
-                            margin-left: 10px;
-                            font-weight: 600;
-                          "
-                        >
-                          {{allReq.property_name}}
-                        </p>
-                      </div>
-                    </div>
 
-                    <hr
-                      style="
-                        border: 1px solid #d4aa32;
-                        border-radius: 15px;
-                        margin-bottom: 5px;
-                      "
-                    />
-
-                    <div class="row" style="margin: 0">
-                      <div
-                        *ngIf="allReq.show_more == false"
-                        class="btn request-approve-btns"
-                        (click)="expandRequestCard(index)"
-                      >
-                        <div class="row" style="margin: 0">
-                          <p style="margin-bottom: 0">view more</p>
-                          <img
-                            src="assets/img/svg/admin-requests/arrow-down.svg"
-                            alt=""
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
                             style="
-                              width: 10px;
-                              margin-left: 15px;
-                              user-select: none;
-                              pointer-events: none;
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
                             "
-                          />
+                          >
+                            approved
+                          </p>
+                        </div>
+
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
                         </div>
                       </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'PAYMENT'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Payment Request
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'OTHER'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Other Request
+                        </p>
+
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Request for new Landlord Sign-up.
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        *ngIf="allReq.request_type == 'NEW_TENANT_ACC'"
+                        class="row"
+                        style="margin: 0; justify-content: space-between"
+                      >
+                        <p
+                          style="
+                            color: #404040;
+                            font-size: 18px;
+                            font-weight: 600;
+                          "
+                        >
+                          Request for new Tenant Sign-up.
+                        </p>
+                        <div
+                          *ngIf="allReq.approved == 'true'"
+                          style="
+                            width: 85px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #d3ab33;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            approved
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.declined == 'true'"
+                          style="
+                            width: 79px;
+                            height: 27px;
+                            border-radius: 5px;
+                            background-color: #f44336d9;
+                          "
+                        >
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              color: white;
+                              margin-left: 9px;
+                            "
+                          >
+                            declined
+                          </p>
+                        </div>
+                      </div>
+
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'ADD_PROPERTY' && allReq.show_more == false"
+                      >
+                        {{allReq.additional_info}}
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'PAYMENT' && allReq.show_more == false"
+                      >
+                        {{allReq.payment_details}}
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' && allReq.show_more == false"
+                      >
+                        Requesting landlord registration.
+                      </p>
+                      <p
+                        style="color: #707070"
+                        *ngIf="allReq.request_type == 'NEW_TENANT_ACC' && allReq.show_more == false"
+                      >
+                        Requesting Tenant registration.
+                      </p>
                       <div
                         *ngIf="allReq.show_more == true"
-                        class="btn request-approve-btns"
-                        (click)="expandRequestCard(index)"
+                        class="description-req-card"
                       >
-                        <div class="row" style="margin: 0">
-                          <p style="margin-bottom: 0">view less</p>
+                        <p style="font-weight: 800">Description</p>
+                        <div
+                          class="row"
+                          style="margin: 0; justify-content: space-between"
+                        >
+                          <p style="max-width: 500px">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit
+                          </p>
+                          <div
+                            *ngIf="show_more_imgLoading[index] == true"
+                            style="
+                              min-width: 20%;
+                              max-width: 23%;
+                              border-radius: 8px;
+                              margin-right: 50px;
+                            "
+                          >
+                            <ngx-skeleton-loader
+                              [theme]="{ width: '250px', height: '160px' }"
+                            >
+                            </ngx-skeleton-loader>
+                          </div>
                           <img
-                            src="assets/img/svg/admin-requests/arrow-up-1.svg"
+                            *ngIf="show_more_imgLoading[index] == false"
+                            src="{{ imagesUrl }}/{{ allReq.property_image_1 }}"
                             alt=""
                             style="
-                              width: 10px;
-                              margin-left: 15px;
-                              user-select: none;
-                              pointer-events: none;
+                              min-width: 20%;
+                              max-width: 23%;
+                              border-radius: 8px;
+                              margin-right: 50px;
                             "
                           />
                         </div>
+                        <p style="font-weight: 800">
+                          Provided Alteration Document
+                        </p>
+                        <div
+                          style="
+                            background-color: #ffffff;
+                            width: 250px;
+                            border-radius: 5px;
+                            padding: 10px;
+                            padding-left: 20px;
+                            padding-right: 25px;
+                          "
+                        >
+                          <div
+                            class="row"
+                            style="margin: 0; justify-content: space-between"
+                          >
+                            <p style="margin: 0; font-weight: 600">
+                              {{getRequestDocsAndImages(allReq)}}
+                            </p>
+                            <img
+                              class="arrow_icon_more_info"
+                              src="assets/img/svg/admin-requests/document-download.svg"
+                              alt=""
+                              style="
+                                width: 15px;
+                                filter: invert(63%) sepia(76%) saturate(389%)
+                                  hue-rotate(7deg) brightness(93%) contrast(93%);
+                                margin-left: 2px;
+                              "
+                            />
+                          </div>
+                        </div>
                       </div>
+
                       <div
-                        *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
-                        class="btn request-approve-btns"
-                        (click)="acceptRequest(allReq)"
+                        class="row"
+                        style="
+                          margin: 0;
+                          justify-content: space-between;
+                          width: 40%;
+                          margin-top: 20px;
+                        "
                       >
-                        <p style="margin-bottom: 0">Accept Request</p>
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/user.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.userData.firstname + " " +
+                            allReq.userData.lastname}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type == 'NEW_LANDLORD_ACC' || allReq.request_type == 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/user.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.firstname + " " + allReq.lastname}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/document-copy.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.userData.auth_type}}
+                          </p>
+                        </div>
+                        <div
+                          *ngIf="allReq.request_type != 'NEW_LANDLORD_ACC' && allReq.request_type != 'NEW_TENANT_ACC'"
+                          class="row"
+                          style="
+                            margin: 0;
+                            background-color: #ffffff;
+                            color: #000000;
+                            padding: 10px;
+                            border-radius: 10px;
+                          "
+                        >
+                          <img
+                            class="arrow_icon_more_info"
+                            src="assets/img/svg/admin-requests/house-2.svg"
+                            alt=""
+                            style="
+                              width: 15px;
+                              filter: invert(63%) sepia(76%) saturate(389%)
+                                hue-rotate(7deg) brightness(93%) contrast(93%);
+                              margin-left: 2px;
+                            "
+                          />
+                          <p
+                            *ngIf="allReq.userData.auth_type == 'landlord'"
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.building_name}}
+                          </p>
+                          <p
+                            *ngIf="allReq.userData.auth_type == 'tenant'"
+                            style="
+                              margin-bottom: 0;
+                              margin-left: 10px;
+                              font-weight: 600;
+                            "
+                          >
+                            {{allReq.property_name}}
+                          </p>
+                        </div>
                       </div>
-                      <div
-                        *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
-                        class="btn request-approve-btns"
-                        (click)="declineRequest(allReq)"
-                      >
-                        <p style="margin-bottom: 0">Decline Request</p>
-                      </div>
-                      <div
-                        *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
-                        class="btn request-approve-btns"
-                      >
-                        <p style="margin-bottom: 0">Send to Landlord</p>
+
+                      <hr
+                        style="
+                          border: 1px solid #d4aa32;
+                          border-radius: 15px;
+                          margin-bottom: 5px;
+                        "
+                      />
+
+                      <div class="row" style="margin: 0">
+                        <div
+                          *ngIf="allReq.show_more == false"
+                          class="btn request-approve-btns"
+                          (click)="expandRequestCard(index)"
+                        >
+                          <div class="row" style="margin: 0">
+                            <p style="margin-bottom: 0">view more</p>
+                            <img
+                              src="assets/img/svg/admin-requests/arrow-down.svg"
+                              alt=""
+                              style="
+                                width: 10px;
+                                margin-left: 15px;
+                                user-select: none;
+                                pointer-events: none;
+                              "
+                            />
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="allReq.show_more == true"
+                          class="btn request-approve-btns"
+                          (click)="expandRequestCard(index)"
+                        >
+                          <div class="row" style="margin: 0">
+                            <p style="margin-bottom: 0">view less</p>
+                            <img
+                              src="assets/img/svg/admin-requests/arrow-up-1.svg"
+                              alt=""
+                              style="
+                                width: 10px;
+                                margin-left: 15px;
+                                user-select: none;
+                                pointer-events: none;
+                              "
+                            />
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                          (click)="acceptRequest(allReq)"
+                        >
+                          <p style="margin-bottom: 0">Accept Request</p>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                          (click)="declineRequest(allReq)"
+                        >
+                          <p style="margin-bottom: 0">Decline Request</p>
+                        </div>
+                        <div
+                          *ngIf="allReq.approved != 'true' && allReq.declined != 'true'"
+                          class="btn request-approve-btns"
+                        >
+                          <p style="margin-bottom: 0">Send to Landlord</p>
+                        </div>
                       </div>
                     </div>
                   </div>
