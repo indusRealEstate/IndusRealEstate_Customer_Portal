@@ -1707,6 +1707,18 @@
                         Appartment
                       </p>
                       <p
+                        *ngIf="filter.filter_2 == 'town_house'"
+                        style="margin-bottom: 0"
+                      >
+                        Town House
+                      </p>
+                      <p
+                        *ngIf="filter.filter_2 == 'other'"
+                        style="margin-bottom: 0"
+                      >
+                        Other
+                      </p>
+                      <p
                         *ngIf="filter.filter_1 == 'approved'"
                         style="margin-bottom: 0"
                       >
@@ -1844,6 +1856,14 @@
                   <div class="row" style="margin: 0">
                     <mat-radio-button value="appartment"></mat-radio-button>
                     <p>Appartment</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="town_house"></mat-radio-button>
+                    <p>Town House</p>
+                  </div>
+                  <div class="row" style="margin: 0">
+                    <mat-radio-button value="other"></mat-radio-button>
+                    <p>Other</p>
                   </div>
                 </mat-radio-group>
                 <button

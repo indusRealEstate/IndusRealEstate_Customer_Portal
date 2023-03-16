@@ -64,7 +64,12 @@ export class AdminRequests implements OnInit {
 
   categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
     "new_sign_ups";
-  propertyTypeAllRequests: "all" | "villa" | "appartment" = "all";
+  propertyTypeAllRequests:
+    | "all"
+    | "villa"
+    | "appartment"
+    | "town_house"
+    | "other" = "all";
 
   constructor(
     private apiService: ApiService,
@@ -147,19 +152,74 @@ export class AdminRequests implements OnInit {
 
     for (let index = 0; index < this.allRequests.length; index++) {
       if (this.categoryAllRequests == "new_sign_ups") {
-        if (
-          this.allRequests[index].request_type == "NEW_LANDLORD_ACC" ||
-          this.allRequests[index].request_type == "NEW_TENANT_ACC"
-        ) {
-          this.allRequestsSearched.push(this.allRequests[index]);
+        if (this.allRequests[index].request_type == "NEW_LANDLORD_ACC") {
+          if (this.propertyTypeAllRequests == "appartment") {
+            if (
+              this.allRequests[index].propertyData.property_type == "Appartment"
+            ) {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "villa") {
+            if (this.allRequests[index].propertyData.property_type == "Villa") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "town_house") {
+            if (
+              this.allRequests[index].propertyData.property_type == "Town House"
+            ) {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "other") {
+            if (this.allRequests[index].propertyData.property_type == "Other") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else {
+            this.allRequestsSearched.push(this.allRequests[index]);
+          }
         }
       } else if (this.categoryAllRequests == "add_new_property") {
         if (this.allRequests[index].request_type == "ADD_PROPERTY") {
-          this.allRequestsSearched.push(this.allRequests[index]);
+          if (this.propertyTypeAllRequests == "appartment") {
+            if (this.allRequests[index].property_type == "Appartment") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "villa") {
+            if (this.allRequests[index].property_type == "Villa") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "town_house") {
+            if (this.allRequests[index].property_type == "Town House") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "other") {
+            if (this.allRequests[index].property_type == "Other") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else {
+            this.allRequestsSearched.push(this.allRequests[index]);
+          }
         }
       } else if (this.categoryAllRequests == "others") {
         if (this.allRequests[index].request_type == "OTHERS") {
-          this.allRequestsSearched.push(this.allRequests[index]);
+          if (this.propertyTypeAllRequests == "appartment") {
+            if (this.allRequests[index].property_type == "Appartment") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "villa") {
+            if (this.allRequests[index].property_type == "Villa") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "town_house") {
+            if (this.allRequests[index].property_type == "Town House") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else if (this.propertyTypeAllRequests == "other") {
+            if (this.allRequests[index].property_type == "Other") {
+              this.allRequestsSearched.push(this.allRequests[index]);
+            }
+          } else {
+            this.allRequestsSearched.push(this.allRequests[index]);
+          }
         }
       }
     }
@@ -199,11 +259,57 @@ export class AdminRequests implements OnInit {
         }
       } else {
         // console.log(filter);
-        if (filter.filter_1 != null) {
-          this.isUserSearchedRequests = false;
+        if (filter.filter_2 != null) {
+          this.allRequestsSearched.length = 0;
+          for (let index = 0; index < this.allRequests.length; index++) {
+            if (this.categoryAllRequests == "new_sign_ups") {
+              if (
+                this.allRequests[index].request_type == "NEW_LANDLORD_ACC" ||
+                this.allRequests[index].request_type == "NEW_TENANT_ACC"
+              ) {
+                this.allRequestsSearched.push(this.allRequests[index]);
+              }
+            } else if (this.categoryAllRequests == "add_new_property") {
+              if (this.allRequests[index].request_type == "ADD_PROPERTY") {
+                this.allRequestsSearched.push(this.allRequests[index]);
+              }
+            } else if (this.categoryAllRequests == "others") {
+              if (this.allRequests[index].request_type == "OTHERS") {
+                this.allRequestsSearched.push(this.allRequests[index]);
+              }
+            }
+          }
+        } else {
+          this.allRequestsSearched.length = 0;
+          for (let index = 0; index < this.allRequests.length; index++) {
+            if (
+              this.allRequests[index].request_type != "NEW_TENANT_ACC" &&
+              this.allRequests[index].request_type == "NEW_LANDLORD_ACC"
+            ) {
+              if (this.propertyTypeAllRequests == "appartment") {
+                if (this.allRequests[index].propertyData.property_type == "Appartment") {
+                  this.allRequestsSearched.push(this.allRequests[index]);
+                }
+              } else if (this.propertyTypeAllRequests == "villa") {
+                if (this.allRequests[index].propertyData.property_type == "Villa") {
+                  this.allRequestsSearched.push(this.allRequests[index]);
+                }
+              } else if (this.propertyTypeAllRequests == "town_house") {
+                if (this.allRequests[index].propertyData.property_type == "Town House") {
+                  this.allRequestsSearched.push(this.allRequests[index]);
+                }
+              } else if (this.propertyTypeAllRequests == "other") {
+                if (this.allRequests[index].propertyData.property_type == "Other") {
+                  this.allRequestsSearched.push(this.allRequests[index]);
+                }
+              } else {
+                this.allRequestsSearched.push(this.allRequests[index]);
+              }
+            }
+          }
         }
       }
-    }, 200);
+    }, 100);
   }
 
   searchBtnClicked() {
