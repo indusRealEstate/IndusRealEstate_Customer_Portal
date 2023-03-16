@@ -22,4 +22,14 @@ export class OpenAiServices {
 
     return completion.data.choices[0].text;
   }
+
+  async createImageOpenAI(text: string) {
+    const completion = await this.openai.createImage({
+      prompt : text,
+      n : 1,
+      size : "1024x1024",
+    });
+
+    return completion.data.data[0]["url"];
+  }
 }

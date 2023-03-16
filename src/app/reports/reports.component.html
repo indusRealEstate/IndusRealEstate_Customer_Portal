@@ -53,6 +53,13 @@
               >
                 Generate Text
               </div>
+              <div
+                (click)="openAiImageGenerateClick()"
+                class="btn"
+                style="width: 200px; height: 40px; margin-left: 10px"
+              >
+                Generate Image
+              </div>
             </div>
             <p
               *ngIf="isUserNothingAdded == true"
@@ -91,6 +98,54 @@
               <div
                 class="col"
                 *ngIf="aiResult == ''"
+                style="text-align: center"
+              >
+                <p>It takes some time. Please wait.</p>
+                <span
+                  class="spinner-border spinner-border-m mr-2"
+                  style="color: #d4aa32"
+                >
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="col"
+              *ngIf="ifAiBtnClickedImage == true"
+              style="
+                display: flex;
+                justify-content: center;
+                min-height: 500px;
+                align-items: center;
+              "
+            >
+              <div class="col" *ngIf="aiGenerateImageUrl != ''">
+                <div
+                  style="
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 50px;
+                  "
+                >
+                  <img
+                    style="width: 30%"
+                    src="{{ aiGenerateImageUrl }}"
+                    alt=""
+                  />
+                </div>
+                <div
+                  (click)="clearAiText()"
+                  class="btn"
+                  style="margin-left: 50%; margin-top: 100px"
+                >
+                  Clear
+                </div>
+              </div>
+
+              <div
+                class="col"
+                *ngIf="aiGenerateImageUrl == ''"
                 style="text-align: center"
               >
                 <p>It takes some time. Please wait.</p>

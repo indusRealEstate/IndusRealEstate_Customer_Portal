@@ -16,7 +16,10 @@ export class ReportsComponent implements OnInit {
   aiPromptText: any = "";
   aiResult: any = "";
 
+  aiGenerateImageUrl: any = "";
+
   ifAiBtnClicked: boolean = false;
+  ifAiBtnClickedImage: boolean = false;
   isUserNothingAdded: boolean = false;
 
   constructor(
@@ -66,8 +69,26 @@ export class ReportsComponent implements OnInit {
     }
   }
 
+  async openAiImageGenerateClick() {
+    if (this.aiPromptText != "") {
+      this.ifAiBtnClickedImage = true;
+      this.aiGenerateImageUrl = await this.openAi.createImageOpenAI(
+        this.aiPromptText
+      );
+      console.log(this.aiGenerateImageUrl)
+    } else {
+      this.isUserNothingAdded = true;
+
+      setTimeout(() => {
+        this.isUserNothingAdded = false;
+      }, 3000);
+    }
+  }
+
   clearAiText() {
     this.ifAiBtnClicked = false;
+    this.ifAiBtnClickedImage = false;
     this.aiResult = "";
+    this.aiGenerateImageUrl = "";
   }
 }
