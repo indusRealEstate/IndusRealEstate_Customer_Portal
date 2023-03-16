@@ -16,7 +16,7 @@ export class ReportsComponent implements OnInit {
   aiPromptText: any = "";
   aiResult: any = "";
 
-  aiGenerateImageUrl: any = "";
+  aiGenerateImageUrls: any[] = [];
 
   ifAiBtnClicked: boolean = false;
   ifAiBtnClickedImage: boolean = false;
@@ -72,10 +72,9 @@ export class ReportsComponent implements OnInit {
   async openAiImageGenerateClick() {
     if (this.aiPromptText != "") {
       this.ifAiBtnClickedImage = true;
-      this.aiGenerateImageUrl = await this.openAi.createImageOpenAI(
+      this.aiGenerateImageUrls = await this.openAi.createImageOpenAI(
         this.aiPromptText
       );
-      console.log(this.aiGenerateImageUrl)
     } else {
       this.isUserNothingAdded = true;
 
@@ -89,6 +88,6 @@ export class ReportsComponent implements OnInit {
     this.ifAiBtnClicked = false;
     this.ifAiBtnClickedImage = false;
     this.aiResult = "";
-    this.aiGenerateImageUrl = "";
+    this.aiGenerateImageUrls.length = 0;
   }
 }

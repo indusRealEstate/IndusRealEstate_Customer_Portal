@@ -119,7 +119,7 @@
                 align-items: center;
               "
             >
-              <div class="col" *ngIf="aiGenerateImageUrl != ''">
+              <div class="col" *ngIf="aiGenerateImageUrls.length != 0">
                 <div
                   style="
                     width: 100%;
@@ -127,12 +127,9 @@
                     justify-content: center;
                     margin-top: 50px;
                   "
+                  *ngFor="let img of aiGenerateImageUrls"
                 >
-                  <img
-                    style="width: 30%"
-                    src="{{ aiGenerateImageUrl }}"
-                    alt=""
-                  />
+                  <img style="width: 30%" src="{{ img.url }}" alt="" />
                 </div>
                 <div
                   (click)="clearAiText()"
@@ -145,7 +142,7 @@
 
               <div
                 class="col"
-                *ngIf="aiGenerateImageUrl == ''"
+                *ngIf="aiGenerateImageUrls.length == 0"
                 style="text-align: center"
               >
                 <p>It takes some time. Please wait.</p>
