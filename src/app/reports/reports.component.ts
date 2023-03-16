@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OpenAiServices } from "app/services/openAI.service";
 
 @Component({
   selector: "app-reports",
@@ -12,10 +13,17 @@ export class ReportsComponent implements OnInit {
   selectedDateRange: any = "--None--";
   isUserSignedIn: boolean = false;
 
+  aiPromptText: any = "";
+  aiResult: any = "";
+
+  ifAiBtnClicked: boolean = false;
+  isUserNothingAdded: boolean = false;
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private openAi: OpenAiServices
   ) {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -44,4 +52,22 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  async openAiPromtBtnClick() {
+    if (this.aiPromptText != "") {
+      this.ifAiBtnClicked = true;
+      this.aiResult = await this.openAi.getDataFromOpenAPI(this.aiPromptText);
+    } else {
+      this.isUserNothingAdded = true;
+
+      setTimeout(() => {
+        this.isUserNothingAdded = false;
+      }, 3000);
+    }
+  }
+
+  clearAiText() {
+    this.ifAiBtnClicked = false;
+    this.aiResult = "";
+  }
 }

@@ -56,6 +56,7 @@
     "ng2-pdf-viewer": "^9.1.4",
     "ngx-checkbox": "^1.0.1",
     "ngx-skeleton-loader": "^6.0.0",
+    "openai": "^3.2.1",
     "perfect-scrollbar": "1.5.5",
     "popper.js": "1.16.1",
     "rxjs": "~7.5.0",

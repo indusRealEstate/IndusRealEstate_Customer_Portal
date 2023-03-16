@@ -23,8 +23,86 @@
               </h4>
             </div>
           </div>
-          <ng-container class="card-body">
-            <tr class="reports-row-body">
+          <div class="card-body" style="min-height: 500px">
+            <h3
+              style="text-align: center; margin-top: 5px; margin-bottom: 30px"
+            >
+              Generate Text using AI
+            </h3>
+            <div
+              class="row"
+              style="margin: 0; width: 100%; justify-content: center"
+            >
+              <input
+                type="text"
+                [(ngModel)]="aiPromptText"
+                placeholder="Enter something"
+                style="
+                  height: 40px;
+                  margin: 5px 30px;
+                  width: 300px;
+                  padding-left: 10px;
+                  border-radius: 7px;
+                  border: 1px solid #7070707d;
+                "
+              />
+              <div
+                (click)="openAiPromtBtnClick()"
+                class="btn"
+                style="width: 200px; height: 40px"
+              >
+                Generate Text
+              </div>
+            </div>
+            <p
+              *ngIf="isUserNothingAdded == true"
+              style="
+                text-align: center;
+                margin-bottom: 0;
+                margin-top: 10px;
+                color: red;
+              "
+            >
+              Please search something.
+            </p>
+            <div
+              class="col"
+              *ngIf="ifAiBtnClicked == true"
+              style="
+                display: flex;
+                justify-content: center;
+                min-height: 500px;
+                align-items: center;
+              "
+            >
+              <div class="col" *ngIf="aiResult != ''">
+                <p style="padding: 0 40px">
+                  {{ aiResult }}
+                </p>
+                <div
+                  (click)="clearAiText()"
+                  class="btn"
+                  style="margin-left: 50%; margin-top: 100px"
+                >
+                  Clear
+                </div>
+              </div>
+
+              <div
+                class="col"
+                *ngIf="aiResult == ''"
+                style="text-align: center"
+              >
+                <p>It takes some time. Please wait.</p>
+                <span
+                  class="spinner-border spinner-border-m mr-2"
+                  style="color: #d4aa32"
+                >
+                </span>
+              </div>
+            </div>
+
+            <!-- <tr class="reports-row-body">
               <td class="reports-row-ind">
                 <p>Choose report</p>
                 <mat-form-field appearance="fill">
@@ -105,8 +183,8 @@
                   "
                 />
               </button>
-            </tr>
-          </ng-container>
+            </tr> -->
+          </div>
         </div>
       </div>
     </div>
