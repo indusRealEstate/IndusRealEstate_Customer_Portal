@@ -101,17 +101,23 @@
           </div>
 
           <div class="row" style="margin-left: 0px; margin-top: 20px">
-            <div
-              class="row"
-              style="margin-left: 0px; width: -webkit-fill-available"
-            >
-              <p class="grey-text-form" style="margin-right: 30px">
-                Furnish Details
-              </p>
-              <mat-form-field
-                style="width: -webkit-fill-available; margin-right: 30px"
-              >
+            <div class="col" style="padding-left: 0">
+              <p class="grey-text-form">Furnish Details</p>
+              <mat-form-field>
                 <input matInput formControlName="furnishDetails" />
+              </mat-form-field>
+            </div>
+            <div class="col" style="padding-left: 0">
+              <p class="grey-text-form">Property Type</p>
+              <mat-form-field appearance="fill">
+                <mat-select
+                  [(ngModel)]="selectedPropertyType"
+                  formControlName="propertyType"
+                >
+                  <mat-option *ngFor="let p of propertyType" [value]="p">
+                    {{ p }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </div>

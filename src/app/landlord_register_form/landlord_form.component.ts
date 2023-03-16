@@ -174,6 +174,7 @@ export class LandlordFormComponent implements OnInit {
         property_state: this.secondStepper.propertyState,
         offer_validity: this.secondStepper.form.value.offerValidity,
         furnish_details: this.secondStepper.form.value.furnishDetails,
+        property_type: this.secondStepper.form.value.propertyType,
         title_deed_number: this.secondStepper.form.value.titleDeedNo,
         project_name: this.secondStepper.form.value.projectName,
         community: this.secondStepper.form.value.community,

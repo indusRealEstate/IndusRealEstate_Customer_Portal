@@ -97,13 +97,26 @@
         class="form-input"
       />
     </div>
-    <div class="col-sm-8">
+    <div class="col">
       <input
         matInput
         placeholder="Furnish Details"
         formControlName="furnishDetails"
         class="form-input"
       />
+    </div>
+    <div class="col" style="padding-right: 0">
+      <mat-form-field appearance="fill">
+        <mat-select
+          [(ngModel)]="selectedPropertyType"
+          placeholder="Property Type"
+          formControlName="propertyType"
+        >
+          <mat-option *ngFor="let p of propertyType" [value]="p">
+            {{ p }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
   <div class="col" style="padding-left: 0">

@@ -47,9 +47,8 @@ export class AddPropertyForm implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute
-  ) // private otherServices: OtherServices
-  {
+    private readonly route: ActivatedRoute // private otherServices: OtherServices
+  ) {
     this.pageLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -94,11 +93,16 @@ export class AddPropertyForm implements OnInit {
       this.router.navigate(["/login"]);
     }
   }
+
+  selectedPropertyType: any;
+  propertyType: any[] = ["Appartment", "Villa", "Town House", "Other"];
+
   ngOnInit() {
     this.addPropertyForm = this.formBuilder.group({
       property_state: ["sale"],
       offer_validity: [""],
       furnishDetails: [""],
+      propertyType: [""],
       titleDeedNumber: [""],
       ProjectName: [""],
       CommunityName: [""],
@@ -164,6 +168,7 @@ export class AddPropertyForm implements OnInit {
         property_state: this.propertyState,
         offer_validity: this.offerValidity,
         furnish_details: this.addPropertyForm.value["furnishDetails"],
+        property_type: this.addPropertyForm.value["propertyType"],
         title_deed_number: this.addPropertyForm.value["titleDeedNumber"],
         project_name: this.addPropertyForm.value["ProjectName"],
         community: this.addPropertyForm.value["CommunityName"],

@@ -225,9 +225,9 @@ export class AdminRequests implements OnInit {
         }
       }
 
-      setTimeout(() => {
-        console.log(this.allRequestsSearched);
-      }, 2000);
+      // setTimeout(() => {
+      //   console.log(this.allRequestsSearched);
+      // }, 2000);
     } else {
       this.isUserSearchedEmpty = true;
 

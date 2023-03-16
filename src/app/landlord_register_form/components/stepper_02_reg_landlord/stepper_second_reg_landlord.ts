@@ -14,6 +14,9 @@ export class StepperLandlordRegisterSecond {
   secondPartySignature: any = "";
   secondPartySignatureExt: any = "";
 
+  selectedPropertyType: any;
+  propertyType: any[] = ["Appartment", "Villa", "Town House", "Other"];
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -28,6 +31,7 @@ export class StepperLandlordRegisterSecond {
       carparkingNo: ["", [Validators.required]],
       bedroomNo: ["", [Validators.required]],
       furnishDetails: ["", [Validators.required]],
+      propertyType: ["", [Validators.required]],
       additionalInfo: ["", [Validators.required]],
       marketing01: ["", [Validators.required]],
       marketing02: ["", [Validators.required]],
