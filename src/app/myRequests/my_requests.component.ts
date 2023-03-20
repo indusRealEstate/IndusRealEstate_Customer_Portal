@@ -11,15 +11,13 @@ import { AuthenticationService } from "app/services/authentication.service";
 export class MyRequestsComponent implements OnInit {
   selectedSearchType: any;
 
-  searchText: any;
+  searchText: any = "";
 
   searchResult: any[] = [];
 
   requestType: "tenant-req" | "my-req" = "my-req";
 
   isUserSignedIn: boolean = false;
-
-  isSearchTypeNotSelected: boolean = false;
   isSearchTextEmpty: boolean = false;
 
   isSearchBtnClicked: boolean = false;
@@ -35,14 +33,6 @@ export class MyRequestsComponent implements OnInit {
     "createdDate",
   ];
   dataSource: any[] = [];
-
-  searchType: any[] = [
-    // "Name",
-    "Request number",
-    "Request type",
-    "Property name",
-    // "Created date",
-  ];
 
   constructor(
     private apiService: ApiService,
@@ -98,13 +88,7 @@ export class MyRequestsComponent implements OnInit {
   }
 
   searchRequest() {
-    if (this.selectedSearchType == null) {
-      this.isSearchTypeNotSelected = true;
-
-      setTimeout(() => {
-        this.isSearchTypeNotSelected = false;
-      }, 2500);
-    } else if (this.searchText == null || this.searchText == "") {
+    if (this.searchText == null || this.searchText == "") {
       this.isSearchTextEmpty = true;
 
       setTimeout(() => {
@@ -112,45 +96,37 @@ export class MyRequestsComponent implements OnInit {
       }, 2500);
     } else {
       this.isSearchBtnClicked = true;
-      if (this.selectedSearchType == "Request number") {
-        this.searchResult.length = 0;
-        this.dataSource.map((val) => {
-          if (
-            new String(val.request_no).trim().toLowerCase() ==
-            new String(this.searchText).trim().toLowerCase()
-          ) {
-            return this.searchResult.push(val);
-          }
-        });
-      } else if (this.selectedSearchType == "Request type") {
-        this.searchResult.length = 0;
-        this.dataSource.map((val) => {
-          if (
-            new String(val.request_type).trim().toLowerCase() ==
-            new String(this.searchText).trim().toLowerCase()
-          ) {
-            return this.searchResult.push(val);
-          }
-        });
-        console.log(this.searchResult);
-      } else if (this.selectedSearchType == "Property name") {
-        this.searchResult.length = 0;
-        this.dataSource.map((val) => {
-          if (
-            new String(val.property_name).trim().toLowerCase() ==
-            new String(this.searchText).trim().toLowerCase()
-          ) {
-            return this.searchResult.push(val);
-          }
-        });
-        console.log(this.searchResult);
+
+      this.searchResult.length = 0;
+
+      for (let index = 0; index < this.dataSource.length; index++) {
+        var e = JSON.stringify(this.dataSource[index])
+          .trim()
+          .replace(/ /g, "")
+          .toLowerCase()
+          .includes(
+            new String(this.searchText).trim().replace(/ /g, "").toLowerCase()
+          );
+
+        if (e == true) {
+          this.searchResult.push(this.dataSource[index]);
+        }
       }
+      // this.dataSource.map((val) => {
+      //   if (
+      //     new String(val.request_no).trim().toLowerCase() ==
+      //     new String(this.searchText).trim().toLowerCase()
+      //   ) {
+      //     return this.searchResult.push(val);
+      //   }
+      // });
     }
   }
 
   closeResults() {
     this.searchResult.length = 0;
     this.isSearchBtnClicked = false;
+    this.searchText = "";
   }
 
   ngOnInit() {

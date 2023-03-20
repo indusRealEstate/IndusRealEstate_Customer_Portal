@@ -23,6 +23,15 @@ export class HomeComponent implements OnInit {
   screenHeight: number;
   screenWidth: number;
 
+  displayedColumns: string[] = [
+    // "name",
+    "details",
+    "propertyName",
+    "dateIssued",
+    "status",
+    "actions",
+  ];
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -56,6 +65,12 @@ export class HomeComponent implements OnInit {
 
     this.scrollToTop();
   }
+
+  selectedStatusType: any;
+  statusType: any[] = ["All", "Approved", "Declined", "Pending"];
+
+  selectedPeriod: any;
+  periods: any[] = ["All", "Last 24 hours", "Last 12 hours", "Last 6 hours"];
 
   @HostListener("window:resize", ["$event"])
   getScreenSize(event?) {

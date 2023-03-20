@@ -494,110 +494,120 @@
       <div
         class="card-header"
         style="
-          height: 100px;
-          border-bottom: 1px solid #e1e1e1;
-          background-image: linear-gradient(
-              to bottom,
-              rgb(255 255 255 / 73%) 50%,
-              rgb(255 255 255 / 76%) 80%
-            ),
-            url('assets/img/bg/navbar_bg.webp');
+          background-color: #2b333e;
+          padding: 25px 20px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
         "
       >
         <div class="row" style="margin: 0; justify-content: space-between">
-          <p
-            style="
-              margin: 0;
-              font-size: 22px;
-              margin-top: 20px;
-              margin-left: 10px;
-              font-weight: 900;
-              margin-bottom: 15px;
-            "
-          >
-            My Documents
-          </p>
-        </div>
-
-        <div
-          style="
-            width: 70%;
-            height: 60px;
-            border-radius: 10px;
-            position: absolute;
-            background-color: #2b333e;
-            left: 15%;
-            top: 70px;
-            padding: 10px;
-          "
-        >
-          <div class="row" style="margin: 0; justify-content: space-between">
-            <div
-              class="col"
-              style="padding-left: 0; width: 100%; padding-right: 0"
+          <div class="col">
+            <p
+              style="
+                margin: 0;
+                font-size: 20px;
+                font-weight: 900;
+                color: white;
+              "
             >
-              <input
-                [(ngModel)]="searchText"
-                type="text"
-                placeholder="Search"
+              My Documents
+            </p>
+            <div class="row" style="margin: 0; margin-top: 5px">
+              <p style="margin-bottom: 0; color: #88909b">
+                Activity regarding documents
+              </p>
+              <img
+                src="assets/img/svg/home-page/info-circle.svg"
+                alt=""
                 style="
-                  border-radius: 7px;
-                  border: none;
-                  height: 40px;
-                  width: 100%;
-                  padding-left: 15px;
-                  padding-right: 15px;
+                  filter: invert(62%) sepia(67%) saturate(434%) hue-rotate(7deg)
+                    brightness(96%) contrast(92%);
+                  width: 15px;
+                  margin-left: 5px;
                 "
               />
-            </div>
-
-            <div class="col" style="width: 100%; padding-right: 0">
-              <mat-form-field appearance="fill">
-                <mat-select
-                  [(ngModel)]="selectedSearchType"
-                  placeholder="Search Type"
-                >
-                  <mat-option *ngFor="let s of searchType" [value]="s">
-                    {{ s }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="col" style="width: 100%; padding-right: 0">
-              <div
-                *ngIf="dataSource.length == 0"
-                class="btn"
-                style="
-                  width: 100%;
-                  background-color: #939393;
-                  margin-top: 0;
-                  height: 40px;
-                  border-radius: 7px;
-                "
-              >
-                <p>Search</p>
-              </div>
-              <div
-                *ngIf="dataSource.length != 0"
-                class="btn"
-                (click)="searchRequest()"
-                style="
-                  width: 100%;
-                  background-color: #d4aa32;
-                  margin-top: 0;
-                  height: 40px;
-                  border-radius: 7px;
-                "
-              >
-                <p>Search</p>
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card-body" style="padding: 50px">
+      <div class="card-body" style="padding: 30px 30px">
+        <div style="width: 100%; display: flex; justify-content: center">
+          <div
+            style="
+              width: 70%;
+              height: 60px;
+              border-radius: 10px;
+              background-color: #2b333e;
+              padding: 10px;
+            "
+          >
+            <div class="row" style="margin: 0; justify-content: space-between">
+              <div
+                class="col"
+                style="padding-left: 0; width: 100%; padding-right: 0"
+              >
+                <input
+                  [(ngModel)]="searchText"
+                  type="text"
+                  placeholder="Search"
+                  style="
+                    border-radius: 7px;
+                    border: none;
+                    height: 40px;
+                    width: 100%;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                  "
+                />
+              </div>
+
+              <div class="col" style="width: 100%; padding-right: 0">
+                <mat-form-field appearance="fill">
+                  <mat-select
+                    [(ngModel)]="selectedSearchType"
+                    placeholder="Search Type"
+                  >
+                    <mat-option *ngFor="let s of searchType" [value]="s">
+                      {{ s }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col" style="width: 100%; padding-right: 0">
+                <div
+                  *ngIf="dataSource.length == 0"
+                  class="btn"
+                  style="
+                    width: 100%;
+                    background-color: #939393;
+                    margin-top: 0;
+                    height: 40px;
+                    border-radius: 7px;
+                  "
+                >
+                  <p>Search</p>
+                </div>
+                <div
+                  *ngIf="dataSource.length != 0"
+                  class="btn"
+                  (click)="searchRequest()"
+                  style="
+                    width: 100%;
+                    background-color: #d4aa32;
+                    margin-top: 0;
+                    height: 40px;
+                    border-radius: 7px;
+                  "
+                >
+                  <p>Search</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div *ngIf="isSearchBtnClicked == true">
           <div
             style="
@@ -701,6 +711,7 @@
                     mat-header-cell
                     *matHeaderCellDef
                     class="table-header-font"
+                    style="border-top-left-radius: 10px"
                   >
                     Document Name
                   </th>
@@ -779,6 +790,7 @@
                     mat-header-cell
                     *matHeaderCellDef
                     class="table-header-font"
+                    style="border-top-right-radius: 10px"
                   ></th>
                   <td
                     mat-cell
@@ -833,7 +845,12 @@
             >
               <!-- Name Column -->
               <ng-container matColumnDef="docName">
-                <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="border-top-left-radius: 10px"
+                >
                   Document Name
                 </th>
                 <td
@@ -903,6 +920,7 @@
                   mat-header-cell
                   *matHeaderCellDef
                   class="table-header-font"
+                  style="border-top-right-radius: 10px"
                 ></th>
                 <td
                   mat-cell

@@ -150,7 +150,7 @@ export class NavbarComponent implements OnInit {
       case "/user-profile":
         return "User profile";
       case "/my-requests":
-        return "Requests";
+        return "My Requests";
       case "/new-payment":
         return "Payment";
       case "/reports":

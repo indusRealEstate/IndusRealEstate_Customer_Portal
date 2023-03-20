@@ -5,22 +5,27 @@
 }
 
 .my-req-btn-active {
-  margin-right: 50px;
+  margin-right: 20px;
   border-radius: 8px;
-  background-color: #2b333e;
+  background-color: #d4aa32;
 }
 .my-req-btn {
-  margin-right: 50px;
+  margin-right: 20px;
   border-radius: 8px;
-  background-color: white;
-  color: black;
-  border: 1px solid #2b333e;
+  background-color: #A3A3A3;
+  color: white;
 }
 
 .demo-table {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 30px;
   box-shadow: none;
+
+  .mat-header-row {
+    background-color: #d9d9d9;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
 
   .mat-row {
     height: 70px;
@@ -79,7 +84,7 @@
   border-radius: 7px !important;
   background-color: white !important;
   padding-left: 10px !important;
-  border: 1px solid #A3A3A3;
+  border: 1px solid #a3a3a3;
   // margin-top: 25px !important;
 }
 

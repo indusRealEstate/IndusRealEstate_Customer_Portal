@@ -6,8 +6,14 @@
 
 .demo-table {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 40px;
   box-shadow: none;
+
+  .mat-header-row {
+    background-color: #d9d9d9;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
 
   .mat-row {
     height: 90px;
