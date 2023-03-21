@@ -10,3 +10,18 @@
   justify-content: center;
   display: flex;
 }
+
+.main-panel-width-mini {
+  width: calc(100% - 60px);
+}
+.main-panel-width-large {
+  width: calc(100% - 310px);
+}
+.sidebar-width-large {
+  width: 315px;
+  z-index: 4;
+}
+.sidebar-width-mini {
+  width: 65px;
+  z-index: 4;
+}

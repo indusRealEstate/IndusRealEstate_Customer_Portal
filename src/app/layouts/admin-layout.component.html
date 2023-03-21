@@ -2,7 +2,11 @@
   class="wrapper"
   *ngIf="isUserSignedOut == true && isLogoutProcessing == false"
 >
-  <div class="main-panel" [ngClass]="decideScreenRatio()" style="align-items: normal;">
+  <div
+    class="main-panel"
+    [ngClass]="decideScreenRatio()"
+    style="align-items: normal"
+  >
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
 </div>
@@ -31,11 +35,24 @@
     data-color="danger"
     data-background-color="white"
     data-image="./assets/img/sidebar-1.jpg"
+    [ngClass]="
+      sideBarClicked == true
+        ? 'sidebar-width-large'
+        : 'sidebar-width-mini'
+    "
   >
     <app-sidebar></app-sidebar>
     <div class="sidebar-background"></div>
   </div>
-  <div class="main-panel" *ngIf="isLogoutProcessing == false">
+  <div
+    class="main-panel"
+    *ngIf="isLogoutProcessing == false"
+    [ngClass]="
+      sideBarClicked == true
+        ? 'main-panel-width-large'
+        : 'main-panel-width-mini'
+    "
+  >
     <app-navbar></app-navbar>
 
     <router-outlet (activate)="onActivate($event)"> </router-outlet>

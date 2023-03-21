@@ -22,6 +22,9 @@ export class OtherServices {
     false
   );
 
+  public miniSideBarClicked: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   public adminRequestGotApproved: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 

@@ -1,7 +1,55 @@
-<nav class="navbar navbar-expand-lg navbar-absolute fixed-top">
+<nav
+  class="navbar navbar-expand-lg navbar-absolute fixed-top"
+  style="z-index: 0"
+>
   <div class="container-fluid navBar-main-top">
     <div class="navbar-wrapper">
-      <a class="navbar-brand" href="javascript:void(0)">{{ getTitle() }}</a>
+      <a class="navbar-brand" hidden>{{ getTitle() }}</a>
+      <div
+        *ngIf="currentPage == 'home'"
+        class="row"
+        style="
+          margin: 0;
+          margin-left: 17px;
+          width: 274px;
+          justify-content: space-between;
+          margin-top: 25px;
+        "
+      >
+        <img
+          src="assets/img/svg/sidebar/home.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+              saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+            width: 20px;
+          "
+        />
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Dashboard
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Overview
+        </p>
+      </div>
     </div>
     <button
       mat-raised-button

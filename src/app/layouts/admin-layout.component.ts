@@ -14,6 +14,8 @@ import { OtherServices } from "app/services/other.service";
 export class AdminLayoutComponent implements OnInit {
   isUserSignedOut: boolean = false;
   isLogoutProcessing: boolean = false;
+
+  sideBarClicked: boolean = false;
   successNotificationMessage: any;
   errorNotificationMessage: any;
   screenHeight: number;
@@ -38,6 +40,10 @@ export class AdminLayoutComponent implements OnInit {
 
     this.otherServices.isLogoutProcessing.subscribe((e) => {
       this.isLogoutProcessing = e;
+    });
+
+    otherServices.miniSideBarClicked.subscribe((val) => {
+      this.sideBarClicked = val;
     });
   }
 

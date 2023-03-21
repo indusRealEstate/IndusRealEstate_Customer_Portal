@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { ROUTES } from "../sidebar/sidebar.component";
 import {
   Location,
@@ -24,6 +24,8 @@ export class NavbarComponent implements OnInit {
   user: User;
 
   isUserAdmin: boolean = false;
+
+  currentPage: any;
 
   constructor(
     location: Location,
@@ -135,7 +137,29 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  userLogOut() {
+    this.otherServices.isLogoutProcessing.next(true);
+    this.authenticationService.logout();
+
+    setTimeout(() => {
+      this.otherServices.isUserSignedOut.next(true);
+    }, 1500);
+  }
+
+  getUserDataFromLocal(user) {
+    this.user = new User(
+      user[0]["id"],
+      user[0]["auth_type"],
+      user[0]["username"],
+      user[0]["firstname"],
+      user[0]["lastname"],
+      user[0]["password"],
+      user[0]["token"]
+    );
+  }
+
   getTitle() {
+    this.currentPage = this.router.url.split("?")[0].split("/")[1];
     var titlee = this.location.prepareExternalUrl(this.location.path());
 
     if (titlee.charAt(0) === "#") {
@@ -192,26 +216,5 @@ export class NavbarComponent implements OnInit {
       default:
         return "Home";
     }
-  }
-
-  userLogOut() {
-    this.otherServices.isLogoutProcessing.next(true);
-    this.authenticationService.logout();
-
-    setTimeout(() => {
-      this.otherServices.isUserSignedOut.next(true);
-    }, 1500);
-  }
-
-  getUserDataFromLocal(user) {
-    this.user = new User(
-      user[0]["id"],
-      user[0]["auth_type"],
-      user[0]["username"],
-      user[0]["firstname"],
-      user[0]["lastname"],
-      user[0]["password"],
-      user[0]["token"]
-    );
   }
 }

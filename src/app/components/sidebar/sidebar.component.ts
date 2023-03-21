@@ -16,14 +16,50 @@ declare interface RouteInfo {
 export const HOMEROUTE: RouteInfo[] = [
   {
     path: "/home",
-    title: "Home",
-    icon: "assets/img/svg/sidebar/home.svg",
+    title: "Overview",
+    icon: "assets/img/svg/sidebar/activity.svg",
     class: "",
   },
   {
+    path: "/notifications",
+    title: "Notifications",
+    icon: "assets/img/svg/navbar/notification.svg",
+    class: "",
+  },
+  {
+    path: "/notifications-manage",
+    title: "Manage Notifications",
+    icon: "assets/img/svg/sidebar/settings.svg",
+    class: "",
+  },
+];
+
+export const PROPERTIESROUTE: RouteInfo[] = [
+  {
     path: "/my-properties",
     title: "My Properties",
-    icon: "assets/img/svg/sidebar/buildings.svg",
+    icon: "assets/img/svg/sidebar/house-2.svg",
+    class: "",
+  },
+  {
+    path: "/add-property-form",
+    title: "Add property",
+    icon: "assets/img/svg/my-properties/add-square.svg",
+    class: "",
+  },
+];
+
+export const SERVICESROUTE: RouteInfo[] = [
+  {
+    path: "/new-payment",
+    title: "Payment",
+    icon: "assets/img/svg/sidebar/empty-wallet.svg",
+    class: "",
+  },
+  {
+    path: "/inspection-request",
+    title: "Inspection Request",
+    icon: "assets/img/svg/sidebar/tool.svg",
     class: "",
   },
 ];
@@ -89,12 +125,23 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   homeRoute: any[];
+  propertiesRoute: any[];
   serviceRoute: any[];
   menuItems: any[];
   user: User;
   userProfilePic: any = false;
   profilePicUpdatingLoader: boolean = false;
   userProfileFetching: boolean = false;
+  sideBarClicked: boolean = false;
+
+  isDashboardOpened: boolean = true;
+  isPropertiesOpened: boolean = false;
+  isServicesOpened: boolean = false;
+  isDocumentsOpened: boolean = false;
+  isRequestsOpened: boolean = false;
+  isPaymentsOpened: boolean = false;
+  isReportsOpened: boolean = false;
+  isCustomerCareOpened: boolean = false;
 
   ///////////////--App Version--////////////////////
   appVersion: any = "VERSION PROD v0.1.15";
@@ -123,23 +170,21 @@ export class SidebarComponent implements OnInit {
         }, 1000);
       }
     });
+
+    otherServices.miniSideBarClicked.subscribe((val) => {
+      this.sideBarClicked = val;
+    });
   }
 
   ngOnInit() {
     this.getUserDataFromLocal();
 
-    if (this.user.auth_type == "admin") {
-      this.homeRoute = ADMINROUTES.filter((menuItem) => menuItem);
-    } else if (this.user.auth_type == "tenant") {
-      this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
-      this.homeRoute.pop();
-      this.menuItems = ROUTES.filter((menuItem) => menuItem);
-    } else {
-      this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
-      this.menuItems = ROUTES.filter((menuItem) => menuItem);
-    }
+    this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
+    this.propertiesRoute = PROPERTIESROUTE.filter((menuItem) => menuItem);
+    this.serviceRoute = SERVICESROUTE.filter((menuItem) => menuItem);
+    this.menuItems = ROUTES.filter((menuItem) => menuItem);
   }
-  
+
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
@@ -199,5 +244,67 @@ export class SidebarComponent implements OnInit {
     setTimeout(() => {
       this.otherServices.isUserSignedOut.next(true);
     }, 1500);
+  }
+
+  miniSideBarClose() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      if (
+        this.isPropertiesOpened == false &&
+        this.isDocumentsOpened == false &&
+        this.isPaymentsOpened == false &&
+        this.isServicesOpened == false &&
+        this.isRequestsOpened == false &&
+        this.isCustomerCareOpened == false &&
+        this.isReportsOpened == false
+      ) {
+        this.isDashboardOpened = true;
+      }
+    } else {
+      this.otherServices.miniSideBarClicked.next(false);
+    }
+  }
+
+  miniSideBarClickedDashboard() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isDashboardOpened = true;
+      this.isPropertiesOpened = false;
+      this.isServicesOpened = false;
+    } else {
+      this.isDashboardOpened = true;
+      this.isPropertiesOpened = false;
+      this.isServicesOpened = false;
+    }
+  }
+
+  miniSideBarClickedProperties() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isPropertiesOpened = true;
+      this.isDashboardOpened = false;
+      this.isServicesOpened = false;
+    } else {
+      this.isPropertiesOpened = true;
+      this.isDashboardOpened = false;
+      this.isServicesOpened = false;
+    }
+  }
+
+  miniSideBarClickedServices() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isServicesOpened = true;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+    } else {
+      this.isServicesOpened = true;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+    }
   }
 }
