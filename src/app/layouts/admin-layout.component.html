@@ -36,9 +36,7 @@
     data-background-color="white"
     data-image="./assets/img/sidebar-1.jpg"
     [ngClass]="
-      sideBarClicked == true
-        ? 'sidebar-width-large'
-        : 'sidebar-width-mini'
+      sideBarClicked == true ? 'sidebar-width-large' : 'sidebar-width-mini'
     "
   >
     <app-sidebar></app-sidebar>
@@ -52,6 +50,7 @@
         ? 'main-panel-width-large'
         : 'main-panel-width-mini'
     "
+    style="z-index: 0"
   >
     <app-navbar></app-navbar>
 

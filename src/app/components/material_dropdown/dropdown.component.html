@@ -1,142 +1,33 @@
-<div *ngIf="isMobileMenu()">
-  <ul class="nav nav-mobile-menu services-dropdown-mobile">
-    <li class="nav-item dropdown services-dropdown-mobile-link">
-      <a
-        class="nav-link"
-        id="navbarDropdownMenuLink"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <div class="row" style="margin: 0; margin-left: 4px">
-          <img
-            class="sidebar-dropdown-icons"
-            src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
-            alt="hello"
-          />
-          <span
-            class="d-lg-none d-md-block services-dropdown-mobile-title"
-            style="
-              position: relative;
-              color: rgba(186, 186, 186, 0.8156862745);
-              margin-left: 15px;
-            "
-            >Services</span
-          >
-          <img
-            class="sidebar-dropdown-icon-arrow"
-            src="assets/img/svg/home-page/arrow-down.svg"
-            alt="hello"
-            style="margin-left: 75px"
-          />
-        </div>
-      </a>
-      <div
-        class="dropdown-menu dropdown-menu-right services-dropdown-items"
-        aria-labelledby="navbarDropdownMenuLink"
-      >
-        <a class="dropdown-item" href="#">• CUSTOMER CARE</a>
-        <a class="dropdown-item" href="#">• FACILITY MANAGEMENT SERVICES</a>
-      </div>
-    </li>
-  </ul>
+<div
+  class="col"
+  [ngClass]="
+    isDropDownBtnClicked == true
+      ? 'dropdown-services-opened'
+      : 'dropdown-services'
+  "
+>
+  <div
+    class="row dropDownBtnRow"
+    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    (click)="dropDownBtnClick()"
+  >
+    <img src="assets/img/svg/sidebar/key.svg" alt="" />
+    <p>Tenant Registration</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    (click)="navigateToTenentRegistrationPage()"
+  >
+    <img src="assets/img/svg/sidebar/minus.svg" alt="" />
+    <p>Register My Own</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    style="margin-top: -10px"
+  >
+    <img src="assets/img/svg/sidebar/minus.svg" alt="" />
+    <p>Request Registration</p>
+  </div>
 </div>
-
-<ng-container>
-  <div
-    #button
-    [matMenuTriggerFor]="menu"
-    class="dropdown-services"
-    #menuTrigger="matMenuTrigger"
-  >
-    <div
-      *ngIf="isPCMenu()"
-      [ngClass]="isPCMenu() ? 'services-Menu-pc' : 'services-hiddenMenu-mobile'"
-    >
-      <a class="nav-link">
-        <div class="row">
-          <img
-            class="sidebar-dropdown-icons"
-            src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
-            alt="hello"
-          />
-          <button class="dropdown-services-btn">Services</button>
-          <img
-            class="sidebar-dropdown-icon-arrow"
-            src="assets/img/svg/home-page/arrow-down.svg"
-            alt="hello"
-          />
-        </div>
-      </a>
-    </div>
-  </div>
-</ng-container>
-
-<!-- #enddocregion mat-menu-trigger-for -->
-<mat-menu #menu="matMenu" [overlapTrigger]="false">
-  <div
-    class="dropdown-servives-items"
-    (mouseenter)="menuenter()"
-    (mouseleave)="menuLeave(menuTrigger, button)"
-  >
-    <button
-      mat-menu-item
-      class="dropdown-servives-items-ind"
-      [matMenuTriggerFor]="facilityMenu"
-      #facilityMenuTrigger="matMenuTrigger"
-      (mouseenter)="facilityMenuTrigger.openMenu()"
-    >
-      FACILITY MANAGEMENT SERVICES
-    </button>
-  </div>
-</mat-menu>
-
-<mat-menu #facilityMenu="matMenu" [overlapTrigger]="false">
-  <div
-    [ngClass]="
-      isLandlord == true
-        ? 'dropdown-facility-landlord'
-        : 'dropdown-facility-tenant'
-    "
-    (mouseenter)="menu2enter()"
-    (mouseleave)="menu2Leave(menuTrigger, facilityMenuTrigger, button)"
-  >
-    <button
-      mat-menu-item
-      class="dropdown-facility-ind"
-      routerLink="/fm-maintanence-request"
-      queryParams="{uid: userId}"
-    >
-      FM-MAINTENANCE REQUEST
-    </button>
-    <!-- <button mat-menu-item class="dropdown-facility-ind" routerLink="/owner-move-in-request/{{userId}}">OWNER MOVE-IN REQUEST</button> -->
-
-    <button
-      mat-menu-item
-      class="dropdown-facility-ind"
-      routerLink="/tenant-move-in-request"
-      queryParams="{uid: userId}"
-      *ngIf="isLandlord"
-    >
-      TENANT MOVE-IN REQUEST
-    </button>
-    <button
-      mat-menu-item
-      class="dropdown-facility-ind"
-      routerLink="/tenant-move-out-request"
-      queryParams="{uid: userId}"
-      *ngIf="isLandlord"
-    >
-      TENANT MOVE-OUT REQUEST
-    </button>
-    <button
-      mat-menu-item
-      class="dropdown-facility-ind"
-      routerLink="/tenant-register-form"
-      queryParams="{uid: userId}"
-      *ngIf="isLandlord"
-    >
-      TENANT REGISTRATION
-    </button>
-  </div>
-</mat-menu>

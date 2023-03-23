@@ -4,227 +4,71 @@
   font-family: "Montserrat";
 }
 
-.services-dropdown-mobile {
-  .services-dropdown-mobile-link {
-    &:hover > a,
-    & .dropdown-menu a:hover,
-    & .dropdown-menu a:focus,
-    &.active > [data-toggle="collapse"] {
-      background-color: rgba(200, 200, 200, 0);
-      color: black;
-      box-shadow: none;
-    }
-  }
-
-  .services-dropdown-mobile-title {
-    padding-top: 2px;
-    position: absolute;
-    color: white;
-    font-size: medium;
-    font-weight: 400;
-  }
-
-  .service-dropdown-arrow-icon-mobile {
-    padding-left: 120px;
-    margin: 0;
-  }
-
-  .services-dropdown-items {
-    a {
-      color: white;
-      padding-left: 22px;
-    }
-  }
-}
-
-.sidebar-dropdown-icons {
-  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg) brightness(94%)
-    contrast(98%);
-  width: 20px;
-}
-
-.sidebar-dropdown-icon-arrow {
-  filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg) brightness(94%)
-    contrast(98%);
-  width: 17px;
-}
-
-.dropdown-myDocuments {
-  cursor: pointer;
-
-  .sidebar-dropdown-icons {
-    filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
-      brightness(94%) contrast(98%);
-    margin-left: 18px;
-    width: 20px;
-  }
-
-  .sidebar-dropdown-icon-arrow {
-    filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
-      brightness(94%) contrast(98%);
-    margin-left: 18px;
-    width: 17px;
-  }
-
-  .nav-link {
-    margin-left: 15px;
-    height: 53px;
-    padding-top: 14px;
-    margin-top: 0;
-  }
-
-  &:hover {
-    .nav-link {
-      background-color: #484e5bd0;
-    }
-    .sidebar-dropdown-icons {
-      filter: brightness(0) invert(1);
-    }
-    .sidebar-dropdown-icon-arrow {
-      filter: brightness(0) invert(1);
-    }
-    .dropdown-myDocuments-btn {
-      color: white;
-    }
-  }
-
-  .myDocuments-hiddenMenu-mobile {
-    height: 0;
-    margin: 0;
-  }
-
-  .dropdown-myDocuments-icon {
-    margin: 0;
-  }
-
-  .myDocuments-dropdown-arrow-icon {
-    position: absolute;
-    align-self: flex-end;
-    padding-left: 23px;
-    font-size: 20px;
-  }
-
-  .dropdown-myDocuments-btn {
-    padding-top: 2px;
-    font-size: medium;
-    font-weight: 400;
-    padding-left: 15px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0);
-    color: #bababad0;
-  }
-}
-
 .dropdown-services {
+  // margin: 10px 15px 0;
+  padding: 10px 15px;
   cursor: pointer;
+  height: 50px;
+  transition: width 400ms ease-out, height 400ms ease-out;
 
-  .sidebar-dropdown-icons {
-    filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
-      brightness(94%) contrast(98%);
-    margin-left: 18px;
+  img {
+    filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
+      hue-rotate(146deg) brightness(90%) contrast(93%);
+    margin-left: 6px;
+    margin-right: 13px;
     width: 20px;
   }
 
-  .sidebar-dropdown-icon-arrow {
-    filter: invert(78%) sepia(1%) saturate(31%) hue-rotate(314deg)
-      brightness(94%) contrast(98%);
-    margin-left: 75px;
-    width: 17px;
-  }
-  .nav-link {
-    margin-left: 15px;
-    height: 52px;
-    padding-top: 13px;
-    margin-top: 0;
+  p {
+    color: #a3a3a3;
   }
 
   &:hover {
-    .nav-link {
-      background-color: #484e5bd0;
-    }
-    .sidebar-dropdown-icons {
+    background-color: #455365;
+    border-radius: 3px;
+
+    img {
       filter: brightness(0) invert(1);
     }
-    .sidebar-dropdown-icon-arrow {
-      filter: brightness(0) invert(1);
-    }
-    .dropdown-services-btn {
+
+    p {
       color: white;
     }
   }
-
-  .services-hiddenMenu-mobile {
-    height: 0;
-    margin: 0;
-  }
-
-  .service-dropdown-arrow-icon {
-    position: absolute;
-    align-self: flex-end;
-    padding-left: 70px;
-    font-size: 20px;
-  }
-
-  .dropdown-services-icon {
-    margin: 0;
-  }
-
-  .dropdown-services-btn {
-    padding-top: 2px;
-    font-size: medium;
-    font-weight: 400;
-    padding-left: 15px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0);
-    color: #bababad0;
-    margin-left: 2px;
-  }
-
-  .dropdown-services-icon-end {
-    position: absolute;
-    left: 220px;
-    right: 0px;
-    margin: 0;
-  }
 }
 
-.dropdown-servives-items {
-  // height: 95px;
+.dropdown-services-opened {
+  padding: 10px 15px;
+  cursor: pointer;
+  height: 160px;
+  background-color: #455365;
+  border-radius: 3px;
+  transition: width 400ms ease-out, height 400ms ease-out;
 
-  .dropdown-servives-items-ind {
-    padding-left: 30px;
+  .dropDownBtnRow{
+    border-bottom: 1px solid #a3a3a3b0;
+  }
+
+  img {
+    filter: brightness(0) invert(1);
+    margin-left: 6px;
+    margin-right: 13px;
+    width: 20px;
+  }
+
+  p {
+    color: white;
+  }
+
+  .subMenu-dropdown {
+    margin: 20px -5px;
+    padding: 5px 5px;
+    transition: all 150ms ease-in;
 
     &:hover {
-      background-color: #2b333e;
-      color: white;
+      background-color: #313a46;
+      border-radius: 4px;
+      padding: 5px 5px;
     }
   }
-}
-
-.dropdown-facility-tenant {
-  width: 260px;
-  // height: 240px;
-
-  .dropdown-facility-ind {
-    &:hover {
-      background-color: #2b333e;
-      color: white;
-    }
-  }
-}
-.dropdown-facility-landlord {
-  width: 260px;
-  // height: 240px;
-
-  .dropdown-facility-ind {
-    &:hover {
-      background-color: #2b333e;
-      color: white;
-    }
-  }
-}
-
-:host ::ng-deep .mat-menu-panel {
-  max-width: none !important;
-  left: 5px !important;
 }

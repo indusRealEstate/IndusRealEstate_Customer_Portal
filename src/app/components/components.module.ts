@@ -20,7 +20,8 @@ import { SuccessDialogRegister } from "./success-dialog/success_dialog";
 import { DndDirective } from "./dialog/dnd.directive";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { ViewDocDialog } from "./view-doc-dialog/view-doc-dialog";
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfViewerModule } from "ng2-pdf-viewer";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MatTableModule,
     MatButtonModule,
     NgxSkeletonLoaderModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatTooltipModule,
   ],
   declarations: [
     FooterComponent,

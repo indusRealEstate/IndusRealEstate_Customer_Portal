@@ -75,9 +75,19 @@
       </li>
     </ul>
   </div>
-  <div class="row" style="margin: 0; height: 100%">
-    <ul class="nav" style="width: 65px; background-color: #2b333e; margin: 0">
-      <div class="col" style="padding: 20px 13px">
+  <div
+    class="row"
+    [ngClass]="
+      sideBarClicked == true
+        ? 'sideBar-row-width-large'
+        : 'sideBar-row-width-mini'
+    "
+  >
+    <ul
+      class="nav"
+      style="width: 65px; background-color: #2b333e; margin: 0; height: 100%"
+    >
+      <div class="col" style="padding: 20px 13px; height: 50%">
         <a href="https://www.indusre.com/">
           <div
             style="
@@ -95,32 +105,26 @@
           </div>
         </a>
 
-        <div style="text-align: center; margin-bottom: 30px">
+        <div
+          style="text-align: center; margin-bottom: 30px"
+          class="mini-sideBar-arrow-div"
+          (click)="miniSideBarClose()"
+        >
           <img
-            *ngIf="sideBarClicked == false"
-            (click)="miniSideBarClose()"
+            [ngClass]="
+              sideBarClicked == true
+                ? 'mini-sideBar-arrow-opened'
+                : 'mini-sideBar-arrow-closed'
+            "
             src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
             alt=""
-            style="
-              filter: brightness(0) invert(1);
-              width: 20px;
-              cursor: pointer;
-            "
-          />
-          <img
-            *ngIf="sideBarClicked == true"
-            (click)="miniSideBarClose()"
-            src="assets/img/svg/sidebar/arrow-left-1.svg"
-            alt=""
-            style="
-              filter: brightness(0) invert(1);
-              width: 20px;
-              cursor: pointer;
-            "
           />
         </div>
 
         <div
+          matTooltip="Dashboard"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
           (click)="miniSideBarClickedDashboard()"
           [ngClass]="
             isDashboardOpened == true
@@ -131,6 +135,10 @@
           <img src="assets/img/svg/sidebar/home.svg" alt="" />
         </div>
         <div
+          matTooltip="Property"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          *ngIf="user.auth_type == 'landlord'"
           (click)="miniSideBarClickedProperties()"
           [ngClass]="
             isPropertiesOpened == true
@@ -141,23 +149,93 @@
           <img src="assets/img/svg/sidebar/buildings.svg" alt="" />
         </div>
         <div
+          matTooltip="Services"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
           (click)="miniSideBarClickedServices()"
           [ngClass]="
-          isServicesOpened == true
+            isServicesOpened == true
               ? 'mini-sidebar-img-active'
               : 'mini-sidebar-img'
           "
         >
           <img src="assets/img/svg/sidebar/arrow-swap-horizontal.svg" alt="" />
         </div>
+        <div
+          matTooltip="Documents"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          (click)="miniSideBarClickedDocuments()"
+          [ngClass]="
+            isDocumentsOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/admin-requests/document-copy.svg" alt="" />
+        </div>
+
+        <div
+          matTooltip="Requests"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          (click)="miniSideBarClickedRequests()"
+          [ngClass]="
+            isRequestsOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/sidebar/menu.svg" alt="" />
+        </div>
+      </div>
+      <div
+        class="col"
+        style="
+          padding: 0;
+          height: 50%;
+          display: flex;
+          align-items: end;
+          width: 65px;
+          justify-content: center;
+          padding-bottom: 40px;
+        "
+      >
+        <img
+          matTooltip="User Profile"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          routerLink="/user-profile"
+          queryParams="{uid: user.id}"
+          *ngIf="userProfileFetching == false"
+          src="{{ userProfilePic }}"
+          alt=""
+          style="
+            background-size: cover;
+            border-radius: 50% 50% 50% 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+          "
+        />
+        <div
+          *ngIf="userProfileFetching == true"
+          style="max-width: 40px; max-height: 40px"
+        >
+          <ngx-skeleton-loader
+            appearance="circle"
+            [theme]="{ width: '40px', height: '40px', margin: '0px' }"
+          >
+          </ngx-skeleton-loader>
+        </div>
       </div>
     </ul>
     <ul
       class="nav"
       [ngClass]="sideBarClicked == true ? 'nav-width-large' : 'nav-width-mini'"
-      style="margin-top: 10px"
+      style="margin-top: 0; height: 100%"
     >
-      <div
+      <!-- <div
         *ngIf="user.auth_type == 'admin'"
         class="d-flex justify-content-center"
         style="
@@ -169,84 +247,283 @@
         "
       >
         <p>Admin Panel</p>
-      </div>
+      </div> -->
 
-      <p
-        style="
-          color: #d4aa32;
-          font-weight: 600;
-          margin: 15px 15px;
-          margin-bottom: 30px;
-        "
-      >
-        Indus RealEstate
-      </p>
-      <div *ngIf="isDashboardOpened == true">
-        <li
-          *ngFor="let item of homeRoute"
-          class="{{ item.class }} nav-item sideBarNav-Item"
-        >
-          <a
-            class="nav-link"
-            [routerLink]="[item.path]"
-            [queryParams]="{ uid: user.id }"
-            [class.active]="isLinkActive(item.path)"
+      <div *ngIf="sideBarTextShow == true" style="height: 100%">
+        <div style="height: 10%; padding-top: 20px">
+          <p
+            style="
+              color: #d4aa32;
+              font-weight: 600;
+              margin: 15px 15px;
+              margin-bottom: 30px;
+              margin-top: 0;
+            "
           >
-            <!-- <i class="material-icons">{{ item.icon }}</i> -->
-            <div class="row">
-              <img class="sidebar-items-icon" [src]="[item.icon]" alt="hello" />
-              <p class="nav-item-title">{{ item.title }}</p>
-            </div>
-          </a>
-        </li>
-      </div>
+            Indus RealEstate
+          </p>
+        </div>
 
-      <div *ngIf="isPropertiesOpened == true">
-        <li
-          *ngFor="let item of propertiesRoute"
-          class="{{ item.class }} nav-item sideBarNav-Item"
-        >
-          <a
-            class="nav-link"
-            [routerLink]="[item.path]"
-            [queryParams]="{ uid: user.id }"
-            [class.active]="isLinkActive(item.path)"
+        <div *ngIf="isDashboardOpened == true" style="height: 80%">
+          <li
+            *ngFor="let item of homeRoute"
+            class="{{ item.class }} nav-item sideBarNav-Item"
           >
-            <!-- <i class="material-icons">{{ item.icon }}</i> -->
-            <div class="row">
-              <img class="sidebar-items-icon" [src]="[item.icon]" alt="hello" />
-              <p class="nav-item-title">{{ item.title }}</p>
-            </div>
-          </a>
-        </li>
-      </div>
+            <a
+              class="nav-link"
+              [routerLink]="[item.path]"
+              [queryParams]="{ uid: user.id }"
+              [class.active]="isLinkActive(item.path)"
+            >
+              <!-- <i class="material-icons">{{ item.icon }}</i> -->
+              <div class="row">
+                <img
+                  class="sidebar-items-icon"
+                  [src]="[item.icon]"
+                  alt="hello"
+                />
+                <p class="nav-item-title">{{ item.title }}</p>
+              </div>
+            </a>
+          </li>
+        </div>
 
-      <div *ngIf="isServicesOpened == true">
-        <li
-          *ngFor="let item of serviceRoute"
-          class="{{ item.class }} nav-item sideBarNav-Item"
-        >
-          <a
-            class="nav-link"
-            [routerLink]="[item.path]"
-            [queryParams]="{ uid: user.id }"
-            [class.active]="isLinkActive(item.path)"
+        <div *ngIf="isPropertiesOpened == true" style="height: 80%">
+          <li
+            *ngFor="let item of propertiesRoute"
+            class="{{ item.class }} nav-item sideBarNav-Item"
           >
-            <!-- <i class="material-icons">{{ item.icon }}</i> -->
-            <div class="row">
-              <img class="sidebar-items-icon" [src]="[item.icon]" alt="hello" />
-              <p class="nav-item-title">{{ item.title }}</p>
+            <a
+              class="nav-link"
+              [routerLink]="[item.path]"
+              [queryParams]="{ uid: user.id }"
+              [class.active]="isLinkActive(item.path)"
+            >
+              <!-- <i class="material-icons">{{ item.icon }}</i> -->
+              <div class="row">
+                <img
+                  class="sidebar-items-icon"
+                  [src]="[item.icon]"
+                  alt="hello"
+                />
+                <p class="nav-item-title">{{ item.title }}</p>
+              </div>
+            </a>
+          </li>
+        </div>
+
+        <div *ngIf="isServicesOpened == true" style="height: 80%">
+          <div *ngIf="user.auth_type == 'landlord'">
+            <li
+              class="nav-item"
+              *ngIf="user.auth_type != 'admin'"
+              style="padding: 0 15px 0"
+            >
+              <dropdown-btn></dropdown-btn>
+            </li>
+            <li
+              *ngFor="let item of serviceRouteLandlord"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+          <div *ngIf="user.auth_type == 'tenant'">
+            <li
+              *ngFor="let item of serviceRouteTenant"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+        </div>
+
+        <div *ngIf="isDocumentsOpened == true" style="height: 80%">
+          <div *ngIf="user.auth_type == 'landlord'">
+            <li
+              *ngFor="let item of documentsRouteLandlord"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+          <div *ngIf="user.auth_type == 'tenant'">
+            <li
+              *ngFor="let item of documentsRouteTenant"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+        </div>
+
+        <div *ngIf="isRequestsOpened == true" style="height: 80%">
+          <div *ngIf="user.auth_type == 'landlord'">
+            <li
+              *ngFor="let item of requestsRouteLandlord; let first = first"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+
+              <hr
+                *ngIf="first"
+                style="
+                  border: 0.5px solid #a3a3a3a1;
+                  margin: 15px 15px;
+                  border-radius: 15px;
+                "
+              />
+            </li>
+          </div>
+          <div *ngIf="user.auth_type == 'tenant'">
+            <li
+              *ngFor="let item of requestsRouteTenant"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+        </div>
+
+        <div
+          style="
+            height: 10%;
+            display: flex;
+            align-items: end;
+            padding: 0 20px 13%;
+          "
+        >
+          <div
+            class="row"
+            style="margin: 0; width: 100%; justify-content: space-between"
+          >
+            <div class="col" style="padding: 0">
+              <p
+                style="
+                  margin-bottom: -10px;
+                  color: #a3a3a3;
+                  font-size: 15px;
+                  font-weight: 600;
+                "
+              >
+                {{ user.firstname }}
+              </p>
+              <p style="margin-bottom: 0; color: #a3a3a3; font-size: 12px">
+                johndoe@email.com
+              </p>
             </div>
-          </a>
-        </li>
+            <div
+              matTooltip="Log Out"
+              matTooltipClass="tooltip"
+              matTooltipPosition="right"
+              class="logout-btn-sidebar"
+              (click)="userLogOut()"
+            >
+              <img
+                src="assets/img/svg/sidebar/log-out.svg"
+                alt=""
+                style="
+                  width: 15px;
+                  filter: brightness(0) saturate(100%) invert(72%) sepia(21%)
+                    saturate(31%) hue-rotate(76deg) brightness(88%)
+                    contrast(92%);
+                "
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- <li
-        class="nav-item dropdown-btn-services"
-        *ngIf="user.auth_type != 'admin'"
-      >
-        <dropdown-btn></dropdown-btn>
-      </li> -->
       <!-- <li
         *ngFor="let menuItem of menuItems"
         class="{{ menuItem.class }} nav-item sideBarNav-Item"

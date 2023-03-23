@@ -389,7 +389,7 @@
     @include transition (0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1));
 
     .main-content {
-        margin-top: 55px;
+        margin-top: 63px;
         padding: 30px 15px;
         min-height: calc(100vh - 123px);
     }
@@ -427,8 +427,8 @@
 .sidebar-wrapper {
     -webkit-transition-property: top, bottom, width;
     transition-property: top, bottom, width;
-    -webkit-transition-duration: .2s, .2s, .35s;
-    transition-duration: .2s, .2s, .35s;
+    -webkit-transition-duration: 0.5s, 0.5s, 0.5s;
+    transition-duration: 0.5s, 0.5s, 0.5s;
     -webkit-transition-timing-function: linear, linear, ease;
     transition-timing-function: linear, linear, ease;
     -webkit-overflow-scrolling: touch;

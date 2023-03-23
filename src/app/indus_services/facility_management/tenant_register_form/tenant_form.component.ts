@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessDialogRegister } from "app/components/success-dialog/success_dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -59,16 +59,32 @@ export class TenantRegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
+    private readonly route: ActivatedRoute,
     private dialog?: MatDialog
   ) {
     if (this.authenticationService.currentUserValue) {
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
 
-      if (user[0]["auth_type"] != "admin") {
+      if (
+        user[0]["auth_type"] == "landlord" ||
+        user[0]["auth_type"] == "admin"
+      ) {
         router.navigate(["/tenant-register-form"]);
+
+        this.route.queryParams.subscribe((e) => {
+          if (e == null) {
+            router.navigate([`/tenant-register-form`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          } else if (e != user[0]["id"]) {
+            router.navigate([`/tenant-register-form`], {
+              queryParams: { uid: user[0]["id"] },
+            });
+          }
+        });
       } else {
-        router.navigate(["/admin-dashboard"]);
+        router.navigate(["/404"]);
       }
     } else {
       this.router.navigate(["/login"]);

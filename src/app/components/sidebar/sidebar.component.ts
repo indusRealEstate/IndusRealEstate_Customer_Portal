@@ -49,7 +49,7 @@ export const PROPERTIESROUTE: RouteInfo[] = [
   },
 ];
 
-export const SERVICESROUTE: RouteInfo[] = [
+export const SERVICESROUTELANDLORD: RouteInfo[] = [
   {
     path: "/new-payment",
     title: "Payment",
@@ -60,6 +60,111 @@ export const SERVICESROUTE: RouteInfo[] = [
     path: "/inspection-request",
     title: "Inspection Request",
     icon: "assets/img/svg/sidebar/tool.svg",
+    class: "",
+  },
+];
+
+export const SERVICESROUTETENANT: RouteInfo[] = [
+  {
+    path: "/new-payment",
+    title: "Payment",
+    icon: "assets/img/svg/sidebar/empty-wallet.svg",
+    class: "",
+  },
+  {
+    path: "/inspection-request",
+    title: "Inspection Request",
+    icon: "assets/img/svg/sidebar/tool.svg",
+    class: "",
+  },
+];
+
+export const DOCUMENTSROUTELANDLORD: RouteInfo[] = [
+  {
+    path: "/documents",
+    title: "My Documents",
+    icon: "assets/img/svg/sidebar/file-text.svg",
+    class: "",
+  },
+  {
+    path: "/tenant-documents",
+    title: "Tenant Documents",
+    icon: "assets/img/svg/sidebar/Document-user-01.svg",
+    class: "",
+  },
+  {
+    path: "/documents-template",
+    title: "Documents Template",
+    icon: "assets/img/svg/sidebar/file.svg",
+    class: "",
+  },
+];
+
+export const DOCUMENTSROUTETENANT: RouteInfo[] = [
+  {
+    path: "/documents",
+    title: "My Documents",
+    icon: "assets/img/svg/sidebar/file-text.svg",
+    class: "",
+  },
+  {
+    path: "/documents-template",
+    title: "Documents Template",
+    icon: "assets/img/svg/sidebar/file.svg",
+    class: "",
+  },
+];
+
+export const REQUESTSROUTELANDLORD: RouteInfo[] = [
+  {
+    path: "/my-requests",
+    title: "My Requests",
+    icon: "assets/img/svg/sidebar/request-send.svg",
+    class: "",
+  },
+  {
+    path: "/maintenance-requests",
+    title: "Maintenance requests",
+    icon: "assets/img/svg/sidebar/maintenance_icon.svg",
+    class: "",
+  },
+  {
+    path: "/tenant-move-in-request",
+    title: "Tenant Move-in",
+    icon: "assets/img/svg/sidebar/User-admin-01.svg",
+    class: "",
+  },
+  {
+    path: "/tenant-move-out-request",
+    title: "Tenant Move-out",
+    icon: "assets/img/svg/sidebar/User-delete-02.svg",
+    class: "",
+  },
+  {
+    path: "/payment-requests-landlord",
+    title: "Payment requests",
+    icon: "assets/img/svg/sidebar/empty-wallet.svg",
+    class: "",
+  },
+  {
+    path: "/property-conditioning-requests",
+    title: "Property conditioning",
+    icon: "assets/img/svg/sidebar/property-conditioning.svg",
+    class: "",
+  },
+];
+
+export const REQUESTSROUTETENANT: RouteInfo[] = [
+  {
+    path: "/my-requests",
+    title: "My Requests",
+    icon: "assets/img/svg/sidebar/request-send.svg",
+    class: "",
+  },
+  {
+    path: "/payment-requests-tenant",
+    title: "Payment requests",
+    icon: "assets/img/svg/sidebar/empty-wallet.svg",
     class: "",
   },
 ];
@@ -126,13 +231,21 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   homeRoute: any[];
   propertiesRoute: any[];
-  serviceRoute: any[];
-  menuItems: any[];
+  serviceRouteLandlord: any[];
+  serviceRouteTenant: any[];
+  documentsRouteLandlord: any[];
+  documentsRouteTenant: any[];
+
+  requestsRouteTenant: any[];
+  requestsRouteLandlord: any[];
+  // menuItems: any[];
   user: User;
   userProfilePic: any = false;
   profilePicUpdatingLoader: boolean = false;
   userProfileFetching: boolean = false;
-  sideBarClicked: boolean = false;
+  sideBarClicked: boolean = true;
+
+  sideBarTextShow: boolean = true;
 
   isDashboardOpened: boolean = true;
   isPropertiesOpened: boolean = false;
@@ -181,8 +294,26 @@ export class SidebarComponent implements OnInit {
 
     this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
     this.propertiesRoute = PROPERTIESROUTE.filter((menuItem) => menuItem);
-    this.serviceRoute = SERVICESROUTE.filter((menuItem) => menuItem);
-    this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    this.serviceRouteLandlord = SERVICESROUTELANDLORD.filter(
+      (menuItem) => menuItem
+    );
+    this.serviceRouteTenant = SERVICESROUTETENANT.filter(
+      (menuItem) => menuItem
+    );
+    this.documentsRouteLandlord = DOCUMENTSROUTELANDLORD.filter(
+      (menuItem) => menuItem
+    );
+    this.documentsRouteTenant = DOCUMENTSROUTETENANT.filter(
+      (menuItem) => menuItem
+    );
+
+    this.requestsRouteLandlord = REQUESTSROUTELANDLORD.filter(
+      (menuItem) => menuItem
+    );
+
+    this.requestsRouteTenant = REQUESTSROUTETENANT.filter(
+      (menuItem) => menuItem
+    );
   }
 
   isMobileMenu() {
@@ -234,7 +365,7 @@ export class SidebarComponent implements OnInit {
 
     setTimeout(() => {
       this.userProfileFetching = false;
-    }, 2000);
+    }, 3000);
   }
 
   userLogOut() {
@@ -260,9 +391,18 @@ export class SidebarComponent implements OnInit {
         this.isReportsOpened == false
       ) {
         this.isDashboardOpened = true;
+
+        setTimeout(() => {
+          this.sideBarTextShow = true;
+        }, 200);
+      } else {
+        setTimeout(() => {
+          this.sideBarTextShow = true;
+        }, 200);
       }
     } else {
       this.otherServices.miniSideBarClicked.next(false);
+      this.sideBarTextShow = false;
     }
   }
 
@@ -271,12 +411,21 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       this.isDashboardOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
       this.isPropertiesOpened = false;
       this.isServicesOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
     } else {
       this.isDashboardOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
       this.isPropertiesOpened = false;
       this.isServicesOpened = false;
+      this.sideBarTextShow = true;
     }
   }
 
@@ -285,12 +434,21 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       this.isPropertiesOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
     } else {
       this.isPropertiesOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
+      this.sideBarTextShow = true;
     }
   }
 
@@ -299,12 +457,67 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       this.isServicesOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
     } else {
       this.isServicesOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedDocuments() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isDocumentsOpened = true;
+      this.isRequestsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isDocumentsOpened = true;
+      this.isRequestsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedRequests() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isRequestsOpened = true;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isRequestsOpened = true;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.sideBarTextShow = true;
     }
   }
 }
