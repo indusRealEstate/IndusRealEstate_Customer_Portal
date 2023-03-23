@@ -129,13 +129,13 @@ export const REQUESTSROUTELANDLORD: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/tenant-move-in-request",
+    path: "/tenant-move-in-requests-landlord",
     title: "Tenant Move-in",
     icon: "assets/img/svg/sidebar/User-admin-01.svg",
     class: "",
   },
   {
-    path: "/tenant-move-out-request",
+    path: "/tenant-move-out-requests-landlord",
     title: "Tenant Move-out",
     icon: "assets/img/svg/sidebar/User-delete-02.svg",
     class: "",

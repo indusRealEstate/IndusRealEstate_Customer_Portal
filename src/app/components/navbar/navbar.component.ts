@@ -158,6 +158,12 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  navigateOverview() {
+    this.router.navigate(["/my-properties"], {
+      queryParams: { uid: this.user.id },
+    });
+  }
+
   getTitle() {
     this.currentPage = this.router.url.split("?")[0].split("/")[1];
     var titlee = this.location.prepareExternalUrl(this.location.path());

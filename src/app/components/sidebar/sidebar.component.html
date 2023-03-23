@@ -371,7 +371,7 @@
         <div *ngIf="isDocumentsOpened == true" style="height: 80%">
           <div *ngIf="user.auth_type == 'landlord'">
             <li
-              *ngFor="let item of documentsRouteLandlord"
+              *ngFor="let item of documentsRouteLandlord; let first = first"
               class="{{ item.class }} nav-item sideBarNav-Item"
             >
               <a
@@ -390,11 +390,20 @@
                   <p class="nav-item-title">{{ item.title }}</p>
                 </div>
               </a>
+
+              <hr
+                *ngIf="first"
+                style="
+                  border: 0.5px solid #a3a3a3a1;
+                  margin: 15px 15px;
+                  border-radius: 15px;
+                "
+              />
             </li>
           </div>
           <div *ngIf="user.auth_type == 'tenant'">
             <li
-              *ngFor="let item of documentsRouteTenant"
+              *ngFor="let item of documentsRouteTenant; let first = first"
               class="{{ item.class }} nav-item sideBarNav-Item"
             >
               <a
@@ -413,6 +422,14 @@
                   <p class="nav-item-title">{{ item.title }}</p>
                 </div>
               </a>
+              <hr
+                *ngIf="first"
+                style="
+                  border: 0.5px solid #a3a3a3a1;
+                  margin: 15px 15px;
+                  border-radius: 15px;
+                "
+              />
             </li>
           </div>
         </div>
@@ -452,7 +469,7 @@
           </div>
           <div *ngIf="user.auth_type == 'tenant'">
             <li
-              *ngFor="let item of requestsRouteTenant"
+              *ngFor="let item of requestsRouteTenant; let first = first"
               class="{{ item.class }} nav-item sideBarNav-Item"
             >
               <a
@@ -471,6 +488,14 @@
                   <p class="nav-item-title">{{ item.title }}</p>
                 </div>
               </a>
+              <hr
+                *ngIf="first"
+                style="
+                  border: 0.5px solid #a3a3a3a1;
+                  margin: 15px 15px;
+                  border-radius: 15px;
+                "
+              />
             </li>
           </div>
         </div>

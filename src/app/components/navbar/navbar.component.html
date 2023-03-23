@@ -47,6 +47,53 @@
           Overview
         </p>
       </div>
+
+      <div
+        *ngIf="currentPage == 'user-profile'"
+        class="row"
+        style="
+          margin: 0;
+          margin-left: 17px;
+          width: 274px;
+          justify-content: space-between;
+          margin-top: 25px;
+        "
+      >
+        <img
+          src="assets/img/svg/admin-requests/user.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+              saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+            width: 20px;
+          "
+        />
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          User
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Profile Overview
+        </p>
+      </div>
+
       <div
         *ngIf="currentPage == 'my-properties'"
         class="row"
@@ -90,6 +137,64 @@
         />
         <p style="color: #858585; margin-bottom: 0; font-size: 16px">
           Overview
+        </p>
+      </div>
+
+      <div
+        *ngIf="currentPage == 'property-page'"
+        class="row"
+        style="
+          margin: 0;
+          margin-left: 17px;
+          width: 460px;
+          justify-content: space-between;
+          margin-top: 25px;
+        "
+      >
+        <img
+          src="assets/img/svg/sidebar/buildings.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+              saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+            width: 20px;
+          "
+        />
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          My Properties
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p class="overview-back-btn-property-page" (click)="navigateOverview()">
+          Overview
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Property Details
         </p>
       </div>
 
@@ -389,7 +494,7 @@
         </p>
       </div>
     </div>
-    
+
     <button
       mat-raised-button
       class="navbar-toggler"

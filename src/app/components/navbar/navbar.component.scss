@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-
 * {
   font-family: "Montserrat";
 }
@@ -20,6 +19,18 @@
     filter: saturate(2.2);
 
     filter: none;
+  }
+}
+
+.overview-back-btn-property-page {
+  color: #858585;
+  margin-bottom: 0;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover{
+    color: black;
+    border-bottom: 1px solid #858585;
   }
 }
 
