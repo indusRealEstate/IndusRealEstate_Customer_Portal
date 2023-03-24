@@ -7,7 +7,7 @@ import {
 import { map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
 
-const API_URL = "https://indusre.app/api/admin";
+const API_URL = "https://indusmanagement.ae/api/admin";
 
 @Injectable({ providedIn: "root" })
 export class AdminService {
