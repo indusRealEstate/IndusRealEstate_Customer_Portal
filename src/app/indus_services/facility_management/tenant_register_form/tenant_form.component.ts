@@ -91,6 +91,20 @@ export class TenantRegisterComponent implements OnInit {
     }
   }
 
+  getCurrentDate() {
+    var date = new Date();
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return currentDate;
+  }
+
   ngOnInit() {
     // this.currentIndex = 0;
     this.selectedIndex = 0;
@@ -349,6 +363,7 @@ export class TenantRegisterComponent implements OnInit {
         approved: "false",
         expired: "false",
         declined: "false",
+        issue_date: this.getCurrentDate(),
       };
 
       await this.uploadFiles(allDocFiles).then(() => {

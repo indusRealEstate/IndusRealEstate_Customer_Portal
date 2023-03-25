@@ -64,12 +64,27 @@ export class AdminRequests implements OnInit {
 
   categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
     "new_sign_ups";
+
+  requestViewType: "table_view" | "card_view" = "table_view";
+
   propertyTypeAllRequests:
     | "all"
     | "villa"
     | "appartment"
     | "town_house"
     | "other" = "all";
+
+  displayedColumns: string[] = [
+    // "name",
+    "issueDate",
+    "reqNo",
+    "reqType",
+    "propertyName",
+    "clientType",
+    "clientName",
+    "status",
+    "actions",
+  ];
 
   constructor(
     private apiService: ApiService,
@@ -139,6 +154,24 @@ export class AdminRequests implements OnInit {
   //     }, 1000);
   //   }
   // }
+
+  getRequestStatus(req, last) {
+    if (req.approved == "true") {
+      return "approved-status";
+    } else if (req.declined == "true") {
+      return "declined-status";
+    } else {
+      return "pending-status";
+    }
+  }
+
+  changeRequestType(btn) {
+    if (btn == "table_view") {
+      this.requestViewType = "table_view";
+    } else {
+      this.requestViewType = "card_view";
+    }
+  }
 
   applyFilters(menu) {
     this.allRequestsSearched.length = 0;
@@ -282,9 +315,7 @@ export class AdminRequests implements OnInit {
         } else {
           this.allRequestsSearched.length = 0;
           for (let index = 0; index < this.allRequests.length; index++) {
-            if (
-              this.allRequests[index].request_type == "NEW_LANDLORD_ACC"
-            ) {
+            if (this.allRequests[index].request_type == "NEW_LANDLORD_ACC") {
               if (this.propertyTypeAllRequests == "appartment") {
                 if (
                   this.allRequests[index].propertyData.property_type ==

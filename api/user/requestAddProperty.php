@@ -51,7 +51,8 @@ if ($postdata != null) {
      `second_party_signature`,
      `approved`,
      `expired`,
-     `declined`)
+     `declined`,
+     `issue_date`)
 VALUES
     ('{$decodedData["user_id"]}',
      '{$decodedData["request_type"]}',
@@ -85,5 +86,6 @@ VALUES
      '{$decodedData["second_party_signature_name"]}',
      '{$decodedData["approved"]}',
      '{$decodedData["expired"]}',
-     '{$decodedData["declined"]}') ");
+     '{$decodedData["declined"]}',
+     '{$decodedData["issue_date"]}') ");
 }

@@ -139,6 +139,20 @@ export class LandlordFormComponent implements OnInit {
     }
   }
 
+  getCurrentDate() {
+    var date = new Date();
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return currentDate;
+  }
+
   // this.loading = true;
   async register() {
     var unique_id = uuid.v4();
@@ -209,6 +223,7 @@ export class LandlordFormComponent implements OnInit {
         approved: "false",
         expired: "false",
         declined: "false",
+        issue_date: "",
       };
 
       var passportPic1Ext = this.thirdStepper.passPortPics[0]["ext"];
@@ -267,6 +282,7 @@ export class LandlordFormComponent implements OnInit {
         approved: "false",
         expired: "false",
         declined: "false",
+        issue_date: this.getCurrentDate(),
       };
 
       await this.uploadFiles(allDocFiles).then(() => {
