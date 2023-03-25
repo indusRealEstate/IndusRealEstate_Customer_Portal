@@ -50,6 +50,12 @@ export class DropdownMaterial implements OnInit {
     // this.getUserDataFromLocal();
   }
 
+  ngDoCheck() {
+    if (this.isDropDownBtnClicked == false && this.isDropDownBtnsShow == true) {
+      this.isDropDownBtnsShow = false;
+    }
+  }
+
   dropDownBtnClick() {
     if (this.isDropDownBtnClicked == false) {
       this.isDropDownBtnClicked = true;

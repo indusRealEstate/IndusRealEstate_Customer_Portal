@@ -94,6 +94,7 @@ import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_proper
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 import { Tenant_Move_in_Request } from "app/indus_services/facility_management/tenant_move-in_request/tenant_move-in_request";
 import { PaymentRecapComponent } from "app/payment_recap/payment_recap";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -110,7 +111,7 @@ import { PaymentRecapComponent } from "app/payment_recap/payment_recap";
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    // MatTooltipModule,
+    MatTooltipModule,
     MatDialogModule,
     MatCardModule,
     // A11yModule,

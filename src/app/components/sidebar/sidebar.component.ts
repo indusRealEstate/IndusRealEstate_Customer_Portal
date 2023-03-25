@@ -34,6 +34,27 @@ export const HOMEROUTE: RouteInfo[] = [
   },
 ];
 
+export const HOMEROUTEADMIN: RouteInfo[] = [
+  {
+    path: "/admin-dashboard",
+    title: "Overview",
+    icon: "assets/img/svg/sidebar/activity.svg",
+    class: "",
+  },
+  {
+    path: "/notifications",
+    title: "Notifications",
+    icon: "assets/img/svg/navbar/notification.svg",
+    class: "",
+  },
+  {
+    path: "/notifications-manage",
+    title: "Manage Notifications",
+    icon: "assets/img/svg/sidebar/settings.svg",
+    class: "",
+  },
+];
+
 export const PROPERTIESROUTE: RouteInfo[] = [
   {
     path: "/my-properties",
@@ -115,6 +136,15 @@ export const DOCUMENTSROUTETENANT: RouteInfo[] = [
   },
 ];
 
+export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
+  {
+    path: "/all-clients-documents",
+    title: "All Clients Documents",
+    icon: "assets/img/svg/sidebar/file-text.svg",
+    class: "",
+  },
+];
+
 export const REQUESTSROUTELANDLORD: RouteInfo[] = [
   {
     path: "/my-requests",
@@ -169,17 +199,23 @@ export const REQUESTSROUTETENANT: RouteInfo[] = [
   },
 ];
 
-export const ADMINROUTES: RouteInfo[] = [
+export const REQUESTSROUTEADMIN: RouteInfo[] = [
   {
-    path: "/admin-dashboard",
-    title: "Dashboard",
-    icon: "assets/img/svg/sidebar/home.svg",
+    path: "/admin-requests",
+    title: "All Requests",
+    icon: "assets/img/svg/sidebar/service-request-1.svg",
     class: "",
   },
   {
-    path: "/admin-requests",
-    title: "Requests",
-    icon: "assets/img/svg/sidebar/notification-status.svg",
+    path: "/admin-requests-landlord",
+    title: "Landlord requests",
+    icon: "assets/img/svg/sidebar/chat-request-svgrepo-com.svg",
+    class: "",
+  },
+  {
+    path: "/admin-requests-tenant",
+    title: "Tenant requests",
+    icon: "assets/img/svg/sidebar/chat-request-svgrepo-com.svg",
     class: "",
   },
 ];
@@ -230,14 +266,17 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   homeRoute: any[];
+  homeRouteAdmin: any[];
   propertiesRoute: any[];
   serviceRouteLandlord: any[];
   serviceRouteTenant: any[];
   documentsRouteLandlord: any[];
   documentsRouteTenant: any[];
+  documentsRouteAdmin: any[];
 
   requestsRouteTenant: any[];
   requestsRouteLandlord: any[];
+  requestsRouteAdmin: any[];
   // menuItems: any[];
   user: User;
   userProfilePic: any = false;
@@ -293,6 +332,7 @@ export class SidebarComponent implements OnInit {
     this.getUserDataFromLocal();
 
     this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
+    this.homeRouteAdmin = HOMEROUTEADMIN.filter((menuItem) => menuItem);
     this.propertiesRoute = PROPERTIESROUTE.filter((menuItem) => menuItem);
     this.serviceRouteLandlord = SERVICESROUTELANDLORD.filter(
       (menuItem) => menuItem
@@ -307,11 +347,19 @@ export class SidebarComponent implements OnInit {
       (menuItem) => menuItem
     );
 
+    this.documentsRouteAdmin = DOCUMENTSROUTEADMIN.filter(
+      (menuItem) => menuItem
+    );
+
     this.requestsRouteLandlord = REQUESTSROUTELANDLORD.filter(
       (menuItem) => menuItem
     );
 
     this.requestsRouteTenant = REQUESTSROUTETENANT.filter(
+      (menuItem) => menuItem
+    );
+
+    this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter(
       (menuItem) => menuItem
     );
   }
