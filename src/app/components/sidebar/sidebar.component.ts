@@ -42,17 +42,18 @@ export const HOMEROUTEADMIN: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/notifications",
-    title: "Notifications",
-    icon: "assets/img/svg/navbar/notification.svg",
+    path: "/admin-properties-sale",
+    title: "Sale Properties",
+    icon: "assets/img/svg/sidebar/activity.svg",
     class: "",
   },
   {
-    path: "/notifications-manage",
-    title: "Manage Notifications",
-    icon: "assets/img/svg/sidebar/settings.svg",
+    path: "/admin-properties-rent",
+    title: "Rent Properties",
+    icon: "assets/img/svg/sidebar/activity.svg",
     class: "",
   },
+  
 ];
 
 export const PROPERTIESROUTE: RouteInfo[] = [
