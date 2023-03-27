@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 import { BehaviorSubject } from "rxjs";
 
 @Component({
@@ -58,6 +59,7 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     this.isLoading = true;
     // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
@@ -430,6 +432,8 @@ export class AdminDashboardComponent implements OnInit {
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
     this.router.navigate(["/admin-requests"], { queryParams: { uid: userId } });
+
+    this.otherServices.allRequestsClickedAdminDashboard.next(true);
   }
 
   navigateToTotalLandlordCleints() {

@@ -162,6 +162,16 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(["/my-properties"], {
       queryParams: { uid: this.user.id },
     });
+
+    this.otherServices.overviewClickedpropertyPage.next(true);
+  }
+
+  navigateMyRequests() {
+    this.router.navigate(["/my-requests"], {
+      queryParams: { uid: this.user.id },
+    });
+
+    this.otherServices.myRequestsClickedrequestPage.next(true);
   }
 
   getTitle() {

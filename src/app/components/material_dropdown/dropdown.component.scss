@@ -12,6 +12,8 @@
   transition: width 400ms ease-out, height 400ms ease-out;
 
   img {
+    pointer-events: none;
+    user-select: none;
     filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
       hue-rotate(146deg) brightness(90%) contrast(93%);
     margin-left: 6px;
@@ -50,6 +52,8 @@
   }
 
   img {
+    pointer-events: none;
+    user-select: none;
     filter: brightness(0) invert(1);
     margin-left: 6px;
     margin-right: 13px;

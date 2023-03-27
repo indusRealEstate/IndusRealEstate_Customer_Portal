@@ -75,7 +75,7 @@
               <img
                 src="assets/img/svg/admin-requests/search-normal-1.svg"
                 alt=""
-                style="width: 15px; filter: brightness(0) invert(1)"
+                style="width: 15px; filter: brightness(0) invert(1);"
               />
             </div>
           </div>
@@ -2395,103 +2395,166 @@
           style="padding: 0"
           *ngIf="requestViewType == 'table_view'"
         >
-          <div
+          <table
             *ngIf="isContentLoading == true"
-            class="card"
-            style="
-              background-color: #f4f4f4;
-              padding: 20px;
-              padding-bottom: 10px;
-            "
+            mat-table
+            [dataSource]="loadingTable"
+            class="mat-elevation-z8 demo-table"
           >
-            <div style="max-width: 200px; max-height: 30px; border-radius: 9px">
-              <ngx-skeleton-loader [theme]="{ width: '200px', height: '30px' }">
-              </ngx-skeleton-loader>
-            </div>
-            <div
-              style="
-                max-width: 260px;
-                max-height: 20px;
-                border-radius: 9px;
-                margin-top: 15px;
-              "
-            >
-              <ngx-skeleton-loader [theme]="{ width: '260px', height: '15px' }">
-              </ngx-skeleton-loader>
-            </div>
+            <!-- Name Column -->
+            <ng-container matColumnDef="issueDate">
+              <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'first-col-last' : 'first-col'"
+              >
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
 
-            <div
-              class="row"
-              style="
-                margin: 0;
-                max-width: 500px;
-                justify-content: space-between;
-              "
-            >
-              <div
-                style="
-                  max-width: 150px;
-                  max-height: 30px;
-                  border-radius: 9px;
-                  margin-top: 15px;
-                "
+            <ng-container matColumnDef="reqNo">
+              <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'second-col-last' : 'second-col'"
               >
-                <ngx-skeleton-loader
-                  [theme]="{ width: '150px', height: '30px' }"
+                <div
+                  style="max-width: 250px; max-height: 30px; border-radius: 9px"
                 >
-                </ngx-skeleton-loader>
-              </div>
-              <div
-                style="
-                  max-width: 150px;
-                  max-height: 30px;
-                  border-radius: 9px;
-                  margin-top: 15px;
-                "
-              >
-                <ngx-skeleton-loader
-                  [theme]="{ width: '150px', height: '30px' }"
-                >
-                </ngx-skeleton-loader>
-              </div>
-              <div
-                style="
-                  max-width: 150px;
-                  max-height: 30px;
-                  border-radius: 9px;
-                  margin-top: 15px;
-                "
-              >
-                <ngx-skeleton-loader
-                  [theme]="{ width: '150px', height: '30px' }"
-                >
-                </ngx-skeleton-loader>
-              </div>
-            </div>
-            <hr
-              style="
-                border: 1px solid #d4aa32;
-                border-radius: 15px;
-                margin-bottom: 5px;
-                margin-top: 20px;
-              "
-            />
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '250px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
 
-            <div class="row" style="margin: 0">
-              <div class="btn request-approve-btns">
-                <p style="margin-bottom: 0">Review Request</p>
-              </div>
-              <div class="btn request-approve-btns">
-                <p style="margin-bottom: 0">Accept Request</p>
-              </div>
-              <div class="btn request-approve-btns">
-                <p style="margin-bottom: 0">Decline Request</p>
-              </div>
-              <div class="btn request-approve-btns">
-                <p style="margin-bottom: 0">Send to Landlord</p>
-              </div>
-            </div>
-          </div>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="reqType">
+              <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'third-col-last' : 'third-col'"
+              >
+                <div
+                  style="max-width: 150px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '150px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="propertyName">
+              <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+              >
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="clientType">
+              <th mat-header-cell *matHeaderCellDef>CLIENT</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+              >
+                <div
+                  style="max-width: 100px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '100px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="clientName">
+              <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+              >
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+              <td mat-cell *matCellDef="let element;let last = last">
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+              <td
+                mat-cell
+                *matCellDef="let element;let last = last"
+                [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
+              >
+                <img
+                  matTooltip="More Actions"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  src="assets/img/svg/home-page/more.svg"
+                  alt=""
+                  style="
+                    filter: brightness(0) saturate(100%) invert(73%) sepia(8%)
+                      saturate(14%) hue-rotate(333deg) brightness(91%)
+                      contrast(77%);
+                    width: 20px;
+                    cursor: pointer;
+                  "
+                />
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
 
           <p
             *ngIf="isContentLoading == true"

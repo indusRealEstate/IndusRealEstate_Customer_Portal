@@ -295,6 +295,8 @@ export class SidebarComponent implements OnInit {
   isReportsOpened: boolean = false;
   isCustomerCareOpened: boolean = false;
 
+  currentPage: any;
+
   ///////////////--App Version--////////////////////
   appVersion: any = "VERSION PROD v0.1.15";
 
@@ -326,6 +328,68 @@ export class SidebarComponent implements OnInit {
     otherServices.miniSideBarClicked.subscribe((val) => {
       this.sideBarClicked = val;
     });
+
+    otherServices.myRequestClickedHome.subscribe((req_val) => {
+      if (req_val == true) {
+        this.miniSideBarClickedRequests();
+      }
+    });
+
+    otherServices.myPropertiesClickedHome.subscribe((prop_val) => {
+      if (prop_val == true) {
+        this.miniSideBarClickedProperties();
+      }
+    });
+
+    otherServices.reportsClickedHome.subscribe((repo_val) => {
+      if (repo_val == true) {
+        this.miniSideBarClickedReports();
+      }
+    });
+
+    otherServices.customerCareClickedHome.subscribe((cust_val) => {
+      if (cust_val == true) {
+        this.miniSideBarClickedCustomerCare();
+      }
+    });
+
+    otherServices.homeClickedTenantReg.subscribe((home_val) => {
+      if (home_val == true) {
+        this.miniSideBarClickedDashboard();
+      }
+    });
+
+    otherServices.allRequestsClickedAdminDashboard.subscribe(
+      (admin_req_val) => {
+        if (admin_req_val == true) {
+          this.miniSideBarClickedRequests();
+        }
+      }
+    );
+
+    otherServices.propertyPageClickedUserProfile.subscribe(
+      (usr_val) => {
+        if (usr_val == true) {
+          this.miniSideBarClickedProperties();
+        }
+      }
+    );
+
+    otherServices.overviewClickedpropertyPage.subscribe(
+      (ovr_val) => {
+        if (ovr_val == true) {
+          this.miniSideBarClickedProperties();
+        }
+      }
+    );
+
+    otherServices.myRequestsClickedrequestPage.subscribe(
+      (myreq_val) => {
+        if (myreq_val == true) {
+          this.miniSideBarClickedRequests();
+        }
+      }
+    );
   }
 
   ngOnInit() {
@@ -359,9 +423,7 @@ export class SidebarComponent implements OnInit {
       (menuItem) => menuItem
     );
 
-    this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter(
-      (menuItem) => menuItem
-    );
+    this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
   }
 
   isMobileMenu() {
@@ -463,6 +525,8 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isPropertiesOpened = false;
       this.isServicesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -473,6 +537,8 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isPropertiesOpened = false;
       this.isServicesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -486,6 +552,8 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -496,6 +564,8 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -509,6 +579,8 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -519,6 +591,8 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -532,16 +606,20 @@ export class SidebarComponent implements OnInit {
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
       this.isDocumentsOpened = true;
+      this.isReportsOpened = false;
       this.isRequestsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+      this.isCustomerCareOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -555,12 +633,70 @@ export class SidebarComponent implements OnInit {
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
       this.isRequestsOpened = true;
+      this.isReportsOpened = false;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.isCustomerCareOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedReports() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isReportsOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.isCustomerCareOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isReportsOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.isCustomerCareOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedCustomerCare() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isCustomerCareOpened = true;
+      this.isReportsOpened = false;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isCustomerCareOpened = true;
+      this.isReportsOpened = false;
+      this.isRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
@@ -568,4 +704,18 @@ export class SidebarComponent implements OnInit {
       this.sideBarTextShow = true;
     }
   }
+
+  // ngDoCheck() {
+  //   this.currentPage = this.router.url.split("?")[0].split("/")[1];
+
+  //   if (this.currentPage == "my-requests") {
+  //     this.miniSideBarClickedRequests();
+  //   } else if (this.currentPage == "my-properties") {
+  //     this.miniSideBarClickedProperties();
+  //   } else if (this.currentPage == "reports") {
+  //     this.miniSideBarClickedReports();
+  //   } else if (this.currentPage == "customer-care") {
+  //     this.miniSideBarClickedCustomerCare();
+  //   }
+  // }
 }

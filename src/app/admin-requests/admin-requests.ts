@@ -32,6 +32,9 @@ export class AdminRequests implements OnInit {
   noDataPresent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   allRequests: any[] = [];
+
+
+  loadingTable: any[] = [1,2,3,4,5];
   allRequestsSearched: any[] = [];
   // allRequestsBH: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   allRequestsLenBH: BehaviorSubject<number> = new BehaviorSubject<number>(100);

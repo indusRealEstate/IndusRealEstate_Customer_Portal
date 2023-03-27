@@ -22,6 +22,37 @@ export class OtherServices {
     false
   );
 
+  /////////////////////////////////////////////////////
+
+  public homeClickedTenantReg: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public propertyPageClickedUserProfile: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public overviewClickedpropertyPage: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public myRequestsClickedrequestPage: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public myRequestClickedHome: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public myPropertiesClickedHome: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public reportsClickedHome: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public customerCareClickedHome: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public allRequestsClickedAdminDashboard: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  //////////////////////////////////////////////////////
+
   public miniSideBarClicked: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 

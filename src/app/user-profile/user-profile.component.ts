@@ -190,6 +190,7 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(["/property-page"], {
       queryParams: { propertyId: property["property_id"] },
     });
+    this.otherServices.propertyPageClickedUserProfile.next(true);
   }
 
   async getUserProperties(userId: any) {

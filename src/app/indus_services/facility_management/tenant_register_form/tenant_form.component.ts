@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessDialogRegister } from "app/components/success-dialog/success_dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 import { UserService } from "app/services/user.service";
 import * as uuid from "uuid";
 import { StepperTenantRegisterFirst } from "./components/stepper_01_reg_tenant/stepper_first_reg_tenant";
@@ -59,6 +60,7 @@ export class TenantRegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
+    private otherServices: OtherServices,
     private readonly route: ActivatedRoute,
     private dialog?: MatDialog
   ) {
@@ -132,6 +134,8 @@ export class TenantRegisterComponent implements OnInit {
 
   cancelRegistration() {
     this.router.navigate(["/home"]);
+
+    this.otherServices.homeClickedTenantReg.next(true);
   }
 
   stepperNextClick() {

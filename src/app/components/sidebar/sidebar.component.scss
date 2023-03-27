@@ -50,6 +50,8 @@
   transition: all 150ms ease-in;
 
   img {
+    pointer-events: none;
+    user-select: none;
     width: 18px;
     filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
       hue-rotate(146deg) brightness(90%) contrast(93%);
@@ -70,12 +72,16 @@
   cursor: pointer;
 
   .mini-sideBar-arrow-opened {
+    pointer-events: none;
+    user-select: none;
     filter: brightness(0) invert(1);
     width: 18px;
     transition: all 250ms ease-out;
     transform: rotate(180deg);
   }
   .mini-sideBar-arrow-closed {
+    pointer-events: none;
+    user-select: none;
     filter: brightness(0) invert(1);
     width: 18px;
     transition: all 250ms ease-out;
@@ -98,6 +104,8 @@
   img {
     width: 18px;
     filter: brightness(0) invert(1);
+    pointer-events: none;
+    user-select: none;
   }
 }
 
@@ -184,6 +192,8 @@
 
   .sideBarNav-Item {
     .sidebar-items-icon {
+      pointer-events: none;
+      user-select: none;
       filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
         hue-rotate(146deg) brightness(90%) contrast(93%);
       margin-left: 20px;
@@ -220,6 +230,8 @@
       }
 
       .sidebar-items-icon {
+        pointer-events: none;
+        user-select: none;
         filter: brightness(0) invert(1);
       }
     }

@@ -238,7 +238,7 @@
         style="
           margin: 0;
           margin-left: 17px;
-          width: 460px;
+          width: 500px;
           justify-content: space-between;
           margin-top: 25px;
         "
@@ -287,6 +287,64 @@
         />
         <p style="color: #858585; margin-bottom: 0; font-size: 16px">
           Property Details
+        </p>
+      </div>
+
+      <div
+        *ngIf="currentPage == 'request-page'"
+        class="row"
+        style="
+          margin: 0;
+          margin-left: 17px;
+          width: 500px;
+          justify-content: space-between;
+          margin-top: 25px;
+        "
+      >
+        <img
+          src="assets/img/svg/sidebar/menu.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+              saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+            width: 20px;
+          "
+        />
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Requests
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p class="overview-back-btn-property-page" (click)="navigateMyRequests()">
+         My Requests
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Request Details
         </p>
       </div>
 

@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 import { User } from "../../../models/user/user.model";
 
 @Component({
@@ -36,7 +37,8 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private otherServices: OtherServices
   ) {
     this.isRecentHappeningsLoading = true;
     var userData = localStorage.getItem("currentUser");
@@ -202,5 +204,37 @@ export class HomeComponent implements OnInit {
       user[0]["password"],
       user[0]["token"]
     );
+  }
+
+  myRequestCardClicked() {
+    this.router.navigate(["/my-requests"], {
+      queryParams: { uid: this.user.id },
+    });
+
+    this.otherServices.myRequestClickedHome.next(true);
+  }
+
+  myPropertiesCardClicked() {
+    this.router.navigate(["/my-properties"], {
+      queryParams: { uid: this.user.id },
+    });
+
+    this.otherServices.myPropertiesClickedHome.next(true);
+  }
+
+  reportsCardClicked() {
+    this.router.navigate(["/reports"], {
+      queryParams: { uid: this.user.id },
+    });
+
+    this.otherServices.reportsClickedHome.next(true);
+  }
+
+  customerCareCardClicked() {
+    this.router.navigate(["/customer-care"], {
+      queryParams: { uid: this.user.id },
+    });
+
+    this.otherServices.customerCareClickedHome.next(true);
   }
 }

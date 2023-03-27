@@ -227,9 +227,9 @@
             <tr>
               <td>
                 <a
-                  routerLink="/my-requests"
-                  queryParams="{uid: user.id}"
+                  (click)="myRequestCardClicked()"
                   class="homePage-more-info-link"
+                  style="cursor: pointer"
                   >More info</a
                 >
               </td>
@@ -262,9 +262,9 @@
             <tr>
               <td>
                 <a
-                  routerLink="/my-properties"
-                  queryParams="{uid: user.id}"
+                  (click)="myPropertiesCardClicked()"
                   class="homePage-more-info-link"
+                  style="cursor: pointer"
                   >More info</a
                 >
               </td>
@@ -292,9 +292,9 @@
             <tr>
               <td>
                 <a
-                  routerLink="/reports"
-                  queryParams="{uid: user.id}"
+                  (click)="reportsCardClicked()"
                   class="homePage-more-info-link"
+                  style="cursor: pointer"
                   >More info</a
                 >
               </td>
@@ -322,9 +322,9 @@
             <tr>
               <td>
                 <a
-                  routerLink="/customer-care"
-                  queryParams="{uid: user.id}"
+                  (click)="customerCareCardClicked()"
                   class="homePage-more-info-link"
+                  style="cursor: pointer"
                   >More info</a
                 >
               </td>
