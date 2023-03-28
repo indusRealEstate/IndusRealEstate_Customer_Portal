@@ -44,13 +44,25 @@ export const HOMEROUTEADMIN: RouteInfo[] = [
   {
     path: "/admin-properties-sale",
     title: "Sale Properties",
-    icon: "assets/img/svg/sidebar/activity.svg",
+    icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
   {
     path: "/admin-properties-rent",
     title: "Rent Properties",
-    icon: "assets/img/svg/sidebar/activity.svg",
+    icon: "assets/img/svg/sidebar/buildings.svg",
+    class: "",
+  },
+  {
+    path: "/admin-landlord-clients",
+    title: "All Landlord Clients",
+    icon: "assets/img/svg/sidebar/clients.svg",
+    class: "",
+  },
+  {
+    path: "/admin-tenant-clients",
+    title: "All Tenant Clients",
+    icon: "assets/img/svg/sidebar/clients.svg",
     class: "",
   },
   

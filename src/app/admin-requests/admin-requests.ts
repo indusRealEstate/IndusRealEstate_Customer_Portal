@@ -1,5 +1,7 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
@@ -32,9 +34,10 @@ export class AdminRequests implements OnInit {
   noDataPresent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   allRequests: any[] = [];
+  allRequestsMatTableData: MatTableDataSource<any>;
+  ngAfterViewInitInitialize: boolean = false;
 
-
-  loadingTable: any[] = [1,2,3,4,5];
+  loadingTable: any[] = [1, 2, 3, 4, 5];
   allRequestsSearched: any[] = [];
   // allRequestsBH: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   allRequestsLenBH: BehaviorSubject<number> = new BehaviorSubject<number>(100);
@@ -88,6 +91,8 @@ export class AdminRequests implements OnInit {
     "status",
     "actions",
   ];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private apiService: ApiService,
@@ -438,6 +443,18 @@ export class AdminRequests implements OnInit {
     return ext;
   }
 
+  ngAfterViewInit() {
+    if (this.ngAfterViewInitInitialize == true) {
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData.paginator = this.paginator;
+    } else {
+      setTimeout(() => {
+        this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+        this.allRequestsMatTableData.paginator = this.paginator;
+      }, 5500);
+    }
+  }
+
   async ngOnInit() {
     this.imagesUrl = this.apiService.getBaseUrlImages();
     var userData = localStorage.getItem("currentUser");
@@ -458,6 +475,7 @@ export class AdminRequests implements OnInit {
       this.isTenantRequestsEmpty = adminReqDataSession["isTenantRequestsEmpty"];
       this.isLoading = false;
       this.isContentLoading = false;
+      this.ngAfterViewInitInitialize = true;
     } else {
       // console.log("no session data");
       await this.initFunction(user[0]["id"]);
@@ -587,6 +605,9 @@ export class AdminRequests implements OnInit {
         isTenantRequestsEmpty: this.isTenantRequestsEmpty,
       })
     );
+
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    this.allRequestsMatTableData.paginator = this.paginator;
   }
 
   async getAllAddPropertyRequests(userId) {

@@ -225,6 +225,45 @@
   }
 }
 
+:host ::ng-deep .table-paginator {
+  .mat-form-field-underline {
+    display: none !important;
+  }
+
+  .mat-form-field-infix {
+    border-top: none !important;
+    padding: 10px 0 !important;
+  }
+
+  .mat-form-field {
+    margin: 0 !important;
+  }
+
+  .mat-select-arrow-wrapper{
+    margin: 0 5px !important;
+  }
+
+  .mat-paginator-page-size-label {
+    margin: 0 10px !important;
+    font-size: 13px !important;
+  }
+
+  .mat-select-value-text{
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+
+  .mat-paginator-page-size {
+    border: 1px solid !important;
+    border-radius: 8px !important;
+    align-items: center !important;
+  }
+}
+
 ::ng-deep .tooltip {
   position: relative;
   background-color: #ececec;

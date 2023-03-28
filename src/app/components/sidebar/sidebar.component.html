@@ -191,6 +191,7 @@
         </div>
       </div>
       <div
+        *ngIf="user.auth_type != 'admin'"
         class="col"
         style="
           padding: 0;
@@ -266,7 +267,9 @@
         </div>
 
         <div *ngIf="isDashboardOpened == true" style="height: 80%">
-          <div *ngIf="user.auth_type == 'landlord'">
+          <div
+            *ngIf="user.auth_type == 'landlord' || user.auth_type == 'tenant'"
+          >
             <li
               *ngFor="let item of homeRoute"
               class="{{ item.class }} nav-item sideBarNav-Item"
@@ -586,7 +589,11 @@
             class="row"
             style="margin: 0; width: 100%; justify-content: space-between"
           >
-            <div class="col" style="padding: 0">
+            <div
+              class="col"
+              style="padding: 0"
+              *ngIf="user.auth_type != 'admin'"
+            >
               <p
                 style="
                   margin-bottom: -10px;
@@ -599,6 +606,22 @@
               </p>
               <p style="margin-bottom: 0; color: #a3a3a3; font-size: 12px">
                 johndoe@email.com
+              </p>
+            </div>
+            <div
+              class="col"
+              style="padding: 0; display: flex; align-items: center"
+              *ngIf="user.auth_type == 'admin'"
+            >
+              <p
+                style="
+                  color: #a3a3a3;
+                  font-size: 15px;
+                  font-weight: 600;
+                  margin-top: 8px;
+                "
+              >
+                Admin Panel
               </p>
             </div>
             <div

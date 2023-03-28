@@ -50,7 +50,11 @@ export class HomeComponent implements OnInit {
       user[0]["auth_type"] == "landlord" ||
       user[0]["auth_type"] == "tenant"
     ) {
-      this.isLandlord = true;
+      if (user[0]["auth_type"] != "tenant") {
+        this.isLandlord = true;
+      } else {
+        this.isLandlord = false;
+      }
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
           router.navigate(["/home"], { queryParams: { uid: user[0]["id"] } });

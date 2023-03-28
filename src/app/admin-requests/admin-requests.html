@@ -75,7 +75,7 @@
               <img
                 src="assets/img/svg/admin-requests/search-normal-1.svg"
                 alt=""
-                style="width: 15px; filter: brightness(0) invert(1);"
+                style="width: 15px; filter: brightness(0) invert(1)"
               />
             </div>
           </div>
@@ -2558,7 +2558,12 @@
 
           <p
             *ngIf="isContentLoading == true"
-            style="font-size: 13px; font-weight: 600; color: #d4aa32"
+            style="
+              font-size: 13px;
+              font-weight: 600;
+              color: #d4aa32;
+              margin-top: 40px;
+            "
           >
             This may take a while. Please wait :)
           </p>
@@ -2570,7 +2575,7 @@
             <div *ngIf="isUserSearchedRequests == false">
               <table
                 mat-table
-                [dataSource]="allRequests"
+                [dataSource]="allRequestsMatTableData"
                 class="mat-elevation-z8 demo-table"
                 *ngIf="allRequests.length != 0"
               >
@@ -2693,6 +2698,14 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+
+              <div style="margin-top: 25px" class="table-paginator">
+                <mat-paginator
+                  #paginator
+                  [pageSizeOptions]="[6, 8, 10, 14, 20]"
+                  showFirstLastButtons
+                ></mat-paginator>
+              </div>
             </div>
             <!-- <div *ngIf="isUserSearchedRequests == true">
               <div
