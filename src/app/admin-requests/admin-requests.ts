@@ -1069,4 +1069,12 @@ export class AdminRequests implements OnInit {
       this.cacheSession();
     }, 1500);
   }
+
+  requestViewHiddenCLass() {
+    if (this.requestViewType == "table_view") {
+      return "table_view_class";
+    } else {
+      return "table_view_class_hidden";
+    }
+  }
 }

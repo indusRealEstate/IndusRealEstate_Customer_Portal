@@ -22,6 +22,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { ViewDocDialog } from "./view-doc-dialog/view-doc-dialog";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-requests-dropdown";
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     NavbarComponent,
     SidebarComponent,
     DropdownMaterial,
+    TenantRequestsDropdown,
     DocUploadDialogRegister,
     ProgressComponent,
     SuccessDialogRegister,

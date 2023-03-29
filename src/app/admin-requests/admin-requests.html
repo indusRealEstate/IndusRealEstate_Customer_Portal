@@ -2393,7 +2393,7 @@
         <div
           class="col"
           style="padding: 0"
-          *ngIf="requestViewType == 'table_view'"
+          [ngClass]="requestViewHiddenCLass()"
         >
           <table
             *ngIf="isContentLoading == true"

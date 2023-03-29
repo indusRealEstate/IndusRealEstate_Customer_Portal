@@ -1,0 +1,57 @@
+<div
+  class="col"
+  [ngClass]="
+    isDropDownBtnClicked == true
+      ? 'dropdown-services-opened'
+      : 'dropdown-services'
+  "
+>
+  <div
+    class="row dropDownBtnRow"
+    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    (click)="dropDownBtnClick()"
+  >
+    <img src="assets/img/svg/sidebar/request-send.svg" alt="" />
+    <p>Tenant Requests</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    (click)="navigateToRequests('maintenance')"
+  >
+    <img src="assets/img/svg/sidebar/maintenance_icon.svg" alt="" />
+    <p>Maintenance</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    style="margin-top: -10px"
+  >
+    <img src="assets/img/svg/sidebar/User-admin-01.svg" alt="" />
+    <p>Tenant Move-in</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    style="margin-top: -10px"
+  >
+    <img src="assets/img/svg/sidebar/User-delete-02.svg" alt="" />
+    <p>Tenant Move-out</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    style="margin-top: -10px"
+  >
+    <img src="assets/img/svg/sidebar/empty-wallet.svg" alt="" />
+    <p>Payment requests</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    style="margin-top: -10px"
+  >
+    <img src="assets/img/svg/sidebar/property-conditioning.svg" alt="" />
+    <p>Conditioning</p>
+  </div>
+</div>

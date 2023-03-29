@@ -5,13 +5,12 @@ import { Route, Router } from "@angular/router";
  * @title Basic menu
  */
 @Component({
-  selector: "dropdown-btn",
-  templateUrl: "./dropdown.component.html",
-  styleUrls: ["./dropdown.component.scss"],
+  selector: "tenant-requests-dropdown",
+  templateUrl: "./tenant-requests-dropdown.html",
+  styleUrls: ["./tenant-requests-dropdown.scss"],
 })
-export class DropdownMaterial implements OnInit {
+export class TenantRequestsDropdown implements OnInit {
   userId: any;
-
   isDropDownBtnClicked: boolean = false;
   isDropDownBtnsShow: boolean = false;
 
@@ -43,9 +42,11 @@ export class DropdownMaterial implements OnInit {
     }
   }
 
-  navigateToTenentRegistrationPage() {
-    this.router.navigate(["/tenant-register-form"], {
-      queryParams: { uid: this.userId },
-    });
+  navigateToRequests(req) {
+    if (req == "maintenance") {
+      this.router.navigate(["/maintenance-requests"], {
+        queryParams: { uid: this.userId },
+      });
+    }
   }
 }

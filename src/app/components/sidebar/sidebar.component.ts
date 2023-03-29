@@ -164,37 +164,7 @@ export const REQUESTSROUTELANDLORD: RouteInfo[] = [
     title: "My Requests",
     icon: "assets/img/svg/sidebar/request-send.svg",
     class: "",
-  },
-  {
-    path: "/maintenance-requests",
-    title: "Maintenance requests",
-    icon: "assets/img/svg/sidebar/maintenance_icon.svg",
-    class: "",
-  },
-  {
-    path: "/tenant-move-in-requests-landlord",
-    title: "Tenant Move-in",
-    icon: "assets/img/svg/sidebar/User-admin-01.svg",
-    class: "",
-  },
-  {
-    path: "/tenant-move-out-requests-landlord",
-    title: "Tenant Move-out",
-    icon: "assets/img/svg/sidebar/User-delete-02.svg",
-    class: "",
-  },
-  {
-    path: "/payment-requests-landlord",
-    title: "Payment requests",
-    icon: "assets/img/svg/sidebar/empty-wallet.svg",
-    class: "",
-  },
-  {
-    path: "/property-conditioning-requests",
-    title: "Property conditioning",
-    icon: "assets/img/svg/sidebar/property-conditioning.svg",
-    class: "",
-  },
+  }
 ];
 
 export const REQUESTSROUTETENANT: RouteInfo[] = [

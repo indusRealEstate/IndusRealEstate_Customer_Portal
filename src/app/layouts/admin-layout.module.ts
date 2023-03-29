@@ -175,7 +175,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 
     ModalComponent,
     ModalComponentDate,
-    
+
     NewPaymentComponent,
     FM_MaintananceRequest,
     Tenant_Move_out_Request,
@@ -208,7 +208,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     RequestPage,
     BackButtonDirective,
     CustomerCareComponent,
-    PaymentRecapComponent
+    PaymentRecapComponent,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
