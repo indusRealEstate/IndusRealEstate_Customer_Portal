@@ -3,7 +3,7 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "../home/home.component";
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { ReportsComponent } from "../reports/reports.component";
-import { MyRequestsComponent } from "app/myRequests/my_requests.component";
+import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { AppointmentsComponent } from "app/appointments/appointments.component";
 import { DocumentsComponent } from "app/documents/documents.component";
@@ -32,7 +32,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "user-profile", component: UserProfileComponent },
   { path: "reports", component: ReportsComponent },
-  { path: "my-requests", component: MyRequestsComponent },
+  { path: "requests", component: RequestsComponent },
   { path: "my-properties", component: MyPropertiesComponent },
   { path: "appointments", component: AppointmentsComponent },
   { path: "documents", component: DocumentsComponent },

@@ -52,7 +52,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 // import { MatToolbarModule } from "@angular/material/toolbar";
 // import { MatTreeModule } from "@angular/material/tree";
-import { MyRequestsComponent } from "app/myRequests/my_requests.component";
+import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { AppointmentsComponent } from "app/appointments/appointments.component";
 import { DocumentsComponent } from "app/documents/documents.component";
@@ -163,7 +163,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     HomeComponent,
     UserProfileComponent,
     ReportsComponent,
-    MyRequestsComponent,
+    RequestsComponent,
     MyPropertiesComponent,
     AppointmentsComponent,
     DocumentsComponent,

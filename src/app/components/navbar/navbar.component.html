@@ -262,9 +262,7 @@
             width: 17px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
-          User
-        </p>
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">User</p>
         <img
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
           alt=""
@@ -324,8 +322,6 @@
           All Requests
         </p>
       </div>
-
-      
 
       <div
         *ngIf="currentPage == 'my-properties'"
@@ -434,13 +430,7 @@
       <div
         *ngIf="currentPage == 'request-page'"
         class="row"
-        style="
-          margin: 0;
-          margin-left: 17px;
-          width: 500px;
-          justify-content: space-between;
-          margin-top: 25px;
-        "
+        style="margin: 0; margin-left: 17px; margin-top: 25px"
       >
         <img
           src="assets/img/svg/sidebar/menu.svg"
@@ -449,6 +439,7 @@
             filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
               saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
             width: 20px;
+            margin-right: 15px;
           "
         />
         <img
@@ -458,9 +449,17 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
           Requests
         </p>
         <img
@@ -470,10 +469,56 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p class="overview-back-btn-property-page" (click)="navigateMyRequests()">
-         My Requests
+        <p
+          class="overview-back-btn-property-page"
+          (click)="navigateMyRequests('my-requests')"
+          *ngIf="requestPageType == 'my-requests'"
+          style="margin-right: 15px"
+        >
+          My Requests
+        </p>
+        <p
+          class="overview-back-btn-property-page"
+          (click)="navigateMyRequests('maintenance')"
+          *ngIf="requestPageType == 'maintenance'"
+          style="margin-right: 15px"
+        >
+          Maintenance Requests
+        </p>
+        <p
+          class="overview-back-btn-property-page"
+          (click)="navigateMyRequests('tenant-move-in')"
+          *ngIf="requestPageType == 'tenant-move-in'"
+          style="margin-right: 15px"
+        >
+          Tenant Move-in Requests
+        </p>
+        <p
+          class="overview-back-btn-property-page"
+          (click)="navigateMyRequests('tenant-move-out')"
+          *ngIf="requestPageType == 'tenant-move-out'"
+          style="margin-right: 15px"
+        >
+          Tenant Move-out Requests
+        </p>
+        <p
+          class="overview-back-btn-property-page"
+          (click)="navigateMyRequests('payment')"
+          *ngIf="requestPageType == 'payment'"
+          style="margin-right: 15px"
+        >
+          Payment Requests
+        </p>
+        <p
+          class="overview-back-btn-property-page"
+          (click)="navigateMyRequests('conditioning')"
+          *ngIf="requestPageType == 'conditioning'"
+          style="margin-right: 15px"
+        >
+          Property Conditioning Requests
         </p>
         <img
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
@@ -482,6 +527,7 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
         <p style="color: #858585; margin-bottom: 0; font-size: 16px">
@@ -740,15 +786,9 @@
       </div>
 
       <div
-        *ngIf="currentPage == 'my-requests'"
+        *ngIf="currentPage == 'requests'"
         class="row"
-        style="
-          margin: 0;
-          margin-left: 17px;
-          width: 320px;
-          justify-content: space-between;
-          margin-top: 25px;
-        "
+        style="margin: 0; margin-left: 17px; margin-top: 25px"
       >
         <img
           src="assets/img/svg/sidebar/menu.svg"
@@ -757,6 +797,7 @@
             filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
               saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
             width: 20px;
+            margin-right: 15px;
           "
         />
         <img
@@ -766,9 +807,17 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
           Requests
         </p>
         <img
@@ -778,10 +827,44 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+        <p
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+          *ngIf="requestPageType == 'my-requests'"
+        >
           My Requests
+        </p>
+        <p
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+          *ngIf="requestPageType == 'maintenance'"
+        >
+          Maintenance Requests
+        </p>
+        <p
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+          *ngIf="requestPageType == 'tenant-move-in'"
+        >
+          Tenant Move-in Requests
+        </p>
+        <p
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+          *ngIf="requestPageType == 'tenant-move-out'"
+        >
+          Tenant Move-out Requests
+        </p>
+        <p
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+          *ngIf="requestPageType == 'payment'"
+        >
+          Payment Requests
+        </p>
+        <p
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+          *ngIf="requestPageType == 'conditioning'"
+        >
+          Property Conditioning Requests
         </p>
       </div>
     </div>

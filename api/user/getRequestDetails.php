@@ -14,7 +14,7 @@ $decodedData = json_decode($postdata, true);
 
 if (isset($postdata) && !empty($postdata)) {
 
-    $result = $dbase->execute("SELECT * FROM `user_requests` WHERE `user_id` = '{$decodedData["userId"]}'");
+    $result = $dbase->execute("SELECT * FROM `user_requests` WHERE (`user_id` = '{$decodedData["userId"]}' AND `request_from` = '{$decodedData["from"]}')");
 
     if ($result->num_rows != 0) {
         $rows = array();

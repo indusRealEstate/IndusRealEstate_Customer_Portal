@@ -51,6 +51,13 @@ export class OtherServices {
   public allRequestsClickedAdminDashboard: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  public tenantRequestsDropDownCloseLandlord: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+
+  public requestsToggle: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   //////////////////////////////////////////////////////
 
   public miniSideBarClicked: BehaviorSubject<boolean> =

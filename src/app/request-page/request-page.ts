@@ -17,6 +17,15 @@ export class RequestPage implements OnInit {
 
   previousUrl: string;
 
+  requestPagesTypes: string[] = [
+    "my-requests",
+    "maintenance",
+    "tenant-move-in",
+    "tenant-move-out",
+    "payment",
+    "conditioning",
+  ];
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -45,29 +54,52 @@ export class RequestPage implements OnInit {
   }
 
   initFunction(e) {
-    try {
-      if (sessionStorage.getItem("my-requests-session") != null) {
-        var requestsDataSession = JSON.parse(
-          sessionStorage.getItem("my-requests-session")
-        );
-        this.requestData = requestsDataSession["data"].find(
-          (x) => x.request_no == e["req-no"]
-        );
+    if (!this.requestPagesTypes.includes(e.req_type)) {
+      this.router.navigate(["/404"]);
+    } else {
+      try {
+        if (e.req_type == "my-requests") {
+          if (sessionStorage.getItem("my-requests-session") != null) {
+            var requestsDataSession = JSON.parse(
+              sessionStorage.getItem("my-requests-session")
+            );
+            this.requestData = requestsDataSession["data"].find(
+              (x) => x.request_no == e["req-no"]
+            );
 
-        if (this.requestData == undefined || this.requestData == null) {
-          this.router.navigate(["/404"]);
+            if (this.requestData == undefined || this.requestData == null) {
+              this.router.navigate(["/404"]);
+            }
+          } else {
+            this.apiService.getRequestLandlord(e["req-no"]).subscribe((e) => {
+              this.requestData = e;
+            });
+          }
+        } else {
+          if (sessionStorage.getItem("requests-session-auth") != null) {
+            var requestsDataSession = JSON.parse(
+              sessionStorage.getItem("requests-session-auth")
+            );
+            this.requestData = requestsDataSession["data"].find(
+              (x) => x.request_no == e["req-no"]
+            );
+
+            if (this.requestData == undefined || this.requestData == null) {
+              this.router.navigate(["/404"]);
+            }
+          } else {
+            this.apiService.getRequestLandlord(e["req-no"]).subscribe((e) => {
+              this.requestData = e;
+            });
+          }
         }
-      } else {
-        this.apiService.getRequestLandlord(e).subscribe((e) => {
-          this.requestData = e;
-        });
-      }
 
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 500);
-    } catch (error) {
-      console.log(error);
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

@@ -65,7 +65,6 @@ export const HOMEROUTEADMIN: RouteInfo[] = [
     icon: "assets/img/svg/sidebar/clients.svg",
     class: "",
   },
-  
 ];
 
 export const PROPERTIESROUTE: RouteInfo[] = [
@@ -160,16 +159,16 @@ export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
 
 export const REQUESTSROUTELANDLORD: RouteInfo[] = [
   {
-    path: "/my-requests",
+    path: "/requests",
     title: "My Requests",
     icon: "assets/img/svg/sidebar/request-send.svg",
     class: "",
-  }
+  },
 ];
 
 export const REQUESTSROUTETENANT: RouteInfo[] = [
   {
-    path: "/my-requests",
+    path: "/requests",
     title: "My Requests",
     icon: "assets/img/svg/sidebar/request-send.svg",
     class: "",
@@ -211,7 +210,7 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/my-requests",
+    path: "/requests",
     title: "Requests",
     icon: "assets/img/svg/sidebar/menu.svg",
     class: "",
@@ -350,29 +349,23 @@ export class SidebarComponent implements OnInit {
       }
     );
 
-    otherServices.propertyPageClickedUserProfile.subscribe(
-      (usr_val) => {
-        if (usr_val == true) {
-          this.miniSideBarClickedProperties();
-        }
+    otherServices.propertyPageClickedUserProfile.subscribe((usr_val) => {
+      if (usr_val == true) {
+        this.miniSideBarClickedProperties();
       }
-    );
+    });
 
-    otherServices.overviewClickedpropertyPage.subscribe(
-      (ovr_val) => {
-        if (ovr_val == true) {
-          this.miniSideBarClickedProperties();
-        }
+    otherServices.overviewClickedpropertyPage.subscribe((ovr_val) => {
+      if (ovr_val == true) {
+        this.miniSideBarClickedProperties();
       }
-    );
+    });
 
-    otherServices.myRequestsClickedrequestPage.subscribe(
-      (myreq_val) => {
-        if (myreq_val == true) {
-          this.miniSideBarClickedRequests();
-        }
+    otherServices.myRequestsClickedrequestPage.subscribe((myreq_val) => {
+      if (myreq_val == true) {
+        this.miniSideBarClickedRequests();
       }
-    );
+    });
   }
 
   ngOnInit() {
@@ -416,10 +409,41 @@ export class SidebarComponent implements OnInit {
     return true;
   }
 
-  isLinkActive(url): boolean {
-    const baseUrl = this.router.url.split("?")[0];
+  myRequestSideBarClicked() {
+    this.otherServices.tenantRequestsDropDownCloseLandlord.next(true);
 
-    return baseUrl == url;
+    if (this.otherServices.requestsToggle.getValue() == false) {
+      this.otherServices.requestsToggle.next(true);
+
+      setTimeout(() => {
+        this.otherServices.requestsToggle.next(false);
+      }, 0);
+    } else {
+      this.otherServices.requestsToggle.next(false);
+
+      setTimeout(() => {
+        this.otherServices.requestsToggle.next(true);
+      }, 0);
+    }
+  }
+
+  isLinkActive(url): boolean {
+    if (url == "/requests") {
+      var base = this.router.url.split("?")[0];
+      if (base == url) {
+        var req_page_type = this.router.url.split("&")[1].split("=")[1];
+
+        if (req_page_type == "my-requests") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      const baseUrl = this.router.url.split("?")[0];
+
+      return baseUrl == url;
+    }
   }
 
   getUserDataFromLocal() {

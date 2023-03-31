@@ -27,6 +27,8 @@ export class NavbarComponent implements OnInit {
 
   currentPage: any;
 
+  requestPageType: any;
+
   constructor(
     location: Location,
     private element: ElementRef,
@@ -166,10 +168,32 @@ export class NavbarComponent implements OnInit {
     this.otherServices.overviewClickedpropertyPage.next(true);
   }
 
-  navigateMyRequests() {
-    this.router.navigate(["/my-requests"], {
-      queryParams: { uid: this.user.id },
-    });
+  navigateMyRequests(req) {
+    if (req == "maintenance") {
+      this.router.navigate(["/requests"], {
+        queryParams: { uid: this.user.id, req_type: "maintenance" },
+      });
+    } else if (req == "tenant-move-in") {
+      this.router.navigate(["/requests"], {
+        queryParams: { uid: this.user.id, req_type: "tenant-move-in" },
+      });
+    } else if (req == "tenant-move-out") {
+      this.router.navigate(["/requests"], {
+        queryParams: { uid: this.user.id, req_type: "tenant-move-out" },
+      });
+    } else if (req == "payment") {
+      this.router.navigate(["/requests"], {
+        queryParams: { uid: this.user.id, req_type: "payment" },
+      });
+    } else if (req == "conditioning") {
+      this.router.navigate(["/requests"], {
+        queryParams: { uid: this.user.id, req_type: "conditioning" },
+      });
+    } else if (req == "my-requests") {
+      this.router.navigate(["/requests"], {
+        queryParams: { uid: this.user.id, req_type: "my-requests" },
+      });
+    }
 
     this.otherServices.myRequestsClickedrequestPage.next(true);
   }
@@ -189,7 +213,8 @@ export class NavbarComponent implements OnInit {
         return "Documents";
       case "/user-profile":
         return "User profile";
-      case "/my-requests":
+      case "/requests":
+        this.requestPageType = titlee.split("&")[1].split("=")[1];
         return "My Requests";
       case "/new-payment":
         return "Payment";
@@ -214,6 +239,7 @@ export class NavbarComponent implements OnInit {
       case "/admin-requests":
         return "Requests";
       case "/request-page":
+        this.requestPageType = titlee.split("&")[1].split("=")[1];
         return "Request Details Page";
       case "/admin-landlord-clients":
         return "All Landlord Clients";

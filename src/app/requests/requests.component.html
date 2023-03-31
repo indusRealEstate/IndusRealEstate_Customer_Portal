@@ -13,9 +13,15 @@
         <div class="row" style="margin: 0; justify-content: space-between">
           <div class="col">
             <p
-              style="margin: 0; font-size: 22px; font-weight: 900; color: white"
+              style="
+                margin: 0;
+                font-size: 22px;
+                font-weight: 900;
+                color: white;
+                margin-bottom: 5px;
+              "
             >
-              My Requests
+              {{ getRequestCardTitle() }}
             </p>
             <div class="row" style="margin: 0; margin-top: 5px">
               <p style="margin-bottom: 0; color: #88909b">
@@ -69,7 +75,7 @@
 
               <div class="col" style="width: 100%; padding-right: 0">
                 <div
-                  *ngIf="dataSource.length == 0"
+                  *ngIf="dataSourceUpdated.length == 0"
                   class="btn"
                   style="
                     width: 100%;
@@ -77,12 +83,13 @@
                     margin-top: 0;
                     height: 40px;
                     border-radius: 7px;
+                    cursor: default;
                   "
                 >
                   <p>Search</p>
                 </div>
                 <div
-                  *ngIf="dataSource.length != 0"
+                  *ngIf="dataSourceUpdated.length != 0"
                   class="btn"
                   (click)="searchRequest()"
                   style="
@@ -163,7 +170,7 @@
 
         <div *ngIf="isLoading == false">
           <div
-            *ngIf="dataSource.length == 0"
+            *ngIf="dataSourceUpdated.length == 0"
             style="
               width: 100%;
               height: 340px;
@@ -176,7 +183,7 @@
               You don't have any requests.
             </p>
           </div>
-          <div *ngIf="dataSource.length != 0">
+          <div *ngIf="dataSourceUpdated.length != 0">
             <div *ngIf="isSearchBtnClicked == true">
               <div
                 *ngIf="searchResult.length == 0"
@@ -225,7 +232,7 @@
                     *matHeaderCellDef
                     class="table-header-font"
                   >
-                    Request Type
+                    Request Title
                   </th>
                   <td
                     mat-cell
@@ -234,7 +241,7 @@
                     (click)="navigateToRequestPage(element.request_no)"
                     style="cursor: pointer"
                   >
-                    {{ element.request_type }}
+                    {{ element.request_title }}
                   </td>
                 </ng-container>
 
@@ -310,7 +317,7 @@
             <table
               *ngIf="isSearchBtnClicked == false"
               mat-table
-              [dataSource]="dataSource"
+              [dataSource]="dataSourceUpdated"
               class="mat-elevation-z8 demo-table"
             >
               <!-- Name Column -->
@@ -335,7 +342,7 @@
 
               <ng-container matColumnDef="requestType">
                 <th mat-header-cell *matHeaderCellDef class="table-header-font">
-                  Request Type
+                  Request Title
                 </th>
                 <td
                   mat-cell
@@ -344,7 +351,7 @@
                   style="cursor: pointer"
                   class="req-type"
                 >
-                  {{ element.request_type }}
+                  {{ element.request_title }}
                 </td>
               </ng-container>
 

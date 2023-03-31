@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import {
-  HttpClient,
-  HttpHeaders,
-} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
 
@@ -59,9 +56,9 @@ export class ApiService {
       .pipe(catchError(this.handleError("addUserRecentHappenings", [])));
   }
 
-  getUserRequestDetails(userId: any) {
+  getUserRequestDetails(userId: any, auth: any) {
     const url = `${API_URL}/getRequestDetails.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId }).pipe(
+    return this.http.post<any>(url, { userId: userId, from: auth }).pipe(
       map((data) => {
         return data;
       })

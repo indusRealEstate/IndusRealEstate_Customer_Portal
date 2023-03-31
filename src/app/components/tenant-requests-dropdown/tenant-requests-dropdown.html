@@ -1,11 +1,4 @@
-<div
-  class="col"
-  [ngClass]="
-    isDropDownBtnClicked == true
-      ? 'dropdown-services-opened'
-      : 'dropdown-services'
-  "
->
+<div class="col" [ngClass]="dropDownBtnStyles()">
   <div
     class="row dropDownBtnRow"
     style="margin: -10px -15px; width: 220px; padding: 10px 15px"
@@ -16,7 +9,8 @@
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
-    class="row subMenu-dropdown"
+    class="row"
+    [ngClass]="requestActiveCheck('maintenance')"
     (click)="navigateToRequests('maintenance')"
   >
     <img src="assets/img/svg/sidebar/maintenance_icon.svg" alt="" />
@@ -24,32 +18,40 @@
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
-    class="row subMenu-dropdown"
+    class="row"
     style="margin-top: -10px"
+    [ngClass]="requestActiveCheck('tenant-move-in')"
+    (click)="navigateToRequests('tenant-move-in')"
   >
     <img src="assets/img/svg/sidebar/User-admin-01.svg" alt="" />
     <p>Tenant Move-in</p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
-    class="row subMenu-dropdown"
+    class="row"
     style="margin-top: -10px"
+    [ngClass]="requestActiveCheck('tenant-move-out')"
+    (click)="navigateToRequests('tenant-move-out')"
   >
     <img src="assets/img/svg/sidebar/User-delete-02.svg" alt="" />
     <p>Tenant Move-out</p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
-    class="row subMenu-dropdown"
+    class="row"
     style="margin-top: -10px"
+    [ngClass]="requestActiveCheck('payment')"
+    (click)="navigateToRequests('payment')"
   >
     <img src="assets/img/svg/sidebar/empty-wallet.svg" alt="" />
     <p>Payment requests</p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
-    class="row subMenu-dropdown"
+    class="row"
     style="margin-top: -10px"
+    [ngClass]="requestActiveCheck('conditioning')"
+    (click)="navigateToRequests('conditioning')"
   >
     <img src="assets/img/svg/sidebar/property-conditioning.svg" alt="" />
     <p>Conditioning</p>

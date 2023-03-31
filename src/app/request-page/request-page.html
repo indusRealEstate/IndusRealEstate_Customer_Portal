@@ -1,5 +1,8 @@
 <div class="main-content reports-bg">
-  <div class="container-fluid h-100 d-flex justify-content-center" style="max-width: 2576px">
+  <div
+    class="container-fluid h-100 d-flex justify-content-center"
+    style="max-width: 2576px"
+  >
     <div
       *ngIf="isLoading == true"
       style="
@@ -22,27 +25,41 @@
           display: flex;
           align-items: start;
           border-bottom: 1px solid #e1e1e1;
-          background-image: linear-gradient(
-              to bottom,
-              rgb(255 255 255 / 60%) 50%,
-              rgb(255 255 255 / 60%) 80%
-            ),
-            url('assets/img/bg/navbar_bg.webp');
+          background-color: #2b333e;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
         "
       >
-        <div class="row" style="margin: 0; justify-content: space-between">
-          <p
-            style="
-              margin: 0;
-              font-size: 23px;
-              margin-top: 20px;
-              margin-left: 10px;
-              font-weight: 900;
-              margin-bottom: 15px;
-            "
-          >
-            Request #{{requestData.request_no}}
-          </p>
+        <div class="col">
+          <div class="row" style="margin: 0; justify-content: space-between">
+            <p
+              style="
+                margin: 0;
+                font-size: 23px;
+                margin-top: 20px;
+                font-weight: 900;
+                margin-bottom: 5px;
+                color: white;
+              "
+            >
+              Request #{{requestData.request_no}}
+            </p>
+          </div>
+          <div class="row" style="margin: 0; margin-top: 5px">
+            <p style="margin-bottom: 0; color: #88909b">
+              Activity regarding requests
+            </p>
+            <img
+              src="assets/img/svg/home-page/info-circle.svg"
+              alt=""
+              style="
+                filter: invert(62%) sepia(67%) saturate(434%) hue-rotate(7deg)
+                  brightness(96%) contrast(92%);
+                width: 15px;
+                margin-left: 5px;
+              "
+            />
+          </div>
         </div>
       </div>
 

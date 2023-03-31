@@ -496,8 +496,9 @@
               <a
                 class="nav-link"
                 [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id }"
+                [queryParams]="{ uid: user.id, req_type: 'my-requests' }"
                 [class.active]="isLinkActive(item.path)"
+                (click)="myRequestSideBarClicked()"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
                 <div class="row">
@@ -519,10 +520,7 @@
                 "
               />
             </li>
-            <li
-              class="nav-item"
-              style="padding: 0 15px 0"
-            >
+            <li class="nav-item" style="padding: 0 15px 0">
               <tenant-requests-dropdown></tenant-requests-dropdown>
             </li>
           </div>

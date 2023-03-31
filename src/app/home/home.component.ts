@@ -128,11 +128,13 @@ export class HomeComponent implements OnInit {
   }
 
   getUserRequestCount(userId) {
-    this.apiService.getUserRequestDetails(userId).subscribe((data: any[]) => {
-      setTimeout(() => {
-        this.userRequestsCount = data.length;
-      }, 200);
-    });
+    this.apiService
+      .getUserRequestDetails(userId, "self")
+      .subscribe((data: any[]) => {
+        setTimeout(() => {
+          this.userRequestsCount = data.length;
+        }, 200);
+      });
   }
 
   getUserPropertiesCount(userId) {
@@ -211,8 +213,8 @@ export class HomeComponent implements OnInit {
   }
 
   myRequestCardClicked() {
-    this.router.navigate(["/my-requests"], {
-      queryParams: { uid: this.user.id },
+    this.router.navigate(["/requests"], {
+      queryParams: { uid: this.user.id, req_type: "my-requests" },
     });
 
     this.otherServices.myRequestClickedHome.next(true);
