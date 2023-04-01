@@ -42,7 +42,8 @@ export class RequestsComponent implements OnInit {
     "createdDate",
   ];
 
-  dataSource: any[] = [];
+  dataSourceMyReq: any[] = [];
+  dataSourceAuths: any[] = [];
   dataSourceUpdated: any[] = [];
 
   requestToggleVal: number;
@@ -171,49 +172,53 @@ export class RequestsComponent implements OnInit {
     if (this.currentRequestPageType != "my-requests") {
       if (this.currentRequestPageType == "payment") {
         this.dataSourceUpdated.length = 0;
-        for (let index = 0; index < this.dataSource.length; index++) {
-          if (this.dataSource[index].request_type == "payment") {
-            this.dataSourceUpdated.push(this.dataSource[index]);
+        for (let index = 0; index < this.dataSourceAuths.length; index++) {
+          if (this.dataSourceAuths[index].request_type == "payment") {
+            this.dataSourceUpdated.push(this.dataSourceAuths[index]);
           }
         }
       } else if (this.currentRequestPageType == "maintenance") {
         this.dataSourceUpdated.length = 0;
-        for (let index = 0; index < this.dataSource.length; index++) {
-          if (this.dataSource[index].request_type == "maintenance") {
-            this.dataSourceUpdated.push(this.dataSource[index]);
+        for (let index = 0; index < this.dataSourceAuths.length; index++) {
+          if (this.dataSourceAuths[index].request_type == "maintenance") {
+            this.dataSourceUpdated.push(this.dataSourceAuths[index]);
           }
         }
       } else if (this.currentRequestPageType == "tenant-move-in") {
         this.dataSourceUpdated.length = 0;
-        for (let index = 0; index < this.dataSource.length; index++) {
-          if (this.dataSource[index].request_type == "tenant_move_in") {
-            this.dataSourceUpdated.push(this.dataSource[index]);
+        for (let index = 0; index < this.dataSourceAuths.length; index++) {
+          if (this.dataSourceAuths[index].request_type == "tenant_move_in") {
+            this.dataSourceUpdated.push(this.dataSourceAuths[index]);
           }
         }
       } else if (this.currentRequestPageType == "tenant-move-out") {
         this.dataSourceUpdated.length = 0;
-        for (let index = 0; index < this.dataSource.length; index++) {
-          if (this.dataSource[index].request_type == "tenant_move_out") {
-            this.dataSourceUpdated.push(this.dataSource[index]);
+        for (let index = 0; index < this.dataSourceAuths.length; index++) {
+          if (this.dataSourceAuths[index].request_type == "tenant_move_out") {
+            this.dataSourceUpdated.push(this.dataSourceAuths[index]);
           }
         }
       } else if (this.currentRequestPageType == "conditioning") {
         this.dataSourceUpdated.length = 0;
-        for (let index = 0; index < this.dataSource.length; index++) {
-          if (this.dataSource[index].request_type == "conditioning") {
-            this.dataSourceUpdated.push(this.dataSource[index]);
+        for (let index = 0; index < this.dataSourceAuths.length; index++) {
+          if (this.dataSourceAuths[index].request_type == "conditioning") {
+            this.dataSourceUpdated.push(this.dataSourceAuths[index]);
           }
         }
       }
     } else {
+      // console.log('my-req')
       this.dataSourceUpdated.length = 0;
-      for (let index = 0; index < this.dataSource.length; index++) {
-        this.dataSourceUpdated.push(this.dataSource[index]);
+      for (let index = 0; index < this.dataSourceMyReq.length; index++) {
+        this.dataSourceUpdated.push(this.dataSourceMyReq[index]);
       }
     }
   }
 
   async ngOnInit() {
+    this.dataSourceMyReq.length = 0;
+    this.dataSourceAuths.length = 0;
+    this.dataSourceUpdated.length = 0;
     var sessionDataMyReq = JSON.parse(
       sessionStorage.getItem("my-requests-session")
     );
@@ -221,10 +226,13 @@ export class RequestsComponent implements OnInit {
       sessionStorage.getItem("requests-session-auth")
     );
 
+    // console.log(sessionDataAuths, "auth");
+    // console.log(sessionDataMyReq, "my-req");
+
     if (this.currentRequestPageType == "my-requests") {
       if (sessionDataMyReq != null) {
         // console.log("my-req");
-        this.dataSource = sessionDataMyReq["data"];
+        this.dataSourceMyReq = sessionDataMyReq["data"];
         await this.sortRequestsByType().finally(() => {
           setTimeout(() => {
             this.isLoading = false;
@@ -235,7 +243,7 @@ export class RequestsComponent implements OnInit {
       }
     } else {
       if (sessionDataAuths != null) {
-        this.dataSource = sessionDataAuths["data"];
+        this.dataSourceAuths = sessionDataAuths["data"];
         await this.sortRequestsByType().finally(() => {
           setTimeout(() => {
             this.isLoading = false;
@@ -255,8 +263,10 @@ export class RequestsComponent implements OnInit {
     if (this.currentRequestPageType == "my-requests") {
       this.apiService
         .getUserRequestDetails(userId, "self")
-        .subscribe((data: any[]) => {
-          this.dataSource = data;
+        .subscribe((req_data: any[]) => {
+          if (req_data.length != 0) {
+            this.dataSourceMyReq = req_data;
+          }
         });
 
       setTimeout(async () => {
@@ -265,11 +275,11 @@ export class RequestsComponent implements OnInit {
             this.isLoading = false;
           }, 300);
         });
-        if (this.dataSource.length != 0) {
+        if (this.dataSourceMyReq.length != 0) {
           sessionStorage.setItem(
             "my-requests-session",
             JSON.stringify({
-              data: this.dataSource,
+              data: this.dataSourceMyReq,
             })
           );
         }
@@ -279,13 +289,17 @@ export class RequestsComponent implements OnInit {
         this.apiService
           .getUserRequestDetails(userId, "tenant")
           .subscribe((data: any[]) => {
-            this.dataSource = data;
+            if (data.length != 0) {
+              this.dataSourceAuths = data;
+            }
           });
       } else {
         this.apiService
           .getUserRequestDetails(userId, "landlord")
           .subscribe((data: any[]) => {
-            this.dataSource = data;
+            if (data.length != 0) {
+              this.dataSourceAuths = data;
+            }
           });
       }
 
@@ -295,11 +309,11 @@ export class RequestsComponent implements OnInit {
             this.isLoading = false;
           }, 300);
         });
-        if (this.dataSource.length != 0) {
+        if (this.dataSourceAuths.length != 0) {
           sessionStorage.setItem(
             "requests-session-auth",
             JSON.stringify({
-              data: this.dataSource,
+              data: this.dataSourceAuths,
             })
           );
         }
