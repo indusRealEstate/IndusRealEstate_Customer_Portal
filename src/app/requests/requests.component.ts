@@ -215,6 +215,21 @@ export class RequestsComponent implements OnInit {
     }
   }
 
+  ngDoCheck() {
+    if (this.isLoading == false) {
+      if (this.currentRequestPageType == "my-requests") {
+        var sessionDataMyReq = JSON.parse(
+          sessionStorage.getItem("my-requests-session")
+        );
+        if (sessionDataMyReq != null) {
+          if (this.dataSourceUpdated.length == 0) {
+            this.isLoading = true;
+          }
+        }
+      }
+    }
+  }
+
   async ngOnInit() {
     this.dataSourceMyReq.length = 0;
     this.dataSourceAuths.length = 0;
