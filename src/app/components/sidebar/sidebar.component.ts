@@ -112,18 +112,20 @@ export const SERVICESROUTETENANT: RouteInfo[] = [
   },
 ];
 
-export const DOCUMENTSROUTELANDLORD: RouteInfo[] = [
+export const DOCUMENTSROUTELANDLORD: any[] = [
   {
     path: "/documents",
     title: "My Documents",
     icon: "assets/img/svg/sidebar/file-text.svg",
     class: "",
+    queryParams: "my-documents",
   },
   {
-    path: "/tenant-documents",
+    path: "/documents",
     title: "Tenant Documents",
     icon: "assets/img/svg/sidebar/Document-user-01.svg",
     class: "",
+    queryParams: "tenant-documents",
   },
   {
     path: "/documents-template",
@@ -427,13 +429,24 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  isLinkActive(url): boolean {
+  isLinkActive(url, type?): boolean {
     if (url == "/requests") {
       var base = this.router.url.split("?")[0];
       if (base == url) {
         var req_page_type = this.router.url.split("&")[1].split("=")[1];
 
         if (req_page_type == "my-requests") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else if (url == "/documents") {
+      var base = this.router.url.split("?")[0];
+      if (base == url) {
+        var req_page_type = this.router.url.split("&")[1].split("=")[1];
+
+        if (req_page_type == type) {
           return true;
         } else {
           return false;

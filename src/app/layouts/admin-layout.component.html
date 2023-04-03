@@ -29,110 +29,65 @@
   class="wrapper"
   *ngIf="isUserSignedOut == false && isLogoutProcessing == false"
 >
-  <div
-    *ngIf="isLogoutProcessing == false"
-    class="sidebar"
-    data-color="danger"
-    data-background-color="white"
-    data-image="./assets/img/sidebar-1.jpg"
-    [ngClass]="
-      sideBarClicked == true ? 'sidebar-width-large' : 'sidebar-width-mini'
-    "
-  >
-    <app-sidebar></app-sidebar>
-    <div class="sidebar-background"></div>
+  <div *ngIf="screenWidth > 430">
+    <div
+      *ngIf="isLogoutProcessing == false"
+      class="sidebar"
+      data-color="danger"
+      data-background-color="white"
+      data-image="./assets/img/sidebar-1.jpg"
+      [ngClass]="
+        sideBarClicked == true ? 'sidebar-width-large' : 'sidebar-width-mini'
+      "
+    >
+      <app-sidebar></app-sidebar>
+      <div class="sidebar-background"></div>
+    </div>
   </div>
-  <div
-    class="main-panel"
-    *ngIf="isLogoutProcessing == false"
-    [ngClass]="
-      sideBarClicked == true
-        ? 'main-panel-width-large'
-        : 'main-panel-width-mini'
-    "
-    style="z-index: 0"
-  >
-    <app-navbar></app-navbar>
 
-    <router-outlet (activate)="onActivate($event)"> </router-outlet>
-
-    <!-- success toast -->
+  <div *ngIf="screenWidth <= 430">
     <div
-      *ngIf="successNotificationMessage != null"
-      style="
-        position: fixed;
-        width: 70%;
-        background-color: #699d69;
-        height: 60px;
-        border-radius: 10px;
-        bottom: 50px;
-        color: white;
-        z-index: 100;
-        margin-left: 140px;
-      "
+      *ngIf="isLogoutProcessing == false"
+      class="sidebar"
+      data-color="danger"
+      data-background-color="white"
+      data-image="./assets/img/sidebar-1.jpg"
     >
-      <div class="row" style="margin-left: 40px">
-        <img
-          src="assets/img/svg/admin-layout/tick-circle.svg"
-          style="filter: brightness(0) invert(1); width: 35px; margin-top: 2px"
-        />
-        <p
-          style="
-            margin-left: 25px;
-            margin-top: 15px;
-            font-size: 20px;
-            font-weight: 500;
-          "
-        >
-          {{ successNotificationMessage.message }} :
-        </p>
-        <p style="margin-left: 20px; margin-top: 15px">
-          {{ successNotificationMessage.description }}
-        </p>
-      </div>
+      <app-sidebar></app-sidebar>
+      <div class="sidebar-background"></div>
     </div>
+  </div>
 
-    <!-- success toast end -->
-
-    <!-- error toast -->
-
+  <div *ngIf="screenWidth > 430">
     <div
-      *ngIf="errorNotificationMessage != null"
-      style="
-        position: fixed;
-        width: 70%;
-        background-color: #a14d50;
-        height: 60px;
-        border-radius: 10px;
-        bottom: 50px;
-        color: white;
-        z-index: 100;
-        margin-left: 140px;
+      class="main-panel"
+      *ngIf="isLogoutProcessing == false"
+      [ngClass]="
+        sideBarClicked == true
+          ? 'main-panel-width-large'
+          : 'main-panel-width-mini'
       "
+      style="z-index: 0"
     >
-      <div class="row" style="margin-left: 40px">
-        <img
-          src="assets/img/svg/admin-layout/danger.svg"
-          style="filter: brightness(0) invert(1); width: 35px; margin-top: 1px"
-        />
-        <p
-          style="
-            margin-left: 25px;
-            margin-top: 16px;
-            font-size: 20px;
-            font-weight: 500;
-          "
-        >
-          {{ errorNotificationMessage.message }} :
-        </p>
-        <p style="margin-left: 20px; margin-top: 15px">
-          {{ errorNotificationMessage.description }}
-        </p>
-      </div>
+      <app-navbar></app-navbar>
+
+      <router-outlet (activate)="onActivate($event)"> </router-outlet>
+
+      <app-footer></app-footer>
     </div>
+  </div>
 
-    <!-- error toast end-->
+  <div *ngIf="screenWidth <= 430">
+    <div
+      class="main-panel"
+      *ngIf="isLogoutProcessing == false"
+      style="z-index: 0; width: 100%"
+    >
+      <app-navbar></app-navbar>
 
-    <app-footer></app-footer>
+      <router-outlet (activate)="onActivate($event)"> </router-outlet>
+
+      <app-footer></app-footer>
+    </div>
   </div>
 </div>

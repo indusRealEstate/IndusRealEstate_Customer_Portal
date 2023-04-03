@@ -401,10 +401,33 @@
         <div *ngIf="isDocumentsOpened == true" style="height: 80%">
           <div *ngIf="user.auth_type == 'landlord'">
             <li
-              *ngFor="let item of documentsRouteLandlord; let first = first"
+              *ngFor="
+                let item of documentsRouteLandlord;
+                let first = first;
+                let last = last
+              "
               class="{{ item.class }} nav-item sideBarNav-Item"
             >
               <a
+                *ngIf="!last"
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id, doc_type: item.queryParams }"
+                [class.active]="isLinkActive(item.path, item.queryParams)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+
+              <a
+                *ngIf="last"
                 class="nav-link"
                 [routerLink]="[item.path]"
                 [queryParams]="{ uid: user.id }"

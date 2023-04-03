@@ -503,14 +503,16 @@
         <div class="row" style="margin: 0; justify-content: space-between">
           <div class="col">
             <p
-              style="
-                margin: 0;
-                font-size: 20px;
-                font-weight: 900;
-                color: white;
-              "
+              *ngIf="currentDocumentPageType == 'my-documents'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
             >
               My Documents
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'tenant-documents'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+            >
+              Tenant Documents
             </p>
             <div class="row" style="margin: 0; margin-top: 5px">
               <p style="margin-bottom: 0; color: #88909b">

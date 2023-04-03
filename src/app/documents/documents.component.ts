@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "app-documents",
@@ -42,11 +43,19 @@ export class DocumentsComponent implements OnInit {
     // "Request type",
   ];
 
+  currentDocumentPageType: any;
+
+  documentPagesTypes: string[] = [
+    "my-documents",
+    "tenant-documents"
+  ];
+
   constructor(
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
+    private otherServices: OtherServices,
     private dialog: MatDialog
   ) {
     this.getScreenSize();
@@ -58,17 +67,43 @@ export class DocumentsComponent implements OnInit {
       if (user[0]["auth_type"] != "admin") {
         this.route.queryParams.subscribe((e) => {
           if (e == null) {
-            router.navigate([`/documents`], {
-              queryParams: { uid: user[0]["id"] },
-            });
-          } else if (e != user[0]["id"]) {
-            router.navigate([`/documents`], {
-              queryParams: { uid: user[0]["id"] },
+            router.navigate(["/404"]);
+          } else if (e.uid != user[0]["id"]) {
+            router.navigate(["/404"]);
+          } else if (!this.documentPagesTypes.includes(e.doc_type)) {
+            router.navigate(["/404"]);
+          } else {
+            this.currentDocumentPageType = e.doc_type;
+
+            otherServices.requestsToggle.subscribe((val) => {
+              if (val == true) {
+                // console.log("not okay");
+                this.isLoading = true;
+                this.ngOnInit();
+              }
             });
           }
         });
       } else {
-        router.navigate(["/admin-dashboard"]);
+        this.route.queryParams.subscribe((e) => {
+          if (e == null) {
+            router.navigate(["/404"]);
+          } else if (e.uid != user[0]["id"]) {
+            router.navigate(["/404"]);
+          } else if (e.doc_type != "all-client-documents") {
+            router.navigate(["/404"]);
+          } else {
+            this.currentDocumentPageType = e.doc_type;
+
+            otherServices.requestsToggle.subscribe((val) => {
+              if (val == true) {
+                // console.log("not okay");
+                this.isLoading = true;
+                this.ngOnInit();
+              }
+            });
+          }
+        });
       }
     } else {
       this.isUserSignedIn = false;

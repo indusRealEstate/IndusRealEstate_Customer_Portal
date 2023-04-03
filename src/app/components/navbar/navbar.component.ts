@@ -210,6 +210,7 @@ export class NavbarComponent implements OnInit {
       case "/my-properties":
         return "My Properties";
       case "/documents":
+        this.requestPageType = titlee.split("&")[1].split("=")[1];
         return "Documents";
       case "/user-profile":
         return "User profile";
