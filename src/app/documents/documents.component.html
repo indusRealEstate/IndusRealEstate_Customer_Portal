@@ -686,8 +686,23 @@
               align-items: center;
             "
           >
-            <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+            <p
+              *ngIf="currentDocumentPageType == 'my-documents'"
+              style="font-size: 20px; font-weight: 600; color: #808080c2"
+            >
               You don't have any documents.
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'tenant-documents'"
+              style="font-size: 20px; font-weight: 600; color: #808080c2"
+            >
+              Your tenant have'nt any documents.
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'all-client-documents'"
+              style="font-size: 20px; font-weight: 600; color: #808080c2"
+            >
+              There is no documents to show.
             </p>
           </div>
           <div *ngIf="dataSource.length != 0">

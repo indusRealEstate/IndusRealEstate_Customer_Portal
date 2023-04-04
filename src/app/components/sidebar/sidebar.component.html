@@ -191,6 +191,7 @@
         </div>
 
         <div
+          *ngIf="user.auth_type != 'admin'"
           matTooltip="Customer Care"
           matTooltipClass="tooltip"
           matTooltipPosition="right"
