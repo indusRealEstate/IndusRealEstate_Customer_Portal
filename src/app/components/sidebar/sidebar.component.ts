@@ -152,7 +152,7 @@ export const DOCUMENTSROUTETENANT: RouteInfo[] = [
 
 export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
   {
-    path: "/all-clients-documents",
+    path: "/documents",
     title: "All Clients Documents",
     icon: "assets/img/svg/sidebar/file-text.svg",
     class: "",
@@ -200,6 +200,15 @@ export const REQUESTSROUTEADMIN: RouteInfo[] = [
     path: "/admin-requests-tenant",
     title: "Tenant requests",
     icon: "assets/img/svg/sidebar/chat-request-svgrepo-com.svg",
+    class: "",
+  },
+];
+
+export const CUSTOMERCAREROUTE: RouteInfo[] = [
+  {
+    path: "/customer-care",
+    title: "Customer Care",
+    icon: "assets/img/svg/sidebar/device-message.svg",
     class: "",
   },
 ];
@@ -261,6 +270,8 @@ export class SidebarComponent implements OnInit {
   requestsRouteTenant: any[];
   requestsRouteLandlord: any[];
   requestsRouteAdmin: any[];
+
+  customerCareRoute: any[];
   // menuItems: any[];
   user: User;
   userProfilePic: any = false;
@@ -402,6 +413,8 @@ export class SidebarComponent implements OnInit {
     );
 
     this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
+
+    this.customerCareRoute = CUSTOMERCAREROUTE.filter((menuItem) => menuItem);
   }
 
   isMobileMenu() {

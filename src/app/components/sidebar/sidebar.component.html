@@ -189,6 +189,20 @@
         >
           <img src="assets/img/svg/sidebar/menu.svg" alt="" />
         </div>
+
+        <div
+          matTooltip="Customer Care"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          (click)="miniSideBarClickedCustomerCare()"
+          [ngClass]="
+            isCustomerCareOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/sidebar/customer-service.svg" alt="" />
+        </div>
       </div>
       <div
         *ngIf="user.auth_type != 'admin'"
@@ -398,6 +412,32 @@
           </div>
         </div>
 
+        <div *ngIf="isCustomerCareOpened == true" style="height: 80%">
+          <div *ngIf="user.auth_type != 'admin'">
+            <li
+              *ngFor="let item of customerCareRoute"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+        </div>
+
         <div *ngIf="isDocumentsOpened == true" style="height: 80%">
           <div *ngIf="user.auth_type == 'landlord'">
             <li
@@ -493,7 +533,10 @@
               <a
                 class="nav-link"
                 [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id }"
+                [queryParams]="{
+                  uid: user.id,
+                  doc_type: 'all-client-documents'
+                }"
                 [class.active]="isLinkActive(item.path)"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
