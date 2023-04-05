@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
-  selector: "payment_recap",
-  templateUrl: "./payment_recap.html",
-  styleUrls: ["./payment_recap.scss"],
+  selector: "service_recap",
+  templateUrl: "./service_recap.html",
+  styleUrls: ["./service_recap.scss"],
 })
-export class PaymentRecapComponent implements OnInit {
+export class ServiceRecapComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   requestData: any;
@@ -15,6 +15,17 @@ export class PaymentRecapComponent implements OnInit {
   previousUrl: string;
 
   selectedPayment: string;
+
+  currentServicePageType: any;
+  servicePagesTypes: string[] = [
+    "payment-tenant",
+    "payment-landlord",
+    "maintenance",
+    "tenant-move-in",
+    "tenant-move-out",
+    "conditioning",
+    "inspection",
+  ];
 
   constructor(
     private router: Router,
@@ -29,13 +40,21 @@ export class PaymentRecapComponent implements OnInit {
         this.isLoading = true;
         this.route.queryParams.subscribe((e) => {
           if (e == null) {
-            router.navigate([`/payment-recap`], {
-              queryParams: { uid: user[0]["id"] },
-            });
-          } else if (e != user[0]["id"]) {
-            router.navigate([`/payment-recap`], {
-              queryParams: { uid: user[0]["id"] },
-            });
+            router.navigate(["/404"]);
+          } else if (e.uid != user[0]["id"]) {
+            router.navigate(["/404"]);
+          } else if (!this.servicePagesTypes.includes(e.service_type)) {
+            router.navigate(["/404"]);
+          } else {
+            this.currentServicePageType = e.service_type;
+
+            // otherServices.servicePageToggle.subscribe((val) => {
+            //   if (val == true) {
+            //     // console.log("not okay");
+            //     this.isLoading = true;
+            //     this.ngOnInit();
+            //   }
+            // });
           }
         });
       } else {

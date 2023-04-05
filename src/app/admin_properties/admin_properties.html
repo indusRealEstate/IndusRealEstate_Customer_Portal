@@ -32,6 +32,7 @@
         <p style="margin-bottom: 0">Back</p>
       </div>
       <p
+        *ngIf="currentPropertyType == 'rent'"
         style="
           font-size: 20px;
           margin-top: 15px;
@@ -41,6 +42,18 @@
         "
       >
         Properties for Rent
+      </p>
+      <p
+        *ngIf="currentPropertyType == 'sale'"
+        style="
+          font-size: 20px;
+          margin-top: 15px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          padding-left: 15px;
+        "
+      >
+        Properties for Sale
       </p>
 
       <div class="col" style="padding: 0">
@@ -413,6 +426,7 @@
         <p style="margin-bottom: 0">Back</p>
       </div>
       <p
+        *ngIf="currentPropertyType == 'rent'"
         style="
           font-size: 25px;
           margin-top: 15px;
@@ -421,6 +435,17 @@
         "
       >
         Properties for Rent
+      </p>
+      <p
+        *ngIf="currentPropertyType == 'sale'"
+        style="
+          font-size: 25px;
+          margin-top: 15px;
+          font-weight: 600;
+          margin-bottom: 10px;
+        "
+      >
+        Properties for Sale
       </p>
 
       <div class="row" style="margin: 0">

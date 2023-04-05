@@ -56,12 +56,9 @@ import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { AppointmentsComponent } from "app/appointments/appointments.component";
 import { DocumentsComponent } from "app/documents/documents.component";
-import { NewPaymentComponent } from "app/new_payment/new_payment.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
 import { ModalComponentDate } from "app/appointments/show_modal_date/modal-date";
 import { ModalComponent } from "app/appointments/show_model_event/modal";
-import { FM_MaintananceRequest } from "app/indus_services/facility_management/fm-maintanence_request/fm-maintanence_request.component";
-import { Tenant_Move_out_Request } from "app/indus_services/facility_management/tenant_move-out_request/tenant_move-out_request.component";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
@@ -87,14 +84,12 @@ import { StepperTenantRegisterThird } from "app/indus_services/facility_manageme
 import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 import { RequestPage } from "app/request-page/request-page";
 import { BackButtonDirective } from "app/request-page/back-navigation.directive";
-import { AdminLandlordClients } from "app/admin_landlord_clients/admin_landlord_clients";
-import { AdminTenantClients } from "app/admin_tenant_clients/admin_tenant_clients";
-import { AdminSaleProperties } from "app/admin_sale_properties/admin_sale_properties";
-import { AdminRentProperties } from "app/admin_rent_properties/admin_rent_properties";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
-import { Tenant_Move_in_Request } from "app/indus_services/facility_management/tenant_move-in_request/tenant_move-in_request";
-import { PaymentRecapComponent } from "app/payment_recap/payment_recap";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { ServiceTemplateComponent } from "app/indus_services/facility_management/service_template/service_template";
+import { ServiceRecapComponent } from "app/indus_services/facility_management/service_recap/service_recap";
+import { AdminClients } from "app/admin_clients/admin_clients";
+import { AdminProperties } from "app/admin_properties/admin_properties";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -176,11 +171,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     ModalComponent,
     ModalComponentDate,
 
-    NewPaymentComponent,
-    FM_MaintananceRequest,
-    Tenant_Move_out_Request,
-    Tenant_Move_in_Request,
-
     AcceptRequestConfirmDialog,
     DeclineRequestConfirmDialog,
 
@@ -199,16 +189,15 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     StepperTenantRegisterSecond,
     StepperTenantRegisterThird,
 
-    AdminLandlordClients,
-    AdminTenantClients,
-    AdminSaleProperties,
-    AdminRentProperties,
+    AdminClients,
+    AdminProperties,
 
     CountryDropdown,
     RequestPage,
     BackButtonDirective,
     CustomerCareComponent,
-    PaymentRecapComponent,
+    ServiceTemplateComponent,
+    ServiceRecapComponent,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

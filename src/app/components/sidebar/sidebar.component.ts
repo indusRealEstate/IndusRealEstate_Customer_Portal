@@ -34,7 +34,7 @@ export const HOMEROUTE: RouteInfo[] = [
   },
 ];
 
-export const HOMEROUTEADMIN: RouteInfo[] = [
+export const HOMEROUTEADMIN: any[] = [
   {
     path: "/admin-dashboard",
     title: "Overview",
@@ -42,28 +42,32 @@ export const HOMEROUTEADMIN: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/admin-properties-sale",
+    path: "/admin-properties",
     title: "Sale Properties",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
+    queryParams: "sale",
   },
   {
-    path: "/admin-properties-rent",
+    path: "/admin-properties",
     title: "Rent Properties",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
+    queryParams: "rent",
   },
   {
-    path: "/admin-landlord-clients",
+    path: "/admin-clients",
     title: "All Landlord Clients",
     icon: "assets/img/svg/sidebar/clients.svg",
     class: "",
+    queryParams: "landlord",
   },
   {
-    path: "/admin-tenant-clients",
+    path: "/admin-clients",
     title: "All Tenant Clients",
     icon: "assets/img/svg/sidebar/clients.svg",
     class: "",
+    queryParams: "tenant",
   },
 ];
 
@@ -82,33 +86,58 @@ export const PROPERTIESROUTE: RouteInfo[] = [
   },
 ];
 
-export const SERVICESROUTELANDLORD: RouteInfo[] = [
+export const SERVICESROUTELANDLORD: any[] = [
   {
-    path: "/new-payment",
+    path: "/service-temp",
     title: "Payment",
     icon: "assets/img/svg/sidebar/empty-wallet.svg",
     class: "",
+    queryParams: "payment-landlord",
   },
   {
-    path: "/inspection-request",
+    path: "/service-temp",
     title: "Inspection Request",
     icon: "assets/img/svg/sidebar/tool.svg",
     class: "",
+    queryParams: "inspection",
   },
 ];
 
-export const SERVICESROUTETENANT: RouteInfo[] = [
+export const SERVICESROUTETENANT: any[] = [
   {
-    path: "/new-payment",
+    path: "/service-temp",
     title: "Payment",
     icon: "assets/img/svg/sidebar/empty-wallet.svg",
     class: "",
+    queryParams: "payment-tenant",
   },
   {
-    path: "/inspection-request",
-    title: "Inspection Request",
-    icon: "assets/img/svg/sidebar/tool.svg",
+    path: "/service-temp",
+    title: "FM Maintenance",
+    icon: "assets/img/svg/sidebar/maintenance_icon.svg",
     class: "",
+    queryParams: "maintenance",
+  },
+  {
+    path: "/service-temp",
+    title: "Tenant Move-in",
+    icon: "assets/img/svg/sidebar/User-admin-01.svg",
+    class: "",
+    queryParams: "tenant-move-in",
+  },
+  {
+    path: "/service-temp",
+    title: "Tenant Move-out",
+    icon: "assets/img/svg/sidebar/User-delete-02.svg",
+    class: "",
+    queryParams: "tenant-move-out",
+  },
+  {
+    path: "/service-temp",
+    title: "Property Conditioning",
+    icon: "assets/img/svg/sidebar/property-conditioning.svg",
+    class: "",
+    queryParams: "conditioning",
   },
 ];
 
@@ -442,6 +471,22 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  adminSidebarClicked(path) {
+    if (path == "/admin-clients") {
+      this.otherServices.adminCLientsPageToggle.next(true);
+
+      setTimeout(() => {
+        this.otherServices.adminCLientsPageToggle.next(false);
+      }, 0);
+    } else if (path == "/admin-properties") {
+      this.otherServices.adminPropertyPageToggle.next(true);
+
+      setTimeout(() => {
+        this.otherServices.adminPropertyPageToggle.next(false);
+      }, 0);
+    }
+  }
+
   isLinkActive(url, type?): boolean {
     if (url == "/requests") {
       var base = this.router.url.split("?")[0];
@@ -455,6 +500,39 @@ export class SidebarComponent implements OnInit {
         }
       }
     } else if (url == "/documents") {
+      var base = this.router.url.split("?")[0];
+      if (base == url) {
+        var req_page_type = this.router.url.split("&")[1].split("=")[1];
+
+        if (req_page_type == type) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else if (url == "/service-temp") {
+      var base = this.router.url.split("?")[0];
+      if (base == url) {
+        var req_page_type = this.router.url.split("&")[1].split("=")[1];
+
+        if (req_page_type == type) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else if (url == "/admin-clients") {
+      var base = this.router.url.split("?")[0];
+      if (base == url) {
+        var req_page_type = this.router.url.split("&")[1].split("=")[1];
+
+        if (req_page_type == type) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else if (url == "/admin-properties") {
       var base = this.router.url.split("?")[0];
       if (base == url) {
         var req_page_type = this.router.url.split("&")[1].split("=")[1];

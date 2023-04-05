@@ -223,12 +223,6 @@ export class NavbarComponent implements OnInit {
         return "Reports";
       case "/appointments":
         return "Appointments";
-      case "/fm-maintanence-request":
-        return "FM Maintanence Request";
-      case "/tenant-move-out-request":
-        return "Tenant Move-out Request";
-      case "/tenant-move-in-request":
-        return "Tenant Move-in Request";
       case "/tenant-register-form":
         return "Tenant Registration";
       case "/property-page":
@@ -252,8 +246,12 @@ export class NavbarComponent implements OnInit {
         return "All Properties For Rent";
       case "/customer-care":
         return "Customer Care";
-      case "/payment-recap":
-        return "Payment Recap";
+      case "/service-temp":
+        this.requestPageType = titlee.split("&")[1].split("=")[1];
+        return "Services";
+      case "/service-recap":
+        this.requestPageType = titlee.split("&")[1].split("=")[1];
+        return "Service Recap";
       case "/404":
         return "";
       default:

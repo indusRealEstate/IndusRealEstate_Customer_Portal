@@ -53,7 +53,7 @@
       >
         <p style="color: #d4aa32; font-weight: 500">Dasboard</p>
         <p>></p>
-        <p>Tenants</p>
+        <p>Landlords</p>
       </div>
 
       <div
@@ -208,7 +208,7 @@
         "
         *ngIf="isContentLoading == false"
       >
-        <div *ngFor="let client of allTenantClients; let last = last;">
+        <div *ngFor="let client of allLandlordClients; let last = last;">
           <div
             class="row"
             style="margin: 0; padding: 10px 15px; padding-top: 20px"
@@ -356,13 +356,13 @@
       >
         Clients
       </p>
-      <div
-        class="row"
-        style="margin: 0; width: 13%; justify-content: space-between"
-      >
-        <p style="color: #d4aa32; font-weight: 500">Dasboard</p>
-        <p>></p>
-        <p>Tenants</p>
+      <div class="row" style="margin: 0">
+        <p style="color: #d4aa32; font-weight: 500; margin-right: 15px">
+          Dasboard
+        </p>
+        <p style="margin-right: 15px">></p>
+        <p *ngIf="currentAdminClientsType == 'landlord'">Landlords</p>
+        <p *ngIf="currentAdminClientsType == 'tenant'">Tenants</p>
       </div>
 
       <div class="card" *ngIf="isContentLoading == true">
@@ -491,7 +491,7 @@
         style="width: 100%; background-color: #ffffff"
         *ngIf="isContentLoading == false"
       >
-        <div *ngFor="let client of allTenantClients; let last = last;">
+        <div *ngFor="let client of allClients; let last = last;">
           <div class="row" style="margin: 0; padding: 25px">
             <img
               *ngIf="client.user_details.profile_photo != ''"

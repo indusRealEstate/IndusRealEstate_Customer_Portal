@@ -1,5 +1,8 @@
 <div class="main-content reports-bg">
-  <div class="container-fluid h-100 d-flex justify-content-center" style="max-width: 2576px">
+  <div
+    class="container-fluid h-100 d-flex justify-content-center"
+    style="max-width: 2576px"
+  >
     <div
       *ngIf="isLoading == true"
       style="
@@ -27,14 +30,40 @@
         <div class="row" style="margin: 0; justify-content: space-between">
           <div class="col">
             <p
-              style="
-                margin: 0;
-                font-size: 20px;
-                font-weight: 900;
-                color: white;
-              "
+              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
             >
-             Make A Payment
+              Make A Payment
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'inspection'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+            >
+              Make A Inspection Request
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'maintenance'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+            >
+              Make A Maintenance Request
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'tenant-move-in'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+            >
+              Make A Tenant Move-in Request
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'tenant-move-out'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+            >
+              Make A Tenant Move-out Request
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'conditioning'"
+              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+            >
+              Make A Property Conditioning Request
             </p>
             <div class="row" style="margin: 0; margin-top: 5px">
               <p style="margin-bottom: 0; color: #88909b">
@@ -79,11 +108,11 @@
             <div class="col" style="padding: 0">
               <mat-form-field appearance="fill">
                 <mat-select
-                  [(ngModel)]="selectedPaymentType"
+                  [(ngModel)]="selectedServiceSubType"
                   placeholder="Choose an Application"
                 >
-                  <mat-option *ngFor="let p of paymentType" [value]="p">
-                    {{ p }}
+                  <mat-option *ngFor="let t of serviceSubType" [value]="t">
+                    {{ t }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

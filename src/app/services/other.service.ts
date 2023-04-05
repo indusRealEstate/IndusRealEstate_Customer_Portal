@@ -58,6 +58,15 @@ export class OtherServices {
   public requestsToggle: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  public servicePageToggle: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public adminCLientsPageToggle: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public adminPropertyPageToggle: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   //////////////////////////////////////////////////////
 
   public miniSideBarClicked: BehaviorSubject<boolean> =

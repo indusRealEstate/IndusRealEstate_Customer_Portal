@@ -624,15 +624,9 @@
       </div>
 
       <div
-        *ngIf="currentPage == 'new-payment'"
+        *ngIf="currentPage == 'service-temp'"
         class="row"
-        style="
-          margin: 0;
-          margin-left: 17px;
-          width: 255px;
-          justify-content: space-between;
-          margin-top: 25px;
-        "
+        style="margin: 0; margin-left: 17px; margin-top: 25px"
       >
         <img
           src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
@@ -641,6 +635,7 @@
             filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
               saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
             width: 20px;
+            margin-right: 15px;
           "
         />
         <img
@@ -650,9 +645,17 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
           Services
         </p>
         <img
@@ -662,21 +665,54 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">Payment</p>
+        <p
+          *ngIf="
+            requestPageType == 'payment-tenant' ||
+            requestPageType == 'payment-landlord'
+          "
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+        >
+          Payment
+        </p>
+        <p
+          *ngIf="requestPageType == 'inspection'"
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+        >
+          Inspection Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'maintenance'"
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+        >
+          Maintenance Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'tenant-move-in'"
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+        >
+          Tenant Move-in Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'tenant-move-out'"
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+        >
+          Tenant Move-out Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'conditioning'"
+          style="color: #858585; margin-bottom: 0; font-size: 16px"
+        >
+          Property Conditioning Request
+        </p>
       </div>
 
       <div
-        *ngIf="currentPage == 'payment-recap'"
+        *ngIf="currentPage == 'service-recap'"
         class="row"
-        style="
-          margin: 0;
-          margin-left: 17px;
-          width: 400px;
-          justify-content: space-between;
-          margin-top: 25px;
-        "
+        style="margin: 0; margin-left: 17px; margin-top: 25px"
       >
         <img
           src="assets/img/svg/sidebar/arrow-swap-horizontal.svg"
@@ -685,6 +721,7 @@
             filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
               saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
             width: 20px;
+            margin-right: 15px;
           "
         />
         <img
@@ -694,9 +731,17 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
           Services
         </p>
         <img
@@ -706,9 +751,67 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">Payment</p>
+        <p
+          *ngIf="
+            requestPageType == 'payment-tenant' ||
+            requestPageType == 'payment-landlord'
+          "
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Payment
+        </p>
+        <p
+          *ngIf="requestPageType == 'inspection'"
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Inspection Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'maintenance'"
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Maintenance Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'tenant-move-in'"
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Tenant Move-in Request
+        </p>
+        <p
+          *ngIf="requestPageType == 'conditioning'"
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Property Conditioning Request
+        </p>
         <img
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
           alt=""
@@ -716,10 +819,11 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
         <p style="color: #858585; margin-bottom: 0; font-size: 16px">
-          Payment Recap
+          Service Recap
         </p>
       </div>
 
