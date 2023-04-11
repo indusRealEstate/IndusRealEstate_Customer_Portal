@@ -124,7 +124,7 @@ export class UserProfileComponent implements OnInit {
 
       setTimeout(() => {
         this.getUserDetails();
-      }, 500);
+      }, 800);
     };
   }
 

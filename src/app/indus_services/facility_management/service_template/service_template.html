@@ -111,13 +111,67 @@
                   [(ngModel)]="selectedServiceSubType"
                   placeholder="Choose an Application"
                 >
-                  <mat-option *ngFor="let t of serviceSubType" [value]="t">
-                    {{ t }}
-                  </mat-option>
+                  <div *ngIf="currentServicePageType == 'payment-tenant'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypePaymentTenant"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
+                  <div *ngIf="currentServicePageType == 'payment-landlord'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypePaymentLandlord"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
+                  <div *ngIf="currentServicePageType == 'maintenance'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypeFM_Maintenance"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
+                  <div *ngIf="currentServicePageType == 'tenant-move-in'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypeTenant_move_in"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
+                  <div *ngIf="currentServicePageType == 'tenant-move-out'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypeTenant_move_out"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
+                  <div *ngIf="currentServicePageType == 'conditioning'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypeProperty_conditioning"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
+                  <div *ngIf="currentServicePageType == 'inspection'">
+                    <mat-option
+                      *ngFor="let t of serviceSubTypeProperty_inspection"
+                      [value]="t"
+                    >
+                      {{ t }}
+                    </mat-option>
+                  </div>
                 </mat-select>
               </mat-form-field>
 
               <input
+                [(ngModel)]="service_amount"
                 type="text"
                 placeholder="Enter the Amount to be paid"
                 style="
@@ -216,6 +270,28 @@
             next
           </div>
         </div>
+        <p
+          *ngIf="applicationNotChoosed == true"
+          style="
+            text-align: end;
+            margin-top: 20px;
+            margin-right: 15px;
+            color: red;
+          "
+        >
+          Please choose a application.
+        </p>
+        <p
+          *ngIf="amountNotEntered == true"
+          style="
+            text-align: end;
+            margin-top: 20px;
+            margin-right: 15px;
+            color: red;
+          "
+        >
+          Please enter a amount.
+        </p>
       </div>
     </div>
   </div>

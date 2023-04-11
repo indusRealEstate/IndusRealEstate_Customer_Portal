@@ -16,6 +16,10 @@ export class ServiceRecapComponent implements OnInit {
 
   selectedPayment: string;
 
+  service_recap_token: string;
+  service_application_type: string;
+  service_amount: string;
+
   currentServicePageType: any;
   servicePagesTypes: string[] = [
     "payment-tenant",
@@ -48,6 +52,8 @@ export class ServiceRecapComponent implements OnInit {
           } else {
             this.currentServicePageType = e.service_type;
 
+            this.service_recap_token = e.token;
+
             // otherServices.servicePageToggle.subscribe((val) => {
             //   if (val == true) {
             //     // console.log("not okay");
@@ -68,5 +74,18 @@ export class ServiceRecapComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = false;
+
+    this.service_application_type = this.decodeToken(
+      this.service_recap_token.split("service_amount")[0]
+    );
+
+    this.service_amount = this.decodeToken(
+      this.service_recap_token.split("service_amount")[1]
+    );
+  }
+
+  decodeToken(input: string) {
+    var type_1 = decodeURIComponent(input);
+    return window.atob(type_1);
   }
 }

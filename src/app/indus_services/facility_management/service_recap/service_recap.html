@@ -1,5 +1,8 @@
 <div class="main-content reports-bg">
-  <div class="container-fluid h-100 d-flex justify-content-center" style="max-width: 2576px"> 
+  <div
+    class="container-fluid h-100 d-flex justify-content-center"
+    style="max-width: 2576px"
+  >
     <div
       *ngIf="isLoading == true"
       style="
@@ -81,7 +84,7 @@
             >
               <div class="col" style="padding: 0">
                 <p style="margin-bottom: 0; color: #a3a3a3">Payment Title</p>
-                <p style="font-weight: 600">Monthly Tenant Payment</p>
+                <p style="font-weight: 600">{{service_application_type}}</p>
               </div>
               <div class="col">
                 <p style="margin-bottom: 0; color: #a3a3a3">Request Number</p>
