@@ -4,6 +4,7 @@ import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { Property } from "../../../models/property/property";
+import { UserService } from "app/services/user.service";
 
 @Component({
   selector: "app-user-profile",
@@ -18,7 +19,8 @@ export class UserProfileComponent implements OnInit {
   address: string;
   phone_number: number;
   lan_number: number;
-  userProfilePic: any = false;
+  userProfilePic: any = '';
+  userProfilePicData: any = false;
   userProfileFetching: boolean = false;
   userDetailsFetching: boolean = false;
   properties: any[] = [];
@@ -29,6 +31,8 @@ export class UserProfileComponent implements OnInit {
   propertiesImagesUrl: any = "";
 
   ///----
+
+  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
 
   isOverviewTabActive: boolean = true;
   isDocDetailsTabActive: boolean = false;
@@ -52,6 +56,7 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
+    private userServices: UserService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
@@ -84,22 +89,36 @@ export class UserProfileComponent implements OnInit {
     reader.readAsDataURL(file);
 
     reader.onloadend = (e) => {
-      this.userProfilePic = e.target.result.toString();
+      this.userProfilePicData = e.target.result.toString();
 
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
       var userId = user[0]["id"];
 
+      this.userProfilePic = userId + "." + new String(file.type).split("/")[1];
+      console.log(this.userProfilePic);
+
       var updatedUserProfileData = {
         user_id: userId,
-        profile_photo: this.userProfilePic.split(",")[1],
+        profile_photo: this.userProfilePic,
       };
+
+      this.userServices
+        .updateUserProfile({
+          user_id: userId,
+          data: this.userProfilePicData,
+        })
+        .subscribe((res) => {
+          console.log(res);
+        });
 
       this.apiService
         .updateUserProfilePic(JSON.stringify(updatedUserProfileData))
         .subscribe((e) => {});
 
       this.otherServices.isProfilePicUpdated.next(true);
+
+      this.userProfileFetching = true;
 
       sessionStorage.removeItem("userDetails");
 
@@ -146,8 +165,6 @@ export class UserProfileComponent implements OnInit {
         }
       }
     } else {
-      console.log("user details from S-NEWR-Session");
-
       this.username = user[0]["username"];
       this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];
 
@@ -226,8 +243,7 @@ export class UserProfileComponent implements OnInit {
       this.address = data[0]["address"];
       this.phone_number = data[0]["phone_number"];
       if (data[0]["profile_photo"] != "") {
-        this.userProfilePic =
-          "data:image/jpg;base64," + data[0]["profile_photo"];
+        this.userProfilePic = data[0]["profile_photo"];
       } else {
         this.userProfilePic = false;
       }

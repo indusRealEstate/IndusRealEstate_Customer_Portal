@@ -361,8 +361,7 @@
           Dasboard
         </p>
         <p style="margin-right: 15px">></p>
-        <p *ngIf="currentAdminClientsType == 'landlord'">Landlords</p>
-        <p *ngIf="currentAdminClientsType == 'tenant'">Tenants</p>
+        <p>Landlords</p>
       </div>
 
       <div class="card" *ngIf="isContentLoading == true">
@@ -493,20 +492,19 @@
       >
         <div *ngFor="let client of allClients; let last = last;">
           <div class="row" style="margin: 0; padding: 25px">
-            <img
+            <div
               *ngIf="client.user_details.profile_photo != ''"
-              src="data:image/jpg;base64,{{client.user_details.profile_photo}}"
-              alt=""
               style="
-                max-width: 100px;
-                min-width: 100px;
-                max-height: 100px;
-                min-height: 100px;
-                border-radius: 9px;
-                user-select: none;
-                pointer-events: none;
-              "
-            />
+                    width: 100px;
+                    height: 100px;
+                    overflow: hidden;
+                    background-image: url('{{usrImgPath}}{{client.user_details.profile_photo}}');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    border-radius: 10px;
+                  "
+            ></div>
             <img
               *ngIf="client.user_details.profile_photo == ''"
               src="assets/img/faces/avatar.webp"

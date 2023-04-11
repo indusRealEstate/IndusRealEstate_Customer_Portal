@@ -1,0 +1,713 @@
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+
+<div
+  class="main-content home-bg"
+  *ngIf="screenWidth <= 430"
+  style="padding: 20px 15px"
+>
+  <div class="container-fluid" style="padding: 0">
+    <div
+      *ngIf="isLoading == true"
+      style="
+        display: flex;
+        width: 100%;
+        height: 800px;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+
+    <div
+      class="col"
+      style="width: 100%; height: 100%; padding: 0"
+      *ngIf="isLoading == false"
+    >
+      <div class="row back-btn-row" navigateBack style="margin-left: 15px">
+        <img src="assets/img/svg/request-page/arrow-left.svg" alt="" />
+        <p style="margin-bottom: 0">Back</p>
+      </div>
+      <p
+        *ngIf="currentPropertyType == 'rent'"
+        style="
+          font-size: 20px;
+          margin-top: 15px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          padding-left: 15px;
+        "
+      >
+        Properties for Rent
+      </p>
+      <p
+        *ngIf="currentPropertyType == 'sale'"
+        style="
+          font-size: 20px;
+          margin-top: 15px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          padding-left: 15px;
+        "
+      >
+        Properties for Sale
+      </p>
+
+      <div class="col" style="padding: 0">
+        <div
+          class="card dashboard-sm-card"
+          style="
+            background-color: #ffffff;
+            min-width: 330px;
+            margin-bottom: 0;
+            margin-top: 25px;
+          "
+        >
+          <div class="row" style="margin: 0; padding: 10px; padding-bottom: 0">
+            <div class="col">
+              <p
+                style="
+                  font-size: 30px;
+                  margin-top: 15px;
+                  font-weight: 900;
+                  margin-bottom: 10px;
+                "
+              >
+                13
+              </p>
+              <p style="margin-bottom: 0; font-size: 14px; font-weight: 600">
+                Total Properties Handling
+              </p>
+              <p
+                style="
+                  margin: 0;
+                  color: #a3a3a3;
+                  font-size: 12px;
+                  margin-bottom: 0;
+                "
+              >
+                Lorem Ipsum
+              </p>
+            </div>
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/house.svg"
+              alt=""
+              style="
+                width: 45px;
+                filter: invert(58%) sepia(62%) saturate(495%) hue-rotate(7deg)
+                  brightness(106%) contrast(84%);
+                margin-right: -8px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/house.svg"
+              alt=""
+              style="
+                width: 30px;
+                margin-right: 20px;
+                filter: invert(52%) sepia(12%) saturate(1334%) hue-rotate(7deg)
+                  brightness(94%) contrast(90%);
+                margin-top: 13px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+          </div>
+          <img
+            class="sidebar-dropdown-icons"
+            src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
+            alt=""
+            style="
+              width: 20px;
+              align-self: self-end;
+              margin-right: 10px;
+              margin-top: -15px;
+              margin-bottom: 12px;
+              filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(220deg)
+                brightness(94%) contrast(84%);
+            "
+          />
+        </div>
+
+        <div
+          class="card dashboard-sm-card"
+          style="
+            background-color: #ffffff;
+            min-width: 330px;
+            margin-top: 10px;
+            margin-bottom: 0;
+          "
+        >
+          <div class="row" style="margin: 0; padding: 10px; padding-bottom: 0">
+            <div class="col">
+              <p
+                style="
+                  font-size: 30px;
+                  margin-top: 15px;
+                  font-weight: 900;
+                  margin-bottom: 10px;
+                "
+              >
+                5
+              </p>
+              <p style="margin-bottom: 0; font-size: 14px; font-weight: 600">
+                Property Requests
+              </p>
+              <p
+                style="
+                  margin: 0;
+                  color: #a3a3a3;
+                  font-size: 12px;
+                  margin-bottom: 0;
+                "
+              >
+                Lorem Ipsum
+              </p>
+            </div>
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/house.svg"
+              alt=""
+              style="
+                width: 45px;
+                filter: invert(58%) sepia(62%) saturate(495%) hue-rotate(7deg)
+                  brightness(106%) contrast(84%);
+                margin-right: -8px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/house.svg"
+              alt=""
+              style="
+                width: 30px;
+                margin-right: 20px;
+                filter: invert(52%) sepia(12%) saturate(1334%) hue-rotate(7deg)
+                  brightness(94%) contrast(90%);
+                margin-top: 13px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+          </div>
+          <img
+            class="sidebar-dropdown-icons"
+            src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
+            alt=""
+            style="
+              width: 20px;
+              align-self: self-end;
+              margin-right: 10px;
+              margin-top: -15px;
+              margin-bottom: 12px;
+              filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(220deg)
+                brightness(94%) contrast(84%);
+            "
+          />
+        </div>
+
+        <div
+          class="card"
+          style="
+            background-color: #2b333e;
+            padding: 20px;
+            min-height: 162px;
+            margin-top: 20px;
+          "
+        >
+          <div class="row" style="margin: 0; align-items: end">
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/house.svg"
+              alt=""
+              style="
+                width: 60px;
+                filter: invert(58%) sepia(62%) saturate(495%) hue-rotate(7deg)
+                  brightness(106%) contrast(84%);
+                margin-right: -8px;
+                user-select: none;
+                pointer-events: none;
+                z-index: 1;
+              "
+            />
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/house.svg"
+              alt=""
+              style="
+                width: 46px;
+                margin-left: -5px;
+                filter: invert(52%) sepia(12%) saturate(1334%) hue-rotate(7deg)
+                  brightness(94%) contrast(90%);
+                margin-top: 13px;
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+
+            <h2
+              style="
+                color: white;
+                font-weight: 900;
+                padding-left: 20px;
+                font-size: 25px;
+                margin-bottom: 0;
+              "
+            >
+              Information
+            </h2>
+          </div>
+          <p
+            style="
+              color: #959595;
+              margin-bottom: 0;
+              line-height: 20px;
+              padding-top: 15px;
+              padding-left: 5px;
+            "
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna
+          </p>
+        </div>
+      </div>
+
+      <div style="overflow: scroll">
+        <table
+          style="width: 350%"
+          *ngIf="dataSource.length != 0"
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 demo-table"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="requestNo">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Request No.
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="font-weight: 600; color: #a3a3a3; cursor: pointer"
+            >
+              {{ element.property_id }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateIssued">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Date Issued
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              2023-03-22
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="clientName">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Client Name
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              Ajeer
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="propertyName">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Property Name
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              {{ element.property_name }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Location
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              {{ element.property_address }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="requestType">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Request Type
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              Service Fee
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="agent">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Agent
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              Patrick Bateman
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="table-header-font">
+              Status
+            </th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              Pending
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="view">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="table-header-font"
+            ></th>
+            <td mat-cell *matCellDef="let element" style="cursor: pointer">
+              <div
+                class="btn"
+                style="
+                  height: 40px;
+                  padding: 11px 20px;
+                  border-radius: 7px;
+                  margin-left: 10px;
+                  background-color: white;
+                  color: black;
+                  border: 1px solid #a3a3a3;
+                "
+              >
+                View
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<div class="main-content home-bg" *ngIf="screenWidth > 430">
+  <div class="container-fluid" style="margin-top: 25px; max-width: 2576px">
+    <div
+      *ngIf="isLoading == true"
+      style="
+        display: flex;
+        width: 100%;
+        height: 800px;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+
+    <div
+      class="col"
+      style="width: 100%; height: 100%; padding: 0px 40px"
+      *ngIf="isLoading == false"
+    >
+      <div class="row back-btn-row" navigateBack>
+        <img src="assets/img/svg/request-page/arrow-left.svg" alt="" />
+        <p style="margin-bottom: 0">Back</p>
+      </div>
+      
+      <p
+        style="
+          font-size: 25px;
+          margin-top: 15px;
+          font-weight: 600;
+          margin-bottom: 10px;
+        "
+      >
+        Properties for Sale
+      </p>
+
+      <div class="row" style="margin: 0">
+        <div class="col-3" style="padding-left: 0">
+          <div class="card dashboard-sm-card" style="background-color: #ffffff">
+            <div class="row" style="margin: 0; padding: 10px">
+              <div class="col">
+                <p style="font-size: 40px; margin-top: 30px; font-weight: 900">
+                  13
+                </p>
+                <p style="margin-bottom: 0; font-size: 15px; font-weight: 600">
+                  Total Properties Handling
+                </p>
+                <p style="margin: 0; color: #a3a3a3; margin-bottom: 8px">
+                  Lorem Ipsum
+                </p>
+              </div>
+              <img
+                class="sidebar-dropdown-icons"
+                src="assets/img/svg/admin-dashboard/house.svg"
+                alt=""
+                style="
+                  width: 45px;
+                  filter: invert(58%) sepia(62%) saturate(495%) hue-rotate(7deg)
+                    brightness(106%) contrast(84%);
+                  margin-right: -8px;
+                  user-select: none;
+                  pointer-events: none;
+                "
+              />
+              <img
+                class="sidebar-dropdown-icons"
+                src="assets/img/svg/admin-dashboard/house.svg"
+                alt=""
+                style="
+                  width: 30px;
+                  margin-right: 20px;
+                  filter: invert(52%) sepia(12%) saturate(1334%)
+                    hue-rotate(7deg) brightness(94%) contrast(90%);
+                  margin-top: 13px;
+                  user-select: none;
+                  pointer-events: none;
+                "
+              />
+            </div>
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
+              alt=""
+              style="
+                width: 20px;
+                align-self: self-end;
+                margin-right: 10px;
+                margin-top: -15px;
+                margin-bottom: 12px;
+                filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(220deg)
+                  brightness(94%) contrast(84%);
+              "
+            />
+          </div>
+        </div>
+        <div class="col-3" style="padding-left: 0">
+          <div class="card dashboard-sm-card" style="background-color: #ffffff">
+            <div class="row" style="margin: 0; padding: 10px">
+              <div class="col">
+                <p style="font-size: 40px; margin-top: 30px; font-weight: 900">
+                  5
+                </p>
+                <p style="margin-bottom: 0; font-size: 15px; font-weight: 600">
+                  Property Requests
+                </p>
+                <p style="margin: 0; color: #a3a3a3; margin-bottom: 8px">
+                  Lorem Ipsum
+                </p>
+              </div>
+              <img
+                class="sidebar-dropdown-icons"
+                src="assets/img/svg/admin-dashboard/house.svg"
+                alt=""
+                style="
+                  width: 45px;
+                  filter: invert(58%) sepia(62%) saturate(495%) hue-rotate(7deg)
+                    brightness(106%) contrast(84%);
+                  margin-right: -8px;
+                  user-select: none;
+                  pointer-events: none;
+                "
+              />
+              <img
+                class="sidebar-dropdown-icons"
+                src="assets/img/svg/admin-dashboard/house.svg"
+                alt=""
+                style="
+                  width: 30px;
+                  margin-right: 20px;
+                  filter: invert(52%) sepia(12%) saturate(1334%)
+                    hue-rotate(7deg) brightness(94%) contrast(90%);
+                  margin-top: 13px;
+                  user-select: none;
+                  pointer-events: none;
+                "
+              />
+            </div>
+            <img
+              class="sidebar-dropdown-icons"
+              src="assets/img/svg/admin-dashboard/arrow-right-2.svg"
+              alt=""
+              style="
+                width: 20px;
+                align-self: self-end;
+                margin-right: 10px;
+                margin-top: -15px;
+                margin-bottom: 12px;
+                filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(220deg)
+                  brightness(94%) contrast(84%);
+                user-select: none;
+                pointer-events: none;
+              "
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <div
+            class="card"
+            style="background-color: #2b333e; padding: 20px; min-height: 162px"
+          >
+            <div class="row" style="margin: 0">
+              <img
+                class="sidebar-dropdown-icons"
+                src="assets/img/svg/admin-dashboard/house.svg"
+                alt=""
+                style="
+                  width: 60px;
+                  filter: invert(58%) sepia(62%) saturate(495%) hue-rotate(7deg)
+                    brightness(106%) contrast(84%);
+                  margin-right: -8px;
+                  user-select: none;
+                  pointer-events: none;
+                  z-index: 1;
+                "
+              />
+              <img
+                class="sidebar-dropdown-icons"
+                src="assets/img/svg/admin-dashboard/house.svg"
+                alt=""
+                style="
+                  width: 46px;
+                  margin-left: -5px;
+                  filter: invert(52%) sepia(12%) saturate(1334%)
+                    hue-rotate(7deg) brightness(94%) contrast(90%);
+                  margin-top: 13px;
+                  user-select: none;
+                  pointer-events: none;
+                "
+              />
+
+              <div class="col" style="padding-left: 50px">
+                <h2 style="color: white; font-weight: 900">Information</h2>
+                <p style="color: #707070; margin-bottom: 0; line-height: 20px">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table
+        *ngIf="dataSource.length != 0"
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 demo-table"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="requestNo">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Request No.
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            style="font-weight: 600; color: #a3a3a3; cursor: pointer"
+          >
+            {{ element.property_id }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateIssued">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Date Issued
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            2023-03-22
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Client Name
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            Ajeer
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="propertyName">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Property Name
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            {{ element.property_name }}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Location
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            {{ element.property_address }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="requestType">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Request Type
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            Service Fee
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="agent">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Agent
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            Patrick Bateman
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font">
+            Status
+          </th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            Pending
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="view">
+          <th mat-header-cell *matHeaderCellDef class="table-header-font"></th>
+          <td mat-cell *matCellDef="let element" style="cursor: pointer">
+            <div
+              class="btn"
+              style="
+                height: 40px;
+                padding: 11px 20px;
+                border-radius: 7px;
+                margin-left: 10px;
+                background-color: white;
+                color: black;
+                border: 1px solid #a3a3a3;
+              "
+            >
+              View
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</div>

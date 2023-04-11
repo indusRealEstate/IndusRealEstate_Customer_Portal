@@ -2,28 +2,23 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
 
 @Component({
-  selector: "admin_properties",
-  templateUrl: "./admin_properties.html",
-  styleUrls: ["./admin_properties.scss"],
+  selector: "admin_properties_sale",
+  templateUrl: "./admin_properties_sale.html",
+  styleUrls: ["./admin_properties_sale.scss"],
 })
-export class AdminProperties implements OnInit {
+export class AdminPropertiesSale implements OnInit {
   isUserSignedIn: boolean = false;
   isLoading: boolean = false;
 
   allProperties: any[] = [];
 
-  currentPropertyType: any;
-  adminPropertyTypes: string[] = ["rent", "sale"];
-
   constructor(
     private adminService: AdminService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute,
-    private otherServices: OtherServices
+    private route: ActivatedRoute
   ) {
     this.isLoading = true;
     this.getScreenSize();
@@ -38,18 +33,6 @@ export class AdminProperties implements OnInit {
           router.navigate(["/404"]);
         } else if (e.uid != user[0]["id"]) {
           router.navigate(["/404"]);
-        } else if (!this.adminPropertyTypes.includes(e.prop_type)) {
-          router.navigate(["/404"]);
-        } else {
-          this.currentPropertyType = e.prop_type;
-
-          otherServices.adminPropertyPageToggle.subscribe((val) => {
-            if (val == true) {
-              // console.log("not okay");
-              this.isLoading = true;
-              this.ngOnInit();
-            }
-          });
         }
       });
     }
@@ -92,47 +75,25 @@ export class AdminProperties implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    var sessionDataRent = sessionStorage.getItem("all_rent_properties");
     var sessionDataSale = sessionStorage.getItem("all_sale_properties");
 
-    if (this.currentPropertyType == "rent") {
-      if (sessionDataRent != null) {
-        this.dataSource = JSON.parse(sessionDataRent);
-        this.isLoading = false;
-      } else {
-        await this.getAllProperties(user[0]["id"], "rent").finally(() => {
-          // console.log(this.allLandlordClients);
-
-          setTimeout(() => {
-            this.dataSource = this.allProperties;
-            this.isLoading = false;
-
-            sessionStorage.setItem(
-              "all_rent_properties",
-              JSON.stringify(this.allProperties)
-            );
-          }, 2000);
-        });
-      }
+    if (sessionDataSale != null) {
+      this.dataSource = JSON.parse(sessionDataSale);
+      this.isLoading = false;
     } else {
-      if (sessionDataSale != null) {
-        this.dataSource = JSON.parse(sessionDataSale);
-        this.isLoading = false;
-      } else {
-        await this.getAllProperties(user[0]["id"], "sale").finally(() => {
-          // console.log(this.allLandlordClients);
+      await this.getAllProperties(user[0]["id"], "sale").finally(() => {
+        // console.log(this.allLandlordClients);
 
-          setTimeout(() => {
-            this.dataSource = this.allProperties;
-            this.isLoading = false;
+        setTimeout(() => {
+          this.dataSource = this.allProperties;
+          this.isLoading = false;
 
-            sessionStorage.setItem(
-              "all_sale_properties",
-              JSON.stringify(this.allProperties)
-            );
-          }, 2000);
-        });
-      }
+          sessionStorage.setItem(
+            "all_sale_properties",
+            JSON.stringify(this.allProperties)
+          );
+        }, 2000);
+      });
     }
   }
 

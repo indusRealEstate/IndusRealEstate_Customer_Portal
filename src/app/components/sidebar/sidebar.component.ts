@@ -42,32 +42,28 @@ export const HOMEROUTEADMIN: any[] = [
     class: "",
   },
   {
-    path: "/admin-properties",
+    path: "/admin-properties-sale",
     title: "Sale Properties",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
-    queryParams: "sale",
   },
   {
-    path: "/admin-properties",
+    path: "/admin-properties-rent",
     title: "Rent Properties",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
-    queryParams: "rent",
   },
   {
-    path: "/admin-clients",
+    path: "/admin-clients-landlord",
     title: "All Landlord Clients",
     icon: "assets/img/svg/sidebar/clients.svg",
     class: "",
-    queryParams: "landlord",
   },
   {
-    path: "/admin-clients",
+    path: "/admin-clients-tenant",
     title: "All Tenant Clients",
     icon: "assets/img/svg/sidebar/clients.svg",
     class: "",
-    queryParams: "tenant",
   },
 ];
 
@@ -324,6 +320,9 @@ export class SidebarComponent implements OnInit {
   ///////////////--App Version--////////////////////
   appVersion: any = "VERSION PROD v0.1.15";
 
+
+  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+
   constructor(
     private authService: AuthenticationService,
     private route: ActivatedRoute,
@@ -471,22 +470,6 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  adminSidebarClicked(path) {
-    if (path == "/admin-clients") {
-      this.otherServices.adminCLientsPageToggle.next(true);
-
-      setTimeout(() => {
-        this.otherServices.adminCLientsPageToggle.next(false);
-      }, 0);
-    } else if (path == "/admin-properties") {
-      this.otherServices.adminPropertyPageToggle.next(true);
-
-      setTimeout(() => {
-        this.otherServices.adminPropertyPageToggle.next(false);
-      }, 0);
-    }
-  }
-
   isLinkActive(url, type?): boolean {
     if (url == "/requests") {
       var base = this.router.url.split("?")[0];
@@ -521,29 +504,7 @@ export class SidebarComponent implements OnInit {
           return false;
         }
       }
-    } else if (url == "/admin-clients") {
-      var base = this.router.url.split("?")[0];
-      if (base == url) {
-        var req_page_type = this.router.url.split("&")[1].split("=")[1];
-
-        if (req_page_type == type) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else if (url == "/admin-properties") {
-      var base = this.router.url.split("?")[0];
-      if (base == url) {
-        var req_page_type = this.router.url.split("&")[1].split("=")[1];
-
-        if (req_page_type == type) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else {
+    }  else {
       const baseUrl = this.router.url.split("?")[0];
 
       return baseUrl == url;
@@ -578,7 +539,7 @@ export class SidebarComponent implements OnInit {
   getUserDetails(userId: any) {
     this.apiServices.getUserDetails(userId).subscribe((e: any) => {
       if (e[0]["profile_photo"] != "") {
-        this.userProfilePic = "data:image/jpg;base64," + e[0]["profile_photo"];
+        this.userProfilePic = e[0]["profile_photo"];
       } else {
         this.userProfilePic = false;
       }

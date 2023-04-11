@@ -44,4 +44,11 @@ export class UserService {
       .post(url, JSON.stringify(userDetails))
       .pipe(catchError(this.handleError("addUserDetails", [])));
   }
+
+  updateUserProfile(data) {
+    const url = `https://indusmanagement.ae/api/user_profile_updator.php?apikey=1`;
+    return this.http
+      .post(url, JSON.stringify(data))
+      .pipe(catchError(this.handleError("addUserDetails", [])));
+  }
 }

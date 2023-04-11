@@ -52,6 +52,8 @@ export class AdminDashboardComponent implements OnInit {
   requestOverview: any[] = [];
 
   isRequestOverviewLoading: boolean = false;
+  
+  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
 
   constructor(
     private apiService: ApiService,
@@ -440,7 +442,7 @@ export class AdminDashboardComponent implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
-    this.router.navigate(["/admin-landlord-clients"], {
+    this.router.navigate(["/admin-clients-landlord"], {
       queryParams: { uid: userId },
     });
   }
@@ -449,7 +451,7 @@ export class AdminDashboardComponent implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
-    this.router.navigate(["/admin-tenant-clients"], {
+    this.router.navigate(["/admin-clients-tenant"], {
       queryParams: { uid: userId },
     });
   }

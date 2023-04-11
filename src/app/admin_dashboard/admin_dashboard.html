@@ -1098,17 +1098,18 @@
                 class="row"
                 style="margin: 0; margin-left: 10px; margin-top: 20px"
               >
-                <img
-                  src="{{'data:image/jpeg;base64,' + pp.userDetails.profile_photo}}"
-                  alt=""
+                <div
                   style="
-                    max-width: 75px;
-                    max-height: 75px;
-                    border-radius: 9px;
-                    user-select: none;
-                    pointer-events: none;
+                    width: 100px;
+                    height: 100px;
+                    overflow: hidden;
+                    background-image: url('{{usrImgPath}}{{pp.userDetails.profile_photo}}');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    border-radius: 10px;
                   "
-                />
+                ></div>
 
                 <div class="col">
                   <div class="row" style="margin: 0; margin-top: 13px">

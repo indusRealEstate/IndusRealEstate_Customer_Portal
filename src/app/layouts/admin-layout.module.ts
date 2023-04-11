@@ -54,11 +54,8 @@ import { MatTabsModule } from "@angular/material/tabs";
 // import { MatTreeModule } from "@angular/material/tree";
 import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
-import { AppointmentsComponent } from "app/appointments/appointments.component";
 import { DocumentsComponent } from "app/documents/documents.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
-import { ModalComponentDate } from "app/appointments/show_modal_date/modal-date";
-import { ModalComponent } from "app/appointments/show_model_event/modal";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
@@ -88,8 +85,10 @@ import { CustomerCareComponent } from "app/indus_services/customer_service/custo
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ServiceTemplateComponent } from "app/indus_services/facility_management/service_template/service_template";
 import { ServiceRecapComponent } from "app/indus_services/facility_management/service_recap/service_recap";
-import { AdminClients } from "app/admin_clients/admin_clients";
-import { AdminProperties } from "app/admin_properties/admin_properties";
+import { AdminClientsLandlord } from "app/admin_clients_landlord/admin_clients_landlord";
+import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenant";
+import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
+import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -160,16 +159,12 @@ import { AdminProperties } from "app/admin_properties/admin_properties";
     ReportsComponent,
     RequestsComponent,
     MyPropertiesComponent,
-    AppointmentsComponent,
     DocumentsComponent,
     PageNotFoundComponent,
     PropertyPage,
     AddPropertyForm,
     AdminRequests,
     AdminDashboardComponent,
-
-    ModalComponent,
-    ModalComponentDate,
 
     AcceptRequestConfirmDialog,
     DeclineRequestConfirmDialog,
@@ -189,8 +184,10 @@ import { AdminProperties } from "app/admin_properties/admin_properties";
     StepperTenantRegisterSecond,
     StepperTenantRegisterThird,
 
-    AdminClients,
-    AdminProperties,
+    AdminClientsLandlord,
+    AdminClientsTenant,
+    AdminPropertiesRent,
+    AdminPropertiesSale,
 
     CountryDropdown,
     RequestPage,

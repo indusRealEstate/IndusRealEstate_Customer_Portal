@@ -5,7 +5,6 @@ import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { ReportsComponent } from "../reports/reports.component";
 import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
-import { AppointmentsComponent } from "app/appointments/appointments.component";
 import { DocumentsComponent } from "app/documents/documents.component";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
@@ -20,8 +19,10 @@ import { RequestPage } from "app/request-page/request-page";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 import { ServiceTemplateComponent } from "app/indus_services/facility_management/service_template/service_template";
 import { ServiceRecapComponent } from "app/indus_services/facility_management/service_recap/service_recap";
-import { AdminClients } from "app/admin_clients/admin_clients";
-import { AdminProperties } from "app/admin_properties/admin_properties";
+import { AdminClientsLandlord } from "app/admin_clients_landlord/admin_clients_landlord";
+import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenant";
+import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
+import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -29,7 +30,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "reports", component: ReportsComponent },
   { path: "requests", component: RequestsComponent },
   { path: "my-properties", component: MyPropertiesComponent },
-  { path: "appointments", component: AppointmentsComponent },
   { path: "documents", component: DocumentsComponent },
   { path: "property-page", component: PropertyPage },
   { path: "request-page", component: RequestPage },
@@ -41,8 +41,10 @@ export const AdminLayoutRoutes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },
   { path: "tenant-register-form", component: TenantRegisterComponent },
-  { path: "admin-clients", component: AdminClients },
-  { path: "admin-properties", component: AdminProperties },
+  { path: "admin-clients-landlord", component: AdminClientsLandlord },
+  { path: "admin-clients-tenant", component: AdminClientsTenant },
+  { path: "admin-properties-rent", component: AdminPropertiesRent },
+  { path: "admin-properties-sale", component: AdminPropertiesSale },
   { path: "customer-care", component: CustomerCareComponent },
   { path: "service-temp", component: ServiceTemplateComponent },
   { path: "service-recap", component: ServiceRecapComponent },

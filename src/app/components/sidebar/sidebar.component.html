@@ -225,7 +225,7 @@
           routerLink="/user-profile"
           queryParams="{uid: user.id}"
           *ngIf="userProfileFetching == false"
-          src="{{ userProfilePic }}"
+          src="{{usrImgPath}}{{ userProfilePic }}"
           alt=""
           style="
             background-size: cover;
@@ -314,47 +314,10 @@
               class="{{ item.class }} nav-item sideBarNav-Item"
             >
               <a
-                *ngIf="item.path == '/admin-dashboard'"
                 class="nav-link"
                 [routerLink]="[item.path]"
                 [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path)"
-              >
-                <!-- <i class="material-icons">{{ item.icon }}</i> -->
-                <div class="row">
-                  <img
-                    class="sidebar-items-icon"
-                    [src]="[item.icon]"
-                    alt="hello"
-                  />
-                  <p class="nav-item-title">{{ item.title }}</p>
-                </div>
-              </a>
-              <a
-                *ngIf="item.path == '/admin-clients'"
-                class="nav-link"
-                [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id, client_type: item.queryParams }"
-                [class.active]="isLinkActive(item.path, item.queryParams)"
-                (click)="adminSidebarClicked(item.path)"
-              >
-                <!-- <i class="material-icons">{{ item.icon }}</i> -->
-                <div class="row">
-                  <img
-                    class="sidebar-items-icon"
-                    [src]="[item.icon]"
-                    alt="hello"
-                  />
-                  <p class="nav-item-title">{{ item.title }}</p>
-                </div>
-              </a>
-              <a
-                *ngIf="item.path == '/admin-properties'"
-                class="nav-link"
-                [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id, prop_type: item.queryParams }"
-                [class.active]="isLinkActive(item.path, item.queryParams)"
-                (click)="adminSidebarClicked(item.path)"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
                 <div class="row">

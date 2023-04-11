@@ -1,113 +1,113 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+// @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-* {
-  font-family: "Montserrat";
-}
+// * {
+//   font-family: "Montserrat";
+// }
 
-.card-appointments {
-  .appointments-icon {
-    position: absolute;
-    justify-self: center;
-    margin: 0;
-    color: white;
-  }
+// .card-appointments {
+//   .appointments-icon {
+//     position: absolute;
+//     justify-self: center;
+//     margin: 0;
+//     color: white;
+//   }
 
-  .card-appointments-head {
-    background-color: #2b333e;
+//   .card-appointments-head {
+//     background-color: #2b333e;
 
-    .card-title {
-      color: white;
-      padding-left: 40px;
-    }
-  }
+//     .card-title {
+//       color: white;
+//       padding-left: 40px;
+//     }
+//   }
 
-  .calendar-wrapper {
-    margin: 10%;
-    margin-top: 3%;
-    margin-bottom: 4%;
+//   .calendar-wrapper {
+//     margin: 10%;
+//     margin-top: 3%;
+//     margin-bottom: 4%;
 
-    .calendar-appointents {
-      font-size: 20px;
-      color: #d3ab33;
-    }
+//     .calendar-appointents {
+//       font-size: 20px;
+//       color: #d3ab33;
+//     }
 
-    .event-details-card {
-      margin: 30px;
-    }
-  }
+//     .event-details-card {
+//       margin: 30px;
+//     }
+//   }
 
-  .appointments-table {
-    margin: 30px;
-    font-size: 20px;
-    font-weight: 500;
+//   .appointments-table {
+//     margin: 30px;
+//     font-size: 20px;
+//     font-weight: 500;
 
-    .monthly-appointments-ind {
-      margin-top: 20px;
-    }
-  }
-}
+//     .monthly-appointments-ind {
+//       margin-top: 20px;
+//     }
+//   }
+// }
 
-:host ::ng-deep .mat-progress-spinner circle,
-.mat-spinner circle {
-  stroke: #000000;
-}
+// :host ::ng-deep .mat-progress-spinner circle,
+// .mat-spinner circle {
+//   stroke: #000000;
+// }
 
-:host ::ng-deep .fc {
-  & .fc-daygrid-day {
-    &.fc-day-today {
-      background-color: #d3ab33 !important;
+// :host ::ng-deep .fc {
+//   & .fc-daygrid-day {
+//     &.fc-day-today {
+//       background-color: #d3ab33 !important;
 
-      & .fc-daygrid-day-number {
-        color: white !important;
-        font-weight: 400 !important;
-      }
-    }
+//       & .fc-daygrid-day-number {
+//         color: white !important;
+//         font-weight: 400 !important;
+//       }
+//     }
 
-    &:hover {
-      cursor: pointer;
-      background-color: #2b333e;
+//     &:hover {
+//       cursor: pointer;
+//       background-color: #2b333e;
 
-      & .fc-daygrid-day-number {
-        color: white !important;
-        font-weight: 400 !important;
-      }
+//       & .fc-daygrid-day-number {
+//         color: white !important;
+//         font-weight: 400 !important;
+//       }
 
-      & .fc-daygrid-event {
-        color: white !important;
+//       & .fc-daygrid-event {
+//         color: white !important;
 
-        &:hover {
-          color: #d3ab33 !important;
-        }
-      }
-    }
-  }
+//         &:hover {
+//           color: #d3ab33 !important;
+//         }
+//       }
+//     }
+//   }
 
-  & .fc-col-header-cell {
-    height: 40px !important;
-    background-color: #2b333e !important;
-  }
+//   & .fc-col-header-cell {
+//     height: 40px !important;
+//     background-color: #2b333e !important;
+//   }
 
-  & .fc-col-header-cell-cushion {
-    padding-top: 5px;
-    color: white !important;
-  }
+//   & .fc-col-header-cell-cushion {
+//     padding-top: 5px;
+//     color: white !important;
+//   }
 
-  & .fc-daygrid-day-number {
-    margin: 5px !important;
-    font-size: 25px !important;
-    font-weight: 300 !important;
-    color: black !important;
-  }
+//   & .fc-daygrid-day-number {
+//     margin: 5px !important;
+//     font-size: 25px !important;
+//     font-weight: 300 !important;
+//     color: black !important;
+//   }
 
-  & .fc-toolbar-title {
-    font-size: 1.2em;
-    font-weight: 400;
-    color: black !important;
-  }
+//   & .fc-toolbar-title {
+//     font-size: 1.2em;
+//     font-weight: 400;
+//     color: black !important;
+//   }
 
-  & .fc-daygrid-event {
-    background-color: #2b333e !important;
-    color: white !important;
-    font-size: 13px !important;
-  }
-}
+//   & .fc-daygrid-event {
+//     background-color: #2b333e !important;
+//     color: white !important;
+//     font-size: 13px !important;
+//   }
+// }

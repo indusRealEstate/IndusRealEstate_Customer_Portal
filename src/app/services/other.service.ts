@@ -61,8 +61,8 @@ export class OtherServices {
   public servicePageToggle: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  public adminCLientsPageToggle: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  // public adminCLientsPageToggle: BehaviorSubject<boolean> =
+  //   new BehaviorSubject<boolean>(false);
 
   public adminPropertyPageToggle: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
