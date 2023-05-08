@@ -89,6 +89,7 @@ import { AdminClientsLandlord } from "app/admin_clients_landlord/admin_clients_l
 import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenant";
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
+import { NotificationsPage } from "app/notifications-page/notifications-page";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -195,6 +196,7 @@ import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_
     CustomerCareComponent,
     ServiceTemplateComponent,
     ServiceRecapComponent,
+    NotificationsPage,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

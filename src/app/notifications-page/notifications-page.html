@@ -1,0 +1,91 @@
+<div class="main-content reports-bg">
+  <div class="container-fluid" style="max-width: 2576px">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card main-card-notifications m-0 p-0">
+          <div class="card-header">
+            <span>Inbox</span>
+          </div>
+          <div class="card-body pt-0" style="min-height: 500px">
+            <div class="row m-0">
+              <div class="col-8">
+                <div
+                  *ngFor="let msg of msgCount"
+                  class="full-msg-cntnt pl-0 pb-4 pt-4"
+                >
+                  <div class="row m-0">
+                    <div
+                      class="col-2 d-flex justify-content-center align-items-start"
+                    >
+                      <div class="unread-dot"></div>
+                      <img
+                        class="not-img-icon"
+                        src="assets/img/faces/profile-sample.jfif"
+                        alt=""
+                      />
+                      <div class="online-dot"></div>
+                    </div>
+                    <div class="col-10">
+                      <p class="m-0">
+                        Jhon snow mentioned you on Improve cards readability
+                      </p>
+                      <p class="m-0">2h ago - Tenant</p>
+                      <div class="msg-card card m-0 mt-2 mb-2">
+                        <span class="text-white mx-auto">Message</span>
+                      </div>
+                      <div class="msg-content-card card m-0 mt-3 shadow-none">
+                        <p class="m-0">
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 pr-0">
+                <div
+                  class="card"
+                  [ngClass]="sideBarOpened ? 'customize-card-mini' : 'customize-card'"
+                >
+                  <div class="card-header">
+                    <span>Customize</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="col">
+                      <div class="btn">
+                        <div class="row m-0">
+                          <img
+                            src="assets/img/svg/notifications/message-notif.svg"
+                            alt=""
+                          />
+                          <p class="m-0 my-auto">Unread Messages</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="btn">
+                        <div class="row m-0">
+                          <img
+                            src="assets/img/svg/notifications/archive.svg"
+                            alt=""
+                          />
+                          <p class="m-0 my-auto">Archive Messages</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-overlay"></div>
+      </div>
+    </div>
+  </div>
+</div>

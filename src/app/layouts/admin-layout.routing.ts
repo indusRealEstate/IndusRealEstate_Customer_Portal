@@ -23,6 +23,7 @@ import { AdminClientsLandlord } from "app/admin_clients_landlord/admin_clients_l
 import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenant";
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
+import { NotificationsPage } from "app/notifications-page/notifications-page";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -48,6 +49,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "customer-care", component: CustomerCareComponent },
   { path: "service-temp", component: ServiceTemplateComponent },
   { path: "service-recap", component: ServiceRecapComponent },
+  { path: "notifications", component: NotificationsPage },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },
 ];
