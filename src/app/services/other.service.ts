@@ -24,6 +24,9 @@ export class OtherServices {
 
   /////////////////////////////////////////////////////
 
+  public userSignedIn: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   public homeClickedTenantReg: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 

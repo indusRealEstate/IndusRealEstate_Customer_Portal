@@ -1,0 +1,996 @@
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+<!------------------------------------ Mobile Screen ----------------------------------------------------->
+
+<div
+  class="main-content reports-bg"
+  *ngIf="screenWidth <= 430"
+  style="padding: 20px 10px"
+>
+  <div class="container-fluid" style="padding: 0">
+    <div class="card" style="margin: 0">
+      <!-- <div
+        class="card-header"
+        style="
+          height: 80px;
+          border-bottom: 1px solid #e1e1e1;
+          background-image: linear-gradient(
+              to bottom,
+              rgb(255 255 255 / 73%) 50%,
+              rgb(255 255 255 / 76%) 80%
+            ),
+            url('assets/img/bg/navbar_bg.webp');
+        "
+      >
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <p
+            style="
+              margin: 0;
+              font-size: 20px;
+              margin-top: 20px;
+              margin-left: 10px;
+              font-weight: 500;
+              margin-bottom: 15px;
+            "
+          >
+            My Documents
+          </p>
+        </div>
+      </div> -->
+
+      <div class="card-body" style="padding: 0 15px; padding-bottom: 20px">
+        <div
+          class="col"
+          style="
+            width: 100%;
+            padding: 0 15px;
+            padding-top: 15px;
+            background-color: #2b333e;
+            padding-bottom: 10px;
+            margin-top: 20px;
+            border-radius: 8px;
+          "
+        >
+          <input
+            [(ngModel)]="searchText"
+            type="text"
+            placeholder="Search"
+            style="
+              border-radius: 7px;
+              height: 40px;
+              width: 100%;
+              padding-left: 15px;
+              padding-right: 15px;
+              border: 1px solid #a3a3a3;
+              margin-bottom: 10px;
+            "
+          />
+
+          <mat-form-field appearance="fill">
+            <mat-select
+              [(ngModel)]="selectedSearchType"
+              placeholder="Search Type"
+            >
+              <mat-option *ngFor="let s of searchType" [value]="s">
+                {{ s }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div
+            *ngIf="dataSource.length == 0"
+            class="btn"
+            style="
+              width: 100%;
+              background-color: #939393;
+              margin-top: 10px;
+              height: 40px;
+              border-radius: 7px;
+            "
+          >
+            <p>Search</p>
+          </div>
+          <div
+            *ngIf="dataSource.length != 0"
+            class="btn"
+            (click)="searchRequest()"
+            style="
+              width: 100%;
+              background-color: #d4aa32;
+              margin-top: 10px;
+              height: 40px;
+              border-radius: 7px;
+            "
+          >
+            <p>Search</p>
+          </div>
+        </div>
+        <div *ngIf="isSearchBtnClicked == true">
+          <div
+            style="
+              background-color: #d4aa32;
+              height: 30px;
+              width: 155px;
+              border-radius: 6px;
+              color: white;
+              margin-top: 20px;
+            "
+          >
+            <div class="row" style="margin: 0">
+              <p style="margin-bottom: 0; margin-left: 10px; padding-top: 2px">
+                Search Results
+              </p>
+              <img
+                (click)="closeResults()"
+                src="assets/img/svg/req-details/close-circle.svg"
+                alt=""
+                class="close-results"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="width: 100%; display: flex; justify-content: center"
+          *ngIf="isSearchTypeNotSelected == true"
+        >
+          <p style="margin-bottom: 0; color: #ff0000cc">
+            Please select a Search type.
+          </p>
+        </div>
+        <div
+          style="width: 100%; display: flex; justify-content: center"
+          *ngIf="isSearchTextEmpty == true"
+        >
+          <p style="margin-bottom: 0; color: #ff0000cc">
+            Please enter something to search.
+          </p>
+        </div>
+
+        <div
+          *ngIf="isLoading == true"
+          style="
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <span
+            class="spinner-border spinner-border-m mr-2"
+            style="color: #d4aa32; margin-top: 50px"
+          >
+          </span>
+        </div>
+
+        <div *ngIf="isLoading == false">
+          <div
+            *ngIf="dataSource.length == 0"
+            style="
+              width: 100%;
+              height: 340px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+              You don't have any documents.
+            </p>
+          </div>
+          <div *ngIf="dataSource.length != 0">
+            <div *ngIf="isSearchBtnClicked == true">
+              <div
+                *ngIf="searchResult.length == 0"
+                style="
+                  width: 100%;
+                  height: 340px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+                  No Results Found
+                </p>
+              </div>
+
+              <table
+                *ngIf="searchResult.length != 0"
+                mat-table
+                [dataSource]="searchResult"
+                class="mat-elevation-z8 demo-table"
+              >
+                <ng-container matColumnDef="docName">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                    style="padding-left: 0; font-size: 14px"
+                  >
+                    Document Name
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="
+                      font-weight: 600;
+                      color: #a3a3a3;
+                      cursor: pointer;
+                      padding: 15px 6px;
+                      font-size: 14px;
+                      width: 45%;
+                    "
+                  >
+                    {{ element.document_name }}
+
+                    <div
+                      class="col"
+                      style="width: 100%; padding: 0; margin-top: 10px"
+                    >
+                      <div
+                        class="btn"
+                        style="
+                          height: 40px;
+                          padding: 11px 20px;
+                          border-radius: 7px;
+                          background-color: #d4aa32;
+                          width: 90px;
+                        "
+                      >
+                        View
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="uploadDate">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                    style="font-size: 14px"
+                  >
+                    Date of Upload
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="cursor: pointer; font-size: 14px; padding: 0 6px"
+                    class="req-type"
+                  >
+                    {{ element.date }}
+                  </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="docSize">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                    style="font-size: 14px"
+                  >
+                    Document Size
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="cursor: pointer; font-size: 14px; padding: 0 6px"
+                    class="property-name"
+                  >
+                    {{ element.size }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="links">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                    style="display: none"
+                  ></th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="cursor: pointer"
+                    class="property-name"
+                    style="display: none"
+                  >
+                    <!-- <div class="row">
+                      <div
+                        class="btn"
+                        style="
+                          height: 40px;
+                          padding: 11px 20px;
+                          border-radius: 7px;
+                          background-color: #d4aa32;
+                          width: 90px;
+                        "
+                      >
+                        View
+                      </div>
+                      <div
+                        class="btn"
+                        style="
+                          height: 40px;
+                          padding: 11px 20px;
+                          border-radius: 7px;
+                          margin-left: 10px;
+                          background-color: white;
+                          color: black;
+                          border: 1px solid #a3a3a3;
+                        "
+                      >
+                        Remove
+                      </div>
+                    </div> -->
+                  </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </div>
+
+            <table
+              *ngIf="isSearchBtnClicked == false"
+              mat-table
+              [dataSource]="dataSource"
+              class="mat-elevation-z8 demo-table"
+            >
+              <!-- Name Column -->
+              <ng-container matColumnDef="docName">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="padding-left: 0; font-size: 14px"
+                >
+                  Document Name
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="
+                    font-weight: 600;
+                    color: #a3a3a3;
+                    cursor: pointer;
+                    padding: 15px 6px;
+                    font-size: 14px;
+                    width: 45%;
+                  "
+                >
+                  {{ element.document_name }}
+
+                  <div
+                    class="col"
+                    style="width: 100%; padding: 0; margin-top: 10px"
+                  >
+                    <div
+                      class="btn"
+                      style="
+                        height: 40px;
+                        padding: 11px 20px;
+                        border-radius: 7px;
+                        background-color: #d4aa32;
+                        width: 90px;
+                      "
+                    >
+                      View
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="uploadDate">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="font-size: 14px"
+                >
+                  Date of Upload
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="cursor: pointer; font-size: 14px; padding: 0 6px"
+                  class="req-type"
+                >
+                  {{ element.date }}
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="docSize">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="font-size: 14px"
+                >
+                  Document Size
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="cursor: pointer; font-size: 14px; padding: 0 6px"
+                  class="property-name"
+                >
+                  {{ element.size }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="links">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="display: none"
+                ></th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="cursor: pointer"
+                  class="property-name"
+                  style="display: none"
+                >
+                  <!-- <div class="row">
+                    <div
+                      class="btn"
+                      style="
+                        height: 40px;
+                        padding: 11px 20px;
+                        border-radius: 7px;
+                        background-color: #d4aa32;
+                        width: 90px;
+                      "
+                    >
+                      View
+                    </div>
+                    <div
+                      class="btn"
+                      style="
+                        height: 40px;
+                        padding: 11px 20px;
+                        border-radius: 7px;
+                        margin-left: 10px;
+                        background-color: white;
+                        color: black;
+                        border: 1px solid #a3a3a3;
+                      "
+                    >
+                      Remove
+                    </div>
+                  </div> -->
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<div class="main-content reports-bg" *ngIf="screenWidth > 430">
+  <div class="container-fluid" style="max-width: 2576px">
+    <div class="card">
+      <div
+        class="card-header"
+        style="
+          background-color: #2b333e;
+          padding: 25px 20px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        "
+      >
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <div class="col">
+            <p
+              *ngIf="currentDocumentPageType == 'my-documents'"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
+            >
+              My Documents
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'tenant-documents'"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
+            >
+              Tenant Documents
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'all-client-documents'"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
+            >
+              All Clients Documents
+            </p>
+            <div class="row" style="margin: 0; margin-top: 5px">
+              <p style="margin-bottom: 0; color: #88909b">
+                Activity regarding documents
+              </p>
+              <img
+                src="assets/img/svg/home-page/info-circle.svg"
+                alt=""
+                style="
+                  filter: invert(62%) sepia(67%) saturate(434%) hue-rotate(7deg)
+                    brightness(96%) contrast(92%);
+                  width: 15px;
+                  margin-left: 5px;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body" style="padding: 30px 30px">
+        <div style="width: 100%; display: flex; justify-content: center">
+          <div
+            style="
+              width: 70%;
+              height: 60px;
+              border-radius: 10px;
+              background-color: #2b333e;
+              padding: 10px;
+            "
+          >
+            <div class="row" style="margin: 0; justify-content: space-between">
+              <div
+                class="col"
+                style="padding-left: 0; width: 100%; padding-right: 0"
+              >
+                <input
+                  [(ngModel)]="searchText"
+                  type="text"
+                  placeholder="Search"
+                  style="
+                    border-radius: 7px;
+                    border: none;
+                    height: 40px;
+                    width: 100%;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                  "
+                />
+              </div>
+
+              <div class="col" style="width: 100%; padding-right: 0">
+                <mat-form-field appearance="fill">
+                  <mat-select
+                    [(ngModel)]="selectedSearchType"
+                    placeholder="Search Type"
+                  >
+                    <mat-option *ngFor="let s of searchType" [value]="s">
+                      {{ s }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col" style="width: 100%; padding-right: 0">
+                <div
+                  *ngIf="dataSource.length == 0"
+                  class="btn"
+                  style="
+                    width: 100%;
+                    background-color: #939393;
+                    margin-top: 0;
+                    height: 40px;
+                    border-radius: 7px;
+                  "
+                >
+                  <p>Search</p>
+                </div>
+                <div
+                  *ngIf="dataSource.length != 0"
+                  class="btn"
+                  (click)="searchRequest()"
+                  style="
+                    width: 100%;
+                    background-color: #d4aa32;
+                    margin-top: 0;
+                    height: 40px;
+                    border-radius: 7px;
+                  "
+                >
+                  <p>Search</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="isSearchBtnClicked == true">
+          <div
+            style="
+              background-color: #d4aa32;
+              height: 30px;
+              width: 155px;
+              border-radius: 6px;
+              color: white;
+              margin-top: 20px;
+            "
+          >
+            <div class="row" style="margin: 0">
+              <p style="margin-bottom: 0; margin-left: 10px; padding-top: 2px">
+                Search Results
+              </p>
+              <img
+                (click)="closeResults()"
+                src="assets/img/svg/req-details/close-circle.svg"
+                alt=""
+                class="close-results"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="width: 100%; display: flex; justify-content: center"
+          *ngIf="isSearchTypeNotSelected == true"
+        >
+          <p style="margin-bottom: 0; color: #ff0000cc">
+            Please select a Search type.
+          </p>
+        </div>
+        <div
+          style="width: 100%; display: flex; justify-content: center"
+          *ngIf="isSearchTextEmpty == true"
+        >
+          <p style="margin-bottom: 0; color: #ff0000cc">
+            Please enter something to search.
+          </p>
+        </div>
+
+        <div
+          *ngIf="isLoading == true"
+          style="
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <span
+            class="spinner-border spinner-border-m mr-2"
+            style="color: #d4aa32; margin-top: 50px"
+          >
+          </span>
+        </div>
+
+        <div *ngIf="isLoading == false">
+          <div
+            *ngIf="dataSource.length == 0"
+            style="
+              width: 100%;
+              height: 340px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <p
+              *ngIf="currentDocumentPageType == 'my-documents'"
+              style="font-size: 20px; font-weight: 600; color: #808080c2"
+            >
+              You don't have any documents.
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'tenant-documents'"
+              style="font-size: 20px; font-weight: 600; color: #808080c2"
+            >
+              Your tenant have'nt any documents.
+            </p>
+            <p
+              *ngIf="currentDocumentPageType == 'all-client-documents'"
+              style="font-size: 20px; font-weight: 600; color: #808080c2"
+            >
+              There is no documents to show.
+            </p>
+          </div>
+          <div *ngIf="dataSource.length != 0">
+            <div *ngIf="isSearchBtnClicked == true">
+              <div
+                *ngIf="searchResult.length == 0"
+                style="
+                  width: 100%;
+                  height: 340px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <p style="font-size: 20px; font-weight: 600; color: #808080c2">
+                  No Results Found
+                </p>
+              </div>
+
+              <table
+                *ngIf="searchResult.length != 0"
+                mat-table
+                [dataSource]="searchResult"
+                class="mat-elevation-z8 demo-table"
+              >
+                <!-- Name Column -->
+                <ng-container matColumnDef="docName">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                    style="border-top-left-radius: 10px"
+                  >
+                    Document Name
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="font-weight: 600; color: #a3a3a3; cursor: pointer"
+                  >
+                    <div class="row" style="margin: 0">
+                      <div
+                        style="
+                          width: 60px;
+                          height: 60px;
+                          border-radius: 50%;
+                          background-color: #e8e8e8;
+                          padding: 15px;
+                        "
+                      >
+                        <img
+                          src="assets/img/svg/documents/document-text.svg"
+                          alt=""
+                          style="
+                            width: 30px;
+                            filter: brightness(0) saturate(100%) invert(88%)
+                              sepia(1%) saturate(555%) hue-rotate(315deg)
+                              brightness(79%) contrast(69%);
+                          "
+                        />
+                      </div>
+                      <p style="margin-top: 15px; margin-left: 20px">
+                        {{ element.document_name }}
+                      </p>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="uploadDate">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Date of Upload
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    class="req-type"
+                    style="cursor: pointer"
+                  >
+                    {{ element.date }}
+                  </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="docSize">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                  >
+                    Document Size
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    class="property-name"
+                    style="cursor: pointer"
+                  >
+                    {{ element.size }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="links">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="table-header-font"
+                    style="border-top-right-radius: 10px"
+                  ></th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    style="cursor: pointer"
+                    class="property-name"
+                  >
+                    <div class="row">
+                      <div
+                        class="btn"
+                        style="
+                          height: 40px;
+                          padding: 11px 20px;
+                          border-radius: 7px;
+                          background-color: #d4aa32;
+                          width: 90px;
+                        "
+                      >
+                        View
+                      </div>
+                      <div
+                        class="btn"
+                        style="
+                          height: 40px;
+                          padding: 11px 20px;
+                          border-radius: 7px;
+                          margin-left: 10px;
+                          background-color: white;
+                          color: black;
+                          border: 1px solid #a3a3a3;
+                        "
+                      >
+                        Remove
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </div>
+
+            <table
+              *ngIf="isSearchBtnClicked == false"
+              mat-table
+              [dataSource]="dataSource"
+              class="mat-elevation-z8 demo-table"
+            >
+              <!-- Name Column -->
+              <ng-container matColumnDef="docName">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="border-top-left-radius: 10px"
+                >
+                  Document Name
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="font-weight: 600; color: #a3a3a3; cursor: pointer"
+                >
+                  <div class="row" style="margin: 0">
+                    <div
+                      style="
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        background-color: #e8e8e8;
+                        padding: 15px;
+                      "
+                    >
+                      <img
+                        src="assets/img/svg/documents/document-text.svg"
+                        alt=""
+                        style="
+                          width: 30px;
+                          filter: brightness(0) saturate(100%) invert(88%)
+                            sepia(1%) saturate(555%) hue-rotate(315deg)
+                            brightness(79%) contrast(69%);
+                        "
+                      />
+                    </div>
+                    <p style="margin-top: 15px; margin-left: 20px">
+                      {{ element.document_name }}
+                    </p>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="uploadDate">
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                  Date of Upload
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="cursor: pointer"
+                  class="req-type"
+                >
+                  {{ element.date }}
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="docSize">
+                <th mat-header-cell *matHeaderCellDef class="table-header-font">
+                  Document Size
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="cursor: pointer"
+                  class="property-name"
+                >
+                  {{ element.size }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="links">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="table-header-font"
+                  style="border-top-right-radius: 10px"
+                ></th>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  style="cursor: pointer"
+                  class="property-name"
+                >
+                  <div class="row">
+                    <div
+                      (click)="viewDoc(element)"
+                      class="btn"
+                      style="
+                        height: 40px;
+                        padding: 11px 20px;
+                        border-radius: 7px;
+                        background-color: #d4aa32;
+                        width: 90px;
+                      "
+                    >
+                      View
+                    </div>
+                    <div
+                      class="btn"
+                      style="
+                        height: 40px;
+                        padding: 11px 20px;
+                        border-radius: 7px;
+                        margin-left: 10px;
+                        background-color: white;
+                        color: black;
+                        border: 1px solid #a3a3a3;
+                      "
+                    >
+                      Remove
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

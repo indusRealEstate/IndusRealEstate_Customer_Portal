@@ -24,6 +24,7 @@ if ($postdata != null) {
           `password`,
           `firstname`,
           `lastname`,
+          `plan`,
           `token`)
        VALUES      
          ('{$decodedData["user_data"]["unique_id"]}',
@@ -32,6 +33,7 @@ if ($postdata != null) {
           '{$decodedData["user_data"]["password"]}',
           '{$decodedData["user_data"]["firstname"]}',
           '{$decodedData["user_data"]["lastname"]}',
+          '{$decodedData["user_data"]["plan"]}',
           '{$decodedData["user_data"]["token"]}')"
         );
 

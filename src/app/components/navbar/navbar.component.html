@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-absolute fixed-top">
-  <div class="container-fluid navBar-main-top">
+  <div class="container-fluid navBar-main-top my-auto">
     <div class="navbar-wrapper">
       <a class="navbar-brand" hidden>{{ getTitle() }}</a>
 
@@ -11,7 +11,7 @@
           margin-left: 17px;
           width: 274px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -257,7 +257,7 @@
           margin-left: 17px;
           width: 274px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -343,7 +343,7 @@
           margin-left: 17px;
           width: 274px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -389,7 +389,7 @@
           margin-left: 17px;
           width: 285px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -435,7 +435,7 @@
           margin-left: 17px;
           width: 500px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -601,7 +601,7 @@
           margin-left: 17px;
           width: 310px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -851,7 +851,7 @@
           margin-left: 17px;
           width: 500px;
           justify-content: space-between;
-          margin-top: 25px;
+          /* margin-top: 25px; */
         "
       >
         <img
@@ -1123,6 +1123,38 @@
             <a class="dropdown-item notification-dropdown-item">Another One</a>
           </div>
         </li>
+        <li class="nav-item" *ngIf="user.auth_type != 'admin'">
+          <div
+            class="card shoadow-none m-0 landlord-payment-plan-card"
+            [matMenuTriggerFor]="menuPaymentPlan"
+            #planAboutTrigger="matMenuTrigger"
+          >
+            <p class="m-0 text-white mx-auto">
+              {{ getLandlordPaymentPlan() }}
+            </p>
+          </div>
+        </li>
+
+        <!--//////////////// plan view mat-menu ////////////////////////-->
+        <mat-menu #menuPaymentPlan="matMenu" class="payment-plan-mat-menu">
+          <div class="content">
+            <div class="row m-0 w-100 justify-content-center">
+              <p class="m-0 my-auto" style="font-weight: 500">{{ getLandlordPaymentPlan() }} Plan </p>
+              <img class="ml-1 my-auto" src="assets/img/svg/home-page/info-circle.svg" alt="">
+            </div>
+            <p style="margin-top: 15px; margin-left: 20px; font-weight: 500">
+              Features
+            </p>
+            <ul style="font-size: 12.5px;padding: 0 2.2rem;">
+              <li>Lorem Ipsum is simply dummy text of the printing.</li>
+              <li>Lorem Ipsum is simply dummy text of the printing.</li>
+              <li>Lorem Ipsum is simply dummy text of the printing.</li>
+              <li>Lorem Ipsum is simply dummy text of the printing.</li>
+            </ul>
+          </div>
+        </mat-menu>
+
+        <!--//////////////// plan view mat-menu end ////////////////////////-->
         <li class="nav-item">
           <a
             class="nav-link profile-dropdown"

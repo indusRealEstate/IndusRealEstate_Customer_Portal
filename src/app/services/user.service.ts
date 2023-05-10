@@ -38,12 +38,12 @@ export class UserService {
     } catch (error) {}
   }
 
-  addUserDetails(userDetails) {
-    const url = `${API_URL}/addUserDetails.php?apikey=1`;
-    return this.http
-      .post(url, JSON.stringify(userDetails))
-      .pipe(catchError(this.handleError("addUserDetails", [])));
-  }
+  // addUserDetails(userDetails) {
+  //   const url = `${API_URL}/addUserDetails.php?apikey=1`;
+  //   return this.http
+  //     .post(url, JSON.stringify(userDetails))
+  //     .pipe(catchError(this.handleError("addUserDetails", [])));
+  // }
 
   updateUserProfile(data) {
     const url = `https://indusmanagement.ae/api/user_profile_updator.php?apikey=1`;

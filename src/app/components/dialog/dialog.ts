@@ -32,6 +32,29 @@ export class DocUploadDialogRegister implements OnInit {
     this.dialogRef.close();
   }
 
+  submitPaymentUploadDoc() {
+    if (this.files.length < 2 && this.files.length != 0) {
+      this.dialogRef.close({
+        doc: "payment_doc",
+        data: this.base64files[0],
+      });
+    } else {
+      if (this.files.length >= 2) {
+        this.isDocsExceededMoreThan1 = true;
+
+        setTimeout(() => {
+          this.isDocsExceededMoreThan1 = false;
+        }, 4000);
+      } else {
+        this.isDocsEmpty = true;
+
+        setTimeout(() => {
+          this.isDocsEmpty = false;
+        }, 4000);
+      }
+    }
+  }
+
   submitEditedData() {
     if (this.docName == "passport" || this.docName == "emirates_id") {
       if (this.files.length < 3 && this.files.length != 0) {

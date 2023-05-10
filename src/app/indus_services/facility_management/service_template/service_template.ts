@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DocUploadDialogRegister } from "app/components/dialog/dialog";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { UserService } from "app/services/user.service";
@@ -19,6 +21,8 @@ export class ServiceTemplateComponent implements OnInit {
   applicationNotChoosed: boolean = false;
   amountNotEntered: boolean = false;
 
+  uploadedDoc: any;
+
   currentServicePageType: any;
   servicePagesTypes: string[] = [
     "payment-tenant",
@@ -35,7 +39,8 @@ export class ServiceTemplateComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private otherServices: OtherServices,
-    private userServices: UserService
+    private userServices: UserService,
+    private dialog?: MatDialog
   ) {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -146,5 +151,26 @@ export class ServiceTemplateComponent implements OnInit {
         },
       });
     }
+  }
+
+  openUploadDocDialog(upload: any) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.dialog
+      .open(DocUploadDialogRegister, {
+        width: "700px",
+        height: "450px",
+        data: { upload: upload, auth: user[0]["auth_type"] },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          this.uploadedDoc = res.data;
+          setTimeout(() => {
+            console.log(this.uploadedDoc);
+          }, 500);
+        } else {
+        }
+      });
   }
 }

@@ -1,5 +1,24 @@
 <h3
   mat-dialog-title
+  *ngIf="docName == 'payment_doc'"
+  style="
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #686868;
+  "
+>
+  Upload Document
+</h3>
+<p
+  *ngIf="docName == 'payment_doc'"
+  style="text-align: center; margin-top: -10px; margin-bottom: 20px"
+>
+  Please add single document.
+</p>
+<h3
+  mat-dialog-title
   *ngIf="docName == 'passport'"
   style="
     display: flex;
@@ -413,7 +432,22 @@
     Cancel
   </button>
   <button
-    *ngIf="auth_type == 'landlord'"
+    *ngIf="auth_type == 'landlord' && docName == 'payment_doc'"
+    style="
+      background-color: #d4aa32;
+      width: 120px;
+      height: 43px;
+      font-size: 17px;
+    "
+    mat-raised-button
+    color="primary"
+    (click)="submitPaymentUploadDoc()"
+    class="submit-btn"
+  >
+    Submit
+  </button>
+  <button
+    *ngIf="auth_type == 'landlord' && docName != 'payment_doc'"
     style="
       background-color: #d4aa32;
       width: 120px;

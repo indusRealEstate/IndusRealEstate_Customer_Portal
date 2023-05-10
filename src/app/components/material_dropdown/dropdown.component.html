@@ -1,4 +1,5 @@
 <div
+  *ngIf="user_payment_plan == 'exclusive'"
   class="col"
   [ngClass]="
     isDropDownBtnClicked == true
@@ -20,7 +21,7 @@
     (click)="navigateToTenentRegistrationPage()"
   >
     <img src="assets/img/svg/sidebar/minus.svg" alt="" />
-    <p>Register My Own</p>
+    <p>Register</p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
@@ -29,5 +30,32 @@
   >
     <img src="assets/img/svg/sidebar/minus.svg" alt="" />
     <p>Request Registration</p>
+  </div>
+</div>
+
+<div
+  *ngIf="user_payment_plan == 'open'"
+  class="col"
+  [ngClass]="
+    isDropDownBtnClicked == true
+      ? 'dropdown-services-opened-open'
+      : 'dropdown-services'
+  "
+>
+  <div
+    class="row dropDownBtnRow"
+    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    (click)="dropDownBtnClick()"
+  >
+    <img src="assets/img/svg/sidebar/key.svg" alt="" />
+    <p>Tenant Registration</p>
+  </div>
+  <div
+    *ngIf="isDropDownBtnsShow == true"
+    class="row subMenu-dropdown"
+    (click)="navigateToTenentRegistrationPage()"
+  >
+    <img src="assets/img/svg/sidebar/minus.svg" alt="" />
+    <p>Register</p>
   </div>
 </div>

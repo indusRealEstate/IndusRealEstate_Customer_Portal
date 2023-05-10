@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   currentPage: any;
 
   requestPageType: any;
+  user_portal_plan: any;
 
   constructor(
     location: Location,
@@ -197,6 +198,27 @@ export class NavbarComponent implements OnInit {
 
     this.otherServices.myRequestsClickedrequestPage.next(true);
   }
+
+  getLandlordPaymentPlan() {
+    var data = localStorage.getItem("currentUser");
+    var user = JSON.parse(data);
+
+    this.user_portal_plan = user[0]["plan"];
+
+    if (this.user_portal_plan == "exclusive") {
+      return "Exclusive";
+    } else {
+      return "Open Account";
+    }
+  }
+
+  // openMatMenu(trigger) {
+  //   trigger.openMenu();
+  // }
+
+  // closeMatMenu(trigger) {
+  //   trigger.closeMenu();
+  // }
 
   getTitle() {
     this.currentPage = this.router.url.split("?")[0].split("/")[1];

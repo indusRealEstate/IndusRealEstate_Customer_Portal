@@ -24,6 +24,7 @@ import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenan
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
+import { IndividualDocumentsComponent } from "app/documents-individual/documents-individual.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -32,6 +33,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "requests", component: RequestsComponent },
   { path: "my-properties", component: MyPropertiesComponent },
   { path: "documents", component: DocumentsComponent },
+  { path: "client-documents", component: IndividualDocumentsComponent },
   { path: "property-page", component: PropertyPage },
   { path: "request-page", component: RequestPage },
   { path: "add-property-form", component: AddPropertyForm },

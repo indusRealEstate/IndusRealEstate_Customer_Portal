@@ -15,10 +15,13 @@ export class DropdownMaterial implements OnInit {
   isDropDownBtnClicked: boolean = false;
   isDropDownBtnsShow: boolean = false;
 
+  user_payment_plan: any;
+
   constructor(private router: Router) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.userId = user[0]["id"];
+    this.user_payment_plan = user[0]["plan"];
   }
 
   ngOnInit() {

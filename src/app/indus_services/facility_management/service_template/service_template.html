@@ -171,6 +171,7 @@
               </mat-form-field>
 
               <input
+                *ngIf="currentServicePageType != 'inspection'"
                 [(ngModel)]="service_amount"
                 type="text"
                 placeholder="Enter the Amount to be paid"
@@ -188,7 +189,16 @@
           <div class="col" style="padding-left: 30px; padding-bottom: 20px">
             <p style="font-size: 17px; font-weight: 600">Documents</p>
 
-            <div class="card" style="padding: 10px; max-width: 450px">
+            <span
+              *ngIf="uploadedDoc == null"
+              style="font-size: 18px; font-weight: 700; color: #c7c7c7"
+              >No Document has uploaded</span
+            >
+            <div
+              *ngIf="uploadedDoc != null"
+              class="card"
+              style="padding: 10px; max-width: 450px"
+            >
               <div class="row" style="margin: 0">
                 <div
                   style="
@@ -223,6 +233,7 @@
               style="width: 100%; display: flex; justify-content: end"
             >
               <div
+                (click)="openUploadDocDialog('payment_doc')"
                 class="btn"
                 style="
                   background-color: #d4aa32;

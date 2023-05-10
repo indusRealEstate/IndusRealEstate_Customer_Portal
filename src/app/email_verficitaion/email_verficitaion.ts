@@ -300,6 +300,7 @@ export class EmailVerification implements OnInit {
       password: this.registerForm.value.pass,
       firstname: this.currentNewUserAllDetails.firstname,
       lastname: this.currentNewUserAllDetails.lastname,
+      plan : 'tenant',
       token: "012345",
     };
 
@@ -332,6 +333,7 @@ export class EmailVerification implements OnInit {
       password: this.registerForm.value.pass,
       firstname: this.currentNewUserAllDetails.firstname,
       lastname: this.currentNewUserAllDetails.lastname,
+      plan : 'open',
       token: "012345",
     };
     var currentDate = this.getCurrentDate();

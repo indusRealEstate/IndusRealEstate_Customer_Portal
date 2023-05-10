@@ -90,6 +90,7 @@ import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenan
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
+import { IndividualDocumentsComponent } from "app/documents-individual/documents-individual.component";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -197,6 +198,7 @@ import { NotificationsPage } from "app/notifications-page/notifications-page";
     ServiceTemplateComponent,
     ServiceRecapComponent,
     NotificationsPage,
+    IndividualDocumentsComponent
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

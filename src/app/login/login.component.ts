@@ -141,12 +141,14 @@ export class LoginComponent implements OnInit {
                   // replaceUrl: true,
                   queryParams: { uid: user[0]["id"] },
                 });
+                this.otherServices.userSignedIn.next(true);
               } else {
                 // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
                 this.router.navigate(["/admin-dashboard"], {
                   // replaceUrl: true,
                   queryParams: { uid: user[0]["id"] },
                 });
+                this.otherServices.userSignedIn.next(true);
               }
             }, 500);
           }

@@ -320,7 +320,6 @@ export class SidebarComponent implements OnInit {
   ///////////////--App Version--////////////////////
   appVersion: any = "VERSION PROD v0.1.15";
 
-
   usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
 
   constructor(
@@ -377,6 +376,12 @@ export class SidebarComponent implements OnInit {
     });
 
     otherServices.homeClickedTenantReg.subscribe((home_val) => {
+      if (home_val == true) {
+        this.miniSideBarClickedDashboard();
+      }
+    });
+
+    otherServices.userSignedIn.subscribe((home_val) => {
       if (home_val == true) {
         this.miniSideBarClickedDashboard();
       }
@@ -504,7 +509,7 @@ export class SidebarComponent implements OnInit {
           return false;
         }
       }
-    }  else {
+    } else {
       const baseUrl = this.router.url.split("?")[0];
 
       return baseUrl == url;
