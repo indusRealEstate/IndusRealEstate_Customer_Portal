@@ -323,7 +323,7 @@
 
 <div class="main-content home-bg" *ngIf="screenWidth > 430">
   <div class="container-fluid" style="margin-top: 25px; max-width: 2576px">
-    <div
+    <!-- <div
       *ngIf="isLoading == true"
       style="
         display: flex;
@@ -335,12 +335,11 @@
     >
       <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
       </span>
-    </div>
+    </div> -->
 
     <div
       class="col"
-      style="width: 100%; height: 100%; padding: 0 100px"
-      *ngIf="isLoading == false"
+      style="width: 100%; height: 100%; padding: 0 3rem"
     >
       <div class="row back-btn-row" navigateBack>
         <img src="assets/img/svg/request-page/arrow-left.svg" alt="" />
@@ -479,7 +478,7 @@
               class="btn"
               style="padding: 12px 25px; background-color: #d4aa32"
             >
-              Show Requests
+              More Info
             </div>
           </div>
         </div>
@@ -493,12 +492,12 @@
         <div *ngFor="let client of allClients; let last = last;">
           <div class="row" style="margin: 0; padding: 25px">
             <div
-              *ngIf="client.user_details.profile_photo != ''"
+              *ngIf="client.profile_photo != ''"
               style="
                     width: 100px;
                     height: 100px;
                     overflow: hidden;
-                    background-image: url('{{usrImgPath}}{{client.user_details.profile_photo}}');
+                    background-image: url('{{usrImgPath}}{{client.profile_photo}}');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
@@ -507,7 +506,7 @@
             ></div>
 
             <img
-              *ngIf="client.user_details.profile_photo == ''"
+              *ngIf="client.profile_photo == ''"
               src="assets/img/faces/avatar.webp"
               alt=""
               style="
@@ -535,39 +534,57 @@
                 {{client.firstname}}
               </p>
               <p style="color: #a3a3a3">
-                Joined on {{client.user_details.joined_date}}
+                Joined on {{client.joined_date}}
               </p>
             </div>
 
             <div class="col">
               <p style="margin-bottom: 8px; color: #707070">Location</p>
               <p style="font-size: 15px; font-weight: 600">
-                {{client.user_details.address}}
+                {{client.address}}
               </p>
             </div>
 
             <div class="col">
               <p style="margin-bottom: 8px; color: #707070">Phone Number</p>
               <p style="font-size: 15px; font-weight: 600">
-                {{client.user_details.phone_number}}
+                {{client.phone_number}}
               </p>
             </div>
 
             <div class="col">
               <p style="margin-bottom: 8px; color: #707070">Email Address</p>
               <p style="font-size: 15px; font-weight: 600">
-                {{client.user_details.email}}
+                {{client.email}}
               </p>
             </div>
 
             <div class="col">
               <div
+                #menuTrigger="matMenuTrigger"
+                [matMenuTriggerFor]="moreInfoMenu"
                 class="btn"
                 style="padding: 12px 25px; background-color: #d4aa32"
               >
-                Show Requests
+                More Info
               </div>
             </div>
+            <mat-menu
+              class="tenant-more-action-menu"
+              style="display: none"
+              #moreInfoMenu="matMenu"
+            >
+              <div class="col" style="display: grid">
+                <div class="btn actions-menu-btn">See all Requests</div>
+                <div
+                  class="btn actions-menu-btn"
+                  routerLink="/client-documents"
+                  [queryParams]="{ userId: client.id }"
+                >
+                  See all Documents
+                </div>
+              </div>
+            </mat-menu>
           </div>
           <hr *ngIf="!last" style="margin: 0" />
         </div>

@@ -60,14 +60,13 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { NgxCheckboxModule } from "ngx-checkbox";
-import { AdminRequests } from "app/admin-requests/admin-requests";
+// import { AdminRequests } from "app/admin-requests/admin-requests";
 import { PropertyPage } from "app/property-page/property-page.component";
 // import { GoogleMapsModule } from "@angular/google-maps";
 // import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
-import { AcceptRequestConfirmDialog } from "app/admin-requests/accept_req_dialog/acspt_req_dialog";
+import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
 import { HttpClientModule } from "@angular/common/http";
-import { DeclineRequestConfirmDialog } from "app/admin-requests/decline_req_dialog/decline_req_dialog";
 import { LoginComponent } from "app/login/login.component";
 import { RegisterComponent } from "app/register/register.component";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
@@ -91,6 +90,10 @@ import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
 import { IndividualDocumentsComponent } from "app/documents-individual/documents-individual.component";
+import { AdminReqs } from "app/admin-requests/admin-req";
+import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
+import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -148,6 +151,7 @@ import { IndividualDocumentsComponent } from "app/documents-individual/documents
     FullCalendarModule,
     NgxSkeletonLoaderModule,
     NgxCheckboxModule,
+    DragDropModule
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
@@ -165,11 +169,13 @@ import { IndividualDocumentsComponent } from "app/documents-individual/documents
     PageNotFoundComponent,
     PropertyPage,
     AddPropertyForm,
-    AdminRequests,
+    // AdminRequests,
+    AdminReqs,
+    AdminReqsLandlord,
+    AdminReqsTenant,
     AdminDashboardComponent,
 
-    AcceptRequestConfirmDialog,
-    DeclineRequestConfirmDialog,
+    ReviewRequestDialog,
 
     LoginComponent,
     RegisterComponent,

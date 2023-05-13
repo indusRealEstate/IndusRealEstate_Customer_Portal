@@ -149,6 +149,13 @@ export class ApiService {
       .pipe(catchError(this.handleError("requestAddPropertyLandlord", [])));
   }
 
+  requestAddPropertyNewLandlord(data: any) {
+    const url = `${API_URL}/add_property_new_landlord.php?apikey=1`;
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("requestAddPropertyNewLandlord", [])));
+  }
+
   saveImgInServer(data: any) {
     const url = `https://indusmanagement.ae/api/uploader.php?apikey=1`;
 
@@ -187,4 +194,6 @@ export class ApiService {
   // downloadFile(data: Blob, filename: string, extension: string) {
   //   saveAs(data, `${filename}.${extension}`);
   // }
+
+  
 }

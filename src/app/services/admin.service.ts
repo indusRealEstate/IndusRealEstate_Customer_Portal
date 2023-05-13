@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Observable, of} from "rxjs";
-import {
-  HttpClient,
-  HttpHeaders,
-} from "@angular/common/http";
+import { Observable, of } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
 
@@ -29,18 +26,20 @@ export class AdminService {
     };
   }
 
-  getAllProperties(userId: any) {
+  getAllProperties(userId: any, prop_type: any) {
     const url = `${API_URL}/getAllProperties.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId }).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+    return this.http
+      .post<any>(url, { userId: userId, prop_type: prop_type })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
-  getAllClients(userId: any) {
+  getAllClients(userId: any, auth: any) {
     const url = `${API_URL}/getAllClients.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId }).pipe(
+    return this.http.post<any>(url, { userId: userId, auth: auth }).pipe(
       map((data) => {
         return data;
       })
@@ -104,6 +103,15 @@ export class AdminService {
   declineRegisterToken(data: any) {
     const url = `${API_URL}/register_token_decline.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllRequestsAdmin(data: any) {
+    const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })

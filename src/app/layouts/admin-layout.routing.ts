@@ -8,7 +8,7 @@ import { MyPropertiesComponent } from "app/myProperties/my_properties.component"
 import { DocumentsComponent } from "app/documents/documents.component";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
-import { AdminRequests } from "app/admin-requests/admin-requests";
+// import { AdminRequests } from "app/admin-requests/admin-requests";
 import { PropertyPage } from "app/property-page/property-page.component";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { LoginComponent } from "app/login/login.component";
@@ -25,6 +25,9 @@ import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
 import { IndividualDocumentsComponent } from "app/documents-individual/documents-individual.component";
+import { AdminReqs } from "app/admin-requests/admin-req";
+import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
+import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -39,7 +42,10 @@ export const AdminLayoutRoutes: Routes = [
   { path: "add-property-form", component: AddPropertyForm },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
-  { path: "admin-requests", component: AdminRequests },
+  // { path: "admin-requests", component: AdminRequests },
+  { path: "admin-requests", component: AdminReqs },
+  { path: "admin-requests-landlord", component: AdminReqsLandlord },
+  { path: "admin-requests-tenant", component: AdminReqsTenant },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },

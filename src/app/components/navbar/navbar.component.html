@@ -338,13 +338,7 @@
       <div
         *ngIf="currentPage == 'admin-requests'"
         class="row"
-        style="
-          margin: 0;
-          margin-left: 17px;
-          width: 274px;
-          justify-content: space-between;
-          /* margin-top: 25px; */
-        "
+        style="margin: 0; margin-left: 17px"
       >
         <img
           src="assets/img/svg/sidebar/menu.svg"
@@ -353,6 +347,7 @@
             filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
               saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
             width: 20px;
+            margin-right: 15px;
           "
         />
         <img
@@ -362,9 +357,17 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
-        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
           Requests
         </p>
         <img
@@ -374,10 +377,111 @@
             filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
               saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
             width: 17px;
+            margin-right: 15px;
           "
         />
         <p style="color: #858585; margin-bottom: 0; font-size: 16px">
           All Requests
+        </p>
+      </div>
+
+      <div
+        *ngIf="currentPage == 'admin-requests-landlord'"
+        class="row"
+        style="margin: 0; margin-left: 17px"
+      >
+        <img
+          src="assets/img/svg/sidebar/menu.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+              saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+            width: 20px;
+            margin-right: 15px;
+          "
+        />
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+            margin-right: 15px;
+          "
+        />
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Requests
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+            margin-right: 15px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Landlord Requests
+        </p>
+      </div>
+
+      <div
+        *ngIf="currentPage == 'admin-requests-tenant'"
+        class="row"
+        style="margin: 0; margin-left: 17px"
+      >
+        <img
+          src="assets/img/svg/sidebar/menu.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+              saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+            width: 20px;
+            margin-right: 15px;
+          "
+        />
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+            margin-right: 15px;
+          "
+        />
+        <p
+          style="
+            color: #858585;
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-right: 15px;
+          "
+        >
+          Requests
+        </p>
+        <img
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(96%) sepia(1%)
+              saturate(0%) hue-rotate(145deg) brightness(84%) contrast(88%);
+            width: 17px;
+            margin-right: 15px;
+          "
+        />
+        <p style="color: #858585; margin-bottom: 0; font-size: 16px">
+          Tenant Requests
         </p>
       </div>
 
@@ -1139,13 +1243,19 @@
         <mat-menu #menuPaymentPlan="matMenu" class="payment-plan-mat-menu">
           <div class="content">
             <div class="row m-0 w-100 justify-content-center">
-              <p class="m-0 my-auto" style="font-weight: 500">{{ getLandlordPaymentPlan() }} Plan </p>
-              <img class="ml-1 my-auto" src="assets/img/svg/home-page/info-circle.svg" alt="">
+              <p class="m-0 my-auto" style="font-weight: 500">
+                {{ getLandlordPaymentPlan() }} Plan
+              </p>
+              <img
+                class="ml-1 my-auto"
+                src="assets/img/svg/home-page/info-circle.svg"
+                alt=""
+              />
             </div>
             <p style="margin-top: 15px; margin-left: 20px; font-weight: 500">
               Features
             </p>
-            <ul style="font-size: 12.5px;padding: 0 2.2rem;">
+            <ul style="font-size: 12.5px; padding: 0 2.2rem">
               <li>Lorem Ipsum is simply dummy text of the printing.</li>
               <li>Lorem Ipsum is simply dummy text of the printing.</li>
               <li>Lorem Ipsum is simply dummy text of the printing.</li>

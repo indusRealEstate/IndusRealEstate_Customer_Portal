@@ -92,22 +92,16 @@ export class AdminPropertiesSale implements OnInit {
             "all_sale_properties",
             JSON.stringify(this.allProperties)
           );
-        }, 2000);
+        }, 1000);
       });
     }
   }
 
   async getAllProperties(userId, type) {
     this.adminService
-      .getAllProperties(userId)
+      .getAllProperties(userId, type)
       .subscribe(async (e: Array<any>) => {
-        var i = 0;
-        for (let c of e) {
-          i++;
-          if (c.property_state == type) {
-            this.allProperties.push(c);
-          }
-        }
+        this.allProperties = e;
       });
   }
 }

@@ -86,7 +86,7 @@
   margin-left: 25px !important;
 }
 
-::ng-deep .filter-menu {
+:host ::ng-deep .filter-menu {
   .mat-radio-inner-circle {
     background-color: #d4aa32 !important;
   }
@@ -114,7 +114,6 @@
 }
 
 .demo-table {
-  min-width: 1200px;
   width: 100%;
   margin-top: 35px;
   border-radius: 10px;
@@ -283,7 +282,7 @@
   display: none;
 }
 
-::ng-deep .tooltip {
+:host ::ng-deep .tooltip {
   position: relative;
   background-color: #ececec;
   color: #313a46 !important;

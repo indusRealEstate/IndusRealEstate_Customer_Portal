@@ -3,24 +3,27 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "decline-dialog",
-  styleUrls: ["./decline_req_dialog.scss"],
-  templateUrl: "./decline_req_dialog.html",
+  selector: "review-req-dialog",
+  styleUrls: ["./review_req_dialog.scss"],
+  templateUrl: "./review_req_dialog.html",
 })
-export class DeclineRequestConfirmDialog implements OnInit {
+export class ReviewRequestDialog implements OnInit {
+  req_data: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<DeclineRequestConfirmDialog>,
+    public dialogRef: MatDialogRef<ReviewRequestDialog>,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.req_data = this.data["req_data"];
+  }
 
   onCloseDialog() {
     this.dialogRef.close();
   }
 
-  declineRequestConfirm(){
+  acceptRequestConfirm() {
     this.dialogRef.close(true);
   }
 }

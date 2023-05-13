@@ -18,7 +18,7 @@ export class AdminPropertiesRent implements OnInit {
     private adminService: AdminService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     this.isLoading = true;
     this.getScreenSize();
@@ -33,7 +33,7 @@ export class AdminPropertiesRent implements OnInit {
           router.navigate(["/404"]);
         } else if (e.uid != user[0]["id"]) {
           router.navigate(["/404"]);
-        } 
+        }
       });
     }
   }
@@ -77,38 +77,31 @@ export class AdminPropertiesRent implements OnInit {
 
     var sessionDataRent = sessionStorage.getItem("all_rent_properties");
 
-      if (sessionDataRent != null) {
-        this.dataSource = JSON.parse(sessionDataRent);
-        this.isLoading = false;
-      } else {
-        await this.getAllProperties(user[0]["id"], "rent").finally(() => {
-          // console.log(this.allLandlordClients);
+    if (sessionDataRent != null) {
+      this.dataSource = JSON.parse(sessionDataRent);
+      this.isLoading = false;
+    } else {
+      await this.getAllProperties(user[0]["id"], "rent").finally(() => {
+        // console.log(this.allLandlordClients);
 
-          setTimeout(() => {
-            this.dataSource = this.allProperties;
-            this.isLoading = false;
+        setTimeout(() => {
+          this.dataSource = this.allProperties;
+          this.isLoading = false;
 
-            sessionStorage.setItem(
-              "all_rent_properties",
-              JSON.stringify(this.allProperties)
-            );
-          }, 2000);
-        });
-      }
-    
+          sessionStorage.setItem(
+            "all_rent_properties",
+            JSON.stringify(this.allProperties)
+          );
+        }, 1000);
+      });
+    }
   }
 
   async getAllProperties(userId, type) {
     this.adminService
-      .getAllProperties(userId)
+      .getAllProperties(userId, type)
       .subscribe(async (e: Array<any>) => {
-        var i = 0;
-        for (let c of e) {
-          i++;
-          if (c.property_state == type) {
-            this.allProperties.push(c);
-          }
-        }
+        this.allProperties = e;
       });
   }
 }

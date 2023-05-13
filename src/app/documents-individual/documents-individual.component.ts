@@ -19,7 +19,11 @@ export class IndividualDocumentsComponent implements OnInit {
 
   searchResult: any[] = [];
 
+  isTableEmpty: boolean = false;
+
   isUserSignedIn: boolean = false;
+
+  userData: any;
 
   isSearchTypeNotSelected: boolean = false;
   isSearchTextEmpty: boolean = false;
@@ -58,7 +62,6 @@ export class IndividualDocumentsComponent implements OnInit {
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
       if (user[0]["auth_type"] == "admin") {
-        this.isLoading = true;
         this.route.queryParams.subscribe((e) => {
           this.initFunction(e);
         });
@@ -71,8 +74,27 @@ export class IndividualDocumentsComponent implements OnInit {
     }
   }
 
-  initFunction(param){
+  initFunction(param) {
+    this.apiService
+      .getUserDocuments(param["userId"])
+      .subscribe((data: any[]) => {
+        this.dataSource = data;
+      });
 
+    this.apiService.getUser(param["userId"]).subscribe((userdata) => {
+      this.userData = userdata[0];
+    });
+
+    setTimeout(() => {
+      if (this.dataSource.length == 0) {
+        this.isTableEmpty = true;
+        this.isLoading = false;
+      } else {
+        console.log(this.userData);
+        this.isTableEmpty = false;
+        this.isLoading = false;
+      }
+    }, 1500);
   }
 
   screenHeight: number;
@@ -131,47 +153,5 @@ export class IndividualDocumentsComponent implements OnInit {
     this.isSearchBtnClicked = false;
   }
 
-  ngOnInit() {
-    var sessionData = JSON.parse(sessionStorage.getItem("my-docs-session"));
-
-    if (sessionData != null) {
-      this.dataSource = sessionData["data"];
-      this.isLoading = false;
-    } else {
-      this.getUserRequestDetails();
-    }
-  }
-
-  getUserRequestDetails() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
-    var userId = user[0]["id"];
-
-    this.apiService.getUserDocuments(userId).subscribe((data: any[]) => {
-      this.dataSource = data;
-    });
-    setTimeout(() => {
-      this.isLoading = false;
-      if (this.dataSource.length != 0) {
-        sessionStorage.setItem(
-          "my-docs-session",
-          JSON.stringify({
-            data: this.dataSource,
-          })
-        );
-      }
-    }, 3000);
-
-    // setTimeout(() => {
-    //   if(this.isLoading == false){
-    //     if(this.dataSource.)
-    //   }
-    // }, 3500);
-  }
-
-  // navigateToRequestPage(req_no) {
-  //   this.router.navigate(["/request-page"], {
-  //     queryParams: { "req-no": req_no },
-  //   });
-  // }
+  ngOnInit() {}
 }

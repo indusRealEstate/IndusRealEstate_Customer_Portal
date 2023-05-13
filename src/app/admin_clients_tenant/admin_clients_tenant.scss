@@ -22,3 +22,15 @@
     }
   }
 }
+
+:host ::ng-deep .tenant-more-action-menu{
+  margin-top: 6px;
+
+  .btn{
+    background: #2b333e;
+
+    &:hover{
+      background: #424f62;
+    }
+  }
+}

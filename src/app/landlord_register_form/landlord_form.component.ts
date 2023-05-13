@@ -179,11 +179,7 @@ export class LandlordFormComponent implements OnInit {
         user_signature: this.secondStepper.secondPartySignature,
       };
 
-      const REQUEST_TYPE = "NEW_LANDLORD_ACC";
-
       var propertyDetails = {
-        user_id: "",
-        request_type: REQUEST_TYPE,
         unique_id: unique_id,
         property_state: this.secondStepper.propertyState,
         offer_validity: this.secondStepper.form.value.offerValidity,
@@ -199,20 +195,11 @@ export class LandlordFormComponent implements OnInit {
         car_parking_no: this.secondStepper.form.value.carparkingNo,
         additional_info: this.secondStepper.form.value.additionalInfo,
 
-        // property images and doc
-        property_image_1_name: "",
-        property_image_2_name: "",
-        property_image_3_name: "",
-        property_image_4_name: "",
-        property_image_5_name: "",
-        property_doc_1_name: "",
-        property_doc_2_name: "",
-        property_doc_3_name: "",
-        property_doc_4_name: "",
-
         social_media_marketing_info: this.secondStepper.form.value.marketing01,
         board_marketing_info: this.secondStepper.form.value.marketing02,
         others_marketing_info: this.secondStepper.form.value.marketing03,
+        images: JSON.stringify({ img1: "", img2: "" }),
+        docs: JSON.stringify({ doc1: "", doc2: "" }),
         valid_until: this.secondStepper.form.value.validUntil,
         second_party_signature_name:
           unique_id +
@@ -220,9 +207,7 @@ export class LandlordFormComponent implements OnInit {
           "user_signature" +
           "." +
           this.secondStepper.secondPartySignatureExt,
-        approved: "false",
-        expired: "false",
-        declined: "false",
+
         issue_date: "",
       };
 
@@ -242,7 +227,7 @@ export class LandlordFormComponent implements OnInit {
       var ownershipDocExt = this.thirdStepper.ownerShipDoc["ext"];
 
       var requestDetails = {
-        request_type: REQUEST_TYPE,
+        request_type: "NEW_LANDLORD_REQ",
         firstname: this.firstStepper.form.value.firstname,
         lastname: this.firstStepper.form.value.lastname,
         auth_type: "landlord",
@@ -279,15 +264,13 @@ export class LandlordFormComponent implements OnInit {
               }),
         ownership_doc: unique_id + "/" + "ownership" + "." + ownershipDocExt,
         sales_deed_doc: unique_id + "/" + "sales_deed" + "." + salesDeedExt,
-        approved: "false",
-        expired: "false",
-        declined: "false",
+        status: "pending",
         issue_date: this.getCurrentDate(),
       };
 
       await this.uploadFiles(allDocFiles).then(() => {
         this.apiService
-          .requestAddPropertyLandlord(JSON.stringify(propertyDetails))
+          .requestAddPropertyNewLandlord(JSON.stringify(propertyDetails))
           .subscribe((e) => {
             console.log(e);
           });

@@ -11,21 +11,12 @@ import { BehaviorSubject } from "rxjs";
 })
 export class AdminClientsTenant implements OnInit {
   isUserSignedIn: boolean = false;
-  isLoading: boolean = false;
+  // isLoading: boolean = false;
   isContentLoading: boolean = true;
-
-  dataPresentInitialize: boolean = false;
-  ngDoCheckInitialize_landlord: boolean = false;
-  ngDoCheckInitialize_tenant: boolean = false;
-
-  noDataPresent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   allClients: any[] = [];
 
   usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
-
-  currentAdminClientsType: any;
-  adminClientsTypes: string[] = ["tenant", "landlord"];
 
   userId: any = JSON.parse(localStorage.getItem("currentUser"))[0]["id"];
 
@@ -35,7 +26,7 @@ export class AdminClientsTenant implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute
   ) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.isContentLoading = true;
 
     this.getScreenSize();
@@ -66,10 +57,6 @@ export class AdminClientsTenant implements OnInit {
 
   restoreBack() {
     this.isContentLoading = true;
-    this.dataPresentInitialize = false;
-    this.ngDoCheckInitialize_landlord = true;
-    this.ngDoCheckInitialize_tenant = true;
-    this.noDataPresent.next(false);
     this.allClients.length = 0;
   }
 
@@ -83,113 +70,32 @@ export class AdminClientsTenant implements OnInit {
   }
 
   async ngOnInit() {
-    var sessionDataTenant = sessionStorage.getItem("all_tenant_clients");
-
-    if (sessionDataTenant != null) {
-      this.allClients = JSON.parse(sessionDataTenant);
-      this.isLoading = false;
+    var sessionDataLandlord = sessionStorage.getItem("all_tenant_clients");
+    if (sessionDataLandlord != null) {
+      this.allClients = JSON.parse(sessionDataLandlord);
+      // this.isLoading = false;
       this.isContentLoading = false;
       // this.ngDoCheckInitialize = true;
     } else {
-      await this.getAllClients(this.userId, "tenant").finally(() => {
-        // console.log(this.allLandlordClients);
+      await this.getAllClients(this.userId).finally(() => {});
+    }
+  }
+
+  async getAllClients(userId) {
+    this.adminService
+      .getAllClients(userId, "tenant")
+      .subscribe(async (e: Array<any>) => {
+        this.allClients = e;
 
         setTimeout(() => {
+          this.isContentLoading = false;
           setTimeout(() => {
-            this.noDataPresent.subscribe((val) => {
-              if (val == true) {
-                // console.log("no data");
-                this.getAllClientsDetails(this.userId);
-              }
-            });
-          }, 1000);
-        }, 2000);
-      });
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1000);
-
-      setTimeout(async () => {
-        await this.checkEveryDataPresent().finally(() => {
-          if (this.dataPresentInitialize == true) {
-            this.isContentLoading = false;
             sessionStorage.setItem(
               "all_tenant_clients",
               JSON.stringify(this.allClients)
             );
-            this.dataPresentInitialize = false;
-          }
-        });
-      }, 5000);
-    }
-  }
-
-  // ngOnDestroy() {
-  //   this.noDataPresent.unsubscribe();
-  // }
-
-  async removeDuplicates(myArr: Array<any>) {
-    return myArr.filter((obj, pos, arr) => {
-      return arr.map((mapObj) => mapObj.id).indexOf(obj.id) === pos;
-    });
-  }
-
-  async getAllClients(userId, type) {
-    this.adminService.getAllClients(userId).subscribe(async (e: Array<any>) => {
-      var i = 0;
-      for (let c of e) {
-        i++;
-        if (c.auth_type == type) {
-          this.allClients.push(c);
-        }
-      }
-
-      if (i == e.length) {
-        await this.removeDuplicates(this.allClients).then((val) => {
-          this.allClients = val;
-          setTimeout(async () => {
-            await this.getAllClientsDetails(userId);
-          }, 1000);
-        });
-      }
-    });
-  }
-
-  async checkEveryDataPresent() {
-    var dataLack = 0;
-    for (let c of this.allClients) {
-      if (c.user_details == null) {
-        dataLack++;
-      }
-    }
-    setTimeout(() => {
-      if (dataLack == 0) {
-        this.noDataPresent.next(false);
-        this.dataPresentInitialize = true;
-      } else {
-        this.noDataPresent.next(true);
-        this.dataPresentInitialize = false;
-      }
-    }, 500);
-  }
-
-  async getAllClientsDetails(userId) {
-    this.adminService
-      .getAllClientsDetails(userId)
-      .subscribe((c_details: Array<any>) => {
-        var i = 0;
-        for (let det of c_details) {
-          i++;
-          for (let c of this.allClients) {
-            if (c.id == det.user_id) {
-              Object.assign(c, { user_details: det });
-            }
-          }
-        }
-
-        if (i == c_details.length) {
-          this.checkEveryDataPresent();
-        }
+          }, 500);
+        }, 500);
       });
   }
 }
