@@ -3,7 +3,6 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "../home/home.component";
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { ReportsComponent } from "../reports/reports.component";
-import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { DocumentsComponent } from "app/documents/documents.component";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
@@ -28,12 +27,23 @@ import { IndividualDocumentsComponent } from "app/documents-individual/documents
 import { AdminReqs } from "app/admin-requests/admin-req";
 import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
 import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
+import { RequestsComponentMyReqs } from "app/requests/my-requests/my-reqs";
+import { RequestsComponentPayment } from "app/requests/payment/payment-req";
+import { RequestsComponentConditioning } from "app/requests/tenant-requests/conditoning/conditioning-req";
+import { RequestsComponentMaintenance } from "app/requests/tenant-requests/maintenance/maintenance-req";
+import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tenant-move-in/tenant-move-in-req";
+import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "user-profile", component: UserProfileComponent },
   { path: "reports", component: ReportsComponent },
-  { path: "requests", component: RequestsComponent },
+  { path: "my-requests", component: RequestsComponentMyReqs },
+  { path: "payment-requests", component: RequestsComponentPayment },
+  { path: "conditioning-requests", component: RequestsComponentConditioning },
+  { path: "maintenance-requests", component: RequestsComponentMaintenance},
+  { path: "tenant-move-in-requests", component: RequestsComponentTenantMoveIn},
+  { path: "tenant-move-out-requests", component: RequestsComponentTenantMoveOut},
   { path: "my-properties", component: MyPropertiesComponent },
   { path: "documents", component: DocumentsComponent },
   { path: "client-documents", component: IndividualDocumentsComponent },

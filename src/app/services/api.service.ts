@@ -56,9 +56,52 @@ export class ApiService {
       .pipe(catchError(this.handleError("addUserRecentHappenings", [])));
   }
 
-  getUserRequestDetails(userId: any, auth: any) {
-    const url = `${API_URL}/getRequestDetails.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId, from: auth }).pipe(
+  getUserRequests(userId: any) {
+    const url = `${API_URL}/getMyRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getUserPaymentRequests(userId: any, auth) {
+    const url = `${API_URL}/getPaymentRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId, auth: auth }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getUserConditioningRequests(userId: any) {
+    const url = `${API_URL}/getConditioningRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId}).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getUserMaintenanceRequests(userId: any) {
+    const url = `${API_URL}/getMaintenanceRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId}).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  getUserTenantMoveInRequests(userId: any) {
+    const url = `${API_URL}/getTenantMoveInRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId}).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  getUserTenantMoveOutRequests(userId: any) {
+    const url = `${API_URL}/getTenantMoveOutRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId}).pipe(
       map((data) => {
         return data;
       })
@@ -194,6 +237,4 @@ export class ApiService {
   // downloadFile(data: Blob, filename: string, extension: string) {
   //   saveAs(data, `${filename}.${extension}`);
   // }
-
-  
 }

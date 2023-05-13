@@ -186,7 +186,7 @@ export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
 
 export const REQUESTSROUTELANDLORD: RouteInfo[] = [
   {
-    path: "/requests",
+    path: "/my-requests",
     title: "My Requests",
     icon: "assets/img/svg/sidebar/request-send.svg",
     class: "",

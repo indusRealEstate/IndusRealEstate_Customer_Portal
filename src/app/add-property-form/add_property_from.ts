@@ -99,8 +99,8 @@ export class AddPropertyForm implements OnInit {
 
   ngOnInit() {
     this.addPropertyForm = this.formBuilder.group({
-      property_state: ["sale"],
-      offer_validity: [""],
+      property_state: [],
+      offer_validity: [],
       furnishDetails: [""],
       propertyType: [""],
       titleDeedNumber: [""],
@@ -123,11 +123,15 @@ export class AddPropertyForm implements OnInit {
     }, 1000);
   }
 
+  generateRandomID() {
+    return Math.floor(10000000000 + Math.random() * 90000000000);
+  }
+
   clickSubmit() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    const REQUEST_TYPE = "ADD_PROPERTY";
+    const REQUEST_TYPE = "ADD_PROPERTY_REC_EXIST_LANDLORD";
 
     if (
       this.propertyState == null ||
@@ -163,8 +167,8 @@ export class AddPropertyForm implements OnInit {
 
       var jsonData = {
         user_id: user[0]["id"],
+        req_id: this.generateRandomID(),
         request_type: REQUEST_TYPE,
-        unique_id: "",
         property_state: this.propertyState,
         offer_validity: this.offerValidity,
         furnish_details: this.addPropertyForm.value["furnishDetails"],
@@ -178,36 +182,6 @@ export class AddPropertyForm implements OnInit {
         unit_number: this.addPropertyForm.value["UnitNumber"],
         car_parking_no: this.addPropertyForm.value["NumberOfCarParking"],
         additional_info: this.addPropertyForm.value["AdditionalInformation"],
-
-        // property images
-        property_image_1_name:
-          this.propertyImages.length < 1 ? "" : this.propertyImagesNames[0],
-
-        property_image_2_name:
-          this.propertyImages.length < 2 ? "" : this.propertyImagesNames[1],
-
-        property_image_3_name:
-          this.propertyImages.length < 3 ? "" : this.propertyImagesNames[2],
-
-        property_image_4_name:
-          this.propertyImages.length < 4 ? "" : this.propertyImagesNames[3],
-
-        property_image_5_name:
-          this.propertyImages.length < 5 ? "" : this.propertyImagesNames[4],
-        // property docs
-
-        property_doc_1_name:
-          this.propertyDocs.length < 1 ? "" : this.propertyDocsNames[0],
-
-        property_doc_2_name:
-          this.propertyDocs.length < 2 ? "" : this.propertyDocsNames[1],
-
-        property_doc_3_name:
-          this.propertyDocs.length < 3 ? "" : this.propertyDocsNames[2],
-
-        property_doc_4_name:
-          this.propertyDocs.length < 4 ? "" : this.propertyDocsNames[3],
-
         social_media_marketing_info:
           this.addPropertyForm.value["SocialMediaMarketingDetails"],
         board_marketing_info:
@@ -215,12 +189,31 @@ export class AddPropertyForm implements OnInit {
         others_marketing_info:
           this.addPropertyForm.value["OthersMarketingDetails"],
 
+        property_images: JSON.stringify({
+          img1:
+            this.propertyImages.length < 1 ? "" : this.propertyImagesNames[0],
+          img2:
+            this.propertyImages.length < 2 ? "" : this.propertyImagesNames[1],
+          img3:
+            this.propertyImages.length < 3 ? "" : this.propertyImagesNames[2],
+          img4:
+            this.propertyImages.length < 4 ? "" : this.propertyImagesNames[3],
+          img5:
+            this.propertyImages.length < 5 ? "" : this.propertyImagesNames[4],
+        }),
+
+        property_docs: JSON.stringify({
+          doc1: this.propertyDocs.length < 1 ? "" : this.propertyDocsNames[0],
+          doc2: this.propertyDocs.length < 2 ? "" : this.propertyDocsNames[1],
+          doc3: this.propertyDocs.length < 3 ? "" : this.propertyDocsNames[2],
+          doc4: this.propertyDocs.length < 4 ? "" : this.propertyDocsNames[3],
+        }),
+        status: "pending",
+
         valid_until: this.validUntil,
 
         second_party_signature_name: this.secondPartySignatureName,
-        approved: "false",
-        expired: "false",
-        declined: "false",
+        issue_date: this.getCurrentDate(),
       };
 
       try {
@@ -264,6 +257,20 @@ export class AddPropertyForm implements OnInit {
         }, 2000);
       } catch (error) {}
     }
+  }
+
+  getCurrentDate() {
+    var date = new Date();
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return currentDate;
   }
 
   clearSignature() {

@@ -10,7 +10,7 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row"
-    [ngClass]="requestActiveCheck('maintenance')"
+    [ngClass]="requestActiveCheck('/maintenance-requests')"
     (click)="navigateToRequests('maintenance')"
   >
     <img src="assets/img/svg/sidebar/maintenance_icon.svg" alt="" />
@@ -20,7 +20,7 @@
     *ngIf="isDropDownBtnsShow == true"
     class="row"
     style="margin-top: -10px"
-    [ngClass]="requestActiveCheck('tenant-move-in')"
+    [ngClass]="requestActiveCheck('/tenant-move-in-requests')"
     (click)="navigateToRequests('tenant-move-in')"
   >
     <img src="assets/img/svg/sidebar/User-admin-01.svg" alt="" />
@@ -30,7 +30,7 @@
     *ngIf="isDropDownBtnsShow == true"
     class="row"
     style="margin-top: -10px"
-    [ngClass]="requestActiveCheck('tenant-move-out')"
+    [ngClass]="requestActiveCheck('/tenant-move-out-requests')"
     (click)="navigateToRequests('tenant-move-out')"
   >
     <img src="assets/img/svg/sidebar/User-delete-02.svg" alt="" />
@@ -40,7 +40,7 @@
     *ngIf="isDropDownBtnsShow == true"
     class="row"
     style="margin-top: -10px"
-    [ngClass]="requestActiveCheck('payment')"
+    [ngClass]="requestActiveCheck('/payment-requests')"
     (click)="navigateToRequests('payment')"
   >
     <img src="assets/img/svg/sidebar/empty-wallet.svg" alt="" />
@@ -50,7 +50,7 @@
     *ngIf="isDropDownBtnsShow == true"
     class="row"
     style="margin-top: -10px"
-    [ngClass]="requestActiveCheck('conditioning')"
+    [ngClass]="requestActiveCheck('/conditioning-requests')"
     (click)="navigateToRequests('conditioning')"
   >
     <img src="assets/img/svg/sidebar/property-conditioning.svg" alt="" />

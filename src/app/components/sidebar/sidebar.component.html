@@ -563,7 +563,7 @@
               <a
                 class="nav-link"
                 [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id, req_type: 'my-requests' }"
+                [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path)"
                 (click)="myRequestSideBarClicked()"
               >

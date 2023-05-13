@@ -52,7 +52,6 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 // import { MatToolbarModule } from "@angular/material/toolbar";
 // import { MatTreeModule } from "@angular/material/tree";
-import { RequestsComponent } from "app/requests/requests.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
 import { DocumentsComponent } from "app/documents/documents.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
@@ -94,6 +93,12 @@ import { AdminReqs } from "app/admin-requests/admin-req";
 import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
 import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RequestsComponentMyReqs } from "app/requests/my-requests/my-reqs";
+import { RequestsComponentPayment } from "app/requests/payment/payment-req";
+import { RequestsComponentConditioning } from "app/requests/tenant-requests/conditoning/conditioning-req";
+import { RequestsComponentMaintenance } from "app/requests/tenant-requests/maintenance/maintenance-req";
+import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tenant-move-in/tenant-move-in-req";
+import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -163,7 +168,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     HomeComponent,
     UserProfileComponent,
     ReportsComponent,
-    RequestsComponent,
+    RequestsComponentMyReqs,
+    RequestsComponentPayment,
+    RequestsComponentConditioning,
+    RequestsComponentMaintenance,
+    RequestsComponentTenantMoveIn,
+    RequestsComponentTenantMoveOut,
     MyPropertiesComponent,
     DocumentsComponent,
     PageNotFoundComponent,

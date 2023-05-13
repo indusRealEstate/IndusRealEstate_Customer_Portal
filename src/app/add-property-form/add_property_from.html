@@ -87,13 +87,12 @@
                 <p class="grey-text-form" style="margin-right: 30px">
                   Offer validity:
                 </p>
-                <mat-form-field>
+                <mat-form-field formControlName="offer_validity">
                   <input
                     matInput
                     [matDatepicker]="picker"
                     [(ngModel)]="offerValidity"
                     (dateChange)="onOfferValidityDate($event)"
-                    formControlName="offer_validity"
                   />
                   <mat-datepicker-toggle
                     matSuffix

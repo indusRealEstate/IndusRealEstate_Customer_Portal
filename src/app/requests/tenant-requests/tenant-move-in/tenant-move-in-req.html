@@ -1,0 +1,611 @@
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<!------------------------------------ Desktop Screen ----------------------------------------------------->
+<div class="main-content reports-bg" *ngIf="screenWidth > 430">
+  <div
+    class="container-fluid h-100 d-flex justify-content-center"
+    style="max-width: 2576px"
+  >
+    <!-- <span
+      *ngIf="isLoading == true"
+      class="spinner-border spinner-border-m mr-2"
+      style="color: #d4aa32; margin-top: 365px"
+    >
+    </span> -->
+    <div class="card" style="border-radius: 8px">
+      <div
+        class="card-header"
+        style="
+          background-color: #2b333e;
+          color: white;
+          border-top-right-radius: 8px;
+          border-top-left-radius: 8px;
+        "
+      >
+        <p
+          style="
+            font-size: 23px;
+            font-weight: 500;
+            margin-left: 10px;
+            margin-top: 15px;
+          "
+        >
+          Tenant-move-in Requests
+        </p>
+      </div>
+      <div
+        class="card-body"
+        style="
+          background-color: #ffffff;
+          color: #404040;
+          padding: 30px;
+          border-bottom-right-radius: 8px;
+          border-bottom-left-radius: 8px;
+        "
+      >
+        <div class="row" style="margin: 0; justify-content: space-between">
+          <div class="row" style="margin: 0">
+            <div
+              #menuTrigger="matMenuTrigger"
+              [matMenuTriggerFor]="filterMenu"
+              class="btn"
+              style="
+                background-color: #2b333e;
+                padding: 8px 30px;
+                max-height: 35px;
+              "
+            >
+              filter
+            </div>
+
+            <div class="row" *ngFor="let filter of filters" style="margin: 0">
+              <div
+                class="card"
+                style="
+                  margin: 5px 0;
+                  max-height: 35px;
+                  margin-left: 20px;
+                  padding: 3px 20px;
+                  background-color: #d3ab33;
+                  color: white;
+                "
+              >
+                <div
+                  class="row"
+                  style="margin: 0; justify-content: space-between"
+                >
+                  <p
+                    *ngIf="filter.filter_1 == 'new_sign_ups'"
+                    style="margin-bottom: 0"
+                  >
+                    New Sign Ups
+                  </p>
+                  <p
+                    *ngIf="filter.filter_1 == 'add_new_property'"
+                    style="margin-bottom: 0"
+                  >
+                    Add Property
+                  </p>
+                  <p
+                    *ngIf="filter.filter_1 == 'others'"
+                    style="margin-bottom: 0"
+                  >
+                    Others
+                  </p>
+                  <p *ngIf="filter.filter_2 == 'all'" style="margin-bottom: 0">
+                    All Type Properties
+                  </p>
+                  <p
+                    *ngIf="filter.filter_2 == 'villa'"
+                    style="margin-bottom: 0"
+                  >
+                    Villa
+                  </p>
+                  <p
+                    *ngIf="filter.filter_2 == 'appartment'"
+                    style="margin-bottom: 0"
+                  >
+                    Appartment
+                  </p>
+                  <p
+                    *ngIf="filter.filter_2 == 'town_house'"
+                    style="margin-bottom: 0"
+                  >
+                    Town House
+                  </p>
+                  <p
+                    *ngIf="filter.filter_2 == 'other'"
+                    style="margin-bottom: 0"
+                  >
+                    Other
+                  </p>
+                  <p
+                    *ngIf="filter.filter_1 == 'approved'"
+                    style="margin-bottom: 0"
+                  >
+                    Approved Requests
+                  </p>
+                  <p
+                    *ngIf="filter.filter_1 == 'declined'"
+                    style="margin-bottom: 0"
+                  >
+                    Denied Requests
+                  </p>
+                  <p
+                    *ngIf="filter.filter_1 == 'search'"
+                    style="margin-bottom: 0"
+                  >
+                    Search Results
+                  </p>
+                  <img
+                    (click)="closeFilter(filter)"
+                    src="assets/img/svg/req-details/close-circle.svg"
+                    alt=""
+                    style="
+                      width: 15px;
+                      filter: brightness(0) invert(1);
+                      margin-left: 20px;
+                      cursor: pointer;
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin: 0; width: 50%; justify-content: end">
+            <input
+              type="text"
+              placeholder="Search"
+              [(ngModel)]="searchString"
+              style="
+                max-height: 35px;
+                padding-left: 10px;
+                min-width: 300px;
+                border-radius: 7px;
+                border: 1px solid #a3a3a39e;
+              "
+            />
+            <div
+              class="btn"
+              style="
+                margin: 0;
+                margin-left: 20px;
+                padding: 9px 36px;
+                max-height: 35px;
+                background-color: #d3ab33;
+              "
+            >
+              Search
+            </div>
+          </div>
+        </div>
+        <p
+          *ngIf="isUserSearchedEmpty == true"
+          style="
+            text-align: end;
+            font-size: 13px;
+            color: #ff0000e6;
+            margin-top: 10px;
+            margin-right: 10px;
+          "
+        >
+          No words found in searchbar.
+        </p>
+
+        <mat-menu style="display: none" #filterMenu="matMenu">
+          <div
+            class="col"
+            style="padding: 20px 20px"
+            (click)="$event.stopPropagation()"
+            class="filter-menu"
+          >
+            <p style="margin-bottom: -10px; font-size: 15px; font-weight: 600">
+              Category
+            </p>
+            <mat-radio-group
+              [(ngModel)]="categoryAllRequests"
+              style="margin-left: 15px"
+            >
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="new_sign_ups"></mat-radio-button>
+                <p>New Sign Ups</p>
+              </div>
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="add_new_property"></mat-radio-button>
+                <p>Add Property</p>
+              </div>
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="others"></mat-radio-button>
+                <p>Others</p>
+              </div>
+            </mat-radio-group>
+            <p
+              style="
+                margin-bottom: -10px;
+                font-size: 15px;
+                font-weight: 600;
+                margin-top: 15px;
+              "
+            >
+              Property Type
+            </p>
+            <mat-radio-group
+              [(ngModel)]="propertyTypeAllRequests"
+              style="margin-left: 15px"
+            >
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="all"></mat-radio-button>
+                <p>All</p>
+              </div>
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="villa"></mat-radio-button>
+                <p>Villa</p>
+              </div>
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="appartment"></mat-radio-button>
+                <p>Appartment</p>
+              </div>
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="town_house"></mat-radio-button>
+                <p>Town House</p>
+              </div>
+              <div class="row" style="margin: 0">
+                <mat-radio-button value="other"></mat-radio-button>
+                <p>Other</p>
+              </div>
+            </mat-radio-group>
+            <button
+              class="btn"
+              style="
+                padding: 10px;
+                width: 170px;
+                background-color: #343b44;
+                border-radius: 7px;
+              "
+            >
+              Apply Filters
+            </button>
+
+            <p
+              style="
+                font-size: 15px;
+                font-weight: 600;
+                margin-top: 15px;
+                margin-bottom: 10px;
+              "
+            >
+              Reset Filters
+            </p>
+            <button
+              class="btn"
+              style="
+                padding: 10px;
+                width: 170px;
+                background-color: #343b44;
+                border-radius: 7px;
+              "
+            >
+              Approved Requests
+            </button>
+            <button
+              class="btn"
+              style="
+                padding: 10px;
+                width: 170px;
+                background-color: #343b44;
+                border-radius: 7px;
+              "
+            >
+              Denied Requests
+            </button>
+          </div>
+        </mat-menu>
+
+        <div class="col" style="padding: 0">
+          <table
+            *ngIf="isContentLoading == true"
+            mat-table
+            [dataSource]="loadingTable"
+            class="mat-elevation-z8 demo-table"
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="issueDate">
+              <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="last ? 'first-col-last' : 'first-col'"
+              >
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="reqNo">
+              <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="last ? 'second-col-last' : 'second-col'"
+              >
+                <div
+                  style="max-width: 250px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '250px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="reqType">
+              <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="last ? 'third-col-last' : 'third-col'"
+              >
+                <div
+                  style="max-width: 150px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '150px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="propertyName">
+              <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+              >
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="clientName">
+              <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+              >
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+              <td mat-cell *matCellDef="let element; let last = last">
+                <div
+                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+                >
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
+              >
+                <img
+                  matTooltip="More Actions"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  src="assets/img/svg/home-page/more.svg"
+                  alt=""
+                  style="
+                    filter: brightness(0) saturate(100%) invert(73%) sepia(8%)
+                      saturate(14%) hue-rotate(333deg) brightness(91%)
+                      contrast(77%);
+                    width: 20px;
+                    cursor: pointer;
+                  "
+                />
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+
+          <p
+            *ngIf="isContentLoading == true"
+            style="
+              font-size: 13px;
+              font-weight: 600;
+              color: #d4aa32;
+              margin-top: 40px;
+            "
+          >
+            This may take a while. Please wait :)
+          </p>
+
+          <!------------------------------------ All Requests ----------------------------------------------------->
+          <!------------------------------------ All Requests ----------------------------------------------------->
+          <!------------------------------------ All Requests ----------------------------------------------------->
+          <div *ngIf="isContentLoading == false">
+            <div *ngIf="isUserSearchedRequests == false">
+              <table
+                mat-table
+                [dataSource]="allRequestsMatTableData"
+                class="mat-elevation-z8 demo-table"
+                *ngIf="allRequests.length != 0"
+              >
+                <!-- Name Column -->
+                <ng-container matColumnDef="issueDate">
+                  <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let last = last"
+                    [ngClass]="last ? 'first-col-last' : 'first-col'"
+                  >
+                    {{ element.created_date }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="reqNo">
+                  <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let last = last"
+                    [ngClass]="last ? 'second-col-last' : 'second-col'"
+                  >
+                    {{ element.request_no }}
+                  </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="reqType">
+                  <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let last = last"
+                    [ngClass]="last ? 'third-col-last' : 'third-col'"
+                  >
+                    Tenant-move-in Request
+                  </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="propertyName">
+                  <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let last = last"
+                    [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+                  >
+                    {{ element.property_name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="clientName">
+                  <div *ngIf="userAuth == 'landlord'">
+                    <th mat-header-cell *matHeaderCellDef>TENANT NAME</th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let last = last"
+                      [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+                    >
+                      {{ element.firstname }}
+                    </td>
+                  </div>
+                  <div *ngIf="userAuth == 'tenant'">
+                    <th mat-header-cell *matHeaderCellDef>LANDLORD NAME</th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let last = last"
+                      [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+                    >
+                      {{ element.firstname }}
+                    </td>
+                  </div>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>STATUS</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let last = last"
+                    [ngClass]="getRequestStatus(element, last)"
+                  ></td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let last = last"
+                    [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
+                  >
+                    <img
+                      matTooltip="More Actions"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      #menuTrigger="matMenuTrigger"
+                      [matMenuTriggerFor]="actionsMenu"
+                      src="assets/img/svg/home-page/more.svg"
+                      alt=""
+                      style="
+                        filter: brightness(0) saturate(100%) invert(73%)
+                          sepia(8%) saturate(14%) hue-rotate(333deg)
+                          brightness(91%) contrast(77%);
+                        width: 20px;
+                        cursor: pointer;
+                      "
+                    />
+                    <mat-menu style="display: none" #actionsMenu="matMenu">
+                      <div class="col" style="display: grid">
+                        <div
+                          class="btn actions-menu-btn"
+                          (click)="reviewRequest(element)"
+                        >
+                          review
+                        </div>
+                        <div class="btn actions-menu-btn">decline</div>
+                        <div class="btn actions-menu-btn">send to landlord</div>
+                      </div>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+
+              <div style="margin-top: 25px" class="table-paginator">
+                <mat-paginator
+                  #paginator
+                  [pageSizeOptions]="[6, 8, 10, 14, 20]"
+                  showFirstLastButtons
+                ></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

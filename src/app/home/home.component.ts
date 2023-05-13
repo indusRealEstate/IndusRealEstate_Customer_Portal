@@ -128,13 +128,13 @@ export class HomeComponent implements OnInit {
   }
 
   getUserRequestCount(userId) {
-    this.apiService
-      .getUserRequestDetails(userId, "self")
-      .subscribe((data: any[]) => {
-        setTimeout(() => {
-          this.userRequestsCount = data.length;
-        }, 200);
-      });
+    // this.apiService
+    //   .getUserRequestDetails(userId, "self")
+    //   .subscribe((data: any[]) => {
+    //     setTimeout(() => {
+    //       this.userRequestsCount = data.length;
+    //     }, 200);
+    //   });
   }
 
   getUserPropertiesCount(userId) {

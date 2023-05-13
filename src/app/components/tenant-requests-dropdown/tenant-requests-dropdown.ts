@@ -86,38 +86,44 @@ export class TenantRequestsDropdown implements OnInit {
   requestActiveCheck(req) {
     this.baseUrl = this.router.url.split("?")[0];
 
-    if (this.baseUrl != "/requests") {
-      return "subMenu-dropdown";
+    if (req == this.baseUrl) {
+      return "subMenu-dropdown-active";
     } else {
-      var req_page_type = this.router.url.split("&")[1].split("=")[1];
-      if (req_page_type == req) {
-        return "subMenu-dropdown-active";
-      } else {
-        return "subMenu-dropdown";
-      }
+      return "subMenu-dropdown";
     }
+
+    // if (this.baseUrl != "/requests") {
+    //   return "subMenu-dropdown";
+    // } else {
+    //   var req_page_type = this.router.url.split("&")[1].split("=")[1];
+    //   if (req_page_type == req) {
+    //     return "subMenu-dropdown-active";
+    //   } else {
+    //     return "subMenu-dropdown";
+    //   }
+    // }
   }
 
   navigateToRequests(req) {
     if (req == "maintenance") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.userId, req_type: "maintenance" },
+      this.router.navigate(["/maintenance-requests"], {
+        queryParams: { uid: this.userId },
       });
     } else if (req == "tenant-move-in") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.userId, req_type: "tenant-move-in" },
+      this.router.navigate(["/tenant-move-in-requests"], {
+        queryParams: { uid: this.userId },
       });
     } else if (req == "tenant-move-out") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.userId, req_type: "tenant-move-out" },
+      this.router.navigate(["/tenant-move-out-requests"], {
+        queryParams: { uid: this.userId },
       });
     } else if (req == "payment") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.userId, req_type: "payment" },
+      this.router.navigate(["/payment-requests"], {
+        queryParams: { uid: this.userId },
       });
     } else if (req == "conditioning") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.userId, req_type: "conditioning" },
+      this.router.navigate(["/conditioning-requests"], {
+        queryParams: { uid: this.userId },
       });
     }
 
