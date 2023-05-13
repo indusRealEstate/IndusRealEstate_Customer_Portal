@@ -18,7 +18,7 @@ import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review
 export class AdminReqsLandlord implements OnInit {
   isUserSignedIn: boolean = false;
 
-  isLoading: boolean = false;
+  // isLoading: boolean = false;
   isContentLoading: boolean = false;
   categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
     "new_sign_ups";
@@ -71,7 +71,7 @@ export class AdminReqsLandlord implements OnInit {
     private dialog?: MatDialog,
     private emailServices?: EmailServices
   ) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.isContentLoading = true;
 
     this.getScreenSize();
@@ -119,7 +119,7 @@ export class AdminReqsLandlord implements OnInit {
       setTimeout(() => {
         this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
         this.allRequestsMatTableData.paginator = this.paginator;
-      }, 2000);
+      }, 1000);
     }
   }
 
@@ -144,7 +144,7 @@ export class AdminReqsLandlord implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.isLoading = false;
+      // this.isLoading = false;
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
@@ -162,7 +162,7 @@ export class AdminReqsLandlord implements OnInit {
       Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
 
     if (diff >= 10) {
-      this.isLoading = true;
+      // this.isLoading = true;
       this.isContentLoading = true;
       this.clearAllVariables();
       sessionStorage.removeItem("admin_reqs_fetched_time");
@@ -186,26 +186,21 @@ export class AdminReqsLandlord implements OnInit {
       })
       .subscribe((va: any[]) => {
         for (let index = 0; index < va.length; index++) {
-          if (
-            va[index].auth_type == "landlord"
-          ) {
+          if (va[index].auth_type == "landlord") {
             this.allRequests.push(va[index]);
           }
         }
       });
 
     setTimeout(() => {
-      this.isLoading = false;
-      setTimeout(() => {
-        this.isContentLoading = false;
-        if (this.allRequests.length != 0) {
-          sessionStorage.setItem(
-            "admin_reqs_session_landlord",
-            JSON.stringify(this.allRequests)
-          );
-        }
-      }, 2000);
-    }, 1000);
+      this.isContentLoading = false;
+      if (this.allRequests.length != 0) {
+        sessionStorage.setItem(
+          "admin_reqs_session_landlord",
+          JSON.stringify(this.allRequests)
+        );
+      }
+    }, 1500);
   }
 
   getRequestType(req_type) {

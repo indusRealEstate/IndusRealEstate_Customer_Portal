@@ -81,9 +81,15 @@ export class AdminPropertiesRent implements OnInit {
       this.dataSource = JSON.parse(sessionDataRent);
       this.isLoading = false;
     } else {
-      await this.getAllProperties(user[0]["id"], "rent").finally(() => {
-        // console.log(this.allLandlordClients);
+      this.getAllProperties(user[0]["id"], "rent");
+    }
+  }
 
+  getAllProperties(userId, type) {
+    this.adminService
+      .getAllProperties(userId, type)
+      .subscribe(async (e: Array<any>) => {
+        this.allProperties = e;
         setTimeout(() => {
           this.dataSource = this.allProperties;
           this.isLoading = false;
@@ -92,16 +98,7 @@ export class AdminPropertiesRent implements OnInit {
             "all_rent_properties",
             JSON.stringify(this.allProperties)
           );
-        }, 1000);
-      });
-    }
-  }
-
-  async getAllProperties(userId, type) {
-    this.adminService
-      .getAllProperties(userId, type)
-      .subscribe(async (e: Array<any>) => {
-        this.allProperties = e;
+        }, 500);
       });
   }
 }

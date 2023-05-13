@@ -165,7 +165,7 @@ export class AdminDashboardComponent implements OnInit {
 
     setTimeout(() => {
       this.isLoading = false;
-    }, 1000);
+    }, 500);
   }
 
   cacheInSession() {
