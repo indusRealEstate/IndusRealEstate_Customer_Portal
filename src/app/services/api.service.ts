@@ -40,6 +40,24 @@ export class ApiService {
     );
   }
 
+  getLandlordTenantDocuments(userId: any) {
+    const url = `${API_URL}/getLandlordTenantDocuments.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getLandlordTenants(userId: any) {
+    const url = `${API_URL}/getLandlordTenants.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getUserRecentHappenings(userId: any) {
     const url = `${API_URL}/getRecentHappenings.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(

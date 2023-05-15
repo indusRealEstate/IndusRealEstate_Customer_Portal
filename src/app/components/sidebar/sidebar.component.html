@@ -149,6 +149,20 @@
           <img src="assets/img/svg/sidebar/buildings.svg" alt="" />
         </div>
         <div
+          matTooltip="Tenants"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          *ngIf="user.auth_type == 'landlord'"
+          (click)="miniSideBarClickedTenants()"
+          [ngClass]="
+            isTenantsOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/admin-dashboard/profile-2user.svg" alt="" />
+        </div>
+        <div
           *ngIf="user.auth_type != 'admin'"
           matTooltip="Services"
           matTooltipClass="tooltip"
@@ -225,7 +239,7 @@
           routerLink="/user-profile"
           queryParams="{uid: user.id}"
           *ngIf="userProfileFetching == false"
-          src="{{usrImgPath}}{{ userProfilePic }}"
+          src="{{ usrImgPath }}{{ userProfilePic }}"
           alt=""
           style="
             background-size: cover;
@@ -357,6 +371,30 @@
           </li>
         </div>
 
+        <div *ngIf="isTenantsOpened == true" style="height: 80%">
+          <li
+            *ngFor="let item of myTenantsRoute"
+            class="{{ item.class }} nav-item sideBarNav-Item"
+          >
+            <a
+              class="nav-link"
+              [routerLink]="[item.path]"
+              [queryParams]="{ uid: user.id }"
+              [class.active]="isLinkActive(item.path)"
+            >
+              <!-- <i class="material-icons">{{ item.icon }}</i> -->
+              <div class="row">
+                <img
+                  class="sidebar-items-icon"
+                  [src]="[item.icon]"
+                  alt="hello"
+                />
+                <p class="nav-item-title">{{ item.title }}</p>
+              </div>
+            </a>
+          </li>
+        </div>
+
         <div *ngIf="isServicesOpened == true" style="height: 80%">
           <div *ngIf="user.auth_type == 'landlord'">
             <li
@@ -453,7 +491,7 @@
                 *ngIf="!last"
                 class="nav-link"
                 [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id, doc_type: item.queryParams }"
+                [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path, item.queryParams)"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->

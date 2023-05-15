@@ -4,7 +4,6 @@ import { HomeComponent } from "../home/home.component";
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import { ReportsComponent } from "../reports/reports.component";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
-import { DocumentsComponent } from "app/documents/documents.component";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
@@ -33,6 +32,9 @@ import { RequestsComponentConditioning } from "app/requests/tenant-requests/cond
 import { RequestsComponentMaintenance } from "app/requests/tenant-requests/maintenance/maintenance-req";
 import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tenant-move-in/tenant-move-in-req";
 import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
+import { DocumentsComponentMyDoc } from "app/documents/my-documents/my-docs";
+import { DocumentsComponentMyTenantDoc } from "app/documents/my-tenant-documents/my-tenant-docs";
+import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -45,7 +47,9 @@ export const AdminLayoutRoutes: Routes = [
   { path: "tenant-move-in-requests", component: RequestsComponentTenantMoveIn},
   { path: "tenant-move-out-requests", component: RequestsComponentTenantMoveOut},
   { path: "my-properties", component: MyPropertiesComponent },
-  { path: "documents", component: DocumentsComponent },
+  { path: "my-documents", component: DocumentsComponentMyDoc },
+  { path: "my-tenant-documents", component: DocumentsComponentMyTenantDoc },
+  { path: "my-tenants", component: MyTenantsLandlord },
   { path: "client-documents", component: IndividualDocumentsComponent },
   { path: "property-page", component: PropertyPage },
   { path: "request-page", component: RequestPage },

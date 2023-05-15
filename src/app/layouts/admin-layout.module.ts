@@ -53,7 +53,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 // import { MatToolbarModule } from "@angular/material/toolbar";
 // import { MatTreeModule } from "@angular/material/tree";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
-import { DocumentsComponent } from "app/documents/documents.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
@@ -99,6 +98,9 @@ import { RequestsComponentConditioning } from "app/requests/tenant-requests/cond
 import { RequestsComponentMaintenance } from "app/requests/tenant-requests/maintenance/maintenance-req";
 import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tenant-move-in/tenant-move-in-req";
 import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
+import { DocumentsComponentMyDoc } from "app/documents/my-documents/my-docs";
+import { DocumentsComponentMyTenantDoc } from "app/documents/my-tenant-documents/my-tenant-docs";
+import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -175,7 +177,8 @@ import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/ten
     RequestsComponentTenantMoveIn,
     RequestsComponentTenantMoveOut,
     MyPropertiesComponent,
-    DocumentsComponent,
+    DocumentsComponentMyDoc,
+    DocumentsComponentMyTenantDoc,
     PageNotFoundComponent,
     PropertyPage,
     AddPropertyForm,
@@ -214,7 +217,8 @@ import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/ten
     ServiceTemplateComponent,
     ServiceRecapComponent,
     NotificationsPage,
-    IndividualDocumentsComponent
+    IndividualDocumentsComponent,
+    MyTenantsLandlord
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

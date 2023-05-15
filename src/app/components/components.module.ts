@@ -23,6 +23,8 @@ import { ViewDocDialog } from "./view-doc-dialog/view-doc-dialog";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-requests-dropdown";
+import { ViewTenantDialog } from "./view-tenant-dialog/view-tenant-dialog";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 @NgModule({
   imports: [
@@ -40,6 +42,7 @@ import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-reques
     NgxSkeletonLoaderModule,
     PdfViewerModule,
     MatTooltipModule,
+    DragDropModule
   ],
   declarations: [
     FooterComponent,
@@ -52,6 +55,7 @@ import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-reques
     SuccessDialogRegister,
     DndDirective,
     ViewDocDialog,
+    ViewTenantDialog
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
