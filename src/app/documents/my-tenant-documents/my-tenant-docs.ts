@@ -176,6 +176,6 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
           })
         );
       }
-    }, 1000);
+    }, 1500);
   }
 }

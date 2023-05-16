@@ -14,7 +14,7 @@ $decodedData = json_decode($postdata, true);
 
 if (isset($postdata) && !empty($postdata)) {
 
-    $data_1 = $dbase->execute("SELECT * FROM landlord_tenants WHERE user_id = '{$decodedData["userId"]}'");
+    $data_1 = $dbase->execute("SELECT * FROM tenants t, user u, user_details ud, user_properties usp WHERE t.landlord_id = u.id AND t.landlord_id = ud.user_id AND t.landlord_id = usp.user_id AND t.user_id = '{$decodedData["userId"]}'");
     $prRows_1 = array();
     while (
         $row_1 = mysqli_fetch_assoc($data_1)
@@ -22,18 +22,7 @@ if (isset($postdata) && !empty($postdata)) {
         $prRows_1[] = $row_1;
     }
 
-    $tenantIDS = json_decode($prRows_1[0]['tenant_ids']);
-
-    $tenant_data = array();
-
-    foreach ($tenantIDS->tenant_ids as $key => $value) {
-        $result = $dbase->execute("SELECT * FROM user_documents udoc, user u, user_details ud WHERE udoc.user_id = '$value' AND u.id = '$value' AND ud.user_id = '$value'");
-        while ($row = mysqli_fetch_assoc($result)) {
-            $tenant_data[] = $row;
-        }
-    }
-
-    echo json_encode($tenant_data);
+    echo json_encode($prRows_1);
 
 }
 

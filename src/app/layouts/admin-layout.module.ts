@@ -101,6 +101,7 @@ import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/ten
 import { DocumentsComponentMyDoc } from "app/documents/my-documents/my-docs";
 import { DocumentsComponentMyTenantDoc } from "app/documents/my-tenant-documents/my-tenant-docs";
 import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
+import { MyLandlordComponent } from "app/my-landlord/my-landlord";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -218,7 +219,8 @@ import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
     ServiceRecapComponent,
     NotificationsPage,
     IndividualDocumentsComponent,
-    MyTenantsLandlord
+    MyTenantsLandlord,
+    MyLandlordComponent
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

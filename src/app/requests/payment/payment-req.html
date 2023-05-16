@@ -516,7 +516,6 @@
                   </td>
                 </ng-container>
 
-
                 <ng-container matColumnDef="clientName">
                   <div *ngIf="userAuth == 'landlord'">
                     <th mat-header-cell *matHeaderCellDef>TENANT NAME</th>
@@ -538,7 +537,6 @@
                       {{ element.firstname }}
                     </td>
                   </div>
-                  
                 </ng-container>
 
                 <ng-container matColumnDef="status">
@@ -596,6 +594,77 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+              
+              <table
+                *ngIf="allRequests.length == 0"
+                mat-table
+                [dataSource]="loadingTable"
+                class="mat-elevation-z8 demo-table"
+              >
+                <!-- Name Column -->
+                <ng-container matColumnDef="issueDate">
+                  <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+                </ng-container>
+
+                <ng-container matColumnDef="reqNo">
+                  <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="reqType">
+                  <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="propertyName">
+                  <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+                </ng-container>
+
+                <ng-container matColumnDef="clientName">
+                  <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>STATUS</th>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+                </ng-container>
+
+                <!-- Symbol Column -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+              <div
+                *ngIf="allRequests.length == 0"
+                class="d-flex align-items-center justify-content-center"
+                style="
+                  background: white;
+                  margin-top: -2rem;
+                  text-align: center;
+                  box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                    0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                    0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+                  border-bottom-left-radius: 10px;
+                  border-bottom-right-radius: 10px;
+                  height: 15rem;
+                "
+              >
+                <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+                  NO REQUESTS
+                </p>
+                <p
+                  class="pl-3"
+                  style="font-size: 1.3rem; font-weight: 500; color: #d3ab33"
+                >
+                  (－_－) zzZ
+                </p>
+              </div>
 
               <div style="margin-top: 25px" class="table-paginator">
                 <mat-paginator

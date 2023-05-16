@@ -35,6 +35,7 @@ import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/ten
 import { DocumentsComponentMyDoc } from "app/documents/my-documents/my-docs";
 import { DocumentsComponentMyTenantDoc } from "app/documents/my-tenant-documents/my-tenant-docs";
 import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
+import { MyLandlordComponent } from "app/my-landlord/my-landlord";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -50,6 +51,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "my-documents", component: DocumentsComponentMyDoc },
   { path: "my-tenant-documents", component: DocumentsComponentMyTenantDoc },
   { path: "my-tenants", component: MyTenantsLandlord },
+  { path: "my-landlord", component: MyLandlordComponent },
   { path: "client-documents", component: IndividualDocumentsComponent },
   { path: "property-page", component: PropertyPage },
   { path: "request-page", component: RequestPage },

@@ -145,6 +145,7 @@ export class RequestsComponentMyReqs implements OnInit {
       // this.isLoading = false;
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
+      console.log(this.allRequests);
     } else {
       await this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
@@ -199,6 +200,8 @@ export class RequestsComponentMyReqs implements OnInit {
         return "New Property Add";
       } else if (req_type == "INSPECTION_REQ") {
         return "Inspection Request";
+      } else if (req_type == "PAYMENT") {
+        return "Payment Request";
       }
     } else {
       if (req_type == "MAINTENANCE_REQ") {
@@ -211,6 +214,8 @@ export class RequestsComponentMyReqs implements OnInit {
         return "Payment Request";
       } else if (req_type == "CONDITIONING_REQ") {
         return "Property Conditioning Request";
+      } else if (req_type == "PAYMENT") {
+        return "Payment Request";
       }
     }
   }

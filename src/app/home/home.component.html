@@ -448,6 +448,7 @@
                   height: 25px;
                   cursor: pointer;
                 "
+                (click)="myRequestCardClicked()"
               >
                 <p style="margin-bottom: 0">View All</p>
                 <img
@@ -759,7 +760,7 @@
                     DETAILS
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.details }}
+                    {{ recentHappeningsDetails(element.request_type) }}
                   </td>
                 </ng-container>
 
@@ -771,8 +772,24 @@
                   >
                     PROPERTY NAME
                   </th>
+
                   <td mat-cell *matCellDef="let element">
-                    {{ element.property_name }}
+                    <div
+                      *ngIf="
+                        element.request_type ==
+                        'ADD_PROPERTY_REC_EXIST_LANDLORD'
+                      "
+                    >
+                      {{ element.property_building_name }}
+                    </div>
+                    <div
+                      *ngIf="
+                        element.request_type !=
+                        'ADD_PROPERTY_REC_EXIST_LANDLORD'
+                      "
+                    >
+                      {{ element.property_name }}
+                    </div>
                   </td>
                 </ng-container>
 
@@ -786,7 +803,26 @@
                     DATE ISSUED
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.date }}
+                    <div
+                      *ngIf="
+                        element.request_type ==
+                        'ADD_PROPERTY_REC_EXIST_LANDLORD'
+                      "
+                    >
+                      {{ element.property_issue_date }}
+                    </div>
+                    <div *ngIf="element.request_type == 'PAYMENT'">
+                      {{ element.issue_date }}
+                    </div>
+                    <div
+                      *ngIf="
+                        element.request_type !=
+                          'ADD_PROPERTY_REC_EXIST_LANDLORD' &&
+                        element.request_type != 'PAYMENT'
+                      "
+                    >
+                      {{ element.created_date }}
+                    </div>
                   </td>
                 </ng-container>
 
@@ -817,6 +853,11 @@
                     style="padding-right: 0"
                   >
                     <img
+                      matTooltip="More Actions"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      #menuTrigger="matMenuTrigger"
+                      [matMenuTriggerFor]="actionsMenuHome"
                       src="assets/img/svg/home-page/more.svg"
                       alt=""
                       style="
@@ -826,6 +867,16 @@
                         cursor: pointer;
                       "
                     />
+                    <mat-menu style="display: none" #actionsMenuHome="matMenu">
+                      <div class="col" style="display: grid">
+                        <div
+                          class="btn"
+                          (click)="reviewRecentHappening(element)"
+                        >
+                          review
+                        </div>
+                      </div>
+                    </mat-menu>
                   </td>
                 </ng-container>
 

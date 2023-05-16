@@ -163,6 +163,20 @@
           <img src="assets/img/svg/admin-dashboard/profile-2user.svg" alt="" />
         </div>
         <div
+          matTooltip="Landlord"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          *ngIf="user.auth_type == 'tenant'"
+          (click)="miniSideBarClickedLandlord()"
+          [ngClass]="
+            isLandlordOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/admin-requests/user.svg" alt="" />
+        </div>
+        <div
           *ngIf="user.auth_type != 'admin'"
           matTooltip="Services"
           matTooltipClass="tooltip"
@@ -395,6 +409,30 @@
           </li>
         </div>
 
+        <div *ngIf="isLandlordOpened == true" style="height: 80%">
+          <li
+            *ngFor="let item of myLandlordRoute"
+            class="{{ item.class }} nav-item sideBarNav-Item"
+          >
+            <a
+              class="nav-link"
+              [routerLink]="[item.path]"
+              [queryParams]="{ uid: user.id }"
+              [class.active]="isLinkActive(item.path)"
+            >
+              <!-- <i class="material-icons">{{ item.icon }}</i> -->
+              <div class="row">
+                <img
+                  class="sidebar-items-icon"
+                  [src]="[item.icon]"
+                  alt="hello"
+                />
+                <p class="nav-item-title">{{ item.title }}</p>
+              </div>
+            </a>
+          </li>
+        </div>
+
         <div *ngIf="isServicesOpened == true" style="height: 80%">
           <div *ngIf="user.auth_type == 'landlord'">
             <li
@@ -604,7 +642,6 @@
                 [routerLink]="[item.path]"
                 [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path)"
-                
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
                 <div class="row">

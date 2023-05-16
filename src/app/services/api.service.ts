@@ -58,6 +58,15 @@ export class ApiService {
     );
   }
 
+  getLandlordDetails(userId: any) {
+    const url = `${API_URL}/getLandlord_details.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getUserRecentHappenings(userId: any) {
     const url = `${API_URL}/getRecentHappenings.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(

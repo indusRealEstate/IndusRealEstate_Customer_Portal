@@ -4,6 +4,8 @@ import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { User } from "../../../models/user/user.model";
+import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-home",
@@ -38,7 +40,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
+    private dialog?: MatDialog,
   ) {
     this.isRecentHappeningsLoading = true;
     var userData = localStorage.getItem("currentUser");
@@ -97,18 +100,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async getUserRecentHappenings() {
+  getUserRecentHappenings() {
     var data = localStorage.getItem("currentUser");
     var user = JSON.parse(data);
     var userId = user[0]["id"];
+    // var user_auth = user[0]["auth_type"];
 
     try {
-      this.apiService.getUserRecentHappenings(userId).subscribe((data: any) => {
+      this.apiService.getUserRequests(userId).subscribe((data: any) => {
         this.recentHeppenings = data;
       });
     } catch (error) {
     } finally {
       setTimeout(() => {
+        setTimeout(() => {
+          this.isRecentHappeningsLoading = false;
+        }, 800);
         sessionStorage.setItem(
           "recentHeppenings",
           JSON.stringify({
@@ -128,13 +135,11 @@ export class HomeComponent implements OnInit {
   }
 
   getUserRequestCount(userId) {
-    // this.apiService
-    //   .getUserRequestDetails(userId, "self")
-    //   .subscribe((data: any[]) => {
-    //     setTimeout(() => {
-    //       this.userRequestsCount = data.length;
-    //     }, 200);
-    //   });
+    this.apiService.getUserRequests(userId).subscribe((data: any[]) => {
+      setTimeout(() => {
+        this.userRequestsCount = data.length;
+      }, 200);
+    });
   }
 
   getUserPropertiesCount(userId) {
@@ -143,6 +148,37 @@ export class HomeComponent implements OnInit {
         this.userPropertiesCount = data.length;
       }, 200);
     });
+  }
+
+  recentHappeningsDetails(type) {
+    if (type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return "Requested for adding new property.";
+    } else if (type == "PAYMENT") {
+      return "Requested for payment.";
+    } else if (type == "INSPECTION_REQ") {
+      return "Requested for inspection.";
+    } else if (type == "MAINTENANCE_REQ") {
+      return "Requested for maintenance.";
+    } else if (type == "CONDITIONING_REQ") {
+      return "Requested for property conditioning.";
+    } else if (type == "TENANT_MOVE_IN") {
+      return "Requested for move-in.";
+    } else if (type == "TENANT_MOVE_OUT") {
+      return "Requested for move-out.";
+    }
+  }
+
+  reviewRecentHappening(rec){
+    this.dialog
+      .open(ReviewRequestDialog, {
+        width: "70%",
+        height: "40rem",
+        data: {
+          req_data: rec,
+        },
+      })
+      .afterClosed()
+      .subscribe(async (res) => {});
   }
 
   async initFunction() {
@@ -159,12 +195,9 @@ export class HomeComponent implements OnInit {
       this.userRequestsCount = data["req_count"];
       this.userPropertiesCount = data["prop_count"];
       this.isRecentHappeningsLoading = false;
+      console.log(this.recentHeppenings);
     } else {
-      await this.getUserRecentHappenings().then(() => {
-        setTimeout(() => {
-          this.isRecentHappeningsLoading = false;
-        }, 800);
-      });
+      this.getUserRecentHappenings();
       this.getUserRequestCount(userId);
 
       if (user[0]["auth_type"] == "landlord") {
@@ -213,8 +246,8 @@ export class HomeComponent implements OnInit {
   }
 
   myRequestCardClicked() {
-    this.router.navigate(["/requests"], {
-      queryParams: { uid: this.user.id, req_type: "my-requests" },
+    this.router.navigate(["/my-requests"], {
+      queryParams: { uid: this.user.id },
     });
 
     this.otherServices.myRequestClickedHome.next(true);

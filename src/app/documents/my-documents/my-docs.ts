@@ -174,6 +174,6 @@ export class DocumentsComponentMyDoc implements OnInit {
           })
         );
       }
-    }, 1000);
+    }, 1500);
   }
 }

@@ -30,7 +30,7 @@
         <div class="row" style="margin: 0; justify-content: space-between">
           <div class="col">
             <p
-              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
               style="margin: 0; font-size: 20px; font-weight: 500; color: white"
             >
               Make a Payment > Payment Recap
@@ -80,7 +80,7 @@
             "
           >
             <p
-              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
               style="font-size: 19px; font-weight: 600"
             >
               Payment Overview
@@ -102,7 +102,7 @@
             >
               <div class="col" style="padding: 0">
                 <p
-                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
                   style="margin-bottom: 0; color: #a3a3a3"
                 >
                   Payment Title
@@ -130,7 +130,7 @@
             >
               <div class="col" style="padding: 0">
                 <p
-                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
                   style="margin-bottom: 0; color: #a3a3a3"
                 >
                   Payment Receipt
@@ -145,7 +145,7 @@
               </div>
               <div
                 class="col"
-                *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+                *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
               >
                 <p style="margin-bottom: 0; color: #a3a3a3">
                   Amount to be payed
@@ -310,7 +310,7 @@
           </div> -->
           <div
             class="col pl-0 pt-5 w-100"
-            *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+            *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
           >
             <p style="font-size: 19px; font-weight: 600">Payment Type</p>
             <mat-radio-group

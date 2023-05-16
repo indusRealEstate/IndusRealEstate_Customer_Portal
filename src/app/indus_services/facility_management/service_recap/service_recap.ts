@@ -64,8 +64,8 @@ export class ServiceRecapComponent implements OnInit {
 
             this.service_recap_token = e.token;
             if (
-              this.currentServicePageType == "payment-landlord" ||
-              this.currentServicePageType == "inspection"
+              e.service_type == "payment-landlord" ||
+              e.service_type == "inspection"
             ) {
               this.tenant_raw = e.tenant;
             } else {
