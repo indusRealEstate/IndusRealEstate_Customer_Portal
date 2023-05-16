@@ -368,14 +368,14 @@
 
     <div class="card" *ngIf="isLoading == false">
       <img
-        *ngIf="propertyData.image1 != ''"
-        src="{{ imagesUrl }}/{{ propertyData.image1 }}"
+        *ngIf="propertyData.property_images != ''"
+        src="{{ getPropertyImage(propertyData) }}"
         class="card-img-top"
         alt="image"
         style="max-height: 500px; object-fit: cover; overflow: hidden"
       />
       <img
-        *ngIf="propertyData.image1 == ''"
+        *ngIf="propertyData.property_images == ''"
         src="assets/img/properties/property_placeholder.webp"
         alt="image"
         style="
@@ -386,7 +386,7 @@
       />
 
       <div
-        *ngIf="propertyData.image1 == ''"
+        *ngIf="propertyData.property_images == ''"
         class="row"
         style="
           top: 540px;
@@ -414,7 +414,7 @@
       </div>
 
       <div
-        *ngIf="propertyData.image1 != ''"
+        *ngIf="propertyData.property_images != ''"
         class="row"
         style="
           top: 420px;
@@ -503,7 +503,7 @@
             <div class="col">
               <p style="margin: 0; font-weight: 600">PRICE RANGE</p>
               <p style="margin: 0; font-weight: 600">
-                {{ propertyData.price_range }}
+                {{ propertyData.property_price_range }}
               </p>
             </div>
           </div>
@@ -527,7 +527,7 @@
             <div class="col">
               <p style="margin: 0; font-weight: 600">COMPLETION</p>
               <p style="margin: 0; font-weight: 600">
-                {{ propertyData.completion }}
+                {{ propertyData.property_completion }}
               </p>
             </div>
           </div>
@@ -539,7 +539,7 @@
             <div class="col">
               <p style="margin: 0; font-weight: 600">FINISH TYPE</p>
               <p style="margin: 0; font-weight: 600">
-                {{ propertyData.furnish_type }}
+                {{ propertyData.property_furnish_type }}
               </p>
             </div>
           </div>
@@ -570,7 +570,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    {{ propertyData.community_name }}
+                    {{ propertyData.property_community_name }}
                   </p>
                 </div>
                 <div class="row">
@@ -578,7 +578,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    {{ propertyData.project_name }}
+                    {{ propertyData.property_project_name }}
                   </p>
                 </div>
                 <div class="row">
@@ -586,7 +586,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    {{ propertyData.ownership }}
+                    {{ propertyData.property_ownership }}
                   </p>
                 </div>
               </div>
@@ -596,7 +596,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    {{ propertyData.ref_no }}
+                    {{ propertyData.property_ref_no }}
                   </p>
                 </div>
                 <div class="row">
@@ -604,7 +604,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    {{ propertyData.purpose }}
+                    {{ propertyData.property_purpose }}
                   </p>
                 </div>
                 <div class="row">
@@ -612,7 +612,7 @@
                   <p
                     style="margin-left: 15px; color: #404040; font-weight: 600"
                   >
-                    {{ propertyData.developer }}
+                    {{ propertyData.property_developer }}
                   </p>
                 </div>
               </div>

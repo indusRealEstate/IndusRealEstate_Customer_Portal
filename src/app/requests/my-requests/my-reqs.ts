@@ -190,7 +190,7 @@ export class RequestsComponentMyReqs implements OnInit {
           JSON.stringify(this.allRequests)
         );
       }
-    }, 1500);
+    }, 2000);
   }
 
   getRequestType(req_type, auth) {

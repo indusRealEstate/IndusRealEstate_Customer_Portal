@@ -30,9 +30,16 @@
         <div class="row" style="margin: 0; justify-content: space-between">
           <div class="col">
             <p
-              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
             >
               Make a Payment > Payment Recap
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'inspection'"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
+            >
+              Make an Inspection Request > Recap
             </p>
             <div class="row" style="margin: 0; margin-top: 5px">
               <p style="margin-bottom: 0; color: #88909b">
@@ -72,7 +79,18 @@
               padding-bottom: 20px;
             "
           >
-            <p style="font-size: 19px; font-weight: 600">Payment Overview</p>
+            <p
+              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+              style="font-size: 19px; font-weight: 600"
+            >
+              Payment Overview
+            </p>
+            <p
+              *ngIf="currentServicePageType == 'inspection'"
+              style="font-size: 19px; font-weight: 600"
+            >
+              Inspection Overview
+            </p>
 
             <div
               class="row"
@@ -83,7 +101,18 @@
               "
             >
               <div class="col" style="padding: 0">
-                <p style="margin-bottom: 0; color: #a3a3a3">Payment Title</p>
+                <p
+                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+                  style="margin-bottom: 0; color: #a3a3a3"
+                >
+                  Payment Title
+                </p>
+                <p
+                  *ngIf="currentServicePageType == 'inspection'"
+                  style="margin-bottom: 0; color: #a3a3a3"
+                >
+                  Inspection Title
+                </p>
                 <p style="font-weight: 600">{{service_application_type}}</p>
               </div>
               <div class="col">
@@ -100,14 +129,30 @@
               "
             >
               <div class="col" style="padding: 0">
-                <p style="margin-bottom: 0; color: #a3a3a3">Payment Receipt</p>
+                <p
+                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+                  style="margin-bottom: 0; color: #a3a3a3"
+                >
+                  Payment Receipt
+                </p>
+                <p
+                  *ngIf="currentServicePageType == 'inspection'"
+                  style="margin-bottom: 0; color: #a3a3a3"
+                >
+                  Inspection Receipt
+                </p>
                 <p style="font-weight: 600">Ref: Indus32132x1</p>
               </div>
-              <div class="col">
+              <div
+                class="col"
+                *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+              >
                 <p style="margin-bottom: 0; color: #a3a3a3">
                   Amount to be payed
                 </p>
-                <p style="font-weight: 600">3,045 AED +VAT</p>
+                <p style="font-weight: 600">
+                  {{service_amount | currency:'AED '}} +VAT
+                </p>
               </div>
             </div>
 
@@ -124,11 +169,15 @@
             >
               <div class="col" style="padding: 0">
                 <p style="margin-bottom: 0; color: #a3a3a3">Full Name</p>
-                <p style="font-weight: 600">John Doe</p>
+                <p style="font-weight: 600">
+                  {{tenant.firstname | titlecase}} {{tenant.lastname}}
+                </p>
               </div>
               <div class="col">
-                <p style="margin-bottom: 0; color: #a3a3a3">Property Name</p>
-                <p style="font-weight: 600">Damac Hills, Basswood, Villa 86</p>
+                <p style="margin-bottom: 0; color: #a3a3a3">Property Address</p>
+                <p style="font-weight: 600">
+                  {{tenant.property_name}}, {{tenant.property_address}}
+                </p>
               </div>
             </div>
             <div
@@ -141,18 +190,26 @@
             >
               <div class="col" style="padding: 0">
                 <p style="margin-bottom: 0; color: #a3a3a3">Mobile Number</p>
-                <p style="font-weight: 600">0501234567</p>
+                <p style="font-weight: 600">{{tenant.phone_number}}</p>
               </div>
               <div class="col">
                 <p style="margin-bottom: 0; color: #a3a3a3">Email Id</p>
-                <p style="font-weight: 600">emailuser123@gmail.com</p>
+                <p style="font-weight: 600">{{tenant.email}}</p>
               </div>
             </div>
           </div>
           <div class="col" style="padding-left: 30px; padding-bottom: 20px">
             <p style="font-size: 17px; font-weight: 600">Documents</p>
-
-            <div class="card" style="padding: 10px; max-width: 450px">
+            <span
+              *ngIf="uploadedDoc == null"
+              style="font-size: 18px; font-weight: 700; color: #c7c7c7"
+              >No Document has uploaded</span
+            >
+            <div
+              *ngIf="uploadedDoc != null"
+              class="card"
+              style="padding: 10px; max-width: 450px"
+            >
               <div class="row" style="margin: 0">
                 <div
                   style="
@@ -172,12 +229,22 @@
                 </div>
 
                 <div class="col" style="padding-left: 40px">
-                  <p style="margin-bottom: 0; font-weight: 600">
-                    Payment Receipts
+                  <p
+                    *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
+                    style="margin-bottom: 0; font-weight: 600"
+                  >
+                    Payment Document
                   </p>
-                  <p class="doc-view-link" (click)="docViewBtnClicked()">
-                    View
+                  <p
+                    *ngIf="currentServicePageType == 'inspection'"
+                    style="margin-bottom: 0; font-weight: 600"
+                  >
+                    Inspection Document
                   </p>
+                  <div class="row m-0">
+                    <p class="doc-view-link pr-2" (click)="viewDoc()">View</p>
+                    <p class="doc-view-link" (click)="removeDoc()">Remove</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -187,11 +254,25 @@
               style="width: 100%; display: flex; justify-content: end"
             >
               <div
+                *ngIf="uploadedDoc == null"
+                (click)="openUploadDocDialog('payment_doc')"
                 class="btn"
                 style="
                   background-color: #d4aa32;
                   border-radius: 8px;
                   padding: 10px 20px;
+                "
+              >
+                upload
+              </div>
+              <div
+                *ngIf="uploadedDoc != null"
+                class="btn"
+                style="
+                  background-color: #adadad;
+                  border-radius: 8px;
+                  padding: 10px 20px;
+                  cursor: auto;
                 "
               >
                 upload
@@ -204,7 +285,7 @@
           class="row"
           style="margin: 0; border-top: 1px solid rgba(0, 0, 0, 0.1)"
         >
-          <div class="col" style="padding-left: 0; padding-top: 20px">
+          <!-- <div class="col" style="padding-left: 0; padding-top: 20px">
             <p style="font-size: 19px; font-weight: 600">Payment</p>
 
             <div
@@ -226,8 +307,11 @@
                 <p style="font-weight: 600">3,045 AED +VAT</p>
               </div>
             </div>
-          </div>
-          <div class="col" style="padding-top: 20px; width: 100%">
+          </div> -->
+          <div
+            class="col pl-0 pt-5 w-100"
+            *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landord'"
+          >
             <p style="font-size: 19px; font-weight: 600">Payment Type</p>
             <mat-radio-group
               aria-labelledby="example-radio-group-label"
@@ -330,7 +414,7 @@
         </div>
 
         <div
-          class="col"
+          class="col pt-4"
           style="width: 100%; display: flex; justify-content: end"
         >
           <div

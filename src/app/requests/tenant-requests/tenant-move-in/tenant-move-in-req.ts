@@ -197,7 +197,7 @@ export class RequestsComponentTenantMoveIn implements OnInit {
           JSON.stringify(this.allRequests)
         );
       }
-    }, 1500);
+    }, 2000);
   }
 
   reviewRequest(req) {

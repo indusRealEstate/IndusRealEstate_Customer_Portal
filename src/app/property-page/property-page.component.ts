@@ -50,6 +50,12 @@ export class PropertyPage implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
+  getPropertyImage(prop) {
+    var images: any[] = JSON.parse(prop.property_images)["img"];
+    var prop_id = prop.property_id;
+    return `${this.imagesUrl}/${prop_id}/${images[0]}`;
+  }
+
   initFunction(e) {
     try {
       if (sessionStorage.getItem("properties") != null) {
@@ -59,6 +65,7 @@ export class PropertyPage implements OnInit {
         this.propertyData = propertiesDataSession["properties"].find(
           (x) => x.property_id == e["propertyId"]
         );
+        console.log(this.propertyData);
 
         if (this.propertyData == undefined || this.propertyData == null) {
           this.router.navigate(["/404"]);
@@ -66,6 +73,7 @@ export class PropertyPage implements OnInit {
       } else {
         this.apiService.getProperty(e["propertyId"]).subscribe((e) => {
           this.propertyData = e;
+          console.log(e);
         });
       }
 

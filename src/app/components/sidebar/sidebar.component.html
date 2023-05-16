@@ -413,6 +413,7 @@
                 [routerLink]="[item.path]"
                 [queryParams]="{ uid: user.id, service_type: item.queryParams }"
                 [class.active]="isLinkActive(item.path, item.queryParams)"
+                (click)="servicesSideBarClicked()"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
                 <div class="row">
@@ -603,7 +604,7 @@
                 [routerLink]="[item.path]"
                 [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path)"
-                (click)="myRequestSideBarClicked()"
+                
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
                 <div class="row">

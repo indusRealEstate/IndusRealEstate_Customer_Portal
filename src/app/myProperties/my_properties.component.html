@@ -67,7 +67,7 @@
         <div *ngIf="isImagesLoading == false">
           <img
             *ngIf="property.image1 != ''"
-            src="{{ imagesUrl }}/{{ property.image1 }}"
+            src="{{ getPropertyImage(property) }}"
             alt=""
             style="
               height: 162.5px;
@@ -185,14 +185,14 @@
       >
         <div *ngIf="isImagesLoading == false">
           <img
-            *ngIf="property.image1 != ''"
+            *ngIf="property.property_images != ''"
             class="card-img-top"
-            src="{{ imagesUrl }}/{{ property.image1 }}"
+            src="{{ getPropertyImage(property) }}"
             alt=""
             style="pointer-events: none"
           />
           <img
-            *ngIf="property.image1 == ''"
+            *ngIf="property.property_images == ''"
             src="assets/img/properties/property_placeholder.webp"
             alt=""
             style="

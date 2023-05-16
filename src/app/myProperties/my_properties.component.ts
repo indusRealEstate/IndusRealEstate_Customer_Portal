@@ -15,6 +15,7 @@ export class MyPropertiesComponent implements OnInit {
   properties: any[] = [];
   mouseEnterAddPropertyCard: boolean = false;
   propertyImages: any[] = [];
+  propertyDocs: any[] = [];
 
   imagesUrl: any = "";
 
@@ -74,6 +75,12 @@ export class MyPropertiesComponent implements OnInit {
     setTimeout(() => {
       this.isImagesLoading = false;
     }, 1000);
+  }
+
+  getPropertyImage(prop) {
+    var images: any[] = JSON.parse(prop.property_images)["img"];
+    var prop_id = prop.property_id;
+    return `${this.imagesUrl}/${prop_id}/${images[0]}`;
   }
 
   async initFunction() {

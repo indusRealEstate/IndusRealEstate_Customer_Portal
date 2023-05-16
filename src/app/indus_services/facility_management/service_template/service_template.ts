@@ -1,7 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
+import { ViewDocDialogService } from "app/components/view-doc-dialog-service-temp/view-doc-dialog-service";
+import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
+import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { UserService } from "app/services/user.service";
@@ -20,8 +23,14 @@ export class ServiceTemplateComponent implements OnInit {
 
   applicationNotChoosed: boolean = false;
   amountNotEntered: boolean = false;
+  docNotUploaded: boolean = false;
+  tenantNotChoosed: boolean = false;
 
   uploadedDoc: any;
+
+  user_auth: any;
+
+  tenantsLoading: boolean = false;
 
   currentServicePageType: any;
   servicePagesTypes: string[] = [
@@ -39,11 +48,13 @@ export class ServiceTemplateComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private otherServices: OtherServices,
+    private apiService: ApiService,
     private userServices: UserService,
     private dialog?: MatDialog
   ) {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
+      this.tenantsLoading = true;
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
       if (user[0]["auth_type"] != "admin") {
@@ -60,8 +71,8 @@ export class ServiceTemplateComponent implements OnInit {
             otherServices.servicePageToggle.subscribe((val) => {
               if (val == true) {
                 // console.log("not okay");
-                this.isLoading = true;
-                this.ngOnInit();
+                sessionStorage.removeItem("service-req-doc");
+                this.uploadedDoc = null;
               }
             });
           }
@@ -74,6 +85,9 @@ export class ServiceTemplateComponent implements OnInit {
       this.router.navigate(["/login"]);
     }
   }
+
+  tenantChoose: any;
+  allTenants: any[];
 
   service_amount: any;
 
@@ -114,13 +128,37 @@ export class ServiceTemplateComponent implements OnInit {
     "inspection_type_3",
   ];
 
+  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+
   ngOnInit() {
+    this.tenantsLoading = true;
     this.isLoading = false;
+
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.user_auth = user[0]["auth_type"];
+
+    this.apiService
+      .getLandlordTenants(user[0]["id"])
+      .subscribe((data: any[]) => {
+        this.allTenants = data;
+
+        setTimeout(() => {
+          this.tenantsLoading = false;
+        }, 500);
+      });
   }
 
   convertToBase64(input: string) {
     let base64EncodedString = window.btoa(input);
     return encodeURIComponent(base64EncodedString);
+  }
+
+  // @ViewChild('')
+
+  selectTenant(event: any) {
+    // event.value = "1";
+    console.log(event);
   }
 
   nextBtnClicked() {
@@ -130,24 +168,93 @@ export class ServiceTemplateComponent implements OnInit {
       setTimeout(() => {
         this.applicationNotChoosed = false;
       }, 3000);
-    } else if (this.service_amount == null) {
-      this.amountNotEntered = true;
+    } else if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      if (this.service_amount == null) {
+        this.amountNotEntered = true;
+
+        setTimeout(() => {
+          this.amountNotEntered = false;
+        }, 3000);
+      } else if (this.uploadedDoc == null || this.uploadedDoc == undefined) {
+        this.docNotUploaded = true;
+
+        setTimeout(() => {
+          this.docNotUploaded = false;
+        }, 3000);
+      } else if (this.tenantChoose == null || this.tenantChoose == undefined) {
+        this.tenantNotChoosed = true;
+
+        setTimeout(() => {
+          this.tenantNotChoosed = false;
+        }, 3000);
+      } else {
+        var res_type = this.convertToBase64(this.selectedServiceSubType);
+        var res_amount = this.convertToBase64(this.service_amount);
+        var param = res_type + "service_amount" + res_amount;
+
+        var tenant_details = this.convertToBase64(
+          JSON.stringify(this.tenantChoose)
+        );
+
+        var userData = localStorage.getItem("currentUser");
+        var user = JSON.parse(userData);
+
+        sessionStorage.setItem(
+          "service-req-doc",
+          JSON.stringify({
+            doc: this.uploadedDoc,
+          })
+        );
+
+        this.router.navigate(["/service-recap"], {
+          queryParams: {
+            uid: user[0]["id"],
+            service_type: this.currentServicePageType,
+            token: param,
+            tenant: tenant_details,
+          },
+        });
+      }
+    } else if (this.uploadedDoc == null || this.uploadedDoc == undefined) {
+      this.docNotUploaded = true;
 
       setTimeout(() => {
-        this.amountNotEntered = false;
+        this.docNotUploaded = false;
+      }, 3000);
+    } else if (this.tenantChoose == null || this.tenantChoose == undefined) {
+      this.tenantNotChoosed = true;
+
+      setTimeout(() => {
+        this.tenantNotChoosed = false;
       }, 3000);
     } else {
       var res_type = this.convertToBase64(this.selectedServiceSubType);
       var res_amount = this.convertToBase64(this.service_amount);
       var param = res_type + "service_amount" + res_amount;
 
+      var tenant_details = this.convertToBase64(
+        JSON.stringify(this.tenantChoose)
+      );
+
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
+
+      sessionStorage.setItem(
+        "service-req-doc",
+        JSON.stringify({
+          doc: this.uploadedDoc,
+        })
+      );
+
       this.router.navigate(["/service-recap"], {
         queryParams: {
           uid: user[0]["id"],
           service_type: this.currentServicePageType,
           token: param,
+          tenant: tenant_details,
         },
       });
     }
@@ -172,5 +279,21 @@ export class ServiceTemplateComponent implements OnInit {
         } else {
         }
       });
+  }
+
+  viewDoc() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.dialog.open(ViewDocDialogService, {
+      data: {
+        doc: this.uploadedDoc,
+      },
+      width: "1300px",
+      height: "700px",
+    });
+  }
+
+  removeDoc() {
+    this.uploadedDoc = null;
   }
 }

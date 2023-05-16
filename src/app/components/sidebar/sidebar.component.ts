@@ -473,22 +473,11 @@ export class SidebarComponent implements OnInit {
     return true;
   }
 
-  myRequestSideBarClicked() {
-    this.otherServices.tenantRequestsDropDownCloseLandlord.next(true);
-
-    if (this.otherServices.requestsToggle.getValue() == false) {
-      this.otherServices.requestsToggle.next(true);
-
-      setTimeout(() => {
-        this.otherServices.requestsToggle.next(false);
-      }, 0);
-    } else {
-      this.otherServices.requestsToggle.next(false);
-
-      setTimeout(() => {
-        this.otherServices.requestsToggle.next(true);
-      }, 0);
-    }
+  servicesSideBarClicked() {
+    this.otherServices.servicePageToggle.next(true);
+    setTimeout(() => {
+      this.otherServices.servicePageToggle.next(false);
+    }, 0);
   }
 
   isLinkActive(url, type?): boolean {

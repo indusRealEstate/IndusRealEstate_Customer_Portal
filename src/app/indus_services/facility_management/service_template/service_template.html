@@ -170,10 +170,96 @@
                 </mat-select>
               </mat-form-field>
 
+              <mat-form-field
+                class="agents-select"
+                appearance="fill"
+                *ngIf="user_auth == 'landlord'"
+                style="margin-top: 15px"
+              >
+                <mat-select
+                  [(ngModel)]="tenantChoose"
+                  placeholder="Choose a tenant"
+                >
+                  <!-- (selectionChange)="selectTenant($event.target.value)" -->
+                  <!-- (ngModelChange)="selectTenant($event)" -->
+                  <div *ngIf="tenantsLoading == true">
+                    <mat-option
+                      style="text-align: center; height: 7rem !important"
+                    >
+                      <span
+                        class="spinner-border spinner-border-m"
+                        style="color: #d4aa32"
+                      >
+                      </span>
+                    </mat-option>
+                  </div>
+                  <div *ngIf="tenantsLoading == false">
+                    <mat-option
+                      *ngFor="let t of allTenants;let first = first"
+                      [value]="t"
+                      style="
+                        height: 6rem !important;
+                        border-bottom: 1px solid #e5e5e5;
+                      "
+                    >
+                      <div class="row m-0">
+                        <div
+                          *ngIf="t.profile_photo != ''"
+                          style="
+                                width: 3.5rem;
+                                height: 3.5rem;
+                                overflow: hidden;
+                                background-image: url('{{usrImgPath}}{{t.profile_photo}}');
+                                background-size: cover;
+                                background-position: center;
+                                background-repeat: no-repeat;
+                                border-radius: 50%;
+                                margin: 0.7rem 0;
+                                "
+                        ></div>
+                        <img
+                          *ngIf="t.profile_photo == ''"
+                          src="assets/img/faces/avatar.webp"
+                          alt=""
+                          style="
+                            max-width: 100px;
+                            min-width: 100px;
+                            max-height: 100px;
+                            min-height: 100px;
+                            border-radius: 9px;
+                            user-select: none;
+                            pointer-events: none;
+                          "
+                        />
+                        <div class="col my-auto">
+                          <p
+                            class="m-0"
+                            style="font-size: 15px; font-weight: 600"
+                          >
+                            {{t.firstname | titlecase}}
+                          </p>
+                          <!-- <p
+                            class="m-0"
+                            style="
+                              font-size: 13px;
+                              font-weight: 400;
+                              color: #a1a1a1;
+                              margin-top: -20px !important;
+                            "
+                          >
+                            {{t.user_id}}
+                          </p> -->
+                        </div>
+                      </div>
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
               <input
                 *ngIf="currentServicePageType != 'inspection'"
                 [(ngModel)]="service_amount"
-                type="text"
+                type="number"
                 placeholder="Enter the Amount to be paid"
                 style="
                   margin-top: 15px;
@@ -218,12 +304,22 @@
                 </div>
 
                 <div class="col" style="padding-left: 40px">
-                  <p style="margin-bottom: 0; font-weight: 600">
-                    Payment Receipts
+                  <p
+                    *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
+                    style="margin-bottom: 0; font-weight: 600"
+                  >
+                    Payment Document
                   </p>
-                  <p class="doc-view-link" (click)="docViewBtnClicked()">
-                    View
+                  <p
+                    *ngIf="currentServicePageType == 'inspection'"
+                    style="margin-bottom: 0; font-weight: 600"
+                  >
+                    Inspection Document
                   </p>
+                  <div class="row m-0">
+                    <p class="doc-view-link pr-2" (click)="viewDoc()">View</p>
+                    <p class="doc-view-link" (click)="removeDoc()">Remove</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -233,12 +329,25 @@
               style="width: 100%; display: flex; justify-content: end"
             >
               <div
+                *ngIf="uploadedDoc == null"
                 (click)="openUploadDocDialog('payment_doc')"
                 class="btn"
                 style="
                   background-color: #d4aa32;
                   border-radius: 8px;
                   padding: 10px 20px;
+                "
+              >
+                upload
+              </div>
+              <div
+                *ngIf="uploadedDoc != null"
+                class="btn"
+                style="
+                  background-color: #adadad;
+                  border-radius: 8px;
+                  padding: 10px 20px;
+                  cursor: auto;
                 "
               >
                 upload
@@ -302,6 +411,28 @@
           "
         >
           Please enter a amount.
+        </p>
+        <p
+          *ngIf="docNotUploaded == true"
+          style="
+            text-align: end;
+            margin-top: 20px;
+            margin-right: 15px;
+            color: red;
+          "
+        >
+          Please upload a document.
+        </p>
+        <p
+          *ngIf="tenantNotChoosed == true"
+          style="
+            text-align: end;
+            margin-top: 20px;
+            margin-right: 15px;
+            color: red;
+          "
+        >
+          Please select a Tenant.
         </p>
       </div>
     </div>

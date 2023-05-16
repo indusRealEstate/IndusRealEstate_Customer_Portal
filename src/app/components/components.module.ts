@@ -25,6 +25,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-requests-dropdown";
 import { ViewTenantDialog } from "./view-tenant-dialog/view-tenant-dialog";
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { ViewDocDialogService } from "./view-doc-dialog-service-temp/view-doc-dialog-service";
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     SuccessDialogRegister,
     DndDirective,
     ViewDocDialog,
-    ViewTenantDialog
+    ViewTenantDialog,
+    ViewDocDialogService
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
