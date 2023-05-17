@@ -432,6 +432,21 @@
     Cancel
   </button>
   <button
+    *ngIf="auth_type == 'tenant' && docName == 'payment_doc'"
+    style="
+      background-color: #d4aa32;
+      width: 120px;
+      height: 43px;
+      font-size: 17px;
+    "
+    mat-raised-button
+    color="primary"
+    (click)="submitPaymentUploadDoc()"
+    class="submit-btn"
+  >
+    Submit
+  </button>
+  <button
     *ngIf="auth_type == 'landlord' && docName == 'payment_doc'"
     style="
       background-color: #d4aa32;
@@ -462,7 +477,7 @@
     Submit
   </button>
   <button
-    *ngIf="auth_type == 'tenant'"
+    *ngIf="auth_type == 'tenant' && docName != 'payment_doc'"
     style="
       background-color: #d4aa32;
       width: 120px;

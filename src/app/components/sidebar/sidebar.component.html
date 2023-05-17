@@ -611,10 +611,7 @@
               <a
                 class="nav-link"
                 [routerLink]="[item.path]"
-                [queryParams]="{
-                  uid: user.id,
-                  doc_type: 'all-client-documents'
-                }"
+                [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path)"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->

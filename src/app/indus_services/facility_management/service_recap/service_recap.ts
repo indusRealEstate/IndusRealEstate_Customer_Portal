@@ -29,6 +29,8 @@ export class ServiceRecapComponent implements OnInit {
 
   uploadedDoc: any;
 
+  user_auth: any;
+
   currentServicePageType: any;
   servicePagesTypes: string[] = [
     "payment-tenant",
@@ -104,6 +106,7 @@ export class ServiceRecapComponent implements OnInit {
       this.service_amount = this.decodeToken(
         this.service_recap_token.split("service_amount")[1]
       );
+      // console.log(this.service_amount)
     } else {
       this.service_amount = "none";
     }
@@ -118,8 +121,11 @@ export class ServiceRecapComponent implements OnInit {
       this.currentServicePageType == "inspection"
     ) {
       this.tenant = JSON.parse(this.decodeToken(this.tenant_raw));
+      this.landlord = null;
     } else {
       this.landlord = JSON.parse(this.decodeToken(this.landlord_raw));
+      this.tenant = null;
+      console.log(this.landlord);
     }
   }
 
@@ -165,5 +171,99 @@ export class ServiceRecapComponent implements OnInit {
         } else {
         }
       });
+  }
+
+  getRecapHeading() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      return "Make a Payment > Payment Recap";
+    } else if (this.currentServicePageType == "inspection") {
+      return "Make an Inspection Request > Recap";
+    } else if (this.currentServicePageType == "maintenance") {
+      return "Make a Maintenance Request > Recap";
+    } else if (this.currentServicePageType == "tenant-move-in") {
+      return "Make a Move-in Request > Recap";
+    } else if (this.currentServicePageType == "tenant-move-out") {
+      return "Make a Move-out Request > Recap";
+    } else if (this.currentServicePageType == "conditioning") {
+      return "Make a Property Conditioning Request > Recap";
+    }
+  }
+
+  getOverviewHeading() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      return "Payment Overview";
+    } else if (this.currentServicePageType == "inspection") {
+      return "Inspection Overview";
+    } else if (this.currentServicePageType == "maintenance") {
+      return "Maintenance Overview";
+    } else if (this.currentServicePageType == "tenant-move-in") {
+      return "Move-in Overview";
+    } else if (this.currentServicePageType == "tenant-move-out") {
+      return "Move-out Overview";
+    } else if (this.currentServicePageType == "conditioning") {
+      return "Property Conditioning Overview";
+    }
+  }
+
+  getRequestTitleHeading() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      return "Payment Title";
+    } else if (this.currentServicePageType == "inspection") {
+      return "Inspection Title";
+    } else if (this.currentServicePageType == "maintenance") {
+      return "Maintenance Title";
+    } else if (this.currentServicePageType == "tenant-move-in") {
+      return "Move-in Title";
+    } else if (this.currentServicePageType == "tenant-move-out") {
+      return "Move-out Title";
+    } else if (this.currentServicePageType == "conditioning") {
+      return "Property Conditioning Title";
+    }
+  }
+  getRequestReciept() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      return "Payment Receipt";
+    } else if (this.currentServicePageType == "inspection") {
+      return "Inspection Receipt";
+    } else if (this.currentServicePageType == "maintenance") {
+      return "Maintenance Receipt";
+    } else if (this.currentServicePageType == "tenant-move-in") {
+      return "Move-in Receipt";
+    } else if (this.currentServicePageType == "tenant-move-out") {
+      return "Move-out Receipt";
+    } else if (this.currentServicePageType == "conditioning") {
+      return "Property Conditioning Receipt";
+    }
+  }
+
+  getDocumentName() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      return "Payment Document";
+    } else if (this.currentServicePageType == "inspection") {
+      return "Inspection Document";
+    } else if (this.currentServicePageType == "maintenance") {
+      return "Maintenance Document";
+    } else if (this.currentServicePageType == "tenant-move-in") {
+      return "Move-in Document";
+    } else if (this.currentServicePageType == "tenant-move-out") {
+      return "Move-out Document";
+    } else if (this.currentServicePageType == "conditioning") {
+      return "Property Conditioning Document";
+    }
   }
 }

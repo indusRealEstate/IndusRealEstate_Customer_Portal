@@ -55,13 +55,13 @@
             </p>
             <p
               *ngIf="currentServicePageType == 'tenant-move-out'"
-              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
             >
               Make A Tenant Move-out Request
             </p>
             <p
               *ngIf="currentServicePageType == 'conditioning'"
-              style="margin: 0; font-size: 20px; font-weight: 900; color: white"
+              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
             >
               Make A Property Conditioning Request
             </p>
@@ -379,7 +379,20 @@
           style="width: 100%; display: flex; justify-content: end"
         >
           <div
+            *ngIf="user_auth == 'landlord'"
             (click)="nextBtnClicked()"
+            class="btn"
+            style="
+              background-color: #d4aa32;
+              border-radius: 8px;
+              padding: 10px 20px;
+            "
+          >
+            next
+          </div>
+          <div
+            *ngIf="user_auth == 'tenant'"
+            (click)="nextBtnClickedTenant()"
             class="btn"
             style="
               background-color: #d4aa32;

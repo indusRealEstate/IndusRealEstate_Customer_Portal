@@ -87,7 +87,7 @@ import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenan
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
-import { IndividualDocumentsComponent } from "app/documents-individual/documents-individual.component";
+import { IndividualDocumentsComponent } from "app/documents/documents-individual/documents-individual.component";
 import { AdminReqs } from "app/admin-requests/admin-req";
 import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
 import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
@@ -102,6 +102,7 @@ import { DocumentsComponentMyDoc } from "app/documents/my-documents/my-docs";
 import { DocumentsComponentMyTenantDoc } from "app/documents/my-tenant-documents/my-tenant-docs";
 import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
 import { MyLandlordComponent } from "app/my-landlord/my-landlord";
+import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -220,7 +221,8 @@ import { MyLandlordComponent } from "app/my-landlord/my-landlord";
     NotificationsPage,
     IndividualDocumentsComponent,
     MyTenantsLandlord,
-    MyLandlordComponent
+    MyLandlordComponent,
+    AllClientsDocuments,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

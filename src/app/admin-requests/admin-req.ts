@@ -155,6 +155,8 @@ export class AdminReqs implements OnInit {
       );
     }
 
+    console.log(this.allRequests);
+
     var now = new Date().getMinutes();
 
     var diff =
@@ -206,6 +208,8 @@ export class AdminReqs implements OnInit {
       return "New Tenant Account";
     } else if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
       return "New Property Add";
+    } else if (req_type == "PAYMENT") {
+      return "Payment Request";
     }
   }
 

@@ -480,7 +480,10 @@
           <!------------------------------------ All Requests ----------------------------------------------------->
           <!------------------------------------ All Requests ----------------------------------------------------->
           <div *ngIf="isContentLoading == false">
-            <div *ngIf="isUserSearchedRequests == false">
+            <div
+              *ngIf="isUserSearchedRequests == false"
+              style="overflow: auto; padding: 0 5px; padding-bottom: 50px"
+            >
               <table
                 mat-table
                 [dataSource]="allRequestsMatTableData"
@@ -496,7 +499,7 @@
                     [ngClass]="last ? 'first-col-last' : 'first-col'"
                   >
                     <div
-                      *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'NEW_TENANT_AC'"
+                      *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'NEW_TENANT_AC' || element.request_type == 'PAYMENT'"
                     >
                       {{ element.issue_date }}
                     </div>
@@ -519,6 +522,9 @@
                       *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'NEW_TENANT_AC'"
                     >
                       {{ element.request_details_id }}
+                    </div>
+                    <div *ngIf="element.request_type == 'PAYMENT'">
+                      {{ element.request_id }}
                     </div>
                     <div
                       *ngIf="element.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
@@ -551,7 +557,12 @@
                     <div *ngIf="element.request_type == 'NEW_TENANT_AC'">
                       {{ element.buildingName }}
                     </div>
-                    <div *ngIf="element.request_type != 'NEW_TENANT_AC'">
+                    <div *ngIf="element.request_type == 'PAYMENT'">
+                      {{ element.property_name }}
+                    </div>
+                    <div
+                      *ngIf="element.request_type != 'NEW_TENANT_AC' && element.request_type != 'PAYMENT'"
+                    >
                       {{ element.property_building_name }}
                     </div>
                   </td>
@@ -634,14 +645,83 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+              <table
+                *ngIf="allRequests.length == 0"
+                mat-table
+                [dataSource]="loadingTable"
+                class="mat-elevation-z8 demo-table"
+              >
+                <!-- Name Column -->
+                <ng-container matColumnDef="issueDate">
+                  <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+                </ng-container>
 
-              <div style="margin-top: 25px" class="table-paginator">
-                <mat-paginator
-                  #paginator
-                  [pageSizeOptions]="[6, 8, 10, 14, 20]"
-                  showFirstLastButtons
-                ></mat-paginator>
+                <ng-container matColumnDef="reqNo">
+                  <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="reqType">
+                  <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="propertyName">
+                  <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+                </ng-container>
+
+                <ng-container matColumnDef="clientName">
+                  <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>STATUS</th>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+                </ng-container>
+
+                <!-- Symbol Column -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+              <div
+                *ngIf="allRequests.length == 0"
+                class="d-flex align-items-center justify-content-center"
+                style="
+                  background: white;
+                  margin-top: -2rem;
+                  text-align: center;
+                  box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                    0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                    0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+                  border-bottom-left-radius: 10px;
+                  border-bottom-right-radius: 10px;
+                  height: 15rem;
+                "
+              >
+                <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+                  NO REQUESTS
+                </p>
+                <p
+                  class="pl-3"
+                  style="font-size: 1.3rem; font-weight: 500; color: #d3ab33"
+                >
+                  (－_－) zzZ
+                </p>
               </div>
+            </div>
+            <div style="margin-top: 25px" class="table-paginator">
+              <mat-paginator
+                #paginator
+                [pageSizeOptions]="[6, 8, 10, 14, 20]"
+                showFirstLastButtons
+              ></mat-paginator>
             </div>
           </div>
         </div>

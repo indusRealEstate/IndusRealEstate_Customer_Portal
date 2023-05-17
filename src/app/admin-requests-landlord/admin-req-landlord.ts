@@ -210,6 +210,8 @@ export class AdminReqsLandlord implements OnInit {
       return "New Tenant Account";
     } else if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
       return "New Property Add";
+    } else if (req_type == "PAYMENT") {
+      return "Payment Request";
     }
   }
 

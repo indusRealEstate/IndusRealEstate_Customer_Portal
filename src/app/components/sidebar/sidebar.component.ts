@@ -205,7 +205,7 @@ export const DOCUMENTSROUTETENANT: RouteInfo[] = [
 
 export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
   {
-    path: "/documents",
+    path: "/all-clients-documents",
     title: "All Clients Documents",
     icon: "assets/img/svg/sidebar/file-text.svg",
     class: "",

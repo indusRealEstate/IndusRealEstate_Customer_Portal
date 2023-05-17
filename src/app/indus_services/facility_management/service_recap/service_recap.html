@@ -30,16 +30,9 @@
         <div class="row" style="margin: 0; justify-content: space-between">
           <div class="col">
             <p
-              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
               style="margin: 0; font-size: 20px; font-weight: 500; color: white"
             >
-              Make a Payment > Payment Recap
-            </p>
-            <p
-              *ngIf="currentServicePageType == 'inspection'"
-              style="margin: 0; font-size: 20px; font-weight: 500; color: white"
-            >
-              Make an Inspection Request > Recap
+              {{getRecapHeading()}}
             </p>
             <div class="row" style="margin: 0; margin-top: 5px">
               <p style="margin-bottom: 0; color: #88909b">
@@ -79,17 +72,8 @@
               padding-bottom: 20px;
             "
           >
-            <p
-              *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
-              style="font-size: 19px; font-weight: 600"
-            >
-              Payment Overview
-            </p>
-            <p
-              *ngIf="currentServicePageType == 'inspection'"
-              style="font-size: 19px; font-weight: 600"
-            >
-              Inspection Overview
+            <p style="font-size: 19px; font-weight: 600">
+              {{getOverviewHeading()}}
             </p>
 
             <div
@@ -101,17 +85,8 @@
               "
             >
               <div class="col" style="padding: 0">
-                <p
-                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
-                  style="margin-bottom: 0; color: #a3a3a3"
-                >
-                  Payment Title
-                </p>
-                <p
-                  *ngIf="currentServicePageType == 'inspection'"
-                  style="margin-bottom: 0; color: #a3a3a3"
-                >
-                  Inspection Title
+                <p style="margin-bottom: 0; color: #a3a3a3">
+                  {{getRequestTitleHeading()}}
                 </p>
                 <p style="font-weight: 600">{{service_application_type}}</p>
               </div>
@@ -129,37 +104,34 @@
               "
             >
               <div class="col" style="padding: 0">
-                <p
-                  *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
-                  style="margin-bottom: 0; color: #a3a3a3"
-                >
-                  Payment Receipt
-                </p>
-                <p
-                  *ngIf="currentServicePageType == 'inspection'"
-                  style="margin-bottom: 0; color: #a3a3a3"
-                >
-                  Inspection Receipt
+                <p style="margin-bottom: 0; color: #a3a3a3">
+                  {{getRequestReciept()}}
                 </p>
                 <p style="font-weight: 600">Ref: Indus32132x1</p>
               </div>
-              <div
-                class="col"
-                *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
-              >
+              <div class="col" *ngIf="service_amount != 'none'">
                 <p style="margin-bottom: 0; color: #a3a3a3">
                   Amount to be payed
                 </p>
                 <p style="font-weight: 600">
-                  {{service_amount | currency:'AED '}} +VAT
+                  {{ service_amount | currency:'AED '}} +VAT
                 </p>
               </div>
             </div>
 
             <hr />
-            <p style="font-size: 19px; font-weight: 600">Tenant Information</p>
+            <p
+              *ngIf="landlord == null"
+              style="font-size: 19px; font-weight: 600"
+            >
+              Tenant Information
+            </p>
+            <p *ngIf="tenant == null" style="font-size: 19px; font-weight: 600">
+              Landlord Information
+            </p>
 
             <div
+              *ngIf="landlord == null"
               class="row"
               style="
                 margin: 0;
@@ -181,6 +153,29 @@
               </div>
             </div>
             <div
+              *ngIf="tenant == null"
+              class="row"
+              style="
+                margin: 0;
+                justify-content: space-between;
+                margin-top: 10px;
+              "
+            >
+              <div class="col" style="padding: 0">
+                <p style="margin-bottom: 0; color: #a3a3a3">Full Name</p>
+                <p style="font-weight: 600">
+                  {{landlord.firstname | titlecase}} {{landlord.lastname}}
+                </p>
+              </div>
+              <div class="col">
+                <p style="margin-bottom: 0; color: #a3a3a3">Property Address</p>
+                <p style="font-weight: 600">
+                  {{landlord.property_name}}, {{landlord.property_address}}
+                </p>
+              </div>
+            </div>
+            <div
+              *ngIf="landlord == null"
               class="row"
               style="
                 margin: 0;
@@ -195,6 +190,24 @@
               <div class="col">
                 <p style="margin-bottom: 0; color: #a3a3a3">Email Id</p>
                 <p style="font-weight: 600">{{tenant.email}}</p>
+              </div>
+            </div>
+            <div
+              *ngIf="tenant == null"
+              class="row"
+              style="
+                margin: 0;
+                justify-content: space-between;
+                margin-top: 20px;
+              "
+            >
+              <div class="col" style="padding: 0">
+                <p style="margin-bottom: 0; color: #a3a3a3">Mobile Number</p>
+                <p style="font-weight: 600">{{landlord.phone_number}}</p>
+              </div>
+              <div class="col">
+                <p style="margin-bottom: 0; color: #a3a3a3">Email Id</p>
+                <p style="font-weight: 600">{{landlord.email}}</p>
               </div>
             </div>
           </div>
@@ -229,17 +242,8 @@
                 </div>
 
                 <div class="col" style="padding-left: 40px">
-                  <p
-                    *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
-                    style="margin-bottom: 0; font-weight: 600"
-                  >
-                    Payment Document
-                  </p>
-                  <p
-                    *ngIf="currentServicePageType == 'inspection'"
-                    style="margin-bottom: 0; font-weight: 600"
-                  >
-                    Inspection Document
+                  <p style="margin-bottom: 0; font-weight: 600">
+                    {{getDocumentName()}}
                   </p>
                   <div class="row m-0">
                     <p class="doc-view-link pr-2" (click)="viewDoc()">View</p>

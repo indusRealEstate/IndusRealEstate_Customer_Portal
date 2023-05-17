@@ -161,6 +161,89 @@ export class ServiceTemplateComponent implements OnInit {
     console.log(event);
   }
 
+  nextBtnClickedTenant() {
+    if (this.selectedServiceSubType == null) {
+      this.applicationNotChoosed = true;
+
+      setTimeout(() => {
+        this.applicationNotChoosed = false;
+      }, 3000);
+    } else if (this.currentServicePageType == "payment-tenant") {
+      if (this.service_amount == null) {
+        this.amountNotEntered = true;
+
+        setTimeout(() => {
+          this.amountNotEntered = false;
+        }, 3000);
+      } else if (this.uploadedDoc == null || this.uploadedDoc == undefined) {
+        this.docNotUploaded = true;
+
+        setTimeout(() => {
+          this.docNotUploaded = false;
+        }, 3000);
+      } else {
+        var userData = localStorage.getItem("currentUser");
+        var user = JSON.parse(userData);
+        var res_type = this.convertToBase64(this.selectedServiceSubType);
+        var res_amount = this.convertToBase64(this.service_amount);
+        var param = res_type + "service_amount" + res_amount;
+
+        this.apiService.getLandlordDetails(user[0]["id"]).subscribe((val) => {
+          var landlord_details = val[0];
+
+          this.router.navigate(["/service-recap"], {
+            queryParams: {
+              uid: user[0]["id"],
+              service_type: this.currentServicePageType,
+              token: param,
+              landlord: this.convertToBase64(JSON.stringify(landlord_details)),
+            },
+          });
+        });
+
+        sessionStorage.setItem(
+          "service-req-doc",
+          JSON.stringify({
+            doc: this.uploadedDoc,
+          })
+        );
+      }
+    } else if (this.uploadedDoc == null || this.uploadedDoc == undefined) {
+      this.docNotUploaded = true;
+
+      setTimeout(() => {
+        this.docNotUploaded = false;
+      }, 3000);
+    } else {
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+
+      var res_type = this.convertToBase64(this.selectedServiceSubType);
+      var res_amount = this.convertToBase64(this.service_amount);
+      var param = res_type + "service_amount" + res_amount;
+
+      this.apiService.getLandlordDetails(user[0]["id"]).subscribe((val) => {
+        var landlord_details = val[0];
+
+        this.router.navigate(["/service-recap"], {
+          queryParams: {
+            uid: user[0]["id"],
+            service_type: this.currentServicePageType,
+            token: param,
+            landlord: this.convertToBase64(JSON.stringify(landlord_details)),
+          },
+        });
+      });
+
+      sessionStorage.setItem(
+        "service-req-doc",
+        JSON.stringify({
+          doc: this.uploadedDoc,
+        })
+      );
+    }
+  }
+
   nextBtnClicked() {
     if (this.selectedServiceSubType == null) {
       this.applicationNotChoosed = true;
@@ -168,10 +251,7 @@ export class ServiceTemplateComponent implements OnInit {
       setTimeout(() => {
         this.applicationNotChoosed = false;
       }, 3000);
-    } else if (
-      this.currentServicePageType == "payment-tenant" ||
-      this.currentServicePageType == "payment-landlord"
-    ) {
+    } else if (this.currentServicePageType == "payment-landlord") {
       if (this.service_amount == null) {
         this.amountNotEntered = true;
 
