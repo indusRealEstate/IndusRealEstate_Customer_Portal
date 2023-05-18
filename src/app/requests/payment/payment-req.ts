@@ -113,15 +113,11 @@ export class RequestsComponentPayment implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-      this.allRequestsMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    setTimeout(() => {
+      if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 
   getRequestStatus(req, last) {
@@ -146,11 +142,27 @@ export class RequestsComponentPayment implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      // this.isLoading = false;
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      this.apiService
+        .getUserPaymentRequests(user[0]["id"], user[0]["auth_type"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "payment-reqs-session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 100);
+        });
       sessionStorage.setItem(
         "payment_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -169,7 +181,24 @@ export class RequestsComponentPayment implements OnInit {
       this.clearAllVariables();
       sessionStorage.removeItem("payment_reqs_fetched_time");
       sessionStorage.removeItem("payment-reqs-session");
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      // await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      this.apiService
+        .getUserPaymentRequests(user[0]["id"], user[0]["auth_type"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "payment-reqs-session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 100);
+        });
       sessionStorage.setItem(
         "payment_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -181,24 +210,9 @@ export class RequestsComponentPayment implements OnInit {
     this.allRequests.length = 0;
   }
 
-  async initFunction(userId, auth) {
-    this.apiService
-      .getUserPaymentRequests(userId, auth)
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        console.log(va);
-      });
+  // async initFunction(userId, auth) {
 
-    setTimeout(() => {
-      this.isContentLoading = false;
-      if (this.allRequests.length != 0) {
-        sessionStorage.setItem(
-          "payment-reqs-session",
-          JSON.stringify(this.allRequests)
-        );
-      }
-    }, 2000);
-  }
+  // }
 
   reviewRequest(req) {
     this.dialog

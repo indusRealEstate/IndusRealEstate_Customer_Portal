@@ -151,3 +151,62 @@
   color: black !important;
   font-weight: 600 !important;
 }
+
+:host ::ng-deep .table-paginator {
+  .mat-paginator-container {
+    padding: 20px 15px !important;
+  }
+  .mat-form-field {
+    width: 5rem !important;
+  }
+  .mat-form-field-underline {
+    display: none !important;
+  }
+
+  .mat-form-field-infix {
+    border-top: none !important;
+    padding: 10px 0 !important;
+  }
+
+  .mat-form-field {
+    margin: 0 !important;
+  }
+
+  .mat-select-arrow-wrapper {
+    margin: 0 10px !important;
+    margin-top: -5px !important;
+  }
+
+  .mat-paginator-page-size-label {
+    margin: 0 10px !important;
+    font-size: 13px !important;
+    margin-right: 20px !important;
+  }
+
+  .mat-select-value-text {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+
+  .mat-paginator-page-size {
+    border: 1px solid #a3a3a37d !important;
+    border-radius: 8px !important;
+    align-items: center !important;
+  }
+
+  .mat-select-value {
+    margin-bottom: -5px !important;
+  }
+
+  .mat-icon-button {
+    svg {
+      border: 1px solid #c7c7c7 !important;
+      border-radius: 7px !important;
+      padding: 3px !important;
+    }
+  }
+}

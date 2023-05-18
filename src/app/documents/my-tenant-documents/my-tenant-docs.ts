@@ -124,17 +124,11 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      this.allDocumentsMatTableData = new MatTableDataSource(this.allDocuments);
-      this.allDocumentsMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allDocumentsMatTableData = new MatTableDataSource(
-          this.allDocuments
-        );
+    setTimeout(() => {
+      if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 
   async ngOnInit() {
@@ -149,33 +143,36 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
 
     if (myDocsDataSession != null) {
       this.allDocuments = myDocsDataSession["data"];
-      // this.isLoading = false;
+      this.allDocumentsMatTableData = new MatTableDataSource(this.allDocuments);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      this.apiService
+        .getLandlordTenantDocuments(user[0]["id"])
+        .subscribe((data: any[]) => {
+          this.allDocuments = data;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allDocumentsMatTableData = new MatTableDataSource(
+              this.allDocuments
+            );
+            if (this.allDocuments.length != 0) {
+              sessionStorage.setItem(
+                "my-tenant-docs-session",
+                JSON.stringify({
+                  data: this.allDocuments,
+                })
+              );
+            }
+          }, 100);
+        });
     }
   }
 
-  async initFunction(userId, auth) {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
-    var userId = user[0]["id"];
+  // async initFunction(userId, auth) {
+  //   var data = localStorage.getItem("currentUser");
+  //   var user = JSON.parse(data);
+  //   var userId = user[0]["id"];
 
-    this.apiService.getLandlordTenantDocuments(userId).subscribe((data: any[]) => {
-      this.allDocuments = data;
-      console.log(data);
-    });
-    setTimeout(() => {
-      this.isContentLoading = false;
-      if (this.allDocuments.length != 0) {
-        sessionStorage.setItem(
-          "my-tenant-docs-session",
-          JSON.stringify({
-            data: this.allDocuments,
-          })
-        );
-      }
-    }, 1500);
-  }
+  // }
 }

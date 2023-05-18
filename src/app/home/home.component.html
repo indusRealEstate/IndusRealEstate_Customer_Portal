@@ -746,7 +746,7 @@
               </div>
               <table
                 mat-table
-                [dataSource]="recentHeppenings"
+                [dataSource]="recentHappeningsMatTableData"
                 class="mat-elevation-z8 demo-table"
                 *ngIf="recentHeppenings.length != 0"
               >
@@ -888,6 +888,13 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+              <div class="table-paginator">
+                <mat-paginator
+                  #paginator
+                  [pageSizeOptions]="[6, 8, 10, 14, 20]"
+                  showFirstLastButtons
+                ></mat-paginator>
+              </div>
             </div>
           </div>
         </div>

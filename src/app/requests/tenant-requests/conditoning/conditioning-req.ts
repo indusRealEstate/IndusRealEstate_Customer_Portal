@@ -113,15 +113,11 @@ export class RequestsComponentConditioning implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-      this.allRequestsMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    setTimeout(() => {
+      if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 
   getRequestStatus(req, last) {
@@ -146,11 +142,27 @@ export class RequestsComponentConditioning implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      // this.isLoading = false;
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      this.apiService
+        .getUserConditioningRequests(user[0]["id"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "conditioning-reqs-session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 100);
+        });
       sessionStorage.setItem(
         "conditioning_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -161,7 +173,9 @@ export class RequestsComponentConditioning implements OnInit {
 
     var diff =
       now -
-      Number(JSON.parse(sessionStorage.getItem("conditioning_reqs_fetched_time")));
+      Number(
+        JSON.parse(sessionStorage.getItem("conditioning_reqs_fetched_time"))
+      );
 
     if (diff >= 10) {
       // this.isLoading = true;
@@ -169,7 +183,23 @@ export class RequestsComponentConditioning implements OnInit {
       this.clearAllVariables();
       sessionStorage.removeItem("conditioning_reqs_fetched_time");
       sessionStorage.removeItem("conditioning-reqs-session");
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      this.apiService
+        .getUserConditioningRequests(user[0]["id"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "conditioning-reqs-session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 100);
+        });
       sessionStorage.setItem(
         "conditioning_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -181,24 +211,9 @@ export class RequestsComponentConditioning implements OnInit {
     this.allRequests.length = 0;
   }
 
-  async initFunction(userId, auth) {
-    this.apiService
-      .getUserConditioningRequests(userId)
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        console.log(va);
-      });
+  // async initFunction(userId, auth) {
 
-    setTimeout(() => {
-      this.isContentLoading = false;
-      if (this.allRequests.length != 0) {
-        sessionStorage.setItem(
-          "conditioning-reqs-session",
-          JSON.stringify(this.allRequests)
-        );
-      }
-    }, 2000);
-  }
+  // }
 
   reviewRequest(req) {
     this.dialog

@@ -1,10 +1,8 @@
 import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -65,9 +63,7 @@ export class RequestsComponentMyReqs implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private adminService: AdminService,
-    private dialog?: MatDialog,
-    private emailServices?: EmailServices
+    private dialog?: MatDialog
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
@@ -110,15 +106,11 @@ export class RequestsComponentMyReqs implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-      this.allRequestsMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    setTimeout(() => {
+      if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 
   getRequestStatus(req, last) {
@@ -142,12 +134,28 @@ export class RequestsComponentMyReqs implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      // this.isLoading = false;
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
-      this.ngAfterViewInitInitialize = true;
-      console.log(this.allRequests);
+      // console.log(this.allRequests);
     } else {
-      await this.initFunction(user[0]["id"]);
+      this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
+        this.allRequests = va;
+
+        setTimeout(() => {
+          this.isContentLoading = false;
+          this.allRequestsMatTableData = new MatTableDataSource(
+            this.allRequests
+          );
+
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "my-reqs-session",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        }, 100);
+      });
+      // this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
         "my_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -165,7 +173,22 @@ export class RequestsComponentMyReqs implements OnInit {
       this.clearAllVariables();
       sessionStorage.removeItem("my_reqs_fetched_time");
       sessionStorage.removeItem("my-reqs-session");
-      await this.initFunction(user[0]["id"]);
+      this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
+        this.allRequests = va;
+
+        setTimeout(() => {
+          this.isContentLoading = false;
+          this.allRequestsMatTableData = new MatTableDataSource(
+            this.allRequests
+          );
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "my-reqs-session",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        }, 100);
+      });
       sessionStorage.setItem(
         "my_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -175,23 +198,6 @@ export class RequestsComponentMyReqs implements OnInit {
 
   clearAllVariables() {
     this.allRequests.length = 0;
-  }
-
-  async initFunction(userId) {
-    this.apiService.getUserRequests(userId).subscribe((va: any[]) => {
-      this.allRequests = va;
-      console.log(va);
-    });
-
-    setTimeout(() => {
-      this.isContentLoading = false;
-      if (this.allRequests.length != 0) {
-        sessionStorage.setItem(
-          "my-reqs-session",
-          JSON.stringify(this.allRequests)
-        );
-      }
-    }, 2000);
   }
 
   getRequestType(req_type, auth) {

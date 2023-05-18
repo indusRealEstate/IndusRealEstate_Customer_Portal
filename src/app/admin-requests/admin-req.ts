@@ -112,15 +112,11 @@ export class AdminReqs implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-      this.allRequestsMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    setTimeout(() => {
+      if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 
   getRequestStatus(req, last) {
@@ -144,11 +140,29 @@ export class AdminReqs implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      // this.isLoading = false;
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      await this.initFunction(user[0]["id"]);
+      this.adminService
+        .getAllRequestsAdmin({
+          userId: user[0]["id"],
+        })
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "admin_reqs_session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 100);
+        });
       sessionStorage.setItem(
         "admin_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -169,7 +183,25 @@ export class AdminReqs implements OnInit {
       this.clearAllVariables();
       sessionStorage.removeItem("admin_reqs_fetched_time");
       sessionStorage.removeItem("admin_reqs_session");
-      await this.initFunction(user[0]["id"]);
+      this.adminService
+        .getAllRequestsAdmin({
+          userId: user[0]["id"],
+        })
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "admin_reqs_session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 100);
+        });
       sessionStorage.setItem(
         "admin_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
@@ -181,25 +213,9 @@ export class AdminReqs implements OnInit {
     this.allRequests.length = 0;
   }
 
-  async initFunction(userId) {
-    this.adminService
-      .getAllRequestsAdmin({
-        userId: userId,
-      })
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-      });
+  // async initFunction(userId) {
 
-    setTimeout(() => {
-      this.isContentLoading = false;
-      if (this.allRequests.length != 0) {
-        sessionStorage.setItem(
-          "admin_reqs_session",
-          JSON.stringify(this.allRequests)
-        );
-      }
-    }, 1500);
-  }
+  // }
 
   getRequestType(req_type) {
     if (req_type == "NEW_LANDLORD_REQ") {

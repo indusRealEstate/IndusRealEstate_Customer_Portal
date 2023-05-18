@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -6,6 +6,8 @@ import { OtherServices } from "app/services/other.service";
 import { User } from "../../../models/user/user.model";
 import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
 import { MatDialog } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
   selector: "app-home",
@@ -35,13 +37,16 @@ export class HomeComponent implements OnInit {
     "actions",
   ];
 
+  recentHappeningsMatTableData: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private otherServices: OtherServices,
-    private dialog?: MatDialog,
+    private dialog?: MatDialog
   ) {
     this.isRecentHappeningsLoading = true;
     var userData = localStorage.getItem("currentUser");
@@ -106,16 +111,13 @@ export class HomeComponent implements OnInit {
     var userId = user[0]["id"];
     // var user_auth = user[0]["auth_type"];
 
-    try {
-      this.apiService.getUserRequests(userId).subscribe((data: any) => {
-        this.recentHeppenings = data;
-      });
-    } catch (error) {
-    } finally {
+    this.apiService.getUserRequests(userId).subscribe((data: any) => {
+      this.recentHeppenings = data;
       setTimeout(() => {
-        setTimeout(() => {
-          this.isRecentHappeningsLoading = false;
-        }, 800);
+        this.isRecentHappeningsLoading = false;
+        this.recentHappeningsMatTableData = new MatTableDataSource(
+          this.recentHeppenings
+        );
         sessionStorage.setItem(
           "recentHeppenings",
           JSON.stringify({
@@ -124,8 +126,8 @@ export class HomeComponent implements OnInit {
             prop_count: this.userPropertiesCount,
           })
         );
-      }, 2000);
-    }
+      }, 500);
+    });
   }
 
   async ngOnInit() {
@@ -168,7 +170,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  reviewRecentHappening(rec){
+  reviewRecentHappening(rec) {
     this.dialog
       .open(ReviewRequestDialog, {
         width: "70%",
@@ -179,6 +181,14 @@ export class HomeComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(async (res) => {});
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.recentHappeningsMatTableData != undefined) {
+        this.recentHappeningsMatTableData.paginator = this.paginator;
+      }
+    }, 1000);
   }
 
   async initFunction() {
@@ -195,7 +205,9 @@ export class HomeComponent implements OnInit {
       this.userRequestsCount = data["req_count"];
       this.userPropertiesCount = data["prop_count"];
       this.isRecentHappeningsLoading = false;
-      console.log(this.recentHeppenings);
+      this.recentHappeningsMatTableData = new MatTableDataSource(
+        this.recentHeppenings
+      );
     } else {
       this.getUserRecentHappenings();
       this.getUserRequestCount(userId);

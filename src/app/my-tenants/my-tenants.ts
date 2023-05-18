@@ -122,15 +122,11 @@ export class MyTenantsLandlord implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      this.allTenantsMatTableData = new MatTableDataSource(this.allTenants);
-      this.allTenantsMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allTenantsMatTableData = new MatTableDataSource(this.allTenants);
+    setTimeout(() => {
+      if (this.allTenantsMatTableData != undefined) {
         this.allTenantsMatTableData.paginator = this.paginator;
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 
   async ngOnInit() {
@@ -145,33 +141,36 @@ export class MyTenantsLandlord implements OnInit {
 
     if (myDocsDataSession != null) {
       this.allTenants = myDocsDataSession["data"];
-      // this.isLoading = false;
+      this.allTenantsMatTableData = new MatTableDataSource(this.allTenants);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      this.apiService
+        .getLandlordTenants(user[0]["id"])
+        .subscribe((data: any[]) => {
+          this.allTenants = data;
+          setTimeout(() => {
+            this.isContentLoading = false;
+            this.allTenantsMatTableData = new MatTableDataSource(
+              this.allTenants
+            );
+            if (this.allTenants.length != 0) {
+              sessionStorage.setItem(
+                "my-tenants-session",
+                JSON.stringify({
+                  data: this.allTenants,
+                })
+              );
+            }
+          }, 100);
+        });
     }
   }
 
-  async initFunction(userId, auth) {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
-    var userId = user[0]["id"];
+  // async initFunction(userId, auth) {
+  //   var data = localStorage.getItem("currentUser");
+  //   var user = JSON.parse(data);
+  //   var userId = user[0]["id"];
 
-    this.apiService.getLandlordTenants(userId).subscribe((data: any[]) => {
-      this.allTenants = data;
-      console.log(data);
-    });
-    setTimeout(() => {
-      this.isContentLoading = false;
-      if (this.allTenants.length != 0) {
-        sessionStorage.setItem(
-          "my-tenants-session",
-          JSON.stringify({
-            data: this.allTenants,
-          })
-        );
-      }
-    }, 1000);
-  }
+  // }
 }
