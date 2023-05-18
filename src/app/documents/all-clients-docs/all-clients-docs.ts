@@ -34,10 +34,11 @@ export class AllClientsDocuments implements OnInit {
 
   displayedColumns: string[] = [
     // "name",
-    "docName",
-    "uploadDate",
-    "docSize",
-    "links",
+    "client_details",
+    "document_name",
+    "doc_size",
+    "client_property",
+    "more",
   ];
 
   allDocuments: any[] = [];
@@ -56,10 +57,11 @@ export class AllClientsDocuments implements OnInit {
 
   userAuth: any;
 
+  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
@@ -136,7 +138,6 @@ export class AllClientsDocuments implements OnInit {
   }
 
   async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.userAuth = user[0]["auth_type"];
@@ -151,7 +152,7 @@ export class AllClientsDocuments implements OnInit {
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      await this.initFunction(user[0]["id"], user[0]["auth_type"]);
+      await this.initFunction(user[0]["id"], this.userAuth);
     }
   }
 
@@ -160,10 +161,12 @@ export class AllClientsDocuments implements OnInit {
     var user = JSON.parse(data);
     var userId = user[0]["id"];
 
-    this.apiService.getUserDocuments(userId).subscribe((data: any[]) => {
-      this.allDocuments = data;
-      console.log(this.allDocuments);
-    });
+    this.adminService
+      .getAllClientsDocuments(userId)
+      .subscribe((data: any[]) => {
+        this.allDocuments = data;
+        console.log(this.allDocuments);
+      });
     setTimeout(() => {
       this.isContentLoading = false;
       if (this.allDocuments.length != 0) {

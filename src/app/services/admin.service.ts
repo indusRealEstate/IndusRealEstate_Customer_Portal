@@ -37,6 +37,17 @@ export class AdminService {
       );
   }
 
+  getAllClientsDocuments(userId: any) {
+    const url = `${API_URL}/getAllClientsDocuments.php?apikey=1`;
+    return this.http
+      .post<any>(url, { userId: userId})
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getAllClients(userId: any, auth: any) {
     const url = `${API_URL}/getAllClients.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId, auth: auth }).pipe(
