@@ -33,7 +33,7 @@ export class AdminDashboardComponent implements OnInit {
 
   isRequestOverviewLoading: boolean = false;
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   constructor(
     private apiService: ApiService,

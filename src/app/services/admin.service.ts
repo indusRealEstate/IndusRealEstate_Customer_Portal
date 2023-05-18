@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
 
-const API_URL = "https://indusmanagement.ae/api/admin";
+const API_URL = "https://indusre.app/api/admin";
 
 @Injectable({ providedIn: "root" })
 export class AdminService {

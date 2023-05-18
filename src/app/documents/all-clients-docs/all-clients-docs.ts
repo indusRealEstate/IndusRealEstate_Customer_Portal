@@ -57,7 +57,7 @@ export class AllClientsDocuments implements OnInit {
 
   userAuth: any;
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

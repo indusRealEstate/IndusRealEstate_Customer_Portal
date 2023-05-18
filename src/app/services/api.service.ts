@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
 
-const API_URL = "https://indusmanagement.ae/api/user";
-const BASE_URL_IMAGES = "https://indusmanagement.ae/api/upload/img/properties";
+const API_URL = "https://indusre.app/api/user";
+const BASE_URL_IMAGES = "https://indusre.app/api/upload/img/properties";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -145,7 +145,7 @@ export class ApiService {
   }
 
   public getDocForView(doc_data: any) {
-    const url = `https://indusmanagement.ae/api/getDocForView.php?apikey=1`;
+    const url = `https://indusre.app/api/getDocForView.php?apikey=1`;
     return this.http.post<any>(url, { doc_data: doc_data }).pipe(
       map((data) => {
         return data;
@@ -227,7 +227,7 @@ export class ApiService {
   }
 
   saveImgInServer(data: any) {
-    const url = `https://indusmanagement.ae/api/uploader.php?apikey=1`;
+    const url = `https://indusre.app/api/uploader.php?apikey=1`;
 
     return this.http
       .post(url, data)
@@ -235,7 +235,7 @@ export class ApiService {
   }
 
   saveLandlordRegisterUploadFiles(data: any) {
-    const url = `https://indusmanagement.ae/api/register_files_uploader.php?apikey=1`;
+    const url = `https://indusre.app/api/register_files_uploader.php?apikey=1`;
 
     return this.http
       .post(url, data)
@@ -245,7 +245,7 @@ export class ApiService {
   }
 
   saveTenantRegisterUploadFiles(data: any) {
-    const url = `https://indusmanagement.ae/api/register_files_uploader_tenant.php?apikey=1`;
+    const url = `https://indusre.app/api/register_files_uploader_tenant.php?apikey=1`;
 
     return this.http
       .post(url, data)

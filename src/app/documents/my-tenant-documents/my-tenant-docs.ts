@@ -40,7 +40,7 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
     "links",
   ];
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   allDocuments: any[] = [];
   allDocumentsMatTableData: MatTableDataSource<any>;

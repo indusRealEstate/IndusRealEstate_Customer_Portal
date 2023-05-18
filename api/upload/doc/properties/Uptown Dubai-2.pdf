@@ -1,0 +1,4 @@
+SELECT * FROM table_blog_light WHERE id='27'dummydemo.pdf<br />
+<b>Warning</b>:  filesize(): stat failed for ../../Admin/pages/forms/uploads/brochure/. dummydemo.pdf in <b>C:\xampp\htdocs\ayaz\v9\controller\download.php</b> on line <b>82</b><br />
+SELECT * FROM table_blog_light WHERE id='27'dummydemo.pdf<br />
+<b>Warning</b>:  filesize(): stat failed for ../../Admin/pages/forms/uploads/brochure/. dummydemo.pdf in <b>C:\xampp\htdocs\ayaz\v9\controller\download.php</b> on line <b>82</b><br />

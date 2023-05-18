@@ -352,7 +352,7 @@ export class SidebarComponent implements OnInit {
   ///////////////--App Version--////////////////////
   appVersion: any = "VERSION PROD v0.1.15";
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   constructor(
     private authService: AuthenticationService,

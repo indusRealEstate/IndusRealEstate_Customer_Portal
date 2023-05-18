@@ -14,7 +14,7 @@ $postdata = file_get_contents("php://input");
 $decodedData = json_decode($postdata, true);
 
 if (isset($postdata) && !empty($postdata)) {
-    $stmt = $dbase->execute("INSERT INTO `create_ac_req`
+    $stmt = $dbase->execute("INSERT INTO `create_ac_req_landlord`
     (
      `request_type`,
      `firstname`,

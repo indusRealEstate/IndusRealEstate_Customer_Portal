@@ -5,7 +5,7 @@ import {
 } from "@angular/common/http";
 import { catchError, Observable, of} from "rxjs";
 
-const API_URL = "https://indusmanagement.ae/api";
+const API_URL = "https://indusre.app/api";
 
 @Injectable({ providedIn: "root" })
 export class EmailServices {

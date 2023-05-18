@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, Observable, of } from "rxjs";
 
-const API_URL = "https://indusmanagement.ae/api/auth";
+const API_URL = "https://indusre.app/api/auth";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
@@ -46,7 +46,7 @@ export class UserService {
   // }
 
   updateUserProfile(data) {
-    const url = `https://indusmanagement.ae/api/user_profile_updator.php?apikey=1`;
+    const url = `https://indusre.app/api/user_profile_updator.php?apikey=1`;
     return this.http
       .post(url, JSON.stringify(data))
       .pipe(catchError(this.handleError("addUserDetails", [])));

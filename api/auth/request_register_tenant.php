@@ -52,8 +52,7 @@ if (isset($postdata) && !empty($postdata)) {
      `title_deed_doc`,
      `approved`,
      `expired`,
-     `declined`,
-     `issue_date`)
+     `declined`)
 VALUES      ('{$decodedData["request_type"]}',
 '{$decodedData["firstname"]}',
 '{$decodedData["lastname"]}',
@@ -91,6 +90,5 @@ VALUES      ('{$decodedData["request_type"]}',
 '{$decodedData["title_Deed_doc"]}',
 '{$decodedData["approved"]}',
 '{$decodedData["expired"]}',
-'{$decodedData["declined"]}',
-'{$decodedData["issue_date"]}') ");
+'{$decodedData["declined"]}') ");
 }

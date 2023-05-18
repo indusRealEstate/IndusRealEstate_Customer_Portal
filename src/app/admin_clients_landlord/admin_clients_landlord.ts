@@ -16,7 +16,7 @@ export class AdminClientsLandlord implements OnInit {
 
   allClients: any[] = [];
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   userId: any = JSON.parse(localStorage.getItem("currentUser"))[0]["id"];
 

@@ -128,7 +128,7 @@ export class ServiceTemplateComponent implements OnInit {
     "inspection_type_3",
   ];
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   ngOnInit() {
     this.tenantsLoading = true;

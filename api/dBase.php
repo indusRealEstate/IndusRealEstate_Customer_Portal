@@ -21,8 +21,8 @@ class dBase
 
     // public $result;
 
-    function __construct($server = "localhost", $user = "ireproperty_portal", $pass = "ireproperty_portal", $db = "ireproperty_portal" ,$con="")
-    // function __construct($server = "localhost", $user = "indusinhouse_v20_user", $pass = "2XLwfK![g82x", $db = "indusinhouse_v20" ,$con="")
+    // function __construct($server = "127.0.0.1", $user = "root", $pass = "", $db = "customer_portal", $con = "")
+    function __construct($server = "localhost", $user = "ireproperty_aj", $pass = 'AA123456', $db = "ireproperty_portal" ,$con="")
 
     {
         $this->server = $server;

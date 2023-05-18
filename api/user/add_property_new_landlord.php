@@ -5,10 +5,6 @@ header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 header("Content-Type: application/json; charset=UTF-8");
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', FALSE);
-header('Pragma: no-cache');
 
 include "../dBase.php";
 $dbase = new dBase();
@@ -19,28 +15,28 @@ $decodedData = json_decode($postdata, true);
 
 if ($postdata != null) {
     $stmt = $dbase->execute("INSERT INTO `add_property_req_new_ac`
-    (`unique_id`,
+    (`property_unique_id`,
      `property_state`,
-     `offer_validity`,
-     `furnish_details`,
+     `property_offer_validity`,
+     `property_furnish_details`,
      `property_type`,
-     `title_deed_number`,
-     `project_name`,
-     `community`,
-     `building_name`,
-     `size_area`,
-     `bedroom_no`,
-     `unit_number`,
-     `car_parking_no`,
-     `additional_info`,
-     `social_media_marketing_info`,
-     `board_marketing_info`,
-     `others_marketing_info`,
-     `images`,
-     `docs`,
-     `valid_until`,
-     `second_party_signature`,
-     `issue_date`)
+     `property_title_deed_number`,
+     `property_project_name`,
+     `property_community`,
+     `property_building_name`,
+     `property_size_area`,
+     `property_bedroom_no`,
+     `property_unit_number`,
+     `property_car_parking_no`,
+     `property_additional_info`,
+     `property_social_media_marketing_info`,
+     `property_board_marketing_info`,
+     `property_others_marketing_info`,
+     `property_images`,
+     `property_docs`,
+     `property_valid_until`,
+     `property_second_party_signature`,
+     `property_issue_date`)
 VALUES
     ('{$decodedData["unique_id"]}',
      '{$decodedData["property_state"]}',

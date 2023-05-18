@@ -70,7 +70,7 @@ function print_processed_html($string, $name, $unique_id, $auth_type)
 
 
     $search2  = "href='#'";
-    $replace2 = "href='https://indusmanagement.ae/#/email-verification?token=$replacedEnc'";
+    $replace2 = "href='https://indusre.app/#/email-verification?token=$replacedEnc'";
 
     $processed_string2 = str_replace($search2, $replace2 , $processed_string);
 

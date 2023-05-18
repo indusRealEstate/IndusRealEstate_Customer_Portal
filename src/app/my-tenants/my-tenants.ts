@@ -42,7 +42,7 @@ export class MyTenantsLandlord implements OnInit {
     "more",
   ];
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   allTenants: any[] = [];
   allTenantsMatTableData: MatTableDataSource<any>;

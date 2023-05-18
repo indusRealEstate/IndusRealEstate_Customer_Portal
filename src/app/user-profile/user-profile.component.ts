@@ -32,7 +32,7 @@ export class UserProfileComponent implements OnInit {
 
   ///----
 
-  usrImgPath: any = "https://indusmanagement.ae/api/upload/img/user/";
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   isOverviewTabActive: boolean = true;
   isDocDetailsTabActive: boolean = false;
