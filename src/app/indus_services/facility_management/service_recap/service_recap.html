@@ -322,7 +322,7 @@
               class="example-radio-group"
               [(ngModel)]="selectedPayment"
             >
-              <mat-radio-button class="example-radio-button" value="card">
+              <!-- <mat-radio-button class="example-radio-button" value="card">
                 <div
                   [ngClass]="selectedPayment == 'card' ? 'payment-type-card-selected' : 'payment-type-card'"
                   class="card"
@@ -360,7 +360,7 @@
                     </p>
                   </div>
                 </div>
-              </mat-radio-button>
+              </mat-radio-button> -->
               <mat-radio-button class="example-radio-button" value="cash">
                 <div
                   class="card"
@@ -422,6 +422,7 @@
           style="width: 100%; display: flex; justify-content: end"
         >
           <div
+            (click)="submitServiceReq()"
             class="btn"
             style="
               background-color: #d4aa32;
@@ -432,6 +433,55 @@
             finish
           </div>
         </div>
+        <p
+          *ngIf="payment_type_not_selected == true"
+          style="
+            text-align: end;
+            margin-top: 20px;
+            margin-right: 15px;
+            color: red;
+          "
+        >
+          Please choose a payment type.
+        </p>
+        <p
+          *ngIf="document_is_missing == true"
+          style="
+            text-align: end;
+            margin-top: 20px;
+            margin-right: 15px;
+            color: red;
+          "
+        >
+          Please choose a document.
+        </p>
+        <div
+          class="spinner_overlay"
+          *ngIf="is_request_processing == true"
+          style="
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            opacity: 0.5;
+            z-index: 1000;
+          "
+        ></div>
+
+        <span
+          *ngIf="is_request_processing == true"
+          class="spinner-border spinner-border-m mr-2"
+          style="
+            color: #d4aa32;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1001;
+          "
+        >
+        </span>
       </div>
     </div>
   </div>

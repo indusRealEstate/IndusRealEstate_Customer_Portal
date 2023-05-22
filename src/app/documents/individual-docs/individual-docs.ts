@@ -11,11 +11,11 @@ import { MatPaginator } from "@angular/material/paginator";
 import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 
 @Component({
-  selector: "app-my-docs",
-  templateUrl: "./my-docs.html",
-  styleUrls: ["./my-docs.scss"],
+  selector: "app-documents-individual",
+  templateUrl: "./individual-docs.html",
+  styleUrls: ["./individual-docs.scss"],
 })
-export class DocumentsComponentMyDoc implements OnInit {
+export class IndividualDocumentsComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -37,6 +37,7 @@ export class DocumentsComponentMyDoc implements OnInit {
     "docName",
     "uploadDate",
     "docSize",
+    "propertyName",
     "links",
   ];
 
@@ -56,6 +57,10 @@ export class DocumentsComponentMyDoc implements OnInit {
 
   userAuth: any;
 
+  userDetails: any;
+
+  isUserDetailsLoading: boolean = false;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -64,26 +69,20 @@ export class DocumentsComponentMyDoc implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
-    private dialog?: MatDialog,
-    private emailServices?: EmailServices
+    private dialog?: MatDialog
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
+    this.isUserDetailsLoading = true;
 
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] != "admin") {
+    if (user[0]["auth_type"] == "admin") {
       this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate([`/my-documents`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate([`/my-documents`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        }
+        this.route.queryParams.subscribe((e) => {
+          this.initFunction(e);
+        });
       });
     } else {
       router.navigate([`/404`]);
@@ -101,6 +100,31 @@ export class DocumentsComponentMyDoc implements OnInit {
       },
       width: "1300px",
       height: "700px",
+    });
+  }
+
+  initFunction(param: any) {
+    this.imagesUrl = this.apiService.getBaseUrlImages();
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.userAuth = user[0]["auth_type"];
+
+    this.adminService
+      .getUserAllDocuments(user[0]["id"], param["userId"])
+      .subscribe((data: any[]) => {
+        this.allDocuments = data;
+        this.allDocumentsMatTableData = new MatTableDataSource(data);
+        setTimeout(() => {
+          this.isContentLoading = false;
+        }, 50);
+      });
+
+    this.apiService.getUser(param["userId"]).subscribe((userdata) => {
+      this.userDetails = userdata[0];
+
+      setTimeout(() => {
+        this.isUserDetailsLoading = false;
+      }, 100);
     });
   }
 
@@ -122,55 +146,14 @@ export class DocumentsComponentMyDoc implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
+    setTimeout(() => {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
       }
-    } else {
-      setTimeout(() => {
-        if (this.allDocumentsMatTableData != undefined) {
-          this.allDocumentsMatTableData.paginator = this.paginator;
-        }
-      }, 1000);
-    }
+    }, 1000);
   }
 
-  async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.userAuth = user[0]["auth_type"];
-
-    var myDocsDataSession = JSON.parse(
-      sessionStorage.getItem("my-docs-session")
-    );
-
-    if (myDocsDataSession != null) {
-      this.allDocuments = myDocsDataSession["data"];
-      this.allDocumentsMatTableData = new MatTableDataSource(this.allDocuments);
-      this.isContentLoading = false;
-      this.ngAfterViewInitInitialize = true;
-    } else {
-      this.apiService
-        .getUserDocuments(user[0]["id"])
-        .subscribe((data: any[]) => {
-          this.allDocuments = data;
-          this.allDocumentsMatTableData = new MatTableDataSource(data);
-          setTimeout(() => {
-            this.isContentLoading = false;
-
-            if (this.allDocuments.length != 0) {
-              sessionStorage.setItem(
-                "my-docs-session",
-                JSON.stringify({
-                  data: this.allDocuments,
-                })
-              );
-            }
-          }, 50);
-        });
-    }
-  }
+  ngOnInit() {}
 
   // async initFunction(userId, auth) {
 

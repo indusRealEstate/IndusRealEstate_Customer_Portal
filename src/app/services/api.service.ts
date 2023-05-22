@@ -92,9 +92,9 @@ export class ApiService {
     );
   }
 
-  getUserPaymentRequests(userId: any, auth) {
+  getUserPaymentRequests(userId: any) {
     const url = `${API_URL}/getPaymentRequests.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId, auth: auth }).pipe(
+    return this.http.post<any>(url, { userId: userId}).pipe(
       map((data) => {
         return data;
       })
@@ -103,7 +103,7 @@ export class ApiService {
 
   getUserConditioningRequests(userId: any) {
     const url = `${API_URL}/getConditioningRequests.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId}).pipe(
+    return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
       })
@@ -112,7 +112,7 @@ export class ApiService {
 
   getUserMaintenanceRequests(userId: any) {
     const url = `${API_URL}/getMaintenanceRequests.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId}).pipe(
+    return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
       })
@@ -120,7 +120,7 @@ export class ApiService {
   }
   getUserTenantMoveInRequests(userId: any) {
     const url = `${API_URL}/getTenantMoveInRequests.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId}).pipe(
+    return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
       })
@@ -128,7 +128,7 @@ export class ApiService {
   }
   getUserTenantMoveOutRequests(userId: any) {
     const url = `${API_URL}/getTenantMoveOutRequests.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId}).pipe(
+    return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
       })
@@ -198,6 +198,15 @@ export class ApiService {
     );
   }
 
+  requestPaymentService(data: any) {
+    const url = `${API_URL}/requestPaymentService.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   updateUserProfilePic(data: string) {
     const url = `${API_URL}/changeUserProfilePic.php?apikey=1`;
     return this.http
@@ -232,6 +241,14 @@ export class ApiService {
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("saveImgInServer", [])));
+  }
+
+  uploadReqDocInServer(data: any) {
+    const url = `https://indusre.app/api/upload_req_doc.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("uploadReqDocInServer", [])));
   }
 
   saveLandlordRegisterUploadFiles(data: any) {

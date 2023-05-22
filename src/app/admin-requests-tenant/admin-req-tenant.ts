@@ -112,11 +112,17 @@ export class AdminReqsTenant implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allRequestsMatTableData != undefined) {
+          this.allRequestsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   getRequestStatus(req, last) {
@@ -149,23 +155,27 @@ export class AdminReqsTenant implements OnInit {
           userId: user[0]["id"],
         })
         .subscribe((va: any[]) => {
+          var count = 0;
           for (let index = 0; index < va.length; index++) {
+            count++;
             if (va[index].auth_type == "tenant") {
               this.allRequests.push(va[index]);
             }
           }
           setTimeout(() => {
-            this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
-            if (this.allRequests.length != 0) {
-              sessionStorage.setItem(
-                "admin_reqs_session_tenant",
-                JSON.stringify(this.allRequests)
+            if (count == va.length) {
+              this.isContentLoading = false;
+              this.allRequestsMatTableData = new MatTableDataSource(
+                this.allRequests
               );
+              if (this.allRequests.length != 0) {
+                sessionStorage.setItem(
+                  "admin_reqs_session_tenant",
+                  JSON.stringify(this.allRequests)
+                );
+              }
             }
-          }, 500);
+          }, 100);
         });
       sessionStorage.setItem(
         "admin_reqs_fetched_time",
@@ -179,7 +189,7 @@ export class AdminReqsTenant implements OnInit {
       now -
       Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
 
-    if (diff >= 10) {
+    if (diff >= 20) {
       // this.isLoading = true;
       this.isContentLoading = true;
       this.clearAllVariables();
@@ -190,23 +200,27 @@ export class AdminReqsTenant implements OnInit {
           userId: user[0]["id"],
         })
         .subscribe((va: any[]) => {
+          var count = 0;
           for (let index = 0; index < va.length; index++) {
+            count++;
             if (va[index].auth_type == "tenant") {
               this.allRequests.push(va[index]);
             }
           }
           setTimeout(() => {
-            this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
-            if (this.allRequests.length != 0) {
-              sessionStorage.setItem(
-                "admin_reqs_session_tenant",
-                JSON.stringify(this.allRequests)
+            if (count == va.length) {
+              this.isContentLoading = false;
+              this.allRequestsMatTableData = new MatTableDataSource(
+                this.allRequests
               );
+              if (this.allRequests.length != 0) {
+                sessionStorage.setItem(
+                  "admin_reqs_session_tenant",
+                  JSON.stringify(this.allRequests)
+                );
+              }
             }
-          }, 500);
+          }, 100);
         });
       sessionStorage.setItem(
         "admin_reqs_fetched_time",

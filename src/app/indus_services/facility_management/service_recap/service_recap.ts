@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
 import { ViewDocDialogService } from "app/components/view-doc-dialog-service-temp/view-doc-dialog-service";
+import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
@@ -12,6 +13,11 @@ import { AuthenticationService } from "app/services/authentication.service";
 })
 export class ServiceRecapComponent implements OnInit {
   isUserSignedIn: boolean = false;
+
+  payment_type_not_selected: boolean = false;
+  document_is_missing: boolean = false;
+
+  is_request_processing: boolean = false;
 
   requestData: any;
   isLoading: boolean = false;
@@ -46,6 +52,7 @@ export class ServiceRecapComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
+    private apiService: ApiService,
     private dialog?: MatDialog
   ) {
     if (this.authenticationService.currentUserValue) {
@@ -265,5 +272,125 @@ export class ServiceRecapComponent implements OnInit {
     } else if (this.currentServicePageType == "conditioning") {
       return "Property Conditioning Document";
     }
+  }
+
+  submitServiceReq() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      this.paymentReqFinished();
+    }
+  }
+
+  paymentReqFinished() {
+    if (this.selectedPayment == undefined || this.selectedPayment == null) {
+      this.payment_type_not_selected = true;
+
+      setTimeout(() => {
+        this.payment_type_not_selected = false;
+      }, 3000);
+    } else if (this.uploadedDoc == undefined || this.uploadedDoc == null) {
+      this.document_is_missing = true;
+
+      setTimeout(() => {
+        this.document_is_missing = false;
+      }, 3000);
+    } else {
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+
+      var req_id = this.generateRandomID();
+      
+
+      if (this.currentServicePageType == "payment-landlord") {
+        var request_client_id_tenant = new String(this.tenant.profile_photo).split(
+          "."
+        )[0];
+        var data = {
+          user_id: user[0]["id"],
+          request_type: "PAYMENT",
+          request_id: req_id,
+          req_to_id: request_client_id_tenant,
+          payment_purpose: this.service_application_type,
+          amount: this.service_amount,
+          payment_method: this.selectedPayment,
+          payment_doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          property_id: this.tenant.property_id,
+          details: "lorem ipsum",
+          status: "pending",
+          issue_date: this.getCurrentDate(),
+        };
+      } else if (this.currentServicePageType == "payment-tenant") {
+        var request_client_id_landlord = new String(this.landlord.profile_photo).split(
+          "."
+        )[0];
+        var data = {
+          user_id: user[0]["id"],
+          request_type: "PAYMENT",
+          request_id: req_id,
+          req_to_id: request_client_id_landlord,
+          payment_purpose: this.service_application_type,
+          amount: this.service_amount,
+          payment_method: this.selectedPayment,
+          payment_doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          property_id: this.landlord.property_id,
+          details: "lorem ipsum",
+          status: "pending",
+          issue_date: this.getCurrentDate(),
+        };
+      }
+
+      this.apiService
+        .requestPaymentService(JSON.stringify({ data }))
+        .subscribe((val) => {
+          console.log(val);
+        });
+
+      // console.log(this.uploadedDoc);
+      this.apiService
+        .uploadReqDocInServer(
+          JSON.stringify({
+            req: this.uploadedDoc["data"],
+            reqName: req_id,
+            ext: this.uploadedDoc["ext"],
+          })
+        )
+        .subscribe((e) => {
+          console.log(e);
+        });
+
+      this.is_request_processing = true;
+      setTimeout(() => {
+        this.router.navigate(["/service-temp"], {
+          queryParams: {
+            uid: user[0]["id"],
+            service_type: this.currentServicePageType,
+          },
+        });
+
+        setTimeout(() => {
+          this.is_request_processing = false;
+        }, 100);
+      }, 3000);
+    }
+  }
+
+  generateRandomID() {
+    return Math.floor(100000000000 + Math.random() * 900000000000);
+  }
+
+  getCurrentDate() {
+    var date = new Date();
+
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var currentDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return currentDate;
   }
 }

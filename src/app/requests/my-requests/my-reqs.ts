@@ -106,11 +106,17 @@ export class RequestsComponentMyReqs implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allRequestsMatTableData != undefined) {
+          this.allRequestsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   getRequestStatus(req, last) {
@@ -137,23 +143,20 @@ export class RequestsComponentMyReqs implements OnInit {
       this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
       // console.log(this.allRequests);
+      this.ngAfterViewInitInitialize = true;
     } else {
       this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
         this.allRequests = va;
-
+        this.allRequestsMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
           this.isContentLoading = false;
-          this.allRequestsMatTableData = new MatTableDataSource(
-            this.allRequests
-          );
-
           if (this.allRequests.length != 0) {
             sessionStorage.setItem(
               "my-reqs-session",
               JSON.stringify(this.allRequests)
             );
           }
-        }, 100);
+        }, 50);
       });
       // this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
@@ -167,7 +170,7 @@ export class RequestsComponentMyReqs implements OnInit {
     var diff =
       now - Number(JSON.parse(sessionStorage.getItem("my_reqs_fetched_time")));
 
-    if (diff >= 10) {
+    if (diff >= 20) {
       // this.isLoading = true;
       this.isContentLoading = true;
       this.clearAllVariables();
@@ -175,19 +178,16 @@ export class RequestsComponentMyReqs implements OnInit {
       sessionStorage.removeItem("my-reqs-session");
       this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
         this.allRequests = va;
-
+        this.allRequestsMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
           this.isContentLoading = false;
-          this.allRequestsMatTableData = new MatTableDataSource(
-            this.allRequests
-          );
           if (this.allRequests.length != 0) {
             sessionStorage.setItem(
               "my-reqs-session",
               JSON.stringify(this.allRequests)
             );
           }
-        }, 100);
+        }, 50);
       });
       sessionStorage.setItem(
         "my_reqs_fetched_time",

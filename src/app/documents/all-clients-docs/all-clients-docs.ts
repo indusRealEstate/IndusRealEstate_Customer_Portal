@@ -124,11 +124,17 @@ export class AllClientsDocuments implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allDocumentsMatTableData != undefined) {
+          this.allDocumentsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   async ngOnInit() {
@@ -150,10 +156,8 @@ export class AllClientsDocuments implements OnInit {
         .getAllClientsDocuments(user[0]["id"])
         .subscribe((data: any[]) => {
           this.allDocuments = data;
+          this.allDocumentsMatTableData = new MatTableDataSource(data);
           setTimeout(() => {
-            this.allDocumentsMatTableData = new MatTableDataSource(
-              this.allDocuments
-            );
             this.isContentLoading = false;
             if (this.allDocuments.length != 0) {
               sessionStorage.setItem(

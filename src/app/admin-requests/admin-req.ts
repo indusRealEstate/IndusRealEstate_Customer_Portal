@@ -112,11 +112,17 @@ export class AdminReqs implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allRequestsMatTableData != undefined) {
+          this.allRequestsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   getRequestStatus(req, last) {
@@ -140,7 +146,9 @@ export class AdminReqs implements OnInit {
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData = new MatTableDataSource(
+        adminReqDataSession
+      );
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
@@ -150,18 +158,16 @@ export class AdminReqs implements OnInit {
         })
         .subscribe((va: any[]) => {
           this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
           setTimeout(() => {
             this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
             if (this.allRequests.length != 0) {
               sessionStorage.setItem(
                 "admin_reqs_session",
                 JSON.stringify(this.allRequests)
               );
             }
-          }, 100);
+          }, 50);
         });
       sessionStorage.setItem(
         "admin_reqs_fetched_time",
@@ -177,7 +183,7 @@ export class AdminReqs implements OnInit {
       now -
       Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
 
-    if (diff >= 10) {
+    if (diff >= 20) {
       // this.isLoading = true;
       this.isContentLoading = true;
       this.clearAllVariables();

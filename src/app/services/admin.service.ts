@@ -39,13 +39,11 @@ export class AdminService {
 
   getAllClientsDocuments(userId: any) {
     const url = `${API_URL}/getAllClientsDocuments.php?apikey=1`;
-    return this.http
-      .post<any>(url, { userId: userId})
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      );
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
   }
 
   getAllClients(userId: any, auth: any) {
@@ -64,6 +62,17 @@ export class AdminService {
         return data;
       })
     );
+  }
+
+  getUserAllDocuments(userId: any, client_id: any) {
+    const url = `${API_URL}/getUserAllDocuments.php?apikey=1`;
+    return this.http
+      .post<any>(url, { userId: userId, client_id: client_id })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   getAllAddPropertyRequests(userId: any) {

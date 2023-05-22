@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
   screenHeight: number;
   screenWidth: number;
 
+  ngAfterViewInitInitialize: boolean = false;
+
   displayedColumns: string[] = [
     // "name",
     "details",
@@ -111,23 +113,23 @@ export class HomeComponent implements OnInit {
     var userId = user[0]["id"];
     // var user_auth = user[0]["auth_type"];
 
-    this.apiService.getUserRequests(userId).subscribe((data: any) => {
+    this.apiService.getUserRequests(userId).subscribe((data: any[]) => {
       this.recentHeppenings = data;
+      this.recentHappeningsMatTableData = new MatTableDataSource(data);
+
       setTimeout(() => {
         this.isRecentHappeningsLoading = false;
-        this.recentHappeningsMatTableData = new MatTableDataSource(
-          this.recentHeppenings
-        );
-        sessionStorage.setItem(
-          "recentHeppenings",
-          JSON.stringify({
-            recentHap: this.recentHeppenings,
-            req_count: this.userRequestsCount,
-            prop_count: this.userPropertiesCount,
-          })
-        );
-      }, 500);
+      }, 50);
     });
+  }
+
+  cacheSession() {
+    sessionStorage.setItem(
+      "recentHeppenings",
+      JSON.stringify({
+        recentHap: this.recentHeppenings,
+      })
+    );
   }
 
   async ngOnInit() {
@@ -138,17 +140,13 @@ export class HomeComponent implements OnInit {
 
   getUserRequestCount(userId) {
     this.apiService.getUserRequests(userId).subscribe((data: any[]) => {
-      setTimeout(() => {
-        this.userRequestsCount = data.length;
-      }, 200);
+      this.userRequestsCount = data.length;
     });
   }
 
   getUserPropertiesCount(userId) {
     this.apiService.getUserProperties(userId).subscribe((data: any[]) => {
-      setTimeout(() => {
-        this.userPropertiesCount = data.length;
-      }, 200);
+      this.userPropertiesCount = data.length;
     });
   }
 
@@ -184,11 +182,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.recentHappeningsMatTableData != undefined) {
         this.recentHappeningsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.recentHappeningsMatTableData != undefined) {
+          this.recentHappeningsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   async initFunction() {
@@ -202,12 +206,16 @@ export class HomeComponent implements OnInit {
     if (recentHeppeningsSessionData != null) {
       var data = JSON.parse(recentHeppeningsSessionData);
       this.recentHeppenings = data["recentHap"];
-      this.userRequestsCount = data["req_count"];
-      this.userPropertiesCount = data["prop_count"];
       this.isRecentHappeningsLoading = false;
       this.recentHappeningsMatTableData = new MatTableDataSource(
         this.recentHeppenings
       );
+      this.ngAfterViewInitInitialize = true;
+      this.getUserRequestCount(userId);
+
+      if (user[0]["auth_type"] == "landlord") {
+        this.getUserPropertiesCount(userId);
+      }
     } else {
       this.getUserRecentHappenings();
       this.getUserRequestCount(userId);
@@ -219,6 +227,10 @@ export class HomeComponent implements OnInit {
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())
       );
+
+      setTimeout(() => {
+        this.cacheSession();
+      }, 1000);
     }
 
     var now = new Date().getMinutes();
@@ -226,19 +238,24 @@ export class HomeComponent implements OnInit {
     var diff =
       now - Number(JSON.parse(sessionStorage.getItem("recentHappeningsDiff")));
 
-    if (diff >= 3) {
+    if (diff >= 10) {
       this.isRecentHappeningsLoading = true;
       sessionStorage.removeItem("recentHappeningsDiff");
       sessionStorage.removeItem("recentHeppenings");
       this.getUserRecentHappenings();
+      this.getUserRequestCount(userId);
+
+      if (user[0]["auth_type"] == "landlord") {
+        this.getUserPropertiesCount(userId);
+      }
       sessionStorage.setItem(
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())
       );
+
       setTimeout(() => {
-        this.isRecentHappeningsLoading = false;
-      }, 800);
-      console.log("refreshed- recent");
+        this.cacheSession();
+      }, 1000);
     }
   }
 

@@ -124,11 +124,17 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allDocumentsMatTableData != undefined) {
+          this.allDocumentsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   async ngOnInit() {
@@ -151,11 +157,10 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
         .getLandlordTenantDocuments(user[0]["id"])
         .subscribe((data: any[]) => {
           this.allDocuments = data;
+          this.allDocumentsMatTableData = new MatTableDataSource(data);
           setTimeout(() => {
             this.isContentLoading = false;
-            this.allDocumentsMatTableData = new MatTableDataSource(
-              this.allDocuments
-            );
+
             if (this.allDocuments.length != 0) {
               sessionStorage.setItem(
                 "my-tenant-docs-session",
@@ -164,7 +169,7 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
                 })
               );
             }
-          }, 100);
+          }, 50);
         });
     }
   }

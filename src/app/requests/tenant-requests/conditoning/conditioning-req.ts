@@ -113,11 +113,17 @@ export class RequestsComponentConditioning implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allRequestsMatTableData != undefined) {
+          this.allRequestsMatTableData.paginator = this.paginator;
+        }
+      }, 1000);
+    }
   }
 
   getRequestStatus(req, last) {
@@ -150,18 +156,17 @@ export class RequestsComponentConditioning implements OnInit {
         .getUserConditioningRequests(user[0]["id"])
         .subscribe((va: any[]) => {
           this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
           setTimeout(() => {
             this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
+
             if (this.allRequests.length != 0) {
               sessionStorage.setItem(
                 "conditioning-reqs-session",
                 JSON.stringify(this.allRequests)
               );
             }
-          }, 100);
+          }, 50);
         });
       sessionStorage.setItem(
         "conditioning_reqs_fetched_time",
@@ -187,18 +192,17 @@ export class RequestsComponentConditioning implements OnInit {
         .getUserConditioningRequests(user[0]["id"])
         .subscribe((va: any[]) => {
           this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
           setTimeout(() => {
             this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
+
             if (this.allRequests.length != 0) {
               sessionStorage.setItem(
                 "conditioning-reqs-session",
                 JSON.stringify(this.allRequests)
               );
             }
-          }, 100);
+          }, 50);
         });
       sessionStorage.setItem(
         "conditioning_reqs_fetched_time",
