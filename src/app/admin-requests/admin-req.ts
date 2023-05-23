@@ -175,7 +175,7 @@ export class AdminReqs implements OnInit {
       );
     }
 
-    console.log(this.allRequests);
+    // console.log(this.allRequests);
 
     var now = new Date().getMinutes();
 
@@ -219,6 +219,38 @@ export class AdminReqs implements OnInit {
     this.allRequests.length = 0;
   }
 
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("admin_reqs_session");
+    this.isContentLoading = true;
+
+    this.adminService
+      .getAllRequestsAdmin({
+        userId: user[0]["id"],
+      })
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        this.allRequestsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "admin_reqs_session",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+          }
+        }, 500);
+      });
+  }
+
   // async initFunction(userId) {
 
   // }
@@ -232,6 +264,16 @@ export class AdminReqs implements OnInit {
       return "New Property Add";
     } else if (req_type == "PAYMENT") {
       return "Payment Request";
+    } else if (req_type == "INSPECTION_REQ") {
+      return "Inspection Request";
+    } else if (req_type == "CONDITIONING_REQ") {
+      return "Property Conditioning Request";
+    } else if (req_type == "MAINTENANCE_REQ") {
+      return "Maintenance Request";
+    } else if (req_type == "TENANT_MOVE_IN") {
+      return "Tenant Move-in Request";
+    } else if (req_type == "TENANT_MOVE_OUT") {
+      return "Tenant Move-out Request";
     }
   }
 

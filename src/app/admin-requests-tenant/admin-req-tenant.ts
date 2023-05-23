@@ -233,6 +233,48 @@ export class AdminReqsTenant implements OnInit {
     this.allRequests.length = 0;
   }
 
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("admin_reqs_session_tenant");
+    this.isContentLoading = true;
+
+    this.adminService
+      .getAllRequestsAdmin({
+        userId: user[0]["id"],
+      })
+      .subscribe((va: any[]) => {
+        var count = 0;
+        for (let index = 0; index < va.length; index++) {
+          count++;
+          if (va[index].auth_type == "tenant") {
+            this.allRequests.push(va[index]);
+          }
+        }
+        setTimeout(() => {
+          if (count == va.length) {
+            this.isContentLoading = false;
+            this.allRequestsMatTableData = new MatTableDataSource(
+              this.allRequests
+            );
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "admin_reqs_session_tenant",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }
+        }, 100);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+          }
+        }, 500);
+      });
+  }
+
   // async initFunction(userId) {
 
   // }
@@ -246,8 +288,18 @@ export class AdminReqsTenant implements OnInit {
       return "New Property Add";
     } else if (req_type == "PAYMENT") {
       return "Payment Request";
-    }
-  }
+    } else if (req_type == "INSPECTION_REQ") {
+      return "Inspection Request";
+    } else if (req_type == "CONDITIONING_REQ") {
+      return "Property Conditioning Request";
+    } else if (req_type == "MAINTENANCE_REQ") {
+      return "Maintenance Request";
+    } else if (req_type == "TENANT_MOVE_IN") {
+      return "Tenant Move-in Request";
+    } else if (req_type == "TENANT_MOVE_OUT") {
+      return "Tenant Move-out Request";
+    } 
+  } 
 
   reviewRequest(req) {
     this.dialog

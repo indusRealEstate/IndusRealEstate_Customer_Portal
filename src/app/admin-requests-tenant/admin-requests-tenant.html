@@ -58,6 +58,16 @@
               filter
             </div>
 
+            <img
+              (click)="refreshTable()"
+              matTooltip="Refresh table"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              class="refresh-table-btn ml-3 my-auto"
+              src="assets/img/svg/home-page/refresh-2.svg"
+              alt=""
+            />
+
             <div class="row" *ngFor="let filter of filters" style="margin: 0">
               <div
                 class="card"
@@ -508,6 +518,11 @@
                     >
                       {{ element.property_issue_date }}
                     </div>
+                    <div
+                      *ngIf="element.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+                    >
+                      {{ element.created_date }}
+                    </div>
                   </td>
                 </ng-container>
 
@@ -530,6 +545,11 @@
                       *ngIf="element.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
                     >
                       {{ element.property_req_id }}
+                    </div>
+                    <div
+                      *ngIf="element.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD' && element.request_type != 'PAYMENT'"
+                    >
+                      {{ element.request_no }}
                     </div>
                   </td>
                 </ng-container>
@@ -557,13 +577,15 @@
                     <div *ngIf="element.request_type == 'NEW_TENANT_AC'">
                       {{ element.buildingName }}
                     </div>
-                    <div *ngIf="element.request_type == 'PAYMENT'">
-                      {{ element.property_name }}
-                    </div>
                     <div
-                      *ngIf="element.request_type != 'NEW_TENANT_AC' && element.request_type != 'PAYMENT'"
+                      *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
                     >
                       {{ element.property_building_name }}
+                    </div>
+                    <div
+                      *ngIf="element.request_type != 'NEW_TENANT_AC' && element.request_type != 'NEW_LANDLORD_REQ' && element.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+                    >
+                      {{ element.property_name }}
                     </div>
                   </td>
                 </ng-container>

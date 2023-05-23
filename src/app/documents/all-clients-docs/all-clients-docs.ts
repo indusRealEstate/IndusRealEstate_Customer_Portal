@@ -167,7 +167,7 @@ export class AllClientsDocuments implements OnInit {
                 })
               );
             }
-          }, 100);
+          }, 200);
         });
     }
   }

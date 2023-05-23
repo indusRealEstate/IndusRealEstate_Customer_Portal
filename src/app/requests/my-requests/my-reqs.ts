@@ -106,7 +106,7 @@ export class RequestsComponentMyReqs implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.allRequests);
+    // console.log(this.allRequests);
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
@@ -199,6 +199,36 @@ export class RequestsComponentMyReqs implements OnInit {
 
   clearAllVariables() {
     this.allRequests.length = 0;
+  }
+
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("my-reqs-session");
+    this.isContentLoading = true;
+
+    this.apiService
+      .getUserRequests(user[0]["id"])
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        this.allRequestsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "my-reqs-session",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+          }
+        }, 500);
+      });
   }
 
   getRequestType(req_type, auth) {

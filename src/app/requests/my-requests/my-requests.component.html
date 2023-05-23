@@ -58,6 +58,16 @@
               filter
             </div>
 
+            <img
+              (click)="refreshTable()"
+              matTooltip="Refresh table"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              class="refresh-table-btn ml-3 my-auto"
+              src="assets/img/svg/home-page/refresh-2.svg"
+              alt=""
+            />
+
             <div class="row" *ngFor="let filter of filters" style="margin: 0">
               <div
                 class="card"

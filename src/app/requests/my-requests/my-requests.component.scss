@@ -113,6 +113,17 @@
   }
 }
 
+.refresh-table-btn{
+  height: 2rem;
+  width: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+
+  &:hover{
+    transform: scaleY(1.2) scaleX(1.2);
+  }
+}
+
 .demo-table {
   width: 100%;
   margin-top: 35px;
