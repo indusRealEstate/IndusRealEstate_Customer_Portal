@@ -257,7 +257,7 @@
               </mat-form-field>
 
               <input
-                *ngIf="currentServicePageType != 'inspection'"
+                *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
                 [(ngModel)]="service_amount"
                 type="number"
                 placeholder="Enter the Amount to be paid"
@@ -305,16 +305,9 @@
 
                 <div class="col" style="padding-left: 40px">
                   <p
-                    *ngIf="currentServicePageType == 'payment-tenant' || currentServicePageType == 'payment-landlord'"
                     style="margin-bottom: 0; font-weight: 600"
                   >
-                    Payment Document
-                  </p>
-                  <p
-                    *ngIf="currentServicePageType == 'inspection'"
-                    style="margin-bottom: 0; font-weight: 600"
-                  >
-                    Inspection Document
+                    {{getDocumentName()}}
                   </p>
                   <div class="row m-0">
                     <p class="doc-view-link pr-2" (click)="viewDoc()">View</p>

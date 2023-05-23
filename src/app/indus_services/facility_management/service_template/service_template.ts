@@ -244,6 +244,25 @@ export class ServiceTemplateComponent implements OnInit {
     }
   }
 
+  getDocumentName() {
+    if (
+      this.currentServicePageType == "payment-tenant" ||
+      this.currentServicePageType == "payment-landlord"
+    ) {
+      return "Payment Document";
+    } else if (this.currentServicePageType == "inspection") {
+      return "Inspection Document";
+    } else if (this.currentServicePageType == "maintenance") {
+      return "Maintenance Document";
+    } else if (this.currentServicePageType == "tenant-move-in") {
+      return "Move-in Document";
+    } else if (this.currentServicePageType == "tenant-move-out") {
+      return "Move-out Document";
+    } else if (this.currentServicePageType == "conditioning") {
+      return "Property Conditioning Document";
+    }
+  }
+
   nextBtnClicked() {
     if (this.selectedServiceSubType == null) {
       this.applicationNotChoosed = true;

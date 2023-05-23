@@ -168,6 +168,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  refreshRecentTable() {
+    sessionStorage.removeItem("recentHeppenings");
+    this.recentHeppenings = [];
+    this.isRecentHappeningsLoading = true;
+    this.getUserRecentHappenings();
+
+    setTimeout(() => {
+      this.cacheSession();
+      this.recentHappeningsMatTableData.paginator = this.paginator;
+    }, 1000);
+  }
+
   reviewRecentHappening(rec) {
     this.dialog
       .open(ReviewRequestDialog, {

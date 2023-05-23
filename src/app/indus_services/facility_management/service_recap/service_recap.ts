@@ -280,6 +280,132 @@ export class ServiceRecapComponent implements OnInit {
       this.currentServicePageType == "payment-landlord"
     ) {
       this.paymentReqFinished();
+    } else {
+      this.otherReqFinished(this.currentServicePageType);
+    }
+  }
+
+  otherReqFinished(req_type: any) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    var req_id = this.generateRandomID();
+
+    var data = this.getReqData(req_type, user[0]["id"], req_id);
+
+    this.apiService
+      .requestService(JSON.stringify({ data }))
+      .subscribe((val) => {
+        console.log(val);
+      });
+
+    // console.log(this.uploadedDoc);
+    this.apiService
+      .uploadReqDocInServer(
+        JSON.stringify({
+          req: this.uploadedDoc["data"],
+          reqName: req_id,
+          ext: this.uploadedDoc["ext"],
+        })
+      )
+      .subscribe((e) => {
+        console.log(e);
+      });
+
+    this.is_request_processing = true;
+    setTimeout(() => {
+      this.router.navigate(["/service-temp"], {
+        queryParams: {
+          uid: user[0]["id"],
+          service_type: this.currentServicePageType,
+        },
+      });
+
+      setTimeout(() => {
+        this.is_request_processing = false;
+      }, 100);
+    }, 3000);
+  }
+
+  getReqData(req_type, userId, req_id) {
+    if (req_type == "inspection") {
+      var request_client_id_tenant = new String(
+        this.tenant.profile_photo
+      ).split(".")[0];
+    } else {
+      var request_client_id_landlord = new String(
+        this.landlord.profile_photo
+      ).split(".")[0];
+    }
+    switch (req_type) {
+      case "inspection":
+        return {
+          user_id: userId,
+          req_to_id: request_client_id_tenant,
+          property_id: this.tenant.property_id,
+          request_no: req_id,
+          request_type: "INSPECTION_REQ",
+          request_title: "Request for Inspection",
+          details: "lorem ipsum",
+          doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          status: "pending",
+          created_date: this.getCurrentDate(),
+        };
+
+      case "maintenance":
+        return {
+          user_id: userId,
+          req_to_id: request_client_id_landlord,
+          property_id: this.landlord.property_id,
+          request_no: req_id,
+          request_type: "MAINTENANCE_REQ",
+          request_title: "Request for Maintenance",
+          details: "lorem ipsum",
+          doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          status: "pending",
+          created_date: this.getCurrentDate(),
+        };
+
+      case "tenant-move-in":
+        return {
+          user_id: userId,
+          req_to_id: request_client_id_landlord,
+          property_id: this.landlord.property_id,
+          request_no: req_id,
+          request_type: "TENANT_MOVE_IN",
+          request_title: "Request for Move-in",
+          details: "lorem ipsum",
+          doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          status: "pending",
+          created_date: this.getCurrentDate(),
+        };
+
+      case "tenant-move-out":
+        return {
+          user_id: userId,
+          req_to_id: request_client_id_landlord,
+          property_id: this.landlord.property_id,
+          request_no: req_id,
+          request_type: "TENANT_MOVE_OUT",
+          request_title: "Request for Move-out",
+          details: "lorem ipsum",
+          doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          status: "pending",
+          created_date: this.getCurrentDate(),
+        };
+      case "conditioning":
+        return {
+          user_id: userId,
+          req_to_id: request_client_id_landlord,
+          property_id: this.landlord.property_id,
+          request_no: req_id,
+          request_type: "CONDITIONING_REQ",
+          request_title: "Request for Property Conditioning",
+          details: "lorem ipsum",
+          doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
+          status: "pending",
+          created_date: this.getCurrentDate(),
+        };
     }
   }
 
@@ -301,12 +427,11 @@ export class ServiceRecapComponent implements OnInit {
       var user = JSON.parse(userData);
 
       var req_id = this.generateRandomID();
-      
 
       if (this.currentServicePageType == "payment-landlord") {
-        var request_client_id_tenant = new String(this.tenant.profile_photo).split(
-          "."
-        )[0];
+        var request_client_id_tenant = new String(
+          this.tenant.profile_photo
+        ).split(".")[0];
         var data = {
           user_id: user[0]["id"],
           request_type: "PAYMENT",
@@ -322,9 +447,9 @@ export class ServiceRecapComponent implements OnInit {
           issue_date: this.getCurrentDate(),
         };
       } else if (this.currentServicePageType == "payment-tenant") {
-        var request_client_id_landlord = new String(this.landlord.profile_photo).split(
-          "."
-        )[0];
+        var request_client_id_landlord = new String(
+          this.landlord.profile_photo
+        ).split(".")[0];
         var data = {
           user_id: user[0]["id"],
           request_type: "PAYMENT",

@@ -110,6 +110,15 @@ export class ApiService {
     );
   }
 
+  getUserInspectionRequests(userId: any) {
+    const url = `${API_URL}/getInspectionRequests.php?apikey=1`;
+    return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getUserMaintenanceRequests(userId: any) {
     const url = `${API_URL}/getMaintenanceRequests.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
@@ -200,6 +209,15 @@ export class ApiService {
 
   requestPaymentService(data: any) {
     const url = `${API_URL}/requestPaymentService.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  requestService(data: any) {
+    const url = `${API_URL}/requestService.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;

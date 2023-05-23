@@ -1,19 +1,21 @@
 import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
+import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
 
 @Component({
-  selector: "app-requests",
-  templateUrl: "./my-requests.component.html",
-  styleUrls: ["./my-requests.component.scss"],
+  selector: "app-requests-inspection",
+  templateUrl: "./inspection-req.html",
+  styleUrls: ["./inspection-req.scss"],
 })
-export class RequestsComponentMyReqs implements OnInit {
+export class RequestsComponentInspection implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -36,6 +38,7 @@ export class RequestsComponentMyReqs implements OnInit {
     "reqNo",
     "reqType",
     "propertyName",
+    "clientName",
     "status",
     "actions",
   ];
@@ -56,6 +59,8 @@ export class RequestsComponentMyReqs implements OnInit {
 
   imagesUrl: any;
 
+  userAuth: any;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -63,7 +68,9 @@ export class RequestsComponentMyReqs implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private dialog?: MatDialog
+    private adminService: AdminService,
+    private dialog?: MatDialog,
+    private emailServices?: EmailServices
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
@@ -71,14 +78,14 @@ export class RequestsComponentMyReqs implements OnInit {
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] != "admin") {
+    if (user[0]["auth_type"] == "tenant") {
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
-          router.navigate([`/my-requests`], {
+          router.navigate([`/inspection-requests`], {
             queryParams: { uid: user[0]["id"] },
           });
         } else if (e != user[0]["id"]) {
-          router.navigate([`/my-requests`], {
+          router.navigate([`/inspection-requests`], {
             queryParams: { uid: user[0]["id"] },
           });
         }
@@ -106,7 +113,6 @@ export class RequestsComponentMyReqs implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.allRequests);
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
@@ -134,34 +140,36 @@ export class RequestsComponentMyReqs implements OnInit {
     this.imagesUrl = this.apiService.getBaseUrlImages();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
+    this.userAuth = user[0]["auth_type"];
 
     var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("my-reqs-session")
+      sessionStorage.getItem("inspection-reqs-session")
     );
 
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
       this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
-      // console.log(this.allRequests);
       this.ngAfterViewInitInitialize = true;
     } else {
-      this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "my-reqs-session",
-              JSON.stringify(this.allRequests)
-            );
-          }
-        }, 50);
-      });
-      // this.initFunction(user[0]["id"]);
+      this.apiService
+        .getUserInspectionRequests(user[0]["id"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+          setTimeout(() => {
+            this.isContentLoading = false;
+
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "inspection-reqs-session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 50);
+        });
       sessionStorage.setItem(
-        "my_reqs_fetched_time",
+        "inspection_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
     }
@@ -169,29 +177,35 @@ export class RequestsComponentMyReqs implements OnInit {
     var now = new Date().getMinutes();
 
     var diff =
-      now - Number(JSON.parse(sessionStorage.getItem("my_reqs_fetched_time")));
+      now -
+      Number(
+        JSON.parse(sessionStorage.getItem("inspection_reqs_fetched_time"))
+      );
 
-    if (diff >= 20) {
+    if (diff >= 10) {
       // this.isLoading = true;
       this.isContentLoading = true;
       this.clearAllVariables();
-      sessionStorage.removeItem("my_reqs_fetched_time");
-      sessionStorage.removeItem("my-reqs-session");
-      this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "my-reqs-session",
-              JSON.stringify(this.allRequests)
-            );
-          }
-        }, 50);
-      });
+      sessionStorage.removeItem("inspection_reqs_fetched_time");
+      sessionStorage.removeItem("inspection-reqs-session");
+      this.apiService
+        .getUserInspectionRequests(user[0]["id"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+          setTimeout(() => {
+            this.isContentLoading = false;
+
+            if (this.allRequests.length != 0) {
+              sessionStorage.setItem(
+                "inspection-reqs-session",
+                JSON.stringify(this.allRequests)
+              );
+            }
+          }, 50);
+        });
       sessionStorage.setItem(
-        "my_reqs_fetched_time",
+        "inspection_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
     }
@@ -201,31 +215,9 @@ export class RequestsComponentMyReqs implements OnInit {
     this.allRequests.length = 0;
   }
 
-  getRequestType(req_type, auth) {
-    if (auth == "landlord") {
-      if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
-        return "New Property Add";
-      } else if (req_type == "INSPECTION_REQ") {
-        return "Inspection Request";
-      } else if (req_type == "PAYMENT") {
-        return "Payment Request";
-      }
-    } else {
-      if (req_type == "MAINTENANCE_REQ") {
-        return "Maintenance Request";
-      } else if (req_type == "TENANT_MOVE_IN") {
-        return "Tenant Move in Request";
-      } else if (req_type == "TENANT_MOVE_OUT") {
-        return "Tenant Move out Request";
-      } else if (req_type == "PAYMENT_REQ") {
-        return "Payment Request";
-      } else if (req_type == "CONDITIONING_REQ") {
-        return "Property Conditioning Request";
-      } else if (req_type == "PAYMENT") {
-        return "Payment Request";
-      }
-    }
-  }
+  // async initFunction(userId, auth) {
+
+  // }
 
   reviewRequest(req) {
     this.dialog

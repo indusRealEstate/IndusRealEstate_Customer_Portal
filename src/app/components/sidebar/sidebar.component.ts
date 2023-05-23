@@ -228,12 +228,6 @@ export const REQUESTSROUTETENANT: RouteInfo[] = [
     icon: "assets/img/svg/sidebar/request-send.svg",
     class: "",
   },
-  {
-    path: "/payment-requests",
-    title: "Payment requests",
-    icon: "assets/img/svg/sidebar/empty-wallet.svg",
-    class: "",
-  },
 ];
 
 export const REQUESTSROUTEADMIN: RouteInfo[] = [

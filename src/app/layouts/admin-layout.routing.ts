@@ -37,6 +37,7 @@ import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
 import { MyLandlordComponent } from "app/my-landlord/my-landlord";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
+import { RequestsComponentInspection } from "app/requests/landlord-requests/inspection/inspection-req";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -45,9 +46,13 @@ export const AdminLayoutRoutes: Routes = [
   { path: "my-requests", component: RequestsComponentMyReqs },
   { path: "payment-requests", component: RequestsComponentPayment },
   { path: "conditioning-requests", component: RequestsComponentConditioning },
-  { path: "maintenance-requests", component: RequestsComponentMaintenance},
-  { path: "tenant-move-in-requests", component: RequestsComponentTenantMoveIn},
-  { path: "tenant-move-out-requests", component: RequestsComponentTenantMoveOut},
+  { path: "inspection-requests", component: RequestsComponentInspection },
+  { path: "maintenance-requests", component: RequestsComponentMaintenance },
+  { path: "tenant-move-in-requests", component: RequestsComponentTenantMoveIn },
+  {
+    path: "tenant-move-out-requests",
+    component: RequestsComponentTenantMoveOut,
+  },
   { path: "my-properties", component: MyPropertiesComponent },
   { path: "my-documents", component: DocumentsComponentMyDoc },
   { path: "all-clients-documents", component: AllClientsDocuments },

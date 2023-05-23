@@ -26,6 +26,7 @@ import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-reques
 import { ViewTenantDialog } from "./view-tenant-dialog/view-tenant-dialog";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { ViewDocDialogService } from "./view-doc-dialog-service-temp/view-doc-dialog-service";
+import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-requests-dropdown";
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { ViewDocDialogService } from "./view-doc-dialog-service-temp/view-doc-di
     SidebarComponent,
     DropdownMaterial,
     TenantRequestsDropdown,
+    LandlordRequestsDropdown,
     DocUploadDialogRegister,
     ProgressComponent,
     SuccessDialogRegister,
