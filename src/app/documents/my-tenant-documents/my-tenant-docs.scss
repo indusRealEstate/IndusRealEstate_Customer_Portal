@@ -121,6 +121,17 @@
   }
 }
 
+.refresh-table-btn {
+  height: 22px;
+  width: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    transform: scaleY(1.2) scaleX(1.2);
+  }
+}
+
 .demo-table {
   width: 100%;
   margin-top: 35px;
@@ -162,22 +173,7 @@
     font-weight: 600;
   }
   .fourth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
-
-  .fifth-col {
-    font-weight: 600;
-  }
-  .fifth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
-
-  .sixth-col {
-    font-weight: 600;
-  }
-  .sixth-col-last {
+    border-bottom-right-radius: 10px;
     border-bottom: none;
     font-weight: 600;
   }
@@ -234,6 +230,9 @@
 }
 
 :host ::ng-deep .table-paginator {
+  .mat-paginator {
+    background: #eee !important;
+  }
   .mat-form-field-underline {
     display: none !important;
   }

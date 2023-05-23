@@ -113,7 +113,19 @@
   }
 }
 
+.refresh-table-btn {
+  height: 22px;
+  width: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    transform: scaleY(1.2) scaleX(1.2);
+  }
+}
+
 .demo-table {
+  min-width: 1250px;
   width: 100%;
   margin-top: 35px;
   border-radius: 10px;
@@ -226,6 +238,9 @@
 }
 
 :host ::ng-deep .table-paginator {
+  .mat-paginator {
+    background: #eee !important;
+  }
   .mat-form-field-underline {
     display: none !important;
   }

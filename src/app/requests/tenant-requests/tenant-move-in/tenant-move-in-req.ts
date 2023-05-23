@@ -116,14 +116,46 @@ export class RequestsComponentTenantMoveIn implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
+        this.allRequestsMatTableData.paginator._changePageSize(10);
       }
     } else {
       setTimeout(() => {
         if (this.allRequestsMatTableData != undefined) {
           this.allRequestsMatTableData.paginator = this.paginator;
+          this.allRequestsMatTableData.paginator._changePageSize(10);
         }
       }, 1000);
     }
+  }
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("tenant-move-in-reqs-session");
+    this.isContentLoading = true;
+
+    this.apiService
+      .getUserTenantMoveInRequests(user[0]["id"])
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        this.allRequestsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "tenant-move-in-reqs-session",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+            this.allRequestsMatTableData.paginator._changePageSize(10);
+          }
+        }, 500);
+      });
   }
 
   getRequestStatus(req, last) {

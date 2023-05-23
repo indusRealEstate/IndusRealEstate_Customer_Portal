@@ -58,6 +58,7 @@ export class IndividualDocumentsComponent implements OnInit {
   userAuth: any;
 
   userDetails: any;
+  params: any;
 
   isUserDetailsLoading: boolean = false;
 
@@ -82,6 +83,7 @@ export class IndividualDocumentsComponent implements OnInit {
       this.route.queryParams.subscribe((e) => {
         this.route.queryParams.subscribe((e) => {
           this.initFunction(e);
+          this.params = e;
         });
       });
     } else {
@@ -149,8 +151,33 @@ export class IndividualDocumentsComponent implements OnInit {
     setTimeout(() => {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
+        this.allDocumentsMatTableData.paginator._changePageSize(10);
       }
     }, 1000);
+  }
+
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.isContentLoading = true;
+
+    this.adminService
+      .getUserAllDocuments(user[0]["id"], this.params["userId"])
+      .subscribe((va: any[]) => {
+        this.allDocuments = va;
+        this.allDocumentsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allDocumentsMatTableData != undefined) {
+            this.allDocumentsMatTableData.paginator = this.paginator;
+            this.allDocumentsMatTableData.paginator._changePageSize(10);
+          }
+        }, 500);
+      });
   }
 
   ngOnInit() {}

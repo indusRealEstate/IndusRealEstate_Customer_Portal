@@ -90,6 +90,39 @@ export class DocumentsComponentMyDoc implements OnInit {
     }
   }
 
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("my-docs-session");
+    this.isContentLoading = true;
+
+    this.apiService
+      .getUserDocuments(user[0]["id"])
+      .subscribe((va: any[]) => {
+        this.allDocuments = va;
+        this.allDocumentsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allDocuments.length != 0) {
+            sessionStorage.setItem(
+              "my-docs-session",
+              JSON.stringify({
+                data: this.allDocuments,
+              })
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allDocumentsMatTableData != undefined) {
+            this.allDocumentsMatTableData.paginator = this.paginator;
+            this.allDocumentsMatTableData.paginator._changePageSize(10);
+          }
+        }, 500);
+      });
+  }
+
   viewDoc(doc) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -125,11 +158,13 @@ export class DocumentsComponentMyDoc implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
+        this.allDocumentsMatTableData.paginator._changePageSize(10);
       }
     } else {
       setTimeout(() => {
         if (this.allDocumentsMatTableData != undefined) {
           this.allDocumentsMatTableData.paginator = this.paginator;
+          this.allDocumentsMatTableData.paginator._changePageSize(10);
         }
       }, 1000);
     }

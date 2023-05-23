@@ -121,6 +121,17 @@
   }
 }
 
+.refresh-table-btn {
+  height: 22px;
+  width: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    transform: scaleY(1.2) scaleX(1.2);
+  }
+}
+
 .demo-table {
   min-width: 1250px;
   width: 100%;
@@ -159,30 +170,6 @@
     font-weight: 600;
   }
 
-  .fourth-col {
-    font-weight: 600;
-  }
-  .fourth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
-
-  .fifth-col {
-    font-weight: 600;
-  }
-  .fifth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
-
-  .sixth-col {
-    font-weight: 600;
-  }
-  .sixth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
-
   .approved-status::before {
     color: #8ae16b;
     font-weight: 600;
@@ -211,14 +198,13 @@
     font-size: 11px;
   }
 
-  .eighth-col-last {
+  .fourth-col-last {
     border-bottom: none;
     border-bottom-right-radius: 10px;
     text-align: center;
   }
 
-  .eighth-col {
-    border-bottom-right-radius: 10px;
+  .fourth-col {
     text-align: center;
   }
 
@@ -235,6 +221,9 @@
 }
 
 :host ::ng-deep .table-paginator {
+  .mat-paginator {
+    background: #eee !important;
+  }
   .mat-form-field-underline {
     display: none !important;
   }

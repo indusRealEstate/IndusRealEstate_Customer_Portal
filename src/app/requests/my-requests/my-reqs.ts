@@ -110,11 +110,13 @@ export class RequestsComponentMyReqs implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
+        this.allRequestsMatTableData.paginator._changePageSize(10);
       }
     } else {
       setTimeout(() => {
         if (this.allRequestsMatTableData != undefined) {
           this.allRequestsMatTableData.paginator = this.paginator;
+          this.allRequestsMatTableData.paginator._changePageSize(10);
         }
       }, 1000);
     }
@@ -129,6 +131,8 @@ export class RequestsComponentMyReqs implements OnInit {
       return "declined-status";
     }
   }
+
+  
 
   async ngOnInit() {
     this.imagesUrl = this.apiService.getBaseUrlImages();
@@ -226,6 +230,7 @@ export class RequestsComponentMyReqs implements OnInit {
         setTimeout(() => {
           if (this.allRequestsMatTableData != undefined) {
             this.allRequestsMatTableData.paginator = this.paginator;
+            this.allRequestsMatTableData.paginator._changePageSize(10);
           }
         }, 500);
       });

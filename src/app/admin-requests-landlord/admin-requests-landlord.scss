@@ -114,7 +114,7 @@
 }
 
 .refresh-table-btn{
-  height: 2rem;
+  height: 22px;
   width: 1.2rem;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
@@ -238,6 +238,10 @@
 }
 
 :host ::ng-deep .table-paginator {
+  .mat-paginator {
+    background: #eee !important;
+  }
+
   .mat-form-field-underline {
     display: none !important;
   }

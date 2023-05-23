@@ -92,6 +92,39 @@ export class AllClientsDocuments implements OnInit {
     }
   }
 
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("all-clients-docs-session");
+    this.isContentLoading = true;
+
+    this.adminService
+      .getAllClientsDocuments(user[0]["id"])
+      .subscribe((va: any[]) => {
+        this.allDocuments = va;
+        this.allDocumentsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allDocuments.length != 0) {
+            sessionStorage.setItem(
+              "all-clients-docs-session",
+              JSON.stringify({
+                data: this.allDocuments,
+              })
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allDocumentsMatTableData != undefined) {
+            this.allDocumentsMatTableData.paginator = this.paginator;
+            this.allDocumentsMatTableData.paginator._changePageSize(10);
+          }
+        }, 500);
+      });
+  }
+
   viewDoc(doc) {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -127,11 +160,13 @@ export class AllClientsDocuments implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
+        this.allDocumentsMatTableData.paginator._changePageSize(10);
       }
     } else {
       setTimeout(() => {
         if (this.allDocumentsMatTableData != undefined) {
           this.allDocumentsMatTableData.paginator = this.paginator;
+          this.allDocumentsMatTableData.paginator._changePageSize(10);
         }
       }, 1000);
     }
@@ -143,7 +178,7 @@ export class AllClientsDocuments implements OnInit {
     this.userAuth = user[0]["auth_type"];
 
     var myDocsDataSession = JSON.parse(
-      sessionStorage.getItem("my-docs-session")
+      sessionStorage.getItem("all-clients-docs-session")
     );
 
     if (myDocsDataSession != null) {
@@ -161,7 +196,7 @@ export class AllClientsDocuments implements OnInit {
             this.isContentLoading = false;
             if (this.allDocuments.length != 0) {
               sessionStorage.setItem(
-                "my-docs-session",
+                "all-clients-docs-session",
                 JSON.stringify({
                   data: this.allDocuments,
                 })

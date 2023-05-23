@@ -113,13 +113,13 @@
   }
 }
 
-.refresh-table-btn{
-  height: 2rem;
+.refresh-table-btn {
+  height: 22px;
   width: 1.2rem;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
 
-  &:hover{
+  &:hover {
     transform: scaleY(1.2) scaleX(1.2);
   }
 }
@@ -256,6 +256,9 @@
     margin-top: 8px !important;
   }
 
+  .mat-paginator {
+    background: #eee !important;
+  }
   .mat-paginator-page-size-label {
     margin: 0 10px !important;
     font-size: 13px !important;
@@ -290,7 +293,7 @@
   }
 }
 
-.table_view_class_hidden{
+.table_view_class_hidden {
   display: none;
 }
 

@@ -122,11 +122,52 @@ export class MyTenantsLandlord implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    if (this.ngAfterViewInitInitialize == true) {
       if (this.allTenantsMatTableData != undefined) {
         this.allTenantsMatTableData.paginator = this.paginator;
+        this.allTenantsMatTableData.paginator._changePageSize(10);
       }
-    }, 1000);
+    } else {
+      setTimeout(() => {
+        if (this.allTenantsMatTableData != undefined) {
+          this.allTenantsMatTableData.paginator = this.paginator;
+          this.allTenantsMatTableData.paginator._changePageSize(10);
+        }
+      }, 1000);
+    }
+  }
+
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("my-tenants-session");
+    this.isContentLoading = true;
+
+    this.apiService
+      .getLandlordTenants(user[0]["id"])
+      .subscribe((va: any[]) => {
+        this.allTenants = va;
+        this.allTenantsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allTenants.length != 0) {
+            sessionStorage.setItem(
+              "my-tenants-session",
+              JSON.stringify({
+                data: this.allTenants,
+              })
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allTenantsMatTableData != undefined) {
+            this.allTenantsMatTableData.paginator = this.paginator;
+            this.allTenantsMatTableData.paginator._changePageSize(10);
+          }
+        }, 500);
+      });
   }
 
   async ngOnInit() {
