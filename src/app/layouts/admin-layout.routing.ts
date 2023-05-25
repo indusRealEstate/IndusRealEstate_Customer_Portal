@@ -22,7 +22,7 @@ import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenan
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
-import { AdminReqs } from "app/admin-requests/admin-req";
+import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
 import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
 import { RequestsComponentMyReqs } from "app/requests/my-requests/my-reqs";

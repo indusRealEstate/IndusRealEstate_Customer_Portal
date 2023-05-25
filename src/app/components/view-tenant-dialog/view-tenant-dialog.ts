@@ -7,6 +7,8 @@ import {
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { RelatedDocsDialog } from "../related-documents/related-documents";
+import { ViewImageDialog } from "../view-image-dialog/view-image-dialog";
+import { RelatedRequestsDialog } from "../related-requests/related-requests";
 
 @Component({
   selector: "view-tenant-dialog",
@@ -33,6 +35,11 @@ export class ViewTenantDialog implements OnInit {
   propertyImgs: any[] = [];
   isImagesLoading: boolean = false;
 
+  isImageDisplaying: boolean = false;
+
+  images: any[] = [];
+  imageIndex: any;
+
   ngOnInit() {
     this.setupImgs();
   }
@@ -48,6 +55,16 @@ export class ViewTenantDialog implements OnInit {
   setupImgs() {
     var raw_json = this.tenant_data.property_images;
     this.propertyImgs = JSON.parse(raw_json).img;
+
+    setTimeout(() => {
+      if (this.imagesUrl != undefined) {
+        for (let index = 0; index < this.propertyImgs.length; index++) {
+          this.images.push(
+            `${this.imagesUrl}/${this.tenant_data.property_id}/${this.propertyImgs[index]}`
+          );
+        }
+      }
+    }, 1000);
   }
 
   getImagesUrl() {
@@ -72,6 +89,26 @@ export class ViewTenantDialog implements OnInit {
     this.dialog.open(RelatedDocsDialog, {
       data: {
         prop_id: this.tenant_data.property_id,
+      },
+      width: "60%",
+      height: "45rem",
+    });
+  }
+
+  viewRelatedReq() {
+    this.dialog.open(RelatedRequestsDialog, {
+      data: {
+        prop_id: this.tenant_data.property_id,
+      },
+      width: "60%",
+      height: "45rem",
+    });
+  }
+
+  viewPropImage(prop_id) {
+    this.dialog.open(ViewImageDialog, {
+      data: {
+        img: `${this.imagesUrl}/${this.tenant_data.property_id}/${prop_id}`,
       },
       width: "60%",
       height: "45rem",

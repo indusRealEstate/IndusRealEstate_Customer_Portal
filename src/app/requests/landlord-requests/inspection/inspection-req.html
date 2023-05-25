@@ -12,7 +12,7 @@
       style="color: #d4aa32; margin-top: 365px"
     >
     </span> -->
-    <div class="card" style="border-radius: 8px">
+    <!-- <div class="card" style="border-radius: 8px">
       <div
         class="card-header"
         style="
@@ -30,7 +30,7 @@
             margin-top: 15px;
           "
         >
-          Property Inspection Requests
+          Property Conditioning Requests
         </p>
       </div>
       <div
@@ -300,14 +300,158 @@
               Denied Requests
             </button>
           </div>
-        </mat-menu>
+        </mat-menu> -->
 
-        <div class="col" style="padding: 0">
+    <div class="col" style="padding: 0">
+      <div class="row m-0 w-100 align-items-end justify-content-between">
+        <div class="row m-0 align-items-end mb-3">
+          <p class="m-0 ml-4 mt-5" style="font-size: 2rem; font-weight: 600">
+            Property Inspection Requests
+          </p>
+          <img
+            (click)="refreshTable()"
+            matTooltip="Refresh table"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="refresh-table-btn ml-3"
+            src="assets/img/svg/home-page/refresh-2.svg"
+            alt=""
+          />
+        </div>
+        <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
+      </div>
+
+      <table
+        *ngIf="isContentLoading == true"
+        mat-table
+        [dataSource]="loadingTable"
+        class="mat-elevation-z8 demo-table"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="issueDate">
+          <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let last = last"
+            [ngClass]="last ? 'first-col-last' : 'first-col'"
+          >
+            <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+              <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reqNo">
+          <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let last = last"
+            [ngClass]="last ? 'second-col-last' : 'second-col'"
+          >
+            <div style="max-width: 250px; max-height: 30px; border-radius: 9px">
+              <ngx-skeleton-loader [theme]="{ width: '250px', height: '30px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="reqType">
+          <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let last = last"
+            [ngClass]="last ? 'third-col-last' : 'third-col'"
+          >
+            <div style="max-width: 150px; max-height: 30px; border-radius: 9px">
+              <ngx-skeleton-loader [theme]="{ width: '150px', height: '30px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="propertyName">
+          <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let last = last"
+            [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+          >
+            <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+              <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let last = last"
+            [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+          >
+            <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+              <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>STATUS</th>
+          <td mat-cell *matCellDef="let element; let last = last">
+            <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+              <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+              </ngx-skeleton-loader>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let last = last"
+            [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
+          >
+            <img
+              matTooltip="More Actions"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              src="assets/img/svg/home-page/more.svg"
+              alt=""
+              style="
+                filter: brightness(0) saturate(100%) invert(73%) sepia(8%)
+                  saturate(14%) hue-rotate(333deg) brightness(91%) contrast(77%);
+                width: 20px;
+                cursor: pointer;
+              "
+            />
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!------------------------------------ All Requests ----------------------------------------------------->
+      <!------------------------------------ All Requests ----------------------------------------------------->
+      <!------------------------------------ All Requests ----------------------------------------------------->
+      <div *ngIf="isContentLoading == false">
+        <div
+          *ngIf="isUserSearchedRequests == false"
+          style="overflow: auto; padding: 0 5px; padding-bottom: 1rem"
+        >
           <table
-            *ngIf="isContentLoading == true"
             mat-table
-            [dataSource]="loadingTable"
+            [dataSource]="allRequestsMatTableData"
             class="mat-elevation-z8 demo-table"
+            *ngIf="allRequests.length != 0"
           >
             <!-- Name Column -->
             <ng-container matColumnDef="issueDate">
@@ -317,14 +461,7 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
               >
-                <div
-                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
-                >
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '120px', height: '30px' }"
-                  >
-                  </ngx-skeleton-loader>
-                </div>
+                {{ element.created_date }}
               </td>
             </ng-container>
 
@@ -335,14 +472,7 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
               >
-                <div
-                  style="max-width: 250px; max-height: 30px; border-radius: 9px"
-                >
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '250px', height: '30px' }"
-                  >
-                  </ngx-skeleton-loader>
-                </div>
+                {{ element.request_no }}
               </td>
             </ng-container>
 
@@ -354,14 +484,7 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
               >
-                <div
-                  style="max-width: 150px; max-height: 30px; border-radius: 9px"
-                >
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '150px', height: '30px' }"
-                  >
-                  </ngx-skeleton-loader>
-                </div>
+                Property Inspection Request
               </td>
             </ng-container>
 
@@ -373,47 +496,40 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
               >
-                <div
-                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
-                >
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '120px', height: '30px' }"
-                  >
-                  </ngx-skeleton-loader>
-                </div>
+                {{ element.property_name }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="clientName">
-              <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
-              <td
-                mat-cell
-                *matCellDef="let element; let last = last"
-                [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
-              >
-                <div
-                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
+              <div *ngIf="userAuth == 'landlord'">
+                <th mat-header-cell *matHeaderCellDef>TENANT NAME</th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let last = last"
+                  [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
                 >
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '120px', height: '30px' }"
-                  >
-                  </ngx-skeleton-loader>
-                </div>
-              </td>
+                  {{ element.firstname }}
+                </td>
+              </div>
+              <div *ngIf="userAuth == 'tenant'">
+                <th mat-header-cell *matHeaderCellDef>LANDLORD NAME</th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let last = last"
+                  [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+                >
+                  {{ element.firstname }}
+                </td>
+              </div>
             </ng-container>
 
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef>STATUS</th>
-              <td mat-cell *matCellDef="let element; let last = last">
-                <div
-                  style="max-width: 120px; max-height: 30px; border-radius: 9px"
-                >
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '120px', height: '30px' }"
-                  >
-                  </ngx-skeleton-loader>
-                </div>
-              </td>
+              <td
+                mat-cell
+                *matCellDef="let element; let last = last"
+                [ngClass]="getRequestStatus(element, last)"
+              ></td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
@@ -427,6 +543,8 @@
                   matTooltip="More Actions"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
+                  #menuTrigger="matMenuTrigger"
+                  [matMenuTriggerFor]="actionsMenu"
                   src="assets/img/svg/home-page/more.svg"
                   alt=""
                   style="
@@ -437,6 +555,18 @@
                     cursor: pointer;
                   "
                 />
+                <mat-menu style="display: none" #actionsMenu="matMenu">
+                  <div class="col" style="display: grid">
+                    <div
+                      class="btn actions-menu-btn"
+                      (click)="reviewRequest(element)"
+                    >
+                      review
+                    </div>
+                    <div class="btn actions-menu-btn">decline</div>
+                    <div class="btn actions-menu-btn">send to landlord</div>
+                  </div>
+                </mat-menu>
               </td>
             </ng-container>
 
@@ -445,237 +575,104 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
-
-          <p
-            *ngIf="isContentLoading == true"
+          <div
+            *ngIf="allRequestsMatTableData.filteredData.length == 0"
+            class="d-flex align-items-center justify-content-center"
             style="
-              font-size: 13px;
-              font-weight: 600;
-              color: #d4aa32;
-              margin-top: 40px;
+              background: white;
+              margin-top: 0;
+              text-align: center;
+              box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
             "
           >
-            This may take a while. Please wait :)
-          </p>
+            <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+              NO RESULTS :(
+            </p>
+          </div>
+          <table
+            *ngIf="allRequests.length == 0"
+            mat-table
+            [dataSource]="loadingTable"
+            class="mat-elevation-z8 demo-table"
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="issueDate">
+              <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+            </ng-container>
 
-          <!------------------------------------ All Requests ----------------------------------------------------->
-          <!------------------------------------ All Requests ----------------------------------------------------->
-          <!------------------------------------ All Requests ----------------------------------------------------->
-          <div *ngIf="isContentLoading == false">
-            <div *ngIf="isUserSearchedRequests == false">
-              <table
-                mat-table
-                [dataSource]="allRequestsMatTableData"
-                class="mat-elevation-z8 demo-table"
-                *ngIf="allRequests.length != 0"
-              >
-                <!-- Name Column -->
-                <ng-container matColumnDef="issueDate">
-                  <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element; let last = last"
-                    [ngClass]="last ? 'first-col-last' : 'first-col'"
-                  >
-                    {{ element.created_date }}
-                  </td>
-                </ng-container>
+            <ng-container matColumnDef="reqNo">
+              <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+            </ng-container>
 
-                <ng-container matColumnDef="reqNo">
-                  <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element; let last = last"
-                    [ngClass]="last ? 'second-col-last' : 'second-col'"
-                  >
-                    {{ element.request_no }}
-                  </td>
-                </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="reqType">
+              <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+            </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="reqType">
-                  <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element; let last = last"
-                    [ngClass]="last ? 'third-col-last' : 'third-col'"
-                  >
-                    Property Inspection Request
-                  </td>
-                </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="propertyName">
+              <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+            </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="propertyName">
-                  <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element; let last = last"
-                    [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
-                  >
-                    {{ element.property_name }}
-                  </td>
-                </ng-container>
+            <ng-container matColumnDef="clientName">
+              <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+            </ng-container>
 
-                <ng-container matColumnDef="clientName">
-                  <div *ngIf="userAuth == 'landlord'">
-                    <th mat-header-cell *matHeaderCellDef>TENANT NAME</th>
-                    <td
-                      mat-cell
-                      *matCellDef="let element; let last = last"
-                      [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
-                    >
-                      {{ element.firstname }}
-                    </td>
-                  </div>
-                  <div *ngIf="userAuth == 'tenant'">
-                    <th mat-header-cell *matHeaderCellDef>LANDLORD NAME</th>
-                    <td
-                      mat-cell
-                      *matCellDef="let element; let last = last"
-                      [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
-                    >
-                      {{ element.firstname }}
-                    </td>
-                  </div>
-                </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+            </ng-container>
 
-                <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef>STATUS</th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element; let last = last"
-                    [ngClass]="getRequestStatus(element, last)"
-                  ></td>
-                </ng-container>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+            </ng-container>
 
-                <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
-                  <td
-                    mat-cell
-                    *matCellDef="let element; let last = last"
-                    [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
-                  >
-                    <img
-                      matTooltip="More Actions"
-                      matTooltipClass="tooltip"
-                      matTooltipPosition="above"
-                      #menuTrigger="matMenuTrigger"
-                      [matMenuTriggerFor]="actionsMenu"
-                      src="assets/img/svg/home-page/more.svg"
-                      alt=""
-                      style="
-                        filter: brightness(0) saturate(100%) invert(73%)
-                          sepia(8%) saturate(14%) hue-rotate(333deg)
-                          brightness(91%) contrast(77%);
-                        width: 20px;
-                        cursor: pointer;
-                      "
-                    />
-                    <mat-menu style="display: none" #actionsMenu="matMenu">
-                      <div class="col" style="display: grid">
-                        <div
-                          class="btn actions-menu-btn"
-                          (click)="reviewRequest(element)"
-                        >
-                          review
-                        </div>
-                        <div class="btn actions-menu-btn">decline</div>
-                        <div class="btn actions-menu-btn">send to landlord</div>
-                      </div>
-                    </mat-menu>
-                  </td>
-                </ng-container>
+            <!-- Symbol Column -->
 
-                <!-- Symbol Column -->
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr
-                  mat-row
-                  *matRowDef="let row; columns: displayedColumns"
-                ></tr>
-              </table>
-              <table
-                *ngIf="allRequests.length == 0"
-                mat-table
-                [dataSource]="loadingTable"
-                class="mat-elevation-z8 demo-table"
-              >
-                <!-- Name Column -->
-                <ng-container matColumnDef="issueDate">
-                  <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
-                </ng-container>
-
-                <ng-container matColumnDef="reqNo">
-                  <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="reqType">
-                  <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="propertyName">
-                  <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
-                </ng-container>
-
-                <ng-container matColumnDef="clientName">
-                  <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef>STATUS</th>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
-                </ng-container>
-
-                <!-- Symbol Column -->
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr
-                  mat-row
-                  *matRowDef="let row; columns: displayedColumns"
-                ></tr>
-              </table>
-              <div
-                *ngIf="allRequests.length == 0"
-                class="d-flex align-items-center justify-content-center"
-                style="
-                  background: white;
-                  margin-top: -2rem;
-                  text-align: center;
-                  box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
-                    0px 0px 1px -5px rgba(0, 0, 0, 0.14),
-                    0px 6px 9px 0px rgba(0, 0, 0, 0.12);
-                  border-bottom-left-radius: 10px;
-                  border-bottom-right-radius: 10px;
-                  height: 15rem;
-                "
-              >
-                <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
-                  NO REQUESTS
-                </p>
-                <p
-                  class="pl-3"
-                  style="font-size: 1.3rem; font-weight: 500; color: #d3ab33"
-                >
-                  (－_－) zzZ
-                </p>
-              </div>
-
-              <div style="margin-top: 25px" class="table-paginator">
-                <mat-paginator
-                  #paginator
-                  [pageSizeOptions]="[6, 8, 10, 14, 20]"
-                  showFirstLastButtons
-                ></mat-paginator>
-              </div>
-            </div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <div
+            *ngIf="allRequests.length == 0"
+            class="d-flex align-items-center justify-content-center"
+            style="
+              background: white;
+              margin-top: -2rem;
+              text-align: center;
+              box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+            "
+          >
+            <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+              NO REQUESTS
+            </p>
+            <p
+              class="pl-3"
+              style="font-size: 1.3rem; font-weight: 500; color: #d3ab33"
+            >
+              (－_－) zzZ
+            </p>
           </div>
         </div>
+        <div style="margin-top: 25px" class="table-paginator">
+          <mat-paginator
+            #paginator
+            [pageSizeOptions]="[6, 8, 10, 14, 20]"
+            showFirstLastButtons
+          ></mat-paginator>
+        </div>
       </div>
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- </div> -->
     </div>
   </div>
 </div>

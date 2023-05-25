@@ -28,6 +28,8 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { ViewDocDialogService } from "./view-doc-dialog-service-temp/view-doc-dialog-service";
 import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-requests-dropdown";
 import { RelatedDocsDialog } from "./related-documents/related-documents";
+import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
+import { RelatedRequestsDialog } from "./related-requests/related-requests";
 
 @NgModule({
   imports: [
@@ -62,6 +64,8 @@ import { RelatedDocsDialog } from "./related-documents/related-documents";
     ViewTenantDialog,
     ViewDocDialogService,
     RelatedDocsDialog,
+    ViewImageDialog,
+    RelatedRequestsDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

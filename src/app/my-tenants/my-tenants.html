@@ -101,7 +101,7 @@
             Tenants
           />
         </div>
-        <searchbar-table></searchbar-table>
+        <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
       </div>
 
       <table
@@ -267,7 +267,7 @@
                         margin-top: -4px !important;
                       "
                     >
-                      {{element.user_id}}
+                      {{getTenant_id(element)}}
                     </p>
                   </div>
                 </div>
@@ -349,9 +349,7 @@
                   />
                   <mat-menu style="display: none" #actionsMenuHome="matMenu">
                     <div class="col" style="display: grid">
-                      <div class="btn">
-                        review
-                      </div>
+                      <div class="btn">review</div>
                     </div>
                   </mat-menu>
                   <div class="more-btn-disabled" style="width: 90px"></div>
@@ -364,6 +362,25 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
+          <div
+            *ngIf="allTenantsMatTableData.filteredData.length == 0"
+            class="d-flex align-items-center justify-content-center"
+            style="
+              background: white;
+              margin-top: 0;
+              text-align: center;
+              box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+            "
+          >
+            <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+              NO RESULTS :(
+            </p>
+          </div>
         </div>
         <div style="margin-top: 25px" class="table-paginator">
           <mat-paginator

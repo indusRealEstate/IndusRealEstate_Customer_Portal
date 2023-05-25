@@ -140,6 +140,15 @@ export class ApiService {
     );
   }
 
+  getPropertyRequests(prop_id: any) {
+    const url = `${API_URL}/getPropertyRequests.php?apikey=1`;
+    return this.http.post<any>(url, { prop_id: prop_id }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getUserInspectionRequests(userId: any) {
     const url = `${API_URL}/getInspectionRequests.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(

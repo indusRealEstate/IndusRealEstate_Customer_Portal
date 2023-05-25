@@ -182,7 +182,8 @@ export class IndividualDocumentsComponent implements OnInit {
 
   ngOnInit() {}
 
-  // async initFunction(userId, auth) {
-
-  // }
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allDocumentsMatTableData.filter = val;
+  }
 }

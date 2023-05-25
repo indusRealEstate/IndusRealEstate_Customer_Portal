@@ -116,11 +116,13 @@ export class RequestsComponentInspection implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
+        this.allRequestsMatTableData.paginator._changePageSize(10);
       }
     } else {
       setTimeout(() => {
         if (this.allRequestsMatTableData != undefined) {
           this.allRequestsMatTableData.paginator = this.paginator;
+          this.allRequestsMatTableData.paginator._changePageSize(10);
         }
       }, 1000);
     }
@@ -134,6 +136,37 @@ export class RequestsComponentInspection implements OnInit {
     } else if (req.status == "declined") {
       return "declined-status";
     }
+  }
+
+  refreshTable() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("inspection-reqs-session");
+    this.isContentLoading = true;
+
+    this.apiService
+      .getUserInspectionRequests(user[0]["id"])
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        this.allRequestsMatTableData = new MatTableDataSource(va);
+        setTimeout(() => {
+          this.isContentLoading = false;
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "inspection-reqs-session",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        }, 50);
+      })
+      .add(() => {
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+            this.allRequestsMatTableData.paginator._changePageSize(10);
+          }
+        }, 500);
+      });
   }
 
   async ngOnInit() {
@@ -230,5 +263,10 @@ export class RequestsComponentInspection implements OnInit {
       })
       .afterClosed()
       .subscribe(async (res) => {});
+  }
+
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allRequestsMatTableData.filter = val;
   }
 }

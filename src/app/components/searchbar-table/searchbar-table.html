@@ -12,5 +12,12 @@
     alt=""
   />
 
-  <input class="search-input w-100 ml-2" *ngIf="searchBarOpened" type="text" />
+  <input
+    #inputBox
+    (keyup)="callParent(inputBox.value)"
+    placeholder="Search here"
+    class="search-input w-100 ml-2"
+    *ngIf="searchBarOpened"
+    type="text"
+  />
 </div>

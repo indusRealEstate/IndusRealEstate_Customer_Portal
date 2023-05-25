@@ -1,4 +1,10 @@
-import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
@@ -6,10 +12,11 @@ import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 import { ViewTenantDialog } from "app/components/view-tenant-dialog/view-tenant-dialog";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 
 @Component({
   selector: "app-my-tenants",
@@ -55,6 +62,8 @@ export class MyTenantsLandlord implements OnInit {
   isUserSearchedEmpty: boolean = false;
 
   searchString: any = "";
+
+  main_table_search_source: any;
 
   imagesUrl: any;
 
@@ -190,11 +199,10 @@ export class MyTenantsLandlord implements OnInit {
         .getLandlordTenants(user[0]["id"])
         .subscribe((data: any[]) => {
           this.allTenants = data;
+          this.allTenantsMatTableData = new MatTableDataSource(data);
+
           setTimeout(() => {
             this.isContentLoading = false;
-            this.allTenantsMatTableData = new MatTableDataSource(
-              this.allTenants
-            );
             if (this.allTenants.length != 0) {
               sessionStorage.setItem(
                 "my-tenants-session",
@@ -208,10 +216,12 @@ export class MyTenantsLandlord implements OnInit {
     }
   }
 
-  // async initFunction(userId, auth) {
-  //   var data = localStorage.getItem("currentUser");
-  //   var user = JSON.parse(data);
-  //   var userId = user[0]["id"];
+  getTenant_id(user) {
+    return new String(user.profile_photo).split(".")[0];
+  }
 
-  // }
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allTenantsMatTableData.filter = val;
+  }
 }

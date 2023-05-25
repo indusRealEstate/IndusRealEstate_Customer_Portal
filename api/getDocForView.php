@@ -15,15 +15,9 @@ if (isset($postdata) && !empty($postdata)) {
 
     $json = json_decode($raw_obj, true);
 
-    if ($json["auth_type"] == "landlord") {
-        $string = "upload/doc/landlord-documents/" . $json["file_path"];
+    $string = "upload/doc/user-documents/" . $json["file_path"];
 
-        $b64Doc = chunk_split(base64_encode(file_get_contents($string)));
-    } elseif ($json["auth_type"] == "tenant") {
-        $string = "upload/doc/tenant-documents/" . $json["file_path"];
-
-        $b64Doc = chunk_split(base64_encode(file_get_contents($string)));
-    }
+    $b64Doc = chunk_split(base64_encode(file_get_contents($string)));
 
     echo json_encode($b64Doc);
 }

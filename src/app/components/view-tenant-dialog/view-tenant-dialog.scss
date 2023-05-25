@@ -110,4 +110,14 @@
         brightness(90%) contrast(83%);
     }
   }
+
+  .prop-images {
+    height: 9rem;
+    border-radius: 5px;
+    transition: 0.2s all ease-in-out;
+    cursor: pointer;
+    &:hover {
+      transform: scaleY(1.03) scaleX(1.03);
+    }
+  }
 }

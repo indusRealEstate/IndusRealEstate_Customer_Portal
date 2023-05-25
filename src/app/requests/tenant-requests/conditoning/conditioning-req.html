@@ -303,20 +303,24 @@
         </mat-menu> -->
 
     <div class="col" style="padding: 0">
-      <div class="row m-0 align-items-end mb-3">
-        <p class="m-0 ml-4 mt-5" style="font-size: 2rem; font-weight: 600">
-          Property Conditioning Requests
-        </p>
-        <img
-          (click)="refreshTable()"
-          matTooltip="Refresh table"
-          matTooltipClass="tooltip"
-          matTooltipPosition="above"
-          class="refresh-table-btn ml-3"
-          src="assets/img/svg/home-page/refresh-2.svg"
-          alt=""
-        />
+      <div class="row m-0 w-100 align-items-end justify-content-between">
+        <div class="row m-0 align-items-end mb-3">
+          <p class="m-0 ml-4 mt-5" style="font-size: 2rem; font-weight: 600">
+            Property Conditioning Requests
+          </p>
+          <img
+            (click)="refreshTable()"
+            matTooltip="Refresh table"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="refresh-table-btn ml-3"
+            src="assets/img/svg/home-page/refresh-2.svg"
+            alt=""
+          />
+        </div>
+        <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
       </div>
+
       <table
         *ngIf="isContentLoading == true"
         mat-table
@@ -434,7 +438,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-
 
       <!------------------------------------ All Requests ----------------------------------------------------->
       <!------------------------------------ All Requests ----------------------------------------------------->
@@ -572,6 +575,25 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
+          <div
+            *ngIf="allRequestsMatTableData.filteredData.length == 0"
+            class="d-flex align-items-center justify-content-center"
+            style="
+              background: white;
+              margin-top: 0;
+              text-align: center;
+              box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+            "
+          >
+            <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+              NO RESULTS :(
+            </p>
+          </div>
           <table
             *ngIf="allRequests.length == 0"
             mat-table

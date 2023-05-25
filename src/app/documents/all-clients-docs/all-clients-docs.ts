@@ -207,10 +207,8 @@ export class AllClientsDocuments implements OnInit {
     }
   }
 
-  // async initFunction(userId, auth) {
-  //   var data = localStorage.getItem("currentUser");
-  //   var user = JSON.parse(data);
-  //   var userId = user[0]["id"];
-
-  // }
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allDocumentsMatTableData.filter = val;
+  }
 }

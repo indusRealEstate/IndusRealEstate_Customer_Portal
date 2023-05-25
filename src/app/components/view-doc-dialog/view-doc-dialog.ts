@@ -21,12 +21,10 @@ export class ViewDocDialog implements OnInit {
     this.isLoading = true;
     this.doc_data = data["doc"];
     this.user_id = data["user_id"];
-    this.auth_type = data["auth_type"];
   }
 
   doc_data: any;
   user_id: any;
-  auth_type: any;
   iframePathDynamic: any;
   iframePath: any;
 
@@ -48,11 +46,11 @@ export class ViewDocDialog implements OnInit {
     this.service
       .getDocForView(
         JSON.stringify({
-          file_path: this.doc_data["path"],
-          auth_type: this.auth_type,
+          file_path: this.doc_data["path"]
         })
       )
       .subscribe((res) => {
+        console.log(res)
         this.viewDocFile = "data:application/pdf;base64," + res;
 
         setTimeout(() => {

@@ -207,7 +207,8 @@ export class DocumentsComponentMyDoc implements OnInit {
     }
   }
 
-  // async initFunction(userId, auth) {
-
-  // }
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allDocumentsMatTableData.filter = val;
+  }
 }

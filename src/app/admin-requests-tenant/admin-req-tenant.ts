@@ -316,4 +316,9 @@ export class AdminReqsTenant implements OnInit {
       .afterClosed()
       .subscribe(async (res) => {});
   }
+
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allRequestsMatTableData.filter = val;
+  }
 }

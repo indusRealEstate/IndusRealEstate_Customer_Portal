@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { OtherServices } from "app/services/other.service";
 
@@ -11,6 +11,12 @@ export class TableSearchBarComponent implements OnInit {
   userId: any;
 
   searchBarOpened: boolean = false;
+
+  @Output() myEvent = new EventEmitter<string>();
+
+  callParent(val) {
+    this.myEvent.emit(val);
+  }
 
   constructor(private router: Router, private otherServices: OtherServices) {
     var userData = localStorage.getItem("currentUser");

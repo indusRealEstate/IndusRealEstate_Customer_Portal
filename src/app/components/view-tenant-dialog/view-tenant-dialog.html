@@ -101,8 +101,10 @@
           <p class="mb-0 prop mt-1">{{tenant_data.property_community_name}}</p>
         </div>
         <div class="col">
-          <div class="links">Related Requests</div>
-          <div class="links mt-2" (click)="viewRelatedDoc()">Related Documents</div>
+          <div class="links" (click)="viewRelatedReq()">Related Requests</div>
+          <div class="links mt-2" (click)="viewRelatedDoc()">
+            Related Documents
+          </div>
           <div (click)="navigateToPropertyDetailsPage()" class="links mt-2">
             Go to Property Details
           </div>
@@ -132,10 +134,10 @@
             style="margin-bottom: 2rem"
           >
             <img
-              class="mr-2"
+              (click)="viewPropImage(prop)"
+              class="mr-2 prop-images"
               src="{{getPropertyImage(prop)}}"
               alt=""
-              style="height: 10rem; border-radius: 5px"
             />
           </div>
         </div>

@@ -1,7 +1,12 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
+import { ViewDocDialog } from "../view-doc-dialog/view-doc-dialog";
 
 @Component({
   selector: "view-related-documents",
@@ -13,7 +18,8 @@ export class RelatedDocsDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<RelatedDocsDialog>,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private dialog?: MatDialog
   ) {
     this.prop_id = data["prop_id"];
     this.document_loading = true;
@@ -37,7 +43,7 @@ export class RelatedDocsDialog implements OnInit {
 
         setTimeout(() => {
           this.document_loading = false;
-        }, 1000);
+        }, 100);
       });
   }
 
@@ -53,7 +59,25 @@ export class RelatedDocsDialog implements OnInit {
     // window.open(document_url);
 
     this.apiService.downloadFile(document_url).subscribe((v) => {
-      console.log(v);
+      // console.log(v);
+      const url = window.URL.createObjectURL(v);
+      window.open(url);
+    });
+  }
+
+  viewDoc(doc) {
+    var document = {
+      path: doc.document_path,
+    };
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.dialog.open(ViewDocDialog, {
+      data: {
+        doc: document,
+        user_id: user[0]["id"],
+      },
+      width: "60%",
+      height: "45rem",
     });
   }
 }

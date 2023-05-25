@@ -23,7 +23,7 @@
           alt=""
         />
         <p class="mr-2" style="font-weight: 500; color: #3c4858b5">
-          Property Related Documents
+          Property Related Requests
         </p>
         <img
           matTooltip="Close"
@@ -36,7 +36,7 @@
         />
       </div>
 
-      <p class="details-title mt-4">All Documents</p>
+      <p class="details-title mt-4">All Requests</p>
 
       <div
         class="card"
@@ -49,16 +49,16 @@
       >
         <div class="card-header" style="background: #dba53ed1">
           <div class="row m-0" style="padding: 0 1rem">
-            <div class="col-2 pl-0 heading-docs">Document</div>
-            <div class="col-4 heading-docs">Name</div>
-            <div class="col-1 heading-docs">Size</div>
-            <div class="col-3 heading-docs">Issued Date</div>
+            <div class="col-2 pl-0 heading-docs">REQ NO.</div>
+            <div class="col-3 heading-docs">REQUEST TYPE</div>
+            <div class="col-2 heading-docs">STATUS</div>
+            <div class="col-3 heading-docs">DATE ISSUED</div>
             <div class="col-2 heading-docs">More</div>
           </div>
         </div>
         <div class="card-body" style="padding: 1rem 2rem">
           <div
-            *ngIf="document_loading == true"
+            *ngIf="reqs_loading == true"
             style="
               height: 170px;
               display: flex;
@@ -72,66 +72,45 @@
             >
             </span>
           </div>
-          <div *ngIf="document_loading == false">
+          <div *ngIf="reqs_loading == false">
             <div
               class="w-100 d-flex justify-content-center align-items-center"
-              *ngIf="prop_docs.length == 0"
+              *ngIf="prop_reqs.length == 0"
               style="height: 25rem"
             >
               <p style="font-size: 1.3rem; font-weight: 600; color: #e0b35d">
                 No Documents to show :(
               </p>
             </div>
-            <div class="mt-4" *ngFor="let doc of prop_docs;let last = last">
+            <div class="mt-4" *ngFor="let req of prop_reqs;let last = last">
               <div class="row m-0">
                 <div class="col-2 pl-0">
-                  <div
-                    class="div"
-                    style="
-                      width: 3rem;
-                      height: 3rem;
-                      border-radius: 50%;
-                      background: #9999995c;
-                      display: flex;
-                      justify-content: center;
-                    "
-                  >
-                    <img
-                      style="
-                        width: 25px;
-                        filter: invert(63%) sepia(12%) saturate(214%)
-                          hue-rotate(177deg) brightness(91%) contrast(99%);
-                      "
-                      src="assets/img/svg/documents/document-text.svg"
-                      alt=""
-                    />
+                  <div *ngIf="req.request_type == 'PAYMENT'">
+                    <p>{{req.request_id}}</p>
+                  </div>
+                  <div *ngIf="req.request_type != 'PAYMENT'">
+                    <p>{{req.request_no}}</p>
                   </div>
                 </div>
 
-                <div class="col-4">
-                  <p>{{doc.document_name}}</p>
+                <div class="col-3">
+                  <p>{{getRequestType(req.request_type)}}</p>
                 </div>
-                <div class="col-1">
-                  <p>{{doc.document_size}}</p>
+                <div class="col-2">
+                  <p>{{req.status}}</p>
                 </div>
                 <div class="col-3">
-                  <p>{{doc.document_issue_date}}</p>
+                  <div *ngIf="req.request_type == 'PAYMENT'">
+                    <p>{{req.issue_date}}</p>
+                  </div>
+                  <div *ngIf="req.request_type != 'PAYMENT'">
+                    <p>{{req.created_date}}</p>
+                  </div>
                 </div>
                 <div class="col-2">
                   <div class="row m-0">
                     <img
-                      (click)="getDocumentPath(doc)"
-                      matTooltip="Download Document"
-                      matTooltipClass="tooltip"
-                      matTooltipPosition="above"
-                      class="more-btn mr-3"
-                      style="width: 20px"
-                      src="assets/img/svg/document-download.svg"
-                      alt=""
-                    />
-                    <img
-                      (click)="viewDoc(doc)"
-                      matTooltip="View Document"
+                      matTooltip="View Request"
                       matTooltipClass="tooltip"
                       matTooltipPosition="above"
                       class="more-btn"
