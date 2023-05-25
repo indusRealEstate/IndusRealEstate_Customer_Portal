@@ -6,6 +6,7 @@ import { OtherServices } from "./other.service";
 
 const API_URL = "https://indusre.app/api/user";
 const BASE_URL_IMAGES = "https://indusre.app/api/upload/img/properties";
+const BASE_URL_DOC = "https://indusre.app/api/upload/doc/user-documents";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
@@ -29,6 +30,26 @@ export class ApiService {
 
   getBaseUrlImages() {
     return BASE_URL_IMAGES;
+  }
+
+  getBaseUrlDocs() {
+    return BASE_URL_DOC;
+  }
+
+  downloadFile(file_path) {
+    return this.http
+      .get(file_path, {
+        responseType: "blob",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,POST,OPTIONS,DELETE,PUT",
+        },
+      })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   getUserDocuments(userId: any) {
@@ -94,7 +115,7 @@ export class ApiService {
 
   getUserPaymentRequests(userId: any) {
     const url = `${API_URL}/getPaymentRequests.php?apikey=1`;
-    return this.http.post<any>(url, { userId: userId}).pipe(
+    return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
       })
@@ -104,6 +125,15 @@ export class ApiService {
   getUserConditioningRequests(userId: any) {
     const url = `${API_URL}/getConditioningRequests.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getPropertyDocuments(prop_id: any) {
+    const url = `${API_URL}/getPropertyDocuments.php?apikey=1`;
+    return this.http.post<any>(url, { prop_id: prop_id }).pipe(
       map((data) => {
         return data;
       })

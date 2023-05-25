@@ -1,0 +1,16 @@
+<div
+  class="col d-flex mr-3"
+  [ngClass]="searchBarOpened ? 'searchbar-container-opened' : 'searchbar-container-closed'"
+>
+  <img
+    (click)="searchBarClicked()"
+    matTooltip="Search"
+    matTooltipClass="tooltip"
+    matTooltipPosition="above"
+    class="search-icon"
+    src="assets/img/svg/searchbar/search-normal-1.svg"
+    alt=""
+  />
+
+  <input class="search-input w-100 ml-2" *ngIf="searchBarOpened" type="text" />
+</div>

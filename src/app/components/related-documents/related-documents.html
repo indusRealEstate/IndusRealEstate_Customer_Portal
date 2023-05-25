@@ -1,0 +1,142 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5">Tenants</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+        />
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5">
+          My Tenants
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+        />
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5">
+          Property Related Documents
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+
+      <p class="details-title mt-4">All Documents</p>
+
+      <div
+        class="card"
+        style="
+          background: #e0b86a29;
+          border-radius: 10px;
+          overflow: auto;
+          height: 32rem;
+        "
+      >
+        <div class="card-header" style="background: #dba53ed1">
+          <div class="row m-0" style="padding: 0 1rem">
+            <div class="col-2 pl-0 heading-docs">Document</div>
+            <div class="col-4 heading-docs">Name</div>
+            <div class="col-1 heading-docs">Size</div>
+            <div class="col-3 heading-docs">Issued Date</div>
+            <div class="col-2 heading-docs">More</div>
+          </div>
+        </div>
+        <div class="card-body" style="padding: 1rem 2rem">
+          <div
+            *ngIf="document_loading == true"
+            style="
+              height: 170px;
+              display: flex;
+              justify-content: center;
+              align-items: end;
+            "
+          >
+            <span
+              class="spinner-border spinner-border-m mr-2"
+              style="color: #e0b35d"
+            >
+            </span>
+          </div>
+          <div *ngIf="document_loading == false">
+            <div class="mt-4" *ngFor="let doc of prop_docs;let last = last">
+              <div class="row m-0">
+                <div class="col-2 pl-0">
+                  <div
+                    class="div"
+                    style="
+                      width: 3rem;
+                      height: 3rem;
+                      border-radius: 50%;
+                      background: #9999995c;
+                      display: flex;
+                      justify-content: center;
+                    "
+                  >
+                    <img
+                      style="
+                        width: 25px;
+                        filter: invert(63%) sepia(12%) saturate(214%)
+                          hue-rotate(177deg) brightness(91%) contrast(99%);
+                      "
+                      src="assets/img/svg/documents/document-text.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+
+                <div class="col-4">
+                  <p>{{doc.document_name}}</p>
+                </div>
+                <div class="col-1">
+                  <p>{{doc.document_size}}</p>
+                </div>
+                <div class="col-3">
+                  <p>{{doc.document_issue_date}}</p>
+                </div>
+                <div class="col-2">
+                  <div class="row m-0">
+                    <img
+                      (click)="getDocumentPath(doc)"
+                      matTooltip="Download Document"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      class="more-btn mr-3"
+                      style="width: 20px"
+                      src="assets/img/svg/document-download.svg"
+                      alt=""
+                    />
+                    <img
+                      matTooltip="View Document"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      class="more-btn"
+                      style="width: 20px"
+                      src="assets/img/svg/login/eye.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

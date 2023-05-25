@@ -104,6 +104,7 @@ import { MyLandlordComponent } from "app/my-landlord/my-landlord";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { RequestsComponentInspection } from "app/requests/landlord-requests/inspection/inspection-req";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -224,7 +225,8 @@ import { RequestsComponentInspection } from "app/requests/landlord-requests/insp
     MyTenantsLandlord,
     MyLandlordComponent,
     AllClientsDocuments,
-    RequestsComponentInspection
+    RequestsComponentInspection,
+    TableSearchBarComponent,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

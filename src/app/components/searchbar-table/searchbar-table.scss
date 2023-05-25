@@ -1,0 +1,38 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+
+.searchbar-container-closed {
+  width: 3rem;
+  transition: width 300ms ease-out, height 300ms ease-out;
+  .search-icon {
+    width: 1.4rem;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+
+    &:hover {
+      transform: scaleY(1.2) scaleX(1.2);
+      filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+        brightness(90%) contrast(83%);
+    }
+  }
+}
+
+.searchbar-container-opened {
+  transition: width 300ms ease-out, height 300ms ease-out;
+  width: 20rem;
+  height: 2rem;
+  background: white;
+  border-radius: 5px;
+  .search-icon {
+    width: 1rem;
+    cursor: pointer;
+  }
+
+  .search-input {
+    border: none;
+    font-size: 0.8rem;
+  }
+}

@@ -99,8 +99,8 @@ export class MyTenantsLandlord implements OnInit {
       data: {
         data: t_data,
       },
-      width: "70%",
-      height: "40rem",
+      width: "65%",
+      height: "45rem",
     });
   }
 

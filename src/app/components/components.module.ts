@@ -27,6 +27,7 @@ import { ViewTenantDialog } from "./view-tenant-dialog/view-tenant-dialog";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { ViewDocDialogService } from "./view-doc-dialog-service-temp/view-doc-dialog-service";
 import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-requests-dropdown";
+import { RelatedDocsDialog } from "./related-documents/related-documents";
 
 @NgModule({
   imports: [
@@ -44,7 +45,7 @@ import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-
     NgxSkeletonLoaderModule,
     PdfViewerModule,
     MatTooltipModule,
-    DragDropModule
+    DragDropModule,
   ],
   declarations: [
     FooterComponent,
@@ -59,7 +60,8 @@ import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-
     DndDirective,
     ViewDocDialog,
     ViewTenantDialog,
-    ViewDocDialogService
+    ViewDocDialogService,
+    RelatedDocsDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
