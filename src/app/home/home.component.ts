@@ -4,7 +4,7 @@ import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 import { User } from "../../../models/user/user.model";
-import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
+import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";

@@ -8,7 +8,7 @@ import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
+import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 
 @Component({
   selector: "app-requests-payment",
@@ -166,7 +166,23 @@ export class RequestsComponentPayment implements OnInit {
       return "approved-status";
     } else if (req.status == "declined") {
       return "declined-status";
+    } else if (req.status == "review") {
+      return "review-status";
     }
+  }
+
+  reviewRequest(req) {
+    this.dialog
+      .open(ReviewRequestDialog, {
+        width: "65%",
+        height: "45rem",
+        data: {
+          req_data: req,
+          section: "payment",
+        },
+      })
+      .afterClosed()
+      .subscribe(async (res) => {});
   }
 
   async ngOnInit() {
@@ -229,22 +245,6 @@ export class RequestsComponentPayment implements OnInit {
     this.allRequests.length = 0;
   }
 
-  // async initFunction(userId, auth) {
-
-  // }
-
-  reviewRequest(req) {
-    this.dialog
-      .open(ReviewRequestDialog, {
-        width: "70%",
-        height: "40rem",
-        data: {
-          req_data: req,
-        },
-      })
-      .afterClosed()
-      .subscribe(async (res) => {});
-  }
 
   applyFilter(filterValue: any) {
     var val = new String(filterValue).trim().toLowerCase();

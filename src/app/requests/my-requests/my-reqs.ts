@@ -6,7 +6,7 @@ import { AuthenticationService } from "app/services/authentication.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
+import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 
 @Component({
   selector: "app-requests",
@@ -129,10 +129,10 @@ export class RequestsComponentMyReqs implements OnInit {
       return "approved-status";
     } else if (req.status == "declined") {
       return "declined-status";
+    } else if (req.status == "review") {
+      return "review-status";
     }
   }
-
-  
 
   async ngOnInit() {
     this.imagesUrl = this.apiService.getBaseUrlImages();
@@ -236,39 +236,34 @@ export class RequestsComponentMyReqs implements OnInit {
       });
   }
 
-  getRequestType(req_type, auth) {
-    if (auth == "landlord") {
-      if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
-        return "New Property Add";
-      } else if (req_type == "INSPECTION_REQ") {
-        return "Inspection Request";
-      } else if (req_type == "PAYMENT") {
-        return "Payment Request";
-      }
-    } else {
-      if (req_type == "MAINTENANCE_REQ") {
-        return "Maintenance Request";
-      } else if (req_type == "TENANT_MOVE_IN") {
-        return "Tenant Move in Request";
-      } else if (req_type == "TENANT_MOVE_OUT") {
-        return "Tenant Move out Request";
-      } else if (req_type == "PAYMENT_REQ") {
-        return "Payment Request";
-      } else if (req_type == "CONDITIONING_REQ") {
-        return "Property Conditioning Request";
-      } else if (req_type == "PAYMENT") {
-        return "Payment Request";
-      }
+  getRequestType(req_type) {
+    if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return "Add New Property Request";
+    } else if (req_type == "INSPECTION_REQ") {
+      return "Inspection Request";
+    } else if (req_type == "PAYMENT") {
+      return "Payment Request";
+    } else if (req_type == "MAINTENANCE_REQ") {
+      return "Maintenance Request";
+    } else if (req_type == "TENANT_MOVE_IN") {
+      return "Tenant Move in Request";
+    } else if (req_type == "TENANT_MOVE_OUT") {
+      return "Tenant Move out Request";
+    } else if (req_type == "CONDITIONING_REQ") {
+      return "Property Conditioning Request";
+    } else if (req_type == "PAYMENT") {
+      return "Payment Request";
     }
   }
 
   reviewRequest(req) {
     this.dialog
       .open(ReviewRequestDialog, {
-        width: "70%",
-        height: "40rem",
+        width: "65%",
+        height: "45rem",
         data: {
           req_data: req,
+          section: "my-reqs",
         },
       })
       .afterClosed()

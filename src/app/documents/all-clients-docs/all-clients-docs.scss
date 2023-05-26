@@ -218,6 +218,19 @@
   .mat-header-row {
     background-color: #f9fafc;
   }
+
+  .more-btn {
+    transition: 0.3s all ease-in-out;
+    cursor: pointer;
+    filter: invert(63%) sepia(12%) saturate(214%) hue-rotate(177deg)
+      brightness(91%) contrast(99%);
+
+    &:hover {
+      transform: scaleY(1.2) scaleX(1.2);
+      filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+        brightness(90%) contrast(83%);
+    }
+  }
 }
 
 :host ::ng-deep .table-paginator {

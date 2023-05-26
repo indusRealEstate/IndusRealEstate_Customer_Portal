@@ -50,7 +50,7 @@ export class ViewDocDialog implements OnInit {
         })
       )
       .subscribe((res) => {
-        console.log(res)
+        // console.log(res)
         this.viewDocFile = "data:application/pdf;base64," + res;
 
         setTimeout(() => {

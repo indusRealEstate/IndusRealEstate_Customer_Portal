@@ -276,39 +276,36 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
               >
-                <div class="row m-0 w-100 justify-content-end">
-                  <div
+                <div class="row m-0 w-100 justify-content-center">
+                  <img
+                    (click)="downloadDoc(element)"
+                    matTooltip="Download Document"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="more-btn mr-4"
+                    style="width: 20px"
+                    src="assets/img/svg/document-download.svg"
+                    alt=""
+                  />
+                  <img
                     (click)="viewDoc(element)"
-                    class="btn my-auto"
-                    style="
-                      height: 30px;
-                      padding: 7px 15px;
-                      border-radius: 6px;
-                      background-color: #d4aa32;
-                      font-size: 11px;
-                      font-weight: 600;
-                      letter-spacing: 0.6px;
-                    "
-                  >
-                    View
-                  </div>
-                  <div
-                    class="btn my-auto"
-                    style="
-                      height: 30px;
-                      padding: 7px 15px;
-                      border-radius: 7px;
-                      margin-left: 10px;
-                      background-color: white;
-                      color: black;
-                      border: 1px solid #a3a3a3;
-                      font-size: 11px;
-                      font-weight: 600;
-                      letter-spacing: 0.6px;
-                    "
-                  >
-                    Remove
-                  </div>
+                    matTooltip="View Document"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="more-btn mr-4"
+                    style="width: 20px"
+                    src="assets/img/svg/login/eye.svg"
+                    alt=""
+                  />
+                  <img
+                    matTooltip="More"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="more-btn"
+                    style="width: 20px"
+                    src="assets/img/svg/home-page/more.svg"
+                    alt=""
+                  />
                 </div>
               </td>
             </ng-container>

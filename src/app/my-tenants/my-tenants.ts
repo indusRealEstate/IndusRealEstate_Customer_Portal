@@ -103,7 +103,7 @@ export class MyTenantsLandlord implements OnInit {
     }
   }
 
-  viewDoc(t_data) {
+  viewTenant(t_data) {
     this.dialog.open(ViewTenantDialog, {
       data: {
         data: t_data,

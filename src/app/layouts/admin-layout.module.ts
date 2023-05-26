@@ -63,7 +63,6 @@ import { PropertyPage } from "app/property-page/property-page.component";
 // import { GoogleMapsModule } from "@angular/google-maps";
 // import { NgApexchartsModule } from "ng-apexcharts";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
-import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
 import { HttpClientModule } from "@angular/common/http";
 import { LoginComponent } from "app/login/login.component";
 import { RegisterComponent } from "app/register/register.component";
@@ -105,6 +104,8 @@ import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { RequestsComponentInspection } from "app/requests/landlord-requests/inspection/inspection-req";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
+import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
+import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -227,6 +228,7 @@ import { TableSearchBarComponent } from "app/components/searchbar-table/searchba
     AllClientsDocuments,
     RequestsComponentInspection,
     TableSearchBarComponent,
+    RequestTimelineComponent
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

@@ -56,6 +56,7 @@ export class AllClientsDocuments implements OnInit {
   imagesUrl: any;
 
   userAuth: any;
+  doc_path: any;
 
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
@@ -66,6 +67,7 @@ export class AllClientsDocuments implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private apiService: ApiService,
     private dialog?: MatDialog,
     private emailServices?: EmailServices
   ) {
@@ -125,20 +127,6 @@ export class AllClientsDocuments implements OnInit {
       });
   }
 
-  viewDoc(doc) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.dialog.open(ViewDocDialog, {
-      data: {
-        doc: doc,
-        user_id: user[0]["id"],
-        auth_type: user[0]["auth_type"],
-      },
-      width: "1300px",
-      height: "700px",
-    });
-  }
-
   screenHeight: number;
   screenWidth: number;
   @HostListener("window:resize", ["$event"])
@@ -173,6 +161,7 @@ export class AllClientsDocuments implements OnInit {
   }
 
   async ngOnInit() {
+    this.doc_path = this.apiService.getBaseUrlDocs();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.userAuth = user[0]["auth_type"];
@@ -210,5 +199,33 @@ export class AllClientsDocuments implements OnInit {
   applyFilter(filterValue: any) {
     var val = new String(filterValue).trim().toLowerCase();
     this.allDocumentsMatTableData.filter = val;
+  }
+
+  downloadDoc(doc) {
+    var document_url = `${this.doc_path}/${doc.document_path}`;
+    // console.log(document_url);
+    // window.open(document_url);
+
+    this.apiService.downloadFile(document_url).subscribe((v) => {
+      // console.log(v);
+      const url = window.URL.createObjectURL(v);
+      window.open(url);
+    });
+  }
+
+  viewDoc(doc) {
+    var document = {
+      path: doc.document_path,
+    };
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.dialog.open(ViewDocDialog, {
+      data: {
+        doc: document,
+        user_id: user[0]["id"],
+      },
+      width: "60%",
+      height: "45rem",
+    });
   }
 }

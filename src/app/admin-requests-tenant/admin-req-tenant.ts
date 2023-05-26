@@ -8,7 +8,7 @@ import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ReviewRequestDialog } from "app/admin-requests/review_req_dialog/review_req_dialog";
+import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 
 @Component({
   selector: "admin-req-tenant",

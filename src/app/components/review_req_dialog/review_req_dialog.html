@@ -1,0 +1,144 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5">Requests</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+        />
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5">
+          {{getReqSection()}}
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt=""
+        />
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5">Details</p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+
+      <p class="details-title mt-3">Request Informations</p>
+      <div class="row m-0">
+        <div class="col-3 pl-0">
+          <p class="prop-tab">Request Type</p>
+          <p class="prop">{{getRequestType()}}</p>
+          <p class="prop-tab mt-2">Request ID</p>
+
+          <div
+            *ngIf="request_data.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.property_req_id}}</p>
+          </div>
+          <div *ngIf="request_data.request_type == 'PAYMENT'">
+            <p class="prop">{{request_data.request_id}}</p>
+          </div>
+          <div
+            *ngIf="request_data.request_type != 'PAYMENT' && request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.request_no}}</p>
+          </div>
+        </div>
+        <div class="col-3 pl-0">
+          <p class="prop-tab">Requested Date</p>
+          <div
+            *ngIf="request_data.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.property_issue_date}}</p>
+          </div>
+          <div *ngIf="request_data.request_type == 'PAYMENT'">
+            <p class="prop">{{request_data.issue_date}}</p>
+          </div>
+          <div
+            *ngIf="request_data.request_type != 'PAYMENT' && request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.created_date}}</p>
+          </div>
+
+          <div *ngIf="req_section != 'my-reqs'">
+            <p class="prop-tab mt-2">Requested By</p>
+            <p class="prop">Ajeer</p>
+          </div>
+        </div>
+        <div class="col-3 pl-0">
+          <p class="prop-tab">Status</p>
+          <div
+            class="mt-3"
+            [ngClass]="getRequestStatus(request_data.status)"
+          ></div>
+        </div>
+        <div class="col-1 pl-0">
+          <div class="btn contact-btns">Message</div>
+          <div class="btn contact-btns">Report</div>
+        </div>
+      </div>
+      <p class="details-title mt-3">Property Informations</p>
+      <div class="row m-0">
+        <div class="col-3 pl-0">
+          <p class="prop-tab">Name</p>
+          <div
+            *ngIf="request_data.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.property_building_name}}</p>
+          </div>
+          <div
+            *ngIf="request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.property_name}}</p>
+          </div>
+          <p class="prop-tab mt-1">Address</p>
+          <p class="prop">{{request_data.property_address}}</p>
+        </div>
+        <div class="col-3">
+          <p class="prop-tab">Type</p>
+          <p class="prop">{{request_data.property_type}}</p>
+          <p class="prop-tab mt-1">Community</p>
+          <div
+            *ngIf="request_data.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.property_community}}</p>
+          </div>
+          <div
+            *ngIf="request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
+            <p class="prop">{{request_data.property_community_name}}</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="links mt-2" (click)="viewRelatedDoc()">
+            Related Documents
+          </div>
+          <div
+            *ngIf="request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+            (click)="navigateToPropertyDetailsPage()"
+            class="links mt-2"
+          >
+            Go to Property Details
+          </div>
+        </div>
+      </div>
+      <p class="details-title mt-3">Request Progress</p>
+      <div class="row m-0">
+        <div class="col pl-0 mt-5">
+          <request-timeline #req_procs></request-timeline>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

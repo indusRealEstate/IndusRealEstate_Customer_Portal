@@ -223,7 +223,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
-                (click)="viewDoc(element)"
+                (click)="viewTenant(element)"
               >
                 <div class="row m-0 tenant-details">
                   <div
@@ -280,7 +280,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
-                (click)="viewDoc(element)"
+                (click)="viewTenant(element)"
               >
                 {{ element.email }}
               </td>
@@ -292,7 +292,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
-                (click)="viewDoc(element)"
+                (click)="viewTenant(element)"
               >
                 {{ element.address }}
               </td>
@@ -305,7 +305,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
-                (click)="viewDoc(element)"
+                (click)="viewTenant(element)"
               >
                 {{ element.phone_number }}
               </td>
@@ -316,7 +316,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
-                (click)="viewDoc(element)"
+                (click)="viewTenant(element)"
               >
                 {{ element.nationality }}
               </td>

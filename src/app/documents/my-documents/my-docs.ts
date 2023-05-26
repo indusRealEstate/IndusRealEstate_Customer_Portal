@@ -55,6 +55,7 @@ export class DocumentsComponentMyDoc implements OnInit {
   imagesUrl: any;
 
   userAuth: any;
+  doc_path: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -123,17 +124,31 @@ export class DocumentsComponentMyDoc implements OnInit {
       });
   }
 
+  downloadDoc(doc) {
+    var document_url = `${this.doc_path}/${doc.document_path}`;
+    // console.log(document_url);
+    // window.open(document_url);
+
+    this.apiService.downloadFile(document_url).subscribe((v) => {
+      // console.log(v);
+      const url = window.URL.createObjectURL(v);
+      window.open(url);
+    });
+  }
+
   viewDoc(doc) {
+    var document = {
+      path: doc.document_path,
+    };
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.dialog.open(ViewDocDialog, {
       data: {
-        doc: doc,
+        doc: document,
         user_id: user[0]["id"],
-        auth_type: user[0]["auth_type"],
       },
-      width: "1300px",
-      height: "700px",
+      width: "60%",
+      height: "45rem",
     });
   }
 
@@ -172,6 +187,7 @@ export class DocumentsComponentMyDoc implements OnInit {
 
   async ngOnInit() {
     this.imagesUrl = this.apiService.getBaseUrlImages();
+    this.doc_path = this.apiService.getBaseUrlDocs();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.userAuth = user[0]["auth_type"];

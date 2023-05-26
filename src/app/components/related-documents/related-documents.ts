@@ -53,7 +53,7 @@ export class RelatedDocsDialog implements OnInit {
     this.dialogRef.close();
   }
 
-  getDocumentPath(doc) {
+  downloadDoc(doc) {
     var document_url = `${this.doc_path}/${doc.document_path}`;
     // console.log(document_url);
     // window.open(document_url);

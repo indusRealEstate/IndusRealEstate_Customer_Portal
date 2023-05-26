@@ -50,10 +50,10 @@
         <div class="card-header" style="background: #dba53ed1">
           <div class="row m-0" style="padding: 0 1rem">
             <div class="col-2 pl-0 heading-docs">REQ NO.</div>
-            <div class="col-3 heading-docs">REQUEST TYPE</div>
+            <div class="col-4 heading-docs">REQUEST TYPE</div>
             <div class="col-2 heading-docs">STATUS</div>
             <div class="col-3 heading-docs">DATE ISSUED</div>
-            <div class="col-2 heading-docs">More</div>
+            <div class="col-1 heading-docs">More</div>
           </div>
         </div>
         <div class="card-body" style="padding: 1rem 2rem">
@@ -93,7 +93,7 @@
                   </div>
                 </div>
 
-                <div class="col-3">
+                <div class="col-4">
                   <p>{{getRequestType(req.request_type)}}</p>
                 </div>
                 <div class="col-2">
@@ -107,7 +107,7 @@
                     <p>{{req.created_date}}</p>
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                   <div class="row m-0">
                     <img
                       matTooltip="View Request"
@@ -115,7 +115,7 @@
                       matTooltipPosition="above"
                       class="more-btn"
                       style="width: 20px"
-                      src="assets/img/svg/login/eye.svg"
+                      src="assets/img/pngs/req_view.png"
                       alt=""
                     />
                   </div>
