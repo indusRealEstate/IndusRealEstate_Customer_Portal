@@ -135,6 +135,8 @@ export class RequestsComponentInspection implements OnInit {
       return "approved-status";
     } else if (req.status == "declined") {
       return "declined-status";
+    } else if (req.status == "review") {
+      return "review-status";
     }
   }
 
@@ -255,10 +257,11 @@ export class RequestsComponentInspection implements OnInit {
   reviewRequest(req) {
     this.dialog
       .open(ReviewRequestDialog, {
-        width: "70%",
-        height: "40rem",
+        width: "65%",
+        height: "45rem",
         data: {
           req_data: req,
+          section: "inspection",
         },
       })
       .afterClosed()

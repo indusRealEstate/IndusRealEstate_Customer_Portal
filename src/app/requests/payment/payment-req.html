@@ -513,7 +513,7 @@
                   [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
                   (click)="reviewRequest(element)"
                 >
-                  {{ element.firstname }}
+                  {{ element.firstname | titlecase}}
                 </td>
               </div>
               <div *ngIf="userAuth == 'tenant'">
@@ -524,7 +524,7 @@
                   [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
                   (click)="reviewRequest(element)"
                 >
-                  {{ element.firstname }}
+                  {{ element.firstname | titlecase}}
                 </td>
               </div>
             </ng-container>
@@ -546,7 +546,7 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
-                <div class="row justify-content-center">
+                <div class="row m-0 justify-content-center">
                   <img
                     class="more-btn d-none"
                     matTooltip="More Actions"
@@ -568,7 +568,7 @@
                       <div class="btn">review</div>
                     </div>
                   </mat-menu>
-                  <div class="more-btn-disabled" style="width: 90px"></div>
+                  <div class="more-btn-disabled" style="width: 40px"></div>
                 </div>
               </td>
             </ng-container>

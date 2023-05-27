@@ -228,7 +228,7 @@ import { RequestTimelineComponent } from "app/components/request-timeline/reques
     AllClientsDocuments,
     RequestsComponentInspection,
     TableSearchBarComponent,
-    RequestTimelineComponent
+    RequestTimelineComponent,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

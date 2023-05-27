@@ -562,7 +562,11 @@
                   >
                     DETAILS
                   </th>
-                  <td mat-cell *matCellDef="let element">
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="reviewRecentHappening(element)"
+                  >
                     {{ recentHappeningsDetails(element.request_type) }}
                   </td>
                 </ng-container>
@@ -576,7 +580,11 @@
                     PROPERTY NAME
                   </th>
 
-                  <td mat-cell *matCellDef="let element">
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="reviewRecentHappening(element)"
+                  >
                     <div
                       *ngIf="
                         element.request_type ==
@@ -605,7 +613,11 @@
                   >
                     DATE ISSUED
                   </th>
-                  <td mat-cell *matCellDef="let element">
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="reviewRecentHappening(element)"
+                  >
                     <div
                       *ngIf="
                         element.request_type ==
@@ -638,7 +650,11 @@
                   >
                     STATUS
                   </th>
-                  <td mat-cell *matCellDef="let element">
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="reviewRecentHappening(element)"
+                  >
                     {{ element.status }}
                   </td>
                 </ng-container>
@@ -655,31 +671,33 @@
                     *matCellDef="let element"
                     style="padding-right: 0"
                   >
-                    <img
-                      matTooltip="More Actions"
-                      matTooltipClass="tooltip"
-                      matTooltipPosition="above"
-                      #menuTrigger="matMenuTrigger"
-                      [matMenuTriggerFor]="actionsMenuHome"
-                      src="assets/img/svg/home-page/more.svg"
-                      alt=""
-                      style="
-                        filter: invert(62%) sepia(67%) saturate(434%)
-                          hue-rotate(7deg) brightness(96%) contrast(92%);
-                        width: 20px;
-                        cursor: pointer;
-                      "
-                    />
-                    <mat-menu style="display: none" #actionsMenuHome="matMenu">
-                      <div class="col" style="display: grid">
-                        <div
-                          class="btn"
-                          (click)="reviewRecentHappening(element)"
-                        >
-                          review
+                    <div class="row m-0 justify-content-center">
+                      <img
+                        class="more-btn d-none"
+                        matTooltip="More Actions"
+                        matTooltipClass="tooltip"
+                        matTooltipPosition="above"
+                        #menuTrigger="matMenuTrigger"
+                        [matMenuTriggerFor]="actionsMenuHome"
+                        src="assets/img/svg/home-page/more.svg"
+                        alt=""
+                        style="
+                          filter: invert(62%) sepia(67%) saturate(434%)
+                            hue-rotate(7deg) brightness(96%) contrast(92%);
+                          width: 20px;
+                          cursor: pointer;
+                        "
+                      />
+                      <mat-menu
+                        style="display: none"
+                        #actionsMenuHome="matMenu"
+                      >
+                        <div class="col" style="display: grid">
+                          <div class="btn">review</div>
                         </div>
-                      </div>
-                    </mat-menu>
+                      </mat-menu>
+                      <div class="more-btn-disabled" style="width: 90px"></div>
+                    </div>
                   </td>
                 </ng-container>
 

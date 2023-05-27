@@ -1,4 +1,10 @@
-import { Component, OnInit, Inject, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Inject,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -8,6 +14,7 @@ import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { RelatedDocsDialog } from "../related-documents/related-documents";
 import { RequestTimelineComponent } from "../request-timeline/request-timeline";
+import { ViewDocDialog } from "../view-doc-dialog/view-doc-dialog";
 
 @Component({
   selector: "review_req_dialog",
@@ -29,7 +36,11 @@ export class ReviewRequestDialog implements OnInit {
   request_data: any;
   req_section: any;
 
+  mouseEnterUserTab: boolean = false;
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
+
   @ViewChild("req_procs") req_procs: RequestTimelineComponent;
+  @ViewChild("user_data_mini_tab") user_data_mini_tab: ElementRef;
 
   ngOnInit() {}
 
@@ -58,6 +69,16 @@ export class ReviewRequestDialog implements OnInit {
       width: "60%",
       height: "45rem",
     });
+  }
+
+  viewUserDetailsMiniTab(state) {
+    if (state == "enter") {
+      // setTimeout(() => {
+        this.user_data_mini_tab.nativeElement.style.display = "block";
+      // }, 500);
+    } else if (state == "leave") {
+      this.user_data_mini_tab.nativeElement.style.display = "none";
+    }
   }
 
   getRequestType() {
@@ -93,11 +114,54 @@ export class ReviewRequestDialog implements OnInit {
     }
   }
 
-  getReqSection(){
-    if(this.req_section == 'my-reqs'){
+  getReqSection() {
+    if (this.req_section == "my-reqs") {
       return "My Requests";
-    }else if(this.req_section == ''){
-
+    } else if (this.req_section == "recent") {
+      return "My History";
+    } else if (this.req_section == "payment") {
+      return "Payment Requests";
+    } else if (this.req_section == "conditioning") {
+      return "Property Conditioning Requests";
+    } else if (this.req_section == "maintenance") {
+      return "Maintenance Requests";
+    } else if (this.req_section == "move-in") {
+      return "Tenant Move-in Requests";
+    } else if (this.req_section == "move-out") {
+      return "Tenant Move-out Requests";
+    } else if (this.req_section == "inspection") {
+      return "Property Inspection Requests";
     }
+  }
+
+  getUserAppState(){
+    return "online-app-status";
+  }
+
+  viewRequestDoc() {
+    var req_type = this.request_data.request_type;
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    if (req_type != "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      if (req_type == "PAYMENT") {
+        var document = {
+          path: this.request_data.payment_doc_path,
+        };
+      } else {
+        var document = {
+          path: this.request_data.doc_path,
+        };
+      }
+    }
+
+    this.dialog.open(ViewDocDialog, {
+      data: {
+        doc: document,
+        user_id: user[0]["id"],
+        type: "request-doc",
+      },
+      width: "60%",
+      height: "45rem",
+    });
   }
 }

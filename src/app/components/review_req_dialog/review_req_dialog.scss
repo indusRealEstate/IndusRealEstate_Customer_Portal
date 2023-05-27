@@ -63,6 +63,39 @@
     font-weight: 400;
   }
 
+  .user-name {
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+
+    &:hover {
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  }
+
+  .online-app-status::before {
+    color: #8ae16b;
+    font-weight: 600;
+    content: "ONLINE";
+    background-color: #e9ffed;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid #a9e16b85;
+  }
+  .offline-app-status::before {
+    color: #ff0000;
+    font-weight: 600;
+    content: "OFFLINE";
+    background-color: #fff2f5;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid #ff00003d;
+  }
+
   .contact-btns {
     background: #3c4858;
     padding: 8px 1rem;

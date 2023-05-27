@@ -183,10 +183,11 @@ export class HomeComponent implements OnInit {
   reviewRecentHappening(rec) {
     this.dialog
       .open(ReviewRequestDialog, {
-        width: "70%",
-        height: "40rem",
+        width: "65%",
+        height: "45rem",
         data: {
           req_data: rec,
+          section: "recent",
         },
       })
       .afterClosed()

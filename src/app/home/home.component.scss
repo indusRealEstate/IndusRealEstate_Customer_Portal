@@ -90,6 +90,17 @@
         .mat-row {
           height: 67px;
           font-weight: 600;
+          &:hover {
+            cursor: pointer;
+            background: #fbf9f2;
+
+            .more-btn {
+              display: block !important;
+            }
+            .more-btn-disabled {
+              display: none;
+            }
+          }
         }
 
         .mat-header-cell {
@@ -114,13 +125,13 @@
   }
 }
 
-.refresh-recent-btn{
+.refresh-recent-btn {
   height: 2rem;
   width: 1.2rem;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
 
-  &:hover{
+  &:hover {
     transform: scaleY(1.2) scaleX(1.2);
   }
 }

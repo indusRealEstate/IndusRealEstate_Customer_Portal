@@ -459,6 +459,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
+                (click)="reviewRequest(element)"
               >
                 {{ element.created_date }}
               </td>
@@ -470,6 +471,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
+                (click)="reviewRequest(element)"
               >
                 {{ element.request_no }}
               </td>
@@ -482,6 +484,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
+                (click)="reviewRequest(element)"
               >
                 Tenant-move-out Request
               </td>
@@ -494,30 +497,22 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+                (click)="reviewRequest(element)"
               >
                 {{ element.property_name }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="clientName">
-              <div *ngIf="userAuth == 'landlord'">
+              <div>
                 <th mat-header-cell *matHeaderCellDef>TENANT NAME</th>
                 <td
                   mat-cell
                   *matCellDef="let element; let last = last"
                   [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
+                  (click)="reviewRequest(element)"
                 >
-                  {{ element.firstname }}
-                </td>
-              </div>
-              <div *ngIf="userAuth == 'tenant'">
-                <th mat-header-cell *matHeaderCellDef>LANDLORD NAME</th>
-                <td
-                  mat-cell
-                  *matCellDef="let element; let last = last"
-                  [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
-                >
-                  {{ element.firstname }}
+                  {{ element.firstname | titlecase}}
                 </td>
               </div>
             </ng-container>
@@ -528,6 +523,7 @@
                 mat-cell
                 *matCellDef="let element; let last = last"
                 [ngClass]="getRequestStatus(element, last)"
+                (click)="reviewRequest(element)"
               ></td>
             </ng-container>
 
@@ -538,34 +534,30 @@
                 *matCellDef="let element; let last = last"
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
-                <img
-                  matTooltip="More Actions"
-                  matTooltipClass="tooltip"
-                  matTooltipPosition="above"
-                  #menuTrigger="matMenuTrigger"
-                  [matMenuTriggerFor]="actionsMenu"
-                  src="assets/img/svg/home-page/more.svg"
-                  alt=""
-                  style="
-                    filter: brightness(0) saturate(100%) invert(73%) sepia(8%)
-                      saturate(14%) hue-rotate(333deg) brightness(91%)
-                      contrast(77%);
-                    width: 20px;
-                    cursor: pointer;
-                  "
-                />
-                <mat-menu style="display: none" #actionsMenu="matMenu">
-                  <div class="col" style="display: grid">
-                    <div
-                      class="btn actions-menu-btn"
-                      (click)="reviewRequest(element)"
-                    >
-                      review
+                <div class="row m-0 justify-content-center">
+                  <img
+                    class="more-btn d-none"
+                    matTooltip="More Actions"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    #menuTrigger="matMenuTrigger"
+                    [matMenuTriggerFor]="actionsMenuHome"
+                    src="assets/img/svg/home-page/more.svg"
+                    alt=""
+                    style="
+                      filter: invert(62%) sepia(67%) saturate(434%)
+                        hue-rotate(7deg) brightness(96%) contrast(92%);
+                      width: 20px;
+                      cursor: pointer;
+                    "
+                  />
+                  <mat-menu style="display: none" #actionsMenuHome="matMenu">
+                    <div class="col" style="display: grid">
+                      <div class="btn">review</div>
                     </div>
-                    <div class="btn actions-menu-btn">decline</div>
-                    <div class="btn actions-menu-btn">send to landlord</div>
-                  </div>
-                </mat-menu>
+                  </mat-menu>
+                  <div class="more-btn-disabled" style="width: 40px"></div>
+                </div>
               </td>
             </ng-container>
 

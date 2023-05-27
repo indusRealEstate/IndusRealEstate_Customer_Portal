@@ -146,6 +146,7 @@ export class DocumentsComponentMyDoc implements OnInit {
       data: {
         doc: document,
         user_id: user[0]["id"],
+        type: "user-doc",
       },
       width: "60%",
       height: "45rem",
