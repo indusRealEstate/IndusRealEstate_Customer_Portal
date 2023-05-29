@@ -38,6 +38,7 @@ import { MyLandlordComponent } from "app/my-landlord/my-landlord";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { RequestsComponentInspection } from "app/requests/landlord-requests/inspection/inspection-req";
+import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -67,6 +68,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-dashboard", component: AdminDashboardComponent },
   // { path: "admin-requests", component: AdminRequests },
   { path: "admin-requests", component: AdminReqs },
+  { path: "review-request-admin", component: ReviewRequestAdmin },
   { path: "admin-requests-landlord", component: AdminReqsLandlord },
   { path: "admin-requests-tenant", component: AdminReqsTenant },
   { path: "login", component: LoginComponent },

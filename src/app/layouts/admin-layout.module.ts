@@ -106,6 +106,7 @@ import { RequestsComponentInspection } from "app/requests/landlord-requests/insp
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
+import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -229,6 +230,7 @@ import { RequestTimelineComponent } from "app/components/request-timeline/reques
     RequestsComponentInspection,
     TableSearchBarComponent,
     RequestTimelineComponent,
+    ReviewRequestAdmin
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

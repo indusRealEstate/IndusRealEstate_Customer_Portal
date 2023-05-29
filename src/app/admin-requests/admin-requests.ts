@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ReviewRequestDialog } from "../components/review_req_dialog/review_req_dialog";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "admin-req",
@@ -68,6 +69,7 @@ export class AdminReqs implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private otherServices: OtherServices,
     private dialog?: MatDialog,
     private emailServices?: EmailServices
   ) {
@@ -134,6 +136,8 @@ export class AdminReqs implements OnInit {
       return "approved-status";
     } else if (req.status == "declined") {
       return "declined-status";
+    } else if (req.status == "review") {
+      return "review-status";
     }
   }
 
@@ -260,11 +264,11 @@ export class AdminReqs implements OnInit {
 
   getRequestType(req_type) {
     if (req_type == "NEW_LANDLORD_REQ") {
-      return "New Landlord Account";
+      return "Request for new Landlord Account";
     } else if (req_type == "NEW_TENANT_AC") {
-      return "New Tenant Account";
+      return "Request for new Tenant Account";
     } else if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
-      return "New Property Add";
+      return "Add New Property Request";
     } else if (req_type == "PAYMENT") {
       return "Payment Request";
     } else if (req_type == "INSPECTION_REQ") {
@@ -278,6 +282,28 @@ export class AdminReqs implements OnInit {
     } else if (req_type == "TENANT_MOVE_OUT") {
       return "Tenant Move-out Request";
     }
+  }
+
+  reviewRequest(req: any) {
+    var req_id: any;
+
+    if (req.request_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      req_id = req.property_req_id;
+    } else if (req.request_type == "NEW_LANDLORD_REQ") {
+      req_id = req.request_details_id;
+    } else if (req.request_type == "NEW_TENANT_AC") {
+      req_id = req.unique_id;
+    } else if (req.request_type == "PAYMENT") {
+      req_id = req.request_id;
+    } else {
+      req_id = req.request_no;
+    }
+
+    var req_base64 = this.otherServices.convertToBase64(JSON.stringify(req));
+
+    this.router.navigate([`/review-request-admin`], {
+      queryParams: { req: req_base64, type: req.request_type },
+    });
   }
 
   applyFilter(filterValue: any) {

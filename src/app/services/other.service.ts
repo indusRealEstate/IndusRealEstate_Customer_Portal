@@ -24,8 +24,9 @@ export class OtherServices {
 
   /////////////////////////////////////////////////////
 
-  public userSignedIn: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  public userSignedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   public homeClickedTenantReg: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
@@ -57,7 +58,6 @@ export class OtherServices {
   public tenantRequestsDropDownCloseLandlord: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-
   public requestsToggle: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
@@ -85,5 +85,18 @@ export class OtherServices {
   public clearMessage() {
     this.gotError.next(false);
     this.messages.next(null);
+  }
+
+  public convertToBase64(input: string) {
+    let base64EncodedString = window.btoa(input);
+    return encodeURIComponent(base64EncodedString);
+  }
+  public decodeBase64(input: string) {
+    var type_1 = decodeURIComponent(input);
+    return window.atob(type_1);
+  }
+
+  public generateRandomID() {
+    return Math.floor(10000000000000 + Math.random() * 90000000000000);
   }
 }

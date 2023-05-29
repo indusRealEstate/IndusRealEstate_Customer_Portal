@@ -203,11 +203,12 @@
   .approved-status::before {
     color: #8ae16b;
     font-weight: 600;
-    content: "ACCEPTED";
+    content: "APPROVED";
     background-color: #e9ffed;
     padding: 5px 15px;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 10px;
+    border: 1px solid #a9e16b85;
   }
   .declined-status::before {
     color: #ff0000;
@@ -216,16 +217,28 @@
     background-color: #fff2f5;
     padding: 5px 15px;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 10px;
+    border: 1px solid #ff00003d;
   }
   .pending-status::before {
+    color: #2b333ea6;
+    font-weight: 700;
+    content: "PENDING";
+    background-color: #2b333e0f;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 10px;
+    border: 1px solid #2b333e2b;
+  }
+  .review-status::before {
     color: #d4aa32;
     font-weight: 600;
-    content: "PENDING";
+    content: "REVIEW";
     background-color: #fbf8ef;
     padding: 5px 15px;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 10px;
+    border: 1px solid #e6a60040;
   }
 
   .eighth-col-last {
