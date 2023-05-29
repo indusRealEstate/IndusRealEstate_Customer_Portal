@@ -280,19 +280,6 @@ export class AdminReqs implements OnInit {
     }
   }
 
-  reviewRequest(req) {
-    this.dialog
-      .open(ReviewRequestDialog, {
-        width: "70%",
-        height: "40rem",
-        data: {
-          req_data: req,
-        },
-      })
-      .afterClosed()
-      .subscribe(async (res) => {});
-  }
-
   applyFilter(filterValue: any) {
     var val = new String(filterValue).trim().toLowerCase();
     this.allRequestsMatTableData.filter = val;

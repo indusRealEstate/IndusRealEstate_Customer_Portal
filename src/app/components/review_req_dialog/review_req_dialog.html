@@ -160,6 +160,13 @@
                   />
                   <p style="font-weight: 400">{{request_data.phone_number}}</p>
                 </div>
+
+                <div
+                  class="btn user-more-details-btn"
+                  (click)="openUserDetails()"
+                >
+                  More Details
+                </div>
               </div>
             </div>
           </div>
@@ -222,7 +229,7 @@
         </div>
         <div class="col">
           <div class="links mt-2" (click)="viewRelatedDoc()">
-            Related Documents
+            Property Related Documents
           </div>
           <div
             *ngIf="request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"

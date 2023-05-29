@@ -15,6 +15,7 @@ import { ApiService } from "app/services/api.service";
 import { RelatedDocsDialog } from "../related-documents/related-documents";
 import { RequestTimelineComponent } from "../request-timeline/request-timeline";
 import { ViewDocDialog } from "../view-doc-dialog/view-doc-dialog";
+import { ViewTenantDialog } from "../view-tenant-dialog/view-tenant-dialog";
 
 @Component({
   selector: "review_req_dialog",
@@ -74,10 +75,25 @@ export class ReviewRequestDialog implements OnInit {
   viewUserDetailsMiniTab(state) {
     if (state == "enter") {
       // setTimeout(() => {
-        this.user_data_mini_tab.nativeElement.style.display = "block";
+      this.user_data_mini_tab.nativeElement.style.display = "block";
       // }, 500);
     } else if (state == "leave") {
       this.user_data_mini_tab.nativeElement.style.display = "none";
+    }
+  }
+
+  openUserDetails() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    if (user[0]["auth_type"] == "landlord") {
+      this.dialog.open(ViewTenantDialog, {
+        data: {
+          data: this.request_data,
+        },
+        width: "65%",
+        height: "45rem",
+      });
     }
   }
 
@@ -131,10 +147,12 @@ export class ReviewRequestDialog implements OnInit {
       return "Tenant Move-out Requests";
     } else if (this.req_section == "inspection") {
       return "Property Inspection Requests";
+    } else if (this.req_section == "prop-related-reqs") {
+      return "Property Related Requests";
     }
   }
 
-  getUserAppState(){
+  getUserAppState() {
     return "online-app-status";
   }
 

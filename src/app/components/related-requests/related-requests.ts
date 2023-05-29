@@ -6,6 +6,7 @@ import {
 } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
+import { ReviewRequestDialog } from "../review_req_dialog/review_req_dialog";
 
 @Component({
   selector: "view-related-requests",
@@ -48,7 +49,7 @@ export class RelatedRequestsDialog implements OnInit {
   onCloseDialog() {
     this.dialogRef.close();
   }
-  
+
   getRequestType(req_type) {
     if (req_type == "MAINTENANCE_REQ") {
       return "Maintenance Request";
@@ -62,7 +63,20 @@ export class RelatedRequestsDialog implements OnInit {
       return "Payment Request";
     } else if (req_type == "INSPECTION_REQ") {
       return "Inspection Request";
-    } 
+    }
   }
 
+  reviewRequest(req) {
+    this.dialog
+      .open(ReviewRequestDialog, {
+        width: "65%",
+        height: "45rem",
+        data: {
+          req_data: req,
+          section: "prop-related-reqs",
+        },
+      })
+      .afterClosed()
+      .subscribe(async (res) => {});
+  }
 }

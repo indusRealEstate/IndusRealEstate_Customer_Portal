@@ -106,6 +106,23 @@
     min-width: 6rem;
   }
 
+  .user-more-details-btn {
+    width: 100%;
+    background: #ffffff52;
+    border-radius: 8px;
+    color: black;
+    border: 1px solid #0000002b;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s all ease-in-out;
+
+    &:hover {
+      color: white;
+      background: #d3ab33;
+      border: none;
+    }
+  }
+
   .details-title {
     color: #3c4858;
     font-size: 1.2rem;
