@@ -124,6 +124,198 @@
   }
 }
 
+::ng-deep .status-menu {
+  .list {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    img {
+      height: 15px;
+      transition: 0.2s all ease-in-out;
+    }
+    p {
+      margin-bottom: 0;
+      margin-left: 13px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6c757dd9;
+      transition: 0.2s all ease-in-out;
+    }
+
+    .arrow-dropdown {
+      filter: invert(47%) sepia(5%) saturate(796%) hue-rotate(167deg)
+        brightness(94%) contrast(80%);
+    }
+
+    &:hover {
+      background: rgb(212 215 218 / 26%);
+      border: 1px solid #80808026;
+
+      p {
+        color: #d4aa32;
+      }
+      img {
+        filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+          brightness(90%) contrast(83%);
+      }
+    }
+  }
+
+  .list-approve {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    img {
+      height: 15px;
+      transition: 0.2s all ease-in-out;
+    }
+    p {
+      margin-bottom: 0;
+      margin-left: 13px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6c757dd9;
+      transition: 0.2s all ease-in-out;
+    }
+
+    .arrow-dropdown {
+      filter: invert(47%) sepia(5%) saturate(796%) hue-rotate(167deg)
+        brightness(94%) contrast(80%);
+    }
+
+    &:hover {
+      background: rgb(212 215 218 / 26%);
+      border: 1px solid #80808026;
+
+      p {
+        color: #8ae16b;
+      }
+      img {
+        filter: invert(79%) sepia(32%) saturate(678%) hue-rotate(54deg)
+          brightness(99%) contrast(87%);
+      }
+    }
+  }
+
+  .list-decline {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    img {
+      height: 15px;
+      transition: 0.2s all ease-in-out;
+    }
+    p {
+      margin-bottom: 0;
+      margin-left: 13px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6c757dd9;
+      transition: 0.2s all ease-in-out;
+    }
+
+    &:hover {
+      background: rgb(212 215 218 / 26%);
+      border: 1px solid #80808026;
+
+      p {
+        color: #e1473c;
+      }
+      img {
+        filter: invert(40%) sepia(65%) saturate(2320%) hue-rotate(335deg)
+          brightness(89%) contrast(98%);
+      }
+    }
+  }
+}
+
+::ng-deep .more-actions {
+  width: 18rem;
+  padding: 5px 13px;
+
+  .list {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    img {
+      height: 15px;
+      transition: 0.2s all ease-in-out;
+    }
+    p {
+      margin-bottom: 0;
+      margin-left: 13px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6c757dd9;
+      transition: 0.2s all ease-in-out;
+    }
+
+    .arrow-dropdown {
+      filter: invert(47%) sepia(5%) saturate(796%) hue-rotate(167deg)
+        brightness(94%) contrast(80%);
+    }
+
+    &:hover {
+      background: rgb(212 215 218 / 26%);
+      border: 1px solid #80808026;
+
+      p {
+        color: #d4aa32;
+      }
+      img {
+        filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+          brightness(90%) contrast(83%);
+      }
+
+      .arrow-dropdown {
+        filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+          brightness(90%) contrast(83%);
+      }
+    }
+  }
+
+  .list-delete {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    img {
+      height: 15px;
+      transition: 0.2s all ease-in-out;
+    }
+    p {
+      margin-bottom: 0;
+      margin-left: 13px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6c757dd9;
+      transition: 0.2s all ease-in-out;
+    }
+
+    &:hover {
+      background: rgb(212 215 218 / 26%);
+      border: 1px solid #80808026;
+
+      p {
+        color: #e1473c;
+      }
+      img {
+        filter: invert(40%) sepia(65%) saturate(2320%) hue-rotate(335deg)
+          brightness(89%) contrast(98%);
+      }
+    }
+  }
+}
+
 .demo-table {
   min-width: 1250px;
   width: 100%;
@@ -145,7 +337,7 @@
         display: none;
       }
     }
-  } 
+  }
 
   .first-col {
     border-bottom-left-radius: 10px;

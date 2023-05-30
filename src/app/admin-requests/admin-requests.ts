@@ -1,4 +1,10 @@
-import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
@@ -10,6 +16,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ReviewRequestDialog } from "../components/review_req_dialog/review_req_dialog";
 import { OtherServices } from "app/services/other.service";
+import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
   selector: "admin-req",
@@ -60,6 +67,8 @@ export class AdminReqs implements OnInit {
   searchString: any = "";
 
   imagesUrl: any;
+
+  statusMenuOpened: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -138,6 +147,22 @@ export class AdminReqs implements OnInit {
       return "declined-status";
     } else if (req.status == "review") {
       return "review-status";
+    }
+  }
+
+  requestFor(req_type, auth_type) {
+    if (req_type == "NEW_LANDLORD_REQ") {
+      return "Admin";
+    } else if (req_type == "NEW_TENANT_AC") {
+      return "Admin";
+    } else if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return "Admin";
+    } else {
+      if (auth_type == "landlord") {
+        return "Tenant";
+      } else if (auth_type == "tenant") {
+        return "Landlord";
+      }
     }
   }
 
@@ -258,9 +283,26 @@ export class AdminReqs implements OnInit {
       });
   }
 
-  // async initFunction(userId) {
+  statusMenuOpen(status) {
+    setTimeout(() => {
+      this.statusMenuOpened = true;
+    }, 10);
 
-  // }
+    
+  }
+
+  clickMainMenu(event) {
+    event.stopPropagation();
+    this.statusMenuOpened = false;
+  }
+
+  mainMenuMouseOver(){
+    this.statusMenuOpened = false;
+  }
+
+  mainMenuOpened() {
+    this.statusMenuOpened = false;
+  }
 
   getRequestType(req_type) {
     if (req_type == "NEW_LANDLORD_REQ") {

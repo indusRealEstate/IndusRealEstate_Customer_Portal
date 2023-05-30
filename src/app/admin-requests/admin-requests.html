@@ -555,16 +555,13 @@
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
                 (click)="reviewRequest(element)"
               >
-                <div *ngIf="element.request_type == 'NEW_TENANT_AC'">
-                  {{ element.buildingName }}
-                </div>
                 <div
                   *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
                 >
                   {{ element.property_building_name }}
                 </div>
                 <div
-                  *ngIf="element.request_type != 'NEW_TENANT_AC' && element.request_type != 'NEW_LANDLORD_REQ' && element.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+                  *ngIf="element.request_type != 'NEW_LANDLORD_REQ' && element.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
                 >
                   {{ element.property_name }}
                 </div>
@@ -618,7 +615,7 @@
                     matTooltip="More Actions"
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
-                    #menuTrigger="matMenuTrigger"
+                    #mainMenuTrigger="matMenuTrigger"
                     [matMenuTriggerFor]="actionsMenuHome"
                     src="assets/img/svg/home-page/more.svg"
                     alt=""
@@ -628,10 +625,107 @@
                       width: 20px;
                       cursor: pointer;
                     "
+                    (click)="mainMenuOpened()"
                   />
-                  <mat-menu style="display: none" #actionsMenuHome="matMenu">
-                    <div class="col" style="display: grid">
-                      <div class="btn">review</div>
+                  <mat-menu #actionsMenuHome="matMenu">
+                    <div
+                      (mouseenter)="mainMenuMouseOver()"
+                      (click)="clickMainMenu($event)"
+                      class="col more-actions"
+                      [ngStyle]="{'height' : requestFor(element.request_type, element.auth_type) == 'Admin' ? '11.3rem' : '13.7rem'}"
+                    >
+                      <div
+                        class="row m-0 list d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/flag.png" alt="" />
+                        <p>Flag As Important</p>
+                      </div>
+                      <div
+                        class="row mt-1 m-0 list d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/folder.png" alt="" />
+                        <p>Archive Request</p>
+                      </div>
+                      <div
+                        [ngClass]="requestFor(element.request_type, element.auth_type) == 'Admin' ? 'mb-2' : ' '"
+                        class="row mt-1 m-0 list d-flex justify-content-between"
+                        style="align-items: center"
+                        #statusMenuTrigger="matMenuTrigger"
+                        [matMenuTriggerFor]="statusChangeMenu"
+                        (click)="statusMenuOpen(element.status)"
+                      >
+                        <div class="row m-0 d-flex" style="align-items: center">
+                          <img src="assets/img/pngs/status.png" alt="" />
+                          <p>Change Status</p>
+                        </div>
+
+                        <img
+                          [ngStyle]="{ 'transform' : statusMenuOpened == true?  'rotate(90deg)' : 'rotate(0deg)'}"
+                          class="arrow-dropdown"
+                          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+                          alt=""
+                        />
+                      </div>
+                      <!-- menu for changing status -->
+                      <mat-menu
+                        style="display: none"
+                        #statusChangeMenu="matMenu"
+                      >
+                        <div
+                          class="status-menu"
+                          (click)="$event.stopPropagation()"
+                          style="width: 13rem; height: 8.1rem; padding: 0 10px"
+                        >
+                          <div
+                            class="row mt-1 mb-2 m-0 list-approve d-flex"
+                            style="align-items: center"
+                          >
+                            <img src="assets/img/pngs/approve.png" alt="" />
+                            <p>Approve Request</p>
+                          </div>
+                          <div
+                            class="row mt-1 mb-2 m-0 list d-flex"
+                            style="align-items: center"
+                          >
+                            <img src="assets/img/pngs/review.png" alt="" />
+                            <p>To Review</p>
+                          </div>
+                          <div
+                            class="row mt-1 mb-2 m-0 list-decline d-flex"
+                            style="align-items: center"
+                          >
+                            <img src="assets/img/pngs/declined.png" alt="" />
+                            <p>Decline Request</p>
+                          </div>
+                        </div>
+                      </mat-menu>
+                      <!-- menu for changing status ends -->
+                      <div
+                        *ngIf="requestFor(element.request_type, element.auth_type) == 'Tenant'"
+                        class="row mt-1 mb-2 m-0 list d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/forward.png" alt="" />
+                        <p>Forward to Tenant</p>
+                      </div>
+                      <div
+                        *ngIf="requestFor(element.request_type, element.auth_type) == 'Landlord'"
+                        class="row mt-1 mb-2 m-0 list d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/forward.png" alt="" />
+                        <p>Forward to Landlord</p>
+                      </div>
+                      <hr style="margin: 0 5px" />
+                      <div
+                        class="row mt-2 m-0 list-delete d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/trash.png" alt="" />
+                        <p>Delete Request</p>
+                      </div>
                     </div>
                   </mat-menu>
                   <div class="more-btn-disabled" style="width: 90px"></div>

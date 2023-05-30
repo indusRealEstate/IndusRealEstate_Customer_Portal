@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "admin-req-tenant",
@@ -59,6 +60,7 @@ export class AdminReqsTenant implements OnInit {
   searchString: any = "";
 
   imagesUrl: any;
+  statusMenuOpened: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -68,6 +70,7 @@ export class AdminReqsTenant implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private otherServices: OtherServices,
     private dialog?: MatDialog,
     private emailServices?: EmailServices
   ) {
@@ -134,6 +137,24 @@ export class AdminReqsTenant implements OnInit {
       return "approved-status";
     } else if (req.status == "declined") {
       return "declined-status";
+    } else if (req.status == "review") {
+      return "review-status";
+    }
+  }
+
+  requestFor(req_type, auth_type) {
+    if (req_type == "NEW_LANDLORD_REQ") {
+      return "Admin";
+    } else if (req_type == "NEW_TENANT_AC") {
+      return "Admin";
+    } else if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return "Admin";
+    } else {
+      if (auth_type == "landlord") {
+        return "Tenant";
+      } else if (auth_type == "tenant") {
+        return "Landlord";
+      }
     }
   }
 
@@ -278,9 +299,24 @@ export class AdminReqsTenant implements OnInit {
       });
   }
 
-  // async initFunction(userId) {
+  statusMenuOpen() {
+    setTimeout(() => {
+      this.statusMenuOpened = true;
+    }, 10);
+  }
 
-  // }
+  clickMainMenu(event) {
+    event.stopPropagation();
+    this.statusMenuOpened = false;
+  }
+
+  mainMenuMouseOver() {
+    this.statusMenuOpened = false;
+  }
+
+  mainMenuOpened() {
+    this.statusMenuOpened = false;
+  }
 
   getRequestType(req_type) {
     if (req_type == "NEW_LANDLORD_REQ") {
@@ -301,20 +337,29 @@ export class AdminReqsTenant implements OnInit {
       return "Tenant Move-in Request";
     } else if (req_type == "TENANT_MOVE_OUT") {
       return "Tenant Move-out Request";
-    } 
-  } 
+    }
+  }
 
-  reviewRequest(req) {
-    this.dialog
-      .open(ReviewRequestDialog, {
-        width: "70%",
-        height: "40rem",
-        data: {
-          req_data: req,
-        },
-      })
-      .afterClosed()
-      .subscribe(async (res) => {});
+  reviewRequest(req: any) {
+    var req_id: any;
+
+    if (req.request_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      req_id = req.property_req_id;
+    } else if (req.request_type == "NEW_LANDLORD_REQ") {
+      req_id = req.request_details_id;
+    } else if (req.request_type == "NEW_TENANT_AC") {
+      req_id = req.unique_id;
+    } else if (req.request_type == "PAYMENT") {
+      req_id = req.request_id;
+    } else {
+      req_id = req.request_no;
+    }
+
+    var req_base64 = this.otherServices.convertToBase64(JSON.stringify(req));
+
+    this.router.navigate([`/review-request-admin`], {
+      queryParams: { req: req_base64, type: req.request_type },
+    });
   }
 
   applyFilter(filterValue: any) {

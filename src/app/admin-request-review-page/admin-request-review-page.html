@@ -104,45 +104,88 @@
             <p class="prop-data">{{requestedBy()}}</p>
           </div>
           <div class="col">
-            <div class="btn doc-btns">Forward to Tenant</div>
+            <div class="btn doc-btns" *ngIf="requestFor() == 'Admin'">
+              Approve
+            </div>
+            <div class="btn doc-btns" *ngIf="requestFor() == 'Tenant'">
+              Forward to Tenant
+            </div>
+            <div class="btn doc-btns" *ngIf="requestFor() == 'Landlord'">
+              Forward to Landlord
+            </div>
             <div class="btn doc-btns-decline">Decline Request</div>
             <div class="links mt-3">Request for Updation</div>
           </div>
         </div>
         <p class="mt-4 mb-4 details-title">User Details</p>
         <div class="row m-0">
-          <div class="col pl-0">
+          <div class="col pl-0" *ngIf="profile_img_loading == true">
+            <ngx-skeleton-loader [theme]="{ width: '9rem', height: '9rem' }">
+            </ngx-skeleton-loader>
+          </div>
+          <div class="col pl-0" *ngIf="profile_img_loading == false">
+            <div
+              *ngIf="req.profile_photo != '' && req.profile_photo != undefined"
+              style="
+                width: 9rem;
+                height: 9rem;
+                overflow: hidden;
+                background-image: url('{{usrImgPath}}{{req.profile_photo}}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                border-radius: 6px;
+              "
+            ></div>
             <img
-              style="max-width: 10rem; border-radius: 10px"
-              class="img-fluid"
-              src="assets/img/faces/profile-sample.jfif"
+              *ngIf="req.profile_photo == '' || req.profile_photo == undefined"
+              src="assets/img/faces/avatar.webp"
               alt=""
+              style="
+                max-width: 8rem;
+                min-width: 8rem;
+                max-height: 8rem;
+                min-height: 8rem;
+                border-radius: 6px;
+                user-select: none;
+                pointer-events: none;
+              "
             />
           </div>
           <div class="col">
             <p class="prop">Name</p>
-            <p class="prop-data">Ajeer Mahmood</p>
+            <p class="prop-data">
+              {{req.firstname | titlecase}} {{req.lastname | titlecase}}
+            </p>
 
             <p class="prop mt-2">Address</p>
-            <p class="prop-data">Dubai, United Arab Emirates</p>
+            <p class="prop-data">{{req.address}}</p>
           </div>
           <div class="col">
             <p class="prop">Email</p>
-            <p class="prop-data">ajeermdk001@gmail.com</p>
+            <p class="prop-data">{{req.email}}</p>
 
             <p class="prop mt-2">Phone No.</p>
-            <p class="prop-data">0528573950</p>
+            <p class="prop-data" *ngIf="req.request_type != 'NEW_LANDLORD_REQ'">
+              {{req.phone_number}}
+            </p>
+            <p class="prop-data" *ngIf="req.request_type == 'NEW_LANDLORD_REQ'">
+              {{req.mobile_no}}
+            </p>
           </div>
           <div class="col">
             <p class="prop">Passport No.</p>
-            <p class="prop-data">74732541825</p>
+            <p class="prop-data">{{req.passport_no}}</p>
 
             <p class="prop mt-2">Passport Expiry</p>
-            <p class="prop-data">2026-09-1</p>
+            <p class="prop-data">{{req.passport_exp}}</p>
           </div>
-          <div class="col">
+          <div
+            class="col"
+            *ngIf="req.request_type != 'NEW_LANDLORD_REQ' &&  req.request_type != 'NEW_TENANT_AC'"
+          >
             <p class="prop">Joined date</p>
-            <p class="prop-data">2021-03-2</p>
+            <p class="prop-data">{{req.joined_date}}</p>
           </div>
           <div class="col">
             <div class="btn doc-btns mr-2">Message</div>
@@ -154,21 +197,44 @@
         <div class="row m-0">
           <div class="col pl-0">
             <p class="prop">Name</p>
-            <p class="prop-data">Burj Al Arab</p>
+            <p
+              class="prop-data"
+              *ngIf="req.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD' && req.request_type != 'NEW_LANDLORD_REQ'"
+            >
+              {{req.property_name}}
+            </p>
+            <p
+              class="prop-data"
+              *ngIf="req.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD' || req.request_type == 'NEW_LANDLORD_REQ'"
+            >
+              {{req.property_building_name}}
+            </p>
 
             <p class="prop mt-2">Address</p>
-            <p class="prop-data">
-              Jumairah Islands, Dubai, United Arab Emirates
-            </p>
+            <p class="prop-data">{{req.property_address}}</p>
           </div>
           <div class="col">
             <p class="prop">Type</p>
-            <p class="prop-data">Luxury Building</p>
+            <p class="prop-data">{{req.property_type}}</p>
 
             <p class="prop mt-2">Community</p>
-            <p class="prop-data">Jumairah Community</p>
+            <p
+              class="prop-data"
+              *ngIf="req.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD' && req.request_type != 'NEW_LANDLORD_REQ'"
+            >
+              {{req.property_community_name}}
+            </p>
+            <p
+              class="prop-data"
+              *ngIf="req.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD' || req.request_type == 'NEW_LANDLORD_REQ'"
+            >
+              {{req.property_community}}
+            </p>
           </div>
-          <div class="col">
+          <div
+            class="col"
+            *ngIf="req.request_type != 'NEW_LANDLORD_REQ' && req.request_type != 'NEW_TENANT_AC' && req.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
+          >
             <div
               style="
                 background: #ffe8af70;
@@ -189,10 +255,11 @@
                     Landlord
                   </p>
                   <p
+                    *ngIf="landlord_details != undefined"
                     class="mt-2"
                     style="font-size: 15px; font-weight: 500; color: #b68c03"
                   >
-                    Mohammed
+                    {{landlord_details.firstname}} {{landlord_details.lastname}}
                   </p>
                 </div>
                 <div class="col">
@@ -207,10 +274,11 @@
                     Tenants Count
                   </p>
                   <p
+                    *ngIf="landlord_tenant_count != undefined"
                     class="mt-2"
                     style="font-size: 15px; font-weight: 500; color: #b68c03"
                   >
-                    2
+                    {{landlord_tenant_count}}
                   </p>
                 </div>
               </div>
@@ -221,19 +289,52 @@
             <div class="links mt-2">Go to Property Details Page</div>
           </div>
         </div>
-        <p class="mt-5 mb-4 details-title">Other Details</p>
+        <p
+          class="mt-5 mb-4 details-title"
+          *ngIf="req.request_type != 'NEW_LANDLORD_REQ' && req.request_type != 'NEW_TENANT_AC'"
+        >
+          Other Details
+        </p>
+        <div
+          class="mt-4"
+          *ngIf="req.request_type == 'NEW_LANDLORD_REQ' || req.request_type == 'NEW_TENANT_AC'"
+        ></div>
         <div class="row m-0">
-          <div class="col-2 pl-0">
+          <div
+            class="col-2 pl-0"
+            *ngIf="req.request_type != 'NEW_LANDLORD_REQ' && req.request_type != 'NEW_TENANT_AC'"
+          >
             <p class="prop">User Total Requests</p>
-            <p class="prop-data">10</p>
+            <p class="prop-data">{{user_total_reqs}}</p>
 
-            <p class="prop mt-2">User Total Requests</p>
-            <p class="prop-data">2</p>
+            <p class="prop mt-2">Pending Requests</p>
+            <p class="prop-data">{{user_pending_reqs}}</p>
+          </div>
+          <div
+            class="col-2"
+            *ngIf="req.request_type != 'NEW_LANDLORD_REQ' && req.request_type != 'NEW_TENANT_AC'"
+          >
+            <p class="prop">Reviewing Requests</p>
+            <p class="prop-data">{{user_review_reqs}}</p>
+          </div>
+          <div
+            class="col-2"
+            *ngIf="req.request_type != 'NEW_LANDLORD_REQ' && req.request_type != 'NEW_TENANT_AC'"
+          >
+            <p class="prop">Approved Requests</p>
+            <p class="prop-data">{{user_approved_reqs}}</p>
+            <p class="prop mt-2">Declined Requests</p>
+            <p class="prop-data">{{user_declined_reqs}}</p>
+          </div>
+          <div
+            class="col-2"
+            *ngIf="req.request_type != 'NEW_LANDLORD_REQ' && req.request_type != 'NEW_TENANT_AC'"
+          >
+            <div class="links" (click)="viewUserAllReqs()">
+              See all Requests
+            </div>
           </div>
           <div class="col">
-            <div class="links">See all Requests</div>
-          </div>
-          <div class="col-6">
             <div
               style="
                 background: #ffe8af70;

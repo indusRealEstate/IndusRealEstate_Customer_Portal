@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SeeAllUserReqsAdminDialog } from "app/components/see-all-user-reqs-admin/see-all-user-reqs-admin";
 import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
+import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
 
@@ -15,6 +17,23 @@ export class ReviewRequestAdmin implements OnInit {
 
   req: any;
 
+  user_to_details: any;
+  // req_for: any;
+  landlord_details: any;
+  landlord_tenant_count: any;
+
+  profile_img_loading: boolean = false;
+
+  user_total_reqs: any = 0;
+  user_approved_reqs: any = 0;
+  user_pending_reqs: any = 0;
+  user_review_reqs: any = 0;
+  user_declined_reqs: any = 0;
+
+  user_all_req: any[] = [];
+
+  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
+
   @ViewChild("status_update_mini_bar") status_update_mini_bar: ElementRef;
 
   constructor(
@@ -22,8 +41,10 @@ export class ReviewRequestAdmin implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private otherServices: OtherServices,
+    private apiServices: ApiService,
     private dialog?: MatDialog
   ) {
+    this.profile_img_loading = true;
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
       var userData = localStorage.getItem("currentUser");
@@ -45,7 +66,105 @@ export class ReviewRequestAdmin implements OnInit {
   initFunction(param) {
     this.req = JSON.parse(this.otherServices.decodeBase64(param.req));
 
+    var adminReqDataSession: any[] = JSON.parse(
+      sessionStorage.getItem("admin_reqs_session")
+    );
+
+    if (
+      this.req.request_type != "NEW_LANDLORD_REQ" &&
+      this.req.request_type != "NEW_TENANT_AC" &&
+      this.req != undefined
+    ) {
+      var tenant_uid = new String(this.req.profile_photo).split(".")[0];
+      var landlord_uid = this.req.user_id;
+
+      for (let index = 0; index < adminReqDataSession.length; index++) {
+        if (this.req.auth_type == "tenant") {
+          var temp_uid = new String(
+            adminReqDataSession[index].profile_photo
+          ).split(".")[0];
+          if (temp_uid == tenant_uid) {
+            this.user_all_req.push(adminReqDataSession[index]);
+            this.user_total_reqs++;
+
+            if (adminReqDataSession[index].status == "approved") {
+              this.user_approved_reqs++;
+            }
+
+            if (adminReqDataSession[index].status == "pending") {
+              this.user_pending_reqs++;
+            }
+
+            if (adminReqDataSession[index].status == "review") {
+              this.user_review_reqs++;
+            }
+
+            if (adminReqDataSession[index].status == "declined") {
+              this.user_declined_reqs++;
+            }
+          }
+        } else if (this.req.auth_type == "landlord") {
+          if (adminReqDataSession[index].auth_type != "tenant") {
+            if (adminReqDataSession[index].user_id == landlord_uid) {
+              this.user_all_req.push(adminReqDataSession[index]);
+              this.user_total_reqs++;
+              console.log(adminReqDataSession[index].user_id);
+
+              if (adminReqDataSession[index].status == "approved") {
+                this.user_approved_reqs++;
+              }
+
+              if (adminReqDataSession[index].status == "pending") {
+                this.user_pending_reqs++;
+              }
+
+              if (adminReqDataSession[index].status == "review") {
+                this.user_review_reqs++;
+              }
+
+              if (adminReqDataSession[index].status == "declined") {
+                this.user_declined_reqs++;
+              }
+            }
+          }
+        }
+      }
+    }
+
     console.log(this.req);
+
+    if (
+      this.req.request_type != "NEW_LANDLORD_REQ" &&
+      this.req.request_type != "NEW_TENANT_AC" &&
+      this.req.request_type != "ADD_PROPERTY_REC_EXIST_LANDLORD" &&
+      this.req != undefined
+    ) {
+      var uid: any;
+      if (this.req.auth_type == "landlord") {
+        uid = this.req.req_to_id;
+      } else if (this.req.auth_type == "tenant") {
+        uid = new String(this.req.profile_photo).split(".")[0];
+      }
+
+      this.apiServices
+        .getLandlordDetails(uid)
+        .subscribe((val) => {
+          this.landlord_details = val[0];
+
+          console.log(this.landlord_details);
+        })
+        .add(() => {
+          this.apiServices
+            .getLandlordTenants(this.landlord_details.landlord_id)
+            .subscribe((val: any[]) => {
+              this.landlord_tenant_count = val.length;
+            });
+        });
+    }
+
+    setTimeout(() => {
+      this.profile_img_loading = false;
+    }, 1000);
   }
 
   viewStatusChangeBar() {
@@ -57,6 +176,16 @@ export class ReviewRequestAdmin implements OnInit {
   ngAfterViewInit() {}
 
   ngOnInit() {}
+
+  viewUserAllReqs() {
+    this.dialog.open(SeeAllUserReqsAdminDialog, {
+      data: {
+        reqs: this.user_all_req,
+      },
+      width: "60%",
+      height: "45rem",
+    });
+  }
 
   requestFor() {
     var req_type = this.req.request_type;
@@ -74,7 +203,7 @@ export class ReviewRequestAdmin implements OnInit {
       }
     }
   }
-  
+
   requestedBy() {
     var req_type = this.req.request_type;
     if (req_type == "NEW_LANDLORD_REQ") {

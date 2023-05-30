@@ -30,6 +30,7 @@ import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-
 import { RelatedDocsDialog } from "./related-documents/related-documents";
 import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
 import { RelatedRequestsDialog } from "./related-requests/related-requests";
+import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-user-reqs-admin";
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { RelatedRequestsDialog } from "./related-requests/related-requests";
     RelatedDocsDialog,
     ViewImageDialog,
     RelatedRequestsDialog,
+    SeeAllUserReqsAdminDialog
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
