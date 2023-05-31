@@ -107,6 +107,7 @@ import { TableSearchBarComponent } from "app/components/searchbar-table/searchba
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
+import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -192,6 +193,7 @@ import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-
     AdminReqs,
     AdminReqsLandlord,
     AdminReqsTenant,
+    AdminRequestsArchive,
     AdminDashboardComponent,
 
     ReviewRequestDialog,

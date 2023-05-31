@@ -13,11 +13,11 @@ import { OtherServices } from "app/services/other.service";
 import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
-  selector: "admin-req-landlord",
-  templateUrl: "./admin-requests-landlord.html",
-  styleUrls: ["./admin-requests-landlord.scss"],
+  selector: "admin-requests-archive",
+  templateUrl: "./admin-requests-archive.html",
+  styleUrls: ["./admin-requests-archive.scss"],
 })
-export class AdminReqsLandlord implements OnInit {
+export class AdminRequestsArchive implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -62,8 +62,6 @@ export class AdminReqsLandlord implements OnInit {
 
   imagesUrl: any;
   statusMenuOpened: boolean = false;
-  flaggedRequest: boolean = false;
-  flaggedRequestsFilterOn: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -86,11 +84,11 @@ export class AdminReqsLandlord implements OnInit {
     if (user[0]["auth_type"] == "admin") {
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
-          router.navigate([`/admin-requests-landlord`], {
+          router.navigate([`/admin-requests-archive`], {
             queryParams: { uid: user[0]["id"] },
           });
         } else if (e != user[0]["id"]) {
-          router.navigate([`/admin-requests-landlord`], {
+          router.navigate([`/admin-requests-archive`], {
             queryParams: { uid: user[0]["id"] },
           });
         }
@@ -161,23 +159,23 @@ export class AdminReqsLandlord implements OnInit {
     }
   }
 
-  fetchData() {
+  async ngOnInit() {
+    this.imagesUrl = this.apiService.getBaseUrlImages();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
     var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_reqs_session_landlord")
+      sessionStorage.getItem("admin_reqs_session_archive")
     );
+
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData = new MatTableDataSource(
-        adminReqDataSession
-      );
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
       this.adminService
-        .getAllLandlordRequestsAdmin({
+        .getAllRequestsAdminArchive({
           userId: user[0]["id"],
         })
         .subscribe((va: any[]) => {
@@ -188,56 +186,51 @@ export class AdminReqsLandlord implements OnInit {
           this.isContentLoading = false;
           if (this.allRequests.length != 0) {
             sessionStorage.setItem(
-              "admin_reqs_session_landlord",
+              "admin_reqs_session_archive",
               JSON.stringify(this.allRequests)
             );
           }
-          setTimeout(() => {
-            if (this.allRequestsMatTableData != undefined) {
-              this.allRequestsMatTableData.paginator = this.paginator;
-              this.allRequestsMatTableData.paginator._changePageSize(10);
-            }
-          }, 200);
         });
       sessionStorage.setItem(
-        "admin_reqs_fetched_time_landlord",
+        "admin_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
     }
-  }
-
-  async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
 
     var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("admin_reqs_fetched_time_landlord")
-    );
 
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_reqs_session_landlord")
-    );
+    var diff =
+      now -
+      Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
 
-    if (previous != null) {
-      var diff = now - Number(previous);
-
-      if (diff >= 5) {
-        sessionStorage.removeItem("admin_reqs_session_landlord");
-        this.fetchData();
-      } else {
-        if (adminReqDataSession != null) {
-          this.allRequests = adminReqDataSession;
-          this.allRequestsMatTableData = new MatTableDataSource(
-            adminReqDataSession
-          );
+    if (diff >= 20) {
+      // this.isLoading = true;
+      this.isContentLoading = true;
+      this.clearAllVariables();
+      sessionStorage.removeItem("admin_reqs_fetched_time");
+      sessionStorage.removeItem("admin_reqs_session_archive");
+      this.adminService
+        .getAllRequestsAdminArchive({
+          userId: user[0]["id"],
+        })
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
           this.isContentLoading = false;
-          this.ngAfterViewInitInitialize = true;
-        } else {
-          this.fetchData();
-        }
-      }
-    } else {
-      this.fetchData();
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "admin_reqs_session_archive",
+              JSON.stringify(this.allRequests)
+            );
+          }
+        });
+
+      sessionStorage.setItem(
+        "admin_reqs_fetched_time",
+        JSON.stringify(new Date().getMinutes())
+      );
     }
   }
 
@@ -246,16 +239,35 @@ export class AdminReqsLandlord implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removeItem("admin_reqs_session_landlord");
+    this.clearAllVariables();
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    sessionStorage.removeItem("admin_reqs_session_archive");
     this.isContentLoading = true;
-    this.flaggedRequestsFilterOn = false;
-    this.fetchData();
-  }
 
-  statusMenuOpen() {
-    setTimeout(() => {
-      this.statusMenuOpened = true;
-    }, 10);
+    this.adminService
+      .getAllRequestsAdminArchive({
+        userId: user[0]["id"],
+      })
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        this.allRequestsMatTableData = new MatTableDataSource(va);
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        if (this.allRequests.length != 0) {
+          sessionStorage.setItem(
+            "admin_reqs_session_archive",
+            JSON.stringify(this.allRequests)
+          );
+        }
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+            this.allRequestsMatTableData.paginator._changePageSize(10);
+          }
+        }, 100);
+      });
   }
 
   clickMainMenu(event) {
@@ -267,47 +279,66 @@ export class AdminReqsLandlord implements OnInit {
     this.statusMenuOpened = false;
   }
 
-  mainMenuOpened(req) {
+  mainMenuOpened() {
     this.statusMenuOpened = false;
-
-    if (req.flag == 1) {
-      this.flaggedRequest = true;
-    } else {
-      this.flaggedRequest = false;
-    }
   }
 
-  flagAsImportant(req, trigger: MatMenuTrigger) {
-    if (req.flag == 1) {
-      req.flag = 0;
+  removeFromArchives(req: any, trigger: MatMenuTrigger, index: number) {
+    req.archive = 0;
 
-      var req_id = this.getReqId(req);
-      this.apiService
-        .updateRequestFlag(req_id, 0, req.request_type)
-        .subscribe((val) => {
-          // console.log(val);
-        });
+    const filteredarray = this.allRequests.filter((d) => d.archive == 1);
+    this.allRequests = filteredarray;
 
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+
+    var req_id = this.getReqId(req);
+    this.apiService
+      .updateRequestArchive(req_id, 0, req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (this.allRequests.length != 0) {
       sessionStorage.setItem(
-        "admin_reqs_session_landlord",
+        "admin_reqs_session_archive",
         JSON.stringify(this.allRequests)
       );
     } else {
-      req.flag = 1;
+      sessionStorage.removeItem("admin_reqs_session_archive");
+    }
 
-      var req_id = this.getReqId(req);
+    sessionStorage.removeItem("admin_reqs_session");
+    sessionStorage.removeItem("admin_reqs_session_landlord");
+    sessionStorage.removeItem("admin_reqs_session_tenant");
+
+    trigger.closeMenu();
+  }
+
+  removeAllFromArchives() {
+    var count = 0;
+    for (let index = 0; index < this.allRequests.length; index++) {
+      count++;
+      var req_id = this.getReqId(this.allRequests[index]);
       this.apiService
-        .updateRequestFlag(req_id, 1, req.request_type)
+        .updateRequestArchive(req_id, 0, this.allRequests[index].request_type)
         .subscribe((val) => {
           // console.log(val);
         });
-      sessionStorage.setItem(
-        "admin_reqs_session_landlord",
-        JSON.stringify(this.allRequests)
-      );
     }
 
-    trigger.closeMenu();
+    if (count == this.allRequests.length) {
+      this.allRequests.length = 0;
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData.paginator = this.paginator;
+      this.allRequestsMatTableData.paginator._changePageSize(10);
+      sessionStorage.removeItem("admin_reqs_session_archive");
+      sessionStorage.removeItem("admin_reqs_session");
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
   }
 
   getReqId(req) {
@@ -323,50 +354,6 @@ export class AdminReqsLandlord implements OnInit {
     } else {
       return req.request_no;
     }
-  }
-
-  archiveRequest(req, trigger: MatMenuTrigger, index: number) {
-    req.archive = 1;
-
-    this.allRequests.splice(index, 1);
-    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-
-    this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
-
-    var req_id = this.getReqId(req);
-    this.apiService
-      .updateRequestArchive(req_id, 1, req.request_type)
-      .subscribe((val) => {
-        // console.log(val);
-      });
-
-    if (this.allRequests.length != 0) {
-      sessionStorage.setItem(
-        "admin_reqs_session_landlord",
-        JSON.stringify(this.allRequests)
-      );
-    }
-
-    sessionStorage.removeItem("admin_reqs_session_archive");
-    sessionStorage.removeItem("admin_reqs_session");
-
-    trigger.closeMenu();
-  }
-
-  showAllFlaggedRequests() {
-    const filteredarray = this.allRequests.filter((d) => d.flag == 1);
-    this.allRequestsMatTableData = new MatTableDataSource(filteredarray);
-    this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
-    this.flaggedRequestsFilterOn = true;
-  }
-
-  closeFlaggedRequestFilter() {
-    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-    this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
-    this.flaggedRequestsFilterOn = false;
   }
 
   getRequestType(req_type) {

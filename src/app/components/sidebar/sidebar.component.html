@@ -217,6 +217,20 @@
         >
           <img src="assets/img/svg/sidebar/menu.svg" alt="" />
         </div>
+        <div
+          *ngIf="user.auth_type == 'admin'"
+          matTooltip="Archived Requests"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          (click)="miniSideBarClickedArchivedRequests()"
+          [ngClass]="
+            isArchiveRequestsOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/sidebar/archive.svg" alt="" />
+        </div>
 
         <div
           *ngIf="user.auth_type != 'admin'"
@@ -505,6 +519,33 @@
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
                 <div class="row">
                   <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+        </div>
+
+        <div *ngIf="isArchiveRequestsOpened == true" style="height: 80%">
+          <div *ngIf="user.auth_type == 'admin'">
+            <li
+              *ngFor="let item of archivedRequestsRouteAdmin"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row" style="align-items: center">
+                  <img
+                    style="height: 18px; width: 18px"
                     class="sidebar-items-icon"
                     [src]="[item.icon]"
                     alt="hello"

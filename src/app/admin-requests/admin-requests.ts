@@ -69,6 +69,8 @@ export class AdminReqs implements OnInit {
   imagesUrl: any;
 
   statusMenuOpened: boolean = false;
+  flaggedRequest: boolean = false;
+  flaggedRequestsFilterOn: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -166,15 +168,13 @@ export class AdminReqs implements OnInit {
     }
   }
 
-  async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
+  fetchData() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
     var adminReqDataSession = JSON.parse(
       sessionStorage.getItem("admin_reqs_session")
     );
-
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
       this.allRequestsMatTableData = new MatTableDataSource(
@@ -190,59 +190,61 @@ export class AdminReqs implements OnInit {
         .subscribe((va: any[]) => {
           this.allRequests = va;
           this.allRequestsMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.isContentLoading = false;
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "admin_reqs_session",
+              JSON.stringify(this.allRequests)
+            );
+          }
           setTimeout(() => {
-            this.isContentLoading = false;
-            if (this.allRequests.length != 0) {
-              sessionStorage.setItem(
-                "admin_reqs_session",
-                JSON.stringify(this.allRequests)
-              );
+            if (this.allRequestsMatTableData != undefined) {
+              this.allRequestsMatTableData.paginator = this.paginator;
+              this.allRequestsMatTableData.paginator._changePageSize(10);
             }
-          }, 50);
+          }, 200);
         });
       sessionStorage.setItem(
-        "admin_reqs_fetched_time",
+        "admin_reqs_fetched_time_admin",
         JSON.stringify(new Date().getMinutes())
       );
     }
+  }
 
-    // console.log(this.allRequests);
+  async ngOnInit() {
+    this.imagesUrl = this.apiService.getBaseUrlImages();
 
     var now = new Date().getMinutes();
+    var previous = JSON.parse(
+      sessionStorage.getItem("admin_reqs_fetched_time_admin")
+    );
 
-    var diff =
-      now -
-      Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
+    var adminReqDataSession = JSON.parse(
+      sessionStorage.getItem("admin_reqs_session")
+    );
 
-    if (diff >= 20) {
-      // this.isLoading = true;
-      this.isContentLoading = true;
-      this.clearAllVariables();
-      sessionStorage.removeItem("admin_reqs_fetched_time");
-      sessionStorage.removeItem("admin_reqs_session");
-      this.adminService
-        .getAllRequestsAdmin({
-          userId: user[0]["id"],
-        })
-        .subscribe((va: any[]) => {
-          this.allRequests = va;
-          setTimeout(() => {
-            this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
-            if (this.allRequests.length != 0) {
-              sessionStorage.setItem(
-                "admin_reqs_session",
-                JSON.stringify(this.allRequests)
-              );
-            }
-          }, 100);
-        });
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
+    if (previous != null) {
+      var diff = now - Number(previous);
+
+      if (diff >= 5) {
+        sessionStorage.removeItem("admin_reqs_session");
+        this.fetchData();
+      } else {
+        if (adminReqDataSession != null) {
+          this.allRequests = adminReqDataSession;
+          this.allRequestsMatTableData = new MatTableDataSource(
+            adminReqDataSession
+          );
+          this.isContentLoading = false;
+          this.ngAfterViewInitInitialize = true;
+        } else {
+          this.fetchData();
+        }
+      }
+    } else {
+      this.fetchData();
     }
   }
 
@@ -251,44 +253,16 @@ export class AdminReqs implements OnInit {
   }
 
   refreshTable() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
     sessionStorage.removeItem("admin_reqs_session");
     this.isContentLoading = true;
-
-    this.adminService
-      .getAllRequestsAdmin({
-        userId: user[0]["id"],
-      })
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "admin_reqs_session",
-              JSON.stringify(this.allRequests)
-            );
-          }
-        }, 50);
-      })
-      .add(() => {
-        setTimeout(() => {
-          if (this.allRequestsMatTableData != undefined) {
-            this.allRequestsMatTableData.paginator = this.paginator;
-            this.allRequestsMatTableData.paginator._changePageSize(10);
-          }
-        }, 500);
-      });
+    this.flaggedRequestsFilterOn = false;
+    this.fetchData();
   }
 
   statusMenuOpen(status) {
     setTimeout(() => {
       this.statusMenuOpened = true;
     }, 10);
-
-    
   }
 
   clickMainMenu(event) {
@@ -296,12 +270,111 @@ export class AdminReqs implements OnInit {
     this.statusMenuOpened = false;
   }
 
-  mainMenuMouseOver(){
+  mainMenuMouseOver() {
     this.statusMenuOpened = false;
   }
 
-  mainMenuOpened() {
+  mainMenuOpened(req) {
     this.statusMenuOpened = false;
+
+    if (req.flag == 1) {
+      this.flaggedRequest = true;
+    } else {
+      this.flaggedRequest = false;
+    }
+  }
+
+  flagAsImportant(req, trigger: MatMenuTrigger) {
+    if (req.flag == 1) {
+      req.flag = 0;
+
+      var req_id = this.getReqId(req);
+      this.apiService
+        .updateRequestFlag(req_id, 0, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+
+      sessionStorage.setItem(
+        "admin_reqs_session",
+        JSON.stringify(this.allRequests)
+      );
+    } else {
+      req.flag = 1;
+
+      var req_id = this.getReqId(req);
+      this.apiService
+        .updateRequestFlag(req_id, 1, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+      sessionStorage.setItem(
+        "admin_reqs_session",
+        JSON.stringify(this.allRequests)
+      );
+    }
+
+    trigger.closeMenu();
+  }
+
+  getReqId(req) {
+    var req_type = req.request_type;
+    if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return req.property_req_id;
+    } else if (req_type == "NEW_LANDLORD_REQ") {
+      return req.request_details_id;
+    } else if (req_type == "NEW_TENANT_AC") {
+      return req.unique_id;
+    } else if (req_type == "PAYMENT") {
+      return req.request_id;
+    } else {
+      return req.request_no;
+    }
+  }
+
+  archiveRequest(req, trigger: MatMenuTrigger, index) {
+    req.archive = 1;
+
+    this.allRequests.splice(index, 1);
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+
+    var req_id = this.getReqId(req);
+    this.apiService
+      .updateRequestArchive(req_id, 1, req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (this.allRequests.length != 0) {
+      sessionStorage.setItem(
+        "admin_reqs_session",
+        JSON.stringify(this.allRequests)
+      );
+    }
+
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    sessionStorage.removeItem("admin_reqs_session_landlord");
+    sessionStorage.removeItem("admin_reqs_session_tenant");
+
+    trigger.closeMenu();
+  }
+
+  showAllFlaggedRequests() {
+    const filteredarray = this.allRequests.filter((d) => d.flag == 1);
+    this.allRequestsMatTableData = new MatTableDataSource(filteredarray);
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.flaggedRequestsFilterOn = true;
+  }
+
+  closeFlaggedRequestFilter() {
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.flaggedRequestsFilterOn = false;
   }
 
   getRequestType(req_type) {

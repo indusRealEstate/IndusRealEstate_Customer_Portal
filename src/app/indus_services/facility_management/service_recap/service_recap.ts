@@ -349,6 +349,8 @@ export class ServiceRecapComponent implements OnInit {
           details: "lorem ipsum",
           doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
           status: "pending",
+          flag: 0,
+          archive: 0,
           created_date: this.getCurrentDate(),
         };
 
@@ -363,6 +365,8 @@ export class ServiceRecapComponent implements OnInit {
           details: "lorem ipsum",
           doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
           status: "pending",
+          flag: 0,
+          archive: 0,
           created_date: this.getCurrentDate(),
         };
 
@@ -377,6 +381,8 @@ export class ServiceRecapComponent implements OnInit {
           details: "lorem ipsum",
           doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
           status: "pending",
+          flag: 0,
+          archive: 0,
           created_date: this.getCurrentDate(),
         };
 
@@ -391,6 +397,8 @@ export class ServiceRecapComponent implements OnInit {
           details: "lorem ipsum",
           doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
           status: "pending",
+          flag: 0,
+          archive: 0,
           created_date: this.getCurrentDate(),
         };
       case "conditioning":
@@ -404,6 +412,8 @@ export class ServiceRecapComponent implements OnInit {
           details: "lorem ipsum",
           doc_path: `${req_id}.${this.uploadedDoc["ext"]}`,
           status: "pending",
+          flag: 0,
+          archive: 0,
           created_date: this.getCurrentDate(),
         };
     }
@@ -444,6 +454,8 @@ export class ServiceRecapComponent implements OnInit {
           property_id: this.tenant.property_id,
           details: "lorem ipsum",
           status: "pending",
+          flag: 0,
+          archive: 0,
           issue_date: this.getCurrentDate(),
         };
       } else if (this.currentServicePageType == "payment-tenant") {
@@ -462,6 +474,8 @@ export class ServiceRecapComponent implements OnInit {
           property_id: this.landlord.property_id,
           details: "lorem ipsum",
           status: "pending",
+          flag: 0,
+          archive: 0,
           issue_date: this.getCurrentDate(),
         };
       }

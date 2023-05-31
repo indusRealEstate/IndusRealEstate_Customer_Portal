@@ -10,6 +10,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 import { OtherServices } from "app/services/other.service";
+import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
   selector: "admin-req-tenant",
@@ -61,6 +62,8 @@ export class AdminReqsTenant implements OnInit {
 
   imagesUrl: any;
   statusMenuOpened: boolean = false;
+  flaggedRequest: boolean = false;
+  flaggedRequestsFilterOn: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -158,97 +161,83 @@ export class AdminReqsTenant implements OnInit {
     }
   }
 
-  async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
+  fetchData() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
     var adminReqDataSession = JSON.parse(
       sessionStorage.getItem("admin_reqs_session_tenant")
     );
-
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData = new MatTableDataSource(
+        adminReqDataSession
+      );
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
       this.adminService
-        .getAllRequestsAdmin({
+        .getAllTenantRequestsAdmin({
           userId: user[0]["id"],
         })
         .subscribe((va: any[]) => {
-          var count = 0;
-          for (let index = 0; index < va.length; index++) {
-            count++;
-            if (va[index].auth_type == "tenant") {
-              this.allRequests.push(va[index]);
-            }
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.isContentLoading = false;
+          if (this.allRequests.length != 0) {
+            sessionStorage.setItem(
+              "admin_reqs_session_tenant",
+              JSON.stringify(this.allRequests)
+            );
           }
           setTimeout(() => {
-            if (count == va.length) {
-              this.isContentLoading = false;
-              this.allRequestsMatTableData = new MatTableDataSource(
-                this.allRequests
-              );
-              if (this.allRequests.length != 0) {
-                sessionStorage.setItem(
-                  "admin_reqs_session_tenant",
-                  JSON.stringify(this.allRequests)
-                );
-              }
+            if (this.allRequestsMatTableData != undefined) {
+              this.allRequestsMatTableData.paginator = this.paginator;
+              this.allRequestsMatTableData.paginator._changePageSize(10);
             }
-          }, 100);
+          }, 200);
         });
       sessionStorage.setItem(
-        "admin_reqs_fetched_time",
+        "admin_reqs_fetched_time_tenant",
         JSON.stringify(new Date().getMinutes())
       );
     }
+  }
+
+  async ngOnInit() {
+    this.imagesUrl = this.apiService.getBaseUrlImages();
 
     var now = new Date().getMinutes();
+    var previous = JSON.parse(
+      sessionStorage.getItem("admin_reqs_fetched_time_tenant")
+    );
 
-    var diff =
-      now -
-      Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
+    var adminReqDataSession = JSON.parse(
+      sessionStorage.getItem("admin_reqs_session_tenant")
+    );
 
-    if (diff >= 20) {
-      // this.isLoading = true;
-      this.isContentLoading = true;
-      this.clearAllVariables();
-      sessionStorage.removeItem("admin_reqs_fetched_time");
-      sessionStorage.removeItem("admin_reqs_session_tenant");
-      this.adminService
-        .getAllRequestsAdmin({
-          userId: user[0]["id"],
-        })
-        .subscribe((va: any[]) => {
-          var count = 0;
-          for (let index = 0; index < va.length; index++) {
-            count++;
-            if (va[index].auth_type == "tenant") {
-              this.allRequests.push(va[index]);
-            }
-          }
-          setTimeout(() => {
-            if (count == va.length) {
-              this.isContentLoading = false;
-              this.allRequestsMatTableData = new MatTableDataSource(
-                this.allRequests
-              );
-              if (this.allRequests.length != 0) {
-                sessionStorage.setItem(
-                  "admin_reqs_session_tenant",
-                  JSON.stringify(this.allRequests)
-                );
-              }
-            }
-          }, 100);
-        });
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
+    if (previous != undefined) {
+      var diff = now - Number(previous);
+
+      if (diff >= 5) {
+        sessionStorage.removeItem("admin_reqs_session_tenant");
+        this.fetchData();
+      } else {
+        if (adminReqDataSession != null) {
+          this.allRequests = adminReqDataSession;
+          this.allRequestsMatTableData = new MatTableDataSource(
+            adminReqDataSession
+          );
+          this.isContentLoading = false;
+          this.ngAfterViewInitInitialize = true;
+        } else {
+          this.fetchData();
+        }
+      }
+    } else {
+      this.fetchData();
     }
   }
 
@@ -257,46 +246,10 @@ export class AdminReqsTenant implements OnInit {
   }
 
   refreshTable() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
     sessionStorage.removeItem("admin_reqs_session_tenant");
     this.isContentLoading = true;
-
-    this.adminService
-      .getAllRequestsAdmin({
-        userId: user[0]["id"],
-      })
-      .subscribe((va: any[]) => {
-        var count = 0;
-        for (let index = 0; index < va.length; index++) {
-          count++;
-          if (va[index].auth_type == "tenant") {
-            this.allRequests.push(va[index]);
-          }
-        }
-        setTimeout(() => {
-          if (count == va.length) {
-            this.isContentLoading = false;
-            this.allRequestsMatTableData = new MatTableDataSource(
-              this.allRequests
-            );
-            if (this.allRequests.length != 0) {
-              sessionStorage.setItem(
-                "admin_reqs_session_tenant",
-                JSON.stringify(this.allRequests)
-              );
-            }
-          }
-        }, 100);
-      })
-      .add(() => {
-        setTimeout(() => {
-          if (this.allRequestsMatTableData != undefined) {
-            this.allRequestsMatTableData.paginator = this.paginator;
-            this.allRequestsMatTableData.paginator._changePageSize(10);
-          }
-        }, 500);
-      });
+    this.flaggedRequestsFilterOn = false;
+    this.fetchData();
   }
 
   statusMenuOpen() {
@@ -314,8 +267,106 @@ export class AdminReqsTenant implements OnInit {
     this.statusMenuOpened = false;
   }
 
-  mainMenuOpened() {
+  mainMenuOpened(req) {
     this.statusMenuOpened = false;
+
+    if (req.flag == 1) {
+      this.flaggedRequest = true;
+    } else {
+      this.flaggedRequest = false;
+    }
+  }
+
+  flagAsImportant(req, trigger: MatMenuTrigger) {
+    if (req.flag == 1) {
+      req.flag = 0;
+
+      var req_id = this.getReqId(req);
+      this.apiService
+        .updateRequestFlag(req_id, 0, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+
+      sessionStorage.setItem(
+        "admin_reqs_session_tenant",
+        JSON.stringify(this.allRequests)
+      );
+    } else {
+      req.flag = 1;
+
+      var req_id = this.getReqId(req);
+      this.apiService
+        .updateRequestFlag(req_id, 1, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+      sessionStorage.setItem(
+        "admin_reqs_session_tenant",
+        JSON.stringify(this.allRequests)
+      );
+    }
+
+    trigger.closeMenu();
+  }
+
+  getReqId(req) {
+    var req_type = req.request_type;
+    if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return req.property_req_id;
+    } else if (req_type == "NEW_LANDLORD_REQ") {
+      return req.request_details_id;
+    } else if (req_type == "NEW_TENANT_AC") {
+      return req.unique_id;
+    } else if (req_type == "PAYMENT") {
+      return req.request_id;
+    } else {
+      return req.request_no;
+    }
+  }
+
+  archiveRequest(req, trigger: MatMenuTrigger, index: number) {
+    req.archive = 1;
+
+    this.allRequests.splice(index, 1);
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+
+    var req_id = this.getReqId(req);
+    this.apiService
+      .updateRequestArchive(req_id, 1, req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (this.allRequests.length != 0) {
+      sessionStorage.setItem(
+        "admin_reqs_session_tenant",
+        JSON.stringify(this.allRequests)
+      );
+    }
+
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    sessionStorage.removeItem("admin_reqs_session");
+
+    trigger.closeMenu();
+  }
+
+  showAllFlaggedRequests() {
+    const filteredarray = this.allRequests.filter((d) => d.flag == 1);
+    this.allRequestsMatTableData = new MatTableDataSource(filteredarray);
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.flaggedRequestsFilterOn = true;
+  }
+
+  closeFlaggedRequestFilter() {
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.flaggedRequestsFilterOn = false;
   }
 
   getRequestType(req_type) {

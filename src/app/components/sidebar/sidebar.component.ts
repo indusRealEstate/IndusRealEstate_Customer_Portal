@@ -82,6 +82,15 @@ export const PROPERTIESROUTE: RouteInfo[] = [
   },
 ];
 
+export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
+  {
+    path: "/admin-requests-archive",
+    title: "Archived Requests",
+    icon: "assets/img/pngs/archive.png",
+    class: "",
+  },
+];
+
 export const MYTENANTSROUTE: RouteInfo[] = [
   {
     path: "/my-tenants",
@@ -320,6 +329,8 @@ export class SidebarComponent implements OnInit {
   requestsRouteLandlord: any[];
   requestsRouteAdmin: any[];
 
+  archivedRequestsRouteAdmin: any[];
+
   customerCareRoute: any[];
   // menuItems: any[];
   user: User;
@@ -337,6 +348,7 @@ export class SidebarComponent implements OnInit {
   isServicesOpened: boolean = false;
   isDocumentsOpened: boolean = false;
   isRequestsOpened: boolean = false;
+  isArchiveRequestsOpened: boolean = false;
   isPaymentsOpened: boolean = false;
   isReportsOpened: boolean = false;
   isCustomerCareOpened: boolean = false;
@@ -474,6 +486,7 @@ export class SidebarComponent implements OnInit {
     );
 
     this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
+    this.archivedRequestsRouteAdmin = ARCHIVEDREQUESTSROUTEADMIN.filter((menuItem) => menuItem);
 
     this.customerCareRoute = CUSTOMERCAREROUTE.filter((menuItem) => menuItem);
   }
@@ -593,6 +606,7 @@ export class SidebarComponent implements OnInit {
         this.isPaymentsOpened == false &&
         this.isServicesOpened == false &&
         this.isRequestsOpened == false &&
+        this.isArchiveRequestsOpened == false &&
         this.isCustomerCareOpened == false &&
         this.isReportsOpened == false
       ) {
@@ -618,6 +632,7 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isDashboardOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isPropertiesOpened = false;
       this.isServicesOpened = false;
@@ -632,6 +647,7 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isDashboardOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isPropertiesOpened = false;
       this.isServicesOpened = false;
@@ -649,6 +665,7 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isPropertiesOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
@@ -663,6 +680,7 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isPropertiesOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
@@ -680,6 +698,7 @@ export class SidebarComponent implements OnInit {
       this.isTenantsOpened = true;
       this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
@@ -694,6 +713,7 @@ export class SidebarComponent implements OnInit {
       this.isTenantsOpened = true;
       this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
@@ -712,6 +732,7 @@ export class SidebarComponent implements OnInit {
       this.isLandlordOpened = true;
       this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
@@ -726,6 +747,7 @@ export class SidebarComponent implements OnInit {
       this.isLandlordOpened = true;
       this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
@@ -741,6 +763,7 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isServicesOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
@@ -755,6 +778,7 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isServicesOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
@@ -772,6 +796,7 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isDocumentsOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
@@ -787,6 +812,7 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = true;
       this.isReportsOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isPropertiesOpened = false;
@@ -802,6 +828,7 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       this.isRequestsOpened = true;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
@@ -816,6 +843,40 @@ export class SidebarComponent implements OnInit {
       }, 200);
     } else {
       this.isRequestsOpened = true;
+      this.isArchiveRequestsOpened = false;
+      this.isReportsOpened = false;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.isCustomerCareOpened = false;
+      this.isTenantsOpened = false;
+      this.isLandlordOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedArchivedRequests() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isArchiveRequestsOpened = true;
+      this.isRequestsOpened = false;
+      this.isDocumentsOpened = false;
+      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isPropertiesOpened = false;
+      this.isReportsOpened = false;
+      this.isCustomerCareOpened = false;
+      this.isTenantsOpened = false;
+      this.isLandlordOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isArchiveRequestsOpened = true;
+      this.isRequestsOpened = false;
       this.isReportsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
@@ -834,6 +895,7 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isReportsOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
@@ -848,6 +910,7 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isReportsOpened = true;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
@@ -866,6 +929,7 @@ export class SidebarComponent implements OnInit {
       this.isCustomerCareOpened = true;
       this.isReportsOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
@@ -880,6 +944,7 @@ export class SidebarComponent implements OnInit {
       this.isCustomerCareOpened = true;
       this.isReportsOpened = false;
       this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;

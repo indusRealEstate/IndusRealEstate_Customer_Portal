@@ -137,4 +137,31 @@ export class AdminService {
       })
     );
   }
+
+  getAllLandlordRequestsAdmin(data: any) {
+    const url = `${API_URL}/get_all_landlord_requests_admin.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllTenantRequestsAdmin(data: any) {
+    const url = `${API_URL}/get_all_tenant_requests_admin.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllRequestsAdminArchive(data: any) {
+    const url = `${API_URL}/get_all_requests_admin_archive.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

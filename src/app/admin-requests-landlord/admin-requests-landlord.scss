@@ -24,6 +24,27 @@
   }
 }
 
+.flagged-reqs-filter {
+  margin-bottom: -3px !important;
+  background: rgb(212 170 50 / 10%);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #d4aa3230;
+
+  p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #d4aa32;
+  }
+
+  img {
+    cursor: pointer;
+    width: 15px;
+    filter: invert(65%) sepia(100%) saturate(328%) hue-rotate(2deg)
+      brightness(89%) contrast(90%);
+  }
+}
+
 .request-show-type-btns {
   background-color: #ffffff;
   border: 1px solid #d1d1d1;
@@ -338,6 +359,11 @@
       }
     }
   }
+
+  .hidden{
+    display: none;
+  }
+
 
   .first-col {
     border-bottom-left-radius: 10px;

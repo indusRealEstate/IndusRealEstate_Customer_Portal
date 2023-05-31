@@ -21,6 +21,28 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt=""
           />
+          <img
+            (click)="showAllFlaggedRequests()"
+            matTooltip="Show All Flagged Requests"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="refresh-table-btn ml-4"
+            src="assets/img/pngs/flag-bold.png"
+            alt=""
+          />
+
+          <div
+            class="row m-0 flagged-reqs-filter ml-4"
+            *ngIf="flaggedRequestsFilterOn == true"
+          >
+            <p class="m-0">Important Requests</p>
+            <img
+              class="ml-2"
+              (click)="closeFlaggedRequestFilter()"
+              src="assets/img/svg/req-details/close-circle.svg"
+              alt=""
+            />
+          </div>
         </div>
         <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
       </div>
@@ -300,7 +322,7 @@
               <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
               <td
                 mat-cell
-                *matCellDef="let element;let last = last"
+                *matCellDef="let element;let last = last;let index = index"
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
                 <div class="row justify-content-center">
@@ -319,7 +341,7 @@
                       width: 20px;
                       cursor: pointer;
                     "
-                    (click)="mainMenuOpened()"
+                    (click)="mainMenuOpened(element)"
                   />
                   <mat-menu #actionsMenuHome="matMenu">
                     <div
@@ -331,13 +353,16 @@
                       <div
                         class="row m-0 list d-flex"
                         style="align-items: center"
+                        (click)="flagAsImportant(element,mainMenuTrigger)"
                       >
                         <img src="assets/img/pngs/flag.png" alt="" />
-                        <p>Flag As Important</p>
+                        <p *ngIf="flaggedRequest == false">Flag As Important</p>
+                        <p *ngIf="flaggedRequest == true">Remove Flag</p>
                       </div>
                       <div
                         class="row mt-1 m-0 list d-flex"
                         style="align-items: center"
+                        (click)="archiveRequest(element,mainMenuTrigger,index)"
                       >
                         <img src="assets/img/pngs/folder.png" alt="" />
                         <p>Archive Request</p>
@@ -422,7 +447,23 @@
                       </div>
                     </div>
                   </mat-menu>
-                  <div class="more-btn-disabled" style="width: 90px"></div>
+                  <div
+                    *ngIf="element.flag == 0"
+                    class="more-btn-disabled"
+                    style="width: 90px"
+                  ></div>
+
+                  <div *ngIf="element.flag == 1">
+                    <img
+                      matTooltip="Important Request"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      style="width: 17px"
+                      class="ml-4"
+                      src="assets/img/pngs/flag-bold.png"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </td>
             </ng-container>
@@ -433,7 +474,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <div
-            *ngIf="allRequestsMatTableData.filteredData.length == 0"
+            *ngIf="allRequestsMatTableData.filteredData.length == 0 && allRequests.length != 0"
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;
@@ -474,6 +515,10 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="propertyName">
               <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+            </ng-container>
+
+            <ng-container matColumnDef="clientType">
+              <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
             </ng-container>
 
             <ng-container matColumnDef="clientName">
