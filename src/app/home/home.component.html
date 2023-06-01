@@ -618,26 +618,7 @@
                     *matCellDef="let element"
                     (click)="reviewRecentHappening(element)"
                   >
-                    <div
-                      *ngIf="
-                        element.request_type ==
-                        'ADD_PROPERTY_REC_EXIST_LANDLORD'
-                      "
-                    >
-                      {{ element.property_issue_date }}
-                    </div>
-                    <div *ngIf="element.request_type == 'PAYMENT'">
-                      {{ element.issue_date }}
-                    </div>
-                    <div
-                      *ngIf="
-                        element.request_type !=
-                          'ADD_PROPERTY_REC_EXIST_LANDLORD' &&
-                        element.request_type != 'PAYMENT'
-                      "
-                    >
-                      {{ element.created_date }}
-                    </div>
+                  {{ element.issue_date }}
                   </td>
                 </ng-container>
 

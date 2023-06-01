@@ -272,7 +272,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <div
-            *ngIf="allDocumentsMatTableData.filteredData.length == 0"
+            *ngIf="allDocumentsMatTableData.filteredData.length == 0 && allDocuments.length != 0"
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;

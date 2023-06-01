@@ -286,6 +286,17 @@ export class ApiService {
       );
   }
 
+  updateRequestSpam(req_id: any, update: any, req_type: any) {
+    const url = `${API_URL}/updateRequestSpam.php?apikey=1`;
+    return this.http
+      .post<any>(url, { req_id: req_id, update: update, req_type: req_type })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   updateUserProfilePic(data: string) {
     const url = `${API_URL}/changeUserProfilePic.php?apikey=1`;
     return this.http

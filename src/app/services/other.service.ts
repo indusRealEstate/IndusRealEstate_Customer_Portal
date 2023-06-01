@@ -99,4 +99,16 @@ export class OtherServices {
   public generateRandomID() {
     return Math.floor(10000000000000 + Math.random() * 90000000000000);
   }
+
+  public convertDateToServerFormat(date: Date) {
+    var dateDay = Number(date.toISOString().split("T")[0].split("-")[2]);
+    var convertedDate =
+      date.toISOString().split("T")[0].split("-")[0] +
+      "-" +
+      date.toISOString().split("T")[0].split("-")[1] +
+      "-" +
+      dateDay.toString();
+
+    return convertedDate;
+  }
 }

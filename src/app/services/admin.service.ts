@@ -164,4 +164,13 @@ export class AdminService {
       })
     );
   }
+
+  getAllRequestsAdminSpam(data: any) {
+    const url = `${API_URL}/get_all_requests_admin_spam.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

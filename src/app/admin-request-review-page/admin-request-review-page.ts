@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SeeAllUserReqsAdminDialog } from "app/components/see-all-user-reqs-admin/see-all-user-reqs-admin";
 import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
+import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
@@ -31,6 +32,7 @@ export class ReviewRequestAdmin implements OnInit {
   user_declined_reqs: any = 0;
 
   user_all_req: any[] = [];
+  allReq: any[] = [];
 
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
@@ -41,7 +43,8 @@ export class ReviewRequestAdmin implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private otherServices: OtherServices,
-    private apiServices: ApiService,
+    private apiService: ApiService,
+    private adminService: AdminService,
     private dialog?: MatDialog
   ) {
     this.profile_img_loading = true;
@@ -63,12 +66,39 @@ export class ReviewRequestAdmin implements OnInit {
     }
   }
 
-  initFunction(param) {
+  async fetchData() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+
+    this.adminService
+      .getAllRequestsAdmin({
+        userId: user[0]["id"],
+      })
+      .subscribe((va: any[]) => {
+        this.allReq = va;
+      })
+      .add(() => {
+        if (this.allReq.length != 0) {
+          sessionStorage.setItem(
+            "admin_reqs_session",
+            JSON.stringify(this.allReq)
+          );
+        }
+      });
+  }
+
+  async initFunction(param) {
     this.req = JSON.parse(this.otherServices.decodeBase64(param.req));
 
     var adminReqDataSession: any[] = JSON.parse(
       sessionStorage.getItem("admin_reqs_session")
     );
+
+    if (adminReqDataSession == null) {
+      await this.fetchData().finally(() => {
+        adminReqDataSession = this.allReq;
+      });
+    }
 
     if (
       this.req.request_type != "NEW_LANDLORD_REQ" &&
@@ -131,8 +161,6 @@ export class ReviewRequestAdmin implements OnInit {
       }
     }
 
-    console.log(this.req);
-
     if (
       this.req.request_type != "NEW_LANDLORD_REQ" &&
       this.req.request_type != "NEW_TENANT_AC" &&
@@ -146,7 +174,7 @@ export class ReviewRequestAdmin implements OnInit {
         uid = new String(this.req.profile_photo).split(".")[0];
       }
 
-      this.apiServices
+      this.apiService
         .getLandlordDetails(uid)
         .subscribe((val) => {
           this.landlord_details = val[0];
@@ -154,7 +182,7 @@ export class ReviewRequestAdmin implements OnInit {
           console.log(this.landlord_details);
         })
         .add(() => {
-          this.apiServices
+          this.apiService
             .getLandlordTenants(this.landlord_details.landlord_id)
             .subscribe((val: any[]) => {
               this.landlord_tenant_count = val.length;
@@ -312,5 +340,160 @@ export class ReviewRequestAdmin implements OnInit {
       width: "60%",
       height: "45rem",
     });
+  }
+
+  flagAsImportant() {
+    if (this.req.flag == 1) {
+      this.req.flag = 0;
+
+      var req_id = this.getReqId(this.req);
+      this.apiService
+        .updateRequestFlag(req_id, 0, this.req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+
+      sessionStorage.removeItem("admin_reqs_session");
+    } else {
+      this.req.flag = 1;
+
+      var req_id = this.getReqId(this.req);
+      this.apiService
+        .updateRequestFlag(req_id, 1, this.req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+
+      sessionStorage.removeItem("admin_reqs_session");
+    }
+
+    if (this.req.auth_type == "landlord") {
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+    } else if (this.req.auth_type == "tenant") {
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
+  }
+
+  getReqId(req) {
+    var req_type = req.request_type;
+    if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return req.property_req_id;
+    } else if (req_type == "NEW_LANDLORD_REQ") {
+      return req.request_details_id;
+    } else if (req_type == "NEW_TENANT_AC") {
+      return req.unique_id;
+    } else if (req_type == "PAYMENT") {
+      return req.request_id;
+    } else {
+      return req.request_no;
+    }
+  }
+
+  archiveRequest() {
+    this.req.archive = 1;
+
+    var req_id = this.getReqId(this.req);
+    this.apiService
+      .updateRequestArchive(req_id, 1, this.req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (this.req.flag == 1) {
+      this.req.flag = 0;
+
+      this.apiService
+        .updateRequestFlag(req_id, 0, this.req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+    }
+
+    sessionStorage.removeItem("admin_reqs_session");
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    if (this.req.auth_type == "landlord") {
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+    } else if (this.req.auth_type == "tenant") {
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
+  }
+
+  removeFromArchives() {
+    this.req.archive = 0;
+
+    var req_id = this.getReqId(this.req);
+    this.apiService
+      .updateRequestArchive(req_id, 0, this.req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    sessionStorage.removeItem("admin_reqs_session");
+    if (this.req.auth_type == "landlord") {
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+    } else if (this.req.auth_type == "tenant") {
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
+  }
+
+  reportAsSpam() {
+    this.req.spam = 1;
+
+    var req_id = this.getReqId(this.req);
+    this.apiService
+      .updateRequestSpam(req_id, 1, this.req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (this.req.flag == 1) {
+      this.req.flag = 0;
+
+      this.apiService
+        .updateRequestFlag(req_id, 0, this.req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+    }
+
+    if (this.req.archive == 1) {
+      this.req.archive = 0;
+
+      this.apiService
+        .updateRequestArchive(req_id, 0, this.req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+    }
+
+    sessionStorage.removeItem("admin_reqs_session");
+    sessionStorage.removeItem("admin_reqs_session_spam");
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    if (this.req.auth_type == "landlord") {
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+    } else if (this.req.auth_type == "tenant") {
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
+  }
+
+  removeFromSpam() {
+    this.req.spam = 0;
+
+    var req_id = this.getReqId(this.req);
+    this.apiService
+      .updateRequestSpam(req_id, 0, this.req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    sessionStorage.removeItem("admin_reqs_session");
+    sessionStorage.removeItem("admin_reqs_session_spam");
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    if (this.req.auth_type == "landlord") {
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+    } else if (this.req.auth_type == "tenant") {
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
   }
 }

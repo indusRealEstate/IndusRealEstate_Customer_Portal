@@ -113,14 +113,20 @@ export class HomeComponent implements OnInit {
     var userId = user[0]["id"];
     // var user_auth = user[0]["auth_type"];
 
-    this.apiService.getUserRequests(userId).subscribe((data: any[]) => {
-      this.recentHeppenings = data;
-      this.recentHappeningsMatTableData = new MatTableDataSource(data);
-
-      setTimeout(() => {
+    this.apiService
+      .getUserRequests(userId)
+      .subscribe((data: any[]) => {
+        this.recentHeppenings = data;
+        this.recentHappeningsMatTableData = new MatTableDataSource(data);
+        setTimeout(() => {
+          if (this.recentHappeningsMatTableData != undefined) {
+            this.recentHappeningsMatTableData.paginator = this.paginator;
+          }
+        });
+      })
+      .add(() => {
         this.isRecentHappeningsLoading = false;
-      }, 50);
-    });
+      });
   }
 
   cacheSession() {
@@ -176,7 +182,6 @@ export class HomeComponent implements OnInit {
 
     setTimeout(() => {
       this.cacheSession();
-      this.recentHappeningsMatTableData.paginator = this.paginator;
     }, 1000);
   }
 
@@ -204,7 +209,7 @@ export class HomeComponent implements OnInit {
         if (this.recentHappeningsMatTableData != undefined) {
           this.recentHappeningsMatTableData.paginator = this.paginator;
         }
-      }, 1000);
+      });
     }
   }
 

@@ -103,24 +103,22 @@ export class DocumentsComponentMyDoc implements OnInit {
         this.allDocuments = va;
         this.allDocumentsMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
-          this.isContentLoading = false;
-          if (this.allDocuments.length != 0) {
-            sessionStorage.setItem(
-              "my-docs-session",
-              JSON.stringify({
-                data: this.allDocuments,
-              })
-            );
-          }
-        }, 50);
-      })
-      .add(() => {
-        setTimeout(() => {
           if (this.allDocumentsMatTableData != undefined) {
             this.allDocumentsMatTableData.paginator = this.paginator;
             this.allDocumentsMatTableData.paginator._changePageSize(10);
           }
-        }, 500);
+        });
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        if (this.allDocuments.length != 0) {
+          sessionStorage.setItem(
+            "my-docs-session",
+            JSON.stringify({
+              data: this.allDocuments,
+            })
+          );
+        }
       });
   }
 
@@ -182,7 +180,7 @@ export class DocumentsComponentMyDoc implements OnInit {
           this.allDocumentsMatTableData.paginator = this.paginator;
           this.allDocumentsMatTableData.paginator._changePageSize(10);
         }
-      }, 1000);
+      });
     }
   }
 
@@ -209,17 +207,22 @@ export class DocumentsComponentMyDoc implements OnInit {
           this.allDocuments = data;
           this.allDocumentsMatTableData = new MatTableDataSource(data);
           setTimeout(() => {
-            this.isContentLoading = false;
-
-            if (this.allDocuments.length != 0) {
-              sessionStorage.setItem(
-                "my-docs-session",
-                JSON.stringify({
-                  data: this.allDocuments,
-                })
-              );
+            if (this.allDocumentsMatTableData != undefined) {
+              this.allDocumentsMatTableData.paginator = this.paginator;
+              this.allDocumentsMatTableData.paginator._changePageSize(10);
             }
-          }, 50);
+          });
+        })
+        .add(() => {
+          this.isContentLoading = false;
+          if (this.allDocuments.length != 0) {
+            sessionStorage.setItem(
+              "my-docs-session",
+              JSON.stringify({
+                data: this.allDocuments,
+              })
+            );
+          }
         });
     }
   }

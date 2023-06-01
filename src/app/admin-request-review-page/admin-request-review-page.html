@@ -116,6 +116,43 @@
             <div class="btn doc-btns-decline">Decline Request</div>
             <div class="links mt-3">Request for Updation</div>
           </div>
+          <div class="col-1 d-flex justify-content-end">
+            <img
+              matTooltip="Important Request"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              *ngIf="req.flag == 1"
+              style="height: 3rem"
+              src="assets/img/pngs/flag-bold.png"
+              alt=""
+            />
+            <img
+              matTooltip="Archived Request"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              *ngIf="req.archive == 1"
+              style="
+                height: 2rem;
+                filter: invert(46%) sepia(93%) saturate(855%) hue-rotate(20deg)
+                  brightness(94%) contrast(95%);
+              "
+              src="assets/img/pngs/archive.png"
+              alt=""
+            />
+            <img
+              matTooltip="Reported As Spam"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              *ngIf="req.spam == 1"
+              style="
+                height: 2rem;
+                filter: invert(11%) sepia(91%) saturate(7496%) hue-rotate(9deg)
+                  brightness(91%) contrast(114%);
+              "
+              src="assets/img/pngs/spam-icon.png"
+              alt=""
+            />
+          </div>
         </div>
         <p class="mt-4 mb-4 details-title">User Details</p>
         <div class="row m-0">
@@ -349,9 +386,48 @@
                   >
                     More Options
                   </p>
-                  <div class="btn doc-btns mr-3">Flag as Important</div>
-                  <div class="btn doc-btns mr-3">Archive Request</div>
-                  <div class="btn doc-btns">Report As Spam</div>
+                  <div
+                    (click)="flagAsImportant()"
+                    *ngIf="req.flag == 0 && req.spam == 0 && req.archive == 0"
+                    class="btn doc-btns mr-3"
+                  >
+                    Flag as Important
+                  </div>
+                  <div
+                    (click)="flagAsImportant()"
+                    *ngIf="req.flag == 1 && req.spam == 0 && req.archive == 0"
+                    class="btn doc-btns mr-3"
+                  >
+                    Remove Flag
+                  </div>
+                  <div
+                    (click)="archiveRequest()"
+                    *ngIf="req.archive == 0 && req.spam == 0"
+                    class="btn doc-btns mr-3"
+                  >
+                    Archive Request
+                  </div>
+                  <div
+                    (click)="removeFromArchives()"
+                    *ngIf="req.archive == 1 && req.spam == 0"
+                    class="btn doc-btns mr-3"
+                  >
+                    Remove from Archive
+                  </div>
+                  <div
+                    (click)="reportAsSpam()"
+                    *ngIf="req.spam == 0"
+                    class="btn doc-btns"
+                  >
+                    Report As Spam
+                  </div>
+                  <div
+                    (click)="removeFromSpam()"
+                    *ngIf="req.spam == 1"
+                    class="btn doc-btns"
+                  >
+                    Remove from Spam
+                  </div>
                 </div>
               </div>
             </div>

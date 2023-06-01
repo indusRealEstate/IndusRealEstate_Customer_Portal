@@ -22,17 +22,6 @@ export class AdminRequestsArchive implements OnInit {
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
-  categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
-    "new_sign_ups";
-
-  requestViewType: "table_view" | "card_view" = "table_view";
-
-  propertyTypeAllRequests:
-    | "all"
-    | "villa"
-    | "appartment"
-    | "town_house"
-    | "other" = "all";
 
   displayedColumns: string[] = [
     // "name",
@@ -51,16 +40,7 @@ export class AdminRequestsArchive implements OnInit {
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
-  allRequestsSearched: any[] = [];
 
-  isUserSearchedRequests: boolean = false;
-  isUserSearchedEmpty: boolean = false;
-
-  filters: any[] = [];
-
-  searchString: any = "";
-
-  imagesUrl: any;
   statusMenuOpened: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -127,7 +107,7 @@ export class AdminRequestsArchive implements OnInit {
           this.allRequestsMatTableData.paginator = this.paginator;
           this.allRequestsMatTableData.paginator._changePageSize(10);
         }
-      }, 1000);
+      });
     }
   }
 
@@ -159,18 +139,18 @@ export class AdminRequestsArchive implements OnInit {
     }
   }
 
-  async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
+  fetchData() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
     var adminReqDataSession = JSON.parse(
       sessionStorage.getItem("admin_reqs_session_archive")
     );
-
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData = new MatTableDataSource(
+        adminReqDataSession
+      );
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
@@ -181,6 +161,12 @@ export class AdminRequestsArchive implements OnInit {
         .subscribe((va: any[]) => {
           this.allRequests = va;
           this.allRequestsMatTableData = new MatTableDataSource(va);
+          setTimeout(() => {
+            if (this.allRequestsMatTableData != undefined) {
+              this.allRequestsMatTableData.paginator = this.paginator;
+              this.allRequestsMatTableData.paginator._changePageSize(10);
+            }
+          });
         })
         .add(() => {
           this.isContentLoading = false;
@@ -192,45 +178,42 @@ export class AdminRequestsArchive implements OnInit {
           }
         });
       sessionStorage.setItem(
-        "admin_reqs_fetched_time",
+        "admin_reqs_fetched_time_archive",
         JSON.stringify(new Date().getMinutes())
       );
     }
+  }
 
+  async ngOnInit() {
     var now = new Date().getMinutes();
+    var previous = JSON.parse(
+      sessionStorage.getItem("admin_reqs_fetched_time_archive")
+    );
 
-    var diff =
-      now -
-      Number(JSON.parse(sessionStorage.getItem("admin_reqs_fetched_time")));
+    var adminReqDataSession = JSON.parse(
+      sessionStorage.getItem("admin_reqs_session_archive")
+    );
 
-    if (diff >= 20) {
-      // this.isLoading = true;
-      this.isContentLoading = true;
-      this.clearAllVariables();
-      sessionStorage.removeItem("admin_reqs_fetched_time");
-      sessionStorage.removeItem("admin_reqs_session_archive");
-      this.adminService
-        .getAllRequestsAdminArchive({
-          userId: user[0]["id"],
-        })
-        .subscribe((va: any[]) => {
-          this.allRequests = va;
-          this.allRequestsMatTableData = new MatTableDataSource(va);
-        })
-        .add(() => {
+    if (previous != null) {
+      var diff = now - Number(previous);
+
+      if (diff >= 5) {
+        sessionStorage.removeItem("admin_reqs_session_archive");
+        this.fetchData();
+      } else {
+        if (adminReqDataSession != null) {
+          this.allRequests = adminReqDataSession;
+          this.allRequestsMatTableData = new MatTableDataSource(
+            adminReqDataSession
+          );
           this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "admin_reqs_session_archive",
-              JSON.stringify(this.allRequests)
-            );
-          }
-        });
-
-      sessionStorage.setItem(
-        "admin_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
+          this.ngAfterViewInitInitialize = true;
+        } else {
+          this.fetchData();
+        }
+      }
+    } else {
+      this.fetchData();
     }
   }
 
@@ -239,35 +222,9 @@ export class AdminRequestsArchive implements OnInit {
   }
 
   refreshTable() {
-    this.clearAllVariables();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
     sessionStorage.removeItem("admin_reqs_session_archive");
     this.isContentLoading = true;
-
-    this.adminService
-      .getAllRequestsAdminArchive({
-        userId: user[0]["id"],
-      })
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-      })
-      .add(() => {
-        this.isContentLoading = false;
-        if (this.allRequests.length != 0) {
-          sessionStorage.setItem(
-            "admin_reqs_session_archive",
-            JSON.stringify(this.allRequests)
-          );
-        }
-        setTimeout(() => {
-          if (this.allRequestsMatTableData != undefined) {
-            this.allRequestsMatTableData.paginator = this.paginator;
-            this.allRequestsMatTableData.paginator._changePageSize(10);
-          }
-        }, 100);
-      });
+    this.fetchData();
   }
 
   clickMainMenu(event) {

@@ -18,17 +18,6 @@ export class RequestsComponentMyReqs implements OnInit {
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
-  categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
-    "new_sign_ups";
-
-  requestViewType: "table_view" | "card_view" = "table_view";
-
-  propertyTypeAllRequests:
-    | "all"
-    | "villa"
-    | "appartment"
-    | "town_house"
-    | "other" = "all";
 
   displayedColumns: string[] = [
     // "name",
@@ -45,16 +34,6 @@ export class RequestsComponentMyReqs implements OnInit {
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
-  allRequestsSearched: any[] = [];
-
-  isUserSearchedRequests: boolean = false;
-  isUserSearchedEmpty: boolean = false;
-
-  filters: any[] = [];
-
-  searchString: any = "";
-
-  imagesUrl: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -118,7 +97,7 @@ export class RequestsComponentMyReqs implements OnInit {
           this.allRequestsMatTableData.paginator = this.paginator;
           this.allRequestsMatTableData.paginator._changePageSize(10);
         }
-      }, 1000);
+      });
     }
   }
 
@@ -134,70 +113,77 @@ export class RequestsComponentMyReqs implements OnInit {
     }
   }
 
-  async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
+  fetchData() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
     var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("my-reqs-session")
+      sessionStorage.getItem("my_reqs_session")
     );
-
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData.data = adminReqDataSession;
       this.isContentLoading = false;
-      // console.log(this.allRequests);
       this.ngAfterViewInitInitialize = true;
     } else {
-      this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
+      this.apiService
+        .getUserRequests(user[0]["id"])
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+          setTimeout(() => {
+            if (this.allRequestsMatTableData != undefined) {
+              this.allRequestsMatTableData.paginator = this.paginator;
+              this.allRequestsMatTableData.paginator._changePageSize(10);
+            }
+          });
+        })
+        .add(() => {
           this.isContentLoading = false;
           if (this.allRequests.length != 0) {
             sessionStorage.setItem(
-              "my-reqs-session",
+              "my_reqs_session",
               JSON.stringify(this.allRequests)
             );
           }
-        }, 50);
-      });
-      // this.initFunction(user[0]["id"]);
+        });
       sessionStorage.setItem(
         "my_reqs_fetched_time",
         JSON.stringify(new Date().getMinutes())
       );
     }
+  }
 
+  async ngOnInit() {
     var now = new Date().getMinutes();
+    var previous = JSON.parse(
+      sessionStorage.getItem("my_reqs_fetched_time")
+    );
 
-    var diff =
-      now - Number(JSON.parse(sessionStorage.getItem("my_reqs_fetched_time")));
+    var adminReqDataSession = JSON.parse(
+      sessionStorage.getItem("my_reqs_session")
+    );
 
-    if (diff >= 20) {
-      // this.isLoading = true;
-      this.isContentLoading = true;
-      this.clearAllVariables();
-      sessionStorage.removeItem("my_reqs_fetched_time");
-      sessionStorage.removeItem("my-reqs-session");
-      this.apiService.getUserRequests(user[0]["id"]).subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
+    if (previous != null) {
+      var diff = now - Number(previous);
+
+      if (diff >= 5) {
+        sessionStorage.removeItem("my_reqs_session");
+        this.fetchData();
+      } else {
+        if (adminReqDataSession != null) {
+          this.allRequests = adminReqDataSession;
+          this.allRequestsMatTableData = new MatTableDataSource(
+            adminReqDataSession
+          );
           this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "my-reqs-session",
-              JSON.stringify(this.allRequests)
-            );
-          }
-        }, 50);
-      });
-      sessionStorage.setItem(
-        "my_reqs_fetched_time",
-        JSON.stringify(new Date().getMinutes())
-      );
+          this.ngAfterViewInitInitialize = true;
+        } else {
+          this.fetchData();
+        }
+      }
+    } else {
+      this.fetchData();
     }
   }
 
@@ -206,34 +192,9 @@ export class RequestsComponentMyReqs implements OnInit {
   }
 
   refreshTable() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    sessionStorage.removeItem("my-reqs-session");
+    sessionStorage.removeItem("my_reqs_session");
     this.isContentLoading = true;
-
-    this.apiService
-      .getUserRequests(user[0]["id"])
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "my-reqs-session",
-              JSON.stringify(this.allRequests)
-            );
-          }
-        }, 50);
-      })
-      .add(() => {
-        setTimeout(() => {
-          if (this.allRequestsMatTableData != undefined) {
-            this.allRequestsMatTableData.paginator = this.paginator;
-            this.allRequestsMatTableData.paginator._changePageSize(10);
-          }
-        }, 500);
-      });
+    this.fetchData();
   }
 
   getRequestType(req_type) {

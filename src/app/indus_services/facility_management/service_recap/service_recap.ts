@@ -351,7 +351,8 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
-          created_date: this.getCurrentDate(),
+          spam: 0,
+          issue_date: this.getCurrentDate(),
         };
 
       case "maintenance":
@@ -367,7 +368,8 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
-          created_date: this.getCurrentDate(),
+          spam: 0,
+          issue_date: this.getCurrentDate(),
         };
 
       case "tenant-move-in":
@@ -383,7 +385,8 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
-          created_date: this.getCurrentDate(),
+          spam: 0,
+          issue_date: this.getCurrentDate(),
         };
 
       case "tenant-move-out":
@@ -399,7 +402,8 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
-          created_date: this.getCurrentDate(),
+          spam: 0,
+          issue_date: this.getCurrentDate(),
         };
       case "conditioning":
         return {
@@ -414,7 +418,8 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
-          created_date: this.getCurrentDate(),
+          spam: 0,
+          issue_date: this.getCurrentDate(),
         };
     }
   }
@@ -456,6 +461,7 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
+          spam: 0,
           issue_date: this.getCurrentDate(),
         };
       } else if (this.currentServicePageType == "payment-tenant") {
@@ -476,6 +482,7 @@ export class ServiceRecapComponent implements OnInit {
           status: "pending",
           flag: 0,
           archive: 0,
+          spam: 0,
           issue_date: this.getCurrentDate(),
         };
       }

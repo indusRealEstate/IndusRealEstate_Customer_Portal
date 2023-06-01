@@ -439,10 +439,7 @@
       <!------------------------------------ All Requests ----------------------------------------------------->
       <!------------------------------------ All Requests ----------------------------------------------------->
       <div *ngIf="isContentLoading == false">
-        <div
-          *ngIf="isUserSearchedRequests == false"
-          style="overflow: auto; padding: 0 5px; padding-bottom: 1rem"
-        >
+        <div style="overflow: auto; padding: 0 5px; padding-bottom: 1rem">
           <table
             mat-table
             [dataSource]="allRequestsMatTableData"
@@ -458,24 +455,7 @@
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
                 (click)="reviewRequest(element)"
               >
-                <div
-                  *ngIf="
-                    element.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'
-                  "
-                >
-                  {{ element.property_issue_date }}
-                </div>
-                <div *ngIf="element.request_type == 'PAYMENT'">
-                  {{ element.issue_date }}
-                </div>
-                <div
-                  *ngIf="
-                    element.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD' &&
-                    element.request_type != 'PAYMENT'
-                  "
-                >
-                  {{ element.created_date }}
-                </div>
+              {{ element.issue_date }}
               </td>
             </ng-container>
 

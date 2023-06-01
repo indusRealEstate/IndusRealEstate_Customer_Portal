@@ -6,83 +6,7 @@
     class="container-fluid h-100 d-flex justify-content-center"
     style="max-width: 2576px"
   >
-    <!-- <span
-      *ngIf="isLoading == true"
-      class="spinner-border spinner-border-m mr-2"
-      style="color: #d4aa32; margin-top: 365px"
-    >
-    </span> -->
-    <!-- <div class="card" style="border-radius: 8px">
-      <div
-        class="card-header"
-        style="
-          background-color: #2b333e;
-          color: white;
-          border-top-right-radius: 8px;
-          border-top-left-radius: 8px;
-        "
-      >
-        <p
-          style="
-            font-size: 23px;
-            font-weight: 500;
-            margin-left: 10px;
-            margin-top: 15px;
-          "
-        >
-          All Clients Documents
-        </p>
-      </div>
-      <div
-        class="card-body"
-        style="
-          background-color: #ffffff;
-          color: #404040;
-          padding: 30px;
-          border-bottom-right-radius: 8px;
-          border-bottom-left-radius: 8px;
-        "
-      >
-        <div class="row" style="margin: 0; justify-content: space-between">
-          <div class="row" style="margin: 0; width: 100%; justify-content: end">
-            <input
-              type="text"
-              placeholder="Search"
-              [(ngModel)]="searchString"
-              style="
-                max-height: 35px;
-                padding-left: 10px;
-                min-width: 300px;
-                border-radius: 7px;
-                border: 1px solid #a3a3a39e;
-              "
-            />
-            <div
-              class="btn"
-              style="
-                margin: 0;
-                margin-left: 20px;
-                padding: 9px 36px;
-                max-height: 35px;
-                background-color: #d3ab33;
-              "
-            >
-              Search
-            </div>
-          </div>
-        </div>
-        <p
-          *ngIf="isUserSearchedEmpty == true"
-          style="
-            text-align: end;
-            font-size: 13px;
-            color: #ff0000e6;
-            margin-top: 10px;
-            margin-right: 10px;
-          "
-        >
-          No words found in searchbar.
-        </p> -->
+    
 
     <div class="col" style="padding: 0">
       <div class="row m-0 w-100 align-items-end justify-content-between">
@@ -366,7 +290,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <div
-            *ngIf="allDocumentsMatTableData.filteredData.length == 0"
+            *ngIf="allDocumentsMatTableData.filteredData.length == 0 && allDocuments.length != 0"
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;

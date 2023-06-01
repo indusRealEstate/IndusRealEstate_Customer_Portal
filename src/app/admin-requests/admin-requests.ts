@@ -1,20 +1,11 @@
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ReviewRequestDialog } from "../components/review_req_dialog/review_req_dialog";
 import { OtherServices } from "app/services/other.service";
 import { MatMenuTrigger } from "@angular/material/menu";
 
@@ -28,17 +19,6 @@ export class AdminReqs implements OnInit {
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
-  categoryAllRequests: "new_sign_ups" | "add_new_property" | "others" =
-    "new_sign_ups";
-
-  requestViewType: "table_view" | "card_view" = "table_view";
-
-  propertyTypeAllRequests:
-    | "all"
-    | "villa"
-    | "appartment"
-    | "town_house"
-    | "other" = "all";
 
   displayedColumns: string[] = [
     // "name",
@@ -57,20 +37,18 @@ export class AdminReqs implements OnInit {
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
-  allRequestsSearched: any[] = [];
-
-  isUserSearchedRequests: boolean = false;
-  isUserSearchedEmpty: boolean = false;
-
-  filters: any[] = [];
-
-  searchString: any = "";
-
-  imagesUrl: any;
 
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
   flaggedRequestsFilterOn: boolean = false;
+  statusFilterOn: boolean = false;
+  timeLineFilterOn: boolean = false;
+  timeLineFilterDateNotSelected: boolean = false;
+  timeLineFilterselectedWrong: boolean = false;
+  statusFilter: any;
+
+  first_selected_timeline: any;
+  last_selected_timeline: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -80,9 +58,7 @@ export class AdminReqs implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
-    private otherServices: OtherServices,
-    private dialog?: MatDialog,
-    private emailServices?: EmailServices
+    private otherServices: OtherServices
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
@@ -136,7 +112,7 @@ export class AdminReqs implements OnInit {
           this.allRequestsMatTableData.paginator = this.paginator;
           this.allRequestsMatTableData.paginator._changePageSize(10);
         }
-      }, 1000);
+      });
     }
   }
 
@@ -177,9 +153,7 @@ export class AdminReqs implements OnInit {
     );
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData = new MatTableDataSource(
-        adminReqDataSession
-      );
+      this.allRequestsMatTableData.data = adminReqDataSession;
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
@@ -190,6 +164,12 @@ export class AdminReqs implements OnInit {
         .subscribe((va: any[]) => {
           this.allRequests = va;
           this.allRequestsMatTableData = new MatTableDataSource(va);
+          setTimeout(() => {
+            if (this.allRequestsMatTableData != undefined) {
+              this.allRequestsMatTableData.paginator = this.paginator;
+              this.allRequestsMatTableData.paginator._changePageSize(10);
+            }
+          });
         })
         .add(() => {
           this.isContentLoading = false;
@@ -199,12 +179,6 @@ export class AdminReqs implements OnInit {
               JSON.stringify(this.allRequests)
             );
           }
-          setTimeout(() => {
-            if (this.allRequestsMatTableData != undefined) {
-              this.allRequestsMatTableData.paginator = this.paginator;
-              this.allRequestsMatTableData.paginator._changePageSize(10);
-            }
-          }, 200);
         });
       sessionStorage.setItem(
         "admin_reqs_fetched_time_admin",
@@ -214,8 +188,6 @@ export class AdminReqs implements OnInit {
   }
 
   async ngOnInit() {
-    this.imagesUrl = this.apiService.getBaseUrlImages();
-
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("admin_reqs_fetched_time_admin")
@@ -256,6 +228,8 @@ export class AdminReqs implements OnInit {
     sessionStorage.removeItem("admin_reqs_session");
     this.isContentLoading = true;
     this.flaggedRequestsFilterOn = false;
+    this.statusFilterOn = false;
+    this.timeLineFilterOn = false;
     this.fetchData();
   }
 
@@ -314,6 +288,12 @@ export class AdminReqs implements OnInit {
       );
     }
 
+    if (req.auth_type == "landlord") {
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+    } else if (req.auth_type == "tenant") {
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
+
     trigger.closeMenu();
   }
 
@@ -336,10 +316,7 @@ export class AdminReqs implements OnInit {
     req.archive = 1;
 
     this.allRequests.splice(index, 1);
-    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-
-    this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.allRequestsMatTableData.data = this.allRequests;
 
     var req_id = this.getReqId(req);
     this.apiService
@@ -347,6 +324,63 @@ export class AdminReqs implements OnInit {
       .subscribe((val) => {
         // console.log(val);
       });
+
+    if (req.flag == 1) {
+      req.flag = 0;
+
+      this.apiService
+        .updateRequestFlag(req_id, 0, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+    }
+
+    if (this.allRequests.length != 0) {
+      sessionStorage.setItem(
+        "admin_reqs_session",
+        JSON.stringify(this.allRequests)
+      );
+    }
+
+    sessionStorage.removeItem("admin_reqs_session_archive");
+    sessionStorage.removeItem("admin_reqs_session_landlord");
+    sessionStorage.removeItem("admin_reqs_session_tenant");
+
+    trigger.closeMenu();
+  }
+
+  reportAsSpam(req, trigger: MatMenuTrigger, index) {
+    req.spam = 1;
+
+    this.allRequests.splice(index, 1);
+    this.allRequestsMatTableData.data = this.allRequests;
+
+    var req_id = this.getReqId(req);
+    this.apiService
+      .updateRequestSpam(req_id, 1, req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (req.flag == 1) {
+      req.flag = 0;
+
+      this.apiService
+        .updateRequestFlag(req_id, 0, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+    }
+
+    if (req.archive == 1) {
+      req.archive = 0;
+
+      this.apiService
+        .updateRequestArchive(req_id, 0, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+    }
 
     if (this.allRequests.length != 0) {
       sessionStorage.setItem(
@@ -363,18 +397,89 @@ export class AdminReqs implements OnInit {
   }
 
   showAllFlaggedRequests() {
-    const filteredarray = this.allRequests.filter((d) => d.flag == 1);
-    this.allRequestsMatTableData = new MatTableDataSource(filteredarray);
-    this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
+    if (this.statusFilterOn == true) {
+      this.closeStatusFilter();
+    }
+    if (this.timeLineFilterOn == true) {
+      this.closeTimelineFilter();
+    }
+
+    this.allRequestsMatTableData.data = this.allRequests.filter(
+      (d) => d.flag == 1
+    );
+
     this.flaggedRequestsFilterOn = true;
   }
 
   closeFlaggedRequestFilter() {
-    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
-    this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.allRequestsMatTableData.data = this.allRequests;
     this.flaggedRequestsFilterOn = false;
+  }
+
+  showRequestsOnStatus(status, trigger: MatMenuTrigger) {
+    if (this.flaggedRequestsFilterOn == true) {
+      this.closeFlaggedRequestFilter();
+    }
+    if (this.timeLineFilterOn == true) {
+      this.closeTimelineFilter();
+    }
+
+    this.allRequestsMatTableData.data = this.allRequests.filter(
+      (d) => d.status == status
+    );
+
+    this.statusFilter = status;
+    this.statusFilterOn = true;
+    trigger.closeMenu();
+  }
+
+  closeStatusFilter() {
+    this.allRequestsMatTableData.data = this.allRequests;
+    this.statusFilterOn = false;
+  }
+
+  filterByTimeline(trigger: MatMenuTrigger) {
+    if (this.first_selected_timeline && this.last_selected_timeline) {
+      var first = new Date(this.first_selected_timeline).getTime();
+      var last = new Date(this.last_selected_timeline).getTime();
+      if (last < first) {
+        this.timeLineFilterselectedWrong = true;
+
+        setTimeout(() => {
+          this.timeLineFilterselectedWrong = false;
+        }, 3000);
+      } else {
+        if (this.flaggedRequestsFilterOn == true) {
+          this.closeFlaggedRequestFilter();
+        }
+        if (this.statusFilterOn == true) {
+          this.closeStatusFilter();
+        }
+        this.allRequestsMatTableData.data =
+          this.allRequestsMatTableData.data.filter(
+            (e) =>
+              new Date(e.issue_date).getTime() >=
+                this.first_selected_timeline?.getTime()! &&
+              new Date(e.issue_date).getTime() <=
+                this.last_selected_timeline?.getTime()!
+          );
+
+        this.timeLineFilterOn = true;
+
+        trigger.closeMenu();
+      }
+    } else {
+      this.timeLineFilterDateNotSelected = true;
+
+      setTimeout(() => {
+        this.timeLineFilterDateNotSelected = false;
+      }, 3000);
+    }
+  }
+
+  closeTimelineFilter() {
+    this.allRequestsMatTableData.data = this.allRequests;
+    this.timeLineFilterOn = false;
   }
 
   getRequestType(req_type) {

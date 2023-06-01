@@ -89,6 +89,12 @@ export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
     icon: "assets/img/pngs/archive.png",
     class: "",
   },
+  {
+    path: "/admin-requests-spam",
+    title: "Spam Requests",
+    icon: "assets/img/pngs/spam-icon.png",
+    class: "",
+  },
 ];
 
 export const MYTENANTSROUTE: RouteInfo[] = [

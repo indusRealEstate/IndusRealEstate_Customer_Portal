@@ -13,11 +13,11 @@ import { OtherServices } from "app/services/other.service";
 import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
-  selector: "admin-req-tenant",
-  templateUrl: "./admin-requests-tenant.html",
-  styleUrls: ["./admin-requests-tenant.scss"],
+  selector: "admin-requests-spam",
+  templateUrl: "./admin-requests-spam.html",
+  styleUrls: ["./admin-requests-spam.scss"],
 })
-export class AdminReqsTenant implements OnInit {
+export class AdminRequestsSpam implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -40,17 +40,9 @@ export class AdminReqsTenant implements OnInit {
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
-  statusMenuOpened: boolean = false;
-  flaggedRequest: boolean = false;
-  flaggedRequestsFilterOn: boolean = false;
-  statusFilterOn: boolean = false;
-  timeLineFilterOn: boolean = false;
-  timeLineFilterDateNotSelected: boolean = false;
-  timeLineFilterselectedWrong: boolean = false;
-  statusFilter: any;
+  allRequestsSearched: any[] = [];
 
-  first_selected_timeline: any;
-  last_selected_timeline: any;
+  statusMenuOpened: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -73,11 +65,11 @@ export class AdminReqsTenant implements OnInit {
     if (user[0]["auth_type"] == "admin") {
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
-          router.navigate([`/admin-requests-tenant`], {
+          router.navigate([`/admin-requests-spam`], {
             queryParams: { uid: user[0]["id"] },
           });
         } else if (e != user[0]["id"]) {
-          router.navigate([`/admin-requests-tenant`], {
+          router.navigate([`/admin-requests-spam`], {
             queryParams: { uid: user[0]["id"] },
           });
         }
@@ -153,7 +145,7 @@ export class AdminReqsTenant implements OnInit {
     var user = JSON.parse(userData);
 
     var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_reqs_session_tenant")
+      sessionStorage.getItem("admin_reqs_session_spam")
     );
     if (adminReqDataSession != null) {
       this.allRequests = adminReqDataSession;
@@ -164,7 +156,7 @@ export class AdminReqsTenant implements OnInit {
       this.ngAfterViewInitInitialize = true;
     } else {
       this.adminService
-        .getAllTenantRequestsAdmin({
+        .getAllRequestsAdminSpam({
           userId: user[0]["id"],
         })
         .subscribe((va: any[]) => {
@@ -181,13 +173,13 @@ export class AdminReqsTenant implements OnInit {
           this.isContentLoading = false;
           if (this.allRequests.length != 0) {
             sessionStorage.setItem(
-              "admin_reqs_session_tenant",
+              "admin_reqs_session_spam",
               JSON.stringify(this.allRequests)
             );
           }
         });
       sessionStorage.setItem(
-        "admin_reqs_fetched_time_tenant",
+        "admin_reqs_fetched_time_spam",
         JSON.stringify(new Date().getMinutes())
       );
     }
@@ -196,18 +188,18 @@ export class AdminReqsTenant implements OnInit {
   async ngOnInit() {
     var now = new Date().getMinutes();
     var previous = JSON.parse(
-      sessionStorage.getItem("admin_reqs_fetched_time_tenant")
+      sessionStorage.getItem("admin_reqs_fetched_time_spam")
     );
 
     var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_reqs_session_tenant")
+      sessionStorage.getItem("admin_reqs_session_spam")
     );
 
-    if (previous != undefined) {
+    if (previous != null) {
       var diff = now - Number(previous);
 
       if (diff >= 5) {
-        sessionStorage.removeItem("admin_reqs_session_tenant");
+        sessionStorage.removeItem("admin_reqs_session_spam");
         this.fetchData();
       } else {
         if (adminReqDataSession != null) {
@@ -231,18 +223,9 @@ export class AdminReqsTenant implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removeItem("admin_reqs_session_tenant");
+    sessionStorage.removeItem("admin_reqs_session_spam");
     this.isContentLoading = true;
-    this.flaggedRequestsFilterOn = false;
-    this.statusFilterOn = false;
-    this.timeLineFilterOn = false;
     this.fetchData();
-  }
-
-  statusMenuOpen() {
-    setTimeout(() => {
-      this.statusMenuOpened = true;
-    }, 10);
   }
 
   clickMainMenu(event) {
@@ -254,47 +237,66 @@ export class AdminReqsTenant implements OnInit {
     this.statusMenuOpened = false;
   }
 
-  mainMenuOpened(req) {
+  mainMenuOpened() {
     this.statusMenuOpened = false;
-
-    if (req.flag == 1) {
-      this.flaggedRequest = true;
-    } else {
-      this.flaggedRequest = false;
-    }
   }
 
-  flagAsImportant(req, trigger: MatMenuTrigger) {
-    if (req.flag == 1) {
-      req.flag = 0;
+  removeFromSpam(req: any, trigger: MatMenuTrigger, index: number) {
+    req.spam = 0;
 
-      var req_id = this.getReqId(req);
-      this.apiService
-        .updateRequestFlag(req_id, 0, req.request_type)
-        .subscribe((val) => {
-          // console.log(val);
-        });
+    const filteredarray = this.allRequests.filter((d) => d.spam == 1);
+    this.allRequests = filteredarray;
 
+    this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+
+    this.allRequestsMatTableData.paginator = this.paginator;
+    this.allRequestsMatTableData.paginator._changePageSize(10);
+
+    var req_id = this.getReqId(req);
+    this.apiService
+      .updateRequestSpam(req_id, 0, req.request_type)
+      .subscribe((val) => {
+        // console.log(val);
+      });
+
+    if (this.allRequests.length != 0) {
       sessionStorage.setItem(
-        "admin_reqs_session_tenant",
+        "admin_reqs_session_spam",
         JSON.stringify(this.allRequests)
       );
     } else {
-      req.flag = 1;
+      sessionStorage.removeItem("admin_reqs_session_spam");
+    }
 
-      var req_id = this.getReqId(req);
+    sessionStorage.removeItem("admin_reqs_session");
+    sessionStorage.removeItem("admin_reqs_session_landlord");
+    sessionStorage.removeItem("admin_reqs_session_tenant");
+
+    trigger.closeMenu();
+  }
+
+  removeAllFromSpam() {
+    var count = 0;
+    for (let index = 0; index < this.allRequests.length; index++) {
+      count++;
+      var req_id = this.getReqId(this.allRequests[index]);
       this.apiService
-        .updateRequestFlag(req_id, 1, req.request_type)
+        .updateRequestSpam(req_id, 0, this.allRequests[index].request_type)
         .subscribe((val) => {
           // console.log(val);
         });
-      sessionStorage.setItem(
-        "admin_reqs_session_tenant",
-        JSON.stringify(this.allRequests)
-      );
     }
 
-    trigger.closeMenu();
+    if (count == this.allRequests.length) {
+      this.allRequests.length = 0;
+      this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
+      this.allRequestsMatTableData.paginator = this.paginator;
+      this.allRequestsMatTableData.paginator._changePageSize(10);
+      sessionStorage.removeItem("admin_reqs_session_spam");
+      sessionStorage.removeItem("admin_reqs_session");
+      sessionStorage.removeItem("admin_reqs_session_landlord");
+      sessionStorage.removeItem("admin_reqs_session_tenant");
+    }
   }
 
   getReqId(req) {
@@ -310,164 +312,6 @@ export class AdminReqsTenant implements OnInit {
     } else {
       return req.request_no;
     }
-  }
-
-  archiveRequest(req, trigger: MatMenuTrigger, index: number) {
-    req.archive = 1;
-
-    this.allRequests.splice(index, 1);
-    this.allRequestsMatTableData.data = this.allRequests;
-
-    var req_id = this.getReqId(req);
-    this.apiService
-      .updateRequestArchive(req_id, 1, req.request_type)
-      .subscribe((val) => {
-        // console.log(val);
-      });
-
-    if (this.allRequests.length != 0) {
-      sessionStorage.setItem(
-        "admin_reqs_session_tenant",
-        JSON.stringify(this.allRequests)
-      );
-    }
-
-    sessionStorage.removeItem("admin_reqs_session_archive");
-    sessionStorage.removeItem("admin_reqs_session");
-
-    trigger.closeMenu();
-  }
-
-  reportAsSpam(req, trigger: MatMenuTrigger, index) {
-    req.spam = 1;
-
-    this.allRequests.splice(index, 1);
-    this.allRequestsMatTableData.data = this.allRequests;
-
-    var req_id = this.getReqId(req);
-    this.apiService
-      .updateRequestSpam(req_id, 1, req.request_type)
-      .subscribe((val) => {
-        // console.log(val);
-      });
-
-    if (req.flag == 1) {
-      req.flag = 0;
-
-      this.apiService
-        .updateRequestFlag(req_id, 0, req.request_type)
-        .subscribe((val) => {
-          // console.log(val);
-        });
-    }
-
-    if (req.archive == 1) {
-      req.archive = 0;
-
-      this.apiService
-        .updateRequestArchive(req_id, 0, req.request_type)
-        .subscribe((val) => {
-          // console.log(val);
-        });
-    }
-
-    if (this.allRequests.length != 0) {
-      sessionStorage.setItem(
-        "admin_reqs_session_tenant",
-        JSON.stringify(this.allRequests)
-      );
-    }
-
-    sessionStorage.removeItem("admin_reqs_session_spam");
-    sessionStorage.removeItem("admin_reqs_session");
-
-    trigger.closeMenu();
-  }
-
-  showAllFlaggedRequests() {
-    if (this.statusFilterOn == true) {
-      this.closeStatusFilter();
-    }
-    if (this.timeLineFilterOn == true) {
-      this.closeTimelineFilter();
-    }
-
-    this.allRequestsMatTableData.data = this.allRequests.filter(
-      (d) => d.flag == 1
-    );
-
-    this.flaggedRequestsFilterOn = true;
-  }
-
-  closeFlaggedRequestFilter() {
-    this.allRequestsMatTableData.data = this.allRequests;
-    this.flaggedRequestsFilterOn = false;
-  }
-
-  showRequestsOnStatus(status, trigger: MatMenuTrigger) {
-    if (this.flaggedRequestsFilterOn == true) {
-      this.closeFlaggedRequestFilter();
-    }
-    if (this.timeLineFilterOn == true) {
-      this.closeTimelineFilter();
-    }
-
-    this.allRequestsMatTableData.data = this.allRequests.filter(
-      (d) => d.status == status
-    );
-
-    this.statusFilter = status;
-    this.statusFilterOn = true;
-    trigger.closeMenu();
-  }
-
-  closeStatusFilter() {
-    this.allRequestsMatTableData.data = this.allRequests;
-    this.statusFilterOn = false;
-  }
-
-  filterByTimeline(trigger: MatMenuTrigger) {
-    if (this.first_selected_timeline && this.last_selected_timeline) {
-      var first = new Date(this.first_selected_timeline).getTime();
-      var last = new Date(this.last_selected_timeline).getTime();
-      if (last < first) {
-        this.timeLineFilterselectedWrong = true;
-
-        setTimeout(() => {
-          this.timeLineFilterselectedWrong = false;
-        }, 3000);
-      } else {
-        if (this.flaggedRequestsFilterOn == true) {
-          this.closeFlaggedRequestFilter();
-        }
-        if (this.statusFilterOn == true) {
-          this.closeStatusFilter();
-        }
-        this.allRequestsMatTableData.data =
-          this.allRequestsMatTableData.data.filter(
-            (e) =>
-              new Date(e.issue_date).getTime() >=
-                this.first_selected_timeline?.getTime()! &&
-              new Date(e.issue_date).getTime() <=
-                this.last_selected_timeline?.getTime()!
-          );
-
-        this.timeLineFilterOn = true;
-
-        trigger.closeMenu();
-      }
-    } else {
-      this.timeLineFilterDateNotSelected = true;
-
-      setTimeout(() => {
-        this.timeLineFilterDateNotSelected = false;
-      }, 3000);
-    }
-  }
-
-  closeTimelineFilter() {
-    this.allRequestsMatTableData.data = this.allRequests;
-    this.timeLineFilterOn = false;
   }
 
   getRequestType(req_type) {

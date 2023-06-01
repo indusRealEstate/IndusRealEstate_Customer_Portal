@@ -10,7 +10,7 @@
       <div class="row m-0 w-100 align-items-end justify-content-between">
         <div class="row m-0 align-items-end mb-3">
           <p class="m-0 ml-4 mt-5" style="font-size: 2rem; font-weight: 600">
-            All Requests
+            Spam Requests
           </p>
           <img
             (click)="refreshTable()"
@@ -22,173 +22,15 @@
             alt=""
           />
           <img
-            (click)="showAllFlaggedRequests()"
-            matTooltip="Show All Flagged Requests"
+            style="height: 20px; width: 20px"
+            (click)="removeAllFromSpam()"
+            matTooltip="Remove All"
             matTooltipClass="tooltip"
             matTooltipPosition="above"
             class="refresh-table-btn ml-4"
-            src="assets/img/pngs/flag-bold.png"
+            src="assets/img/pngs/remove.png"
             alt=""
           />
-
-          <img
-            #filterMenuTrigger="matMenuTrigger"
-            [matMenuTriggerFor]="filterMenu"
-            matTooltip="Filter"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="sort-table-btn ml-4"
-            src="assets/img/pngs/sort.png"
-            alt=""
-          />
-
-          <img
-            style="height: 21px"
-            #timelineMenuTrigger="matMenuTrigger"
-            [matMenuTriggerFor]="timelineMenu"
-            matTooltip="Filter By Date"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="sort-table-btn ml-4"
-            src="assets/img/pngs/timeline.png"
-            alt=""
-          />
-
-          <mat-menu #timelineMenu="matMenu">
-            <div class="timeline-menu" (click)="$event.stopPropagation()">
-              <div class="row m-0">
-                <div class="col p-0">
-                  <p class="cal-title">From</p>
-                  <mat-calendar
-                    [(selected)]="first_selected_timeline"
-                  ></mat-calendar>
-                </div>
-
-                <div class="vertical-divider"></div>
-                <div class="col p-0">
-                  <p class="cal-title">To</p>
-                  <mat-calendar
-                    [(selected)]="last_selected_timeline"
-                  ></mat-calendar>
-                </div>
-              </div>
-              <div class="col mt-3 p-0 d-flex justify-content-end">
-                <div
-                  (click)="filterByTimeline(timelineMenuTrigger)"
-                  class="btn search-btn"
-                >
-                  Search
-                </div>
-              </div>
-              <p
-                class="mb-0 mt-2"
-                *ngIf="timeLineFilterDateNotSelected == true"
-                style="
-                  text-align: end;
-                  font-size: 12px;
-                  font-weight: 400;
-                  color: red;
-                "
-              >
-                Please Select Dates for Filtering.
-              </p>
-              <p
-                class="mb-0 mt-2"
-                *ngIf="timeLineFilterselectedWrong == true"
-                style="
-                  text-align: end;
-                  font-size: 12px;
-                  font-weight: 400;
-                  color: red;
-                "
-              >
-                Please Select Valid Date Timeline.
-              </p>
-            </div>
-          </mat-menu>
-
-          <mat-menu #filterMenu="matMenu">
-            <div class="filter-menu" (click)="$event.stopPropagation()">
-              <p class="small-title">Show Only</p>
-              <hr />
-
-              <div
-                class="list mt-2"
-                (click)="showRequestsOnStatus('approved',filterMenuTrigger)"
-              >
-                <p class="m-0">Approved Requests</p>
-              </div>
-              <div
-                class="list"
-                (click)="showRequestsOnStatus('declined',filterMenuTrigger)"
-              >
-                <p class="m-0">Declined Requests</p>
-              </div>
-              <div
-                class="list"
-                (click)="showRequestsOnStatus('pending',filterMenuTrigger)"
-              >
-                <p class="m-0">Pending Requests</p>
-              </div>
-              <div
-                class="list"
-                (click)="showRequestsOnStatus('review',filterMenuTrigger)"
-              >
-                <p class="m-0">Reviewing Requests</p>
-              </div>
-            </div>
-          </mat-menu>
-
-          <div
-            class="row m-0 flagged-reqs-filter ml-4"
-            *ngIf="flaggedRequestsFilterOn == true"
-          >
-            <p class="m-0">Important Requests</p>
-            <img
-              class="ml-2"
-              (click)="closeFlaggedRequestFilter()"
-              src="assets/img/svg/req-details/close-circle.svg"
-              alt=""
-            />
-          </div>
-          <div
-            class="row m-0 flagged-reqs-filter ml-4"
-            *ngIf="statusFilterOn == true"
-          >
-            <p class="m-0">
-              Filtered On :
-              <span class="ml-1" style="font-weight: 700"
-                >{{statusFilter | titlecase}}</span
-              >
-            </p>
-            <img
-              class="ml-2"
-              (click)="closeStatusFilter()"
-              src="assets/img/svg/req-details/close-circle.svg"
-              alt=""
-            />
-          </div>
-          <div
-            class="row m-0 flagged-reqs-filter ml-4"
-            *ngIf="timeLineFilterOn == true"
-          >
-            <p class="m-0">
-              Filtered On :
-              <span class="ml-1" style="font-weight: 700"
-                >{{first_selected_timeline | date:'d/M/yy'}}</span
-              >
-              <span class="ml-1" style="font-weight: 700">-</span>
-              <span class="ml-1" style="font-weight: 700"
-                >{{last_selected_timeline | date:'d/M/yy'}}</span
-              >
-            </p>
-            <img
-              class="ml-2"
-              (click)="closeTimelineFilter()"
-              src="assets/img/svg/req-details/close-circle.svg"
-              alt=""
-            />
-          </div>
         </div>
         <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
       </div>
@@ -448,7 +290,7 @@
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef></th>
+              <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
               <td
                 mat-cell
                 *matCellDef="let element;let last = last;let index = index"
@@ -470,110 +312,24 @@
                       width: 20px;
                       cursor: pointer;
                     "
-                    (click)="mainMenuOpened(element)"
+                    (click)="mainMenuOpened()"
                   />
                   <mat-menu #actionsMenuHome="matMenu">
                     <div
                       (mouseenter)="mainMenuMouseOver()"
                       (click)="clickMainMenu($event)"
                       class="col more-actions"
-                      [ngStyle]="{'height' : requestFor(element.request_type, element.auth_type) == 'Admin' ? '13.6rem' : '16.1rem'}"
+                      [ngStyle]="{ 'height' : '6.5rem'}"
                     >
                       <div
-                        class="row m-0 list d-flex"
+                        class="row mt-1 mb-2 m-0 list d-flex"
                         style="align-items: center"
-                        (click)="flagAsImportant(element,mainMenuTrigger)"
-                      >
-                        <img src="assets/img/pngs/flag.png" alt="" />
-                        <p *ngIf="flaggedRequest == false">Flag As Important</p>
-                        <p *ngIf="flaggedRequest == true">Remove Flag</p>
-                      </div>
-                      <div
-                        class="row mt-1 m-0 list d-flex"
-                        style="align-items: center"
-                        (click)="archiveRequest(element,mainMenuTrigger,index)"
+                        (click)="removeFromSpam(element,mainMenuTrigger, index)"
                       >
                         <img src="assets/img/pngs/folder.png" alt="" />
-                        <p>Archive Request</p>
+                        <p>Remove from Spam</p>
                       </div>
-                      <div
-                        class="row mt-1 m-0 list d-flex"
-                        style="align-items: center"
-                        (click)="reportAsSpam(element,mainMenuTrigger,index)"
-                      >
-                        <img src="assets/img/pngs/block.png" alt="" />
-                        <p>Move To Spam</p>
-                      </div>
-                      <div
-                        [ngClass]="requestFor(element.request_type, element.auth_type) == 'Admin' ? 'mb-2' : ' '"
-                        class="row mt-1 m-0 list d-flex justify-content-between"
-                        style="align-items: center"
-                        #statusMenuTrigger="matMenuTrigger"
-                        [matMenuTriggerFor]="statusChangeMenu"
-                        (click)="statusMenuOpen(element.status)"
-                      >
-                        <div class="row m-0 d-flex" style="align-items: center">
-                          <img src="assets/img/pngs/status.png" alt="" />
-                          <p>Change Status</p>
-                        </div>
 
-                        <img
-                          [ngStyle]="{ 'transform' : statusMenuOpened == true?  'rotate(90deg)' : 'rotate(0deg)'}"
-                          class="arrow-dropdown"
-                          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
-                          alt=""
-                        />
-                      </div>
-                      <!-- menu for changing status -->
-                      <mat-menu
-                        style="display: none"
-                        #statusChangeMenu="matMenu"
-                      >
-                        <div
-                          class="status-menu"
-                          (click)="$event.stopPropagation()"
-                          style="width: 13rem; height: 8.1rem; padding: 0 10px"
-                        >
-                          <div
-                            class="row mt-1 mb-2 m-0 list-approve d-flex"
-                            style="align-items: center"
-                          >
-                            <img src="assets/img/pngs/approve.png" alt="" />
-                            <p>Approve Request</p>
-                          </div>
-                          <div
-                            class="row mt-1 mb-2 m-0 list d-flex"
-                            style="align-items: center"
-                          >
-                            <img src="assets/img/pngs/review.png" alt="" />
-                            <p>To Review</p>
-                          </div>
-                          <div
-                            class="row mt-1 mb-2 m-0 list-decline d-flex"
-                            style="align-items: center"
-                          >
-                            <img src="assets/img/pngs/declined.png" alt="" />
-                            <p>Decline Request</p>
-                          </div>
-                        </div>
-                      </mat-menu>
-                      <!-- menu for changing status ends -->
-                      <div
-                        *ngIf="requestFor(element.request_type, element.auth_type) == 'Tenant'"
-                        class="row mt-1 mb-2 m-0 list d-flex"
-                        style="align-items: center"
-                      >
-                        <img src="assets/img/pngs/forward.png" alt="" />
-                        <p>Forward to Tenant</p>
-                      </div>
-                      <div
-                        *ngIf="requestFor(element.request_type, element.auth_type) == 'Landlord'"
-                        class="row mt-1 mb-2 m-0 list d-flex"
-                        style="align-items: center"
-                      >
-                        <img src="assets/img/pngs/forward.png" alt="" />
-                        <p>Forward to Landlord</p>
-                      </div>
                       <hr style="margin: 0 5px" />
                       <div
                         class="row mt-2 m-0 list-delete d-flex"
@@ -584,23 +340,7 @@
                       </div>
                     </div>
                   </mat-menu>
-                  <div
-                    *ngIf="element.flag == 0"
-                    class="more-btn-disabled"
-                    style="width: 90px"
-                  ></div>
-
-                  <div *ngIf="element.flag == 1">
-                    <img
-                      matTooltip="Important Request"
-                      matTooltipClass="tooltip"
-                      matTooltipPosition="above"
-                      style="width: 17px"
-                      class="ml-4"
-                      src="assets/img/pngs/flag-bold.png"
-                      alt=""
-                    />
-                  </div>
+                  <div class="more-btn-disabled" style="width: 90px"></div>
                 </div>
               </td>
             </ng-container>
@@ -635,7 +375,6 @@
             [dataSource]="loadingTable"
             class="mat-elevation-z8 demo-table"
           >
-            <!-- Name Column -->
             <ng-container matColumnDef="issueDate">
               <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
             </ng-container>
@@ -643,16 +382,13 @@
             <ng-container matColumnDef="reqNo">
               <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
             </ng-container>
-
-            <!-- Weight Column -->
             <ng-container matColumnDef="reqType">
               <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
             </ng-container>
-
-            <!-- Symbol Column -->
             <ng-container matColumnDef="propertyName">
               <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
             </ng-container>
+
             <ng-container matColumnDef="clientType">
               <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
             </ng-container>
@@ -667,8 +403,6 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
             </ng-container>
-
-            <!-- Symbol Column -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -690,7 +424,7 @@
             "
           >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
-              NO REQUESTS
+              NO SPAM REQUESTS
             </p>
             <p
               class="pl-3"
