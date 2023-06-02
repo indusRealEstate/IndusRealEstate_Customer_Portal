@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
+import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
   selector: "app-requests",
@@ -34,6 +35,17 @@ export class RequestsComponentMyReqs implements OnInit {
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
+
+  flaggedRequest: boolean = false;
+  flaggedRequestsFilterOn: boolean = false;
+  statusFilterOn: boolean = false;
+  timeLineFilterOn: boolean = false;
+  timeLineFilterDateNotSelected: boolean = false;
+  timeLineFilterselectedWrong: boolean = false;
+  statusFilter: any;
+
+  first_selected_timeline: any;
+  last_selected_timeline: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -156,9 +168,7 @@ export class RequestsComponentMyReqs implements OnInit {
 
   async ngOnInit() {
     var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("my_reqs_fetched_time")
-    );
+    var previous = JSON.parse(sessionStorage.getItem("my_reqs_fetched_time"));
 
     var adminReqDataSession = JSON.parse(
       sessionStorage.getItem("my_reqs_session")
@@ -194,7 +204,152 @@ export class RequestsComponentMyReqs implements OnInit {
   refreshTable() {
     sessionStorage.removeItem("my_reqs_session");
     this.isContentLoading = true;
+    this.flaggedRequestsFilterOn = false;
+    this.statusFilterOn = false;
+    this.timeLineFilterOn = false;
     this.fetchData();
+  }
+
+  mainMenuOpened(req) {
+    if (req.flag == 1) {
+      this.flaggedRequest = true;
+    } else {
+      this.flaggedRequest = false;
+    }
+  }
+
+  flagAsImportant(req, trigger: MatMenuTrigger) {
+    if (req.flag == 1) {
+      req.flag = 0;
+
+      var req_id = this.getReqId(req);
+      this.apiService
+        .updateRequestFlag(req_id, 0, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+
+      sessionStorage.setItem(
+        "my_reqs_session",
+        JSON.stringify(this.allRequests)
+      );
+    } else {
+      req.flag = 1;
+
+      var req_id = this.getReqId(req);
+      this.apiService
+        .updateRequestFlag(req_id, 1, req.request_type)
+        .subscribe((val) => {
+          // console.log(val);
+        });
+      sessionStorage.setItem(
+        "my_reqs_session",
+        JSON.stringify(this.allRequests)
+      );
+    }
+
+    trigger.closeMenu();
+  }
+
+  getReqId(req) {
+    var req_type = req.request_type;
+    if (req_type == "ADD_PROPERTY_REC_EXIST_LANDLORD") {
+      return req.property_req_id;
+    } else if (req_type == "NEW_LANDLORD_REQ") {
+      return req.request_details_id;
+    } else if (req_type == "NEW_TENANT_AC") {
+      return req.unique_id;
+    } else if (req_type == "PAYMENT") {
+      return req.request_id;
+    } else {
+      return req.request_no;
+    }
+  }
+
+  showAllFlaggedRequests() {
+    if (this.statusFilterOn == true) {
+      this.closeStatusFilter();
+    }
+    if (this.timeLineFilterOn == true) {
+      this.closeTimelineFilter();
+    }
+
+    this.allRequestsMatTableData.data = this.allRequests.filter(
+      (d) => d.flag == 1
+    );
+
+    this.flaggedRequestsFilterOn = true;
+  }
+
+  closeFlaggedRequestFilter() {
+    this.allRequestsMatTableData.data = this.allRequests;
+    this.flaggedRequestsFilterOn = false;
+  }
+
+  showRequestsOnStatus(status, trigger: MatMenuTrigger) {
+    if (this.flaggedRequestsFilterOn == true) {
+      this.closeFlaggedRequestFilter();
+    }
+    if (this.timeLineFilterOn == true) {
+      this.closeTimelineFilter();
+    }
+
+    this.allRequestsMatTableData.data = this.allRequests.filter(
+      (d) => d.status == status
+    );
+
+    this.statusFilter = status;
+    this.statusFilterOn = true;
+    trigger.closeMenu();
+  }
+
+  closeStatusFilter() {
+    this.allRequestsMatTableData.data = this.allRequests;
+    this.statusFilterOn = false;
+  }
+
+  filterByTimeline(trigger: MatMenuTrigger) {
+    if (this.first_selected_timeline && this.last_selected_timeline) {
+      var first = new Date(this.first_selected_timeline).getTime();
+      var last = new Date(this.last_selected_timeline).getTime();
+      if (last < first) {
+        this.timeLineFilterselectedWrong = true;
+
+        setTimeout(() => {
+          this.timeLineFilterselectedWrong = false;
+        }, 3000);
+      } else {
+        if (this.flaggedRequestsFilterOn == true) {
+          this.closeFlaggedRequestFilter();
+        }
+        if (this.statusFilterOn == true) {
+          this.closeStatusFilter();
+        }
+        this.allRequestsMatTableData.data =
+          this.allRequestsMatTableData.data.filter(
+            (e) =>
+              new Date(e.issue_date).getTime() >=
+                this.first_selected_timeline?.getTime()! &&
+              new Date(e.issue_date).getTime() <=
+                this.last_selected_timeline?.getTime()!
+          );
+
+        this.timeLineFilterOn = true;
+
+        trigger.closeMenu();
+      }
+    } else {
+      this.timeLineFilterDateNotSelected = true;
+
+      setTimeout(() => {
+        this.timeLineFilterDateNotSelected = false;
+      }, 3000);
+    }
+  }
+
+  closeTimelineFilter() {
+    this.allRequestsMatTableData.data = this.allRequests;
+    this.timeLineFilterOn = false;
   }
 
   getRequestType(req_type) {

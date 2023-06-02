@@ -6,302 +6,6 @@
     class="container-fluid h-100 d-flex justify-content-center"
     style="max-width: 2576px"
   >
-    <!-- <span
-      *ngIf="isLoading == true"
-      class="spinner-border spinner-border-m mr-2"
-      style="color: #d4aa32; margin-top: 365px"
-    >
-    </span> -->
-    <!-- <div class="card" style="border-radius: 8px">
-      <div
-        class="card-header"
-        style="
-          background-color: #2b333e;
-          color: white;
-          border-top-right-radius: 8px;
-          border-top-left-radius: 8px;
-        "
-      >
-        <p
-          style="
-            font-size: 23px;
-            font-weight: 500;
-            margin-left: 10px;
-            margin-top: 15px;
-          "
-        >
-          Payment Requests
-        </p>
-      </div>
-      <div
-        class="card-body"
-        style="
-          background-color: #ffffff;
-          color: #404040;
-          padding: 30px;
-          border-bottom-right-radius: 8px;
-          border-bottom-left-radius: 8px;
-        "
-      >
-        <div class="row" style="margin: 0; justify-content: space-between">
-          <div class="row" style="margin: 0">
-            <div
-              #menuTrigger="matMenuTrigger"
-              [matMenuTriggerFor]="filterMenu"
-              class="btn"
-              style="
-                background-color: #2b333e;
-                padding: 8px 30px;
-                max-height: 35px;
-              "
-            >
-              filter
-            </div>
-
-            <div class="row" *ngFor="let filter of filters" style="margin: 0">
-              <div
-                class="card"
-                style="
-                  margin: 5px 0;
-                  max-height: 35px;
-                  margin-left: 20px;
-                  padding: 3px 20px;
-                  background-color: #d3ab33;
-                  color: white;
-                "
-              >
-                <div
-                  class="row"
-                  style="margin: 0; justify-content: space-between"
-                >
-                  <p
-                    *ngIf="filter.filter_1 == 'new_sign_ups'"
-                    style="margin-bottom: 0"
-                  >
-                    New Sign Ups
-                  </p>
-                  <p
-                    *ngIf="filter.filter_1 == 'add_new_property'"
-                    style="margin-bottom: 0"
-                  >
-                    Add Property
-                  </p>
-                  <p
-                    *ngIf="filter.filter_1 == 'others'"
-                    style="margin-bottom: 0"
-                  >
-                    Others
-                  </p>
-                  <p *ngIf="filter.filter_2 == 'all'" style="margin-bottom: 0">
-                    All Type Properties
-                  </p>
-                  <p
-                    *ngIf="filter.filter_2 == 'villa'"
-                    style="margin-bottom: 0"
-                  >
-                    Villa
-                  </p>
-                  <p
-                    *ngIf="filter.filter_2 == 'appartment'"
-                    style="margin-bottom: 0"
-                  >
-                    Appartment
-                  </p>
-                  <p
-                    *ngIf="filter.filter_2 == 'town_house'"
-                    style="margin-bottom: 0"
-                  >
-                    Town House
-                  </p>
-                  <p
-                    *ngIf="filter.filter_2 == 'other'"
-                    style="margin-bottom: 0"
-                  >
-                    Other
-                  </p>
-                  <p
-                    *ngIf="filter.filter_1 == 'approved'"
-                    style="margin-bottom: 0"
-                  >
-                    Approved Requests
-                  </p>
-                  <p
-                    *ngIf="filter.filter_1 == 'declined'"
-                    style="margin-bottom: 0"
-                  >
-                    Denied Requests
-                  </p>
-                  <p
-                    *ngIf="filter.filter_1 == 'search'"
-                    style="margin-bottom: 0"
-                  >
-                    Search Results
-                  </p>
-                  <img
-                    (click)="closeFilter(filter)"
-                    src="assets/img/svg/req-details/close-circle.svg"
-                    alt=""
-                    style="
-                      width: 15px;
-                      filter: brightness(0) invert(1);
-                      margin-left: 20px;
-                      cursor: pointer;
-                    "
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" style="margin: 0; width: 50%; justify-content: end">
-            <input
-              type="text"
-              placeholder="Search"
-              [(ngModel)]="searchString"
-              style="
-                max-height: 35px;
-                padding-left: 10px;
-                min-width: 300px;
-                border-radius: 7px;
-                border: 1px solid #a3a3a39e;
-              "
-            />
-            <div
-              class="btn"
-              style="
-                margin: 0;
-                margin-left: 20px;
-                padding: 9px 36px;
-                max-height: 35px;
-                background-color: #d3ab33;
-              "
-            >
-              Search
-            </div>
-          </div>
-        </div>
-        <p
-          *ngIf="isUserSearchedEmpty == true"
-          style="
-            text-align: end;
-            font-size: 13px;
-            color: #ff0000e6;
-            margin-top: 10px;
-            margin-right: 10px;
-          "
-        >
-          No words found in searchbar.
-        </p>
-
-        <mat-menu style="display: none" #filterMenu="matMenu">
-          <div
-            class="col"
-            style="padding: 20px 20px"
-            (click)="$event.stopPropagation()"
-            class="filter-menu"
-          >
-            <p style="margin-bottom: -10px; font-size: 15px; font-weight: 600">
-              Category
-            </p>
-            <mat-radio-group
-              [(ngModel)]="categoryAllRequests"
-              style="margin-left: 15px"
-            >
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="new_sign_ups"></mat-radio-button>
-                <p>New Sign Ups</p>
-              </div>
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="add_new_property"></mat-radio-button>
-                <p>Add Property</p>
-              </div>
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="others"></mat-radio-button>
-                <p>Others</p>
-              </div>
-            </mat-radio-group>
-            <p
-              style="
-                margin-bottom: -10px;
-                font-size: 15px;
-                font-weight: 600;
-                margin-top: 15px;
-              "
-            >
-              Property Type
-            </p>
-            <mat-radio-group
-              [(ngModel)]="propertyTypeAllRequests"
-              style="margin-left: 15px"
-            >
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="all"></mat-radio-button>
-                <p>All</p>
-              </div>
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="villa"></mat-radio-button>
-                <p>Villa</p>
-              </div>
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="appartment"></mat-radio-button>
-                <p>Appartment</p>
-              </div>
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="town_house"></mat-radio-button>
-                <p>Town House</p>
-              </div>
-              <div class="row" style="margin: 0">
-                <mat-radio-button value="other"></mat-radio-button>
-                <p>Other</p>
-              </div>
-            </mat-radio-group>
-            <button
-              class="btn"
-              style="
-                padding: 10px;
-                width: 170px;
-                background-color: #343b44;
-                border-radius: 7px;
-              "
-            >
-              Apply Filters
-            </button>
-
-            <p
-              style="
-                font-size: 15px;
-                font-weight: 600;
-                margin-top: 15px;
-                margin-bottom: 10px;
-              "
-            >
-              Reset Filters
-            </p>
-            <button
-              class="btn"
-              style="
-                padding: 10px;
-                width: 170px;
-                background-color: #343b44;
-                border-radius: 7px;
-              "
-            >
-              Approved Requests
-            </button>
-            <button
-              class="btn"
-              style="
-                padding: 10px;
-                width: 170px;
-                background-color: #343b44;
-                border-radius: 7px;
-              "
-            >
-              Denied Requests
-            </button>
-          </div>
-        </mat-menu> -->
-
     <div class="col" style="padding: 0">
       <div class="row m-0 w-100 align-items-end justify-content-between">
         <div class="row m-0 align-items-end mb-3">
@@ -317,6 +21,174 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt=""
           />
+          <img
+            (click)="showAllFlaggedRequests()"
+            matTooltip="Show All Flagged Requests"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="refresh-table-btn ml-4"
+            src="assets/img/pngs/flag-bold.png"
+            alt=""
+          />
+
+          <img
+            #filterMenuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="filterMenu"
+            matTooltip="Filter"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="sort-table-btn ml-4"
+            src="assets/img/pngs/sort.png"
+            alt=""
+          />
+
+          <img
+            style="height: 21px"
+            #timelineMenuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="timelineMenu"
+            matTooltip="Filter By Date"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="sort-table-btn ml-4"
+            src="assets/img/pngs/timeline.png"
+            alt=""
+          />
+
+          <mat-menu #timelineMenu="matMenu">
+            <div class="timeline-menu" (click)="$event.stopPropagation()">
+              <div class="row m-0">
+                <div class="col p-0">
+                  <p class="cal-title">From</p>
+                  <mat-calendar
+                    [(selected)]="first_selected_timeline"
+                  ></mat-calendar>
+                </div>
+
+                <div class="vertical-divider"></div>
+                <div class="col p-0">
+                  <p class="cal-title">To</p>
+                  <mat-calendar
+                    [(selected)]="last_selected_timeline"
+                  ></mat-calendar>
+                </div>
+              </div>
+              <div class="col mt-3 p-0 d-flex justify-content-end">
+                <div
+                  (click)="filterByTimeline(timelineMenuTrigger)"
+                  class="btn search-btn"
+                >
+                  Search
+                </div>
+              </div>
+              <p
+                class="mb-0 mt-2"
+                *ngIf="timeLineFilterDateNotSelected == true"
+                style="
+                  text-align: end;
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: red;
+                "
+              >
+                Please Select Dates for Filtering.
+              </p>
+              <p
+                class="mb-0 mt-2"
+                *ngIf="timeLineFilterselectedWrong == true"
+                style="
+                  text-align: end;
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: red;
+                "
+              >
+                Please Select Valid Date Timeline.
+              </p>
+            </div>
+          </mat-menu>
+
+          <mat-menu #filterMenu="matMenu">
+            <div class="filter-menu" (click)="$event.stopPropagation()">
+              <p class="small-title">Show Only</p>
+              <hr />
+
+              <div
+                class="list mt-2"
+                (click)="showRequestsOnStatus('approved', filterMenuTrigger)"
+              >
+                <p class="m-0">Approved Requests</p>
+              </div>
+              <div
+                class="list"
+                (click)="showRequestsOnStatus('declined', filterMenuTrigger)"
+              >
+                <p class="m-0">Declined Requests</p>
+              </div>
+              <div
+                class="list"
+                (click)="showRequestsOnStatus('pending', filterMenuTrigger)"
+              >
+                <p class="m-0">Pending Requests</p>
+              </div>
+              <div
+                class="list"
+                (click)="showRequestsOnStatus('review', filterMenuTrigger)"
+              >
+                <p class="m-0">Reviewing Requests</p>
+              </div>
+            </div>
+          </mat-menu>
+
+          <div
+            class="row m-0 flagged-reqs-filter ml-4"
+            *ngIf="flaggedRequestsFilterOn == true"
+          >
+            <p class="m-0">Important Requests</p>
+            <img
+              class="ml-2"
+              (click)="closeFlaggedRequestFilter()"
+              src="assets/img/svg/req-details/close-circle.svg"
+              alt=""
+            />
+          </div>
+          <div
+            class="row m-0 flagged-reqs-filter ml-4"
+            *ngIf="statusFilterOn == true"
+          >
+            <p class="m-0">
+              Filtered On :
+              <span class="ml-1" style="font-weight: 700"
+                >{{ statusFilter | titlecase }}</span
+              >
+            </p>
+            <img
+              class="ml-2"
+              (click)="closeStatusFilter()"
+              src="assets/img/svg/req-details/close-circle.svg"
+              alt=""
+            />
+          </div>
+          <div
+            class="row m-0 flagged-reqs-filter ml-4"
+            *ngIf="timeLineFilterOn == true"
+          >
+            <p class="m-0">
+              Filtered On :
+              <span class="ml-1" style="font-weight: 700"
+                >{{ first_selected_timeline | date : "d/M/yy" }}</span
+              >
+              <span class="ml-1" style="font-weight: 700">-</span>
+              <span class="ml-1" style="font-weight: 700"
+                >{{ last_selected_timeline | date : "d/M/yy" }}</span
+              >
+            </p>
+            <img
+              class="ml-2"
+              (click)="closeTimelineFilter()"
+              src="assets/img/svg/req-details/close-circle.svg"
+              alt=""
+            />
+          </div>
         </div>
         <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
       </div>
@@ -443,10 +315,7 @@
       <!------------------------------------ All Requests ----------------------------------------------------->
       <!------------------------------------ All Requests ----------------------------------------------------->
       <div *ngIf="isContentLoading == false">
-        <div
-          *ngIf="isUserSearchedRequests == false"
-          style="overflow: auto; padding: 0 5px; padding-bottom: 1rem"
-        >
+        <div style="overflow: auto; padding: 0 5px; padding-bottom: 1rem">
           <table
             mat-table
             [dataSource]="allRequestsMatTableData"
@@ -552,7 +421,7 @@
                     matTooltip="More Actions"
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
-                    #menuTrigger="matMenuTrigger"
+                    #mainMenuTrigger="matMenuTrigger"
                     [matMenuTriggerFor]="actionsMenuHome"
                     src="assets/img/svg/home-page/more.svg"
                     alt=""
@@ -562,13 +431,65 @@
                       width: 20px;
                       cursor: pointer;
                     "
+                    (click)="mainMenuOpened(element)"
                   />
-                  <mat-menu style="display: none" #actionsMenuHome="matMenu">
-                    <div class="col" style="display: grid">
-                      <div class="btn">review</div>
+                  <mat-menu #actionsMenuHome="matMenu">
+                    <div
+                      (click)="$event.stopPropagation()"
+                      class="col more-actions"
+                    >
+                      <div
+                        class="row m-0 list d-flex"
+                        style="align-items: center"
+                        (click)="flagAsImportant(element, mainMenuTrigger)"
+                      >
+                        <img src="assets/img/pngs/flag.png" alt="" />
+                        <p *ngIf="flaggedRequest == false">Flag As Important</p>
+                        <p *ngIf="flaggedRequest == true">Remove Flag</p>
+                      </div>
+                      <div
+                        class="row mt-1 m-0 list d-flex"
+                        style="align-items: center"
+                        (click)="
+                          archiveRequest(element, mainMenuTrigger, index)
+                        "
+                      >
+                        <img src="assets/img/pngs/folder.png" alt="" />
+                        <p>Archive Request</p>
+                      </div>
+                      <div
+                        class="row mt-1 mb-2 m-0 list d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/alarm.png" alt="" />
+                        <p>Send Reminder</p>
+                      </div>
+                      <hr style="margin: 0 5px" />
+                      <div
+                        class="row mt-2 m-0 list-delete d-flex"
+                        style="align-items: center"
+                      >
+                        <img src="assets/img/pngs/trash.png" alt="" />
+                        <p>Delete Request</p>
+                      </div>
                     </div>
                   </mat-menu>
-                  <div class="more-btn-disabled" style="width: 40px"></div>
+                  <div
+                    *ngIf="element.flag == 0"
+                    class="more-btn-disabled"
+                  ></div>
+
+                  <div *ngIf="element.flag == 1">
+                    <img
+                      matTooltip="Important Request"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      style="width: 17px"
+                      class="ml-4"
+                      src="assets/img/pngs/flag-bold.png"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </td>
             </ng-container>
@@ -579,7 +500,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <div
-            *ngIf="allRequestsMatTableData.filteredData.length == 0"
+            *ngIf="allRequestsMatTableData.filteredData.length == 0  && allRequests.length != 0"
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;
@@ -591,6 +512,7 @@
               border-bottom-left-radius: 10px;
               border-bottom-right-radius: 10px;
               height: 15rem;
+              min-width: 1250px;
             "
           >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
@@ -653,6 +575,7 @@
               border-bottom-left-radius: 10px;
               border-bottom-right-radius: 10px;
               height: 15rem;
+              min-width: 1250px;
             "
           >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">

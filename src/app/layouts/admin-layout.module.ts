@@ -109,6 +109,7 @@ import { RequestTimelineComponent } from "app/components/request-timeline/reques
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
+import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -233,6 +234,7 @@ import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
     AllClientsDocuments,
     RequestsComponentInspection,
     TableSearchBarComponent,
+    TableFiltersComponent,
     RequestTimelineComponent,
     ReviewRequestAdmin
   ],

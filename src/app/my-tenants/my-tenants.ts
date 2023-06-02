@@ -142,7 +142,7 @@ export class MyTenantsLandlord implements OnInit {
           this.allTenantsMatTableData.paginator = this.paginator;
           this.allTenantsMatTableData.paginator._changePageSize(10);
         }
-      }, 1000);
+      });
     }
   }
 
@@ -156,26 +156,24 @@ export class MyTenantsLandlord implements OnInit {
       .getLandlordTenants(user[0]["id"])
       .subscribe((va: any[]) => {
         this.allTenants = va;
-        this.allTenantsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          this.isContentLoading = false;
-          if (this.allTenants.length != 0) {
-            sessionStorage.setItem(
-              "my-tenants-session",
-              JSON.stringify({
-                data: this.allTenants,
-              })
-            );
-          }
-        }, 50);
-      })
-      .add(() => {
+        this.allTenantsMatTableData.data = va;
         setTimeout(() => {
           if (this.allTenantsMatTableData != undefined) {
             this.allTenantsMatTableData.paginator = this.paginator;
             this.allTenantsMatTableData.paginator._changePageSize(10);
           }
-        }, 500);
+        });
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        if (this.allTenants.length != 0) {
+          sessionStorage.setItem(
+            "my-tenants-session",
+            JSON.stringify({
+              data: this.allTenants,
+            })
+          );
+        }
       });
   }
 
@@ -200,18 +198,23 @@ export class MyTenantsLandlord implements OnInit {
         .subscribe((data: any[]) => {
           this.allTenants = data;
           this.allTenantsMatTableData = new MatTableDataSource(data);
-
           setTimeout(() => {
-            this.isContentLoading = false;
-            if (this.allTenants.length != 0) {
-              sessionStorage.setItem(
-                "my-tenants-session",
-                JSON.stringify({
-                  data: this.allTenants,
-                })
-              );
+            if (this.allTenantsMatTableData != undefined) {
+              this.allTenantsMatTableData.paginator = this.paginator;
+              this.allTenantsMatTableData.paginator._changePageSize(10);
             }
-          }, 100);
+          });
+        })
+        .add(() => {
+          this.isContentLoading = false;
+          if (this.allTenants.length != 0) {
+            sessionStorage.setItem(
+              "my-tenants-session",
+              JSON.stringify({
+                data: this.allTenants,
+              })
+            );
+          }
         });
     }
   }
