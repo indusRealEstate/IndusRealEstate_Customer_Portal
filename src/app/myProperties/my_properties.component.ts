@@ -10,7 +10,6 @@ import { AuthenticationService } from "app/services/authentication.service";
 })
 export class MyPropertiesComponent implements OnInit {
   isUserSignedIn: boolean = false;
-  isLoading: boolean = false;
   isImagesLoading: boolean = false;
   properties: any[] = [];
   mouseEnterAddPropertyCard: boolean = false;
@@ -65,16 +64,16 @@ export class MyPropertiesComponent implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.isImagesLoading = true;
-    await this.initFunction();
+    this.initFunction();
   }
 
   getImagesUrl() {
     this.imagesUrl = this.apiService.getBaseUrlImages();
     setTimeout(() => {
       this.isImagesLoading = false;
-    }, 1000);
+    });
   }
 
   getPropertyImage(prop) {
@@ -83,7 +82,7 @@ export class MyPropertiesComponent implements OnInit {
     return `${this.imagesUrl}/${prop_id}/${images[0]}`;
   }
 
-  async initFunction() {
+  initFunction() {
     var propertiesdata = sessionStorage.getItem("properties");
     if (propertiesdata != null) {
       var decodedData = JSON.parse(propertiesdata);
@@ -91,9 +90,7 @@ export class MyPropertiesComponent implements OnInit {
       this.imagesUrl = decodedData["imgUrl"];
       this.isImagesLoading = false;
     } else {
-      this.isLoading = true;
-
-      await this.getProperties();
+      this.getProperties();
     }
   }
 
@@ -111,21 +108,17 @@ export class MyPropertiesComponent implements OnInit {
     });
   }
 
-  async getProperties() {
+  getProperties() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
 
-    try {
-      this.apiService.getUserProperties(userId).subscribe((data) => {
+    this.apiService
+      .getUserProperties(userId)
+      .subscribe((data) => {
         this.properties = data;
-      });
-    } catch (error) {
-      // console.log(error);
-    } finally {
-      setTimeout(() => {
-        this.isLoading = false;
-
+      })
+      .add(() => {
         if (this.properties.length != 0) {
           this.getImagesUrl();
           sessionStorage.setItem(
@@ -136,7 +129,6 @@ export class MyPropertiesComponent implements OnInit {
             })
           );
         }
-      }, 3000);
-    }
+      });
   }
 }
