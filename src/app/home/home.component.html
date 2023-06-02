@@ -205,6 +205,7 @@
                 <mat-form-field appearance="fill">
                   <mat-select
                     [(ngModel)]="selectedStatusType"
+                    (selectionChange)="statusChange()"
                     placeholder="None"
                   >
                     <mat-option *ngFor="let s of statusType" [value]="s">
@@ -235,7 +236,11 @@
                   Period :
                 </p>
                 <mat-form-field appearance="fill">
-                  <mat-select [(ngModel)]="selectedPeriod" placeholder="None">
+                  <mat-select
+                    [(ngModel)]="selectedPeriod"
+                    (selectionChange)="periodChange()"
+                    placeholder="None"
+                  >
                     <mat-option *ngFor="let p of periods" [value]="p">
                       {{ p }}
                     </mat-option>
@@ -618,7 +623,7 @@
                     *matCellDef="let element"
                     (click)="reviewRecentHappening(element)"
                   >
-                  {{ element.issue_date }}
+                    {{ element.issue_date | date : "d/M/yy"}}
                   </td>
                 </ng-container>
 

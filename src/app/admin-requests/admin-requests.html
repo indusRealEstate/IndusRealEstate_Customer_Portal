@@ -12,183 +12,16 @@
           <p class="m-0 ml-4 mt-5" style="font-size: 2rem; font-weight: 600">
             All Requests
           </p>
-          <img
-            (click)="refreshTable()"
-            matTooltip="Refresh table"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="refresh-table-btn ml-4"
-            src="assets/img/svg/home-page/refresh-2.svg"
-            alt=""
-          />
-          <img
-            (click)="showAllFlaggedRequests()"
-            matTooltip="Show All Flagged Requests"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="refresh-table-btn ml-4"
-            src="assets/img/pngs/flag-bold.png"
-            alt=""
-          />
-
-          <img
-            #filterMenuTrigger="matMenuTrigger"
-            [matMenuTriggerFor]="filterMenu"
-            matTooltip="Filter"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="sort-table-btn ml-4"
-            src="assets/img/pngs/sort.png"
-            alt=""
-          />
-
-          <img
-            style="height: 21px"
-            #timelineMenuTrigger="matMenuTrigger"
-            [matMenuTriggerFor]="timelineMenu"
-            matTooltip="Filter By Date"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="sort-table-btn ml-4"
-            src="assets/img/pngs/timeline.png"
-            alt=""
-          />
-
-          <mat-menu #timelineMenu="matMenu">
-            <div class="timeline-menu" (click)="$event.stopPropagation()">
-              <div class="row m-0">
-                <div class="col p-0">
-                  <p class="cal-title">From</p>
-                  <mat-calendar
-                    [(selected)]="first_selected_timeline"
-                  ></mat-calendar>
-                </div>
-
-                <div class="vertical-divider"></div>
-                <div class="col p-0">
-                  <p class="cal-title">To</p>
-                  <mat-calendar
-                    [(selected)]="last_selected_timeline"
-                  ></mat-calendar>
-                </div>
-              </div>
-              <div class="col mt-3 p-0 d-flex justify-content-end">
-                <div
-                  (click)="filterByTimeline(timelineMenuTrigger)"
-                  class="btn search-btn"
-                >
-                  Search
-                </div>
-              </div>
-              <p
-                class="mb-0 mt-2"
-                *ngIf="timeLineFilterDateNotSelected == true"
-                style="
-                  text-align: end;
-                  font-size: 12px;
-                  font-weight: 400;
-                  color: red;
-                "
-              >
-                Please Select Dates for Filtering.
-              </p>
-              <p
-                class="mb-0 mt-2"
-                *ngIf="timeLineFilterselectedWrong == true"
-                style="
-                  text-align: end;
-                  font-size: 12px;
-                  font-weight: 400;
-                  color: red;
-                "
-              >
-                Please Select Valid Date Timeline.
-              </p>
-            </div>
-          </mat-menu>
-
-          <mat-menu #filterMenu="matMenu">
-            <div class="filter-menu" (click)="$event.stopPropagation()">
-              <p class="small-title">Show Only</p>
-              <hr />
-
-              <div
-                class="list mt-2"
-                (click)="showRequestsOnStatus('approved',filterMenuTrigger)"
-              >
-                <p class="m-0">Approved Requests</p>
-              </div>
-              <div
-                class="list"
-                (click)="showRequestsOnStatus('declined',filterMenuTrigger)"
-              >
-                <p class="m-0">Declined Requests</p>
-              </div>
-              <div
-                class="list"
-                (click)="showRequestsOnStatus('pending',filterMenuTrigger)"
-              >
-                <p class="m-0">Pending Requests</p>
-              </div>
-              <div
-                class="list"
-                (click)="showRequestsOnStatus('review',filterMenuTrigger)"
-              >
-                <p class="m-0">Reviewing Requests</p>
-              </div>
-            </div>
-          </mat-menu>
-
-          <div
-            class="row m-0 flagged-reqs-filter ml-4"
-            *ngIf="flaggedRequestsFilterOn == true"
-          >
-            <p class="m-0">Important Requests</p>
-            <img
-              class="ml-2"
-              (click)="closeFlaggedRequestFilter()"
-              src="assets/img/svg/req-details/close-circle.svg"
-              alt=""
-            />
-          </div>
-          <div
-            class="row m-0 flagged-reqs-filter ml-4"
-            *ngIf="statusFilterOn == true"
-          >
-            <p class="m-0">
-              Filtered On :
-              <span class="ml-1" style="font-weight: 700"
-                >{{statusFilter | titlecase}}</span
-              >
-            </p>
-            <img
-              class="ml-2"
-              (click)="closeStatusFilter()"
-              src="assets/img/svg/req-details/close-circle.svg"
-              alt=""
-            />
-          </div>
-          <div
-            class="row m-0 flagged-reqs-filter ml-4"
-            *ngIf="timeLineFilterOn == true"
-          >
-            <p class="m-0">
-              Filtered On :
-              <span class="ml-1" style="font-weight: 700"
-                >{{first_selected_timeline | date:'d/M/yy'}}</span
-              >
-              <span class="ml-1" style="font-weight: 700">-</span>
-              <span class="ml-1" style="font-weight: 700"
-                >{{last_selected_timeline | date:'d/M/yy'}}</span
-              >
-            </p>
-            <img
-              class="ml-2"
-              (click)="closeTimelineFilter()"
-              src="assets/img/svg/req-details/close-circle.svg"
-              alt=""
-            />
-          </div>
+          <table-filters
+            #table_filter
+            (refresh)="refreshTable()"
+            (showAllFlaggedReqs)="showAllFlaggedRequests()"
+            (closeFlaggedReqs)="closeFlaggedRequestFilter()"
+            (statusFilterEmitter)="showRequestsOnStatus($event)"
+            (closeStatusFilterEmitter)="closeStatusFilter()"
+            (timeLineFilter)="filterByTimeline()"
+            (closeTimeLineFilterEmitter)="closeTimelineFilter()"
+          ></table-filters>
         </div>
         <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
       </div>
@@ -345,7 +178,7 @@
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
                 (click)="reviewRequest(element)"
               >
-                {{ element.issue_date }}
+                {{ element.issue_date | date : "d/M/yy"}}
               </td>
             </ng-container>
 

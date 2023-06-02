@@ -187,7 +187,7 @@
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
                 (click)="reviewRequest(element)"
               >
-                {{ element.issue_date }}
+                {{ element.issue_date | date : "d/M/yy"}}
               </td>
             </ng-container>
 

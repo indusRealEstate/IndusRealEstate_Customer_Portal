@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectedStatusType: any;
-  statusType: any[] = ["All", "Approved", "Declined", "Pending"];
+  statusType: any[] = ["All", "Approved", "Declined", "Pending", "Reviewing"];
 
   selectedPeriod: any;
   periods: any[] = ["All", "Last 24 hours", "Last 12 hours", "Last 6 hours"];
@@ -107,6 +107,60 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  statusChange() {
+    if (this.selectedStatusType != "All") {
+      if (this.selectedStatusType == "Approved") {
+        this.recentHappeningsMatTableData.data = this.recentHeppenings.filter(
+          (v) => v.status == "approved"
+        );
+      } else if (this.selectedStatusType == "Declined") {
+        this.recentHappeningsMatTableData.data = this.recentHeppenings.filter(
+          (v) => v.status == "declined"
+        );
+      } else if (this.selectedStatusType == "Reviewing") {
+        this.recentHappeningsMatTableData.data = this.recentHeppenings.filter(
+          (v) => v.status == "review"
+        );
+      } else {
+        this.recentHappeningsMatTableData.data = this.recentHeppenings.filter(
+          (v) => v.status == "pending"
+        );
+      }
+    } else {
+      this.recentHappeningsMatTableData.data = this.recentHeppenings;
+    }
+  }
+
+  getFormathours(input) {
+    var totalHours,
+      totalMinutes,
+      totalSeconds,
+      hours,
+      minutes,
+      seconds,
+      result = "";
+    totalSeconds = input / 1000;
+    totalMinutes = totalSeconds / 60;
+    totalHours = totalMinutes / 60;
+
+    seconds = Math.floor(totalSeconds) % 60;
+    minutes = Math.floor(totalMinutes) % 60;
+    hours = Math.floor(totalHours) % 60;
+
+    return hours;
+  }
+
+  periodChange() {
+    var now = new Date().getTime();
+
+    var sample = new Date(this.recentHeppenings[2].issue_date).getTime();
+
+    console.log(
+      this.getFormathours(sample),
+      this.recentHeppenings[2].issue_date
+    );
+  }
+
   getUserRecentHappenings() {
     var data = localStorage.getItem("currentUser");
     var user = JSON.parse(data);
@@ -126,6 +180,7 @@ export class HomeComponent implements OnInit {
       })
       .add(() => {
         this.isRecentHappeningsLoading = false;
+        this.cacheSession();
       });
   }
 
@@ -226,7 +281,7 @@ export class HomeComponent implements OnInit {
       this.recentHeppenings = data["recentHap"];
       this.isRecentHappeningsLoading = false;
       this.recentHappeningsMatTableData = new MatTableDataSource(
-        this.recentHeppenings
+        data["recentHap"]
       );
       this.ngAfterViewInitInitialize = true;
       this.getUserRequestCount(userId);
@@ -245,35 +300,6 @@ export class HomeComponent implements OnInit {
         "recentHappeningsDiff",
         JSON.stringify(new Date().getMinutes())
       );
-
-      setTimeout(() => {
-        this.cacheSession();
-      }, 1000);
-    }
-
-    var now = new Date().getMinutes();
-
-    var diff =
-      now - Number(JSON.parse(sessionStorage.getItem("recentHappeningsDiff")));
-
-    if (diff >= 10) {
-      this.isRecentHappeningsLoading = true;
-      sessionStorage.removeItem("recentHappeningsDiff");
-      sessionStorage.removeItem("recentHeppenings");
-      this.getUserRecentHappenings();
-      this.getUserRequestCount(userId);
-
-      if (user[0]["auth_type"] == "landlord") {
-        this.getUserPropertiesCount(userId);
-      }
-      sessionStorage.setItem(
-        "recentHappeningsDiff",
-        JSON.stringify(new Date().getMinutes())
-      );
-
-      setTimeout(() => {
-        this.cacheSession();
-      }, 1000);
     }
   }
 

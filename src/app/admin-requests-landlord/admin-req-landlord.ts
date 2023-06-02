@@ -8,6 +8,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { OtherServices } from "app/services/other.service";
 import { MatMenuTrigger } from "@angular/material/menu";
+import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 
 @Component({
   selector: "admin-req-landlord",
@@ -40,17 +41,9 @@ export class AdminReqsLandlord implements OnInit {
 
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
-  flaggedRequestsFilterOn: boolean = false;
-  statusFilterOn: boolean = false;
-  timeLineFilterOn: boolean = false;
-  timeLineFilterDateNotSelected: boolean = false;
-  timeLineFilterselectedWrong: boolean = false;
-  statusFilter: any;
-
-  first_selected_timeline: any;
-  last_selected_timeline: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
   constructor(
     private apiService: ApiService,
@@ -229,9 +222,11 @@ export class AdminReqsLandlord implements OnInit {
   refreshTable() {
     sessionStorage.removeItem("admin_reqs_session_landlord");
     this.isContentLoading = true;
-    this.flaggedRequestsFilterOn = false;
-    this.statusFilterOn = false;
-    this.timeLineFilterOn = false;
+    if (this.table_filter != undefined) {
+      this.table_filter.flaggedRequestsFilterOn = false;
+      this.table_filter.statusFilterOn = false;
+      this.table_filter.timeLineFilterOn = false;
+    }
     this.fetchData();
   }
 
@@ -381,89 +376,74 @@ export class AdminReqsLandlord implements OnInit {
   }
 
   showAllFlaggedRequests() {
-    if (this.statusFilterOn == true) {
-      this.closeStatusFilter();
+    if (this.table_filter != undefined) {
+      if (this.table_filter.statusFilterOn == true) {
+        this.table_filter.closeStatusFilter();
+      }
     }
-    if (this.timeLineFilterOn == true) {
-      this.closeTimelineFilter();
+    if (this.table_filter != undefined) {
+      if (this.table_filter.timeLineFilterOn == true) {
+        this.table_filter.closeTimelineFilter();
+      }
     }
 
     this.allRequestsMatTableData.data = this.allRequests.filter(
       (d) => d.flag == 1
     );
-
-    this.flaggedRequestsFilterOn = true;
   }
 
   closeFlaggedRequestFilter() {
     this.allRequestsMatTableData.data = this.allRequests;
-    this.flaggedRequestsFilterOn = false;
   }
 
-  showRequestsOnStatus(status, trigger: MatMenuTrigger) {
-    if (this.flaggedRequestsFilterOn == true) {
-      this.closeFlaggedRequestFilter();
+  showRequestsOnStatus(status) {
+    if (this.table_filter != undefined) {
+      if (this.table_filter.flaggedRequestsFilterOn == true) {
+        this.table_filter.closeFlaggedRequestFilter();
+      }
     }
-    if (this.timeLineFilterOn == true) {
-      this.closeTimelineFilter();
+
+    if (this.table_filter != undefined) {
+      if (this.table_filter.timeLineFilterOn == true) {
+        this.table_filter.closeTimelineFilter();
+      }
     }
 
     this.allRequestsMatTableData.data = this.allRequests.filter(
       (d) => d.status == status
     );
-
-    this.statusFilter = status;
-    this.statusFilterOn = true;
-    trigger.closeMenu();
   }
 
   closeStatusFilter() {
     this.allRequestsMatTableData.data = this.allRequests;
-    this.statusFilterOn = false;
   }
 
-  filterByTimeline(trigger: MatMenuTrigger) {
-    if (this.first_selected_timeline && this.last_selected_timeline) {
-      var first = new Date(this.first_selected_timeline).getTime();
-      var last = new Date(this.last_selected_timeline).getTime();
-      if (last < first) {
-        this.timeLineFilterselectedWrong = true;
-
-        setTimeout(() => {
-          this.timeLineFilterselectedWrong = false;
-        }, 3000);
-      } else {
-        if (this.flaggedRequestsFilterOn == true) {
-          this.closeFlaggedRequestFilter();
-        }
-        if (this.statusFilterOn == true) {
-          this.closeStatusFilter();
-        }
-        this.allRequestsMatTableData.data =
-          this.allRequestsMatTableData.data.filter(
-            (e) =>
-              new Date(e.issue_date).getTime() >=
-                this.first_selected_timeline?.getTime()! &&
-              new Date(e.issue_date).getTime() <=
-                this.last_selected_timeline?.getTime()!
-          );
-
-        this.timeLineFilterOn = true;
-
-        trigger.closeMenu();
+  filterByTimeline() {
+    if (this.table_filter != undefined) {
+      if (this.table_filter.flaggedRequestsFilterOn == true) {
+        this.table_filter.closeFlaggedRequestFilter();
       }
-    } else {
-      this.timeLineFilterDateNotSelected = true;
+    }
+    if (this.table_filter != undefined) {
+      if (this.table_filter.statusFilterOn == true) {
+        this.table_filter.closeStatusFilter();
+      }
+    }
 
-      setTimeout(() => {
-        this.timeLineFilterDateNotSelected = false;
-      }, 3000);
+    if (this.table_filter != undefined) {
+      this.allRequestsMatTableData.data =
+        this.allRequestsMatTableData.data.filter(
+          (e) =>
+            new Date(e.issue_date).getTime() >=
+              this.table_filter.first_selected_timeline?.getTime()! &&
+            new Date(e.issue_date).getTime() <=
+              this.table_filter.last_selected_timeline?.getTime()!
+        );
     }
   }
 
   closeTimelineFilter() {
     this.allRequestsMatTableData.data = this.allRequests;
-    this.timeLineFilterOn = false;
   }
 
   getRequestType(req_type) {

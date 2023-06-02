@@ -86,72 +86,8 @@
   margin-left: 25px !important;
 }
 
-::ng-deep .timeline-menu {
-  padding: 0 15px;
-
-  .cal-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #d4aa32;
-    margin-bottom: 0;
-  }
-
-  .search-btn {
-    padding: 6px 12px;
-    background: #2b333e;
-    font-weight: 500;
-  }
-
-  .mat-calendar {
-    width: 15rem;
-  }
-
-  .vertical-divider {
-    width: 1px;
-    background: #93939340;
-    margin: 0 30px;
-  }
-}
-
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
-}
-
-::ng-deep .filter-menu {
-  width: 10rem;
-  height: auto;
-  padding: 0 10px;
-
-  hr {
-    margin: 0;
-    background: #d4aa32;
-  }
-
-  .small-title {
-    margin-bottom: 0;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .list {
-    cursor: pointer;
-    padding: 3px 6px;
-    margin-top: 5px;
-    border-radius: 5px;
-    transition: 0.2s all ease-in-out;
-    p {
-      font-size: 12px;
-      font-weight: 400;
-      transition: 0.2s all ease-in-out;
-    }
-
-    &:hover {
-      p {
-        color: #d4aa32;
-      }
-      background: #d4a93227;
-    }
-  }
 }
 
 ::ng-deep .more-actions {
@@ -235,39 +171,6 @@
   }
 }
 
-.flagged-reqs-filter {
-  margin-bottom: -3px !important;
-  background: rgb(212 170 50 / 10%);
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid #d4aa3230;
-
-  p {
-    font-size: 13px;
-    font-weight: 600;
-    color: #d4aa32;
-  }
-
-  img {
-    cursor: pointer;
-    width: 15px;
-    filter: invert(65%) sepia(100%) saturate(328%) hue-rotate(2deg)
-      brightness(89%) contrast(90%);
-  }
-}
-
-.sort-table-btn {
-  height: 25px;
-  filter: invert(44%) sepia(5%) saturate(30%) hue-rotate(48deg) brightness(91%)
-    contrast(87%);
-  cursor: pointer;
-  transition: 0.3s all ease-in-out;
-
-  &:hover {
-    transform: scaleY(1.2) scaleX(1.2);
-  }
-}
-
 .actions-menu-btn {
   padding: 8px 15px;
   font-size: 10px;
@@ -276,16 +179,6 @@
 
   &:hover {
     background-color: #d4aa32;
-  }
-}
-.refresh-table-btn {
-  height: 22px;
-  width: 1.2rem;
-  cursor: pointer;
-  transition: 0.3s all ease-in-out;
-
-  &:hover {
-    transform: scaleY(1.2) scaleX(1.2);
   }
 }
 
