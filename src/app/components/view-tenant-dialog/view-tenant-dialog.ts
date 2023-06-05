@@ -64,14 +64,14 @@ export class ViewTenantDialog implements OnInit {
           );
         }
       }
-    }, 1000);
+    });
   }
 
   getImagesUrl() {
     this.imagesUrl = this.apiService.getBaseUrlImages();
     setTimeout(() => {
       this.isImagesLoading = false;
-    }, 1000);
+    });
   }
 
   getPropertyImage(prop_id) {

@@ -45,14 +45,16 @@
 
 .mini-sidebar-img {
   cursor: pointer;
-  padding: 7px 11px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 0 6px;
   margin-bottom: 15px;
   transition: all 150ms ease-in;
 
   img {
     pointer-events: none;
     user-select: none;
-    width: 18px;
+    width: 17px;
     filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
       hue-rotate(146deg) brightness(90%) contrast(93%);
   }
@@ -68,6 +70,7 @@
 }
 
 .mini-sideBar-arrow-div {
+  margin: 0 6px;
   padding: 7px 11px;
   cursor: pointer;
 
@@ -97,12 +100,13 @@
 .mini-sidebar-img-active {
   cursor: pointer;
   background-color: #455365;
-  padding: 7px 11px;
+  padding: 5px 10px;
   border-radius: 8px;
+  margin: 0 6px;
   margin-bottom: 15px;
 
   img {
-    width: 18px;
+    width: 17px;
     filter: brightness(0) invert(1);
     pointer-events: none;
     user-select: none;
@@ -110,17 +114,17 @@
 }
 
 .sideBarWrapper-width-large {
-  width: 315px;
+  width: 250px;
   padding: 0;
   overflow: hidden;
 }
 .sideBarWrapper-width-mini {
-  width: 65px;
+  width: 50px;
   padding: 0;
 }
 
 .nav-width-large {
-  width: 250px;
+  width: calc(250px - 50px);
 }
 
 .nav-width-mini {
@@ -130,13 +134,13 @@
 .sideBar-row-width-large {
   margin: 0;
   height: 100%;
-  width: 315px;
+  width: 250px;
 }
 
 .sideBar-row-width-mini {
   margin: 0;
   height: 100%;
-  width: 65px;
+  width: 50px;
 }
 
 .sideBar-main {
@@ -196,9 +200,9 @@
       user-select: none;
       filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
         hue-rotate(146deg) brightness(90%) contrast(93%);
-      margin-left: 20px;
-      margin-right: 15px;
-      width: 20px;
+      margin-left: 17px;
+      margin-right: 11px;
+      width: 15px;
     }
 
     &:hover {
@@ -217,9 +221,16 @@
   }
 
   .nav-item {
+
+    .nav-link{
+      padding: 5px 8px !important;
+      margin: 0 7px !important;
+      margin-bottom: 12px !important;
+    }
+
     .nav-item-title {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 12px;
+      font-weight: 500;
       color: #a3a3a3;
     }
     .active {

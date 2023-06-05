@@ -69,7 +69,7 @@ export class AdminClientsTenant implements OnInit {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     var sessionDataLandlord = sessionStorage.getItem("all_tenant_clients");
     if (sessionDataLandlord != null) {
       this.allClients = JSON.parse(sessionDataLandlord);
@@ -77,24 +77,23 @@ export class AdminClientsTenant implements OnInit {
       this.isContentLoading = false;
       // this.ngDoCheckInitialize = true;
     } else {
-      await this.getAllClients(this.userId).finally(() => {});
+      this.getAllClients(this.userId);
     }
   }
 
-  async getAllClients(userId) {
+  getAllClients(userId) {
     this.adminService
       .getAllClients(userId, "tenant")
       .subscribe(async (e: Array<any>) => {
         this.allClients = e;
-
+      })
+      .add(() => {
+        this.isContentLoading = false;
         setTimeout(() => {
-          this.isContentLoading = false;
-          setTimeout(() => {
-            sessionStorage.setItem(
-              "all_tenant_clients",
-              JSON.stringify(this.allClients)
-            );
-          }, 500);
+          sessionStorage.setItem(
+            "all_tenant_clients",
+            JSON.stringify(this.allClients)
+          );
         }, 500);
       });
   }

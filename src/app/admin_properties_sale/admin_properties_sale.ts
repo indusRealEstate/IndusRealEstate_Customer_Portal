@@ -70,7 +70,7 @@ export class AdminPropertiesSale implements OnInit {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.allProperties.length = 0;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
@@ -90,15 +90,14 @@ export class AdminPropertiesSale implements OnInit {
       .getAllProperties(userId, type)
       .subscribe(async (e: Array<any>) => {
         this.allProperties = e;
-        setTimeout(() => {
-          this.dataSource = this.allProperties;
-          this.isLoading = false;
-
-          sessionStorage.setItem(
-            "all_sale_properties",
-            JSON.stringify(this.allProperties)
-          );
-        }, 500);
+        this.dataSource = e;
+      })
+      .add(() => {
+        this.isLoading = false;
+        sessionStorage.setItem(
+          "all_sale_properties",
+          JSON.stringify(this.allProperties)
+        );
       });
   }
 }

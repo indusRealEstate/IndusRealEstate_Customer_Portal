@@ -6,9 +6,9 @@
 
 .dropdown-services {
   // margin: 10px 15px 0;
-  padding: 10px 15px;
+  padding: 7px 7px;
   cursor: pointer;
-  height: 50px;
+  height: 42px;
   transition: width 400ms ease-out, height 400ms ease-out;
 
   img {
@@ -18,7 +18,7 @@
       hue-rotate(146deg) brightness(90%) contrast(93%);
     margin-left: 6px;
     margin-right: 13px;
-    width: 20px;
+    width: 15px;
   }
 
   p {
@@ -40,15 +40,16 @@
 }
 
 .dropdown-services-opened {
-  padding: 10px 15px;
+  padding: 7px 7px;
   cursor: pointer;
-  height: 160px;
+  height: 145px;
   background-color: #455365;
   border-radius: 8px;
   transition: width 400ms ease-out, height 400ms ease-out;
 
-  .dropDownBtnRow{
+  .dropDownBtnRow {
     border-bottom: 1px solid #a3a3a3b0;
+    padding-bottom: 6px;
   }
 
   img {
@@ -57,7 +58,7 @@
     filter: brightness(0) invert(1);
     margin-left: 6px;
     margin-right: 13px;
-    width: 20px;
+    width: 15px;
   }
 
   p {
@@ -65,9 +66,19 @@
   }
 
   .subMenu-dropdown {
-    margin: 20px -5px;
+    margin: 6px 0px;
     padding: 5px 5px;
     transition: all 150ms ease-in;
+
+    img {
+      margin-right: 6px;
+      margin-left: 3px;
+    }
+    
+    p{
+      font-size: 12px;
+      font-weight: 500;
+    }
 
     &:hover {
       background-color: #313a46;
@@ -78,15 +89,16 @@
 }
 
 .dropdown-services-opened-open {
-  padding: 10px 15px;
+  padding: 7px 7px;
   cursor: pointer;
-  height: 115px;
+  height: 100px;
   background-color: #455365;
   border-radius: 8px;
   transition: width 400ms ease-out, height 400ms ease-out;
 
-  .dropDownBtnRow{
+  .dropDownBtnRow {
     border-bottom: 1px solid #a3a3a3b0;
+    padding-bottom: 6px;
   }
 
   img {
@@ -95,7 +107,7 @@
     filter: brightness(0) invert(1);
     margin-left: 6px;
     margin-right: 13px;
-    width: 20px;
+    width: 15px;
   }
 
   p {
@@ -103,9 +115,19 @@
   }
 
   .subMenu-dropdown {
-    margin: 20px -5px;
+    margin: 6px 0px;
     padding: 5px 5px;
     transition: all 150ms ease-in;
+
+    img {
+      margin-right: 6px;
+      margin-left: 3px;
+    }
+    
+    p{
+      font-size: 12px;
+      font-weight: 500;
+    }
 
     &:hover {
       background-color: #313a46;

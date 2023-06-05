@@ -1,11 +1,11 @@
 <div class="col" [ngClass]="dropDownBtnStyles()">
   <div
-    class="row dropDownBtnRow"
-    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    class="row m-0 dropDownBtnRow"
+    style="width: 172px"
     (click)="dropDownBtnClick()"
   >
     <img src="assets/img/svg/sidebar/request-send.svg" alt="" />
-    <p>Tenant Requests</p>
+    <p style="font-size: 12px !important; font-weight: 500 !important">Tenant Requests</p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
@@ -19,7 +19,6 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row"
-    style="margin-top: -10px"
     [ngClass]="requestActiveCheck('/tenant-move-in-requests')"
     (click)="navigateToRequests('tenant-move-in')"
   >
@@ -29,7 +28,6 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row"
-    style="margin-top: -10px"
     [ngClass]="requestActiveCheck('/tenant-move-out-requests')"
     (click)="navigateToRequests('tenant-move-out')"
   >
@@ -39,7 +37,6 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row"
-    style="margin-top: -10px"
     [ngClass]="requestActiveCheck('/payment-requests')"
     (click)="navigateToRequests('payment')"
   >
@@ -49,7 +46,6 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row"
-    style="margin-top: -10px"
     [ngClass]="requestActiveCheck('/conditioning-requests')"
     (click)="navigateToRequests('conditioning')"
   >

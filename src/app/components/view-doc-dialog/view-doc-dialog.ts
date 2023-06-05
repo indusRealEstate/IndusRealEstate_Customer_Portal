@@ -56,10 +56,9 @@ export class ViewDocDialog implements OnInit {
       .subscribe((res) => {
         // console.log(res)
         this.viewDocFile = "data:application/pdf;base64," + res;
-
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 1000);
+      })
+      .add(() => {
+        this.isLoading = false;
       });
   }
 

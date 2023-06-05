@@ -26,12 +26,6 @@ export const HOMEROUTE: RouteInfo[] = [
     icon: "assets/img/svg/navbar/notification.svg",
     class: "",
   },
-  {
-    path: "/notifications-manage",
-    title: "Manage Notifications",
-    icon: "assets/img/svg/sidebar/settings.svg",
-    class: "",
-  },
 ];
 
 export const HOMEROUTEADMIN: any[] = [
@@ -341,6 +335,7 @@ export class SidebarComponent implements OnInit {
   // menuItems: any[];
   user: User;
   userProfilePic: any = false;
+  userDetails : any;
   profilePicUpdatingLoader: boolean = false;
   userProfileFetching: boolean = false;
   sideBarClicked: boolean = true;
@@ -492,7 +487,9 @@ export class SidebarComponent implements OnInit {
     );
 
     this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
-    this.archivedRequestsRouteAdmin = ARCHIVEDREQUESTSROUTEADMIN.filter((menuItem) => menuItem);
+    this.archivedRequestsRouteAdmin = ARCHIVEDREQUESTSROUTEADMIN.filter(
+      (menuItem) => menuItem
+    );
 
     this.customerCareRoute = CUSTOMERCAREROUTE.filter((menuItem) => menuItem);
   }
@@ -578,17 +575,19 @@ export class SidebarComponent implements OnInit {
   }
 
   getUserDetails(userId: any) {
-    this.apiServices.getUserDetails(userId).subscribe((e: any) => {
-      if (e[0]["profile_photo"] != "") {
-        this.userProfilePic = e[0]["profile_photo"];
-      } else {
-        this.userProfilePic = false;
-      }
-    });
-
-    setTimeout(() => {
-      this.userProfileFetching = false;
-    }, 3000);
+    this.apiServices
+      .getUserDetails(userId)
+      .subscribe((e: any) => {
+        this.userDetails = e[0];
+        if (e[0]["profile_photo"] != "") {
+          this.userProfilePic = e[0]["profile_photo"];
+        } else {
+          this.userProfilePic = false;
+        }
+      })
+      .add(() => {
+        this.userProfileFetching = false;
+      });
   }
 
   userLogOut() {

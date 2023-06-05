@@ -53,24 +53,9 @@
           <p class="prop-tab" (mouseleave)="viewUserDetailsMiniTab('leave')">
             Requested Date
           </p>
-          <div
-            (mouseleave)="viewUserDetailsMiniTab('leave')"
-            *ngIf="request_data.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
-          >
-            <p class="prop">{{request_data.property_issue_date}}</p>
-          </div>
-          <div
-            *ngIf="request_data.request_type == 'PAYMENT'"
-            (mouseleave)="viewUserDetailsMiniTab('leave')"
-          >
-            <p class="prop">{{request_data.issue_date}}</p>
-          </div>
-          <div
-            (mouseleave)="viewUserDetailsMiniTab('leave')"
-            *ngIf="request_data.request_type != 'PAYMENT' && request_data.request_type != 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
-          >
-            <p class="prop">{{request_data.created_date}}</p>
-          </div>
+          <p (mouseleave)="viewUserDetailsMiniTab('leave')" class="prop">
+            {{request_data.issue_date | date : "d/M/yy"}}
+          </p>
 
           <div
             *ngIf="req_section != 'my-reqs' && req_section != 'recent'"

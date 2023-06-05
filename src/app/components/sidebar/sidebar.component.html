@@ -85,14 +85,15 @@
   >
     <ul
       class="nav"
-      style="width: 65px; background-color: #2b333e; margin: 0; height: 100%"
+      style="width: 50px; background-color: #2b333e; margin: 0; height: 100%"
     >
-      <div class="col" style="padding: 20px 13px; height: 50%">
+      <div class="col mx-auto" style="padding: 20px 0px; height: 50%">
         <a href="https://www.indusre.com/">
           <div
             style="
               background-color: white;
-              padding: 6px 9px;
+              padding: 5px 7px;
+              margin: 0 7px;
               margin-bottom: 30px;
               border-radius: 7px;
             "
@@ -255,7 +256,7 @@
           height: 50%;
           display: flex;
           align-items: end;
-          width: 65px;
+          width: 50px;
           justify-content: center;
           padding-bottom: 40px;
         "
@@ -272,8 +273,8 @@
           style="
             background-size: cover;
             border-radius: 50% 50% 50% 50%;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             cursor: pointer;
           "
         />
@@ -283,7 +284,7 @@
         >
           <ngx-skeleton-loader
             appearance="circle"
-            [theme]="{ width: '40px', height: '40px', margin: '0px' }"
+            [theme]="{ width: '35px', height: '35px', margin: '0px' }"
           >
           </ngx-skeleton-loader>
         </div>
@@ -452,7 +453,7 @@
             <li
               class="nav-item"
               *ngIf="user.auth_type != 'admin'"
-              style="padding: 0 15px 0"
+              style="padding: 0 7px 0"
             >
               <dropdown-btn></dropdown-btn>
             </li>
@@ -701,7 +702,7 @@
                 "
               />
             </li>
-            <li class="nav-item" style="padding: 0 15px 0">
+            <li class="nav-item" style="padding: 0 7px 0">
               <tenant-requests-dropdown></tenant-requests-dropdown>
             </li>
           </div>
@@ -735,7 +736,7 @@
                 "
               />
             </li>
-            <li class="nav-item" style="padding: 0 15px 0">
+            <li class="nav-item" style="padding: 0 7px 0">
               <landlord-requests-dropdown></landlord-requests-dropdown>
             </li>
           </div>
@@ -770,7 +771,7 @@
             height: 10%;
             display: flex;
             align-items: end;
-            padding: 0 20px 13%;
+            padding: 0 10px 13%;
           "
         >
           <div
@@ -792,8 +793,11 @@
               >
                 {{ user.firstname }}
               </p>
-              <p style="margin-bottom: 0; color: #a3a3a3; font-size: 12px">
-                johndoe@email.com
+              <p
+                *ngIf="userDetails != undefined"
+                style="margin-bottom: 0; color: #a3a3a3; font-size: 12px"
+              >
+                {{ userDetails.email }}
               </p>
             </div>
             <div
@@ -812,7 +816,7 @@
                 Admin Panel
               </p>
             </div>
-            <div
+            <!-- <div
               matTooltip="Log Out"
               matTooltipClass="tooltip"
               matTooltipPosition="right"
@@ -829,7 +833,7 @@
                     contrast(92%);
                 "
               />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

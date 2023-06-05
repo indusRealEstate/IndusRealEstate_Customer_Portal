@@ -1,11 +1,11 @@
 <div class="col" [ngClass]="dropDownBtnStyles()">
   <div
-    class="row dropDownBtnRow"
-    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    class="row m-0 dropDownBtnRow"
+    style="width: 172px"
     (click)="dropDownBtnClick()"
   >
     <img src="assets/img/svg/sidebar/request-send.svg" alt="" />
-    <p>Landlord Requests</p>
+    <p style="font-size: 12px !important; font-weight: 500 !important">Landlord Requests</p>
   </div>
 
   <div
@@ -20,7 +20,6 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row"
-    style="margin-top: -10px"
     [ngClass]="requestActiveCheck('/inspection-requests')"
     (click)="navigateToRequests('inspection')"
   >

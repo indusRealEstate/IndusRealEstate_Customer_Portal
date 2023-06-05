@@ -1,6 +1,7 @@
 <div
   *ngIf="user_payment_plan == 'exclusive'"
   class="col"
+  style="margin-bottom: 12px !important"
   [ngClass]="
     isDropDownBtnClicked == true
       ? 'dropdown-services-opened'
@@ -8,12 +9,14 @@
   "
 >
   <div
-    class="row dropDownBtnRow"
-    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    class="row m-0 dropDownBtnRow"
+    style="width: 172px;"
     (click)="dropDownBtnClick()"
   >
     <img src="assets/img/svg/sidebar/key.svg" alt="" />
-    <p>Tenant Registration</p>
+    <p style="font-size: 12px !important; font-weight: 500 !important">
+      Tenant Registration
+    </p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"
@@ -26,7 +29,6 @@
   <div
     *ngIf="isDropDownBtnsShow == true"
     class="row subMenu-dropdown"
-    style="margin-top: -10px"
   >
     <img src="assets/img/svg/sidebar/minus.svg" alt="" />
     <p>Request Registration</p>
@@ -36,6 +38,7 @@
 <div
   *ngIf="user_payment_plan == 'open'"
   class="col"
+  style="margin-bottom: 12px !important"
   [ngClass]="
     isDropDownBtnClicked == true
       ? 'dropdown-services-opened-open'
@@ -43,12 +46,12 @@
   "
 >
   <div
-    class="row dropDownBtnRow"
-    style="margin: -10px -15px; width: 220px; padding: 10px 15px"
+    class="row m-0 dropDownBtnRow"
+    style="width: 172px;"
     (click)="dropDownBtnClick()"
   >
     <img src="assets/img/svg/sidebar/key.svg" alt="" />
-    <p>Tenant Registration</p>
+    <p style="font-size: 12px !important; font-weight: 500 !important">Tenant Registration</p>
   </div>
   <div
     *ngIf="isDropDownBtnsShow == true"

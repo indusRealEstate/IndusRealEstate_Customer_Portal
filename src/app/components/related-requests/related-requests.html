@@ -100,11 +100,8 @@
                   <p>{{req.status}}</p>
                 </div>
                 <div class="col-3">
-                  <div *ngIf="req.request_type == 'PAYMENT'">
-                    <p>{{req.issue_date}}</p>
-                  </div>
-                  <div *ngIf="req.request_type != 'PAYMENT'">
-                    <p>{{req.created_date}}</p>
+                  <div>
+                    <p>{{req.issue_date | date : "d/M/yy"}}</p>
                   </div>
                 </div>
                 <div class="col-1">

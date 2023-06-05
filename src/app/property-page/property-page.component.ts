@@ -65,21 +65,21 @@ export class PropertyPage implements OnInit {
         this.propertyData = propertiesDataSession["properties"].find(
           (x) => x.property_id == e["propertyId"]
         );
-        console.log(this.propertyData);
+        this.isLoading = false;
 
         if (this.propertyData == undefined || this.propertyData == null) {
           this.router.navigate(["/404"]);
         }
       } else {
-        this.apiService.getProperty(e["propertyId"]).subscribe((e) => {
-          this.propertyData = e;
-          console.log(e);
-        });
+        this.apiService
+          .getProperty(e["propertyId"])
+          .subscribe((e) => {
+            this.propertyData = e;
+          })
+          .add(() => {
+            this.isLoading = false;
+          });
       }
-
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 500);
     } catch (error) {
       console.log(error);
     }

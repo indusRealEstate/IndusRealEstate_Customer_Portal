@@ -6,7 +6,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { DropdownMaterial } from "./material_dropdown/dropdown.component";
+import { DropdownMaterial } from "./tenant-reg-dropdown/dropdown.component";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatListModule } from "@angular/material/list";
 import { MatNativeDateModule } from "@angular/material/core";

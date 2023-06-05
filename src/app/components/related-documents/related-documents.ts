@@ -40,10 +40,9 @@ export class RelatedDocsDialog implements OnInit {
       .getPropertyDocuments(this.prop_id)
       .subscribe((val: any[]) => {
         this.prop_docs = val;
-
-        setTimeout(() => {
-          this.document_loading = false;
-        }, 100);
+      })
+      .add(() => {
+        this.document_loading = false;
       });
   }
 

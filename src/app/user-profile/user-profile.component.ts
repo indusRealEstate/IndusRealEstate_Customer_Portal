@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
-import { Property } from "../../../models/property/property";
 import { UserService } from "app/services/user.service";
 
 @Component({
@@ -13,46 +12,10 @@ import { UserService } from "app/services/user.service";
 })
 export class UserProfileComponent implements OnInit {
   isUserSignedIn: boolean = false;
-  username: string;
-  full_name: string;
-  email: string;
-  address: string;
-  phone_number: number;
-  lan_number: number;
-  userProfilePic: any = '';
-  userProfilePicData: any = false;
-  userProfileFetching: boolean = false;
-  userDetailsFetching: boolean = false;
-  properties: any[] = [];
-  isLoading: boolean = false;
-  isLandlord: boolean = false;
-
-  propertiesImagesLoading: boolean = false;
-  propertiesImagesUrl: any = "";
-
-  ///----
+  isContentLoading: boolean = false;
+  user: any;
 
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
-
-  isOverviewTabActive: boolean = true;
-  isDocDetailsTabActive: boolean = false;
-  isPropertiesTabActive: boolean = false;
-
-  isOverviewTabClicked() {
-    this.isOverviewTabActive = true;
-    this.isDocDetailsTabActive = false;
-    this.isPropertiesTabActive = false;
-  }
-  isDocDetailsTabClicked() {
-    this.isDocDetailsTabActive = true;
-    this.isPropertiesTabActive = false;
-    this.isOverviewTabActive = false;
-  }
-  isPropertiesTabClicked() {
-    this.isPropertiesTabActive = true;
-    this.isOverviewTabActive = false;
-    this.isDocDetailsTabActive = false;
-  }
 
   constructor(
     private apiService: ApiService,
@@ -62,6 +25,7 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
+    this.isContentLoading = true;
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
       var userData = localStorage.getItem("currentUser");
@@ -83,184 +47,19 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  pickImg(event: any) {
-    var file = event.target.files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = (e) => {
-      this.userProfilePicData = e.target.result.toString();
-
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-      var userId = user[0]["id"];
-
-      this.userProfilePic = userId + "." + new String(file.type).split("/")[1];
-      console.log(this.userProfilePic);
-
-      var updatedUserProfileData = {
-        user_id: userId,
-        profile_photo: this.userProfilePic,
-      };
-
-      this.userServices
-        .updateUserProfile({
-          user_id: userId,
-          data: this.userProfilePicData,
-        })
-        .subscribe((res) => {
-          console.log(res);
-        });
-
-      this.apiService
-        .updateUserProfilePic(JSON.stringify(updatedUserProfileData))
-        .subscribe((e) => {});
-
-      this.otherServices.isProfilePicUpdated.next(true);
-
-      this.userProfileFetching = true;
-
-      sessionStorage.removeItem("userDetails");
-
-      setTimeout(() => {
-        this.getUserDetails();
-      }, 800);
-    };
-  }
-
   async ngOnInit() {
-    this.propertiesImagesLoading = true;
-    await this.initFunction();
-  }
-
-  async initFunction() {
-    this.propertiesImagesUrl = this.apiService.getBaseUrlImages();
-
     var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    var userDetailsDataSession = sessionStorage.getItem("userDetails");
-    var sessionDataJSON = JSON.parse(userDetailsDataSession);
-
-    var userPropertiesDataSession = sessionStorage.getItem("properties");
-    var sessionDataJSONPropertes = JSON.parse(userPropertiesDataSession);
-
-    if (userDetailsDataSession == null) {
-      console.log("user details from api");
-      this.userProfileFetching = true;
-      this.userDetailsFetching = true;
-      await this.getUserDetails();
-
-      if (user[0]["auth_type"] == "landlord") {
-        if (userPropertiesDataSession != null) {
-          this.properties = sessionDataJSONPropertes["properties"];
-          setTimeout(() => {
-            this.propertiesImagesLoading = false;
-          }, 500);
-        } else {
-          await this.getUserProperties(user[0]["id"]);
-          setTimeout(() => {
-            this.propertiesImagesLoading = false;
-          }, 3000);
-        }
-      }
-    } else {
-      this.username = user[0]["username"];
-      this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];
-
-      this.email = sessionDataJSON["email"];
-      this.address = sessionDataJSON["address"];
-      this.phone_number = sessionDataJSON["phone_number"];
-      this.userProfilePic = sessionDataJSON["userProfilePic"];
-
-      if (user[0]["auth_type"] == "landlord") {
-        if (userPropertiesDataSession != null) {
-          this.properties = sessionDataJSONPropertes["properties"];
-          setTimeout(() => {
-            this.propertiesImagesLoading = false;
-          }, 500);
-        } else {
-          await this.getUserProperties(user[0]["id"]);
-          setTimeout(() => {
-            this.propertiesImagesLoading = false;
-          }, 3000);
-        }
-      }
-    }
-  }
-
-  getAuthType() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    if (user[0]["auth_type"] == "landlord") {
-      this.isLandlord = true;
-      return "Property Owner";
-    } else if (user[0]["auth_type"] == "tenant") {
-      return "Tenant";
-    } else {
-      return "Admin";
-    }
-  }
-
-  goToPropertyPage(property: any) {
-    this.router.navigate(["/property-page"], {
-      queryParams: { propertyId: property["property_id"] },
-    });
-    this.otherServices.propertyPageClickedUserProfile.next(true);
-  }
-
-  async getUserProperties(userId: any) {
-    try {
-      this.apiService.getUserProperties(userId).subscribe((data) => {
-        this.properties = data;
+    var userId = JSON.parse(userData)[0]["id"];
+    this.apiService
+      .getUser(userId)
+      .subscribe((v) => {
+        this.user = v[0];
+        console.log(this.user);
+      })
+      .add(() => {
+        setTimeout(() => {
+          this.isContentLoading = false;
+        });
       });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setTimeout(() => {
-        this.isLoading = false;
-        sessionStorage.setItem(
-          "properties",
-          JSON.stringify({
-            properties: this.properties,
-            imgUrl: this.propertiesImagesUrl,
-          })
-        );
-      }, 10000);
-    }
-  }
-
-  async getUserDetails() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    var userId = user[0]["id"];
-    this.username = user[0]["username"];
-    this.full_name = user[0]["firstname"] + " " + user[0]["lastname"];
-
-    this.apiService.getUserDetails(userId).subscribe((data) => {
-      this.email = data[0]["email"];
-      this.address = data[0]["address"];
-      this.phone_number = data[0]["phone_number"];
-      if (data[0]["profile_photo"] != "") {
-        this.userProfilePic = data[0]["profile_photo"];
-      } else {
-        this.userProfilePic = false;
-      }
-    });
-
-    setTimeout(() => {
-      sessionStorage.setItem(
-        "userDetails",
-        JSON.stringify({
-          email: this.email,
-          address: this.address,
-          phone_number: this.phone_number,
-          userProfilePic: this.userProfilePic,
-        })
-      );
-      this.userProfileFetching = false;
-      this.userDetailsFetching = false;
-    }, 3000);
   }
 }
