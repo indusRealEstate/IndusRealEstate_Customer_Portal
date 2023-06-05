@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import { provideImgixLoader } from "@angular/common";
 
 @Component({
   selector: "user-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.scss"],
+  styleUrls: ["./login.scss"]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -15,6 +16,8 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   invaliduser: boolean = false;
+
+  logoImg: any = "assets/img/logo/logo-new-comp.webp";
 
   screenHeight: number;
   screenWidth: number;
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
   ) {
     this.getScreenSize();
     // redirect to home if already logged in

@@ -4,6 +4,7 @@ import {
   CommonModule,
   HashLocationStrategy,
   LocationStrategy,
+  NgOptimizedImage,
 } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
@@ -169,7 +170,8 @@ import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/l
     FullCalendarModule,
     NgxSkeletonLoaderModule,
     NgxCheckboxModule,
-    DragDropModule
+    DragDropModule,
+    NgOptimizedImage,
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,

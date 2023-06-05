@@ -1,7 +1,7 @@
 <div
   *ngIf="screenWidth > 430"
   class="container-fluid h-100 d-flex justify-content-center"
-  style="height: 100%; align-items: center;"
+  style="height: 100%; align-items: center"
 >
   <div class="main">
     <div class="container b-container" id="b-container">
@@ -70,18 +70,9 @@
         </button>
       </form>
     </div>
-    <div
-      class="switch"
-      id="switch-cnt"
-      style="
-        background-image: linear-gradient(
-            to bottom,
-            rgb(236 240 243 / 80%) 50%,
-            rgb(236 240 243 / 80%) 80%
-          ),
-          url(assets/img/bg/navbar_bg.webp);
-      "
-    >
+    <!-- style=" background-image: linear-gradient( to bottom, rgb(236 240 243 / 80%)
+    50%, rgb(236 240 243 / 80%) 80% ), url(assets/img/bg/navbar_bg.webp); " -->
+    <div class="switch" id="switch-cnt">
       <!-- <img
         src="assets/img/bg/navbar_bg.webp"
         alt=""
@@ -93,9 +84,12 @@
       <div class="switch__container" id="switch-c2">
         <img
           class="logo-img"
-          src="assets/img/logo/logo-extended.webp"
-          style="width: 60%; margin-bottom: -60px"
+          ngSrc="assets/img/logo/logo-new-comp.webp"
+          width="170"
+          height="170"
+          style="margin-bottom: -60px"
           alt="logo"
+          priority
         />
         <a routerLink="/register">
           <button class="switch__button button switch-btn register-btn">
