@@ -14,7 +14,6 @@ import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 import { ViewTenantDialog } from "app/components/view-tenant-dialog/view-tenant-dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 

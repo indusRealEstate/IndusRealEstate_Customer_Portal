@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
-import { ViewDocDialogService } from "app/components/view-doc-dialog-service-temp/view-doc-dialog-service";
-import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
@@ -381,15 +379,6 @@ export class ServiceTemplateComponent implements OnInit {
   }
 
   viewDoc() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.dialog.open(ViewDocDialogService, {
-      data: {
-        doc: this.uploadedDoc,
-      },
-      width: "1300px",
-      height: "700px",
-    });
   }
 
   removeDoc() {

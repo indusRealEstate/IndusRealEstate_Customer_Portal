@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
-import { ViewDocDialogService } from "app/components/view-doc-dialog-service-temp/view-doc-dialog-service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -141,17 +140,7 @@ export class ServiceRecapComponent implements OnInit {
     return window.atob(type_1);
   }
 
-  viewDoc() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.dialog.open(ViewDocDialogService, {
-      data: {
-        doc: this.uploadedDoc,
-      },
-      width: "1300px",
-      height: "700px",
-    });
-  }
+  viewDoc() {}
 
   removeDoc() {
     this.uploadedDoc = null;

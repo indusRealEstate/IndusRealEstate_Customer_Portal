@@ -8,7 +8,6 @@ import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 
 @Component({
   selector: "app-my-tenant-docs",
@@ -171,19 +170,14 @@ export class DocumentsComponentMyTenantDoc implements OnInit {
   }
 
   viewDoc(doc) {
-    var document = {
-      path: doc.document_path,
-    };
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.dialog.open(ViewDocDialog, {
-      data: {
-        doc: document,
-        user_id: user[0]["id"],
-        type: "user-doc",
-      },
-      width: "60%",
-      height: "45rem",
+    var document_url = `${this.doc_path}/${doc.document_path}`;
+    // console.log(document_url);
+    // window.open(document_url);
+
+    this.apiService.downloadFile(document_url).subscribe((v) => {
+      // console.log(v);
+      const url = window.URL.createObjectURL(v);
+      window.open(url);
     });
   }
 

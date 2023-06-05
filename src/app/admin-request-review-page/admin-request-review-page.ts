@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SeeAllUserReqsAdminDialog } from "app/components/see-all-user-reqs-admin/see-all-user-reqs-admin";
-import { ViewDocDialog } from "app/components/view-doc-dialog/view-doc-dialog";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -330,16 +329,6 @@ export class ReviewRequestAdmin implements OnInit {
         };
       }
     }
-
-    this.dialog.open(ViewDocDialog, {
-      data: {
-        doc: document,
-        user_id: user[0]["id"],
-        type: "request-doc",
-      },
-      width: "60%",
-      height: "45rem",
-    });
   }
 
   flagAsImportant() {

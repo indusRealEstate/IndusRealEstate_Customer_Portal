@@ -19,13 +19,10 @@ import { ProgressComponent } from "./progressbar/progress";
 import { SuccessDialogRegister } from "./success-dialog/success_dialog";
 import { DndDirective } from "./dialog/dnd.directive";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { ViewDocDialog } from "./view-doc-dialog/view-doc-dialog";
-import { PdfViewerModule } from "ng2-pdf-viewer";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-requests-dropdown";
 import { ViewTenantDialog } from "./view-tenant-dialog/view-tenant-dialog";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { ViewDocDialogService } from "./view-doc-dialog-service-temp/view-doc-dialog-service";
 import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-requests-dropdown";
 import { RelatedDocsDialog } from "./related-documents/related-documents";
 import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
@@ -46,7 +43,6 @@ import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-use
     MatTableModule,
     MatButtonModule,
     NgxSkeletonLoaderModule,
-    PdfViewerModule,
     MatTooltipModule,
     DragDropModule,
   ],
@@ -61,9 +57,7 @@ import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-use
     ProgressComponent,
     SuccessDialogRegister,
     DndDirective,
-    ViewDocDialog,
     ViewTenantDialog,
-    ViewDocDialogService,
     RelatedDocsDialog,
     ViewImageDialog,
     RelatedRequestsDialog,

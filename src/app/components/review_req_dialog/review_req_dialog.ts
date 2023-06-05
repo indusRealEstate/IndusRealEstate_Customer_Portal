@@ -14,7 +14,6 @@ import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
 import { RelatedDocsDialog } from "../related-documents/related-documents";
 import { RequestTimelineComponent } from "../request-timeline/request-timeline";
-import { ViewDocDialog } from "../view-doc-dialog/view-doc-dialog";
 import { ViewTenantDialog } from "../view-tenant-dialog/view-tenant-dialog";
 
 @Component({
@@ -158,28 +157,22 @@ export class ReviewRequestDialog implements OnInit {
 
   viewRequestDoc() {
     var req_type = this.request_data.request_type;
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
+
+    var path = this.apiService.getBaseUrlDocs();
     if (req_type != "ADD_PROPERTY_REC_EXIST_LANDLORD") {
       if (req_type == "PAYMENT") {
-        var document = {
-          path: this.request_data.payment_doc_path,
-        };
+        var doc_path = this.request_data.payment_doc_path;
       } else {
-        var document = {
-          path: this.request_data.doc_path,
-        };
+        var doc_path = this.request_data.doc_path;
       }
+
+      var document_url = `${path}/${doc_path}`;
     }
 
-    this.dialog.open(ViewDocDialog, {
-      data: {
-        doc: document,
-        user_id: user[0]["id"],
-        type: "request-doc",
-      },
-      width: "60%",
-      height: "45rem",
+    this.apiService.downloadFile(document_url).subscribe((v) => {
+      // console.log(v);
+      const url = window.URL.createObjectURL(v);
+      window.open(url);
     });
   }
 }

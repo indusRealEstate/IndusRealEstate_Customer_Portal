@@ -111,6 +111,7 @@ import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { LoadingTableTenantReqs } from "app/components/loading-table-tenant-reqs/loading-table-tenant-reqs";
+import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -239,6 +240,7 @@ import { LoadingTableTenantReqs } from "app/components/loading-table-tenant-reqs
     RequestTimelineComponent,
     ReviewRequestAdmin,
     LoadingTableTenantReqs,
+    LoadingTableAdminReqs,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

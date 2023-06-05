@@ -6,7 +6,6 @@ import {
 } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
-import { ViewDocDialog } from "../view-doc-dialog/view-doc-dialog";
 
 @Component({
   selector: "view-related-documents",
@@ -65,19 +64,14 @@ export class RelatedDocsDialog implements OnInit {
   }
 
   viewDoc(doc) {
-    var document = {
-      path: doc.document_path,
-    };
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.dialog.open(ViewDocDialog, {
-      data: {
-        doc: document,
-        user_id: user[0]["id"],
-        type: "user-doc",
-      },
-      width: "60%",
-      height: "45rem",
+    var document_url = `${this.doc_path}/${doc.document_path}`;
+    // console.log(document_url);
+    // window.open(document_url);
+
+    this.apiService.downloadFile(document_url).subscribe((v) => {
+      // console.log(v);
+      const url = window.URL.createObjectURL(v);
+      window.open(url);
     });
   }
 }
