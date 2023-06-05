@@ -110,6 +110,7 @@ import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
+import { LoadingTableTenantReqs } from "app/components/loading-table-tenant-reqs/loading-table-tenant-reqs";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -236,7 +237,8 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
     TableSearchBarComponent,
     TableFiltersComponent,
     RequestTimelineComponent,
-    ReviewRequestAdmin
+    ReviewRequestAdmin,
+    LoadingTableTenantReqs,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
