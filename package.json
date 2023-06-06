@@ -9,6 +9,7 @@
     "build": "ng build --aot && tar -zcvf archive.tar.gz dist/*",
     "build-stats": "ng build --stats-json",
     "build-stats-json-run": "webpack-bundle-analyzer dist/stats.json",
+    "postbuild": "node src/environments/postbuild.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

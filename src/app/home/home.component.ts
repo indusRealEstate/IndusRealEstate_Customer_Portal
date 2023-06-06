@@ -335,11 +335,11 @@ export class HomeComponent implements OnInit {
   }
 
   reportsCardClicked() {
-    this.router.navigate(["/reports"], {
-      queryParams: { uid: this.user.id },
-    });
+    // this.router.navigate(["/reports"], {
+    //   queryParams: { uid: this.user.id },
+    // });
 
-    this.otherServices.reportsClickedHome.next(true);
+    // this.otherServices.reportsClickedHome.next(true);
   }
 
   customerCareCardClicked() {

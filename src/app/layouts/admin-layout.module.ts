@@ -76,8 +76,6 @@ import { StepperTenantRegisterFirst } from "app/indus_services/facility_manageme
 import { StepperTenantRegisterSecond } from "app/indus_services/facility_management/tenant_register_form/components/stepper_02_reg_tenant/stepper_second_reg_tenant";
 import { StepperTenantRegisterThird } from "app/indus_services/facility_management/tenant_register_form/components/stepper_03_reg_tenant/stepper_third_reg_tenant";
 import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
-import { RequestPage } from "app/request-page/request-page";
-import { BackButtonDirective } from "app/request-page/back-navigation.directive";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ServiceTemplateComponent } from "app/indus_services/facility_management/service_template/service_template";
@@ -90,7 +88,7 @@ import { NotificationsPage } from "app/notifications-page/notifications-page";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
 import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import { RequestsComponentMyReqs } from "app/requests/my-requests/my-reqs";
 import { RequestsComponentPayment } from "app/requests/payment/payment-req";
 import { RequestsComponentConditioning } from "app/requests/tenant-requests/conditoning/conditioning-req";
@@ -113,6 +111,7 @@ import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { LoadingTableTenantReqs } from "app/components/loading-table-tenant-reqs/loading-table-tenant-reqs";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
+import { BackButtonDirective } from "app/components/back-navigation.directive";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -226,8 +225,6 @@ import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/l
     AdminPropertiesSale,
 
     CountryDropdown,
-    RequestPage,
-    BackButtonDirective,
     CustomerCareComponent,
     ServiceTemplateComponent,
     ServiceRecapComponent,
@@ -243,6 +240,8 @@ import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/l
     ReviewRequestAdmin,
     LoadingTableTenantReqs,
     LoadingTableAdminReqs,
+
+    BackButtonDirective,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

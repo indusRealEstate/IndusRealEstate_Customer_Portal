@@ -13,7 +13,6 @@ import { LoginComponent } from "app/login/login.component";
 import { RegisterComponent } from "app/register/register.component";
 import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.component";
 import { TenantRegisterComponent } from "app/indus_services/facility_management/tenant_register_form/tenant_form.component";
-import { RequestPage } from "app/request-page/request-page";
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 import { ServiceTemplateComponent } from "app/indus_services/facility_management/service_template/service_template";
 import { ServiceRecapComponent } from "app/indus_services/facility_management/service_recap/service_recap";
@@ -64,7 +63,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "my-landlord", component: MyLandlordComponent },
   { path: "client-documents", component: IndividualDocumentsComponent },
   { path: "property-page", component: PropertyPage },
-  { path: "request-page", component: RequestPage },
   { path: "add-property-form", component: AddPropertyForm },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
