@@ -232,6 +232,20 @@
         >
           <img src="assets/img/svg/sidebar/archive.svg" alt="" />
         </div>
+        <div
+          *ngIf="user.auth_type == 'admin'"
+          matTooltip="Chats"
+          matTooltipClass="tooltip"
+          matTooltipPosition="right"
+          (click)="miniSideBarClickedChats()"
+          [ngClass]="
+            isChatsOpened == true
+              ? 'mini-sidebar-img-active'
+              : 'mini-sidebar-img'
+          "
+        >
+          <img src="assets/img/svg/sidebar/messages-1.svg" alt="" />
+        </div>
 
         <div
           *ngIf="user.auth_type != 'admin'"
@@ -509,6 +523,31 @@
           <div *ngIf="user.auth_type != 'admin'">
             <li
               *ngFor="let item of customerCareRoute"
+              class="{{ item.class }} nav-item sideBarNav-Item"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="[item.path]"
+                [queryParams]="{ uid: user.id }"
+                [class.active]="isLinkActive(item.path)"
+              >
+                <!-- <i class="material-icons">{{ item.icon }}</i> -->
+                <div class="row">
+                  <img
+                    class="sidebar-items-icon"
+                    [src]="[item.icon]"
+                    alt="hello"
+                  />
+                  <p class="nav-item-title">{{ item.title }}</p>
+                </div>
+              </a>
+            </li>
+          </div>
+        </div>
+        <div *ngIf="isChatsOpened == true" style="height: 80%">
+          <div>
+            <li
+              *ngFor="let item of chatsRouteAdmin"
               class="{{ item.class }} nav-item sideBarNav-Item"
             >
               <a

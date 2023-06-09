@@ -264,6 +264,48 @@ export class ApiService {
     );
   }
 
+  ///chatroom api calls.....//////////////////////////////////////////////////
+
+
+
+  connect_socket(data: any) {
+    const url = `https://indusre.app/api/socket.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  fetchAllCLientsForChat(data: any) {
+    const url = `${API_URL}/fetchAllCLientsForChat.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  fetchAllChatMessages(data: any) {
+    const url = `${API_URL}/fetchAllChatMessages.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  sendChatMessage(data: any) {
+    const url = `${API_URL}/sendChatMessage.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  ///chatroom api calls ends.....//////////////////////////////////////////////////
+
   updateRequestFlag(req_id: any, update: any, req_type: any) {
     const url = `${API_URL}/updateRequestFlag.php?apikey=1`;
     return this.http

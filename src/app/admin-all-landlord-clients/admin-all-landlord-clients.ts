@@ -1,46 +1,26 @@
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { EmailServices } from "app/services/email.service";
-import { Router } from "@angular/router";
-import { MatTable, MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { ViewTenantDialog } from "app/components/view-tenant-dialog/view-tenant-dialog";
-import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 
 @Component({
-  selector: "app-my-tenants",
-  templateUrl: "./my-tenants.html",
-  styleUrls: ["./my-tenants.scss"],
+  selector: "app-admin-all-landlord-clients",
+  templateUrl: "./admin-all-landlord-clients.html",
+  styleUrls: ["./admin-all-landlord-clients.scss"],
 })
-export class MyTenantsLandlord implements OnInit {
+export class AdminAllLandlordClients implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
 
-  // displayedColumns: string[] = [
-  //   // "name",
-  //   "issueDate",
-  //   "reqNo",
-  //   "reqType",
-  //   "propertyName",
-  //   "clientName",
-  //   "status",
-  //   "actions",
-  // ];
-
   displayedColumns: string[] = [
-    "tenant",
+    "client",
     "email",
     "address",
     "phone-no",
@@ -51,8 +31,8 @@ export class MyTenantsLandlord implements OnInit {
 
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
-  allTenants: any[] = [];
-  allTenantsMatTableData: MatTableDataSource<any>;
+  allLandlords: any[] = [];
+  allLandlordsMatTableData: MatTableDataSource<any>;
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
@@ -76,14 +56,14 @@ export class MyTenantsLandlord implements OnInit {
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] != "admin") {
+    if (user[0]["auth_type"] == "admin") {
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
-          router.navigate([`/my-tenants`], {
+          router.navigate([`/admin-all-landlords`], {
             queryParams: { uid: user[0]["id"] },
           });
         } else if (e != user[0]["id"]) {
-          router.navigate([`/my-tenants`], {
+          router.navigate([`/admin-all-landlords`], {
             queryParams: { uid: user[0]["id"] },
           });
         }
@@ -93,15 +73,7 @@ export class MyTenantsLandlord implements OnInit {
     }
   }
 
-  viewTenant(t_data) {
-    this.dialog.open(ViewTenantDialog, {
-      data: {
-        data: t_data,
-      },
-      width: "65%",
-      height: "45rem",
-    });
-  }
+  viewClient(data) {}
 
   screenHeight: number;
   screenWidth: number;
@@ -122,15 +94,15 @@ export class MyTenantsLandlord implements OnInit {
 
   ngAfterViewInit() {
     if (this.ngAfterViewInitInitialize == true) {
-      if (this.allTenantsMatTableData != undefined) {
-        this.allTenantsMatTableData.paginator = this.paginator;
-        this.allTenantsMatTableData.paginator._changePageSize(10);
+      if (this.allLandlordsMatTableData != undefined) {
+        this.allLandlordsMatTableData.paginator = this.paginator;
+        this.allLandlordsMatTableData.paginator._changePageSize(10);
       }
     } else {
       setTimeout(() => {
-        if (this.allTenantsMatTableData != undefined) {
-          this.allTenantsMatTableData.paginator = this.paginator;
-          this.allTenantsMatTableData.paginator._changePageSize(10);
+        if (this.allLandlordsMatTableData != undefined) {
+          this.allLandlordsMatTableData.paginator = this.paginator;
+          this.allLandlordsMatTableData.paginator._changePageSize(10);
         }
       });
     }
@@ -139,28 +111,28 @@ export class MyTenantsLandlord implements OnInit {
   refreshTable() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    sessionStorage.removeItem("my-tenants-session");
+    sessionStorage.removeItem("all-landlords-session");
     this.isContentLoading = true;
 
-    this.apiService
-      .getLandlordTenants(user[0]["id"])
+    this.adminService
+      .getAllClients(user[0]["id"], "landlord")
       .subscribe((va: any[]) => {
-        this.allTenants = va;
-        this.allTenantsMatTableData.data = va;
+        this.allLandlords = va;
+        this.allLandlordsMatTableData.data = va;
         setTimeout(() => {
-          if (this.allTenantsMatTableData != undefined) {
-            this.allTenantsMatTableData.paginator = this.paginator;
-            this.allTenantsMatTableData.paginator._changePageSize(10);
+          if (this.allLandlordsMatTableData != undefined) {
+            this.allLandlordsMatTableData.paginator = this.paginator;
+            this.allLandlordsMatTableData.paginator._changePageSize(10);
           }
         });
       })
       .add(() => {
         this.isContentLoading = false;
-        if (this.allTenants.length != 0) {
+        if (this.allLandlords.length != 0) {
           sessionStorage.setItem(
-            "my-tenants-session",
+            "all-landlords-session",
             JSON.stringify({
-              data: this.allTenants,
+              data: this.allLandlords,
             })
           );
         }
@@ -173,34 +145,34 @@ export class MyTenantsLandlord implements OnInit {
     this.userAuth = user[0]["auth_type"];
 
     var myDocsDataSession = JSON.parse(
-      sessionStorage.getItem("my-tenants-session")
+      sessionStorage.getItem("all-landlords-session")
     );
 
     if (myDocsDataSession != null) {
-      this.allTenants = myDocsDataSession["data"];
-      this.allTenantsMatTableData = new MatTableDataSource(this.allTenants);
+      this.allLandlords = myDocsDataSession["data"];
+      this.allLandlordsMatTableData = new MatTableDataSource(this.allLandlords);
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      this.apiService
-        .getLandlordTenants(user[0]["id"])
+      this.adminService
+        .getAllClients(user[0]["id"], "landlord")
         .subscribe((data: any[]) => {
-          this.allTenants = data;
-          this.allTenantsMatTableData = new MatTableDataSource(data);
+          this.allLandlords = data;
+          this.allLandlordsMatTableData = new MatTableDataSource(data);
           setTimeout(() => {
-            if (this.allTenantsMatTableData != undefined) {
-              this.allTenantsMatTableData.paginator = this.paginator;
-              this.allTenantsMatTableData.paginator._changePageSize(10);
+            if (this.allLandlordsMatTableData != undefined) {
+              this.allLandlordsMatTableData.paginator = this.paginator;
+              this.allLandlordsMatTableData.paginator._changePageSize(10);
             }
           });
         })
         .add(() => {
           this.isContentLoading = false;
-          if (this.allTenants.length != 0) {
+          if (this.allLandlords.length != 0) {
             sessionStorage.setItem(
-              "my-tenants-session",
+              "all-landlords-session",
               JSON.stringify({
-                data: this.allTenants,
+                data: this.allLandlords,
               })
             );
           }
@@ -214,6 +186,6 @@ export class MyTenantsLandlord implements OnInit {
 
   applyFilter(filterValue: any) {
     var val = new String(filterValue).trim().toLowerCase();
-    this.allTenantsMatTableData.filter = val;
+    this.allLandlordsMatTableData.filter = val;
   }
 }

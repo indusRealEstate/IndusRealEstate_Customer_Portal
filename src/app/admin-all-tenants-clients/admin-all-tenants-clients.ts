@@ -1,46 +1,26 @@
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { EmailServices } from "app/services/email.service";
-import { Router } from "@angular/router";
-import { MatTable, MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { ViewTenantDialog } from "app/components/view-tenant-dialog/view-tenant-dialog";
-import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 
 @Component({
-  selector: "app-my-tenants",
-  templateUrl: "./my-tenants.html",
-  styleUrls: ["./my-tenants.scss"],
+  selector: "app-admin-all-tenants-clients",
+  templateUrl: "./admin-all-tenants-clients.html",
+  styleUrls: ["./admin-all-tenants-clients.scss"],
 })
-export class MyTenantsLandlord implements OnInit {
+export class AdminAllTenantClients implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
 
-  // displayedColumns: string[] = [
-  //   // "name",
-  //   "issueDate",
-  //   "reqNo",
-  //   "reqType",
-  //   "propertyName",
-  //   "clientName",
-  //   "status",
-  //   "actions",
-  // ];
-
   displayedColumns: string[] = [
-    "tenant",
+    "client",
     "email",
     "address",
     "phone-no",
@@ -76,14 +56,14 @@ export class MyTenantsLandlord implements OnInit {
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] != "admin") {
+    if (user[0]["auth_type"] == "admin") {
       this.route.queryParams.subscribe((e) => {
         if (e == null) {
-          router.navigate([`/my-tenants`], {
+          router.navigate([`/admin-all-tenants`], {
             queryParams: { uid: user[0]["id"] },
           });
         } else if (e != user[0]["id"]) {
-          router.navigate([`/my-tenants`], {
+          router.navigate([`/admin-all-tenants`], {
             queryParams: { uid: user[0]["id"] },
           });
         }
@@ -93,15 +73,7 @@ export class MyTenantsLandlord implements OnInit {
     }
   }
 
-  viewTenant(t_data) {
-    this.dialog.open(ViewTenantDialog, {
-      data: {
-        data: t_data,
-      },
-      width: "65%",
-      height: "45rem",
-    });
-  }
+  viewClient(data) {}
 
   screenHeight: number;
   screenWidth: number;
@@ -139,11 +111,11 @@ export class MyTenantsLandlord implements OnInit {
   refreshTable() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    sessionStorage.removeItem("my-tenants-session");
+    sessionStorage.removeItem("all-tenants-session");
     this.isContentLoading = true;
 
-    this.apiService
-      .getLandlordTenants(user[0]["id"])
+    this.adminService
+      .getAllClients(user[0]["id"], "tenant")
       .subscribe((va: any[]) => {
         this.allTenants = va;
         this.allTenantsMatTableData.data = va;
@@ -158,7 +130,7 @@ export class MyTenantsLandlord implements OnInit {
         this.isContentLoading = false;
         if (this.allTenants.length != 0) {
           sessionStorage.setItem(
-            "my-tenants-session",
+            "all-tenants-session",
             JSON.stringify({
               data: this.allTenants,
             })
@@ -173,7 +145,7 @@ export class MyTenantsLandlord implements OnInit {
     this.userAuth = user[0]["auth_type"];
 
     var myDocsDataSession = JSON.parse(
-      sessionStorage.getItem("my-tenants-session")
+      sessionStorage.getItem("all-tenants-session")
     );
 
     if (myDocsDataSession != null) {
@@ -182,8 +154,8 @@ export class MyTenantsLandlord implements OnInit {
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      this.apiService
-        .getLandlordTenants(user[0]["id"])
+      this.adminService
+        .getAllClients(user[0]["id"], "tenant")
         .subscribe((data: any[]) => {
           this.allTenants = data;
           this.allTenantsMatTableData = new MatTableDataSource(data);
@@ -198,7 +170,7 @@ export class MyTenantsLandlord implements OnInit {
           this.isContentLoading = false;
           if (this.allTenants.length != 0) {
             sessionStorage.setItem(
-              "my-tenants-session",
+              "all-tenants-session",
               JSON.stringify({
                 data: this.allTenants,
               })

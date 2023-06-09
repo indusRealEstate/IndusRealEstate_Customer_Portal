@@ -16,8 +16,6 @@ import { TenantRegisterComponent } from "app/indus_services/facility_management/
 import { CustomerCareComponent } from "app/indus_services/customer_service/customer_care";
 import { ServiceTemplateComponent } from "app/indus_services/facility_management/service_template/service_template";
 import { ServiceRecapComponent } from "app/indus_services/facility_management/service_recap/service_recap";
-import { AdminClientsLandlord } from "app/admin_clients_landlord/admin_clients_landlord";
-import { AdminClientsTenant } from "app/admin_clients_tenant/admin_clients_tenant";
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { NotificationsPage } from "app/notifications-page/notifications-page";
@@ -40,6 +38,9 @@ import { RequestsComponentInspection } from "app/requests/landlord-requests/insp
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
+import { AdminAllLandlordClients } from "app/admin-all-landlord-clients/admin-all-landlord-clients";
+import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-tenants-clients";
+import { AdminChats } from "app/admin_chats/admin_chats";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -66,6 +67,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "add-property-form", component: AddPropertyForm },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
+  { path: "admin-chats", component: AdminChats },
   // { path: "admin-requests", component: AdminRequests },
   { path: "admin-requests", component: AdminReqs },
   { path: "review-request-admin", component: ReviewRequestAdmin },
@@ -77,8 +79,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "landlord-register-form", component: LandlordFormComponent },
   { path: "tenant-register-form", component: TenantRegisterComponent },
-  { path: "admin-clients-landlord", component: AdminClientsLandlord },
-  { path: "admin-clients-tenant", component: AdminClientsTenant },
+  { path: "admin-all-landlords", component: AdminAllLandlordClients },
+  { path: "admin-all-tenants", component: AdminAllTenantClients },
   { path: "admin-properties-rent", component: AdminPropertiesRent },
   { path: "admin-properties-sale", component: AdminPropertiesSale },
   { path: "customer-care", component: CustomerCareComponent },

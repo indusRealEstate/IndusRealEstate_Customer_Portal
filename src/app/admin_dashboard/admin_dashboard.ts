@@ -258,7 +258,7 @@ export class AdminDashboardComponent implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
-    this.router.navigate(["/admin-clients-landlord"], {
+    this.router.navigate(["/admin-all-landlords"], {
       queryParams: { uid: userId },
     });
   }
@@ -267,7 +267,7 @@ export class AdminDashboardComponent implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
-    this.router.navigate(["/admin-clients-tenant"], {
+    this.router.navigate(["/admin-all-tenants"], {
       queryParams: { uid: userId },
     });
   }
