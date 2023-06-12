@@ -16,7 +16,7 @@ export class ChatService {
     };
   }
 
-  socket = io("http://alsimatower.ae");
+  socket = io("https://www.ireproperty.com");
 
   socket_connect() {
     this.socket.on("connect", () => {
@@ -32,6 +32,7 @@ export class ChatService {
     return new Observable((observer: Observer<any>) => {
       this.socket.on("msg", (message: string) => {
         observer.next(message);
+        // console.log(message);
       });
     });
   }

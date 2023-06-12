@@ -264,9 +264,78 @@
             <div
               class="mt-3"
               [ngClass]="m.recieved == 0 ? 'message-send' : 'message-coming'"
+              [ngStyle]="{'background' : m.file == 1 ? 'rgb(231 189 51 / 7%)' : 'rgba(231,189,51,.22)', 'border' : m.file == 1 ? '1px solid #be8e0047' : 'none'}"
             >
-              <span class="m-0 msg">{{m.message}}</span> <br />
-              <span class="m-0 time">{{m.time | date : 'shortTime'}}</span>
+              <div *ngIf="m.file == 0">
+                <span class="m-0 msg">{{m.message}}</span> <br />
+                <span class="m-0 time">{{m.time | date : 'shortTime'}}</span>
+              </div>
+              <div class="row m-0" *ngIf="m.file == 1">
+                <div class="col p-0 py-3" style="width: 8rem">
+                  <svg
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 58 58"
+                    style="enable-background: new 0 0 58 58"
+                    xml:space="preserve"
+                  >
+                    <polygon
+                      style="fill: #edeada"
+                      points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 "
+                    />
+                    <g>
+                      <path
+                        style="fill: #cec9ae"
+                        d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z"
+                      />
+                      <path
+                        style="fill: #cec9ae"
+                        d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z"
+                      />
+                      <path
+                        style="fill: #cec9ae"
+                        d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z"
+                      />
+                      <path
+                        style="fill: #cec9ae"
+                        d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z"
+                      />
+                      <path
+                        style="fill: #cec9ae"
+                        d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z"
+                      />
+                    </g>
+                    <polygon
+                      style="fill: #cec9ae"
+                      points="37.5,0 37.5,14 51.5,14 "
+                    />
+                  </svg>
+                </div>
+
+                <div class="col-8 my-auto">
+                  <span
+                    style="font-size: 17px; font-weight: 500; color: #b78e00"
+                    >{{getFileName(m.file_data)}}</span
+                  ><br />
+                  <span
+                    style="font-size: 12px; font-weight: 600; color: #808080b3"
+                    >{{getFileSize(m.file_data)}}</span
+                  ><br />
+                  <img
+                    (click)="downloadFile(m.file_path, m.file_data)"
+                    matTooltip="Download File"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="download-file"
+                    src="assets/img/svg/document-download.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -284,6 +353,7 @@
           <div class="row m-0 mt-2 justify-content-between">
             <div class="row m-0">
               <img
+                (click)="attachFile()"
                 matTooltip="Attach File"
                 matTooltipClass="tooltip"
                 matTooltipPosition="above"

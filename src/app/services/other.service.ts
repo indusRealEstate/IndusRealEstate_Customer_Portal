@@ -91,6 +91,19 @@ export class OtherServices {
     let base64EncodedString = window.btoa(input);
     return encodeURIComponent(base64EncodedString);
   }
+
+  // public convertFileToBase64(file) {
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = function () {
+  //     console.log(reader.result);
+  //     return reader.result;
+  //   };
+  //   reader.onerror = function (error) {
+  //     console.log("Error: ", error);
+  //   };
+  // }
+
   public decodeBase64(input: string) {
     var type_1 = decodeURIComponent(input);
     return window.atob(type_1);
@@ -98,6 +111,22 @@ export class OtherServices {
 
   public generateRandomID() {
     return Math.floor(10000000000000 + Math.random() * 90000000000000);
+  }
+
+  /**
+   * format bytes
+   * @param bytes (File size in bytes)
+   * @param decimals (Decimals point)
+   */
+  public formatBytes(bytes, decimals?) {
+    if (bytes === 0) {
+      return "0 Bytes";
+    }
+    const k = 1024;
+    const dm = decimals <= 0 ? 0 : decimals || 2;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
   public convertDateToServerFormat(date: Date) {

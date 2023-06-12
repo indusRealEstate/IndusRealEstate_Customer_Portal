@@ -293,6 +293,14 @@ export class ApiService {
     );
   }
 
+  uploadFileChat(data: any) {
+    const url = `https://indusre.app/api/uploadFileChat.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("uploadFileChat", [])));
+  }
+
   ///chatroom api calls ends.....//////////////////////////////////////////////////
 
   updateRequestFlag(req_id: any, update: any, req_type: any) {

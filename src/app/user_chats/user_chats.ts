@@ -1,4 +1,5 @@
 import { formatDate } from "@angular/common";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {
   Component,
   ElementRef,
@@ -7,7 +8,9 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DocUploadDialogRegister } from "app/components/dialog/dialog";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { ChatService } from "app/services/chat.service";
@@ -23,6 +26,7 @@ export class UserChatsComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   userId: any;
+  user: any;
 
   sending_msg: any;
 
@@ -44,13 +48,17 @@ export class UserChatsComponent implements OnInit {
 
   all_chats: any[] = [];
 
+  uploadedFiles: any[] = [];
+
   constructor(
     private apiService: ApiService,
     private chatService: ChatService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
+    private http: HttpClient,
+    private dialog?: MatDialog
   ) {
     this.sidebarChatOpened = true;
     this.isAllClientsLoading = true;
@@ -100,6 +108,29 @@ export class UserChatsComponent implements OnInit {
     }
   }
 
+  attachFile() {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    this.dialog
+      .open(DocUploadDialogRegister, {
+        width: "700px",
+        height: "450px",
+        data: { upload: "chat_file_upload" },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          this.sendFileMsg(res.data);
+        } else {
+        }
+      });
+  }
+
+  getFileSize(file) {
+    var size = JSON.parse(file)["size"];
+    return this.otherServices.formatBytes(size);
+  }
+
   getAllChats() {
     this.apiService
       .fetchAllChatMessages({ userId: this.userId })
@@ -133,12 +164,14 @@ export class UserChatsComponent implements OnInit {
     this.chatService.socket_connect();
 
     this.chatService.getMessage().subscribe((v) => {
-      // console.log(JSON.parse(v));
+      console.log(JSON.parse(v));
       var new_chat = JSON.parse(v);
       this.all_chats.push(new_chat);
       if (this.currentChat_usr != undefined) {
         if (this.currentChat_usr.user_id == new_chat.sender_id) {
-          this.chatroom_msgs.push(new_chat);
+          if (!this.chatroom_msgs.includes(new_chat)) {
+            this.chatroom_msgs.push(new_chat);
+          }
         }
       }
 
@@ -146,6 +179,13 @@ export class UserChatsComponent implements OnInit {
         for (let index = 0; index < this.chats.length; index++) {
           if (this.chats[index].user_id == new_chat.sender_id) {
             Object.assign(this.chats[index], { new_msg: true });
+          }
+        }
+      } else {
+        for (let index = 0; index < this.all_chats.length; index++) {
+          if (this.all_chats[index].user_id == new_chat.user_id) {
+            this.chats.push(this.all_chats[index]);
+            Object.assign(this.chats[0], { new_msg: true });
           }
         }
       }
@@ -157,6 +197,9 @@ export class UserChatsComponent implements OnInit {
 
     this.isUserSignOut();
 
+    this.apiService.getUser(this.userId).subscribe((user) => {
+      this.user = user[0];
+    });
     this.apiService
       .fetchAllCLientsForChat({ userId: this.userId })
       .subscribe((va) => {
@@ -203,12 +246,125 @@ export class UserChatsComponent implements OnInit {
       : (this.sidebarChatOpened = false);
   }
 
+  downloadFile(path, file_data) {
+    console.log(path);
+
+    var file_name = this.getFileName(file_data);
+    const baseUrl = "https://indusre.app/api/upload/chat/";
+
+    const headers = new HttpHeaders().set("Access-Control-Allow-Origin", "*");
+
+    this.http
+      .get(baseUrl + path, { headers, responseType: "blob" as "json" })
+      .subscribe((response: any) => {
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement("a");
+        downloadLink.href = window.URL.createObjectURL(
+          new Blob(binaryData, { type: dataType })
+        );
+        if (file_name) downloadLink.setAttribute("download", file_name);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      });
+  }
+
+  getFileName(file) {
+    return JSON.parse(file)["name"];
+  }
+
+  sendFileMsg(files: any[]) {
+    if (files != undefined && files.length != 0 && files != null) {
+      var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
+
+      console.log(files);
+
+      for (let index = 0; index < files.length; index++) {
+        var random_id = this.otherServices.generateRandomID();
+
+        this.chatroom_msgs.push({
+          recieved: 0,
+          file: 1,
+          file_data: JSON.stringify({
+            ext: files[index]["ext"],
+            name: files[index]["name"],
+            size: files[index]["size"],
+          }),
+          time: timeStamp,
+        });
+
+        var chat_sender_data = {
+          user_id: this.userId,
+          message_id: random_id,
+          send_to_id: this.currentChat_usr.user_id,
+          recieved: 0,
+        };
+
+        var chat_recipient_data = {
+          user_id: this.currentChat_usr.user_id,
+          message_id: random_id,
+          sender_id: this.userId,
+          recieved: 1,
+          read: 0,
+        };
+
+        var chat_message_data = {
+          message_id: random_id,
+          message: "",
+          file: 1,
+          file_data: JSON.stringify({
+            ext: files[index]["ext"],
+            name: files[index]["name"],
+            size: files[index]["size"],
+          }),
+          file_path: `${random_id}.${files[index]["ext"]}`,
+          image: 0,
+          image_data: "",
+          image_path: "",
+          time: timeStamp,
+        };
+
+        var data = {
+          chat_sender_data: chat_sender_data,
+          chat_recipient_data: chat_recipient_data,
+          chat_message_data: chat_message_data,
+        };
+
+        this.sendFileMessageToSocket(random_id, files[index], timeStamp);
+
+        this.apiService
+          .sendChatMessage(JSON.stringify(data))
+          .subscribe((val) => {});
+
+        this.apiService
+          .uploadFileChat(
+            JSON.stringify({
+              file: files[index]["data"],
+              fileID: random_id,
+              ext: files[index]["ext"],
+            })
+          )
+          .subscribe((e) => {
+            console.log(e);
+          });
+      }
+
+      if (!this.chats.includes(this.currentChat_usr)) {
+        this.chats.push(this.currentChat_usr);
+      }
+      this.all_chats.length = 0;
+      this.getAllChats();
+    }
+  }
+
   sendMsg() {
     if (this.sending_msg != undefined && this.sending_msg != "") {
       var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
 
       this.chatroom_msgs.push({
         recieved: 0,
+        file: 0,
         message: this.sending_msg,
         time: timeStamp,
       });
@@ -216,8 +372,6 @@ export class UserChatsComponent implements OnInit {
       if (!this.chats.includes(this.currentChat_usr)) {
         this.chats.push(this.currentChat_usr);
       }
-      this.all_chats.length = 0;
-      this.getAllChats();
 
       var random_id = this.otherServices.generateRandomID();
       var chat_sender_data = {
@@ -238,6 +392,12 @@ export class UserChatsComponent implements OnInit {
       var chat_message_data = {
         message_id: random_id,
         message: this.sending_msg,
+        file: 0,
+        file_data: "",
+        file_path: "",
+        image: 0,
+        image_data: "",
+        image_path: "",
         time: timeStamp,
       };
 
@@ -251,9 +411,12 @@ export class UserChatsComponent implements OnInit {
 
       this.apiService
         .sendChatMessage(JSON.stringify(data))
-        .subscribe((val) => {});
-
-      this.sending_msg = "";
+        .subscribe((val) => {})
+        .add(() => {
+          this.all_chats.length = 0;
+          this.getAllChats();
+          this.sending_msg = "";
+        });
     }
   }
 
@@ -269,8 +432,36 @@ export class UserChatsComponent implements OnInit {
       message_id: random_id,
       send_to_id: this.currentChat_usr.user_id,
       recieved: 1,
+      file: 0,
       message: msg,
       time: timeStamp,
+      profile_photo: this.user.profile_photo,
+    };
+    this.chatService.sendMessage(JSON.stringify(data));
+  }
+
+  sendFileMessageToSocket(random_id, file, timeStamp) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var data = {
+      sender_id: this.userId,
+      user_id: this.userId,
+      firstname: user[0]["firstname"],
+      lastname: user[0]["lastname"],
+      auth_type: user[0]["auth_type"],
+      message_id: random_id,
+      send_to_id: this.currentChat_usr.user_id,
+      recieved: 1,
+      file: 1,
+      file_data: JSON.stringify({
+        ext: file["ext"],
+        name: file["name"],
+        size: file["size"],
+      }),
+      file_path: `${random_id}.${file["ext"]}`,
+      message: "",
+      time: timeStamp,
+      profile_photo: this.user.profile_photo,
     };
     this.chatService.sendMessage(JSON.stringify(data));
   }

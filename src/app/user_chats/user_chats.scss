@@ -348,6 +348,21 @@
             font-weight: 600;
             color: #808080b3;
           }
+
+          .download-file {
+            padding: 1rem 0;
+            width: 25px;
+            cursor: pointer;
+            transition: 0.2s all ease-in-out;
+            filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
+              brightness(101%) contrast(89%);
+
+            &:hover {
+              transform: scaleY(1.1) scaleX(1.1);
+              filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+                brightness(90%) contrast(83%);
+            }
+          }
         }
       }
 
@@ -371,6 +386,21 @@
             font-size: 10px;
             font-weight: 600;
             color: #808080b3;
+          }
+
+          .download-file {
+            padding: 1rem 0;
+            width: 25px;
+            cursor: pointer;
+            transition: 0.2s all ease-in-out;
+            filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
+              brightness(101%) contrast(89%);
+
+            &:hover {
+              transform: scaleY(1.1) scaleX(1.1);
+              filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+                brightness(90%) contrast(83%);
+            }
           }
         }
       }

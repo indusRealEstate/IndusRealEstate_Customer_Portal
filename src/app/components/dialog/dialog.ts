@@ -32,6 +32,20 @@ export class DocUploadDialogRegister implements OnInit {
     this.dialogRef.close();
   }
 
+  submitChatFiles() {
+    if (this.files.length != 0) {
+      this.dialogRef.close({
+        data: this.base64files,
+      });
+    } else {
+      this.isDocsEmpty = true;
+
+      setTimeout(() => {
+        this.isDocsEmpty = false;
+      }, 4000);
+    }
+  }
+
   submitPaymentUploadDoc() {
     if (this.files.length < 2 && this.files.length != 0) {
       this.dialogRef.close({
@@ -252,6 +266,8 @@ export class DocUploadDialogRegister implements OnInit {
         this.base64files.push({
           data: e.target.result,
           ext: part1.split("/")[1],
+          name: item.name,
+          size: item.size,
         });
       };
     }
