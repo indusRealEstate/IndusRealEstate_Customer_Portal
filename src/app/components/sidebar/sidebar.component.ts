@@ -93,7 +93,7 @@ export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
 
 export const CHATSROUTEADMIN: RouteInfo[] = [
   {
-    path: "/admin-chats",
+    path: "/user-chats",
     title: "Chats",
     icon: "assets/img/svg/sidebar/messages-1.svg",
     class: "",

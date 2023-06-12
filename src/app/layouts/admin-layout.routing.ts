@@ -40,7 +40,7 @@ import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminAllLandlordClients } from "app/admin-all-landlord-clients/admin-all-landlord-clients";
 import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-tenants-clients";
-import { AdminChats } from "app/admin_chats/admin_chats";
+import { UserChatsComponent } from "app/user_chats/user_chats";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -67,7 +67,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "add-property-form", component: AddPropertyForm },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
-  { path: "admin-chats", component: AdminChats },
+  { path: "user-chats", component: UserChatsComponent },
   // { path: "admin-requests", component: AdminRequests },
   { path: "admin-requests", component: AdminReqs },
   { path: "review-request-admin", component: ReviewRequestAdmin },

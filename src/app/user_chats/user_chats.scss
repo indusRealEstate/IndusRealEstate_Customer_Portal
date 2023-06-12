@@ -84,9 +84,60 @@
   border-radius: 5px;
   height: 50rem;
 
-  .tab-1 {
+  .tab-1-closed {
+    max-width: 4rem;
     height: 100%;
     border-right: 1px solid #e6ebf1;
+    transition: max-width 300ms ease-out, height 300ms ease-out;
+
+    .add-new-chat {
+      cursor: pointer;
+      height: 33px;
+      padding: 5px 5px;
+      border-radius: 3px;
+      transition: 0.2s all ease-in-out;
+
+      &:hover {
+        background: #e7bd3326;
+      }
+    }
+
+    .settings {
+      border-top: 1px solid #e6ebf1;
+      padding: 10px 10px;
+      align-items: center;
+      cursor: pointer;
+
+      img {
+        width: 20px;
+        transition: 0.2s all ease-in-out;
+      }
+
+      p {
+        font-size: 15px;
+        font-weight: 500;
+        color: #848484;
+        transition: 0.2s all ease-in-out;
+      }
+
+      &:hover {
+        img {
+          filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+            brightness(90%) contrast(83%);
+        }
+
+        p {
+          color: #e7bd33;
+        }
+      }
+    }
+  }
+
+  .tab-1-opened {
+    min-width: 23rem;
+    height: 100%;
+    border-right: 1px solid #e6ebf1;
+    transition: width 300ms ease-in-out, height 300ms ease-out;
 
     .tab-1-title {
       font-size: 18px;
@@ -275,6 +326,7 @@
     }
 
     .messages-bar {
+      scroll-behavior: smooth;
       .message-coming-wrp {
         display: flex;
         justify-content: left;

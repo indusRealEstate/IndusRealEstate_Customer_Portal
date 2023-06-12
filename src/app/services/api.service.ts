@@ -266,17 +266,6 @@ export class ApiService {
 
   ///chatroom api calls.....//////////////////////////////////////////////////
 
-
-
-  connect_socket(data: any) {
-    const url = `https://indusre.app/api/socket.php?apikey=1`;
-    return this.http.post<any>(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
   fetchAllCLientsForChat(data: any) {
     const url = `${API_URL}/fetchAllCLientsForChat.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(

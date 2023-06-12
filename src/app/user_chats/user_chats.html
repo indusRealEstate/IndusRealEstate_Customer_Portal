@@ -4,11 +4,14 @@
 <div class="main-content home-bg" *ngIf="screenWidth > 430">
   <div class="container-fluid" style="max-width: 2576px">
     <div class="row m-0 w-100 main-wrapper">
-      <div class="col-3 py-3 tab-1" style="min-width: 23rem">
+      <div
+        class="col-3 py-3 tab-1"
+        [ngClass]="sidebarChatOpened? 'tab-1-opened' : 'tab-1-closed'"
+      >
         <div class="tab-1-sec-1" style="height: 93%">
           <div style="height: 13%">
             <div class="row m-0 justify-content-between align-items-center">
-              <p class="m-0 tab-1-title">Messages</p>
+              <p *ngIf="sidebarChatOpened" class="m-0 tab-1-title">Messages</p>
               <img
                 *ngIf="isAllClientsLoading == false"
                 #newChatMenuTrigger="matMenuTrigger"
@@ -73,7 +76,7 @@
               </mat-menu>
             </div>
 
-            <div class="row m-0 search-bar mt-3 mb-4">
+            <div *ngIf="sidebarChatOpened" class="row m-0 search-bar mt-3 mb-4">
               <img
                 class="mr-2"
                 src="assets/img/svg/searchbar/search-normal-1.svg"
@@ -83,7 +86,11 @@
             </div>
           </div>
 
-          <div class="mb-3" style="overflow: auto; height: 86%">
+          <div
+            *ngIf="sidebarChatOpened"
+            class="mb-3"
+            style="overflow: auto; height: 86%"
+          >
             <div class="chats-wrapper mt-3 mr-2" *ngFor="let c of chats">
               <div
                 class="row m-0 align-items-center"
@@ -144,16 +151,27 @@
                 </div>
                 <div class="col-2 p-0">
                   <p class="messaged-time m-0">2h ago</p>
-                  <div class="mt-1 new-messages"></div>
+                  <div
+                    *ngIf="c.new_msg != undefined"
+                    class="mt-1 new-messages"
+                  ></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row m-0 settings" style="height: 7%">
-          <img class="mr-2" src="assets/img/svg/setting-2.svg" alt="" />
-          <p class="m-0">Settings</p>
+        <div
+          [ngClass]="sidebarChatOpened? '' : 'justify-content-center'"
+          class="row m-0 settings"
+          style="height: 7%"
+        >
+          <img
+            [ngClass]="sidebarChatOpened? 'mr-2' : 'mr-0'"
+            src="assets/img/svg/setting-2.svg"
+            alt=""
+          />
+          <p *ngIf="sidebarChatOpened" class="m-0">Settings</p>
         </div>
       </div>
       <div class="col py-3 tab-2">
@@ -163,6 +181,7 @@
           *ngIf="currentChat_usr == undefined"
         >
           <img
+            (click)="sideBarCloseChats()"
             class="mr-4 my-auto sideBar-toggler"
             src="assets/img/svg/sidebar/menu.svg"
             alt=""
@@ -180,6 +199,7 @@
           *ngIf="currentChat_usr != undefined"
         >
           <img
+            (click)="sideBarCloseChats()"
             class="mr-4 my-auto sideBar-toggler"
             src="assets/img/svg/sidebar/menu.svg"
             alt=""
@@ -226,6 +246,7 @@
           />
         </div>
         <div
+          #msg_bar
           *ngIf="currentChat_usr != undefined"
           class="messages-bar"
           style="
@@ -233,6 +254,7 @@
             overflow: auto;
             max-height: 37rem;
             padding-right: 10px;
+            padding-bottom: 10px;
           "
         >
           <div

@@ -113,7 +113,7 @@ import { RequestsComponentConditioning } from "app/requests/tenant-requests/cond
 import { RequestsComponentMaintenance } from "app/requests/tenant-requests/maintenance/maintenance-req";
 import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tenant-move-in/tenant-move-in-req";
 import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
-import { AdminChats } from "app/admin_chats/admin_chats";
+import { UserChatsComponent } from "app/user_chats/user_chats";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -242,7 +242,7 @@ import { AdminChats } from "app/admin_chats/admin_chats";
     LoadingTableAdminCLients,
     AdminAllLandlordClients,
     AdminAllTenantClients,
-    AdminChats,
+    UserChatsComponent,
 
     BackButtonDirective,
   ],

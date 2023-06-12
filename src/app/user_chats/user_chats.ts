@@ -1,24 +1,25 @@
 import { formatDate } from "@angular/common";
 import {
   Component,
+  ElementRef,
   HostListener,
   OnInit,
+  ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { ChatService } from "app/services/chat.service";
 import { OtherServices } from "app/services/other.service";
-import { BehaviorSubject } from "rxjs";
 
 @Component({
-  selector: "admin-chats",
-  templateUrl: "./admin_chats.html",
-  styleUrls: ["./admin_chats.scss"],
+  selector: "user-chats",
+  templateUrl: "./user_chats.html",
+  styleUrls: ["./user_chats.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class AdminChats implements OnInit {
+export class UserChatsComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   userId: any;
@@ -33,6 +34,8 @@ export class AdminChats implements OnInit {
 
   currentChat_usr: any;
 
+  sidebarChatOpened: boolean = false;
+
   isAllClientsLoading: boolean = false;
 
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
@@ -43,12 +46,13 @@ export class AdminChats implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private adminService: AdminService,
+    private chatService: ChatService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private otherServices: OtherServices
   ) {
+    this.sidebarChatOpened = true;
     this.isAllClientsLoading = true;
     this.chats_loading = true;
     this.getScreenSize();
@@ -59,11 +63,11 @@ export class AdminChats implements OnInit {
 
     this.route.queryParams.subscribe((e) => {
       if (e == null) {
-        router.navigate(["/admin-chats"], {
+        router.navigate(["/user-chats"], {
           queryParams: { uid: user[0]["id"] },
         });
       } else if (e != user[0]["id"]) {
-        router.navigate(["/admin-chats"], {
+        router.navigate(["/user-chats"], {
           queryParams: { uid: user[0]["id"] },
         });
       }
@@ -76,6 +80,15 @@ export class AdminChats implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  @ViewChild("msg_bar") private currentChatScroll: ElementRef;
+
+  scrollToBottom(): void {
+    try {
+      this.currentChatScroll.nativeElement.scrollTop =
+        this.currentChatScroll.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 
   isUserSignOut() {
@@ -91,6 +104,7 @@ export class AdminChats implements OnInit {
     this.apiService
       .fetchAllChatMessages({ userId: this.userId })
       .subscribe((val: any[]) => {
+        // console.log(val);
         this.all_chats = val;
         // console.log(val);
         this.all_chats.sort((a, b) => {
@@ -111,36 +125,37 @@ export class AdminChats implements OnInit {
       })
       .add(() => {
         this.chats_loading = false;
+        this.initFunction();
       });
   }
 
-  // ngDoCheck() {
-  //   if (sessionStorage.getItem("chat_refreshed_time") != null) {
-  //     var old_time = new Date(
-  //       JSON.parse(sessionStorage.getItem("chat_refreshed_time"))
-  //     );
+  initFunction() {
+    this.chatService.socket_connect();
 
-  //     var new_time = new Date();
+    this.chatService.getMessage().subscribe((v) => {
+      // console.log(JSON.parse(v));
+      var new_chat = JSON.parse(v);
+      this.all_chats.push(new_chat);
+      if (this.currentChat_usr != undefined) {
+        if (this.currentChat_usr.user_id == new_chat.sender_id) {
+          this.chatroom_msgs.push(new_chat);
+        }
+      }
 
-  //     if (new_time.getTime() - old_time.getTime() >= 10000) {
-  //       this.getAllChats();
-  //       sessionStorage.setItem(
-  //         "chat_refreshed_time",
-  //         JSON.stringify(new Date())
-  //       );
-  //       console.log("refreshed");
-  //     }
-  //   }
-  // }
+      if (this.chats.length != 0 && this.chats != undefined) {
+        for (let index = 0; index < this.chats.length; index++) {
+          if (this.chats[index].user_id == new_chat.sender_id) {
+            Object.assign(this.chats[index], { new_msg: true });
+          }
+        }
+      }
+    });
+  }
 
   async ngOnInit() {
     sessionStorage.setItem("chat_refreshed_time", JSON.stringify(new Date()));
 
     this.isUserSignOut();
-
-    // this.apiService.connect_socket("h").subscribe((v) => {
-    //   console.log(v);
-    // });
 
     this.apiService
       .fetchAllCLientsForChat({ userId: this.userId })
@@ -155,9 +170,12 @@ export class AdminChats implements OnInit {
   }
 
   newChatOpen(c: any) {
+    if (c.new_msg != undefined) {
+      delete c.new_msg;
+    }
+
     this.chatroom_msgs.length = 0;
     this.currentChat_usr = c;
-    // console.log(this.all_chats);
 
     if (this.all_chats.length != 0) {
       for (let index = 0; index < this.all_chats.length; index++) {
@@ -169,6 +187,20 @@ export class AdminChats implements OnInit {
         }
       }
     }
+
+    setTimeout(() => {
+      if (this.currentChatScroll != undefined) {
+        this.scrollToBottom();
+        // console.log("scrolling");
+      }
+    });
+  }
+
+  sideBarCloseChats() {
+    // console.log("side-bar-closed");
+    this.sidebarChatOpened == false
+      ? (this.sidebarChatOpened = true)
+      : (this.sidebarChatOpened = false);
   }
 
   sendMsg() {
@@ -186,8 +218,6 @@ export class AdminChats implements OnInit {
       }
       this.all_chats.length = 0;
       this.getAllChats();
-
-      // console.log(timeStamp);
 
       var random_id = this.otherServices.generateRandomID();
       var chat_sender_data = {
@@ -217,11 +247,31 @@ export class AdminChats implements OnInit {
         chat_message_data: chat_message_data,
       };
 
+      this.sendMessageToSocket(random_id, this.sending_msg, timeStamp);
+
       this.apiService
         .sendChatMessage(JSON.stringify(data))
         .subscribe((val) => {});
 
       this.sending_msg = "";
     }
+  }
+
+  sendMessageToSocket(random_id, msg, timeStamp) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var data = {
+      sender_id: this.userId,
+      user_id: this.userId,
+      firstname: user[0]["firstname"],
+      lastname: user[0]["lastname"],
+      auth_type: user[0]["auth_type"],
+      message_id: random_id,
+      send_to_id: this.currentChat_usr.user_id,
+      recieved: 1,
+      message: msg,
+      time: timeStamp,
+    };
+    this.chatService.sendMessage(JSON.stringify(data));
   }
 }
