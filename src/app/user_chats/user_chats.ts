@@ -48,6 +48,8 @@ export class UserChatsComponent implements OnInit {
 
   all_chats: any[] = [];
 
+  socket_dups: any[] = [];
+
   uploadedFiles: any[] = [];
 
   constructor(
@@ -162,39 +164,42 @@ export class UserChatsComponent implements OnInit {
 
   initFunction() {
     this.chatService.socket_connect();
-
     this.chatService.getMessage().subscribe((v) => {
-      console.log(JSON.parse(v));
       var new_chat = JSON.parse(v);
-      this.all_chats.push(new_chat);
-      if (this.currentChat_usr != undefined) {
-        if (this.currentChat_usr.user_id == new_chat.sender_id) {
-          if (!this.chatroom_msgs.includes(new_chat)) {
+      // console.log(new_chat);
+
+      if (new_chat.send_to_id == this.userId) {
+        this.all_chats.push(new_chat);
+        if (this.currentChat_usr != undefined) {
+          if (this.currentChat_usr.user_id == new_chat.sender_id) {
             this.chatroom_msgs.push(new_chat);
           }
         }
+
+        if (this.chats.length != 0 && this.chats != undefined) {
+          for (let index = 0; index < this.chats.length; index++) {
+            if (this.chats[index].user_id == new_chat.sender_id) {
+              Object.assign(this.chats[index], { new_msg: true });
+            }
+          }
+        } else {
+          for (let index = 0; index < this.all_chats.length; index++) {
+            if (this.all_chats[index].user_id == new_chat.user_id) {
+              this.chats.push(this.all_chats[index]);
+              Object.assign(this.chats[0], { new_msg: true });
+            }
+          }
+        }
       }
 
-      if (this.chats.length != 0 && this.chats != undefined) {
-        for (let index = 0; index < this.chats.length; index++) {
-          if (this.chats[index].user_id == new_chat.sender_id) {
-            Object.assign(this.chats[index], { new_msg: true });
-          }
-        }
-      } else {
-        for (let index = 0; index < this.all_chats.length; index++) {
-          if (this.all_chats[index].user_id == new_chat.user_id) {
-            this.chats.push(this.all_chats[index]);
-            Object.assign(this.chats[0], { new_msg: true });
-          }
-        }
-      }
+      var dup = [];
+      this.chatroom_msgs = this.chatroom_msgs.filter(
+        (item) => !dup.includes(item.message_id) && dup.push(item.message_id)
+      );
     });
   }
 
   async ngOnInit() {
-    sessionStorage.setItem("chat_refreshed_time", JSON.stringify(new Date()));
-
     this.isUserSignOut();
 
     this.apiService.getUser(this.userId).subscribe((user) => {
@@ -213,20 +218,40 @@ export class UserChatsComponent implements OnInit {
   }
 
   newChatOpen(c: any) {
+    // this.chatService.createChatRoom();
     if (c.new_msg != undefined) {
       delete c.new_msg;
     }
+    if (this.currentChat_usr != undefined) {
+      if (c.user_id != this.currentChat_usr.user_id) {
+        this.chatroom_msgs.length = 0;
+        this.currentChat_usr = c;
 
-    this.chatroom_msgs.length = 0;
-    this.currentChat_usr = c;
+        if (this.all_chats.length != 0) {
+          for (let index = 0; index < this.all_chats.length; index++) {
+            if (
+              this.all_chats[index]["send_to_id"] ==
+                this.currentChat_usr.user_id ||
+              this.all_chats[index]["sender_id"] == this.currentChat_usr.user_id
+            ) {
+              this.chatroom_msgs.push(this.all_chats[index]);
+            }
+          }
+        }
+      }
+    } else {
+      this.chatroom_msgs.length = 0;
+      this.currentChat_usr = c;
 
-    if (this.all_chats.length != 0) {
-      for (let index = 0; index < this.all_chats.length; index++) {
-        if (
-          this.all_chats[index]["send_to_id"] == this.currentChat_usr.user_id ||
-          this.all_chats[index]["sender_id"] == this.currentChat_usr.user_id
-        ) {
-          this.chatroom_msgs.push(this.all_chats[index]);
+      if (this.all_chats.length != 0) {
+        for (let index = 0; index < this.all_chats.length; index++) {
+          if (
+            this.all_chats[index]["send_to_id"] ==
+              this.currentChat_usr.user_id ||
+            this.all_chats[index]["sender_id"] == this.currentChat_usr.user_id
+          ) {
+            this.chatroom_msgs.push(this.all_chats[index]);
+          }
         }
       }
     }
@@ -464,5 +489,10 @@ export class UserChatsComponent implements OnInit {
       profile_photo: this.user.profile_photo,
     };
     this.chatService.sendMessage(JSON.stringify(data));
+  }
+
+  ngOnDestroy() {
+    this.chatService.getMessage().subscribe().unsubscribe();
+    this.chatService.socket_disconnect();
   }
 }

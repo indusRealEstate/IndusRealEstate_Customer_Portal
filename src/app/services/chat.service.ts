@@ -24,6 +24,16 @@ export class ChatService {
     });
   }
 
+  socket_disconnect() {
+    this.socket.on("disconnect", () => {
+      console.log("socket disconnect");
+    });
+  }
+
+  createChatRoom() {
+    this.socket.emit("room");
+  }
+
   sendMessage(msg: string) {
     this.socket.emit("new_chat", msg);
   }
@@ -32,7 +42,6 @@ export class ChatService {
     return new Observable((observer: Observer<any>) => {
       this.socket.on("msg", (message: string) => {
         observer.next(message);
-        // console.log(message);
       });
     });
   }
