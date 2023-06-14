@@ -258,15 +258,39 @@
           "
         >
           <div
-            *ngFor="let m of chatroom_msgs"
+            *ngFor="let m of chatroom_msgs;let i = index"
             [ngClass]="m.recieved == 0 ? 'message-send-wrp' : 'message-coming-wrp'"
           >
+            <div
+              class="more-actions"
+              *ngIf="m.file == 0 && m.image == 0 && m.recieved == 0"
+            >
+              <div class="row m-0">
+                <img
+                  matTooltip="Copy Message"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  class="download-file"
+                  src="assets/img/svg/copy.svg"
+                  alt=""
+                />
+                <img
+                  (click)="deleteMessage(m,i)"
+                  matTooltip="Delete Message"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  class="download-file ml-2 mr-2"
+                  src="assets/img/svg/delete.svg"
+                  alt=""
+                />
+              </div>
+            </div>
             <div
               class="mt-3"
               [ngClass]="m.recieved == 0 ? 'message-send' : 'message-coming'"
               [ngStyle]="{'background' : m.file == 1 ? 'rgb(231 189 51 / 7%)' : 'rgba(231,189,51,.22)', 'border' : m.file == 1 ? '1px solid #be8e0047' : 'none'}"
             >
-              <div *ngIf="m.file == 0">
+              <div *ngIf="m.file == 0 && m.image == 0">
                 <span class="m-0 msg">{{m.message}}</span> <br />
                 <span class="m-0 time">{{m.time | date : 'shortTime'}}</span>
               </div>
@@ -325,17 +349,102 @@
                     style="font-size: 12px; font-weight: 600; color: #808080b3"
                     >{{getFileSize(m.file_data)}}</span
                   ><br />
+                  <div class="row m-0 justify-content-end">
+                    <img
+                      (click)="downloadFile(m.file_path, m.file_data)"
+                      matTooltip="Download File"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      class="download-file"
+                      src="assets/img/svg/document-download.svg"
+                      alt=""
+                    />
+                    <img
+                      (click)="deleteMessage(m,i)"
+                      *ngIf="m.recieved == 0"
+                      matTooltip="Delete File"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      class="download-file ml-3"
+                      src="assets/img/svg/delete.svg"
+                      alt=""
+                    />
+                  </div>
+                  <span class="m-0 time">{{m.time | date : 'shortTime'}}</span>
+                </div>
+              </div>
+              <div *ngIf="m.image == 1">
+                <img
+                  id="{{'chat_img' + i}}"
+                  (error)="onImageError(m,i)"
+                  (load)="onImageLoad(m,i)"
+                  style="max-width: 25rem; border-radius: 5px; display: none"
+                  src="{{chatImgsPath}}{{m.image_path}}"
+                  alt="error"
+                />
+                <div *ngIf="m.loading == true || m.loading == undefined">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '20rem', height: '10rem'}"
+                  >
+                  </ngx-skeleton-loader>
+                </div>
+
+                <div class="row m-0 justify-content-end">
                   <img
-                    (click)="downloadFile(m.file_path, m.file_data)"
-                    matTooltip="Download File"
+                    (click)="downloadFile(m.image_path, m.image_data)"
+                    matTooltip="Download Image"
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
                     class="download-file"
                     src="assets/img/svg/document-download.svg"
                     alt=""
                   />
+                  <img
+                    (click)="deleteMessage(m,i)"
+                    *ngIf="m.recieved == 0"
+                    matTooltip="Delete Image"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="download-file ml-3"
+                    src="assets/img/svg/delete.svg"
+                    alt=""
+                  />
                 </div>
+                <span class="m-0 time">{{m.time | date : 'shortTime'}}</span>
               </div>
+            </div>
+            <div
+              class="more-actions"
+              *ngIf="m.file == 0 && m.image == 0 && m.recieved == 1"
+            >
+              <div class="row m-0">
+                <img
+                  matTooltip="Copy Message"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  class="download-file ml-2"
+                  src="assets/img/svg/copy.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="sending_new_message == true"
+            class="d-flex w-100 justify-content-end mt-3"
+          >
+            <div
+              style="
+                padding: 7rem 9rem;
+                background: #faf1d2;
+                border-radius: 10px;
+              "
+            >
+              <span
+                class="spinner-border spinner-border-m"
+                style="color: #d4aa32; padding: 23px"
+              >
+              </span>
             </div>
           </div>
         </div>
@@ -345,6 +454,7 @@
           *ngIf="currentChat_usr != undefined"
         >
           <textarea
+            (paste)="onPaste($event)"
             [(ngModel)]="sending_msg"
             class="mt-2 text-area"
             rows="3"
@@ -362,6 +472,7 @@
                 alt=""
               />
               <img
+                (click)="attachImage()"
                 matTooltip="Send Media"
                 matTooltipClass="tooltip"
                 matTooltipPosition="above"

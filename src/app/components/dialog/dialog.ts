@@ -18,14 +18,26 @@ export class DocUploadDialogRegister implements OnInit {
   files: any[] = [];
   base64files: any[] = [];
 
+  image_only: boolean = false;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DocUploadDialogRegister>
   ) {}
 
+  // makeUploadImageOnly() {
+
+  // }
+
   ngOnInit() {
     this.docName = this.data["upload"];
+    this.image_only = this.data["image_only"];
     this.auth_type = this.data["auth"];
+
+    if (this.data["image_only"] == true) {
+      $("#main-upload").attr("accept", "image/*");
+      $("#drag-upload").attr("accept", "image/*");
+    }
   }
 
   onCloseDialog() {

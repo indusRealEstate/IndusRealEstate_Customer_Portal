@@ -284,9 +284,27 @@ export class ApiService {
     );
   }
 
+  deleteChatMessage(data: any) {
+    const url = `${API_URL}/deleteChatMessage.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   sendChatMessage(data: any) {
     const url = `${API_URL}/sendChatMessage.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  updateChatRead(message_id: any) {
+    const url = `${API_URL}/updateChatRead.php?apikey=1`;
+    return this.http.post<any>(url, { message_id: message_id }).pipe(
       map((data) => {
         return data;
       })
@@ -299,6 +317,14 @@ export class ApiService {
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("uploadFileChat", [])));
+  }
+
+  deleteFileFromServer(data: any) {
+    const url = `https://indusre.app/api/deleteFileFromServer.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("deleteFileFromServer", [])));
   }
 
   ///chatroom api calls ends.....//////////////////////////////////////////////////

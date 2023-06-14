@@ -38,9 +38,21 @@ export class ChatService {
     this.socket.emit("new_chat", msg);
   }
 
+  deleteMessage(msg: string) {
+    this.socket.emit("delete_chat", msg);
+  }
+
   getMessage() {
     return new Observable((observer: Observer<any>) => {
       this.socket.on("msg", (message: string) => {
+        observer.next(message);
+      });
+    });
+  }
+
+  getDeletedMessage() {
+    return new Observable((observer: Observer<any>) => {
+      this.socket.on("msg_del", (message: string) => {
         observer.next(message);
       });
     });

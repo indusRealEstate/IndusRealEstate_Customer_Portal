@@ -42,7 +42,10 @@ export class UserChatsComponent implements OnInit {
 
   isAllClientsLoading: boolean = false;
 
+  sending_new_message: boolean = false;
+
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
+  chatImgsPath: any = "https://indusre.app/api/upload/chat/";
 
   chatroom_msgs: any[] = [];
 
@@ -110,9 +113,33 @@ export class UserChatsComponent implements OnInit {
     }
   }
 
+  deleteMessage(msg, i) {
+    this.chatroom_msgs.splice(i, 1);
+    // console.log(msg);
+    this.apiService
+      .deleteChatMessage({ message_id: msg.message_id })
+      .subscribe((v) => {
+        // console.log(v);
+      });
+
+    if (msg.file == 1) {
+      this.apiService
+        .deleteFileFromServer({ file_name: msg.file_path })
+        .subscribe((e) => {});
+    }
+
+    if (msg.image == 1) {
+      this.apiService
+        .deleteFileFromServer({ file_name: msg.image_path })
+        .subscribe((e) => {});
+    }
+
+    this.chatService.deleteMessage(
+      JSON.stringify({ msg_id: msg.message_id, send_to_id: msg.send_to_id })
+    );
+  }
+
   attachFile() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
     this.dialog
       .open(DocUploadDialogRegister, {
         width: "700px",
@@ -122,7 +149,23 @@ export class UserChatsComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
-          this.sendFileMsg(res.data);
+          this.sendFileMsg(res.data, false);
+        } else {
+        }
+      });
+  }
+
+  attachImage() {
+    this.dialog
+      .open(DocUploadDialogRegister, {
+        width: "700px",
+        height: "450px",
+        data: { upload: "chat_file_upload", image_only: true },
+      })
+      .afterClosed()
+      .subscribe(async (res) => {
+        if (res != undefined) {
+          await this.sendFileMsg(res.data, true);
         } else {
         }
       });
@@ -152,9 +195,24 @@ export class UserChatsComponent implements OnInit {
         this.chats = this.all_chats;
 
         var dup = [];
-        this.chats = val.filter(
+        this.chats = this.all_chats.filter(
           (item) => !dup.includes(item.user_id) && dup.push(item.user_id)
         );
+
+        var e = val.filter((i) => i.recieved == 1 && i.read == 0);
+        var dup2 = [];
+        var unread = e.filter(
+          (item) => !dup2.includes(item.user_id) && dup2.push(item.user_id)
+        );
+
+        // console.log(unread);
+        for (let index = 0; index < unread.length; index++) {
+          for (let index = 0; index < this.chats.length; index++) {
+            if (unread[index].user_id == this.chats[index].user_id) {
+              Object.assign(this.chats[index], { new_msg: true });
+            }
+          }
+        }
       })
       .add(() => {
         this.chats_loading = false;
@@ -164,6 +222,7 @@ export class UserChatsComponent implements OnInit {
 
   initFunction() {
     this.chatService.socket_connect();
+
     this.chatService.getMessage().subscribe((v) => {
       var new_chat = JSON.parse(v);
       // console.log(new_chat);
@@ -197,6 +256,25 @@ export class UserChatsComponent implements OnInit {
         (item) => !dup.includes(item.message_id) && dup.push(item.message_id)
       );
     });
+
+    this.chatService.getDeletedMessage().subscribe((e) => {
+      var message = JSON.parse(e);
+      if (message.send_to_id == this.userId) {
+        for (let index = 0; index < this.all_chats.length; index++) {
+          if (message.msg_id == this.all_chats[index].message_id) {
+            this.all_chats.splice(index, 1);
+          }
+        }
+
+        if (this.currentChat_usr != undefined) {
+          for (let index = 0; index < this.chatroom_msgs.length; index++) {
+            if (message.msg_id == this.chatroom_msgs[index].message_id) {
+              this.chatroom_msgs.splice(index, 1);
+            }
+          }
+        }
+      }
+    });
   }
 
   async ngOnInit() {
@@ -205,6 +283,7 @@ export class UserChatsComponent implements OnInit {
     this.apiService.getUser(this.userId).subscribe((user) => {
       this.user = user[0];
     });
+
     this.apiService
       .fetchAllCLientsForChat({ userId: this.userId })
       .subscribe((va) => {
@@ -234,7 +313,13 @@ export class UserChatsComponent implements OnInit {
                 this.currentChat_usr.user_id ||
               this.all_chats[index]["sender_id"] == this.currentChat_usr.user_id
             ) {
+              if (this.all_chats[index].image == 1) {
+                Object.assign(this.all_chats[index], { loading: true });
+              }
               this.chatroom_msgs.push(this.all_chats[index]);
+              this.apiService
+                .updateChatRead(this.all_chats[index].message_id)
+                .subscribe((v) => {});
             }
           }
         }
@@ -251,6 +336,9 @@ export class UserChatsComponent implements OnInit {
             this.all_chats[index]["sender_id"] == this.currentChat_usr.user_id
           ) {
             this.chatroom_msgs.push(this.all_chats[index]);
+            this.apiService
+              .updateChatRead(this.all_chats[index].message_id)
+              .subscribe((v) => {});
           }
         }
       }
@@ -299,80 +387,153 @@ export class UserChatsComponent implements OnInit {
     return JSON.parse(file)["name"];
   }
 
-  sendFileMsg(files: any[]) {
-    if (files != undefined && files.length != 0 && files != null) {
-      var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
+  setupData(random_id, file, timeStamp, image) {
+    if (image == true) {
+      var chat_sender_data = {
+        user_id: this.userId,
+        message_id: random_id,
+        send_to_id: this.currentChat_usr.user_id,
+        recieved: 0,
+      };
 
-      console.log(files);
+      var chat_recipient_data = {
+        user_id: this.currentChat_usr.user_id,
+        message_id: random_id,
+        sender_id: this.userId,
+        recieved: 1,
+        read: 0,
+      };
 
-      for (let index = 0; index < files.length; index++) {
-        var random_id = this.otherServices.generateRandomID();
+      var chat_message_data = {
+        message_id: random_id,
+        message: "",
+        file: 0,
+        file_data: "",
+        file_path: "",
+        image: 1,
+        image_data: JSON.stringify({
+          ext: file["ext"],
+          name: file["name"],
+          size: file["size"],
+        }),
+        image_path: `${random_id}.${file["ext"]}`,
+        time: timeStamp,
+      };
+    } else {
+      var chat_sender_data = {
+        user_id: this.userId,
+        message_id: random_id,
+        send_to_id: this.currentChat_usr.user_id,
+        recieved: 0,
+      };
 
+      var chat_recipient_data = {
+        user_id: this.currentChat_usr.user_id,
+        message_id: random_id,
+        sender_id: this.userId,
+        recieved: 1,
+        read: 0,
+      };
+
+      var chat_message_data = {
+        message_id: random_id,
+        message: "",
+        file: 1,
+        file_data: JSON.stringify({
+          ext: file["ext"],
+          name: file["name"],
+          size: file["size"],
+        }),
+        file_path: `${random_id}.${file["ext"]}`,
+        image: 0,
+        image_data: "",
+        image_path: "",
+        time: timeStamp,
+      };
+    }
+
+    var data = {
+      chat_sender_data: chat_sender_data,
+      chat_recipient_data: chat_recipient_data,
+      chat_message_data: chat_message_data,
+    };
+
+    return data;
+  }
+
+  pushToChatRoom(files: any[], timeStamp, image) {
+    files.forEach((file) => {
+      if (image == true) {
+        this.chatroom_msgs.push({
+          recieved: 0,
+          image: 1,
+          image_data: JSON.stringify({
+            ext: file["ext"],
+            name: file["name"],
+            size: file["size"],
+          }),
+          image_path: `${file.random_id}.${file["ext"]}`,
+          time: timeStamp,
+          message_id: file.random_id,
+          send_to_id: this.currentChat_usr.user_id,
+          loading: true,
+        });
+        this.sendImageMessageToSocket(file.random_id, file, timeStamp);
+      } else {
         this.chatroom_msgs.push({
           recieved: 0,
           file: 1,
           file_data: JSON.stringify({
-            ext: files[index]["ext"],
-            name: files[index]["name"],
-            size: files[index]["size"],
+            ext: file["ext"],
+            name: file["name"],
+            size: file["size"],
           }),
+          file_path: `${file.random_id}.${file["ext"]}`,
+          message_id: file.random_id,
+          send_to_id: this.currentChat_usr.user_id,
           time: timeStamp,
         });
 
-        var chat_sender_data = {
-          user_id: this.userId,
-          message_id: random_id,
-          send_to_id: this.currentChat_usr.user_id,
-          recieved: 0,
-        };
+        this.sendFileMessageToSocket(file.random_id, file, timeStamp);
+      }
+    });
+  }
 
-        var chat_recipient_data = {
-          user_id: this.currentChat_usr.user_id,
-          message_id: random_id,
-          sender_id: this.userId,
-          recieved: 1,
-          read: 0,
-        };
+  async sendFileMsg(files: any[], image: boolean) {
+    if (files != undefined && files.length != 0 && files != null) {
+      this.sending_new_message = true;
+      var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
 
-        var chat_message_data = {
-          message_id: random_id,
-          message: "",
-          file: 1,
-          file_data: JSON.stringify({
-            ext: files[index]["ext"],
-            name: files[index]["name"],
-            size: files[index]["size"],
-          }),
-          file_path: `${random_id}.${files[index]["ext"]}`,
-          image: 0,
-          image_data: "",
-          image_path: "",
-          time: timeStamp,
-        };
+      let upload_data = [];
+      var loop_completed = false;
+      for (let index = 0; index < files.length; index++) {
+        var random_id = this.otherServices.generateRandomID();
+        var data = this.setupData(random_id, files[index], timeStamp, image);
 
-        var data = {
-          chat_sender_data: chat_sender_data,
-          chat_recipient_data: chat_recipient_data,
-          chat_message_data: chat_message_data,
-        };
+        upload_data.push({
+          data: files[index]["data"],
+          fileID: random_id,
+          ext: files[index]["ext"],
+        });
 
-        this.sendFileMessageToSocket(random_id, files[index], timeStamp);
+        Object.assign(files[index], { random_id: random_id });
 
-        this.apiService
-          .sendChatMessage(JSON.stringify(data))
-          .subscribe((val) => {});
-
-        this.apiService
-          .uploadFileChat(
-            JSON.stringify({
-              file: files[index]["data"],
-              fileID: random_id,
-              ext: files[index]["ext"],
-            })
-          )
-          .subscribe((e) => {
-            console.log(e);
-          });
+        this.apiService.sendChatMessage(JSON.stringify(data)).subscribe(() => {
+          if (loop_completed == false) {
+            if (upload_data.length == files.length) {
+              loop_completed = true;
+              this.apiService
+                .uploadFileChat(JSON.stringify(upload_data))
+                .subscribe((e) => {
+                  console.log(e);
+                })
+                .add(() => {
+                  this.sending_new_message = false;
+                  this.pushToChatRoom(files, timeStamp, image);
+                });
+            }
+          }
+        });
       }
 
       if (!this.chats.includes(this.currentChat_usr)) {
@@ -383,6 +544,26 @@ export class UserChatsComponent implements OnInit {
     }
   }
 
+  onImageError(msg, i) {
+    console.log("image got error");
+    setTimeout(() => {
+      msg.image_path = this.chatroom_msgs[i].image_path;
+      msg.loading = false;
+    }, 3000);
+  }
+
+  onImageLoad(msg, i) {
+    msg.loading = false;
+
+    $(`#chat_img${i}`).css("display", "block");
+
+    console.log("image not loaded");
+  }
+
+  onPaste(e) {
+    new String(this.sending_msg).trim().replace(/[\r\n]+/, " ");
+  }
+
   sendMsg() {
     if (this.sending_msg != undefined && this.sending_msg != "") {
       var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
@@ -390,6 +571,7 @@ export class UserChatsComponent implements OnInit {
       this.chatroom_msgs.push({
         recieved: 0,
         file: 0,
+        image: 0,
         message: this.sending_msg,
         time: timeStamp,
       });
@@ -458,6 +640,7 @@ export class UserChatsComponent implements OnInit {
       send_to_id: this.currentChat_usr.user_id,
       recieved: 1,
       file: 0,
+      image: 0,
       message: msg,
       time: timeStamp,
       profile_photo: this.user.profile_photo,
@@ -487,6 +670,33 @@ export class UserChatsComponent implements OnInit {
       message: "",
       time: timeStamp,
       profile_photo: this.user.profile_photo,
+    };
+    this.chatService.sendMessage(JSON.stringify(data));
+  }
+
+  sendImageMessageToSocket(random_id, file, timeStamp) {
+    var userData = localStorage.getItem("currentUser");
+    var user = JSON.parse(userData);
+    var data = {
+      sender_id: this.userId,
+      user_id: this.userId,
+      firstname: user[0]["firstname"],
+      lastname: user[0]["lastname"],
+      auth_type: user[0]["auth_type"],
+      message_id: random_id,
+      send_to_id: this.currentChat_usr.user_id,
+      recieved: 1,
+      image: 1,
+      image_data: JSON.stringify({
+        ext: file["ext"],
+        name: file["name"],
+        size: file["size"],
+      }),
+      image_path: `${random_id}.${file["ext"]}`,
+      message: "",
+      time: timeStamp,
+      profile_photo: this.user.profile_photo,
+      loading: true,
     };
     this.chatService.sendMessage(JSON.stringify(data));
   }

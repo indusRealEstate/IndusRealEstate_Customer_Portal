@@ -330,6 +330,52 @@
       .message-coming-wrp {
         display: flex;
         justify-content: left;
+
+        .more-actions {
+          opacity: 0;
+          display: flex;
+          align-items: center;
+          transition: 0.2s all ease-in-out;
+
+          .download-file {
+            padding: 1rem 0;
+            width: 17px;
+            cursor: pointer;
+            transition: 0.2s all ease-in-out;
+            filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
+              brightness(101%) contrast(89%);
+
+            &:hover {
+              transform: scaleY(1.1) scaleX(1.1);
+              filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+                brightness(90%) contrast(83%);
+            }
+          }
+        }
+
+        &:hover {
+          .more-actions {
+            opacity: 1;
+            display: flex;
+            align-items: center;
+
+            .download-file {
+              padding: 1rem 0;
+              width: 17px;
+              cursor: pointer;
+              transition: 0.2s all ease-in-out;
+              filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
+                brightness(101%) contrast(89%);
+
+              &:hover {
+                transform: scaleY(1.1) scaleX(1.1);
+                filter: invert(79%) sepia(23%) saturate(1398%)
+                  hue-rotate(355deg) brightness(90%) contrast(83%);
+              }
+            }
+          }
+        }
+
         .message-coming {
           text-align: left;
           background: rgb(231 189 51 / 22%);
@@ -337,6 +383,7 @@
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
+          max-width: 40rem;
 
           .msg {
             font-size: 15px;
@@ -369,6 +416,52 @@
       .message-send-wrp {
         display: flex;
         justify-content: right;
+
+        .more-actions {
+          opacity: 0;
+          display: flex;
+          align-items: center;
+          transition: 0.2s all ease-in-out;
+
+          .download-file {
+            padding: 1rem 0;
+            width: 17px;
+            cursor: pointer;
+            transition: 0.2s all ease-in-out;
+            filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
+              brightness(101%) contrast(89%);
+
+            &:hover {
+              transform: scaleY(1.1) scaleX(1.1);
+              filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+                brightness(90%) contrast(83%);
+            }
+          }
+        }
+
+        &:hover {
+          .more-actions {
+            opacity: 1;
+            display: flex;
+            align-items: center;
+
+            .download-file {
+              padding: 1rem 0;
+              width: 17px;
+              cursor: pointer;
+              transition: 0.2s all ease-in-out;
+              filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
+                brightness(101%) contrast(89%);
+
+              &:hover {
+                transform: scaleY(1.1) scaleX(1.1);
+                filter: invert(79%) sepia(23%) saturate(1398%)
+                  hue-rotate(355deg) brightness(90%) contrast(83%);
+              }
+            }
+          }
+        }
+
         .message-send {
           text-align: right;
           background: rgb(231 189 51 / 22%);
@@ -376,6 +469,7 @@
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
           border-bottom-left-radius: 10px;
+          max-width: 40rem;
 
           .msg {
             font-size: 15px;
