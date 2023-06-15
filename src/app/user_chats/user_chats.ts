@@ -59,6 +59,8 @@ export class UserChatsComponent implements OnInit {
 
   all_chats: any[] = [];
 
+  unread_chats: any[] = [];
+
   socket_dups: any[] = [];
 
   uploadedFiles: any[] = [];
@@ -144,6 +146,12 @@ export class UserChatsComponent implements OnInit {
       JSON.stringify({ msg_id: msg.message_id, send_to_id: msg.send_to_id })
     );
     this.chatroom_msgs.splice(i, 1);
+
+    for (let index = 0; index < this.all_chats.length; index++) {
+      if (msg.message_id == this.all_chats[index].message_id) {
+        this.all_chats.splice(index, 1);
+      }
+    }
   }
 
   attachFile() {
@@ -223,8 +231,6 @@ export class UserChatsComponent implements OnInit {
           return 0;
         });
 
-        this.chats = this.all_chats;
-
         var dup = [];
         this.chats = this.all_chats.filter(
           (item) => !dup.includes(item.user_id) && dup.push(item.user_id)
@@ -232,23 +238,24 @@ export class UserChatsComponent implements OnInit {
 
         var e = val.filter((i) => i.recieved == 1 && i.read == 0);
         var dup2 = [];
-        var unread = e.filter(
+        this.unread_chats = e.filter(
           (item) => !dup2.includes(item.user_id) && dup2.push(item.user_id)
         );
-
-        // console.log(unread);
-        for (let index = 0; index < unread.length; index++) {
-          for (let index = 0; index < this.chats.length; index++) {
-            if (unread[index].user_id == this.chats[index].user_id) {
-              Object.assign(this.chats[index], { new_msg: true });
-            }
-          }
-        }
       })
       .add(() => {
         this.chats_loading = false;
         this.initFunction();
         this.temp_chats = this.chats;
+        
+        if (this.chats.length != 0 && this.unread_chats.length != 0) {
+          this.unread_chats.forEach((un) => {
+            this.chats.forEach((ch) => {
+              if (un.user_id == ch.user_id) {
+                Object.assign(ch, { new_msg: true });
+              }
+            });
+          });
+        }
       });
   }
 
@@ -271,9 +278,18 @@ export class UserChatsComponent implements OnInit {
           for (let index = 0; index < this.allClients.length; index++) {
             if (this.allClients[index].user_id == new_chat.sender_id) {
               // console.log("new user msg");
-              var obj = this.allClients[index];
-              Object.assign(obj, { new_msg: true });
-              this.chats.push(obj);
+
+              var e = this.chats.filter(
+                (v) => v.user_id == this.allClients[index].user_id
+              );
+
+              if (e.length == 0) {
+                var obj = this.allClients[index];
+                Object.assign(obj, {
+                  new_msg: true,
+                });
+                this.chats.push(obj);
+              }
             }
           }
 
@@ -360,9 +376,12 @@ export class UserChatsComponent implements OnInit {
                 Object.assign(this.all_chats[index], { loading: true });
               }
               this.chatroom_msgs.push(this.all_chats[index]);
-              this.apiService
-                .updateChatRead(this.all_chats[index].message_id)
-                .subscribe((v) => {});
+
+              if (this.all_chats[index].recipient_id == this.userId) {
+                this.apiService
+                  .updateChatRead(this.all_chats[index].message_id)
+                  .subscribe((v) => {});
+              }
             }
           }
         }
@@ -379,9 +398,12 @@ export class UserChatsComponent implements OnInit {
             this.all_chats[index]["sender_id"] == this.currentChat_usr.user_id
           ) {
             this.chatroom_msgs.push(this.all_chats[index]);
-            this.apiService
-              .updateChatRead(this.all_chats[index].message_id)
-              .subscribe((v) => {});
+
+            if (this.all_chats[index].recipient_id == this.userId) {
+              this.apiService
+                .updateChatRead(this.all_chats[index].message_id)
+                .subscribe((v) => {});
+            }
           }
         }
       }
@@ -440,7 +462,7 @@ export class UserChatsComponent implements OnInit {
       };
 
       var chat_recipient_data = {
-        user_id: this.currentChat_usr.user_id,
+        recipient_id: this.currentChat_usr.user_id,
         message_id: random_id,
         sender_id: this.userId,
         recieved: 1,
@@ -471,7 +493,7 @@ export class UserChatsComponent implements OnInit {
       };
 
       var chat_recipient_data = {
-        user_id: this.currentChat_usr.user_id,
+        recipient_id: this.currentChat_usr.user_id,
         message_id: random_id,
         sender_id: this.userId,
         recieved: 1,
@@ -634,7 +656,7 @@ export class UserChatsComponent implements OnInit {
       };
 
       var chat_recipient_data = {
-        user_id: this.currentChat_usr.user_id,
+        recipient_id: this.currentChat_usr.user_id,
         message_id: random_id,
         sender_id: this.userId,
         recieved: 1,
