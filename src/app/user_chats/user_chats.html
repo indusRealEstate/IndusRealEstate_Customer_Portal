@@ -44,6 +44,13 @@
                     (click)="newChatOpen(c)"
                   >
                     <div
+                      matTooltip="{{c.firstname | titlecase}} is Online."
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      *ngIf="c.online == true"
+                      class="online"
+                    ></div>
+                    <div
                       class=""
                       *ngIf="c.profile_photo != ''"
                       style="
@@ -153,6 +160,14 @@
                   "
                 />
 
+                <div
+                  matTooltip="{{c.firstname | titlecase}} is Online."
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  *ngIf="c.online == true"
+                  class="online"
+                ></div>
+
                 <div class="col my-auto">
                   <p class="m-0 client-name">
                     {{c.firstname | titlecase}} {{c.lastname | titlecase}}
@@ -247,7 +262,19 @@
 
           <div class="col my-auto" *ngIf="currentChat_usr != undefined">
             <p class="m-0 name">{{currentChat_usr.firstname | titlecase}}</p>
-            <p class="m-0 status">Active 2 hours ago</p>
+            <p
+              *ngIf="currentChat_usr.online == false || currentChat_usr.online == undefined"
+              class="m-0 status"
+            >
+              Active 2 hours ago
+            </p>
+            <p
+              *ngIf="currentChat_usr.online == true"
+              class="m-0 status"
+              style="font-weight: 700; color: #00c700bf"
+            >
+              Online
+            </p>
           </div>
           <img
             class="more my-auto mr-2"

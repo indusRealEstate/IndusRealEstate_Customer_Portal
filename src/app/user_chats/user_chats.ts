@@ -246,7 +246,7 @@ export class UserChatsComponent implements OnInit {
         this.chats_loading = false;
         this.initFunction();
         this.temp_chats = this.chats;
-        
+
         if (this.chats.length != 0 && this.unread_chats.length != 0) {
           this.unread_chats.forEach((un) => {
             this.chats.forEach((ch) => {
@@ -261,6 +261,51 @@ export class UserChatsComponent implements OnInit {
 
   initFunction() {
     this.chatService.socket_connect();
+    this.chatService.user_online(JSON.stringify({ user_id: this.userId }));
+
+    this.chatService.getUserOnline().subscribe((usr) => {
+      var user = JSON.parse(usr);
+      // console.log(user);
+
+      this.allClients.forEach((va) => {
+        if (va.user_id == user.user_id) {
+          Object.assign(va, { online: true });
+        }
+      });
+
+      this.all_chats.forEach((alch) => {
+        if (alch.user_id == user.user_id) {
+          Object.assign(alch, { online: true });
+        }
+      });
+
+      this.chats.forEach((ch) => {
+        if (ch.user_id == user.user_id) {
+          Object.assign(ch, { online: true });
+        }
+      });
+    });
+
+    this.chatService.getUserLeave().subscribe((usr) => {
+      var user = JSON.parse(usr);
+      // console.log(user);
+
+      this.allClients.forEach((va) => {
+        if (va.user_id == user.user_id) {
+          if (va.online != undefined) {
+            va.online = false;
+          }
+        }
+      });
+
+      this.chats.forEach((ch) => {
+        if (ch.user_id == user.user_id) {
+          if (ch.online != undefined) {
+            ch.online = false;
+          }
+        }
+      });
+    });
 
     this.chatService.getMessage().subscribe((v) => {
       var new_chat = JSON.parse(v);
@@ -771,5 +816,6 @@ export class UserChatsComponent implements OnInit {
   ngOnDestroy() {
     this.chatService.getMessage().subscribe().unsubscribe();
     this.chatService.socket_disconnect();
+    this.chatService.user_leave(JSON.stringify({ user_id: this.userId }));
   }
 }

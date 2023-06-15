@@ -30,6 +30,14 @@ export class ChatService {
     });
   }
 
+  user_online(userData) {
+    this.socket.emit("user", userData);
+  }
+
+  user_leave(userData) {
+    this.socket.emit("user_leave", userData);
+  }
+
   createChatRoom() {
     this.socket.emit("room");
   }
@@ -40,6 +48,22 @@ export class ChatService {
 
   deleteMessage(msg: string) {
     this.socket.emit("delete_chat", msg);
+  }
+
+  getUserOnline() {
+    return new Observable((observer: Observer<any>) => {
+      this.socket.on("online", (userData: string) => {
+        observer.next(userData);
+      });
+    });
+  }
+
+  getUserLeave() {
+    return new Observable((observer: Observer<any>) => {
+      this.socket.on("not_online", (userData: string) => {
+        observer.next(userData);
+      });
+    });
   }
 
   getMessage() {
