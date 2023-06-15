@@ -114,8 +114,6 @@ export class UserChatsComponent implements OnInit {
   }
 
   deleteMessage(msg, i) {
-    this.chatroom_msgs.splice(i, 1);
-    // console.log(msg);
     this.apiService
       .deleteChatMessage({ message_id: msg.message_id })
       .subscribe((v) => {
@@ -137,6 +135,7 @@ export class UserChatsComponent implements OnInit {
     this.chatService.deleteMessage(
       JSON.stringify({ msg_id: msg.message_id, send_to_id: msg.send_to_id })
     );
+    this.chatroom_msgs.splice(i, 1);
   }
 
   attachFile() {
@@ -225,7 +224,7 @@ export class UserChatsComponent implements OnInit {
 
     this.chatService.getMessage().subscribe((v) => {
       var new_chat = JSON.parse(v);
-      // console.log(new_chat);
+      console.log(new_chat, "new msg");
 
       if (new_chat.send_to_id == this.userId) {
         this.all_chats.push(new_chat);
@@ -259,6 +258,7 @@ export class UserChatsComponent implements OnInit {
 
     this.chatService.getDeletedMessage().subscribe((e) => {
       var message = JSON.parse(e);
+      console.log(message, "deleted");
       if (message.send_to_id == this.userId) {
         for (let index = 0; index < this.all_chats.length; index++) {
           if (message.msg_id == this.all_chats[index].message_id) {
@@ -567,6 +567,7 @@ export class UserChatsComponent implements OnInit {
   sendMsg() {
     if (this.sending_msg != undefined && this.sending_msg != "") {
       var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
+      var random_id = this.otherServices.generateRandomID();
 
       this.chatroom_msgs.push({
         recieved: 0,
@@ -574,13 +575,15 @@ export class UserChatsComponent implements OnInit {
         image: 0,
         message: this.sending_msg,
         time: timeStamp,
+        message_id: random_id,
+        send_to_id: this.currentChat_usr.user_id,
       });
 
       if (!this.chats.includes(this.currentChat_usr)) {
         this.chats.push(this.currentChat_usr);
       }
 
-      var random_id = this.otherServices.generateRandomID();
+      
       var chat_sender_data = {
         user_id: this.userId,
         message_id: random_id,
