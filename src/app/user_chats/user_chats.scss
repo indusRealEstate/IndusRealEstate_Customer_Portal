@@ -327,9 +327,21 @@
 
     .messages-bar {
       scroll-behavior: smooth;
+
+      .overlay-bg {
+        position: absolute;
+        background-image: url("../../assets/img/test-svg/pattern-30.svg");
+        width: 97%;
+        height: 72%;
+        opacity: 12%;
+        margin-top: 10px;
+      }
+
       .message-coming-wrp {
         display: flex;
         justify-content: left;
+        z-index: 10;
+        position: relative;
 
         .more-actions {
           opacity: 0;
@@ -364,13 +376,11 @@
               width: 17px;
               cursor: pointer;
               transition: 0.2s all ease-in-out;
-              filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
-                brightness(101%) contrast(89%);
+              filter: invert(59%) sepia(85%) saturate(2753%) hue-rotate(19deg)
+                brightness(92%) contrast(101%);
 
               &:hover {
                 transform: scaleY(1.1) scaleX(1.1);
-                filter: invert(79%) sepia(23%) saturate(1398%)
-                  hue-rotate(355deg) brightness(90%) contrast(83%);
               }
             }
           }
@@ -416,6 +426,8 @@
       .message-send-wrp {
         display: flex;
         justify-content: right;
+        z-index: 10;
+        position: relative;
 
         .more-actions {
           opacity: 0;
@@ -450,13 +462,11 @@
               width: 17px;
               cursor: pointer;
               transition: 0.2s all ease-in-out;
-              filter: invert(70%) sepia(0%) saturate(24%) hue-rotate(142deg)
-                brightness(101%) contrast(89%);
+              filter: invert(59%) sepia(85%) saturate(2753%) hue-rotate(19deg)
+                brightness(92%) contrast(101%);
 
               &:hover {
                 transform: scaleY(1.1) scaleX(1.1);
-                filter: invert(79%) sepia(23%) saturate(1398%)
-                  hue-rotate(355deg) brightness(90%) contrast(83%);
               }
             }
           }

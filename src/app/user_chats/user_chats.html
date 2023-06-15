@@ -31,7 +31,12 @@
                       src="assets/img/svg/searchbar/search-normal-1.svg"
                       alt=""
                     />
-                    <input type="text" placeholder="Search" />
+                    <input
+                      (keyup)="serachChats('clients')"
+                      [(ngModel)]="search_clients"
+                      type="text"
+                      placeholder="Search"
+                    />
                   </div>
                   <div
                     class="all-c row m-0"
@@ -82,7 +87,12 @@
                 src="assets/img/svg/searchbar/search-normal-1.svg"
                 alt=""
               />
-              <input type="text" placeholder="Search" />
+              <input
+                (keyup)="serachChats('chats')"
+                [(ngModel)]="search_chats"
+                type="text"
+                placeholder="Search"
+              />
             </div>
           </div>
 
@@ -246,6 +256,19 @@
           />
         </div>
         <div
+          *ngIf="currentChat_usr == undefined"
+          style="
+            height: 85%;
+            margin: 2rem 1rem;
+            display: flex;
+            width: 97%;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <img style="height: 20rem" src="assets/img/bg/chat-bg.png" alt="" />
+        </div>
+        <div
           #msg_bar
           *ngIf="currentChat_usr != undefined"
           class="messages-bar"
@@ -257,6 +280,7 @@
             padding-bottom: 10px;
           "
         >
+          <div class="overlay-bg"></div>
           <div
             *ngFor="let m of chatroom_msgs;let i = index"
             [ngClass]="m.recieved == 0 ? 'message-send-wrp' : 'message-coming-wrp'"
@@ -267,6 +291,7 @@
             >
               <div class="row m-0">
                 <img
+                  [cdkCopyToClipboard]="m.message"
                   matTooltip="Copy Message"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
@@ -288,10 +313,11 @@
             <div
               class="mt-3"
               [ngClass]="m.recieved == 0 ? 'message-send' : 'message-coming'"
-              [ngStyle]="{'background' : m.file == 1 ? 'rgb(231 189 51 / 7%)' : 'rgba(231,189,51,.22)', 'border' : m.file == 1 ? '1px solid #be8e0047' : 'none'}"
+              [ngStyle]="{'background' : m.file == 1 ? 'rgb(255 252 244)' : 'rgb(255 244 207)', 'border' : m.file == 1 ? '1px solid #be8e0047' : 'none'}"
             >
               <div *ngIf="m.file == 0 && m.image == 0">
-                <span class="m-0 msg">{{m.message}}</span> <br />
+                <span class="m-0 msg">{{m.message}}</span>
+                <br />
                 <span class="m-0 time">{{m.time | date : 'shortTime'}}</span>
               </div>
               <div class="row m-0" *ngIf="m.file == 1">
@@ -419,6 +445,7 @@
             >
               <div class="row m-0">
                 <img
+                  [cdkCopyToClipboard]="m.message"
                   matTooltip="Copy Message"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"

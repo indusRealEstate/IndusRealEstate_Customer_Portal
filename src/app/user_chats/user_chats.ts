@@ -30,9 +30,17 @@ export class UserChatsComponent implements OnInit {
 
   sending_msg: any;
 
+  search_chats: any = "";
+
+  search_clients: any = "";
+
   chats: any[] = [0, 1, 0, 1];
 
+  temp_chats: any[] = [];
+
   allClients: any[] = [];
+
+  allClients_temp: any[] = [];
 
   chats_loading: boolean = false;
 
@@ -175,6 +183,30 @@ export class UserChatsComponent implements OnInit {
     return this.otherServices.formatBytes(size);
   }
 
+  serachChats(type) {
+    if (type == "chats") {
+      if (this.search_chats != "") {
+        var searchText = new String(this.search_chats).trim().toLowerCase();
+
+        this.chats = this.temp_chats.filter((v) =>
+          new String(v.firstname).trim().toLowerCase().includes(searchText)
+        );
+      } else {
+        this.chats = this.temp_chats;
+      }
+    } else if (type == "clients") {
+      if (this.search_clients != "") {
+        var searchText = new String(this.search_clients).trim().toLowerCase();
+
+        this.allClients = this.allClients_temp.filter((v) =>
+          new String(v.firstname).trim().toLowerCase().includes(searchText)
+        );
+      } else {
+        this.allClients = this.allClients_temp;
+      }
+    }
+  }
+
   getAllChats() {
     this.apiService
       .fetchAllChatMessages({ userId: this.userId })
@@ -216,6 +248,7 @@ export class UserChatsComponent implements OnInit {
       .add(() => {
         this.chats_loading = false;
         this.initFunction();
+        this.temp_chats = this.chats;
       });
   }
 
@@ -290,6 +323,7 @@ export class UserChatsComponent implements OnInit {
         this.allClients = va;
       })
       .add(() => {
+        this.allClients_temp = this.allClients;
         this.isAllClientsLoading = false;
       });
 
@@ -583,7 +617,6 @@ export class UserChatsComponent implements OnInit {
         this.chats.push(this.currentChat_usr);
       }
 
-      
       var chat_sender_data = {
         user_id: this.userId,
         message_id: random_id,

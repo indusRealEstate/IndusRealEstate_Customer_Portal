@@ -114,6 +114,7 @@ import { RequestsComponentMaintenance } from "app/requests/tenant-requests/maint
 import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tenant-move-in/tenant-move-in-req";
 import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
 import { UserChatsComponent } from "app/user_chats/user_chats";
+import { ClipboardModule } from "@angular/cdk/clipboard";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -173,6 +174,7 @@ import { UserChatsComponent } from "app/user_chats/user_chats";
     NgxCheckboxModule,
     DragDropModule,
     NgOptimizedImage,
+    ClipboardModule,
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
