@@ -257,7 +257,7 @@ export class UserChatsComponent implements OnInit {
 
     this.chatService.getMessage().subscribe((v) => {
       var new_chat = JSON.parse(v);
-      console.log(new_chat, "new msg");
+      // console.log(new_chat, "new msg");
 
       if (new_chat.send_to_id == this.userId) {
         this.all_chats.push(new_chat);
@@ -268,6 +268,15 @@ export class UserChatsComponent implements OnInit {
         }
 
         if (this.chats.length != 0 && this.chats != undefined) {
+          for (let index = 0; index < this.allClients.length; index++) {
+            if (this.allClients[index].user_id == new_chat.sender_id) {
+              // console.log("new user msg");
+              var obj = this.allClients[index];
+              Object.assign(obj, { new_msg: true });
+              this.chats.push(obj);
+            }
+          }
+
           for (let index = 0; index < this.chats.length; index++) {
             if (this.chats[index].user_id == new_chat.sender_id) {
               Object.assign(this.chats[index], { new_msg: true });
@@ -291,7 +300,7 @@ export class UserChatsComponent implements OnInit {
 
     this.chatService.getDeletedMessage().subscribe((e) => {
       var message = JSON.parse(e);
-      console.log(message, "deleted");
+      // console.log(message, "deleted");
       if (message.send_to_id == this.userId) {
         for (let index = 0; index < this.all_chats.length; index++) {
           if (message.msg_id == this.all_chats[index].message_id) {
