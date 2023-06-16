@@ -108,10 +108,12 @@ export class UserChatsComponent implements OnInit {
   @ViewChild("msg_bar") private currentChatScroll: ElementRef;
 
   scrollToBottom(): void {
-    try {
-      this.currentChatScroll.nativeElement.scrollTop =
-        this.currentChatScroll.nativeElement.scrollHeight;
-    } catch (err) {}
+    if (this.currentChatScroll != undefined) {
+      try {
+        this.currentChatScroll.nativeElement.scrollTop =
+          this.currentChatScroll.nativeElement.scrollHeight;
+      } catch (err) {}
+    }
   }
 
   isUserSignOut() {
@@ -264,36 +266,50 @@ export class UserChatsComponent implements OnInit {
     this.chatService.user_online(JSON.stringify({ user_id: this.userId }));
 
     this.chatService.getUserOnline().subscribe((usr) => {
-      var user = JSON.parse(usr);
-      // console.log(user);
+      var users: any[] = JSON.parse(usr);
+      // console.log(users, "joined_users");
 
       this.allClients.forEach((va) => {
-        if (va.user_id == user.user_id) {
-          Object.assign(va, { online: true });
-        }
+        users.forEach((u) => {
+          if (va.user_id == u.user_id) {
+            Object.assign(va, { online: true });
+          }
+        });
       });
 
       this.all_chats.forEach((alch) => {
-        if (alch.user_id == user.user_id) {
-          Object.assign(alch, { online: true });
-        }
+        users.forEach((u) => {
+          if (alch.user_id == u.user_id) {
+            Object.assign(alch, { online: true });
+          }
+        });
       });
 
       this.chats.forEach((ch) => {
-        if (ch.user_id == user.user_id) {
-          Object.assign(ch, { online: true });
-        }
+        users.forEach((u) => {
+          if (ch.user_id == u.user_id) {
+            Object.assign(ch, { online: true });
+          }
+        });
       });
     });
 
     this.chatService.getUserLeave().subscribe((usr) => {
       var user = JSON.parse(usr);
-      // console.log(user);
+      // console.log(user, "leaved_users");
 
       this.allClients.forEach((va) => {
         if (va.user_id == user.user_id) {
           if (va.online != undefined) {
             va.online = false;
+          }
+        }
+      });
+
+      this.all_chats.forEach((alch) => {
+        if (alch.user_id == user.user_id) {
+          if (alch.online != undefined) {
+            alch.online = false;
           }
         }
       });
@@ -311,9 +327,16 @@ export class UserChatsComponent implements OnInit {
       var new_chat = JSON.parse(v);
       // console.log(new_chat, "new msg");
 
+      if (new_chat.sender_id == this.userId) {
+        if (this.currentChat_usr != undefined) {
+          this.scrollToBottom();
+        }
+      }
+
       if (new_chat.send_to_id == this.userId) {
         this.all_chats.push(new_chat);
         if (this.currentChat_usr != undefined) {
+          this.scrollToBottom();
           if (this.currentChat_usr.user_id == new_chat.sender_id) {
             this.chatroom_msgs.push(new_chat);
           }
