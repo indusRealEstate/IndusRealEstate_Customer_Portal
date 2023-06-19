@@ -110,7 +110,7 @@ export class UserChatsComponent implements OnInit {
         all_cl.forEach((v) => {
           if (url.chat_uid == v.user_id) {
             this.currentChat_usr = v;
-            console.log("url init");
+            // console.log("url init");
             setTimeout(() => {
               this.newChatOpen(v, true);
             }, 1000);
@@ -276,6 +276,7 @@ export class UserChatsComponent implements OnInit {
     this.chatService.deletedMessage.subscribe((v) => {
       if (v != 0) {
         if (this.currentChat_usr != undefined) {
+          console.log(v);
           var d = this.chatroom_msgs.filter((m) => m.message_id == v.msg_id)[0];
           var i = this.chatroom_msgs.indexOf(d);
           this.chatroom_msgs.splice(i, 1);
@@ -409,7 +410,7 @@ export class UserChatsComponent implements OnInit {
       }
 
       if (url_opened == true) {
-        console.log("url chat....");
+        // console.log("url chat....");
         this._location.go(`/user-chats?uid=${this.userId}`);
         if (this.all_chats.length != 0) {
           for (let index = 0; index < this.all_chats.length; index++) {
