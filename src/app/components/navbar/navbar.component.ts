@@ -24,6 +24,9 @@ export class NavbarComponent implements OnInit {
   private sidebarVisible: boolean;
   user: User;
 
+  ///////////////--App Version--////////////////////
+  appVersion: any = "VERSION PROD v0.1.16";
+
   isUserAdmin: boolean = false;
 
   currentPage: any;

@@ -19,7 +19,7 @@ export const HOMEROUTE: RouteInfo[] = [
     title: "Overview",
     icon: "assets/img/svg/sidebar/activity.svg",
     class: "",
-  }
+  },
 ];
 
 export const HOMEROUTEADMIN: any[] = [
@@ -360,9 +360,6 @@ export class SidebarComponent implements OnInit {
   isCustomerCareOpened: boolean = false;
 
   currentPage: any;
-
-  ///////////////--App Version--////////////////////
-  appVersion: any = "VERSION PROD v0.1.15";
 
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 

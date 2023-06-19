@@ -383,16 +383,16 @@ export class UserChatsComponent implements OnInit {
       .getUser(this.userId)
       .subscribe((user) => {
         this.user = user[0];
+        this.chatService.allChatsPeople.subscribe((al_c_p) => {
+          this.chats = al_c_p;
+        });
 
         this.chatService.allChats.subscribe((al_c_v) => {
           this.all_chats = al_c_v;
         });
-
-        this.chatService.allChatsPeople.subscribe((al_c_p) => {
-          this.chats = al_c_p;
-        });
       })
       .add(() => {
+        this.chats_loading = false; 
         // console.log(this.chats, "client");
         this.initFunction();
         var e = this.all_chats.filter((i) => i.recieved == 1 && i.read == 0);
@@ -401,7 +401,6 @@ export class UserChatsComponent implements OnInit {
           (item) => !dup2.includes(item.user_id) && dup2.push(item.user_id)
         );
 
-        this.chats_loading = false;
         this.temp_chats = this.chats;
         this.allClients_temp = this.allClients;
         this.isAllClientsLoading = false;

@@ -268,12 +268,7 @@
             >
               Active 2 hours ago
             </p>
-            <p
-              *ngIf="is_user_typing == true"
-              class="m-0 status"
-            >
-              Typing...
-            </p>
+            <p *ngIf="is_user_typing == true" class="m-0 status">Typing...</p>
 
             <p
               *ngIf="currentChat_usr.online == true && is_user_typing == false"
@@ -514,6 +509,7 @@
           *ngIf="currentChat_usr != undefined"
         >
           <textarea
+            (keyup.enter)="sendMsg()"
             (keyup)="currentUserTyping()"
             (paste)="onPaste($event)"
             [(ngModel)]="sending_msg"
@@ -542,7 +538,7 @@
                 src="assets/img/svg/image.svg"
                 alt=""
               />
-              <img
+              <!-- <img
                 matTooltip="Emoji"
                 matTooltipClass="tooltip"
                 matTooltipPosition="above"
@@ -550,7 +546,7 @@
                 class="bottom-bar-btns"
                 src="assets/img/svg/smile.svg"
                 alt=""
-              />
+              /> -->
             </div>
 
             <img
