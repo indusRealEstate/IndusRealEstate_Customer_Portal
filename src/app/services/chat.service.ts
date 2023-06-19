@@ -54,8 +54,32 @@ export class ChatService implements OnDestroy {
     this.socket.emit("new_chat", msg);
   }
 
+  userTyping(usr: string) {
+    this.socket.emit("user_typing", usr);
+  }
+
+  userNotTyping(usr: string) {
+    this.socket.emit("user_not_typing", usr);
+  }
+
   deleteMessage(msg: string) {
     this.socket.emit("delete_chat", msg);
+  }
+
+  getUserTyping() {
+    return new Observable((observer: Observer<any>) => {
+      this.socket.on("user_typing_data", (userData: string) => {
+        observer.next(userData);
+      });
+    });
+  }
+
+  getUserNotTyping() {
+    return new Observable((observer: Observer<any>) => {
+      this.socket.on("user_not_typing_data", (userData: string) => {
+        observer.next(userData);
+      });
+    });
   }
 
   getUserOnline() {
@@ -202,6 +226,9 @@ export class ChatService implements OnDestroy {
   public newRecievedMessage: BehaviorSubject<any> = new BehaviorSubject<any>(0);
   public deletedMessage: BehaviorSubject<any> = new BehaviorSubject<any>(0);
 
+  public typingUser: BehaviorSubject<any> = new BehaviorSubject<any>(0);
+  public notTypingUser: BehaviorSubject<any> = new BehaviorSubject<any>(0);
+
   setupMessageEmitter(user_id) {
     this.getMessage().subscribe((v) => {
       var new_chat = JSON.parse(v);
@@ -216,6 +243,22 @@ export class ChatService implements OnDestroy {
       // console.log(message, "deleted");
       if (message.send_to_id == user_id) {
         this.deletedMessage.next(message);
+      }
+    });
+
+    this.getUserTyping().subscribe((u) => {
+      var usr = JSON.parse(u);
+      if (usr.send_to_id == user_id) {
+        // console.log(usr);
+        this.typingUser.next(usr);
+      }
+    });
+
+    this.getUserNotTyping().subscribe((u_n) => {
+      var usr_n = JSON.parse(u_n);
+      if (usr_n.send_to_id == user_id) {
+        // console.log(usr);
+        this.notTypingUser.next(usr_n);
       }
     });
   }

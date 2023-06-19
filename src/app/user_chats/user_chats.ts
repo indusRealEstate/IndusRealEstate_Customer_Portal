@@ -1,4 +1,4 @@
-import { formatDate } from "@angular/common";
+import { Location, formatDate } from "@angular/common";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {
   Component,
@@ -15,8 +15,6 @@ import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { ChatService } from "app/services/chat.service";
 import { OtherServices } from "app/services/other.service";
-import { Location } from "@angular/common";
-import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "user-chats",
@@ -30,7 +28,7 @@ export class UserChatsComponent implements OnInit {
   userId: any;
   user: any;
 
-  sending_msg: any;
+  sending_msg: any = "";
 
   search_chats: any = "";
 
@@ -49,6 +47,8 @@ export class UserChatsComponent implements OnInit {
   currentChat_usr: any;
 
   sidebarChatOpened: boolean = false;
+
+  is_user_typing: boolean = false;
 
   isAllClientsLoading: boolean = false;
 
@@ -146,6 +146,14 @@ export class UserChatsComponent implements OnInit {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
     }
+  }
+
+  currentUserTyping() {
+    var usr = JSON.stringify({
+      user_id: this.userId,
+      send_to_id: this.currentChat_usr.user_id,
+    });
+    this.chatService.userTyping(usr);
   }
 
   deleteMessage(msg, i) {
@@ -267,6 +275,11 @@ export class UserChatsComponent implements OnInit {
               this.chats.push(sended_user_al_ch);
             }
           }
+
+          if (this.chats.length != 0) {
+            var i = this.chats.indexOf(sended_user[0]);
+            this.otherServices.array_move(this.chats, i, 0);
+          }
         }
       })
       .add(() => {
@@ -333,6 +346,34 @@ export class UserChatsComponent implements OnInit {
         }
       }
     });
+
+    this.chatService.typingUser.subscribe((t_u) => {
+      if (this.currentChat_usr != undefined) {
+        if (this.currentChat_usr.user_id == t_u.user_id) {
+          this.is_user_typing = true;
+        }
+      }
+    });
+
+    this.chatService.notTypingUser.subscribe((n_t_u) => {
+      if (this.currentChat_usr != undefined) {
+        if (this.currentChat_usr.user_id == n_t_u.user_id) {
+          this.is_user_typing = false;
+        }
+      }
+    });
+  }
+
+  ngDoCheck() {
+    if (this.currentChat_usr != undefined) {
+      if (this.sending_msg == "") {
+        var usr = JSON.stringify({
+          user_id: this.userId,
+          send_to_id: this.currentChat_usr.user_id,
+        });
+        this.chatService.userNotTyping(usr);
+      }
+    }
   }
 
   ngOnInit() {
