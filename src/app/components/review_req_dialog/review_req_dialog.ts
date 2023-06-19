@@ -15,6 +15,7 @@ import { ApiService } from "app/services/api.service";
 import { RelatedDocsDialog } from "../related-documents/related-documents";
 import { RequestTimelineComponent } from "../request-timeline/request-timeline";
 import { ViewTenantDialog } from "../view-tenant-dialog/view-tenant-dialog";
+import { ChatService } from "app/services/chat.service";
 
 @Component({
   selector: "review_req_dialog",
@@ -26,6 +27,7 @@ export class ReviewRequestDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ReviewRequestDialog>,
     private apiService: ApiService,
+    private chatService: ChatService,
     private router: Router,
     private dialog?: MatDialog
   ) {
@@ -33,6 +35,7 @@ export class ReviewRequestDialog implements OnInit {
     this.req_section = data["section"];
   }
 
+  is_user_online: boolean = false;
   request_data: any;
   req_section: any;
 
@@ -42,7 +45,26 @@ export class ReviewRequestDialog implements OnInit {
   @ViewChild("req_procs") req_procs: RequestTimelineComponent;
   @ViewChild("user_data_mini_tab") user_data_mini_tab: ElementRef;
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.req_section != "my-reqs" && this.req_section != "recent") {
+      var requested_user_id = new String(this.request_data.profile_photo).split(
+        "."
+      )[0];
+      this.chatService.new_joined_users.subscribe((n_j_u) => {
+        n_j_u.forEach((v) => {
+          if (v.user_id == requested_user_id) {
+            this.is_user_online = true;
+          }
+        });
+      });
+
+      this.chatService.leaved_user.subscribe((l_u) => {
+        if (l_u.user_id == requested_user_id) {
+          this.is_user_online = false;
+        }
+      });
+    }
+  }
 
   ngAfterViewInit() {
     if (this.req_procs != undefined) {
@@ -72,12 +94,25 @@ export class ReviewRequestDialog implements OnInit {
   }
 
   viewUserDetailsMiniTab(state) {
-    if (state == "enter") {
-      // setTimeout(() => {
-      this.user_data_mini_tab.nativeElement.style.display = "block";
-      // }, 500);
-    } else if (state == "leave") {
-      this.user_data_mini_tab.nativeElement.style.display = "none";
+    if (this.req_section != "my-reqs" && this.req_section != "recent") {
+      if (state == "enter") {
+        // setTimeout(() => {
+        this.user_data_mini_tab.nativeElement.style.display = "block";
+        // }, 500);
+      } else if (state == "leave") {
+        this.user_data_mini_tab.nativeElement.style.display = "none";
+      }
+    }
+  }
+
+  changeStatus() {
+    if (
+      this.request_data.status == "pending" ||
+      this.request_data.status == "review"
+    ) {
+      return "Approve";
+    } else {
+      return "Audit Again";
     }
   }
 
@@ -152,7 +187,11 @@ export class ReviewRequestDialog implements OnInit {
   }
 
   getUserAppState() {
-    return "online-app-status";
+    if (this.is_user_online == true) {
+      return "online-app-status";
+    } else {
+      return "offline-app-status";
+    }
   }
 
   viewRequestDoc() {

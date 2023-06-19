@@ -170,8 +170,13 @@
             Request Document
           </div>
         </div>
-        <div class="col-1 pl-0">
-          <div class="btn contact-btns">Message</div>
+        <div class="col-1 pl-0" *ngIf="req_section == 'my-reqs'">
+          <div class="btn contact-btns" style="min-width: 9rem">
+            Send Reminder
+          </div>
+        </div>
+        <div class="col-1 pl-0" *ngIf="req_section != 'my-reqs'">
+          <div class="btn contact-btns" style="min-width: 8rem">{{changeStatus()}}</div>
           <div class="btn contact-btns">Report</div>
         </div>
       </div>

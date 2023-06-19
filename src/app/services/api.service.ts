@@ -1,16 +1,21 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { OtherServices } from "./other.service";
+import { ChatService } from "./chat.service";
 
 const API_URL = "https://indusre.app/api/user";
 const BASE_URL_IMAGES = "https://indusre.app/api/upload/img/properties";
 const BASE_URL_DOC = "https://indusre.app/api/upload/doc/user-documents";
 
 @Injectable({ providedIn: "root" })
-export class ApiService {
-  constructor(public http: HttpClient, private otherServices: OtherServices) {}
+export class ApiService implements OnDestroy {
+  constructor(
+    public http: HttpClient,
+    private otherServices: OtherServices,
+    private chatService: ChatService
+  ) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
@@ -266,6 +271,8 @@ export class ApiService {
 
   ///chatroom api calls.....//////////////////////////////////////////////////
 
+  ngOnDestroy(): void {}
+
   fetchAllCLientsForChat(data: any) {
     const url = `${API_URL}/fetchAllCLientsForChat.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
@@ -277,6 +284,15 @@ export class ApiService {
 
   fetchAllChatMessages(data: any) {
     const url = `${API_URL}/fetchAllChatMessages.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  fetchAllPeopleSendChats(data: any) {
+    const url = `${API_URL}/fetchAllPeopleSendChats.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;

@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 import { User } from "../../../../models/user/user.model";
 import { OtherServices } from "app/services/other.service";
+import { ChatService } from "app/services/chat.service";
 
 @Component({
   selector: "app-navbar",
@@ -35,7 +36,8 @@ export class NavbarComponent implements OnInit {
     private element: ElementRef,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
+    private chatService: ChatService
   ) {
     this.location = location;
     this.sidebarVisible = false;
@@ -143,9 +145,12 @@ export class NavbarComponent implements OnInit {
   userLogOut() {
     this.otherServices.isLogoutProcessing.next(true);
     this.authenticationService.logout();
+    this.chatService.user_leave(JSON.stringify({ user_id: this.user.id }));
 
     setTimeout(() => {
+      this.chatService.socket_disconnect();
       this.otherServices.isUserSignedOut.next(true);
+      location.reload();
     }, 1500);
   }
 

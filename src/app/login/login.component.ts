@@ -1,14 +1,15 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
+import { ChatService } from "app/services/chat.service";
 import { OtherServices } from "app/services/other.service";
-import { provideImgixLoader } from "@angular/common";
+import { io } from "socket.io-client";
 
 @Component({
   selector: "user-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.scss"]
+  styleUrls: ["./login.scss"],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private otherServices: OtherServices,
+    private chatService: ChatService
   ) {
     this.getScreenSize();
     // redirect to home if already logged in
@@ -118,25 +120,35 @@ export class LoginComponent implements OnInit {
             var userData = localStorage.getItem("currentUser");
             var user = JSON.parse(userData);
 
+            // this.chatService.socket_connect();
+
+            var socket = io("https://www.ireproperty.com");
+            socket.on("connect", () => {
+              var userdata = localStorage.getItem("currentUser");
+              var user_id = JSON.parse(userdata)[0]["id"];
+              // console.log("socket connected");
+              this.chatService.getAllCLients(user_id);
+            });
+
             setTimeout(async () => {
-              await this.authenticationService.getIPAddress().then((res) => {
-                var date = this.getCurrentDate();
+              // await this.authenticationService.getIPAddress().then((res) => {
+              //   var date = this.getCurrentDate();
 
-                setTimeout(() => {
-                  res.subscribe((ip) => {
-                    var ip_data = {
-                      date: date,
-                      ip: ip["ip"],
-                    };
+              //   setTimeout(() => {
+              //     res.subscribe((ip) => {
+              //       var ip_data = {
+              //         date: date,
+              //         ip: ip["ip"],
+              //       };
 
-                    this.authenticationService
-                      .storeClientIP(JSON.stringify(ip_data))
-                      .subscribe((e) => {
-                        console.log(e);
-                      });
-                  });
-                }, 1000);
-              });
+              //       this.authenticationService
+              //         .storeClientIP(JSON.stringify(ip_data))
+              //         .subscribe((e) => {
+              //           // console.log(e);
+              //         });
+              //     });
+              //   });
+              // });
 
               if (user[0]["auth_type"] != "admin") {
                 // window.location.replace(`/home?uid=${user[0]["id"]}`);

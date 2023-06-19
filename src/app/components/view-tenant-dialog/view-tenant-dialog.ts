@@ -52,6 +52,19 @@ export class ViewTenantDialog implements OnInit {
     this.dialogRef.close();
   }
 
+  messageUser() {
+    var tenant_user_id = new String(this.tenant_data.profile_photo).split(
+      "."
+    )[0];
+    var userData = localStorage.getItem("currentUser");
+    var user_id = JSON.parse(userData)[0]["id"];
+    this.router.navigate(["/user-chats"], {
+      queryParams: { uid: user_id, chat_uid: tenant_user_id },
+    });
+
+    this.dialogRef.close();
+  }
+
   setupImgs() {
     var raw_json = this.tenant_data.property_images;
     this.propertyImgs = JSON.parse(raw_json).img;

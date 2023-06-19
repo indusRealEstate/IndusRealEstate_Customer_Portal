@@ -19,13 +19,7 @@ export const HOMEROUTE: RouteInfo[] = [
     title: "Overview",
     icon: "assets/img/svg/sidebar/activity.svg",
     class: "",
-  },
-  {
-    path: "/notifications",
-    title: "Notifications",
-    icon: "assets/img/svg/navbar/notification.svg",
-    class: "",
-  },
+  }
 ];
 
 export const HOMEROUTEADMIN: any[] = [

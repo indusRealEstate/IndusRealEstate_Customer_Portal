@@ -81,7 +81,7 @@
           <p class="mb-0 prop">{{tenant_data.passport_no}}</p>
         </div>
         <div class="col-2">
-          <div class="btn contact-btns">Message</div>
+          <div class="btn contact-btns" (click)="messageUser()">Message</div>
           <div class="btn contact-btns">Report</div>
         </div>
       </div>
@@ -101,7 +101,9 @@
           <p class="mb-0 prop mt-1">{{tenant_data.property_community_name}}</p>
         </div>
         <div class="col">
-          <div class="links" (click)="viewRelatedReq()">Property Related Requests</div>
+          <div class="links" (click)="viewRelatedReq()">
+            Property Related Requests
+          </div>
           <div class="links mt-2" (click)="viewRelatedDoc()">
             Property Related Documents
           </div>

@@ -104,7 +104,6 @@ import { LandlordFormComponent } from "app/landlord_register_form/landlord_form.
 import { LoginComponent } from "app/login/login.component";
 import { MyLandlordComponent } from "app/my-landlord/my-landlord";
 import { MyTenantsLandlord } from "app/my-tenants/my-tenants";
-import { NotificationsPage } from "app/notifications-page/notifications-page";
 import { RegisterComponent } from "app/register/register.component";
 import { RequestsComponentInspection } from "app/requests/landlord-requests/inspection/inspection-req";
 import { RequestsComponentMyReqs } from "app/requests/my-requests/my-reqs";
@@ -229,7 +228,6 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
     CustomerCareComponent,
     ServiceTemplateComponent,
     ServiceRecapComponent,
-    NotificationsPage,
     IndividualDocumentsComponent,
     MyTenantsLandlord,
     MyLandlordComponent,

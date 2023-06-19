@@ -1,10 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpClient} from "@angular/common/http";
+import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { User } from "../../../models/user/user.model";
 import { OtherServices } from "./other.service";
-import { Router } from "@angular/router";
 
 const API_URL = "https://indusre.app/api/auth";
 
@@ -47,6 +47,7 @@ export class AuthenticationService {
       .pipe(
         map((userData) => {
           console.log(userData);
+
           // login successful if there's a jwt token in the response
           if (userData && userData[0]["token"]) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

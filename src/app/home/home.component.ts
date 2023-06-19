@@ -8,6 +8,7 @@ import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req
 import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
+import { ChatService } from "app/services/chat.service";
 
 @Component({
   selector: "app-home",
@@ -46,6 +47,7 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private chatService: ChatService,
     private route: ActivatedRoute,
     private otherServices: OtherServices,
     private dialog?: MatDialog
@@ -338,7 +340,6 @@ export class HomeComponent implements OnInit {
     // this.router.navigate(["/reports"], {
     //   queryParams: { uid: this.user.id },
     // });
-
     // this.otherServices.reportsClickedHome.next(true);
   }
 

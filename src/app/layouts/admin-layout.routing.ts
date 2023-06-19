@@ -18,7 +18,6 @@ import { ServiceTemplateComponent } from "app/indus_services/facility_management
 import { ServiceRecapComponent } from "app/indus_services/facility_management/service_recap/service_recap";
 import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
 import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
-import { NotificationsPage } from "app/notifications-page/notifications-page";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminReqsLandlord } from "app/admin-requests-landlord/admin-req-landlord";
 import { AdminReqsTenant } from "app/admin-requests-tenant/admin-req-tenant";
@@ -86,7 +85,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "customer-care", component: CustomerCareComponent },
   { path: "service-temp", component: ServiceTemplateComponent },
   { path: "service-recap", component: ServiceRecapComponent },
-  { path: "notifications", component: NotificationsPage },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },
 ];
