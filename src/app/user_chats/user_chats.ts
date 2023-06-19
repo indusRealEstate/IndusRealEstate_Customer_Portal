@@ -103,10 +103,10 @@ export class UserChatsComponent implements OnInit {
       this.router.navigate(["/404"]);
     }
 
-    if (url.chat_uid != undefined) {
-      this.chatService.allClients.subscribe((all_cl) => {
-        this.allClients = all_cl;
+    this.chatService.allClients.subscribe((all_cl) => {
+      this.allClients = all_cl;
 
+      if (url.chat_uid != undefined) {
         all_cl.forEach((v) => {
           if (url.chat_uid == v.user_id) {
             this.currentChat_usr = v;
@@ -116,8 +116,8 @@ export class UserChatsComponent implements OnInit {
             }, 1000);
           }
         });
-      });
-    }
+      }
+    });
   }
 
   screenHeight: number;
