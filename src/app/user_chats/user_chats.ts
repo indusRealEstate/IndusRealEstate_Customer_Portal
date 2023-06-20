@@ -54,6 +54,8 @@ export class UserChatsComponent implements OnInit {
 
   sending_new_message: boolean = false;
 
+  ngDoCheckInitialize: boolean = false;
+
   usrImgPath: any = "https://indusre.app/api/upload/img/user/";
   chatImgsPath: any = "https://indusre.app/api/upload/chat/";
 
@@ -252,33 +254,40 @@ export class UserChatsComponent implements OnInit {
     this.chatService.newRecievedMessage
       .subscribe((v) => {
         if (v != 0) {
-          this.all_chats.push(v);
-          var sended_user = this.chats.filter((c) => c.user_id == v.user_id);
-          if (
-            this.currentChat_usr != undefined &&
-            this.currentChat_usr.user_id == v.user_id
-          ) {
-            this.chatroom_msgs.push(v);
-            if (this.chats.length != 0) {
-              var c_i = this.chats.indexOf(sended_user[0]);
-              Object.assign(this.chats[c_i], { new_msg: true });
-            }
-          } else {
-            if (sended_user.length != 0) {
-              var c_i = this.chats.indexOf(sended_user[0]);
-              Object.assign(this.chats[c_i], { new_msg: true });
+          // console.log(v);
+          var dupData = this.all_chats.filter(
+            (all_ch) => all_ch.message_id == v.message_id
+          );
+          if (dupData.length == 0) {
+            this.all_chats.push(v);
+            var sended_user = this.chats.filter((c) => c.user_id == v.user_id);
+            if (
+              this.currentChat_usr != undefined &&
+              this.currentChat_usr.user_id == v.user_id
+            ) {
+              this.chatroom_msgs.push(v);
+              if (this.chats.length != 0) {
+                var c_i = this.chats.indexOf(sended_user[0]);
+                Object.assign(this.chats[c_i], { new_msg: true });
+              }
             } else {
-              var sended_user_al_ch = this.allClients.filter(
-                (c) => c.user_id == v.user_id
-              );
-              Object.assign(sended_user_al_ch[0], { new_msg: true });
-              this.chats.push(sended_user_al_ch);
+              if (sended_user.length != 0) {
+                var c_i = this.chats.indexOf(sended_user[0]);
+                Object.assign(this.chats[c_i], { new_msg: true });
+              } else {
+                var sended_user_al_ch = this.allClients.filter(
+                  (c) => c.user_id == v.user_id
+                );
+                console.log(sended_user_al_ch[0]);
+                Object.assign(sended_user_al_ch[0], { new_msg: true });
+                this.chats.push(sended_user_al_ch[0]);
+              }
             }
-          }
 
-          if (this.chats.length != 0) {
+            // if (sended_user.length != 0) {
             var i = this.chats.indexOf(sended_user[0]);
             this.otherServices.array_move(this.chats, i, 0);
+            // }
           }
         }
       })
@@ -289,7 +298,7 @@ export class UserChatsComponent implements OnInit {
     this.chatService.deletedMessage.subscribe((v) => {
       if (v != 0) {
         if (this.currentChat_usr != undefined) {
-          console.log(v);
+          // console.log(v);
           var d = this.chatroom_msgs.filter((m) => m.message_id == v.msg_id)[0];
           var i = this.chatroom_msgs.indexOf(d);
           this.chatroom_msgs.splice(i, 1);
@@ -374,6 +383,20 @@ export class UserChatsComponent implements OnInit {
         this.chatService.userNotTyping(usr);
       }
     }
+
+    if (this.ngDoCheckInitialize == true) {
+      if (this.chats.length != 0) {
+        var dup = [];
+        this.chats.forEach((c, i) => {
+          if (!dup.includes(c.user_id)) {
+            dup.push(c.user_id);
+          } else {
+            console.log(c.user_id);
+            this.chats.splice(i, 1);
+          }
+        });
+      }
+    }
   }
 
   ngOnInit() {
@@ -392,7 +415,8 @@ export class UserChatsComponent implements OnInit {
         });
       })
       .add(() => {
-        this.chats_loading = false; 
+        this.chats_loading = false;
+        this.ngDoCheckInitialize = true;
         // console.log(this.chats, "client");
         this.initFunction();
         var e = this.all_chats.filter((i) => i.recieved == 1 && i.read == 0);
@@ -705,7 +729,7 @@ export class UserChatsComponent implements OnInit {
               this.apiService
                 .uploadFileChat(JSON.stringify(upload_data))
                 .subscribe((e) => {
-                  console.log(e);
+                  // console.log(e);
                 })
                 .add(() => {
                   this.sending_new_message = false;
