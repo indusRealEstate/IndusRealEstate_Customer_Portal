@@ -1,0 +1,134 @@
+<div class="main-content">
+  <div class="container-fluid" style="max-width: 2576px">
+    <div class="card calendar-card">
+      <div class="card-header">
+        <p class="my-auto">Calendar</p>
+      </div>
+
+      <div class="card-body">
+        <div class="calendar-wrap">
+          <div
+            *ngIf="!pageLoaded"
+            style="height: 25rem"
+            class="w-100 d-flex justify-content-center align-items-center"
+          >
+            <span
+              class="spinner-border spinner-border-m mr-2"
+              style="color: #d4aa32"
+            >
+            </span>
+          </div>
+
+          <div
+            style="visibility: hidden; position: fixed"
+            [style.left]="menuTopLeftPosition.x"
+            [style.top]="menuTopLeftPosition.y"
+            [matMenuTriggerFor]="rightMenu"
+          ></div>
+
+          <mat-menu class="cal-right-menu" #rightMenu="matMenu">
+            <div class="col" (click)="$event.stopPropagation()">
+              <p class="day">Day {{right_click_day}}</p>
+              <div class="list" style="margin-bottom: 6px">
+                <p
+                  class="m-0"
+                  #addEventMenuTrigger="matMenuTrigger"
+                  [matMenuTriggerFor]="addEventMenu"
+                  (click)="$event.stopPropagation()"
+                >
+                  Add Event
+                </p>
+              </div>
+            </div>
+          </mat-menu>
+
+          <mat-menu class="cal-event-add-menu" #addEventMenu="matMenu">
+            <div class="col" (click)="$event.stopPropagation()">
+              <p class="title">Add New Event</p>
+              <input
+                [(ngModel)]="new_event_name"
+                class="name-input"
+                type="text"
+                placeholder="Event Name"
+              />
+              <textarea
+                [(ngModel)]="new_event_description"
+                class="mt-2 desc-input"
+                rows="3"
+                placeholder="Description"
+              >
+              </textarea>
+
+              <div class="row m-0 mt-2">
+                <div class="col pl-0">
+                  <p class="mb-1 time-btn-title">Start Time</p>
+                  <div class="row m-0">
+                    <div class="btn time-btn" (click)="start.click()">
+                      <img
+                        class="time-icon"
+                        src="assets/img/svg/time.svg"
+                        alt=""
+                      />
+                    </div>
+
+                    <div
+                      class="selected-date ml-2 my-auto"
+                      *ngIf="new_event_start_time != undefined"
+                    >
+                      {{new_event_start_time | date:"h:mm a"}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <p class="mb-1 time-btn-title">End Time</p>
+                  <div class="row m-0">
+                    <div class="btn time-btn" (click)="end.click()">
+                      <img
+                        class="time-icon"
+                        src="assets/img/svg/time.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div
+                      class="selected-date ml-2 my-auto"
+                      *ngIf="new_event_end_time != undefined"
+                    >
+                      {{new_event_end_time | date:"h:mm a"}}
+                    </div>
+                  </div>
+                </div>
+
+                <input
+                  #start
+                  class="d-none"
+                  matTimepicker
+                  [(ngModel)]="new_event_start_time"
+                />
+
+                <input
+                  #end
+                  class="d-none"
+                  matTimepicker
+                  [(ngModel)]="new_event_end_time"
+                />
+              </div>
+              <div class="mt-3 w-100 d-flex justify-content-end">
+                <div
+                  class="btn save-btn"
+                  (click)="addEvent(addEventMenuTrigger)"
+                >
+                  Save
+                </div>
+              </div>
+            </div>
+          </mat-menu>
+
+          <full-calendar
+            *ngIf="pageLoaded"
+            [options]="calendarOptions"
+          ></full-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

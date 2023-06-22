@@ -139,6 +139,12 @@ export const SERVICESROUTELANDLORD: any[] = [
     class: "",
     queryParams: "inspection",
   },
+  {
+    path: "/appointments",
+    title: "Calendar",
+    icon: "assets/img/svg/calendar.svg",
+    class: "",
+  },
 ];
 
 export const SERVICESROUTETENANT: any[] = [

@@ -53,7 +53,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 // import { MatToolbarModule } from "@angular/material/toolbar";
 // import { MatTreeModule } from "@angular/material/tree";
-import { FullCalendarModule } from "@fullcalendar/angular";
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { MyPropertiesComponent } from "app/myProperties/my_properties.component";
@@ -114,6 +114,8 @@ import { RequestsComponentTenantMoveIn } from "app/requests/tenant-requests/tena
 import { RequestsComponentTenantMoveOut } from "app/requests/tenant-requests/tenant-move-out/tenant-move-out-req";
 import { UserChatsComponent } from "app/user_chats/user_chats";
 import { ClipboardModule } from "@angular/cdk/clipboard";
+import { AppointmentsComponent } from "app/appointments/appointments";
+import { MatTimepickerModule } from 'mat-timepicker';
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -174,6 +176,7 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
     DragDropModule,
     NgOptimizedImage,
     ClipboardModule,
+    MatTimepickerModule
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
@@ -243,6 +246,7 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
     AdminAllLandlordClients,
     AdminAllTenantClients,
     UserChatsComponent,
+    AppointmentsComponent,
 
     BackButtonDirective,
   ],

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({ providedIn: "root" })
@@ -103,6 +103,24 @@ export class OtherServices {
   //     console.log("Error: ", error);
   //   };
   // }
+
+  opensslEncrypt(data: any) {
+    const url = `https://indusre.app/api/encrypter.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  opensslDecrypt(data: any) {
+    const url = `https://indusre.app/api/decrypter.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
   public array_move(arr, old_index, new_index) {
     if (new_index >= arr.length) {

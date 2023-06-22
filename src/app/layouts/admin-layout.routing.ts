@@ -40,6 +40,7 @@ import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminAllLandlordClients } from "app/admin-all-landlord-clients/admin-all-landlord-clients";
 import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-tenants-clients";
 import { UserChatsComponent } from "app/user_chats/user_chats";
+import { AppointmentsComponent } from "app/appointments/appointments";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "home", component: HomeComponent },
@@ -67,6 +68,7 @@ export const AdminLayoutRoutes: Routes = [
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "user-chats", component: UserChatsComponent },
+  { path: "appointments", component: AppointmentsComponent },
   // { path: "admin-requests", component: AdminRequests },
   { path: "admin-requests", component: AdminReqs },
   { path: "review-request-admin", component: ReviewRequestAdmin },

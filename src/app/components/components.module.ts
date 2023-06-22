@@ -28,6 +28,7 @@ import { RelatedDocsDialog } from "./related-documents/related-documents";
 import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
 import { RelatedRequestsDialog } from "./related-requests/related-requests";
 import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-user-reqs-admin";
+import { ViewEventDialog } from "./view-event-dialog/view-event-dialog";
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-use
     RelatedDocsDialog,
     ViewImageDialog,
     RelatedRequestsDialog,
-    SeeAllUserReqsAdminDialog
+    SeeAllUserReqsAdminDialog,
+    ViewEventDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
