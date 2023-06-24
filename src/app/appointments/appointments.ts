@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CalendarOptions, EventSourceInput } from "@fullcalendar/core"; // useful for typechecking
+import { CalendarOptions } from "@fullcalendar/core"; // useful for typechecking
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";

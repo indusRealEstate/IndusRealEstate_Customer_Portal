@@ -66,11 +66,12 @@ export class AuthenticationService {
   }
 
   async getIPAddress() {
-    return this.http.get("https://api.ipify.org/?format=json").pipe(
-      map((res) => {
-        return res;
-      })
-    );
+    var api_key = "a9e468d770944e39b04fca46e16d36cc";
+    return this.http
+      .get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${api_key}`)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   public storeClientIP(data: any) {
@@ -82,6 +83,45 @@ export class AuthenticationService {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  public getLocalIP() {
+    var result: string;
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: true, 
+        // video: true,
+      })
+      .then((stream) => {
+        // stream.getTracks().forEach(function (track) {
+        //   track.stop();
+        // });
+        window.RTCPeerConnection = window.RTCPeerConnection; //compatibility for firefox and chrome
+        var pc = new RTCPeerConnection({
+          iceServers: [{ urls: "stun:stun.services.mozilla.com" }],
+        });
+        var noop = () => {};
+        pc.createDataChannel(""); //create a bogus data channel
+        pc.createOffer(pc.setLocalDescription.bind(pc), noop); // create offer and set local description
+        pc.onicecandidate = (ice) => {
+          //listen for candidate events
+          // if (!ice || !ice.candidate || !ice.candidate.candidate) {
+          result = ice.candidate.address;
+          pc.onicecandidate = noop;
+          // }
+          // var myIP =
+          //   /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(
+          //     ice.candidate.candidate
+          //   )[1];
+          // console.log("my IP: ", myIP);
+        };
+      })
+      .catch((err) => {
+        // console.log(err);
+        result = "FAILED";
+      });
+
+    return result;
   }
 
   logout() {

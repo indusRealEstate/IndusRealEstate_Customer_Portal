@@ -131,24 +131,25 @@ export class LoginComponent implements OnInit {
             });
 
             setTimeout(async () => {
-              await this.authenticationService.getIPAddress().then((res) => {
-                var date = this.getCurrentDate();
+              // await this.authenticationService.getIPAddress();
+              // .then((res) => {
+              //   var date = this.getCurrentDate();
+              //   console.log(res);
+              // setTimeout(() => {
+              //   res.subscribe((ip) => {
+              //     var ip_data = {
+              //       date: date,
+              //       ip: ip["ip"],
+              //     };
 
-                setTimeout(() => {
-                  res.subscribe((ip) => {
-                    var ip_data = {
-                      date: date,
-                      ip: ip["ip"],
-                    };
-
-                    this.authenticationService
-                      .storeClientIP(JSON.stringify(ip_data))
-                      .subscribe((e) => {
-                        // console.log(e);
-                      });
-                  });
-                });
-              });
+              //     this.authenticationService
+              //       .storeClientIP(JSON.stringify(ip_data))
+              //       .subscribe((e) => {
+              //         // console.log(e);
+              //       });
+              //   });
+              // });
+              // });
 
               if (user[0]["auth_type"] != "admin") {
                 // window.location.replace(`/home?uid=${user[0]["id"]}`);
@@ -165,7 +166,7 @@ export class LoginComponent implements OnInit {
                 });
                 this.otherServices.userSignedIn.next(true);
               }
-            }, 500);
+            });
           }
         },
         (error) => {

@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   user: User;
 
   ///////////////--App Version--////////////////////
-  appVersion: any = "VERSION PROD v0.1.16";
+  appVersion: any = "VERSION PROD v0.1.17 -test";
 
   isUserAdmin: boolean = false;
 
@@ -80,6 +80,7 @@ export class NavbarComponent implements OnInit {
 
     this.sidebarVisible = true;
   }
+  
   sidebarClose() {
     const body = document.getElementsByTagName("body")[0];
     this.toggleButton.classList.remove("toggled");

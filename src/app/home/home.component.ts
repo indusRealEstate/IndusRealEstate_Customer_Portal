@@ -196,6 +196,8 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
+    // var ip = this.authenticationService.getLocalIP();
+    // console.log(ip);
     this.isUserSignOut();
     this.getUserDataFromLocal();
     await this.initFunction();
