@@ -29,6 +29,7 @@ import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
 import { RelatedRequestsDialog } from "./related-requests/related-requests";
 import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-user-reqs-admin";
 import { ViewEventDialog } from "./view-event-dialog/view-event-dialog";
+import { AdminViewTenantDialog } from "./admin-view-tenant-dialog/admin-view-tenant-dialog";
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { ViewEventDialog } from "./view-event-dialog/view-event-dialog";
     NgxSkeletonLoaderModule,
     MatTooltipModule,
     DragDropModule,
+    
   ],
   declarations: [
     FooterComponent,
@@ -64,6 +66,7 @@ import { ViewEventDialog } from "./view-event-dialog/view-event-dialog";
     RelatedRequestsDialog,
     SeeAllUserReqsAdminDialog,
     ViewEventDialog,
+    AdminViewTenantDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

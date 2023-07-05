@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild, Input } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
@@ -7,6 +7,7 @@ import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { EmailServices } from "app/services/email.service";
+import { AdminViewTenantDialog } from "app/components/admin-view-tenant-dialog/admin-view-tenant-dialog";
 
 @Component({
   selector: "app-admin-all-tenants-clients",
@@ -188,4 +189,17 @@ export class AdminAllTenantClients implements OnInit {
     var val = new String(filterValue).trim().toLowerCase();
     this.allTenantsMatTableData.filter = val;
   }
+  // @Input() user_data;
+
+  rowClicked(data:object){
+    // this.user_data = data;
+    this.dialog.open(AdminViewTenantDialog,{
+      data: {
+        data: data,
+      },
+      width: "65%",
+      height: "45rem",
+    })
+  }
 }
+ 
