@@ -13,15 +13,6 @@ declare interface RouteInfo {
   class: string;
 }
 
-export const HOMEROUTE: RouteInfo[] = [
-  {
-    path: "/home",
-    title: "Overview",
-    icon: "assets/img/svg/sidebar/activity.svg",
-    class: "",
-  },
-];
-
 export const HOMEROUTEADMIN: any[] = [
   {
     path: "/admin-dashboard",
@@ -41,33 +32,18 @@ export const HOMEROUTEADMIN: any[] = [
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
-  {
-    path: "/admin-all-landlords",
-    title: "All Landlord Clients",
-    icon: "assets/img/svg/sidebar/clients.svg",
-    class: "",
-  },
-  {
-    path: "/admin-all-tenants",
-    title: "All Tenant Clients",
-    icon: "assets/img/svg/sidebar/clients.svg",
-    class: "",
-  },
-];
-
-export const PROPERTIESROUTE: RouteInfo[] = [
-  {
-    path: "/my-properties",
-    title: "My Properties",
-    icon: "assets/img/svg/sidebar/house-2.svg",
-    class: "",
-  },
-  {
-    path: "/add-property-form",
-    title: "Add property",
-    icon: "assets/img/svg/my-properties/add-square.svg",
-    class: "",
-  },
+  // {
+  //   path: "/admin-all-landlords",
+  //   title: "All Landlord Clients",
+  //   icon: "assets/img/svg/sidebar/clients.svg",
+  //   class: "",
+  // },
+  // {
+  //   path: "/admin-all-tenants",
+  //   title: "All Tenant Clients",
+  //   icon: "assets/img/svg/sidebar/clients.svg",
+  //   class: "",
+  // },
 ];
 
 export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
@@ -94,156 +70,11 @@ export const CHATSROUTEADMIN: RouteInfo[] = [
   },
 ];
 
-export const MYTENANTSROUTE: RouteInfo[] = [
-  {
-    path: "/my-tenants",
-    title: "My Tenants",
-    icon: "assets/img/svg/sidebar/my-tenants.svg",
-    class: "",
-  },
-  {
-    path: "/tenant-register-form",
-    title: "Add Tenant",
-    icon: "assets/img/svg/my-properties/add-square.svg",
-    class: "",
-  },
-];
-
-export const MYLANDLORDROUTE: RouteInfo[] = [
-  {
-    path: "/my-landlord",
-    title: "My Landlord",
-    icon: "assets/img/svg/sidebar/landlord.svg",
-    class: "",
-  },
-  {
-    path: "/other",
-    title: "Other",
-    icon: "assets/img/svg/my-properties/add-square.svg",
-    class: "",
-  },
-];
-
-export const SERVICESROUTELANDLORD: any[] = [
-  {
-    path: "/service-temp",
-    title: "Payment",
-    icon: "assets/img/svg/sidebar/empty-wallet.svg",
-    class: "",
-    queryParams: "payment-landlord",
-  },
-  {
-    path: "/service-temp",
-    title: "Inspection Request",
-    icon: "assets/img/svg/sidebar/tool.svg",
-    class: "",
-    queryParams: "inspection",
-  },
-  {
-    path: "/appointments",
-    title: "Calendar",
-    icon: "assets/img/svg/calendar.svg",
-    class: "",
-  },
-];
-
-export const SERVICESROUTETENANT: any[] = [
-  {
-    path: "/service-temp",
-    title: "Payment",
-    icon: "assets/img/svg/sidebar/empty-wallet.svg",
-    class: "",
-    queryParams: "payment-tenant",
-  },
-  {
-    path: "/service-temp",
-    title: "FM Maintenance",
-    icon: "assets/img/svg/sidebar/maintenance_icon.svg",
-    class: "",
-    queryParams: "maintenance",
-  },
-  {
-    path: "/service-temp",
-    title: "Tenant Move-in",
-    icon: "assets/img/svg/sidebar/User-admin-01.svg",
-    class: "",
-    queryParams: "tenant-move-in",
-  },
-  {
-    path: "/service-temp",
-    title: "Tenant Move-out",
-    icon: "assets/img/svg/sidebar/User-delete-02.svg",
-    class: "",
-    queryParams: "tenant-move-out",
-  },
-  {
-    path: "/service-temp",
-    title: "Property Conditioning",
-    icon: "assets/img/svg/sidebar/property-conditioning.svg",
-    class: "",
-    queryParams: "conditioning",
-  },
-];
-
-export const DOCUMENTSROUTELANDLORD: any[] = [
-  {
-    path: "/my-documents",
-    title: "My Documents",
-    icon: "assets/img/svg/sidebar/file-text.svg",
-    class: "",
-  },
-  {
-    path: "/my-tenant-documents",
-    title: "Tenant Documents",
-    icon: "assets/img/svg/sidebar/Document-user-01.svg",
-    class: "",
-  },
-  {
-    path: "/documents-template",
-    title: "Documents Template",
-    icon: "assets/img/svg/sidebar/file.svg",
-    class: "",
-  },
-];
-
-export const DOCUMENTSROUTETENANT: RouteInfo[] = [
-  {
-    path: "/my-documents",
-    title: "My Documents",
-    icon: "assets/img/svg/sidebar/file-text.svg",
-    class: "",
-  },
-  {
-    path: "/documents-template",
-    title: "Documents Template",
-    icon: "assets/img/svg/sidebar/file.svg",
-    class: "",
-  },
-];
-
 export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
   {
     path: "/all-clients-documents",
     title: "All Clients Documents",
     icon: "assets/img/svg/sidebar/file-text.svg",
-    class: "",
-  },
-];
-
-export const REQUESTSROUTELANDLORD: RouteInfo[] = [
-  {
-    path: "/my-requests",
-    title: "My Requests",
-    icon: "assets/img/svg/sidebar/request-send.svg",
-    class: "",
-  },
-];
-
-export const REQUESTSROUTETENANT: RouteInfo[] = [
-  {
-    path: "/my-requests",
-    title: "My Requests",
-    icon: "assets/img/svg/sidebar/request-send.svg",
     class: "",
   },
 ];
@@ -255,67 +86,9 @@ export const REQUESTSROUTEADMIN: RouteInfo[] = [
     icon: "assets/img/svg/sidebar/service-request-1.svg",
     class: "",
   },
-  {
-    path: "/admin-requests-landlord",
-    title: "Landlord requests",
-    icon: "assets/img/svg/sidebar/chat-request-svgrepo-com.svg",
-    class: "",
-  },
-  {
-    path: "/admin-requests-tenant",
-    title: "Tenant requests",
-    icon: "assets/img/svg/sidebar/chat-request-svgrepo-com.svg",
-    class: "",
-  },
 ];
 
-export const CUSTOMERCAREROUTE: RouteInfo[] = [
-  {
-    path: "/customer-care",
-    title: "Customer Care",
-    icon: "assets/img/svg/sidebar/device-message.svg",
-    class: "",
-  },
-];
-
-export const ROUTES: RouteInfo[] = [
-  {
-    path: "/documents",
-    title: "My Documents",
-    icon: "assets/img/svg/home-page/note-2.svg",
-    class: "",
-  },
-  {
-    path: "/requests",
-    title: "Requests",
-    icon: "assets/img/svg/sidebar/menu.svg",
-    class: "",
-  },
-  {
-    path: "/new-payment",
-    title: "Payment",
-    icon: "assets/img/svg/sidebar/empty-wallet.svg",
-    class: "",
-  },
-  {
-    path: "/reports",
-    title: "Reports",
-    icon: "assets/img/svg/sidebar/document-filter.svg",
-    class: "",
-  },
-  {
-    path: "/customer-care",
-    title: "Customer Care",
-    icon: "assets/img/svg/sidebar/device-message.svg",
-    class: "",
-  },
-  // {
-  //   path: "/appointments",
-  //   title: "Appointments",
-  //   icon: "assets/img/svg/sidebar/menu-board.svg",
-  //   class: "",
-  // },
-];
+export const ROUTES: RouteInfo[] = [];
 
 @Component({
   selector: "app-sidebar",
@@ -323,26 +96,15 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ["./sidebar.component.scss"],
 })
 export class SidebarComponent implements OnInit {
-  homeRoute: any[];
   homeRouteAdmin: any[];
-  propertiesRoute: any[];
-  myTenantsRoute: any[];
-  myLandlordRoute: any[];
-  serviceRouteLandlord: any[];
-  serviceRouteTenant: any[];
-  documentsRouteLandlord: any[];
-  documentsRouteTenant: any[];
+
   documentsRouteAdmin: any[];
 
-  requestsRouteTenant: any[];
-  requestsRouteLandlord: any[];
   requestsRouteAdmin: any[];
 
   archivedRequestsRouteAdmin: any[];
   chatsRouteAdmin: any[];
 
-  customerCareRoute: any[];
-  // menuItems: any[];
   user: User;
   userProfilePic: any = false;
   userDetails: any;
@@ -353,17 +115,13 @@ export class SidebarComponent implements OnInit {
   sideBarTextShow: boolean = true;
 
   isDashboardOpened: boolean = true;
-  isPropertiesOpened: boolean = false;
-  isTenantsOpened: boolean = false;
-  isLandlordOpened: boolean = false;
+
   isServicesOpened: boolean = false;
   isDocumentsOpened: boolean = false;
   isRequestsOpened: boolean = false;
   isArchiveRequestsOpened: boolean = false;
   isChatsOpened: boolean = false;
   isPaymentsOpened: boolean = false;
-  isReportsOpened: boolean = false;
-  isCustomerCareOpened: boolean = false;
 
   currentPage: any;
 
@@ -464,33 +222,9 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.getUserDataFromLocal();
 
-    this.homeRoute = HOMEROUTE.filter((menuItem) => menuItem);
     this.homeRouteAdmin = HOMEROUTEADMIN.filter((menuItem) => menuItem);
-    this.propertiesRoute = PROPERTIESROUTE.filter((menuItem) => menuItem);
-    this.myTenantsRoute = MYTENANTSROUTE.filter((menuItem) => menuItem);
-    this.myLandlordRoute = MYLANDLORDROUTE.filter((menuItem) => menuItem);
-    this.serviceRouteLandlord = SERVICESROUTELANDLORD.filter(
-      (menuItem) => menuItem
-    );
-    this.serviceRouteTenant = SERVICESROUTETENANT.filter(
-      (menuItem) => menuItem
-    );
-    this.documentsRouteLandlord = DOCUMENTSROUTELANDLORD.filter(
-      (menuItem) => menuItem
-    );
-    this.documentsRouteTenant = DOCUMENTSROUTETENANT.filter(
-      (menuItem) => menuItem
-    );
 
     this.documentsRouteAdmin = DOCUMENTSROUTEADMIN.filter(
-      (menuItem) => menuItem
-    );
-
-    this.requestsRouteLandlord = REQUESTSROUTELANDLORD.filter(
-      (menuItem) => menuItem
-    );
-
-    this.requestsRouteTenant = REQUESTSROUTETENANT.filter(
       (menuItem) => menuItem
     );
 
@@ -499,8 +233,6 @@ export class SidebarComponent implements OnInit {
       (menuItem) => menuItem
     );
     this.chatsRouteAdmin = CHATSROUTEADMIN.filter((menuItem) => menuItem);
-
-    this.customerCareRoute = CUSTOMERCAREROUTE.filter((menuItem) => menuItem);
   }
 
   isMobileMenu() {
@@ -613,17 +345,12 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       if (
-        this.isPropertiesOpened == false &&
-        this.isTenantsOpened == false &&
-        this.isLandlordOpened == false &&
         this.isDocumentsOpened == false &&
         this.isPaymentsOpened == false &&
         this.isServicesOpened == false &&
         this.isRequestsOpened == false &&
         this.isArchiveRequestsOpened == false &&
-        this.isChatsOpened == false &&
-        this.isCustomerCareOpened == false &&
-        this.isReportsOpened == false
+        this.isChatsOpened == false
       ) {
         this.isDashboardOpened = true;
 
@@ -649,12 +376,7 @@ export class SidebarComponent implements OnInit {
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
-      this.isPropertiesOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
@@ -665,12 +387,7 @@ export class SidebarComponent implements OnInit {
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
-      this.isPropertiesOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -680,32 +397,22 @@ export class SidebarComponent implements OnInit {
     var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
-      this.isPropertiesOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
-      this.isPropertiesOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -714,32 +421,22 @@ export class SidebarComponent implements OnInit {
     var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
-      this.isTenantsOpened = true;
-      this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
-      this.isTenantsOpened = true;
-      this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -749,32 +446,22 @@ export class SidebarComponent implements OnInit {
     var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = true;
-      this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = true;
-      this.isPropertiesOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
       this.isServicesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -789,11 +476,6 @@ export class SidebarComponent implements OnInit {
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
@@ -805,11 +487,6 @@ export class SidebarComponent implements OnInit {
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -824,11 +501,6 @@ export class SidebarComponent implements OnInit {
       this.isArchiveRequestsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
@@ -836,15 +508,10 @@ export class SidebarComponent implements OnInit {
       }, 200);
     } else {
       this.isDocumentsOpened = true;
-      this.isReportsOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -859,11 +526,6 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
@@ -872,14 +534,9 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isRequestsOpened = true;
       this.isArchiveRequestsOpened = false;
-      this.isReportsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -894,11 +551,6 @@ export class SidebarComponent implements OnInit {
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isReportsOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
@@ -907,14 +559,9 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isArchiveRequestsOpened = true;
       this.isRequestsOpened = false;
-      this.isReportsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -924,32 +571,22 @@ export class SidebarComponent implements OnInit {
     var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
-      this.isReportsOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
-      this.isReportsOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isCustomerCareOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -959,32 +596,22 @@ export class SidebarComponent implements OnInit {
     var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
-      this.isCustomerCareOpened = true;
-      this.isReportsOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
-      this.isCustomerCareOpened = true;
-      this.isReportsOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
     }
@@ -995,32 +622,22 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       this.isChatsOpened = true;
-      this.isCustomerCareOpened = false;
-      this.isReportsOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
       this.isChatsOpened = true;
-      this.isCustomerCareOpened = false;
-      this.isReportsOpened = false;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
       this.isDocumentsOpened = false;
       this.isServicesOpened = false;
       this.isDashboardOpened = false;
-      this.isPropertiesOpened = false;
-      this.isTenantsOpened = false;
-      this.isLandlordOpened = false;
       this.sideBarTextShow = true;
     }
   }

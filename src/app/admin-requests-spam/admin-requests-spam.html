@@ -56,7 +56,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
-                (click)="reviewRequest(element)"
+                 
               >
                 {{ element.issue_date | date : "d/M/yy"}}
               </td>
@@ -68,7 +68,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
-                (click)="reviewRequest(element)"
+                 
               >
                 <div
                   *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'NEW_TENANT_AC'"
@@ -98,7 +98,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
-                (click)="reviewRequest(element)"
+                 
               >
                 {{ getRequestType(element.request_type) }}
               </td>
@@ -111,7 +111,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
-                (click)="reviewRequest(element)"
+                 
               >
                 <div
                   *ngIf="element.request_type == 'NEW_LANDLORD_REQ' || element.request_type == 'ADD_PROPERTY_REC_EXIST_LANDLORD'"
@@ -132,7 +132,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
-                (click)="reviewRequest(element)"
+                 
               >
                 {{ element.auth_type | titlecase}}
               </td>
@@ -144,7 +144,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'sixth-col-last' : 'sixth-col'"
-                (click)="reviewRequest(element)"
+                 
               >
                 {{ element.firstname}}
               </td>
@@ -156,7 +156,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="getRequestStatus(element,last)"
-                (click)="reviewRequest(element)"
+                 
               ></td>
             </ng-container>
 

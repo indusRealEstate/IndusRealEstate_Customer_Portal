@@ -7,7 +7,6 @@ import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout.component";
-import { EmailVerification } from "./email_verficitaion/email_verficitaion";
 import { MatDialogModule } from "@angular/material/dialog";
 // import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
@@ -25,7 +24,6 @@ import { MatDialogModule } from "@angular/material/dialog";
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    EmailVerification,
   ],
   // providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent],

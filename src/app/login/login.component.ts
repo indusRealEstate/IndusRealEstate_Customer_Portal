@@ -151,21 +151,12 @@ export class LoginComponent implements OnInit {
               // });
               // });
 
-              if (user[0]["auth_type"] != "admin") {
-                // window.location.replace(`/home?uid=${user[0]["id"]}`);
-                this.router.navigate(["/home"], {
-                  // replaceUrl: true,
-                  queryParams: { uid: user[0]["id"] },
-                });
-                this.otherServices.userSignedIn.next(true);
-              } else {
-                // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
-                this.router.navigate(["/admin-dashboard"], {
-                  // replaceUrl: true,
-                  queryParams: { uid: user[0]["id"] },
-                });
-                this.otherServices.userSignedIn.next(true);
-              }
+              // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
+              this.router.navigate(["/admin-dashboard"], {
+                // replaceUrl: true,
+                queryParams: { uid: user[0]["id"] },
+              });
+              this.otherServices.userSignedIn.next(true);
             });
           }
         },

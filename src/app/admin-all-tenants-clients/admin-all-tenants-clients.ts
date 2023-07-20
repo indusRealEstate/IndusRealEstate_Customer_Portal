@@ -37,8 +37,6 @@ export class AdminAllTenantClients implements OnInit {
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
 
-  userAuth: any;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -56,21 +54,18 @@ export class AdminAllTenantClients implements OnInit {
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] == "admin") {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate([`/admin-all-tenants`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate([`/admin-all-tenants`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        }
-      });
-    } else {
-      router.navigate([`/404`]);
-    }
+
+    this.route.queryParams.subscribe((e) => {
+      if (e == null) {
+        router.navigate([`/admin-all-tenants`], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      } else if (e != user[0]["id"]) {
+        router.navigate([`/admin-all-tenants`], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      }
+    });
   }
 
   viewClient(data) {}
@@ -142,7 +137,6 @@ export class AdminAllTenantClients implements OnInit {
   async ngOnInit() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    this.userAuth = user[0]["auth_type"];
 
     var myDocsDataSession = JSON.parse(
       sessionStorage.getItem("all-tenants-session")

@@ -76,21 +76,18 @@ export class AllClientsDocuments implements OnInit {
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    if (user[0]["auth_type"] == "admin") {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate([`/all-clients-documents`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate([`/all-clients-documents`], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        }
-      });
-    } else {
-      router.navigate([`/404`]);
-    }
+
+    this.route.queryParams.subscribe((e) => {
+      if (e == null) {
+        router.navigate([`/all-clients-documents`], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      } else if (e != user[0]["id"]) {
+        router.navigate([`/all-clients-documents`], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      }
+    });
   }
 
   refreshTable() {

@@ -5,7 +5,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
-import { ApiService } from "app/services/api.service";
 import { ChatService } from "app/services/chat.service";
 
 @Component({

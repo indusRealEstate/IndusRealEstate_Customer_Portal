@@ -406,6 +406,14 @@ export class ApiService implements OnDestroy {
       .pipe(catchError(this.handleError("requestAddPropertyNewLandlord", [])));
   }
 
+  convertImgIntoWebp(data: any) {
+    const url = `https://indusre.app/api/convert_img_to_webp.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("saveImgInServer", [])));
+  }
+
   saveImgInServer(data: any) {
     const url = `https://indusre.app/api/uploader.php?apikey=1`;
 

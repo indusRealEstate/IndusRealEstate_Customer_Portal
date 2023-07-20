@@ -25,17 +25,13 @@ export class AdminPropertiesSale implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    if (user[0]["auth_type"] != "admin") {
-      router.navigate(["/404"]);
-    } else {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate(["/404"]);
-        } else if (e.uid != user[0]["id"]) {
-          router.navigate(["/404"]);
-        }
-      });
-    }
+    this.route.queryParams.subscribe((e) => {
+      if (e == null) {
+        router.navigate(["/404"]);
+      } else if (e.uid != user[0]["id"]) {
+        router.navigate(["/404"]);
+      }
+    });
   }
 
   screenHeight: number;

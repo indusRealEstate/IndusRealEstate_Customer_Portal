@@ -52,21 +52,17 @@ export class AdminDashboardComponent implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    if (user[0]["auth_type"] != "admin") {
-      router.navigate(["/404"]);
-    } else {
-      this.route.queryParams.subscribe((e) => {
-        if (e == null) {
-          router.navigate(["/admin-dashboard"], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        } else if (e != user[0]["id"]) {
-          router.navigate(["/admin-dashboard"], {
-            queryParams: { uid: user[0]["id"] },
-          });
-        }
-      });
-    }
+    this.route.queryParams.subscribe((e) => {
+      if (e == null) {
+        router.navigate(["/admin-dashboard"], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      } else if (e != user[0]["id"]) {
+        router.navigate(["/admin-dashboard"], {
+          queryParams: { uid: user[0]["id"] },
+        });
+      }
+    });
   }
 
   screenHeight: number;
@@ -159,7 +155,7 @@ export class AdminDashboardComponent implements OnInit {
 
   async initFunction(userId) {
     await this.getAllProperties(userId);
-    await this.getAllClients(userId);
+    // await this.getAllClients(userId);
 
     await this.getAllRequests(userId);
 
@@ -185,26 +181,30 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async getAllProperties(userId) {
-    this.adminService.getAllProperties(userId, 'rent').subscribe((e: Array<any>) => {
-      this.rentPropertiesLength = e.length;
-    });
-    this.adminService.getAllProperties(userId, 'sale').subscribe((e: Array<any>) => {
-      this.salePropertiesLength = e.length;
-    });
+    this.adminService
+      .getAllProperties(userId, "rent")
+      .subscribe((e: Array<any>) => {
+        this.rentPropertiesLength = e.length;
+      });
+    this.adminService
+      .getAllProperties(userId, "sale")
+      .subscribe((e: Array<any>) => {
+        this.salePropertiesLength = e.length;
+      });
   }
 
-  async getAllClients(userId) {
-    this.adminService
-      .getAllClients(userId, "landlord")
-      .subscribe((e: Array<any>) => {
-        this.landlordClient = e.length;
-      });
-    this.adminService
-      .getAllClients(userId, "tenant")
-      .subscribe((e: Array<any>) => {
-        this.tenantClient = e.length;
-      });
-  }
+  // async getAllClients(userId) {
+  //   this.adminService
+  //     .getAllClients(userId, "landlord")
+  //     .subscribe((e: Array<any>) => {
+  //       this.landlordClient = e.length;
+  //     });
+  //   this.adminService
+  //     .getAllClients(userId, "tenant")
+  //     .subscribe((e: Array<any>) => {
+  //       this.tenantClient = e.length;
+  //     });
+  // }
 
   async getAllRequests(userId) {
     this.adminService
