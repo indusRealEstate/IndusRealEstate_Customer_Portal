@@ -15,8 +15,8 @@ export class AdminDashboardComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   // properties
-  rentPropertiesLength: number = 0;
-  salePropertiesLength: number = 0;
+  allUnitsLength: number = 0;
+  allPropertiesLength: number = 0;
 
   // clients
   landlordClient: number = 0;
@@ -93,8 +93,8 @@ export class AdminDashboardComponent implements OnInit {
     var sessionData = JSON.parse(sessionDataRaw);
 
     if (sessionDataRaw != null) {
-      this.rentPropertiesLength = sessionData["rentProperties"];
-      this.salePropertiesLength = sessionData["saleProperties"];
+      this.allUnitsLength = sessionData["rentProperties"];
+      this.allPropertiesLength = sessionData["saleProperties"];
       this.landlordClient = sessionData["landlords"];
       this.tenantClient = sessionData["tenants"];
       this.totalRequests = sessionData["totalRequests"];
@@ -143,8 +143,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   clearAllVariables() {
-    this.rentPropertiesLength = 0;
-    this.salePropertiesLength = 0;
+    this.allUnitsLength = 0;
+    this.allPropertiesLength = 0;
     this.landlordClient = 0;
     this.tenantClient = 0;
     this.totalRequests = 0;
@@ -154,7 +154,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async initFunction(userId) {
-    await this.getAllProperties(userId);
+    await this.getAllProperties();
     // await this.getAllClients(userId);
 
     await this.getAllRequests(userId);
@@ -168,8 +168,8 @@ export class AdminDashboardComponent implements OnInit {
     sessionStorage.setItem(
       "admin_dashboard_session_data",
       JSON.stringify({
-        rentProperties: this.rentPropertiesLength,
-        saleProperties: this.salePropertiesLength,
+        rentProperties: this.allUnitsLength,
+        saleProperties: this.allPropertiesLength,
         landlords: this.landlordClient,
         tenants: this.tenantClient,
         totalRequests: this.totalRequests,
@@ -180,17 +180,15 @@ export class AdminDashboardComponent implements OnInit {
     );
   }
 
-  async getAllProperties(userId) {
-    // this.adminService
-    //   .getAllProperties(userId, "rent")
-    //   .subscribe((e: Array<any>) => {
-    //     this.rentPropertiesLength = e.length;
-    //   });
-    // this.adminService
-    //   .getAllProperties(userId, "sale")
-    //   .subscribe((e: Array<any>) => {
-    //     this.salePropertiesLength = e.length;
-    //   });
+  async getAllProperties() {
+    this.adminService.getallPropertiesAdmin().subscribe((e: Array<any>) => {
+      this.allPropertiesLength = e.length;
+    });
+    this.adminService
+      .getallPropertiesUnitsAdmin()
+      .subscribe((e: Array<any>) => {
+        this.allUnitsLength = e.length;
+      });
   }
 
   // async getAllClients(userId) {
@@ -254,38 +252,20 @@ export class AdminDashboardComponent implements OnInit {
     this.otherServices.allRequestsClickedAdminDashboard.next(true);
   }
 
-  navigateToTotalLandlordCleints() {
+  navigateToTotalProperties() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
-    this.router.navigate(["/admin-all-landlords"], {
+    this.router.navigate(["/admin-properties"], {
       queryParams: { uid: userId },
     });
   }
 
-  navigateToTotalTenantCleints() {
+  navigateToTotalUnits() {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     var userId = user[0]["id"];
-    this.router.navigate(["/admin-all-tenants"], {
-      queryParams: { uid: userId },
-    });
-  }
-
-  navigateToTotalSaleProperties() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    var userId = user[0]["id"];
-    this.router.navigate(["/admin-properties-sale"], {
-      queryParams: { uid: userId },
-    });
-  }
-
-  navigateToTotalRentProperties() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    var userId = user[0]["id"];
-    this.router.navigate(["/admin-properties-rent"], {
+    this.router.navigate(["/admin-properties-units"], {
       queryParams: { uid: userId },
     });
   }

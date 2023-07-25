@@ -201,7 +201,7 @@ export class AdminPropertiesUnits implements OnInit {
     this.dialog
       .open(AddUnitDialog, {
         width: "80%",
-        height: "43rem",
+        height: "50rem",
       })
       .afterClosed()
       .subscribe((res) => {});

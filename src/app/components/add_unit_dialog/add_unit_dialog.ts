@@ -26,7 +26,9 @@ export class AddUnitDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddUnitDialog>,
     private adminService: AdminService
-  ) {}
+  ) {
+    this.getAllProperties();
+  }
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
@@ -36,28 +38,49 @@ export class AddUnitDialog implements OnInit {
   imgFilesBase64Uploaded: any[] = [];
   imgFilesUploaded: File[] = [];
 
-  property_name: any = "";
-  property_address: any = "";
-  property_govt_id: any = "";
-  property_owner_name: any = "";
-  property_no_of_units: any = "";
-  property_no_of_parking: any = "";
-  property_in_charge: any = "";
+  amenties: any[] = [];
+  inventories: any[] = [];
 
-  property_building_type: any = "";
-  property_locality: any = "";
+  selected_property: any = "";
+  unit_type: any = "";
+  unit_number: any = "";
+  owner: any = "";
+  govt_id: any = "";
+  floors: any = "";
+  unit_size: any = "";
+
+  bedrooms: any = "";
+  bathrooms: any = "";
+
+  new_amenty: any = "";
+
+  inventory_name: any = "";
+  inventory_place: any = "";
+  inventory_count: any = "";
 
   formNotFilled: boolean = false;
   imageNotAdded: boolean = false;
   documentNotAdded: boolean = false;
   uploading: boolean = false;
 
-  buildingTypes: DropDownButtonModel[] = [
-    { value: "commercial", viewValue: "Commercial" },
-    { value: "co_living", viewValue: "Co-Living" },
-    { value: "co_working", viewValue: "Co-Working" },
-    { value: "residential", viewValue: "Residential" },
-    { value: "others", viewValue: "Others" },
+  users: any[] = [
+    { value: "appartment", viewValue: "Appartment" },
+    { value: "penthouse", viewValue: "Penthouse" },
+    { value: "duplex", viewValue: "Duplex" },
+    { value: "office", viewValue: "Office" },
+    { value: "shop", viewValue: "Shop" },
+    { value: "villa", viewValue: "Villa" },
+  ];
+
+  properties: any[] = [];
+
+  unitTypes: DropDownButtonModel[] = [
+    { value: "appartment", viewValue: "Appartment" },
+    { value: "penthouse", viewValue: "Penthouse" },
+    { value: "duplex", viewValue: "Duplex" },
+    { value: "office", viewValue: "Office" },
+    { value: "shop", viewValue: "Shop" },
+    { value: "villa", viewValue: "Villa" },
   ];
 
   locality: DropDownButtonModel[] = [
@@ -68,12 +91,48 @@ export class AddUnitDialog implements OnInit {
     { value: "4", viewValue: "JVC" },
   ];
 
+  getAllProperties() {
+    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      val.forEach((prop) =>
+        this.properties.push({
+          value: prop.property_id,
+          viewValue: prop.property_name,
+        })
+      );
+    });
+  }
+
   ngOnInit() {}
 
   ngAfterViewInit() {}
 
   onCloseDialog() {
     this.dialogRef.close();
+  }
+
+  addinventory() {
+    this.inventories.push({
+      name: this.inventory_name,
+      place: this.inventory_place,
+      count: this.inventory_count,
+    });
+
+    this.inventory_name = "";
+    this.inventory_place = "";
+    this.inventory_count = "";
+  }
+
+  deleteInventory(index) {
+    this.inventories.splice(index, 1);
+  }
+
+  addAmenty() {
+    this.amenties.push(this.new_amenty);
+    this.new_amenty = "";
+  }
+
+  deleteAmenty(index) {
+    this.amenties.splice(index, 1);
   }
 
   onFileSelected(files: Array<any>) {
@@ -116,9 +175,10 @@ export class AddUnitDialog implements OnInit {
       this.docsFilesUploaded.length != 0
     ) {
       if (
-        this.property_name != "" &&
-        this.property_building_type != "" &&
-        this.property_locality != ""
+        this.selected_property != "" &&
+        this.unit_type != "" &&
+        this.unit_number != "" &&
+        this.owner != ""
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
@@ -135,7 +195,7 @@ export class AddUnitDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, images_names, docs_names);
-        this.adminService.addProperty(data).subscribe((val) => {
+        this.adminService.addUnit(data).subscribe((val) => {
           if (val == "success") {
             var uploadData = this.setupUploadFiles(
               random_id,
@@ -143,7 +203,7 @@ export class AddUnitDialog implements OnInit {
               docs_names
             );
             this.adminService
-              .uploadAllFilesAddProperty(uploadData)
+              .uploadAllFilesAddUnit(uploadData)
               .subscribe((va) => {
                 if (va == "success") {
                   this.uploading = false;
@@ -179,7 +239,7 @@ export class AddUnitDialog implements OnInit {
     docs_names: any[]
   ): string {
     var data = {
-      property_id: random_id,
+      unit_id: random_id,
       img_files: this.imgFilesBase64Uploaded,
       doc_files: this.docsFilesBase64Uploaded,
       img_name: images_names,
@@ -191,18 +251,19 @@ export class AddUnitDialog implements OnInit {
 
   setupData(random_id: any, images_names: any[], docs_names: any[]): string {
     var data = {
-      property_id: random_id,
-      govt_id: this.property_govt_id,
-      property_name: this.property_name,
-      address: this.property_address,
-      property_type: this.property_building_type,
-      locality_name: this.property_locality,
-      owner_name: this.property_owner_name,
-      no_of_units: this.property_no_of_units,
-      no_of_parking: this.property_no_of_parking,
-      property_in_charge: this.property_in_charge,
+      unit_id: random_id,
+      unit_no: this.unit_number,
+      property_id: this.selected_property,
+      unit_type: this.unit_type,
+      floor: this.floors,
+      size: this.unit_size,
+      status: "vacant",
+      bedroom: this.bedrooms,
+      bathroom: this.bathrooms,
+      owner: this.owner,
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
+      amenties: JSON.stringify(this.amenties),
     };
 
     return JSON.stringify(data);

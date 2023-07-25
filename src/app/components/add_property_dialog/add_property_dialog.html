@@ -24,7 +24,7 @@
           alt=""
         />
       </div>
-      <div class="row m-0 my-3">
+      <div class="row m-0 my-4">
         <div
           (click)="fileInputImage.click()"
           class="col"
@@ -114,14 +114,6 @@
             <mat-label>No. of Units</mat-label>
             <input type="number" matInput [(ngModel)]="property_no_of_units" />
           </mat-form-field>
-          <mat-form-field class="mt-2">
-            <mat-label>Property In Charge</mat-label>
-            <input
-              matInput
-              placeholder="Ex. Jhon Due"
-              [(ngModel)]="property_in_charge"
-            />
-          </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field>
@@ -141,15 +133,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="mt-2">
-            <mat-label>Owner Name</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Ex. Jhon Due"
-              [(ngModel)]="property_owner_name"
-            />
-          </mat-form-field>
+
           <mat-form-field class="mt-2">
             <mat-label>No. of Parking</mat-label>
             <input
@@ -158,9 +142,17 @@
               [(ngModel)]="property_no_of_parking"
             />
           </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label>Property In Charge</mat-label>
+            <input
+              matInput
+              placeholder="Ex. Jhon Due"
+              [(ngModel)]="property_in_charge"
+            />
+          </mat-form-field>
         </div>
 
-        <div class="col pr-0" style="height: 40vh; overflow: auto">
+        <div class="col pr-0" style="height: 35vh; overflow: auto">
           <div
             (click)="fileInput.click()"
             class="btn ml-4"
@@ -215,7 +207,7 @@
           </div>
         </div>
       </div>
-      <div class="row w-100 justify-content-end align-items-center">
+      <div class="row w-100 justify-content-end align-items-center my-3">
         <span
           class="mr-3"
           *ngIf="formNotFilled"

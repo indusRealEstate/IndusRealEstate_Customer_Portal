@@ -53,8 +53,26 @@ export class AdminService {
     );
   }
 
+  addUnit(data: any) {
+    const url = `${API_URL}/addUnit.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   uploadAllFilesAddProperty(data: any) {
     const url = `${API_URL}/upload_add_property_files.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  uploadAllFilesAddUnit(data: any) {
+    const url = `${API_URL}/upload_add_unit_files.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
