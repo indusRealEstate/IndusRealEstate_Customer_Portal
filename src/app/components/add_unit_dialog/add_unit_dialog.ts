@@ -206,6 +206,17 @@ export class AddUnitDialog implements OnInit {
               .uploadAllFilesAddUnit(uploadData)
               .subscribe((va) => {
                 if (va == "success") {
+                  if (this.inventories.length != 0) {
+                    var inventory_data = {
+                      unit_id: random_id,
+                      data: this.inventories,
+                    };
+                    this.adminService
+                      .addInventory(JSON.stringify(inventory_data))
+                      .subscribe((val) => {
+                        console.log(val);
+                      });
+                  }
                   this.uploading = false;
                   this.dialogRef.close();
                 }

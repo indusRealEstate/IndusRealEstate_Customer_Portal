@@ -80,6 +80,15 @@ export class AdminService {
     );
   }
 
+  addInventory(data: any) {
+    const url = `${API_URL}/addInventory.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllClientsDocuments(userId: any) {
     const url = `${API_URL}/getAllClientsDocuments.php?apikey=1`;
     return this.http.post<any>(url, { userId: userId }).pipe(
