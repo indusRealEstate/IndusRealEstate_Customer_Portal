@@ -1,0 +1,274 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 20px"
+        >
+          Add New Unit
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+      <div class="row m-0 my-3">
+        <div
+          (click)="fileInputImage.click()"
+          class="col"
+          style="
+            display: grid;
+            max-width: 130px;
+            background: #d4aa323b;
+            border: 2px solid #d4aa32;
+            border-radius: 8px;
+            padding: 10px 10px;
+            cursor: pointer;
+          "
+        >
+          <img
+            class="mx-auto"
+            src="assets/img/pngs/add-image.png"
+            alt=""
+            style="width: 30px"
+          />
+          <span class="mx-auto mt-2">Add Images</span>
+          <input
+            multiple
+            hidden
+            (change)="onImageFileSelected($event.target.files)"
+            #fileInputImage
+            type="file"
+            accept="image/*"
+          />
+        </div>
+
+        <div
+          class="d-flex"
+          style="max-width: calc(100% - 135px); overflow: auto"
+        >
+          <div
+            class="mx-3"
+            *ngFor="let img of imgFilesBase64Uploaded;let index = index"
+            style="max-width: 80px; background: #d4aa3229; min-width: 100px"
+          >
+            <div class="row m-0" style="position: relative">
+              <img
+                src="{{img}}"
+                style="height: 100%; width: 100%; object-fit: contain"
+                alt=""
+              />
+              <img
+                (click)="removeUploadedImg(index)"
+                src="assets/img/svg/success-dialog/close-square.svg"
+                alt=""
+                style="position: absolute; width: 20px; cursor: pointer"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 mt-3">
+        <div class="col pl-0">
+          <mat-form-field>
+            <mat-label>Property Name*</mat-label>
+            <input
+              matInput
+              placeholder="Ex. Burj Khalifa"
+              [(ngModel)]="property_name"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="mt-2">
+            <mat-label>Building Type*</mat-label>
+            <mat-select [(ngModel)]="property_building_type">
+              <mat-option
+                *ngFor="let type of buildingTypes"
+                [value]="type.value"
+              >
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label>Governemnt Property Id</mat-label>
+            <input
+              matInput
+              placeholder="Ex. EA1x24383"
+              [(ngModel)]="property_govt_id"
+            />
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label>No. of Units</mat-label>
+            <input type="number" matInput [(ngModel)]="property_no_of_units" />
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label>Property In Charge</mat-label>
+            <input
+              matInput
+              placeholder="Ex. Jhon Due"
+              [(ngModel)]="property_in_charge"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Address Line</mat-label>
+            <input
+              matInput
+              placeholder="Ex. Downtown Dubai, UAE"
+              [(ngModel)]="property_address"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="mt-2">
+            <mat-label>Locality*</mat-label>
+            <mat-select [(ngModel)]="property_locality">
+              <mat-option *ngFor="let place of locality" [value]="place.value">
+                {{place.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label>Owner Name</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Ex. Jhon Due"
+              [(ngModel)]="property_owner_name"
+            />
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label>No. of Parking</mat-label>
+            <input
+              type="number"
+              matInput
+              [(ngModel)]="property_no_of_parking"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col pr-0" style="height: 40vh; overflow: auto">
+          <div
+            (click)="fileInput.click()"
+            class="btn ml-4"
+            style="background: #d4aa32"
+          >
+            Add Documents
+          </div>
+          <input
+            multiple
+            hidden
+            (change)="onFileSelected($event.target.files)"
+            #fileInput
+            type="file"
+            id="file"
+          />
+
+          <div *ngIf="docsFilesUploaded.length != 0">
+            <div
+              *ngFor="let file of docsFilesUploaded;let index=index"
+              class="row m-0 mt-2 align-items-center"
+              style="
+                background: #d4aa3230;
+                border: solid 1px #d4aa32;
+                border-radius: 5px;
+                padding: 10px 10px;
+              "
+            >
+              <img src="assets/img/svg/documents/document-text.svg" alt="" />
+              <span
+                class="m-0 ml-3"
+                style="
+                  font-weight: 500;
+                  text-overflow: ellipsis;
+                  max-width: 230px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+                >{{file.name}}</span
+              >
+              <img
+                (click)="removeUploadedDoc(index)"
+                src="assets/img/svg/success-dialog/close-square.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 10px;
+                  width: 20px;
+                  cursor: pointer;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row w-100 justify-content-end align-items-center">
+        <span
+          class="mr-3"
+          *ngIf="formNotFilled"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please fill the form.</span
+        >
+        <span
+          class="mr-3"
+          *ngIf="imageNotAdded"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please add atleast 1 image.</span
+        >
+        <span
+          class="mr-3"
+          *ngIf="documentNotAdded"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please add atleast 1 document.</span
+        >
+        <div
+          class="btn"
+          style="background: #3c4858; min-width: 120px; padding: 10px 20px"
+          (click)="onSubmit()"
+        >
+          <span *ngIf="!uploading">Submit</span>
+          <span
+            *ngIf="uploading"
+            class="spinner-border spinner-border-m mx-auto"
+            style="height: 25px; width: 25px"
+          >
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

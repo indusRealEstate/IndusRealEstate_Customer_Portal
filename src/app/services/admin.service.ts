@@ -26,15 +26,40 @@ export class AdminService {
     };
   }
 
-  getAllProperties(userId: any, prop_type: any) {
+  getallPropertiesAdmin() {
     const url = `${API_URL}/getAllProperties.php?apikey=1`;
-    return this.http
-      .post<any>(url, { userId: userId, prop_type: prop_type })
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      );
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getallPropertiesUnitsAdmin() {
+    const url = `${API_URL}/getAllPropertiesUnits.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  addProperty(data: any) {
+    const url = `${API_URL}/addProperty.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  uploadAllFilesAddProperty(data: any) {
+    const url = `${API_URL}/upload_add_property_files.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
   }
 
   getAllClientsDocuments(userId: any) {

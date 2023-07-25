@@ -181,16 +181,16 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async getAllProperties(userId) {
-    this.adminService
-      .getAllProperties(userId, "rent")
-      .subscribe((e: Array<any>) => {
-        this.rentPropertiesLength = e.length;
-      });
-    this.adminService
-      .getAllProperties(userId, "sale")
-      .subscribe((e: Array<any>) => {
-        this.salePropertiesLength = e.length;
-      });
+    // this.adminService
+    //   .getAllProperties(userId, "rent")
+    //   .subscribe((e: Array<any>) => {
+    //     this.rentPropertiesLength = e.length;
+    //   });
+    // this.adminService
+    //   .getAllProperties(userId, "sale")
+    //   .subscribe((e: Array<any>) => {
+    //     this.salePropertiesLength = e.length;
+    //   });
   }
 
   // async getAllClients(userId) {

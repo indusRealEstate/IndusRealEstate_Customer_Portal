@@ -30,6 +30,10 @@ import { RelatedRequestsDialog } from "./related-requests/related-requests";
 import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-user-reqs-admin";
 import { ViewEventDialog } from "./view-event-dialog/view-event-dialog";
 import { AdminViewTenantDialog } from "./admin-view-tenant-dialog/admin-view-tenant-dialog";
+import { AddPropertyDialog } from "./add_property_dialog/add_property_dialog";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
+import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
 
 @NgModule({
   imports: [
@@ -38,12 +42,14 @@ import { AdminViewTenantDialog } from "./admin-view-tenant-dialog/admin-view-ten
     FormsModule,
     MatMenuModule,
     MatFormFieldModule,
+    MatInputModule,
     MatListModule,
     MatNativeDateModule,
     ReactiveFormsModule,
     MatCardModule,
     MatTableModule,
     MatButtonModule,
+    MatSelectModule,
     NgxSkeletonLoaderModule,
     MatTooltipModule,
     DragDropModule,
@@ -67,6 +73,8 @@ import { AdminViewTenantDialog } from "./admin-view-tenant-dialog/admin-view-ten
     SeeAllUserReqsAdminDialog,
     ViewEventDialog,
     AdminViewTenantDialog,
+    AddPropertyDialog,
+    AddUnitDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

@@ -21,17 +21,23 @@ export const HOMEROUTEADMIN: any[] = [
     class: "",
   },
   {
-    path: "/admin-properties-sale",
-    title: "Sale Properties",
+    path: "/admin-properties",
+    title: "All Properties",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
   {
-    path: "/admin-properties-rent",
-    title: "Rent Properties",
+    path: "/admin-properties-units",
+    title: "All units",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
+  // {
+  //   path: "/admin-properties-rent",
+  //   title: "Rent Properties",
+  //   icon: "assets/img/svg/sidebar/buildings.svg",
+  //   class: "",
+  // },
   // {
   //   path: "/admin-all-landlords",
   //   title: "All Landlord Clients",

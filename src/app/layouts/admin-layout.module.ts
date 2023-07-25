@@ -67,8 +67,6 @@ import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
-import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
-import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
 import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 import { LoadingTableAdminCLients } from "app/components/loading-table-admin-clients/loading-table-admin-clients";
@@ -83,6 +81,10 @@ import { LoginComponent } from "app/login/login.component";
 import { UserChatsComponent } from "app/user_chats/user_chats";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { MatTimepickerModule } from "mat-timepicker";
+import { AdminProperties } from "app/admin-properties/admin-properties";
+import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
+import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
+import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -163,8 +165,8 @@ import { MatTimepickerModule } from "mat-timepicker";
 
     LoginComponent,
 
-    AdminPropertiesRent,
-    AdminPropertiesSale,
+    AdminProperties,
+    AdminPropertiesUnits,
 
     CountryDropdown,
     IndividualDocumentsComponent,
@@ -175,6 +177,8 @@ import { MatTimepickerModule } from "mat-timepicker";
     ReviewRequestAdmin,
     LoadingTableAdminReqs,
     LoadingTableAdminCLients,
+    LoadingTableAdminProperties,
+    LoadingTableAdminPropertiesUnits,
     AdminAllLandlordClients,
     AdminAllTenantClients,
     UserChatsComponent,

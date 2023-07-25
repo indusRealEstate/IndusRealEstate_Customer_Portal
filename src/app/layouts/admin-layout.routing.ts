@@ -5,8 +5,6 @@ import { AddPropertyForm } from "app/add-property-form/add_property_from";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { LoginComponent } from "app/login/login.component";
-import { AdminPropertiesRent } from "app/admin_properties_rent/admin_properties_rent";
-import { AdminPropertiesSale } from "app/admin_properties_sale/admin_properties_sale";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
@@ -16,6 +14,8 @@ import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminAllLandlordClients } from "app/admin-all-landlord-clients/admin-all-landlord-clients";
 import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-tenants-clients";
 import { UserChatsComponent } from "app/user_chats/user_chats";
+import { AdminProperties } from "app/admin-properties/admin-properties";
+import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -32,8 +32,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "admin-all-landlords", component: AdminAllLandlordClients },
   { path: "admin-all-tenants", component: AdminAllTenantClients },
-  { path: "admin-properties-rent", component: AdminPropertiesRent },
-  { path: "admin-properties-sale", component: AdminPropertiesSale },
+  { path: "admin-properties", component: AdminProperties },
+  { path: "admin-properties-units", component: AdminPropertiesUnits },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },
 ];
