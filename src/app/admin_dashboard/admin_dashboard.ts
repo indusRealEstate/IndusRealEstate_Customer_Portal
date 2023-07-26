@@ -22,18 +22,7 @@ export class AdminDashboardComponent implements OnInit {
   landlordClient: number = 0;
   tenantClient: number = 0;
 
-  totalRequests: number = 0;
-  approvedRequests: number = 0;
-
-  requestPercentage: number = 0;
-
   isLoading: boolean = false;
-
-  requestOverview: any[] = [];
-
-  isRequestOverviewLoading: boolean = false;
-
-  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
 
   constructor(
     private apiService: ApiService,
@@ -44,8 +33,6 @@ export class AdminDashboardComponent implements OnInit {
     private otherServices: OtherServices
   ) {
     this.isLoading = true;
-    // if (sessionStorage.getItem("admin_dashboard_session_data") == null) {
-    this.isRequestOverviewLoading = true;
     // }
 
     this.getScreenSize();
@@ -83,7 +70,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.isRequestOverviewLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -97,12 +83,7 @@ export class AdminDashboardComponent implements OnInit {
       this.allPropertiesLength = sessionData["saleProperties"];
       this.landlordClient = sessionData["landlords"];
       this.tenantClient = sessionData["tenants"];
-      this.totalRequests = sessionData["totalRequests"];
-      this.requestPercentage = sessionData["requestPercentage"];
-      this.approvedRequests = sessionData["approvedRequests"];
-      this.requestOverview = sessionData["requestOverview"];
       this.isLoading = false;
-      this.isRequestOverviewLoading = false;
     } else {
       await this.initFunction(user[0]["id"]);
       sessionStorage.setItem(
@@ -120,7 +101,6 @@ export class AdminDashboardComponent implements OnInit {
       );
 
     if (diff >= 10) {
-      this.isRequestOverviewLoading = true;
       this.isLoading = true;
       this.clearAllVariables();
       sessionStorage.removeItem("admin_dashboard_fetched_time");
@@ -133,31 +113,15 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  calculateRequests() {
-    var a = this.approvedRequests;
-    var b = this.totalRequests;
-
-    var a1 = a / b;
-
-    this.requestPercentage = a1 * 100;
-  }
-
   clearAllVariables() {
     this.allUnitsLength = 0;
     this.allPropertiesLength = 0;
     this.landlordClient = 0;
     this.tenantClient = 0;
-    this.totalRequests = 0;
-    this.approvedRequests = 0;
-    this.requestPercentage = 0;
-    this.requestOverview.length = 0;
   }
 
   async initFunction(userId) {
     await this.getAllProperties();
-    // await this.getAllClients(userId);
-
-    await this.getAllRequests(userId);
 
     setTimeout(() => {
       this.isLoading = false;
@@ -172,10 +136,6 @@ export class AdminDashboardComponent implements OnInit {
         saleProperties: this.allPropertiesLength,
         landlords: this.landlordClient,
         tenants: this.tenantClient,
-        totalRequests: this.totalRequests,
-        approvedRequests: this.approvedRequests,
-        requestPercentage: this.requestPercentage,
-        requestOverview: this.requestOverview,
       })
     );
   }
@@ -189,67 +149,6 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe((e: Array<any>) => {
         this.allUnitsLength = e.length;
       });
-  }
-
-  // async getAllClients(userId) {
-  //   this.adminService
-  //     .getAllClients(userId, "landlord")
-  //     .subscribe((e: Array<any>) => {
-  //       this.landlordClient = e.length;
-  //     });
-  //   this.adminService
-  //     .getAllClients(userId, "tenant")
-  //     .subscribe((e: Array<any>) => {
-  //       this.tenantClient = e.length;
-  //     });
-  // }
-
-  async getAllRequests(userId) {
-    this.adminService
-      .getAllRequestsAdmin({ userId: userId })
-      .subscribe((val: any[]) => {
-        // console.log(val);
-        setTimeout(() => {
-          if (val.length != 0) {
-            this.totalRequests = val.length;
-
-            var count = 0;
-            for (let index = 0; index < val.length; index++) {
-              count++;
-              if (val[index].status == "approved") {
-                this.approvedRequests++;
-              }
-
-              if (
-                val[index].request_type != "NEW_LANDLORD_REQ" &&
-                val[index].request_type != "NEW_TENANT_AC"
-              ) {
-                if (this.requestOverview.length != 4) {
-                  this.requestOverview.push(val[index]);
-                }
-              }
-            }
-
-            if (val.length == count) {
-              setTimeout(() => {
-                this.isRequestOverviewLoading = false;
-                this.cacheInSession();
-              }, 500);
-
-              this.calculateRequests();
-            }
-          }
-        }, 100);
-      });
-  }
-
-  moreRequestClicked() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    var userId = user[0]["id"];
-    this.router.navigate(["/admin-requests"], { queryParams: { uid: userId } });
-
-    this.otherServices.allRequestsClickedAdminDashboard.next(true);
   }
 
   navigateToTotalProperties() {

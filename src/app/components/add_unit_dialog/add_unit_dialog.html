@@ -139,8 +139,30 @@
           <mat-form-field class="mt-2">
             <mat-label>Owner*</mat-label>
             <mat-select [(ngModel)]="owner">
-              <mat-option *ngFor="let usr of users" [value]="usr.value">
-                {{usr.viewValue}}
+              <mat-select-trigger> {{ owner.viewValue }} </mat-select-trigger>
+              <mat-option *ngFor="let usr of users" [value]="usr">
+                <div class="row m-0">
+                  <span>{{usr.viewValue}}</span>
+                  <div
+                    class="my-auto ml-2"
+                    style="
+                      background: #d4aa322e;
+                      height: 30px;
+                      text-align: center;
+                      display: flex;
+                      align-items: center;
+                      padding: 0px 10px;
+                      border-radius: 6px;
+                      font-size: 12px;
+                      font-weight: 600;
+                      border: 1px solid #d4aa32;
+                    "
+                  >
+                    <span style="color: #9c770c"
+                      >{{getUserType(usr.user_type)}}</span
+                    >
+                  </div>
+                </div>
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -162,6 +184,15 @@
               type="number"
               placeholder="Ex. 1"
               [(ngModel)]="bedrooms"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>No. of Parking</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 2"
+              [(ngModel)]="number_of_parking"
             />
           </mat-form-field>
         </div>
@@ -325,9 +356,9 @@
         </div>
         <div class="d-flex my-3" style="max-width: 100%; overflow: auto">
           <div
-            class="mx-2"
+            class="mx-2 mb-2"
             *ngFor="let inventory of inventories;let index = index"
-            style="background: #d4aa3229;"
+            style="background: #d4aa3229; min-width: 215px"
           >
             <div
               class="row m-0 justify-content-between"

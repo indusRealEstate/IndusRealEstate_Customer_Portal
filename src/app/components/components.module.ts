@@ -38,6 +38,11 @@ import { AdminRequestsCategory } from "app/admin-requests-category/admin-request
 import { AddCategoryDialog } from "./add_category_dialog/add_category_dialog";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { EditCategoryDialog } from "./edit_category_dialog/edit_category_dialog";
+import { AddUserDialog } from "./add_user_dialog/add_user_dialog";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { CountryDropdown } from "./country-dropdown/country-dropdown";
+
+import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 
 @NgModule({
   imports: [
@@ -58,6 +63,8 @@ import { EditCategoryDialog } from "./edit_category_dialog/edit_category_dialog"
     MatTooltipModule,
     DragDropModule,
     MatSlideToggleModule,
+    MatDatepickerModule,
+    NgxMatIntlTelInputComponent,
   ],
   declarations: [
     FooterComponent,
@@ -81,7 +88,9 @@ import { EditCategoryDialog } from "./edit_category_dialog/edit_category_dialog"
     AddUnitDialog,
     AdminRequestsCategory,
     AddCategoryDialog,
-    EditCategoryDialog
+    EditCategoryDialog,
+    AddUserDialog,
+    CountryDropdown,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

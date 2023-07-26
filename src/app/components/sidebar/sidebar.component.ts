@@ -32,6 +32,12 @@ export const HOMEROUTEADMIN: any[] = [
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
+  {
+    path: "/all-users",
+    title: "Users",
+    icon: "assets/img/svg/admin-dashboard/profile-2user.svg",
+    class: "",
+  },
   // {
   //   path: "/admin-properties-rent",
   //   title: "Rent Properties",
