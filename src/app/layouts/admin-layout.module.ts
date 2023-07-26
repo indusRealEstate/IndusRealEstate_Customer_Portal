@@ -87,8 +87,9 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
 
-// import { BrowserModule } from '@angular/platform-browser';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from '@progress/kendo-angular-charts';
+
+import "hammerjs";
 
 @NgModule({
   imports: [
@@ -146,6 +147,8 @@ import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-al
     NgOptimizedImage,
     ClipboardModule,
     MatTimepickerModule,
+    ChartsModule,
+    
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
