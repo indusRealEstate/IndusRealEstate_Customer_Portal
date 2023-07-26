@@ -92,6 +92,12 @@ export const REQUESTSROUTEADMIN: RouteInfo[] = [
     icon: "assets/img/svg/sidebar/service-request-1.svg",
     class: "",
   },
+  {
+    path: "/admin-request-category",
+    title: "Category",
+    icon: "assets/img/svg/sidebar/category.svg",
+    class: "",
+  },
 ];
 
 export const ROUTES: RouteInfo[] = [];

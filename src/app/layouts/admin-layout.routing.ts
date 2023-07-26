@@ -16,6 +16,7 @@ import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-t
 import { UserChatsComponent } from "app/user_chats/user_chats";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
+import { AdminRequestsCategory } from "app/admin-requests-category/admin-requests-category";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -35,5 +36,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-properties", component: AdminProperties },
   { path: "admin-properties-units", component: AdminPropertiesUnits },
   { path: "404", component: PageNotFoundComponent },
+  { path: "admin-request-category", component: AdminRequestsCategory },
   { path: "**", redirectTo: "/404" },
 ];

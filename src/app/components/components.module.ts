@@ -34,6 +34,10 @@ import { AddPropertyDialog } from "./add_property_dialog/add_property_dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
+import { AdminRequestsCategory } from "app/admin-requests-category/admin-requests-category";
+import { AddCategoryDialog } from "./add_category_dialog/add_category_dialog";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { EditCategoryDialog } from "./edit_category_dialog/edit_category_dialog";
 
 @NgModule({
   imports: [
@@ -53,7 +57,7 @@ import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
     NgxSkeletonLoaderModule,
     MatTooltipModule,
     DragDropModule,
-    
+    MatSlideToggleModule,
   ],
   declarations: [
     FooterComponent,
@@ -75,6 +79,9 @@ import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
     AdminViewTenantDialog,
     AddPropertyDialog,
     AddUnitDialog,
+    AdminRequestsCategory,
+    AddCategoryDialog,
+    EditCategoryDialog
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

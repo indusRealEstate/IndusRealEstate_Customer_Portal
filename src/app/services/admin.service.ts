@@ -216,4 +216,54 @@ export class AdminService {
       })
     );
   }
+
+  insertCategory(data: any) {
+    const url = `${API_URL}/insert_request_category.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllCategories(data:any) {
+    const url = `${API_URL}/select_all_categories.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  deleteServiceCategory(data:any) {
+    const url = `${API_URL}/deleteServiceCategory.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  selecteCategory(){
+    const url = `${API_URL}/select_all_categories.php?apikey=1`;
+    return this.http.get(url);
+  }
+
+  changeCategoryStatus(data:any){
+    const url = `${API_URL}/changeCategoryStatus.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  updateCategory(data:any){
+    const url = `${API_URL}/updateServiceCategory.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

@@ -1,0 +1,122 @@
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="main-content reports-bg">
+  <div
+    class="container-fluid h-100 d-flex justify-content-center"
+    style="max-width: 2576px">
+
+    <div class="alert-msg"
+      [ngClass]="[item_deleted ? 'bg-success' : 'bg-danger']"
+      *ngIf="display_msg">{{msg}}</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div
+          class="btn"
+          style="
+              margin: 0;
+              padding: 7px 15px;
+              margin-right: 10px;
+              background: #d4aa32;
+            "
+          (click)="openWindow()">
+          <div
+            class="row m-0 align-items-center"
+            style="width: 135px; justify-content: space-between">
+            <img
+            
+              src="assets/img/svg/add-square.svg"
+              alt
+              style="width: 20px; filter: brightness(0) invert(1)" />
+            <p class="m-0">Add Category</p>
+          </div>
+        </div>
+
+        <!-- <button title="button" class="btn ms-auto add-catagory"
+          (click)="openWindow()">
+          <img src="assets/img/svg/add-square.svg" alt="" style="width: 20px; filter: brightness(0) invert(1);">   
+          Add new catagory</button> -->
+      </div>
+      <div class="card-body p-3">
+        <div class="row d-flex align-items-stretch">
+          <div class="col-md-2 d-flex align-items-stretch"
+            *ngFor="let category of categoryData; let index = i">
+            <div class="card p-2" (click)="viewCategory(category)">
+              <div class="card-header p-1">
+                <div class="row position-relative">
+                  <div class="col-2 image-container">
+                    <img
+                      class="card-top-img"
+                      src="https://indusre.app/api/upload/category/{{category?.icon}}"
+                      alt="category icon">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-1">
+                <p class="category-name mb-1">{{category?.name}}</p>
+                <p class="category-description mb-1">{{category?.name}}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-4"
+            *ngFor="let category of categoryData; let index = i">
+            <div class="card category-card">
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-4">
+                    <img
+                      src="https://indusre.app/api/upload/category/{{category?.icon}}"
+                      alt="category icon" class="category-icon">
+                  </div>
+                  <div class="col-8 m-auto">
+                    {{category?.name}}
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-4 d-flex m-auto">
+                    <button class="btn delete-btn" title="EDIT"
+                      (click)="edit_item(category)">
+
+                      <p class="w-100 m-0">
+                        <img
+                          src="assets/img/svg/property-page/edit.svg"
+                          alt
+                          style="width: 20px; filter: brightness(0) invert(1)" />
+                        <span class="m-auto px-2">Edit</span>
+                      </p>
+                    </button>
+                  </div>
+
+                  <div class="col-4 d-flex m-auto">
+                    <mat-slide-toggle class="m-auto slider-toggle-status"
+                      [checked]="category?.status !== '0' ? true : false"
+                      (change)="stauts_change($event,category?.id)"></mat-slide-toggle>
+                  </div>
+
+                  <div class="col-4 d-flex m-auto">
+                    <button class="btn delete-btn bg-danger" title="DELETE"
+                      (click)="delete_item(category?.id)">
+
+                      <p class="w-100 m-0">
+                        <img
+                          src="assets/img/svg/delete.svg"
+                          alt
+                          style="width: 20px; filter: brightness(0) invert(1)" />
+                        <span class="m-auto px-2">Delete</span>
+                      </p>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

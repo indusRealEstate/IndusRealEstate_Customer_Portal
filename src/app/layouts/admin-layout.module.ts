@@ -57,6 +57,7 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 // import { GoogleMapsModule } from "@angular/google-maps";
 // import { NgApexchartsModule } from "ng-apexcharts";
+import { ClipboardModule } from "@angular/cdk/clipboard";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -79,7 +80,6 @@ import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { UserChatsComponent } from "app/user_chats/user_chats";
-import { ClipboardModule } from "@angular/cdk/clipboard";
 import { MatTimepickerModule } from "mat-timepicker";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
@@ -184,6 +184,8 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
     UserChatsComponent,
 
     BackButtonDirective,
+
+    
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

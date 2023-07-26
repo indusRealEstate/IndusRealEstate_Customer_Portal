@@ -8,6 +8,7 @@ import { ComponentsModule } from "./components/components.module";
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout.component";
 import { MatDialogModule } from "@angular/material/dialog";
+
 // import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
 @NgModule({
@@ -20,6 +21,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     RouterModule,
     AppRoutingModule,
     MatDialogModule,
+    
   ],
   declarations: [
     AppComponent,
