@@ -26,6 +26,15 @@ export class AdminService {
     };
   }
 
+  getAllUsersAdmin() {
+    const url = `${API_URL}/getAllUsersAdmin.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getallPropertiesAdmin() {
     const url = `${API_URL}/getAllProperties.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -62,6 +71,15 @@ export class AdminService {
     );
   }
 
+  addUser(data: any) {
+    const url = `${API_URL}/addUser.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   uploadAllFilesAddProperty(data: any) {
     const url = `${API_URL}/upload_add_property_files.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
@@ -73,6 +91,15 @@ export class AdminService {
 
   uploadAllFilesAddUnit(data: any) {
     const url = `${API_URL}/upload_add_unit_files.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  uploadAllFilesAddUser(data: any) {
+    const url = `${API_URL}/upload_add_user_files.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;

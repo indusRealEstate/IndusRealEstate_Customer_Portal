@@ -52,6 +52,8 @@ export class AddUnitDialog implements OnInit {
   bedrooms: any = "";
   bathrooms: any = "";
 
+  number_of_parking: any = "";
+
   new_amenty: any = "";
 
   inventory_name: any = "";
@@ -63,16 +65,9 @@ export class AddUnitDialog implements OnInit {
   documentNotAdded: boolean = false;
   uploading: boolean = false;
 
-  users: any[] = [
-    { value: "appartment", viewValue: "Appartment" },
-    { value: "penthouse", viewValue: "Penthouse" },
-    { value: "duplex", viewValue: "Duplex" },
-    { value: "office", viewValue: "Office" },
-    { value: "shop", viewValue: "Shop" },
-    { value: "villa", viewValue: "Villa" },
-  ];
-
   properties: any[] = [];
+
+  users: any[] = [];
 
   unitTypes: DropDownButtonModel[] = [
     { value: "appartment", viewValue: "Appartment" },
@@ -100,6 +95,26 @@ export class AddUnitDialog implements OnInit {
         })
       );
     });
+
+    this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+      val.forEach((user) =>
+        this.users.push({
+          value: user.user_id,
+          user_type: user.user_type,
+          viewValue: user.name,
+        })
+      );
+    });
+  }
+
+  getUserType(user_type) {
+    if (user_type == "new_user") {
+      return "New User";
+    } else if (user_type == "resident") {
+      return "Resident";
+    } else if (user_type == "owner") {
+      return "Property Owner";
+    }
   }
 
   ngOnInit() {}
@@ -271,10 +286,12 @@ export class AddUnitDialog implements OnInit {
       status: "vacant",
       bedroom: this.bedrooms,
       bathroom: this.bathrooms,
-      owner: this.owner,
+      no_of_parking: this.number_of_parking,
+      owner: this.owner.viewValue,
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
+      user_id: this.owner.value,
     };
 
     return JSON.stringify(data);

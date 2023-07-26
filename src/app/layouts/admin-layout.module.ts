@@ -68,7 +68,6 @@ import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
-import { CountryDropdown } from "app/components/country-dropdown/country-dropdown";
 import { LoadingTableAdminCLients } from "app/components/loading-table-admin-clients/loading-table-admin-clients";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
@@ -85,6 +84,8 @@ import { AdminProperties } from "app/admin-properties/admin-properties";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
+import { AllUsersComponent } from "app/all-users/all-users";
+import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -168,7 +169,6 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
     AdminProperties,
     AdminPropertiesUnits,
 
-    CountryDropdown,
     IndividualDocumentsComponent,
     AllClientsDocuments,
     TableSearchBarComponent,
@@ -179,9 +179,12 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
     LoadingTableAdminCLients,
     LoadingTableAdminProperties,
     LoadingTableAdminPropertiesUnits,
+    LoadingTableAdminAllUsers,
     AdminAllLandlordClients,
     AdminAllTenantClients,
     UserChatsComponent,
+
+    AllUsersComponent,
 
     BackButtonDirective,
   ],

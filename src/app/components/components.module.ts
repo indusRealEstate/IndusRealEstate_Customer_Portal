@@ -34,6 +34,11 @@ import { AddPropertyDialog } from "./add_property_dialog/add_property_dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
+import { AddUserDialog } from "./add_user_dialog/add_user_dialog";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { CountryDropdown } from "./country-dropdown/country-dropdown";
+
+import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 
 @NgModule({
   imports: [
@@ -53,7 +58,8 @@ import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
     NgxSkeletonLoaderModule,
     MatTooltipModule,
     DragDropModule,
-    
+    MatDatepickerModule,
+    NgxMatIntlTelInputComponent,
   ],
   declarations: [
     FooterComponent,
@@ -75,6 +81,8 @@ import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
     AdminViewTenantDialog,
     AddPropertyDialog,
     AddUnitDialog,
+    AddUserDialog,
+    CountryDropdown,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
