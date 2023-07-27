@@ -263,16 +263,27 @@ export class AddUnitDialog implements OnInit {
     random_id: any,
     images_names: any[],
     docs_names: any[]
-  ): string {
-    var data = {
-      unit_id: random_id,
-      img_files: this.imgFilesBase64Uploaded,
-      doc_files: this.docsFilesBase64Uploaded,
-      img_name: images_names,
-      doc_names: docs_names,
-    };
+  ): FormData {
+    const formdata: FormData = new FormData();
 
-    return JSON.stringify(data);
+    var img_count = 0;
+    for (let img of this.imgFilesUploaded) {
+      formdata.append(`img_${img_count}`, img);
+      img_count++;
+    }
+
+    formdata.append("images_names", JSON.stringify(images_names));
+    formdata.append("docs_names", JSON.stringify(docs_names));
+
+    var doc_count = 0;
+    for (let doc of this.docsFilesUploaded) {
+      doc_count++;
+      formdata.append(`doc_${doc_count}`, doc);
+    }
+
+    formdata.append("unit_id", random_id);
+
+    return formdata;
   }
 
   setupData(random_id: any, images_names: any[], docs_names: any[]): string {

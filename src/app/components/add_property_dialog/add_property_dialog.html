@@ -82,7 +82,7 @@
       </div>
       <div class="row m-0 mt-3">
         <div class="col pl-0">
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Property Name*</mat-label>
             <input
               matInput
@@ -91,7 +91,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>Building Type*</mat-label>
             <mat-select [(ngModel)]="property_building_type">
               <mat-option
@@ -102,7 +102,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>Governemnt Property Id</mat-label>
             <input
               matInput
@@ -110,13 +110,13 @@
               [(ngModel)]="property_govt_id"
             />
           </mat-form-field>
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>No. of Units</mat-label>
             <input type="number" matInput [(ngModel)]="property_no_of_units" />
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Address Line</mat-label>
             <input
               matInput
@@ -125,7 +125,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>Locality*</mat-label>
             <mat-select [(ngModel)]="property_locality">
               <mat-option *ngFor="let place of locality" [value]="place.value">
@@ -134,7 +134,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>Property In Charge</mat-label>
             <input
               matInput

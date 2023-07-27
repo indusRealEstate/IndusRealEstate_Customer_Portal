@@ -1,7 +1,6 @@
 import { Routes } from "@angular/router";
 
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
-import { AddPropertyForm } from "app/add-property-form/add_property_from";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { LoginComponent } from "app/login/login.component";
@@ -19,7 +18,6 @@ import { AllUsersComponent } from "app/all-users/all-users";
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
   { path: "client-documents", component: IndividualDocumentsComponent },
-  { path: "add-property-form", component: AddPropertyForm },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "user-chats", component: UserChatsComponent },

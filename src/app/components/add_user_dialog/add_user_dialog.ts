@@ -172,16 +172,21 @@ export class AddUserDialog implements OnInit {
     }
   }
 
-  setupUploadFiles(random_id: any, docs_names: any[]): string {
-    var data = {
-      user_id: random_id,
-      img_file: this.imgFileBase64Uploaded,
-      doc_files: this.docsFilesBase64Uploaded,
-      img_name: this.imgFileUploaded.name,
-      doc_names: docs_names,
-    };
+  setupUploadFiles(random_id: any, docs_names: any[]): FormData {
+    const formdata: FormData = new FormData();
 
-    return JSON.stringify(data);
+    formdata.append("img", this.imgFileUploaded);
+    formdata.append("docs_names", JSON.stringify(docs_names));
+
+    var doc_count = 0;
+    for (let doc of this.docsFilesUploaded) {
+      doc_count++;
+      formdata.append(`doc_${doc_count}`, doc);
+    }
+
+    formdata.append("user_id", random_id);
+
+    return formdata;
   }
 
   setupData(random_id: any, docs_names: any[]): string {

@@ -82,7 +82,7 @@
       </div>
       <div class="row m-0 mt-3">
         <div class="col pl-0">
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Select Property*</mat-label>
             <mat-select [(ngModel)]="selected_property">
               <mat-option *ngFor="let prop of properties" [value]="prop.value">
@@ -91,7 +91,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Unit Number*</mat-label>
             <input
               matInput
@@ -101,12 +101,12 @@
             />
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Governemnt Property Id</mat-label>
             <input matInput placeholder="Ex. EA1x24383" [(ngModel)]="govt_id" />
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Unit Size</mat-label>
             <input
               matInput
@@ -116,7 +116,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Bathrooms</mat-label>
             <input
               matInput
@@ -127,7 +127,7 @@
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Unit Type*</mat-label>
             <mat-select [(ngModel)]="unit_type">
               <mat-option *ngFor="let type of unitTypes" [value]="type.value">
@@ -136,7 +136,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Owner*</mat-label>
             <mat-select [(ngModel)]="owner">
               <mat-select-trigger> {{ owner.viewValue }} </mat-select-trigger>
@@ -167,7 +167,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Floors</mat-label>
             <input
               matInput
@@ -177,7 +177,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Bedrooms</mat-label>
             <input
               matInput
@@ -186,7 +186,7 @@
               [(ngModel)]="bedrooms"
             />
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>No. of Parking</mat-label>
             <input
               matInput
@@ -254,7 +254,11 @@
         <div class="col pr-0" style="height: 31vh; overflow: auto">
           <span style="font-size: 17px; font-weight: 500">Amenties</span>
           <div class="row m-0 align-items-start justify-content-between mt-2">
-            <mat-form-field>
+            <mat-form-field
+              class="textField"
+              style="width: unset !important"
+              appearance="outline"
+            >
               <mat-label>Add amenties</mat-label>
               <input
                 matInput
@@ -304,7 +308,7 @@
         <span style="font-size: 17px; font-weight: 500">Add Inventory</span>
         <div class="row m-0 mt-3">
           <div class="col pl-0">
-            <mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
               <mat-label>Inventory Name</mat-label>
               <input
                 matInput
@@ -315,7 +319,7 @@
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
               <mat-label>Inventory Place</mat-label>
               <input
                 matInput
@@ -326,7 +330,7 @@
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
               <mat-label>Inventory Count</mat-label>
               <input
                 matInput

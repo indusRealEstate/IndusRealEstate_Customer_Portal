@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="col">
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Name*</mat-label>
             <input
               matInput
@@ -94,7 +94,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Email*</mat-label>
             <input
               matInput
@@ -104,11 +104,12 @@
             />
           </mat-form-field>
           <form #f="ngForm" [formGroup]="phoneForm">
-            <mat-form-field class="mt-2">
+            <mat-form-field class="mt-2 textField" appearance="outline">
               <mat-label>Mobile Number*</mat-label>
               <ngx-mat-intl-tel-input
                 [preferredCountries]="['us', 'gb']"
                 [enablePlaceholder]="true"
+                customPlaceholder="Mobile Number*"
                 [enableSearch]="true"
                 name="phone"
                 describedBy="phoneInput"
@@ -133,7 +134,10 @@
             />
           </mat-form-field> -->
 
-          <mat-form-field class="mat-datepicker mt-2">
+          <mat-form-field
+            class="mat-datepicker mt-2 textField"
+            appearance="outline"
+          >
             <mat-label>Choose Date of Birth</mat-label>
             <input matInput [matDatepicker]="picker" [(ngModel)]="user_dob" />
             <mat-datepicker-toggle
@@ -145,7 +149,7 @@
         </div>
         <div class="col">
           <form #f="ngForm" [formGroup]="phoneForm">
-            <mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
               <mat-label>Alternative Mobile Number</mat-label>
               <ngx-mat-intl-tel-input
                 [preferredCountries]="['us', 'gb']"
@@ -167,7 +171,7 @@
             </mat-form-field>
           </form>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Alternative Email</mat-label>
             <input
               matInput
@@ -181,7 +185,7 @@
         </div>
 
         <div class="col">
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Select Gender</mat-label>
             <mat-select [(ngModel)]="user_gender">
               <mat-option *ngFor="let gender of genders" [value]="gender.value">
@@ -190,7 +194,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>Select ID Type</mat-label>
             <mat-select [(ngModel)]="user_id_type">
               <mat-option *ngFor="let id of idType" [value]="id.viewValue">
@@ -199,7 +203,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="mt-2">
+          <mat-form-field class="mt-2 textField" appearance="outline">
             <mat-label>ID Number</mat-label>
             <input
               matInput
@@ -219,7 +223,7 @@
       >
       <div class="row m-0 mt-3">
         <div class="col pl-0">
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Bank Name</mat-label>
             <input
               matInput
@@ -229,7 +233,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Bank Account Number</mat-label>
             <input
               matInput
@@ -240,7 +244,7 @@
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>Swift Code</mat-label>
             <input
               matInput
@@ -250,7 +254,7 @@
             />
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
             <mat-label>IBAN Coder</mat-label>
             <input
               matInput
@@ -260,7 +264,7 @@
             />
           </mat-form-field>
         </div>
-        <div class="col" style="height: 28vh; overflow: auto">
+        <div class="col" style="height: 20vh; overflow: auto">
           <div
             (click)="fileInput.click()"
             class="btn ml-4"

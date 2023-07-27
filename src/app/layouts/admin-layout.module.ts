@@ -51,7 +51,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 // import { MatToolbarModule } from "@angular/material/toolbar";
 // import { MatTreeModule } from "@angular/material/tree";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
-import { AddPropertyForm } from "app/add-property-form/add_property_from";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 // import { GoogleMapsModule } from "@angular/google-maps";
@@ -151,7 +150,6 @@ import "hammerjs";
   ],
   declarations: [
     PageNotFoundComponent,
-    AddPropertyForm,
     // AdminRequests,
     AdminReqs,
     AdminRequestsArchive,
