@@ -52,7 +52,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 // import { MatTreeModule } from "@angular/material/tree";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 import { AddPropertyForm } from "app/add-property-form/add_property_from";
-import { NgxCheckboxModule } from "ngx-checkbox";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 // import { GoogleMapsModule } from "@angular/google-maps";
@@ -79,7 +78,6 @@ import { IndividualDocumentsComponent } from "app/documents/individual-docs/indi
 import { LoginComponent } from "app/login/login.component";
 import { UserChatsComponent } from "app/user_chats/user_chats";
 import { ClipboardModule } from "@angular/cdk/clipboard";
-import { MatTimepickerModule } from "mat-timepicker";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
@@ -142,11 +140,9 @@ import "hammerjs";
     // MatTreeModule,
     MatNativeDateModule,
     NgxSkeletonLoaderModule,
-    NgxCheckboxModule,
     DragDropModule,
     NgOptimizedImage,
     ClipboardModule,
-    MatTimepickerModule,
     ChartsModule,
     
     // GoogleMapsModule,

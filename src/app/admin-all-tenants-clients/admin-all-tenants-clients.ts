@@ -92,13 +92,13 @@ export class AdminAllTenantClients implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allTenantsMatTableData != undefined) {
         this.allTenantsMatTableData.paginator = this.paginator;
-        this.allTenantsMatTableData.paginator._changePageSize(10);
+        this.allTenantsMatTableData.paginator.pageSize = 10;
       }
     } else {
       setTimeout(() => {
         if (this.allTenantsMatTableData != undefined) {
           this.allTenantsMatTableData.paginator = this.paginator;
-          this.allTenantsMatTableData.paginator._changePageSize(10);
+          this.allTenantsMatTableData.paginator.pageSize = 10;
         }
       });
     }
@@ -118,7 +118,7 @@ export class AdminAllTenantClients implements OnInit {
         setTimeout(() => {
           if (this.allTenantsMatTableData != undefined) {
             this.allTenantsMatTableData.paginator = this.paginator;
-            this.allTenantsMatTableData.paginator._changePageSize(10);
+            this.allTenantsMatTableData.paginator.pageSize = 10;
           }
         });
       })
@@ -157,7 +157,7 @@ export class AdminAllTenantClients implements OnInit {
           setTimeout(() => {
             if (this.allTenantsMatTableData != undefined) {
               this.allTenantsMatTableData.paginator = this.paginator;
-              this.allTenantsMatTableData.paginator._changePageSize(10);
+              this.allTenantsMatTableData.paginator.pageSize = 10;
             }
           });
         })

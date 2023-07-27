@@ -97,13 +97,13 @@ export class AdminRequestsSpam implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
-        this.allRequestsMatTableData.paginator._changePageSize(10);
+        this.allRequestsMatTableData.paginator.pageSize = 10;
       }
     } else {
       setTimeout(() => {
         if (this.allRequestsMatTableData != undefined) {
           this.allRequestsMatTableData.paginator = this.paginator;
-          this.allRequestsMatTableData.paginator._changePageSize(10);
+          this.allRequestsMatTableData.paginator.pageSize = 10;
         }
       });
     }
@@ -162,7 +162,7 @@ export class AdminRequestsSpam implements OnInit {
           setTimeout(() => {
             if (this.allRequestsMatTableData != undefined) {
               this.allRequestsMatTableData.paginator = this.paginator;
-              this.allRequestsMatTableData.paginator._changePageSize(10);
+              this.allRequestsMatTableData.paginator.pageSize = 10;
             }
           });
         })
@@ -247,7 +247,7 @@ export class AdminRequestsSpam implements OnInit {
     this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
 
     this.allRequestsMatTableData.paginator = this.paginator;
-    this.allRequestsMatTableData.paginator._changePageSize(10);
+    this.allRequestsMatTableData.paginator.pageSize = 10;
 
     var req_id = this.getReqId(req);
     this.apiService
@@ -288,7 +288,7 @@ export class AdminRequestsSpam implements OnInit {
       this.allRequests.length = 0;
       this.allRequestsMatTableData = new MatTableDataSource(this.allRequests);
       this.allRequestsMatTableData.paginator = this.paginator;
-      this.allRequestsMatTableData.paginator._changePageSize(10);
+      this.allRequestsMatTableData.paginator.pageSize = 10;
       sessionStorage.removeItem("admin_reqs_session_spam");
       sessionStorage.removeItem("admin_reqs_session");
       sessionStorage.removeItem("admin_reqs_session_landlord");

@@ -106,7 +106,7 @@ export class IndividualDocumentsComponent implements OnInit {
         setTimeout(() => {
           if (this.allDocumentsMatTableData != undefined) {
             this.allDocumentsMatTableData.paginator = this.paginator;
-            this.allDocumentsMatTableData.paginator._changePageSize(10);
+            this.allDocumentsMatTableData.paginator.pageSize = 10;
           }
         });
       })
@@ -145,7 +145,7 @@ export class IndividualDocumentsComponent implements OnInit {
     setTimeout(() => {
       if (this.allDocumentsMatTableData != undefined) {
         this.allDocumentsMatTableData.paginator = this.paginator;
-        this.allDocumentsMatTableData.paginator._changePageSize(10);
+        this.allDocumentsMatTableData.paginator.pageSize = 10;
       }
     });
   }
@@ -163,7 +163,7 @@ export class IndividualDocumentsComponent implements OnInit {
         setTimeout(() => {
           if (this.allDocumentsMatTableData != undefined) {
             this.allDocumentsMatTableData.paginator = this.paginator;
-            this.allDocumentsMatTableData.paginator._changePageSize(10);
+            this.allDocumentsMatTableData.paginator.pageSize = 10;
           }
         });
       })
