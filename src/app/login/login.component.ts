@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.currentUserValue) {
       var userData = localStorage.getItem("currentUser");
       var user = JSON.parse(userData);
-      this.router.navigate([`/home`], {
+      this.router.navigate([`/admin-dashboard`], {
         queryParams: { uid: user[0]["id"] },
       });
     }

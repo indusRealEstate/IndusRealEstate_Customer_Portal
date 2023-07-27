@@ -59,15 +59,12 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { AdminAllLandlordClients } from "app/admin-all-landlord-clients/admin-all-landlord-clients";
-import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-tenants-clients";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
-import { LoadingTableAdminCLients } from "app/components/loading-table-admin-clients/loading-table-admin-clients";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
@@ -85,7 +82,7 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
 
-import { ChartsModule } from '@progress/kendo-angular-charts';
+import { ChartsModule } from "@progress/kendo-angular-charts";
 
 import "hammerjs";
 
@@ -144,7 +141,7 @@ import "hammerjs";
     NgOptimizedImage,
     ClipboardModule,
     ChartsModule,
-    
+
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
@@ -175,12 +172,9 @@ import "hammerjs";
     RequestTimelineComponent,
     ReviewRequestAdmin,
     LoadingTableAdminReqs,
-    LoadingTableAdminCLients,
     LoadingTableAdminProperties,
     LoadingTableAdminPropertiesUnits,
     LoadingTableAdminAllUsers,
-    AdminAllLandlordClients,
-    AdminAllTenantClients,
     UserChatsComponent,
 
     AllUsersComponent,

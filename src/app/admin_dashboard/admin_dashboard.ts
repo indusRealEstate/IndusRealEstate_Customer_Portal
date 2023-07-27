@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, Renderer2 } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   RenderEvent,
@@ -7,16 +7,14 @@ import {
 } from "@progress/kendo-angular-charts";
 import {
   Element,
+  GradientStop,
   Layout,
+  LinearGradient,
   Text,
   geometry,
-  LinearGradient,
-  GradientStop,
 } from "@progress/kendo-drawing";
 import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "admin-dashboard",
@@ -37,13 +35,10 @@ export class AdminDashboardComponent implements OnInit {
   isLoading: boolean = false;
 
   constructor(
-    private apiService: ApiService,
     private adminService: AdminService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private renderer: Renderer2,
-    private otherServices: OtherServices
   ) {
     this.isLoading = true;
     // }
@@ -78,7 +73,7 @@ export class AdminDashboardComponent implements OnInit {
     },
     {
       title: "Total Units",
-      count: "13",
+      count: "15",
       icon: "assets/img/pngs/dashboard/unit.png",
     },
   ];
