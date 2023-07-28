@@ -189,8 +189,8 @@ export class AddPropertyDialog implements OnInit {
 
     var doc_count = 0;
     for (let doc of this.docsFilesUploaded) {
-      doc_count++;
       formdata.append(`doc_${doc_count}`, doc);
+      doc_count++;
     }
 
     formdata.append("property_id", random_id);
