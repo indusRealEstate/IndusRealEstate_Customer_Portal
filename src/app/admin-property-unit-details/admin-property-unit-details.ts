@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
@@ -7,17 +13,24 @@ import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { HttpParams } from "@angular/common/http";
 
 @Component({
-  selector: "admin-properties-units",
-  templateUrl: "./admin-properties-units.html",
-  styleUrls: ["./admin-properties-units.scss"],
+  selector: "admin-property-unit-details",
+  templateUrl: "./admin-property-unit-details.html",
+  styleUrls: ["./admin-property-unit-details.scss"],
 })
-export class AdminPropertiesUnits implements OnInit {
+export class AdminPropertiesUnitDetails implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
+  all_data: object | any;
+  unit_id: string;
+  image_array: string[] = [];
+  address: string;
+  allocated_unit: Number;
+  amenities: string[] = [];
 
   displayedColumns: string[] = [
     // "name",
@@ -43,7 +56,10 @@ export class AdminPropertiesUnits implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  // @ViewChild("carousel") carousel: Element;
+
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
+  activatedRoute: any;
 
   constructor(
     private router: Router,
@@ -55,21 +71,11 @@ export class AdminPropertiesUnits implements OnInit {
     // this.isLoading = true;
     this.isContentLoading = true;
 
-    this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-properties-units`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-properties-units`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
+    this.route.queryParams.subscribe((param) => {
+      this.unit_id = param.unit_id;
     });
+
+    this.getScreenSize();
   }
 
   screenHeight: number;
@@ -89,21 +95,21 @@ export class AdminPropertiesUnits implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allPropertiesMatTableData != undefined) {
-        this.allPropertiesMatTableData.paginator = this.paginator;
-        this.allPropertiesMatTableData.paginator._changePageSize(10);
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allPropertiesMatTableData != undefined) {
-          this.allPropertiesMatTableData.paginator = this.paginator;
-          this.allPropertiesMatTableData.paginator._changePageSize(10);
-        }
-      });
-    }
-  }
+  // ngAfterViewInit() {
+  //   if (this.ngAfterViewInitInitialize == true) {
+  //     if (this.allPropertiesMatTableData != undefined) {
+  //       this.allPropertiesMatTableData.paginator = this.paginator;
+  //       this.allPropertiesMatTableData.paginator._changePageSize(10);
+  //     }
+  //   } else {
+  //     setTimeout(() => {
+  //       if (this.allPropertiesMatTableData != undefined) {
+  //         this.allPropertiesMatTableData.paginator = this.paginator;
+  //         this.allPropertiesMatTableData.paginator._changePageSize(10);
+  //       }
+  //     });
+  //   }
+  // }
 
   fetchData() {
     var adminReqDataSession = JSON.parse(
@@ -145,6 +151,84 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   async ngOnInit() {
+    this.adminService
+      .getUnitAllData({ id: this.unit_id })
+      .subscribe((value) => {
+        this.all_data = value;
+        console.log(this.all_data);
+
+        this.address = this.all_data.address;
+        this.allocated_unit = this.all_data.allocated_unit;
+
+        for (let i = 0; i < JSON.parse(this.all_data.unit_images).length; i++) {
+          this.image_array.push(JSON.parse(this.all_data.unit_images)[i]);
+        }
+
+        for (
+          let i = 0;
+          i < JSON.parse(this.all_data.unit_amenties).length;
+          i++
+        ) {
+          this.amenities.push(JSON.parse(this.all_data.unit_amenties)[i]);
+        }
+
+        $(document).ready(() => {
+          // console.log('hello');
+          let carousel = document.getElementById("carousel");
+          let indicator = document.getElementById("indicator");
+          
+          for (let i = 0; i < this.image_array.length; i++) {
+            if (i == 0) {
+              let carouselDiv = document.createElement("div");
+              let indicatorDiv = document.createElement("li");
+              carouselDiv.classList.add("carousel-item");
+              carouselDiv.classList.add("active");
+              indicatorDiv.classList.add("active");
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
+              indicatorDiv.setAttribute("data-slide-to", `${i}`);
+              carousel.append(carouselDiv);
+              indicator.append(indicatorDiv);
+
+              let imgElmnt = document.createElement("img");
+              imgElmnt.classList.add("d-flex");
+              imgElmnt.classList.add("carousel-img");
+              imgElmnt.classList.add("w-100");
+              imgElmnt.style.height = "30rem";
+              imgElmnt.style.height = "30rem";
+              imgElmnt.style.objectFit = "cover";
+              imgElmnt.style.objectPosition = "bottom";
+              imgElmnt.src = `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`;
+              carouselDiv.append(imgElmnt);
+            } else {
+              let carouselDiv = document.createElement("div");
+              let indicatorDiv = document.createElement("li");
+              carouselDiv.classList.add("carousel-item");
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
+              indicatorDiv.setAttribute("data-slide-to", `${i}`);
+
+              carousel.append(carouselDiv);
+              indicator.append(indicatorDiv);
+
+              let imgElmnt = document.createElement("img");
+              imgElmnt.classList.add("d-block");
+              imgElmnt.classList.add("w-100");
+              imgElmnt.classList.add("carousel-img");
+              imgElmnt.style.height = "30rem";
+              imgElmnt.style.objectFit = "cover";
+              imgElmnt.style.objectPosition = "bottom";
+              imgElmnt.src = `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`;
+              carouselDiv.append(imgElmnt);
+            }
+          }
+        });
+      });
+
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("admin_properties_units_session_time_admin")
@@ -207,9 +291,7 @@ export class AdminPropertiesUnits implements OnInit {
       .subscribe((res) => {});
   }
 
-
-  navigateToDetailPage(unit){
-    
-    this.router.navigate(['/admin-property-unit-details'], {queryParams : {"unit_id":unit.unit_id}})
-  }
+  // navigateToDetailPage(unit) {
+  //   console.log(unit.unit_id);
+  // }
 }

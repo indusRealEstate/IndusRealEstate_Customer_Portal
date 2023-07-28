@@ -86,9 +86,10 @@ import { AdminPropertiesUnits } from "app/admin-properties-units/admin-propertie
 import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
+import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 
 // import { BrowserModule } from '@angular/platform-browser';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
 
 @NgModule({
   imports: [
@@ -168,6 +169,7 @@ import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-al
 
     AdminProperties,
     AdminPropertiesUnits,
+    AdminPropertiesUnitDetails,
 
     IndividualDocumentsComponent,
     AllClientsDocuments,
@@ -187,8 +189,6 @@ import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-al
     AllUsersComponent,
 
     BackButtonDirective,
-
-    
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

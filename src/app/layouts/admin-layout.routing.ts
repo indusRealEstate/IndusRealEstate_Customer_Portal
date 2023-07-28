@@ -18,6 +18,7 @@ import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { AdminRequestsCategory } from "app/admin-requests-category/admin-requests-category";
 import { AllUsersComponent } from "app/all-users/all-users";
+import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -39,5 +40,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "all-users", component: AllUsersComponent },
   { path: "404", component: PageNotFoundComponent },
   { path: "admin-request-category", component: AdminRequestsCategory },
+  { path: "admin-property-unit-details", component: AdminPropertiesUnitDetails },
   { path: "**", redirectTo: "/404" },
 ];

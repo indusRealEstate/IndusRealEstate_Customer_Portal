@@ -84,7 +84,10 @@ export class EditCategoryDialog implements OnInit {
       this.isEmptyCategoryName = false;
     }
 
-    if (this.f.categoryIcon.value == "") {
+    // console.log(this.f.categoryIcon.value);
+
+    if (this.f.categoryIcon.value !== "") {
+      
       let image_array = this.preview_image.split(";base64,");
       let image_data = image_array[1];
       let image_type = image_array[0].split("/")[1];
@@ -166,17 +169,12 @@ export class EditCategoryDialog implements OnInit {
     this.apiAdminService.changeCategoryStatus(json_format).subscribe((value:any)=>{
       console.log(value);
       // this.selectAllCategories()
+      this.dialogRef.close();
     })
 
   }
 
   edit_item(){
-    // let data = this.category_data;
-    // this.dialog.open(EditCategoryDialog, {
-    //   data
-    // }).afterClosed().subscribe((val)=>{
-    //   // this.selectAllCategories()
-    // });
     this.edit_show = true;
   }
 
@@ -184,9 +182,11 @@ export class EditCategoryDialog implements OnInit {
     this.display_msg = true
     this.apiAdminService.deleteServiceCategory(data).subscribe((value:any)=>{
       if(value.status == 1){
-        this.msg = value.msg;
+        this.alert_msg = value.msg;
         this.item_deleted = true;
+        this.form_submit = true;
         // this.selectAllCategories()
+        // console.log(this.msg);
       }
       else{
         this.msg = value.msg;
@@ -195,6 +195,7 @@ export class EditCategoryDialog implements OnInit {
     })
     setTimeout(()=>{
       this.display_msg = false;
+      this.dialogRef.close();
     },2000)
   }
 }
