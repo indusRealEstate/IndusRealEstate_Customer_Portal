@@ -2,7 +2,7 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <div class="main-content home-bg" *ngIf="screenWidth > 430">
-  <div class="container-fluid" style="margin-top: 25px; max-width: 2576px">
+  <div class="container-fluid" style="max-width: 2576px">
     <div
       *ngIf="isLoading == true"
       style="
@@ -17,19 +17,321 @@
       </span>
     </div>
 
-    <div *ngIf="isLoading == false" class="row m-0">
-      <div class="col pl-0">
-        <div class="row m-0">
-          <div class="col">
-            <div class="row">
-              <img src="" alt="">
+    <div class="col p-0" *ngIf="isLoading == false">
+      <div class="row m-0">
+        <div class="col pl-0">
+          <div class="row m-0">
+            <div class="col pl-0" *ngFor="let card of dashboardMainCards">
+              <div
+                class="col small-cards"
+                [ngStyle]="{'padding' : card.title == 'Total Units' ?  '25px 20px 10px' : '25px 20px '}"
+              >
+                <div class="row m-0">
+                  <img src="{{card.icon}}" alt="" style="height: 4rem" />
+                  <div class="col">
+                    <p
+                      class="m-0"
+                      style="
+                        font-size: 17px;
+                        font-weight: 600;
+                        color: #2b333ec4;
+                      "
+                    >
+                      {{card.title}}
+                    </p>
+                    <p
+                      class="m-0 mt-3"
+                      style="
+                        font-size: 2.5rem;
+                        font-weight: 600;
+                        color: #6384af;
+                      "
+                    >
+                      {{card.count}}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="row m-0 mt-4 justify-content-end align-items-end"
+                  *ngIf="card.title == 'Total Units'"
+                  style="min-height: 35px"
+                >
+                  <span
+                    style="font-size: 13px; font-weight: 600; color: #3564a2"
+                    >Vacant : 6</span
+                  >
+                  <span
+                    style="font-size: 13px; font-weight: 600; color: #3564a2"
+                    class="ml-3"
+                    >Occupied : 9</span
+                  >
+                </div>
+              </div>
             </div>
+          </div>
 
+          <div class="row m-0 mt-3">
+            <div
+              class="col pl-0"
+              *ngFor="let card of dashboardMainCardsPartTwo"
+            >
+              <div class="row m-0 small-cards">
+                <img src="{{card.icon}}" alt="" style="height: 4rem" />
+                <div class="col">
+                  <p
+                    class="m-0"
+                    style="font-size: 17px; font-weight: 600; color: #2b333ec4"
+                  >
+                    {{card.title}}
+                  </p>
+                  <p
+                    class="m-0 mt-3"
+                    style="font-size: 2.5rem; font-weight: 600; color: #6384af"
+                  >
+                    {{card.count}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!------------------------------------------------------------------ Area Chart -------------------------------------------->
+          <!------------------------------------------------------------------ Area Chart -------------------------------------------->
+          <!------------------------------------------------------------------ Area Chart -------------------------------------------->
+          <div class="col pl-0">
+            <div
+              class="card mt-3"
+              style="
+                margin: 0;
+                box-shadow: none;
+                border: 1px solid #e6ebf1;
+                background: white;
+              "
+            >
+              <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
+                <span style="font-weight: 600">Contracts Status By Month</span>
+              </div>
+
+              <div class="card-body">
+                <kendo-chart>
+                  <kendo-chart-title
+                    text="2023 (January - July)"
+                  ></kendo-chart-title>
+                  <kendo-chart-area
+                    background="transparent"
+                    [height]="screenHeight / 3"
+                  >
+                    <kendo-chart-category-axis>
+                      <kendo-chart-category-axis-item
+                        [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
+                      >
+                      </kendo-chart-category-axis-item>
+                    </kendo-chart-category-axis>
+
+                    <kendo-chart-series-defaults
+                      [highlight]="{ inactiveOpacity: 0.3 }"
+                    >
+                    </kendo-chart-series-defaults>
+
+                    <kendo-chart-series>
+                      <kendo-chart-series-item
+                        type="area"
+                        [data]="[123, 276, 310, 212, 240, 156, 98, ]"
+                        color="#3db9ac"
+                      >
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item
+                        type="area"
+                        [data]="[165, 210, 287, 144, 190, 167, 212]"
+                        color="#feda6a"
+                      >
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item
+                        type="area"
+                        [data]="[56, 140, 195, 46, 123, 78, 95]"
+                        color="#93cf3c"
+                      >
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item
+                        type="area"
+                        [data]="[30, 120, 43, 20, 100, 60, 152]"
+                        color="#fe8178"
+                      >
+                      </kendo-chart-series-item>
+                    </kendo-chart-series>
+                  </kendo-chart-area>
+                </kendo-chart>
+                <div
+                  class="row m-0 mt-3 align-items-center justify-content-center"
+                >
+                  <span
+                    style="width: 50px; background: #3db9ac; height: 15px"
+                  ></span>
+                  <span class="ml-2" style="font-weight: 500">No Action</span>
+                  <span
+                    class="ml-4"
+                    style="width: 50px; background: #feda6a; height: 15px"
+                  ></span>
+                  <span class="ml-2" style="font-weight: 500">Contracted</span>
+                  <span
+                    class="ml-4"
+                    style="width: 50px; background: #93cf3c; height: 15px"
+                  ></span>
+                  <span class="ml-2" style="font-weight: 500">Renewing</span>
+                  <span
+                    class="ml-4"
+                    style="width: 50px; background: #fe8178; height: 15px"
+                  ></span>
+                  <span class="ml-2" style="font-weight: 500"
+                    >Not Renewing</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!------------------------------------------------------------------ Area Chart ends-------------------------------------------->
+          <!------------------------------------------------------------------ Area Chart ends-------------------------------------------->
+          <!------------------------------------------------------------------ Area Chart ends-------------------------------------------->
+        </div>
+        <div class="col-4 pl-0 pr-0">
+          <div
+            class="card"
+            style="
+              margin: 0;
+              box-shadow: none;
+              border: 1px solid #e6ebf1;
+              background: white;
+            "
+          >
+            <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
+              <div class="row m-0 justify-content-between">
+                <span style="font-weight: 600">Unit Stats</span>
+                <span style="font-weight: 600; color: #d4aa32"
+                  >Total Units : 15</span
+                >
+              </div>
+            </div>
+            <div class="card-body" #card_body>
+              <!------------------------------------------------------------------ Donut Chart -------------------------------------------->
+              <!------------------------------------------------------------------ Donut Chart -------------------------------------------->
+              <!------------------------------------------------------------------ Donut Chart -------------------------------------------->
+              <kendo-chart
+                (render)="onRender($event)"
+                style="height: 330px; display: flex; width: 100%"
+              >
+                <kendo-chart-area
+                  background="transparent"
+                  [height]="screenHeight / 2.5"
+                  [width]="card_body.offsetWidth - 40"
+                >
+                  <kendo-chart-series>
+                    <kendo-chart-series-item
+                      type="donut"
+                      [data]="chart_data"
+                      categoryField="kind"
+                      field="share"
+                      [visual]="visualHandler"
+                      [holeSize]="80"
+                    >
+                      <kendo-chart-series-item-labels
+                        [content]="labelContent"
+                        color="#fff"
+                        background="none"
+                      >
+                      </kendo-chart-series-item-labels>
+                    </kendo-chart-series-item>
+                  </kendo-chart-series>
+                  <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                </kendo-chart-area>
+              </kendo-chart>
+
+              <!------------------------------------------------------------------ Donut Chart ends-------------------------------------------->
+              <!------------------------------------------------------------------ Donut Chart ends-------------------------------------------->
+              <!------------------------------------------------------------------ Donut Chart ends-------------------------------------------->
+
+              <div class="row m-0 justify-content-center align-items-center">
+                <span
+                  style="background: #fac83a; width: 40px; height: 15px"
+                  class="mr-3"
+                ></span>
+                <span style="font-size: 12px; font-weight: 600"
+                  >60% Units Occupied</span
+                >
+              </div>
+              <div
+                class="row m-0 mt-1 justify-content-center align-items-center"
+              >
+                <span
+                  style="background: #ff5353; width: 40px; height: 15px"
+                  class="mr-3"
+                ></span>
+                <span style="font-size: 12px; font-weight: 600"
+                  >40% Units Vacant</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="card mt-3"
+            style="
+              margin: 0;
+              box-shadow: none;
+              border: 1px solid #e6ebf1;
+              background: white;
+            "
+          >
+            <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
+              <span style="font-weight: 600">Revenue generated per year</span>
+            </div>
+            <div class="card-body" #card_body>
+              <kendo-chart>
+                <kendo-chart-area
+                  background="transparent"
+                  [height]="screenHeight / 2.7"
+                  [width]="card_body.offsetWidth - 40"
+                >
+                  <kendo-chart-title text="Past 4 Years"></kendo-chart-title>
+                  <kendo-chart-category-axis>
+                    <kendo-chart-category-axis-item
+                      [categories]="['2020', '2021', '2022', '2023']"
+                    >
+                    </kendo-chart-category-axis-item>
+                  </kendo-chart-category-axis>
+                  <kendo-chart-series>
+                    <kendo-chart-series-item
+                      type="column"
+                      [gap]="2"
+                      [spacing]=".25"
+                      [data]="[100, 123, 234, 343]"
+                      color="#3f92ff"
+                    >
+                    </kendo-chart-series-item>
+                    <kendo-chart-series-item
+                      [data]="[120, 67, 231, 196]"
+                      color="#fe947b"
+                    >
+                    </kendo-chart-series-item>
+                  </kendo-chart-series>
+                </kendo-chart-area>
+              </kendo-chart>
+              <div
+                class="row m-0 mt-3 align-items-center justify-content-center"
+              >
+                <span
+                  style="width: 40px; background: #3f92ff; height: 15px"
+                ></span>
+                <span class="ml-2" style="font-weight: 500">Recieved</span>
+                <span
+                  class="ml-4"
+                  style="width: 40px; background: #fe947b; height: 15px"
+                ></span>
+                <span class="ml-2" style="font-weight: 500">Pending</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-3">
-
       </div>
     </div>
   </div>

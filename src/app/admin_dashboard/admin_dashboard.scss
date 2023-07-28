@@ -3,3 +3,17 @@
 * {
   font-family: "Montserrat";
 }
+
+.small-cards {
+  border: 1px solid #e6ebf1;
+  border-radius: 7px;
+  padding: 25px 20px;
+  min-height: 10rem;
+  background: white;
+  transition: all ease-in-out 200ms;
+  &:hover {
+    box-shadow: -1px 6px 21px -11px rgba(130, 130, 130, 0.78);
+    -webkit-box-shadow: -1px 6px 21px -11px rgba(130, 130, 130, 0.78);
+    -moz-box-shadow: -1px 6px 21px -11px rgba(130, 130, 130, 0.78);
+  }
+}

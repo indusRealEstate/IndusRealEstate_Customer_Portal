@@ -16,8 +16,16 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicon.ico"],
-            "styles": ["src/assets/scss/material-dashboard.scss"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico"
+            ],
+            "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/assets/scss/material-dashboard.scss"
+            ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "node_modules/jquery/dist/jquery.min.js",
@@ -104,8 +112,16 @@
               "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
               "node_modules/bootstrap-notify/bootstrap-notify.js"
             ],
-            "styles": ["src/assets/scss/material-dashboard.scss"],
-            "assets": ["src/assets", "src/favicon.ico"]
+            "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/assets/scss/material-dashboard.scss"
+            ],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico"
+            ]
           }
         },
         "lint": {

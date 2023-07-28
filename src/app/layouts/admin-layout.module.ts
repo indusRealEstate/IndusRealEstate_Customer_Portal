@@ -51,8 +51,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 // import { MatToolbarModule } from "@angular/material/toolbar";
 // import { MatTreeModule } from "@angular/material/tree";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
-import { AddPropertyForm } from "app/add-property-form/add_property_from";
-import { NgxCheckboxModule } from "ngx-checkbox";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 // import { GoogleMapsModule } from "@angular/google-maps";
@@ -61,15 +59,12 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { AdminAllLandlordClients } from "app/admin-all-landlord-clients/admin-all-landlord-clients";
-import { AdminAllTenantClients } from "app/admin-all-tenants-clients/admin-all-tenants-clients";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminReqs } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
-import { LoadingTableAdminCLients } from "app/components/loading-table-admin-clients/loading-table-admin-clients";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
 import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
@@ -79,7 +74,7 @@ import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { UserChatsComponent } from "app/user_chats/user_chats";
-import { MatTimepickerModule } from "mat-timepicker";
+import { ClipboardModule } from "@angular/cdk/clipboard";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
@@ -90,6 +85,9 @@ import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admi
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
+import { ChartsModule } from "@progress/kendo-angular-charts";
+
+import "hammerjs";
 
 @NgModule({
   imports: [
@@ -142,11 +140,11 @@ import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admi
     // MatTreeModule,
     MatNativeDateModule,
     NgxSkeletonLoaderModule,
-    NgxCheckboxModule,
     DragDropModule,
     NgOptimizedImage,
     ClipboardModule,
-    MatTimepickerModule,
+    ChartsModule,
+
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
@@ -156,7 +154,6 @@ import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admi
   ],
   declarations: [
     PageNotFoundComponent,
-    AddPropertyForm,
     // AdminRequests,
     AdminReqs,
     AdminRequestsArchive,
@@ -178,12 +175,9 @@ import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admi
     RequestTimelineComponent,
     ReviewRequestAdmin,
     LoadingTableAdminReqs,
-    LoadingTableAdminCLients,
     LoadingTableAdminProperties,
     LoadingTableAdminPropertiesUnits,
     LoadingTableAdminAllUsers,
-    AdminAllLandlordClients,
-    AdminAllTenantClients,
     UserChatsComponent,
 
     AllUsersComponent,

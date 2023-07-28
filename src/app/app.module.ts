@@ -8,6 +8,11 @@ import { ComponentsModule } from "./components/components.module";
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout.component";
 import { MatDialogModule } from "@angular/material/dialog";
+import { ChartsModule } from '@progress/kendo-angular-charts';
+import 'hammerjs';
+import { IconsModule } from '@progress/kendo-angular-icons';
+
+
 
 // import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
@@ -21,7 +26,8 @@ import { MatDialogModule } from "@angular/material/dialog";
     RouterModule,
     AppRoutingModule,
     MatDialogModule,
-    
+    ChartsModule,
+    IconsModule,
   ],
   declarations: [
     AppComponent,

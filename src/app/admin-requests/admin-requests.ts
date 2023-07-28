@@ -95,13 +95,13 @@ export class AdminReqs implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allRequestsMatTableData != undefined) {
         this.allRequestsMatTableData.paginator = this.paginator;
-        this.allRequestsMatTableData.paginator._changePageSize(10);
+        this.allRequestsMatTableData.paginator.pageSize = 10;
       }
     } else {
       setTimeout(() => {
         if (this.allRequestsMatTableData != undefined) {
           this.allRequestsMatTableData.paginator = this.paginator;
-          this.allRequestsMatTableData.paginator._changePageSize(10);
+          this.allRequestsMatTableData.paginator.pageSize = 10;
         }
       });
     }
@@ -158,7 +158,7 @@ export class AdminReqs implements OnInit {
           setTimeout(() => {
             if (this.allRequestsMatTableData != undefined) {
               this.allRequestsMatTableData.paginator = this.paginator;
-              this.allRequestsMatTableData.paginator._changePageSize(10);
+              this.allRequestsMatTableData.paginator.pageSize = 10;
             }
           });
         })

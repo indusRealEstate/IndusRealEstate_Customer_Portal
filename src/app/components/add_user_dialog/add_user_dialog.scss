@@ -35,10 +35,39 @@
         brightness(90%) contrast(83%);
     }
   }
+
+  .progress-bar {
+    width: 400px;
+    height: 25px;
+    background-color: #f5ebd0a8;
+    border: 1px solid #d4aa32;
+    border-radius: 6px;
+  }
+
+  .progress-bar-fill {
+    background: #d4aa32;
+    height: 100%;
+  }
 }
 
 ::ng-deep .mat-datepicker {
   .mat-form-field-infix {
     display: flex !important;
+  }
+}
+
+::ng-deep .textField {
+  width: 100%;
+
+  .mdc-notched-outline {
+    .mdc-notched-outline__leading {
+      border-color: #d4aa32;
+    }
+    .mdc-notched-outline__notch {
+      border-color: #d4aa32;
+    }
+    .mdc-notched-outline__trailing {
+      border-color: #d4aa32;
+    }
   }
 }

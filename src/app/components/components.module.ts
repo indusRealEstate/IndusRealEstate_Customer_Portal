@@ -41,7 +41,7 @@ import { EditCategoryDialog } from "./edit_category_dialog/edit_category_dialog"
 import { AddUserDialog } from "./add_user_dialog/add_user_dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { CountryDropdown } from "./country-dropdown/country-dropdown";
-
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 
 @NgModule({
@@ -65,6 +65,7 @@ import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
     MatSlideToggleModule,
     MatDatepickerModule,
     NgxMatIntlTelInputComponent,
+    MatProgressBarModule,
   ],
   declarations: [
     FooterComponent,

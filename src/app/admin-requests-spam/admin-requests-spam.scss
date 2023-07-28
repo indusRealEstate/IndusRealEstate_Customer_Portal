@@ -124,8 +124,6 @@
   }
 }
 
-
-
 ::ng-deep .more-actions {
   width: 18rem;
   padding: 5px 13px;
@@ -230,10 +228,9 @@
     }
   }
 
-  .hidden{
+  .hidden {
     display: none;
   }
-
 
   .first-col {
     border-bottom-left-radius: 10px;
@@ -364,6 +361,10 @@
   .mat-form-field-infix {
     border-top: none !important;
     padding: 10px 0 !important;
+  }
+
+  .mat-mdc-paginator {
+    background: transparent !important;
   }
 
   .mat-form-field {
