@@ -21,6 +21,9 @@
               "src/favicon.ico"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "src/assets/scss/material-dashboard.scss"
             ],
             "scripts": [
@@ -109,6 +112,9 @@
               "node_modules/bootstrap-notify/bootstrap-notify.js"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "src/assets/scss/material-dashboard.scss"
             ],
             "assets": [

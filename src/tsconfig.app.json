@@ -4,7 +4,9 @@
     "outDir": "../out-tsc/app",
     "module": "es2020",
     "baseUrl": "",
-    "types": []
+    "types": [
+      "@angular/localize"
+    ]
   },
   "exclude": [
     "test.ts",
