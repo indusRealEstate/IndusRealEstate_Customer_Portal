@@ -1,3 +1,4 @@
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {
   Component,
   ElementRef,
@@ -7,6 +8,7 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
+import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
 interface DropDownButtonModel {
@@ -64,6 +66,8 @@ export class AddUnitDialog implements OnInit {
   imageNotAdded: boolean = false;
   documentNotAdded: boolean = false;
   uploading: boolean = false;
+
+  uploading_progress: any = 0;
 
   properties: any[] = [];
 
@@ -219,22 +223,17 @@ export class AddUnitDialog implements OnInit {
             );
             this.adminService
               .uploadAllFilesAddUnit(uploadData)
-              .subscribe((va) => {
-                if (va == "success") {
-                  if (this.inventories.length != 0) {
-                    var inventory_data = {
-                      unit_id: random_id,
-                      data: this.inventories,
-                    };
-                    this.adminService
-                      .addInventory(JSON.stringify(inventory_data))
-                      .subscribe((val) => {
-                        console.log(val);
-                      });
+              .pipe(
+                map((event) => this.getEventMessage(event)),
+                tap((message) => {
+                  if (message == "File was completely uploaded!") {
+                    this.dialogRef.close();
                   }
-                  this.uploading = false;
-                  this.dialogRef.close();
-                }
+                }),
+                last()
+              )
+              .subscribe((v) => {
+                console.log(v);
               });
           }
         });
@@ -306,5 +305,29 @@ export class AddUnitDialog implements OnInit {
     };
 
     return JSON.stringify(data);
+  }
+
+  /** Return distinct message for sent, upload progress, & response events */
+  private getEventMessage(event: HttpEvent<any>) {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        return `Uploading file `;
+
+      case HttpEventType.UploadProgress:
+        // Compute and show the % done:
+        const percentDone = event.total
+          ? Math.round((100 * event.loaded) / event.total)
+          : 0;
+
+        this.uploading_progress = percentDone;
+        return `File is ${percentDone}% uploaded.`;
+
+      case HttpEventType.Response:
+        this.uploading = false;
+        return `File was completely uploaded!`;
+
+      default:
+        return `File surprising upload event: ${event.type}.`;
+    }
   }
 }

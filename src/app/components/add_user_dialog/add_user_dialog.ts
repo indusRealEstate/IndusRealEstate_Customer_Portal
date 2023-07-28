@@ -10,6 +10,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
+import { HttpEvent, HttpEventType } from "@angular/common/http";
+import { last, map, tap } from "rxjs";
 
 @Component({
   // standalone: true,
@@ -63,6 +65,8 @@ export class AddUserDialog implements OnInit {
   imageNotAdded: boolean = false;
   documentNotAdded: boolean = false;
   uploading: boolean = false;
+
+  uploading_progress: any = 0;
 
   genders: any[] = [
     { value: "male", viewValue: "Male" },
@@ -152,9 +156,17 @@ export class AddUserDialog implements OnInit {
             var uploadData = this.setupUploadFiles(random_id, docs_names);
             this.adminService
               .uploadAllFilesAddUser(uploadData)
-              .subscribe((va) => {
-                this.uploading = false;
-                this.dialogRef.close();
+              .pipe(
+                map((event) => this.getEventMessage(event)),
+                tap((message) => {
+                  if (message == "File was completely uploaded!") {
+                    this.dialogRef.close();
+                  }
+                }),
+                last()
+              )
+              .subscribe((v) => {
+                console.log(v);
               });
           }
         });
@@ -212,5 +224,29 @@ export class AddUserDialog implements OnInit {
     };
 
     return JSON.stringify(data);
+  }
+
+  /** Return distinct message for sent, upload progress, & response events */
+  private getEventMessage(event: HttpEvent<any>) {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        return `Uploading file `;
+
+      case HttpEventType.UploadProgress:
+        // Compute and show the % done:
+        const percentDone = event.total
+          ? Math.round((100 * event.loaded) / event.total)
+          : 0;
+
+        this.uploading_progress = percentDone;
+        return `File is ${percentDone}% uploaded.`;
+
+      case HttpEventType.Response:
+        this.uploading = false;
+        return `File was completely uploaded!`;
+
+      default:
+        return `File surprising upload event: ${event.type}.`;
+    }
   }
 }

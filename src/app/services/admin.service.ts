@@ -1,7 +1,7 @@
+import { HttpClient, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { catchError, last, map, tap } from "rxjs/operators";
 import { OtherServices } from "./other.service";
 
 const API_URL = "https://indusre.app/api/admin";
@@ -82,29 +82,28 @@ export class AdminService {
 
   uploadAllFilesAddProperty(data: any) {
     const url = `${API_URL}/upload_add_property_files.php?apikey=1`;
-    return this.http.post<any>(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
   }
 
   uploadAllFilesAddUnit(data: any) {
     const url = `${API_URL}/upload_add_unit_files.php?apikey=1`;
-    return this.http.post<any>(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+
+    return this.http.request(req);
   }
 
   uploadAllFilesAddUser(data: any) {
     const url = `${API_URL}/upload_add_user_files.php?apikey=1`;
-    return this.http.post<any>(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+
+    return this.http.request(req);
   }
 
   addInventory(data: any) {

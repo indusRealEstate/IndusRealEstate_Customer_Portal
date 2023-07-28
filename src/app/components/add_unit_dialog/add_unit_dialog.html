@@ -434,6 +434,18 @@
           "
           >Please add atleast 1 document.</span
         >
+        <span
+          *ngIf="uploading"
+          class="mr-3"
+          style="font-size: 19px; font-weight: 600; color: #3c4858"
+          >{{uploading_progress}}%</span
+        >
+        <div class="progress-bar mr-4" *ngIf="uploading">
+          <div
+            class="progress-bar-fill"
+            [ngStyle]="{'width.%': uploading_progress % 100}"
+          ></div>
+        </div>
         <div
           class="btn"
           style="background: #3c4858; min-width: 120px; padding: 10px 20px"
