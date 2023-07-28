@@ -1,0 +1,346 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 20px"
+        >
+          Add New Lease
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+
+      <div class="row m-0 mt-3">
+        <div class="col pl-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Select Property*</mat-label>
+            <mat-select
+              [(ngModel)]="property_id"
+              (selectionChange)="selectProperty($event)"
+            >
+              <mat-option *ngFor="let prop of properties" [value]="prop.value">
+                {{prop.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Choose Contract Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="start_date_picker"
+              [(ngModel)]="contract_start_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="start_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #start_date_picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Notice Period (Months)*</mat-label>
+            <mat-select [(ngModel)]="notice_period">
+              <mat-option
+                *ngFor="let item of notice_period_lists"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Select Unit*</mat-label>
+            <mat-select
+              [(ngModel)]="unit_data"
+              (selectionChange)="selectUnit($event)"
+            >
+              <mat-select-trigger>
+                {{ unit_data.viewValue }}
+              </mat-select-trigger>
+              <mat-option *ngFor="let unit of units" [value]="unit">
+                {{unit.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Choose Contract End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="end_date_picker"
+              [(ngModel)]="contract_end_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="end_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #end_date_picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Purpose*</mat-label>
+            <mat-select [(ngModel)]="purpose">
+              <mat-option
+                *ngFor="let item of purpose_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Owner</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Ex. Jhon"
+              value="{{owner}}"
+              disabled
+            />
+          </mat-form-field>
+
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Choose Move-in Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="move_in_date_picker"
+              [(ngModel)]="move_in_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="move_in_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #move_in_date_picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Select Tenant*</mat-label>
+            <mat-select [(ngModel)]="tenant_id">
+              <mat-option *ngFor="let usr of users" [value]="usr.value">
+                {{usr.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Choose Move-out Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="move_out_date_picker"
+              [(ngModel)]="move_out_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="move_out_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #move_out_date_picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div
+        class="my-3"
+        style="width: 100%; height: 2px; background: #f0ba243b"
+      ></div>
+      <span style="font-size: 17px; font-weight: 500; color: #3c4858b5"
+        >Tenancy Terms</span
+      >
+      <div class="row m-0 mt-3">
+        <div class="col pl-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Select Currency*</mat-label>
+            <mat-select [(ngModel)]="payment_currency">
+              <mat-option
+                *ngFor="let item of currency_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Rent Amount*</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. Jhon"
+              [(ngModel)]="rent_amount"
+            />
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Government Charges*</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. Jhon"
+              [(ngModel)]="govt_charges"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Payment Method*</mat-label>
+            <mat-select [(ngModel)]="payment_method">
+              <mat-option
+                *ngFor="let item of payment_method_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Payment Frequency*</mat-label>
+            <mat-select [(ngModel)]="payment_frequency">
+              <mat-option
+                *ngFor="let item of payment_frequency_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Security Deposit*</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. Jhon"
+              [(ngModel)]="security_deposit"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col" style="height: 30vh; overflow: auto">
+          <div
+            (click)="fileInput.click()"
+            class="btn ml-4"
+            style="background: #d4aa32"
+          >
+            Add Documents
+          </div>
+          <input
+            multiple
+            hidden
+            (change)="onFileSelected($event.target.files)"
+            #fileInput
+            type="file"
+            id="file"
+          />
+
+          <div *ngIf="docsFilesUploaded.length != 0">
+            <div
+              *ngFor="let file of docsFilesUploaded;let index=index"
+              class="row m-0 mt-2 align-items-center"
+              style="
+                background: #d4aa3230;
+                border: solid 1px #d4aa32;
+                border-radius: 5px;
+                padding: 10px 10px;
+              "
+            >
+              <img src="assets/img/svg/documents/document-text.svg" alt="" />
+              <span
+                class="m-0 ml-3"
+                style="
+                  font-weight: 500;
+                  text-overflow: ellipsis;
+                  max-width: 160px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+                >{{file.name}}</span
+              >
+              <img
+                (click)="removeUploadedDoc(index)"
+                src="assets/img/svg/success-dialog/close-square.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 25px;
+                  width: 20px;
+                  cursor: pointer;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-0 w-100 justify-content-end align-items-center">
+        <span
+          class="mr-3"
+          *ngIf="formNotFilled"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please fill the form.</span
+        >
+
+        <span
+          class="mr-3"
+          *ngIf="documentNotAdded"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please add atleast 1 document.</span
+        >
+        <span
+          *ngIf="uploading"
+          class="mr-3"
+          style="font-size: 19px; font-weight: 600; color: #3c4858"
+          >{{uploading_progress}}%</span
+        >
+        <div class="progress-bar mr-4" *ngIf="uploading">
+          <div
+            class="progress-bar-fill"
+            [ngStyle]="{'width.%': uploading_progress % 100}"
+          ></div>
+        </div>
+        <div
+          class="btn"
+          style="background: #3c4858; min-width: 120px; padding: 10px 20px"
+          (click)="onSubmit()"
+        >
+          <span *ngIf="!uploading">Submit</span>
+          <span
+            *ngIf="uploading"
+            class="spinner-border spinner-border-m mx-auto"
+            style="height: 25px; width: 25px"
+          >
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

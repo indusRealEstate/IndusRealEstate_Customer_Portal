@@ -14,6 +14,7 @@ import { UserChatsComponent } from "app/user_chats/user_chats";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { AllUsersComponent } from "app/all-users/all-users";
+import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -30,6 +31,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-properties", component: AdminProperties },
   { path: "admin-properties-units", component: AdminPropertiesUnits },
   { path: "all-users", component: AllUsersComponent },
+  { path: "admin-lease", component: AllLeasesComponent },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },
 ];

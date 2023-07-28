@@ -37,7 +37,6 @@ export class AddUserDialog implements OnInit {
   @ViewChild("country_dropdown") country_dropdown: CountryDropdown;
 
   docsFilesUploaded: File[] = [];
-  docsFilesBase64Uploaded: any[] = [];
 
   imgFileUploaded: File;
   imgFileBase64Uploaded: any = "";
@@ -118,18 +117,12 @@ export class AddUserDialog implements OnInit {
   onFileSelected(files: Array<any>) {
     for (var item of files) {
       this.docsFilesUploaded.push(item);
-      const reader = new FileReader();
-      reader.readAsDataURL(item);
-      reader.onload = (event) => {
-        this.docsFilesBase64Uploaded.push(event.target.result);
-      };
     }
     this.fileInput.nativeElement.value = "";
   }
 
   removeUploadedDoc(index) {
     this.docsFilesUploaded.splice(index, 1);
-    this.docsFilesBase64Uploaded.splice(index, 1);
   }
 
   onSubmit() {

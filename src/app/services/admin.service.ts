@@ -26,6 +26,14 @@ export class AdminService {
     };
   }
 
+  getAllLeaseAdmin() {
+    const url = `${API_URL}/getAllLeaseAdmin.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
   getAllUsersAdmin() {
     const url = `${API_URL}/getAllUsersAdmin.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -80,6 +88,15 @@ export class AdminService {
     );
   }
 
+  addNewLease(data: any) {
+    const url = `${API_URL}/addNewLease.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   uploadAllFilesAddProperty(data: any) {
     const url = `${API_URL}/upload_add_property_files.php?apikey=1`;
     const req = new HttpRequest("POST", url, data, {
@@ -99,6 +116,15 @@ export class AdminService {
 
   uploadAllFilesAddUser(data: any) {
     const url = `${API_URL}/upload_add_user_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+
+    return this.http.request(req);
+  }
+
+  uploadAllFilesAddNewLease(data: any) {
+    const url = `${API_URL}/upload_add_lease_files.php?apikey=1`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });

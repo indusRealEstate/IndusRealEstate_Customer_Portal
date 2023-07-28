@@ -84,6 +84,8 @@ import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-al
 import { ChartsModule } from "@progress/kendo-angular-charts";
 
 import "hammerjs";
+import { AllLeasesComponent } from "app/admin-lease/admin-lease";
+import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
 
 @NgModule({
   imports: [
@@ -173,11 +175,13 @@ import "hammerjs";
     LoadingTableAdminProperties,
     LoadingTableAdminPropertiesUnits,
     LoadingTableAdminAllUsers,
+    LoadingTableAdminAllLease,
     UserChatsComponent,
 
     AllUsersComponent,
 
     BackButtonDirective,
+    AllLeasesComponent,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
