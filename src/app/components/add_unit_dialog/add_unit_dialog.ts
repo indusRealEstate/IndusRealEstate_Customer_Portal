@@ -36,7 +36,6 @@ export class AddUnitDialog implements OnInit {
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
 
   docsFilesUploaded: File[] = [];
-  docsFilesBase64Uploaded: any[] = [];
   imgFilesBase64Uploaded: any[] = [];
   imgFilesUploaded: File[] = [];
 
@@ -157,22 +156,16 @@ export class AddUnitDialog implements OnInit {
   onFileSelected(files: Array<any>) {
     for (var item of files) {
       this.docsFilesUploaded.push(item);
-      const reader = new FileReader();
-      reader.readAsDataURL(item);
-      reader.onload = (event) => {
-        this.docsFilesBase64Uploaded.push(event.target.result);
-      };
     }
     this.fileInput.nativeElement.value = "";
   }
 
   removeUploadedDoc(index) {
     this.docsFilesUploaded.splice(index, 1);
-    this.docsFilesBase64Uploaded.splice(index, 1);
   }
 
   removeUploadedImg(index) {
-    this.imgFilesBase64Uploaded.splice(index, 1);
+    this.imgFilesUploaded.splice(index, 1);
     this.imgFilesBase64Uploaded.splice(index, 1);
   }
 
@@ -298,6 +291,7 @@ export class AddUnitDialog implements OnInit {
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
       owner: this.owner.viewValue,
+      tenant_id: "",
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),

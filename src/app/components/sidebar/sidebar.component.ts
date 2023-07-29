@@ -38,24 +38,6 @@ export const HOMEROUTEADMIN: any[] = [
     icon: "assets/img/svg/admin-dashboard/profile-2user.svg",
     class: "",
   },
-  // {
-  //   path: "/admin-properties-rent",
-  //   title: "Rent Properties",
-  //   icon: "assets/img/svg/sidebar/buildings.svg",
-  //   class: "",
-  // },
-  // {
-  //   path: "/admin-all-landlords",
-  //   title: "All Landlord Clients",
-  //   icon: "assets/img/svg/sidebar/clients.svg",
-  //   class: "",
-  // },
-  // {
-  //   path: "/admin-all-tenants",
-  //   title: "All Tenant Clients",
-  //   icon: "assets/img/svg/sidebar/clients.svg",
-  //   class: "",
-  // },
 ];
 
 export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
@@ -106,6 +88,15 @@ export const REQUESTSROUTEADMIN: RouteInfo[] = [
   },
 ];
 
+export const LEASEROUTEADMIN: RouteInfo[] = [
+  {
+    path: "/admin-lease",
+    title: "All Lease Contracts",
+    icon: "assets/img/svg/sidebar/lease-2.svg",
+    class: "",
+  },
+];
+
 export const ROUTES: RouteInfo[] = [];
 
 @Component({
@@ -120,88 +111,56 @@ export class SidebarComponent implements OnInit {
 
   requestsRouteAdmin: any[];
 
+  leaseRouteAdmin: any[];
+
   archivedRequestsRouteAdmin: any[];
   chatsRouteAdmin: any[];
 
   user: User;
-  userProfilePic: any = false;
-  userDetails: any;
-  profilePicUpdatingLoader: boolean = false;
-  userProfileFetching: boolean = false;
   sideBarClicked: boolean = true;
 
   sideBarTextShow: boolean = true;
 
   isDashboardOpened: boolean = true;
 
-  isServicesOpened: boolean = false;
-  isDocumentsOpened: boolean = false;
   isRequestsOpened: boolean = false;
+
+  isLeaseOpened: boolean = false;
   isArchiveRequestsOpened: boolean = false;
   isChatsOpened: boolean = false;
-  isPaymentsOpened: boolean = false;
 
   currentPage: any;
 
-  usrImgPath: any = "https://indusre.app/api/upload/img/user/";
+  miniSidebarItems: any[] = [
+    {
+      tooltip: "Dashboard",
+      icon: "assets/img/svg/sidebar/home.svg",
+    },
+    {
+      tooltip: "Lease Management",
+      icon: "assets/img/svg/sidebar/lease.svg",
+    },
+    {
+      tooltip: "Requests",
+      icon: "assets/img/svg/sidebar/menu.svg",
+    },
+    {
+      tooltip: "Archives & Spams",
+      icon: "assets/img/svg/sidebar/archive.svg",
+    },
+    {
+      tooltip: "Chats",
+      icon: "assets/img/svg/sidebar/messages-1.svg",
+    },
+  ];
 
   constructor(
     private authService: AuthenticationService,
-    private route: ActivatedRoute,
     private router: Router,
-    private apiServices: ApiService,
     private otherServices: OtherServices
   ) {
-    this.userProfileFetching = true;
-    this.otherServices.isProfilePicUpdated.subscribe((e) => {
-      if (e == true) {
-        this.userProfileFetching = true;
-        this.profilePicUpdatingLoader = true;
-        var data = localStorage.getItem("currentUser");
-        var user = JSON.parse(data);
-        setTimeout(() => {
-          this.getUserDetails(user[0]["id"]);
-        }, 1000);
-
-        this.otherServices.isProfilePicUpdated.next(false);
-        setTimeout(() => {
-          this.profilePicUpdatingLoader = false;
-        }, 1000);
-      }
-    });
-
     otherServices.miniSideBarClicked.subscribe((val) => {
       this.sideBarClicked = val;
-    });
-
-    otherServices.myRequestClickedHome.subscribe((req_val) => {
-      if (req_val == true) {
-        this.miniSideBarClickedRequests();
-      }
-    });
-
-    otherServices.myPropertiesClickedHome.subscribe((prop_val) => {
-      if (prop_val == true) {
-        this.miniSideBarClickedProperties();
-      }
-    });
-
-    otherServices.reportsClickedHome.subscribe((repo_val) => {
-      if (repo_val == true) {
-        this.miniSideBarClickedReports();
-      }
-    });
-
-    otherServices.customerCareClickedHome.subscribe((cust_val) => {
-      if (cust_val == true) {
-        this.miniSideBarClickedCustomerCare();
-      }
-    });
-
-    otherServices.homeClickedTenantReg.subscribe((home_val) => {
-      if (home_val == true) {
-        this.miniSideBarClickedDashboard();
-      }
     });
 
     otherServices.userSignedIn.subscribe((home_val) => {
@@ -217,24 +176,45 @@ export class SidebarComponent implements OnInit {
         }
       }
     );
+  }
 
-    otherServices.propertyPageClickedUserProfile.subscribe((usr_val) => {
-      if (usr_val == true) {
-        this.miniSideBarClickedProperties();
-      }
-    });
-
-    otherServices.overviewClickedpropertyPage.subscribe((ovr_val) => {
-      if (ovr_val == true) {
-        this.miniSideBarClickedProperties();
-      }
-    });
-
-    otherServices.myRequestsClickedrequestPage.subscribe((myreq_val) => {
-      if (myreq_val == true) {
+  miniSideBarClick(title: string) {
+    switch (title) {
+      case "Dashboard":
+        this.miniSideBarClickedDashboard();
+        break;
+      case "Lease Management":
+        this.miniSideBarClickedLease();
+        break;
+      case "Requests":
         this.miniSideBarClickedRequests();
-      }
-    });
+        break;
+      case "Archives & Spams":
+        this.miniSideBarClickedArchivedRequests();
+        break;
+      case "Chats":
+        this.miniSideBarClickedChats();
+        break;
+      default:
+        break;
+    }
+  }
+
+  miniSideBarBool(title: string): boolean {
+    switch (title) {
+      case "Dashboard":
+        return this.isDashboardOpened;
+      case "Lease Management":
+        return this.isLeaseOpened;
+      case "Requests":
+        return this.isRequestsOpened;
+      case "Archives & Spams":
+        return this.isArchiveRequestsOpened;
+      case "Chats":
+        return this.isChatsOpened;
+      default:
+        break;
+    }
   }
 
   ngOnInit() {
@@ -251,6 +231,8 @@ export class SidebarComponent implements OnInit {
       (menuItem) => menuItem
     );
     this.chatsRouteAdmin = CHATSROUTEADMIN.filter((menuItem) => menuItem);
+
+    this.leaseRouteAdmin = LEASEROUTEADMIN.filter((menuItem) => menuItem);
   }
 
   isMobileMenu() {
@@ -268,44 +250,9 @@ export class SidebarComponent implements OnInit {
   }
 
   isLinkActive(url, type?): boolean {
-    if (url == "/requests") {
-      var base = this.router.url.split("?")[0];
-      if (base == url) {
-        var req_page_type = this.router.url.split("&")[1].split("=")[1];
+    const baseUrl = this.router.url.split("?")[0];
 
-        if (req_page_type == "my-requests") {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else if (url == "/documents") {
-      var base = this.router.url.split("?")[0];
-      if (base == url) {
-        var req_page_type = this.router.url.split("&")[1].split("=")[1];
-
-        if (req_page_type == type) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else if (url == "/service-temp") {
-      var base = this.router.url.split("?")[0];
-      if (base == url) {
-        var req_page_type = this.router.url.split("&")[1].split("=")[1];
-
-        if (req_page_type == type) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else {
-      const baseUrl = this.router.url.split("?")[0];
-
-      return baseUrl == url;
-    }
+    return baseUrl == url;
   }
 
   getUserDataFromLocal() {
@@ -321,32 +268,6 @@ export class SidebarComponent implements OnInit {
       user[0]["password"],
       user[0]["token"]
     );
-
-    var userDetailsSessionData = sessionStorage.getItem("userDetails");
-    var jsonUserDetails = JSON.parse(userDetailsSessionData);
-
-    if (userDetailsSessionData != null) {
-      this.userProfilePic = jsonUserDetails["userProfilePic"];
-      this.userProfileFetching = false;
-    } else {
-      this.getUserDetails(user[0]["id"]);
-    }
-  }
-
-  getUserDetails(userId: any) {
-    this.apiServices
-      .getUserDetails(userId)
-      .subscribe((e: any) => {
-        this.userDetails = e[0];
-        if (e[0]["profile_photo"] != "") {
-          this.userProfilePic = e[0]["profile_photo"];
-        } else {
-          this.userProfilePic = false;
-        }
-      })
-      .add(() => {
-        this.userProfileFetching = false;
-      });
   }
 
   userLogOut() {
@@ -363,9 +284,6 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       if (
-        this.isDocumentsOpened == false &&
-        this.isPaymentsOpened == false &&
-        this.isServicesOpened == false &&
         this.isRequestsOpened == false &&
         this.isArchiveRequestsOpened == false &&
         this.isChatsOpened == false
@@ -392,9 +310,8 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isDashboardOpened = true;
       this.isRequestsOpened = false;
+      this.isLeaseOpened = false;
       this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isChatsOpened = false;
 
       setTimeout(() => {
@@ -404,133 +321,8 @@ export class SidebarComponent implements OnInit {
       this.isDashboardOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-
-  miniSideBarClickedProperties() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isServicesOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isServicesOpened = false;
-      this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-  miniSideBarClickedTenants() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isServicesOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isServicesOpened = false;
-      this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-
-  miniSideBarClickedLandlord() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isServicesOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isServicesOpened = false;
-      this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-
-  miniSideBarClickedServices() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isServicesOpened = true;
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isServicesOpened = true;
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-
-  miniSideBarClickedDocuments() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isDocumentsOpened = true;
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isServicesOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isDocumentsOpened = true;
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isServicesOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
+      this.isLeaseOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -541,10 +333,9 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isRequestsOpened = true;
       this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
+      this.isLeaseOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -552,8 +343,30 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isRequestsOpened = true;
       this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
+      this.isDashboardOpened = false;
+      this.isChatsOpened = false;
+      this.isLeaseOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedLease() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isLeaseOpened = true;
+      this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
+      this.isDashboardOpened = false;
+      this.isChatsOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isLeaseOpened = true;
+      this.isRequestsOpened = false;
+      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
       this.sideBarTextShow = true;
@@ -566,10 +379,9 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isArchiveRequestsOpened = true;
       this.isRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
+      this.isLeaseOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -577,60 +389,9 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isArchiveRequestsOpened = true;
       this.isRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-
-  miniSideBarClickedReports() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
-
-  miniSideBarClickedCustomerCare() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
+      this.isLeaseOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -642,9 +403,8 @@ export class SidebarComponent implements OnInit {
       this.isChatsOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isDashboardOpened = false;
+      this.isLeaseOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -653,24 +413,9 @@ export class SidebarComponent implements OnInit {
       this.isChatsOpened = true;
       this.isRequestsOpened = false;
       this.isArchiveRequestsOpened = false;
-      this.isDocumentsOpened = false;
-      this.isServicesOpened = false;
       this.isDashboardOpened = false;
+      this.isLeaseOpened = false;
       this.sideBarTextShow = true;
     }
   }
-
-  // ngDoCheck() {
-  //   this.currentPage = this.router.url.split("?")[0].split("/")[1];
-
-  //   if (this.currentPage == "my-requests") {
-  //     this.miniSideBarClickedRequests();
-  //   } else if (this.currentPage == "my-properties") {
-  //     this.miniSideBarClickedProperties();
-  //   } else if (this.currentPage == "reports") {
-  //     this.miniSideBarClickedReports();
-  //   } else if (this.currentPage == "customer-care") {
-  //     this.miniSideBarClickedCustomerCare();
-  //   }
-  // }
 }

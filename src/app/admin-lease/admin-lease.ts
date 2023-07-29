@@ -3,18 +3,17 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
+import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
-import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
-  selector: "all-users",
-  templateUrl: "./all-users.html",
-  styleUrls: ["./all-users.scss"],
+  selector: "admin-lease",
+  templateUrl: "./admin-lease.html",
+  styleUrls: ["./admin-lease.scss"],
 })
-export class AllUsersComponent implements OnInit {
+export class AllLeasesComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -22,21 +21,24 @@ export class AllUsersComponent implements OnInit {
 
   displayedColumns: string[] = [
     // "name",
-    "name",
-    "mobileNumber",
-    "userType",
-    "email",
-    "idType",
-    "idNumber",
-    "nationality",
-    "dob",
-    "allocated_unit",
-    "building",
+    "contractId",
+    "buliding",
+    "unitNo",
+    "status",
+    "leaseExpiry",
+    "owner",
+    "tenant",
+    "moveIn",
+    "moveOut",
+    "contractStartDate",
+    "contractEndDate",
+    "deposit",
+    "rentAmount",
     "more",
   ];
 
-  allUsers: any[] = [];
-  allUsersMatTableData: MatTableDataSource<any>;
+  allLease: any[] = [];
+  allLeaseMatTableData: MatTableDataSource<any>;
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
@@ -46,10 +48,9 @@ export class AllUsersComponent implements OnInit {
 
   allProperties: any[] = [];
   allUnits: any[] = [];
+  allUsers: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
   constructor(
     private router: Router,
@@ -67,11 +68,11 @@ export class AllUsersComponent implements OnInit {
 
     this.route.queryParams.subscribe((e) => {
       if (e == null) {
-        router.navigate([`/all-users`], {
+        router.navigate([`/admin-lease`], {
           queryParams: { uid: user[0]["id"] },
         });
       } else if (e != user[0]["id"]) {
-        router.navigate([`/all-users`], {
+        router.navigate([`/admin-lease`], {
           queryParams: { uid: user[0]["id"] },
         });
       }
@@ -97,15 +98,15 @@ export class AllUsersComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.ngAfterViewInitInitialize == true) {
-      if (this.allUsersMatTableData != undefined) {
-        this.allUsersMatTableData.paginator = this.paginator;
-        this.allUsersMatTableData.paginator.pageSize = 10;
+      if (this.allLeaseMatTableData != undefined) {
+        this.allLeaseMatTableData.paginator = this.paginator;
+        this.allLeaseMatTableData.paginator.pageSize = 10;
       }
     } else {
       setTimeout(() => {
-        if (this.allUsersMatTableData != undefined) {
-          this.allUsersMatTableData.paginator = this.paginator;
-          this.allUsersMatTableData.paginator.pageSize = 10;
+        if (this.allLeaseMatTableData != undefined) {
+          this.allLeaseMatTableData.paginator = this.paginator;
+          this.allLeaseMatTableData.paginator.pageSize = 10;
         }
       });
     }
@@ -131,31 +132,51 @@ export class AllUsersComponent implements OnInit {
     }
   }
 
+  getUserName(user_id) {
+    if (this.allUsers != null) {
+      var user = this.allUsers.find((u) => u.user_id == user_id);
+      return user.name;
+    } else {
+      return "loading..";
+    }
+  }
+
+  getLeaseExpiry(start: any, end: any) {
+    var start_date = new Date(start);
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    return `${difference_In_Days} Days left`;
+  }
+
   fetchData() {
     this.adminService
-      .getAllUsersAdmin()
+      .getAllLeaseAdmin()
       .subscribe((va: any[]) => {
         console.log(va);
-        this.allUsers = va;
-        this.allUsersMatTableData = new MatTableDataSource(va);
+        this.allLease = va;
+        this.allLeaseMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
-          if (this.allUsersMatTableData != undefined) {
-            this.allUsersMatTableData.paginator = this.paginator;
-            this.allUsersMatTableData.paginator.pageSize = 10;
+          if (this.allLeaseMatTableData != undefined) {
+            this.allLeaseMatTableData.paginator = this.paginator;
+            this.allLeaseMatTableData.paginator.pageSize = 10;
           }
         });
       })
       .add(() => {
         this.isContentLoading = false;
-        if (this.allUsers.length != 0) {
+        if (this.allLease.length != 0) {
           sessionStorage.setItem(
-            "all_users_session",
-            JSON.stringify(this.allUsers)
+            "all_lease_session",
+            JSON.stringify(this.allLease)
           );
         }
       });
     sessionStorage.setItem(
-      "all_users_session_time_admin",
+      "all_lease_session_time_admin",
       JSON.stringify(new Date().getMinutes())
     );
   }
@@ -184,29 +205,41 @@ export class AllUsersComponent implements OnInit {
     } else {
       this.allUnits = unitsDataSession;
     }
+
+    var usersDataSession = JSON.parse(
+      sessionStorage.getItem("all_users_session")
+    );
+
+    if (usersDataSession == null) {
+      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+        this.allUsers = val;
+      });
+    } else {
+      this.allUsers = usersDataSession;
+    }
   }
 
   async ngOnInit() {
     this.getAllData();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
-      sessionStorage.getItem("all_users_session_time_admin")
+      sessionStorage.getItem("all_lease_session_time_admin")
     );
 
     var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
+      sessionStorage.getItem("all_lease_session")
     );
 
     if (previous != null) {
       var diff = now - Number(previous);
 
       if (diff >= 5) {
-        sessionStorage.removeItem("all_users_session");
+        sessionStorage.removeItem("all_lease_session");
         this.fetchData();
       } else {
         if (adminReqDataSession != null) {
-          this.allUsers = adminReqDataSession;
-          this.allUsersMatTableData = new MatTableDataSource(
+          this.allLease = adminReqDataSession;
+          this.allLeaseMatTableData = new MatTableDataSource(
             adminReqDataSession
           );
           this.isContentLoading = false;
@@ -221,29 +254,25 @@ export class AllUsersComponent implements OnInit {
   }
 
   clearAllVariables() {
-    this.allUsers.length = 0;
+    this.allLease.length = 0;
   }
 
   refreshTable() {
-    sessionStorage.removeItem("all_users_session");
+    sessionStorage.removeItem("all_lease_session");
     this.isContentLoading = true;
-    if (this.table_filter != undefined) {
-      this.table_filter.flaggedRequestsFilterOn = false;
-      this.table_filter.statusFilterOn = false;
-      this.table_filter.timeLineFilterOn = false;
-    }
+
     this.fetchData();
   }
 
   applyFilter(filterValue: any) {
     var val = new String(filterValue).trim().toLowerCase();
-    this.allUsersMatTableData.filter = val;
+    this.allLeaseMatTableData.filter = val;
   }
 
   addUserDialogOpen() {
     this.dialog
-      .open(AddUserDialog, {
-        width: "75%",
+      .open(AddLeaseDialog, {
+        width: "80%",
         height: "50rem",
       })
       .afterClosed()
