@@ -192,7 +192,7 @@
             <!-- Symbol Column -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateToDetailPage(row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateToDetailPage(row)" class="unit-row"></tr>
           </table>
           <div
             *ngIf="allPropertiesMatTableData.filteredData.length == 0 && allProperties.length != 0"

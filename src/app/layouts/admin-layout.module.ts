@@ -74,7 +74,6 @@ import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { UserChatsComponent } from "app/user_chats/user_chats";
-import { ClipboardModule } from "@angular/cdk/clipboard";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";

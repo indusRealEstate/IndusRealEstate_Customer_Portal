@@ -130,7 +130,7 @@ export class AdminPropertiesUnitDetails implements OnInit {
           setTimeout(() => {
             if (this.allPropertiesMatTableData != undefined) {
               this.allPropertiesMatTableData.paginator = this.paginator;
-              this.allPropertiesMatTableData.paginator._changePageSize(10);
+              this.allPropertiesMatTableData.paginator.pageSize = 10;
             }
           });
         })
@@ -148,6 +148,13 @@ export class AdminPropertiesUnitDetails implements OnInit {
         JSON.stringify(new Date().getMinutes())
       );
     }
+  }
+
+  call_person(){
+    location.href = `tell:${this.all_data.user_country_code_number + this.all_data.user_mobile_number}`;
+  }
+  email_person(){
+    location.href = "mailto:"+this.all_data.user_email+'?cc='+'sample@sdsd.ae'+'&subject='+'test'+'&body='+'hi';
   }
 
   async ngOnInit() {
@@ -196,8 +203,7 @@ export class AdminPropertiesUnitDetails implements OnInit {
               imgElmnt.classList.add("d-flex");
               imgElmnt.classList.add("carousel-img");
               imgElmnt.classList.add("w-100");
-              imgElmnt.style.height = "30rem";
-              imgElmnt.style.height = "30rem";
+              imgElmnt.style.height = "50vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
               imgElmnt.src = `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`;
@@ -219,7 +225,7 @@ export class AdminPropertiesUnitDetails implements OnInit {
               imgElmnt.classList.add("d-block");
               imgElmnt.classList.add("w-100");
               imgElmnt.classList.add("carousel-img");
-              imgElmnt.style.height = "30rem";
+              imgElmnt.style.height = "50vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
               imgElmnt.src = `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`;
