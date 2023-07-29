@@ -14,6 +14,7 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { HttpParams } from "@angular/common/http";
+import { ViewImageOfUnit } from "app/components/view_image_of_unit/view_image_of_unit";
 
 @Component({
   selector: "admin-property-unit-details",
@@ -67,7 +68,8 @@ export class AdminPropertiesUnitDetails implements OnInit {
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
     private dialog: MatDialog
-  ) {
+  ) // private viewImage: ViewImageOfUnit,
+  {
     // this.isLoading = true;
     this.isContentLoading = true;
 
@@ -111,6 +113,30 @@ export class AdminPropertiesUnitDetails implements OnInit {
   //   }
   // }
 
+  viewImageOfUnit(data: string) {
+    let constainer = document.getElementById("full-screen-image");
+    constainer.style.display = "flex";
+    constainer.style.width = "100vw";
+    constainer.style.height = "100vh";
+    constainer.style.backgroundColor = "#000000bd";
+    constainer.style.position = "fixed";
+    constainer.style.zIndex = "1000";
+    constainer.style.top = "0";
+    constainer.style.left = "0";
+    let image = document.getElementById("image");
+    image.setAttribute("src",data);
+    image.style.width = "75vw";
+    image.style.height = "75vh";
+    image.style.objectFit = "cover";
+    image.style.objectPosition = "bottom";
+    image.style.margin = "auto";
+  }
+
+  onCloseDialog(){
+    let constainer = document.getElementById("full-screen-image");
+    constainer.style.display = "none";
+  }
+
   fetchData() {
     var adminReqDataSession = JSON.parse(
       sessionStorage.getItem("admin_properties_units_session")
@@ -150,11 +176,39 @@ export class AdminPropertiesUnitDetails implements OnInit {
     }
   }
 
-  call_person(){
-    location.href = `tell:${this.all_data.user_country_code_number + this.all_data.user_mobile_number}`;
+  call_person() {
+    location.href = `tell:${
+      this.all_data.user_country_code_number + this.all_data.user_mobile_number
+    }`;
   }
-  email_person(){
-    location.href = "mailto:"+this.all_data.user_email+'?cc='+'sample@sdsd.ae'+'&subject='+'test'+'&body='+'hi';
+  email_person() {
+    location.href =
+      "mailto:" +
+      this.all_data.user_email +
+      "?cc=" +
+      "sample@sdsd.ae" +
+      "&subject=" +
+      "test" +
+      "&body=" +
+      "hi";
+  }
+
+  call_tenant_person() {
+    location.href = `tell:${
+      this.all_data.tenant_country_code_number +
+      this.all_data.tenant_mobile_number
+    }`;
+  }
+  email_tenant_person() {
+    location.href =
+      "mailto:" +
+      this.all_data.tenant_email +
+      "?cc=" +
+      "sample@sdsd.ae" +
+      "&subject=" +
+      "test" +
+      "&body=" +
+      "hi";
   }
 
   async ngOnInit() {
@@ -164,8 +218,8 @@ export class AdminPropertiesUnitDetails implements OnInit {
         this.all_data = value;
         console.log(this.all_data);
 
-        this.address = this.all_data.address;
-        this.allocated_unit = this.all_data.allocated_unit;
+        this.address = this.all_data.prop_address;
+        this.allocated_unit = this.all_data.user_allocates_unit;
 
         for (let i = 0; i < JSON.parse(this.all_data.unit_images).length; i++) {
           this.image_array.push(JSON.parse(this.all_data.unit_images)[i]);
@@ -183,7 +237,7 @@ export class AdminPropertiesUnitDetails implements OnInit {
           // console.log('hello');
           let carousel = document.getElementById("carousel");
           let indicator = document.getElementById("indicator");
-          
+
           for (let i = 0; i < this.image_array.length; i++) {
             if (i == 0) {
               let carouselDiv = document.createElement("div");
@@ -206,7 +260,13 @@ export class AdminPropertiesUnitDetails implements OnInit {
               imgElmnt.style.height = "50vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
+              imgElmnt.style.cursor = "pointer";
               imgElmnt.src = `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`;
+              imgElmnt.addEventListener("click", () => {
+                this.viewImageOfUnit(
+                  `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`
+                );
+              });
               carouselDiv.append(imgElmnt);
             } else {
               let carouselDiv = document.createElement("div");
@@ -228,12 +288,19 @@ export class AdminPropertiesUnitDetails implements OnInit {
               imgElmnt.style.height = "50vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
+              imgElmnt.style.cursor = "pointer";
               imgElmnt.src = `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`;
+              imgElmnt.addEventListener("click", () => {
+                this.viewImageOfUnit(
+                  `https://www.indusre.app/api/upload/unit/${this.all_data.unit_id}/images/${this.image_array[i]}`
+                );
+              });
               carouselDiv.append(imgElmnt);
             }
           }
         });
       });
+      
 
     var now = new Date().getMinutes();
     var previous = JSON.parse(
