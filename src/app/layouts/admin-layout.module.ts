@@ -73,13 +73,13 @@ import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { UserChatsComponent } from "app/user_chats/user_chats";
-import { ClipboardModule } from "@angular/cdk/clipboard";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
+import { DetailsComponents } from "app/property-details/details-properties";
 
 import { ChartsModule } from "@progress/kendo-angular-charts";
 
@@ -140,7 +140,6 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     NgxSkeletonLoaderModule,
     DragDropModule,
     NgOptimizedImage,
-    ClipboardModule,
     ChartsModule,
 
     // GoogleMapsModule,
@@ -163,6 +162,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     LoginComponent,
 
     AdminProperties,
+    DetailsComponents,
     AdminPropertiesUnits,
 
     IndividualDocumentsComponent,

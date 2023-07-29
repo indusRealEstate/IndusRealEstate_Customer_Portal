@@ -211,6 +211,7 @@ export class AdminService {
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
+        
       })
     );
   }
@@ -276,5 +277,27 @@ export class AdminService {
         return data;
       })
     );
+  }
+
+  getPropDetails(data:any){
+    // console.log(data);
+    const url = `${API_URL}/selectPropertyDetails.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getDownloadDocument(data:any){
+     //console.log(data);
+    const url = `${API_URL}/downloadDocument.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+        
+      })
+    );
+
   }
 }

@@ -73,6 +73,7 @@
             [dataSource]="allPropertiesMatTableData"
             class="mat-elevation-z8 demo-table"
             *ngIf="allProperties.length != 0"
+            
           >
             <!-- Name Column -->
             <ng-container matColumnDef="propertyName">
@@ -81,6 +82,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
+                
               >
                 {{ element.property_name}}
               </td>
@@ -159,7 +161,7 @@
             <!-- Symbol Column -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="viewPropInfo(row)"></tr>
           </table>
           <div
             *ngIf="allPropertiesMatTableData.filteredData.length == 0 && allProperties.length != 0"
