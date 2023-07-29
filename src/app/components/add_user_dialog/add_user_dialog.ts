@@ -177,6 +177,19 @@ export class AddUserDialog implements OnInit {
         this.documentNotAdded = false;
       }, 3000);
     }
+
+    if (this.user_bank_name != "" && this.user_bank_ac_no != "") {
+      var bank_data = {
+        user_id: random_id,
+        bank_name: this.user_bank_name,
+        bank_ac_number: this.user_bank_ac_no,
+        swift_code: this.user_bank_swift_code,
+        iban: this.user_bank_iban,
+      };
+      this.adminService
+        .addUserBankDetails(JSON.stringify(bank_data))
+        .subscribe((val) => {});
+    }
   }
 
   setupUploadFiles(random_id: any, docs_names: any[]): FormData {

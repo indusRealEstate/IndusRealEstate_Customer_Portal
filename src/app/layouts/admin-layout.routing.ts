@@ -4,7 +4,7 @@ import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { LoginComponent } from "app/login/login.component";
-import { AdminReqs } from "app/admin-requests/admin-requests";
+import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
@@ -26,7 +26,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "user-chats", component: UserChatsComponent },
   // { path: "admin-requests", component: AdminRequests },
-  { path: "admin-requests", component: AdminReqs },
+  { path: "admin-requests", component: AdminRequests },
   { path: "review-request-admin", component: ReviewRequestAdmin },
   { path: "admin-requests-archive", component: AdminRequestsArchive },
   { path: "admin-requests-spam", component: AdminRequestsSpam },

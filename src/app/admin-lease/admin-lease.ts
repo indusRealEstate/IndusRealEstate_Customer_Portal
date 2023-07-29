@@ -284,4 +284,10 @@ export class AllLeasesComponent implements OnInit {
       queryParams: { prop_id: prop_id },
     });
   }
+
+  navigateToUnitDetailPage(unit_id) {
+    this.router.navigate(["/admin-property-unit-details"], {
+      queryParams: { unit_id: unit_id },
+    });
+  }
 }
