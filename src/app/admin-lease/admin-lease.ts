@@ -47,6 +47,8 @@ export class AllLeasesComponent implements OnInit {
   flaggedRequest: boolean = false;
 
   allProperties: any[] = [];
+  allUnits: any[] = [];
+  allUsers: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -121,6 +123,35 @@ export class AllLeasesComponent implements OnInit {
     }
   }
 
+  getUnitNo(unit_id) {
+    if (this.allUnits != null) {
+      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
+      return unit.unit_no;
+    } else {
+      return "loading..";
+    }
+  }
+
+  getUserName(user_id) {
+    if (this.allUsers != null) {
+      var user = this.allUsers.find((u) => u.user_id == user_id);
+      return user.name;
+    } else {
+      return "loading..";
+    }
+  }
+
+  getLeaseExpiry(start: any, end: any) {
+    var start_date = new Date(start);
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    return `${difference_In_Days} Days left`;
+  }
+
   fetchData() {
     this.adminService
       .getAllLeaseAdmin()
@@ -150,7 +181,7 @@ export class AllLeasesComponent implements OnInit {
     );
   }
 
-  async ngOnInit() {
+  getAllData() {
     var propertiesDataSession = JSON.parse(
       sessionStorage.getItem("admin_properties_session")
     );
@@ -162,6 +193,34 @@ export class AllLeasesComponent implements OnInit {
     } else {
       this.allProperties = propertiesDataSession;
     }
+
+    var unitsDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_units_session")
+    );
+
+    if (unitsDataSession == null) {
+      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+        this.allUnits = val;
+      });
+    } else {
+      this.allUnits = unitsDataSession;
+    }
+
+    var usersDataSession = JSON.parse(
+      sessionStorage.getItem("all_users_session")
+    );
+
+    if (usersDataSession == null) {
+      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+        this.allUsers = val;
+      });
+    } else {
+      this.allUsers = usersDataSession;
+    }
+  }
+
+  async ngOnInit() {
+    this.getAllData();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("all_lease_session_time_admin")

@@ -68,6 +68,7 @@
             <ng-container matColumnDef="contractId">
               <th mat-header-cell *matHeaderCellDef>Contract ID</th>
               <td
+                style="max-width: 150px; padding: 10px 15px"
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
@@ -83,7 +84,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
               >
-                {{ element.country_code_number }}
+                {{ getbuildingName(element.property_id) }}
               </td>
             </ng-container>
 
@@ -95,7 +96,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
               >
-                {{ element.country_code_number }}
+                {{ getUnitNo(element.unit_id) }}
               </td>
             </ng-container>
 
@@ -118,7 +119,18 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.contract_end | date:'M/d/y'}}
+                <span
+                  style="
+                    color: red;
+                    background: #ff000017;
+                    padding: 10px 10px;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    border: 1px solid #ff00003b;
+                  "
+                  >{{
+                  getLeaseExpiry(element.contract_start,element.contract_end)}}</span
+                >
               </td>
             </ng-container>
 
@@ -129,7 +141,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.id_number}}
+                {{ getUserName(element.owner_id) }}
               </td>
             </ng-container>
             <ng-container matColumnDef="tenant">
@@ -139,7 +151,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.nationality}}
+                {{ getUserName(element.tenant_id) }}
               </td>
             </ng-container>
             <ng-container matColumnDef="moveIn">
@@ -191,7 +203,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.security_deposit}}
+                {{ element.security_deposit | currency:'AED '}}
               </td>
             </ng-container>
             <ng-container matColumnDef="rentAmount">
@@ -201,7 +213,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.rent_amount}}
+                {{ element.rent_amount | currency:'AED '}}
               </td>
             </ng-container>
 

@@ -291,6 +291,7 @@ export class AddUnitDialog implements OnInit {
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
       owner: this.owner.viewValue,
+      tenant_id: "",
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),

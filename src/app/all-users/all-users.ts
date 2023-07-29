@@ -45,6 +45,7 @@ export class AllUsersComponent implements OnInit {
   flaggedRequest: boolean = false;
 
   allProperties: any[] = [];
+  allUnits: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -121,6 +122,15 @@ export class AllUsersComponent implements OnInit {
     }
   }
 
+  getUnitNo(unit_id) {
+    if (this.allUnits != null) {
+      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
+      return unit.unit_no;
+    } else {
+      return "loading..";
+    }
+  }
+
   fetchData() {
     this.adminService
       .getAllUsersAdmin()
@@ -150,7 +160,7 @@ export class AllUsersComponent implements OnInit {
     );
   }
 
-  async ngOnInit() {
+  getAllData() {
     var propertiesDataSession = JSON.parse(
       sessionStorage.getItem("admin_properties_session")
     );
@@ -162,6 +172,22 @@ export class AllUsersComponent implements OnInit {
     } else {
       this.allProperties = propertiesDataSession;
     }
+
+    var unitsDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_units_session")
+    );
+
+    if (unitsDataSession == null) {
+      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+        this.allUnits = val;
+      });
+    } else {
+      this.allUnits = unitsDataSession;
+    }
+  }
+
+  async ngOnInit() {
+    this.getAllData();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("all_users_session_time_admin")
