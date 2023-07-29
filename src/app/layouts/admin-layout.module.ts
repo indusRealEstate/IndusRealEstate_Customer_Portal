@@ -55,6 +55,7 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 // import { GoogleMapsModule } from "@angular/google-maps";
 // import { NgApexchartsModule } from "ng-apexcharts";
+import { ClipboardModule } from "@angular/cdk/clipboard";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -80,7 +81,10 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
 import { DetailsComponents } from "app/property-details/details-properties";
+import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 
+// import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
 import { ChartsModule } from "@progress/kendo-angular-charts";
 
 import "hammerjs";
@@ -164,6 +168,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     AdminProperties,
     DetailsComponents,
     AdminPropertiesUnits,
+    AdminPropertiesUnitDetails,
 
     IndividualDocumentsComponent,
     AllClientsDocuments,

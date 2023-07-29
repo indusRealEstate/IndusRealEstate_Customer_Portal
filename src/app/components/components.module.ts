@@ -34,6 +34,10 @@ import { AddPropertyDialog } from "./add_property_dialog/add_property_dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
+import { AdminRequestsCategory } from "app/admin-requests-category/admin-requests-category";
+import { AddCategoryDialog } from "./add_category_dialog/add_category_dialog";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { EditCategoryDialog } from "./edit_category_dialog/edit_category_dialog";
 import { AddUserDialog } from "./add_user_dialog/add_user_dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { CountryDropdown } from "./country-dropdown/country-dropdown";
@@ -59,6 +63,7 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
     NgxSkeletonLoaderModule,
     MatTooltipModule,
     DragDropModule,
+    MatSlideToggleModule,
     MatDatepickerModule,
     NgxMatIntlTelInputComponent,
     MatProgressBarModule,
@@ -83,6 +88,9 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
     AdminViewTenantDialog,
     AddPropertyDialog,
     AddUnitDialog,
+    AdminRequestsCategory,
+    AddCategoryDialog,
+    EditCategoryDialog,
     AddUserDialog,
     AddLeaseDialog,
     CountryDropdown,

@@ -1,0 +1,126 @@
+<div
+  class="card main-dialog"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane">
+  <!-- <div class="card-header"></div> -->
+  <div class="card-header position-relative">
+    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
+    <h4 class="dialog-head">Edit Srevice Category</h4>
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </div>
+  <div class="text-center text-light fw-bold"
+    [ngClass]="[form_submit ? 'bg-success' : 'bg-danger']">{{alert_msg}}</div>
+  <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
+
+    <div class="row">
+      <div class="col-6">
+        <img
+          class="card-top-img icon"
+          src="https://indusre.app/api/upload/category/{{image}}"
+          alt="category icon">
+        <p class="category-name mb-1">{{name}}</p>
+        <p class="category-description mb-1">{{name}}</p>
+      </div>
+      <div class="col-6 my-auto">
+        <div class="row">
+          <div class="col-4 d-flex justify-content-center m-auto">
+            <button class="btn delete-btn" title="EDIT"
+              (click)="edit_item()">
+
+              <p class="w-100 m-0">
+                <img
+                  src="assets/img/svg/property-page/edit.svg"
+                  alt
+                  style="width: 20px; filter: brightness(0) invert(1)" />
+                <!-- <span class="m-auto px-2">Edit</span> -->
+              </p>
+            </button>
+          </div>
+          <div class="col-4 d-flex justify-content-center m-auto">
+            <mat-slide-toggle class="m-auto slider-toggle-status"
+              [checked]="status"
+              (change)="stauts_change($event,id)"></mat-slide-toggle>
+          </div>
+          <div class="col-4 d-flex justify-content-center m-auto">
+            <button class="btn delete-btn bg-danger" title="DELETE"
+              (click)="delete_item(id)">
+
+              <p class="w-100 m-0">
+                <img
+                  src="assets/img/svg/delete.svg"
+                  alt
+                  style="width: 20px; filter: brightness(0) invert(1)" />
+                <!-- <span class="m-auto px-2">Delete</span> -->
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form
+      *ngIf="edit_show"
+      [formGroup]="categoryForm"
+      (ngSubmit)="submit()" enctype='multipart/form-data'>
+      <div class="form-group">
+        <label for="category-name">Category Name</label>
+        <input type="text" name="category_name" id="category-name"
+          class="form-control" formControlName="categoryName" [(ngModel)]="name">
+        <span class="text-danger" *ngIf="isEmptyCategoryName">{{error_message_name}}</span>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="from-group">
+            <label for="category-icon">
+
+              <div
+                class="btn"
+                style="
+              margin: 0;
+              padding: 7px 15px;
+              margin-right: 10px;
+              background: #d4aa32;
+            ">
+                <div
+                  class="row m-0 align-items-center"
+                  style="width: 135px; justify-content: space-between">
+                  <img
+                    src="assets/img/svg/image.svg"
+                    alt
+                    style="width: 20px; filter: brightness(0) invert(1)" />
+                  <p class="m-0">Category Icon</p>
+                </div>
+              </div>
+            </label>
+
+            <input type="file" name="category_icon" id="category-icon"
+              class="d-none" formControlName="categoryIcon" accept="image/*"
+              (change)="get_image_data($event)">
+
+          </div>
+          <span class="text-danger" *ngIf="isEmptyCategoryIcon">{{error_message_icon}}</span>
+        </div>
+        <div class="col-6">
+          <img src="{{preview_image}}"
+            alt="preview image" class="priview-image">
+        </div>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-3">
+          <button type="submit" class="btn btn-info" title="Save">Save</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

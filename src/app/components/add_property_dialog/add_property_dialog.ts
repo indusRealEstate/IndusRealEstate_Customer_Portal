@@ -17,11 +17,9 @@ interface DropDownButtonModel {
 }
 
 @Component({
-  // standalone: true,
   selector: "add_property_dialog",
   styleUrls: ["./add_property_dialog.scss"],
   templateUrl: "./add_property_dialog.html",
-  // imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class AddPropertyDialog implements OnInit {
   constructor(

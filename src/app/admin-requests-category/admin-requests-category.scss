@@ -1,0 +1,85 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+
+.alert-msg {
+  position: absolute;
+  top: 5rem;
+  right: 2rem;
+  color: #fff;
+  font-weight: 600;
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 100;
+}
+
+.add-catagory {
+  background-color: #d4aa32;
+}
+
+.card{
+  cursor: pointer;
+
+  .card-top-img{
+    max-width:2em;
+    max-height: 2em;
+  }
+
+  .category-name{
+    font-size: 1.25rem;
+    font-weight: 600;
+    max-width: 7rem;
+  }
+
+  .category-description{
+    font-size: 0.986rem;
+  }
+}
+
+.category-card {
+  background-color: #dddddd;
+  font-weight: 700;
+  font-size: 1.25rem;
+  position: relative;
+  border: rgb(43 51 62 / 39%) solid 0.125rem;
+  color: #d4aa32;
+  padding: 0.9375rem 25px;
+
+  .category-icon {
+    min-width: 1rem;
+    min-height: 1rem;
+    max-width: 4rem;
+    max-height: 4rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .delete-btn {
+    padding: 0.5rem;
+    background: rgba(43, 51, 62, 0.8117647059);
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap-reverse;
+  }
+
+  mat-slide-toggle {
+    color: #34ae39 !important;
+  }
+
+  mat-slide-toggle.mat-checked .mat-slide-toggle-thumb{
+    background-color: #34ae39 !important;
+  }
+}
+
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #397e427a ;
+}
+:host ::ng-deep  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #046b26 ;
+}

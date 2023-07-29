@@ -460,4 +460,14 @@ export class ApiService implements OnDestroy {
   // downloadFile(data: Blob, filename: string, extension: string) {
   //   saveAs(data, `${filename}.${extension}`);
   // }
+
+  insertCategory(data: any){
+    const url = `${API_URL}/removeAppointment.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("removeAppointment", [])));
+  }
+
+  
 }
