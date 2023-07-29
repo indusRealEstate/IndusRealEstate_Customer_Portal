@@ -278,4 +278,10 @@ export class AllLeasesComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {});
   }
+
+  navigateToPropertyDetailsPage(prop_id) {
+    this.router.navigate(["/property-details"], {
+      queryParams: { prop_id: prop_id },
+    });
+  }
 }

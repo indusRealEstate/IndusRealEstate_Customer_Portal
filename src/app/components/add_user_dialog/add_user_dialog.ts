@@ -132,7 +132,9 @@ export class AddUserDialog implements OnInit {
       if (
         this.user_name != "" &&
         this.user_email != "" &&
-        this.user_mobile_number != ""
+        this.user_mobile_number != "" &&
+        this.user_id_type != "" &&
+        this.user_id_number != ""
       ) {
         this.uploading = true;
         var random_id = uuid.v4();

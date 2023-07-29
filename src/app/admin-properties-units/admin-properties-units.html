@@ -93,7 +93,11 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
               >
-                {{ element.property_name }}
+                <span
+                  class="prop_name"
+                  (click)="navigateToPropertyDetailsPage(element.property_id)"
+                  >{{ element.property_name }}</span
+                >
               </td>
             </ng-container>
 
@@ -128,7 +132,36 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.status}}
+                <div
+                  *ngIf="element.status == 'vacant'"
+                  style="
+                    color: #2b333eb0;
+                    background: #2b333e1a;
+                    padding: 10px 8px;
+                    border-radius: 5px;
+                    font-size: 15px;
+                    border: 1px solid #2b333e2e;
+                    text-align: center;
+                    margin: 10px 0;
+                  "
+                >
+                  {{ element.status | titlecase}}
+                </div>
+                <div
+                  *ngIf="element.status == 'occupied'"
+                  style="
+                    color: #37b400;
+                    background: #37b4001c;
+                    padding: 10px 8px;
+                    border-radius: 5px;
+                    font-size: 15px;
+                    border: 1px solid #37b4003b;
+                    text-align: center;
+                    margin: 10px 0;
+                  "
+                >
+                  {{ element.status | titlecase}}
+                </div>
               </td>
             </ng-container>
 
@@ -192,7 +225,12 @@
             <!-- Symbol Column -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateToDetailPage(row)" class="unit-row"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="navigateToDetailPage(row)"
+              class="unit-row"
+            ></tr>
           </table>
           <div
             *ngIf="allPropertiesMatTableData.filteredData.length == 0 && allProperties.length != 0"

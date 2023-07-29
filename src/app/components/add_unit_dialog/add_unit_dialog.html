@@ -65,185 +65,269 @@
             style="max-width: 80px; background: #d4aa3229; min-width: 100px"
           >
             <div class="row m-0" style="position: relative">
-              <img
-                src="{{img}}"
-                style="height: 100%; width: 100%; object-fit: contain"
-                alt=""
-              />
-              <img
-                (click)="removeUploadedImg(index)"
-                src="assets/img/svg/success-dialog/close-square.svg"
-                alt=""
-                style="position: absolute; width: 20px; cursor: pointer"
-              />
+              <div
+                style="
+                  width: 100%;
+                  height: 7rem;
+                  overflow: hidden;
+                  background-image: url('{{ img }}');
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  border-radius: 10px;
+                "
+              >
+                <!-- <img
+                  src="{{img}}"
+                  style="height: 100%; width: 100%; object-fit: contain"
+                  alt=""
+                /> -->
+                <img
+                  (click)="removeUploadedImg(index)"
+                  src="assets/img/svg/success-dialog/close-square.svg"
+                  alt=""
+                  style="position: absolute; width: 20px; cursor: pointer"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row m-0 mt-3">
-        <div class="col pl-0">
-          <mat-form-field class="mt-2 textField" appearance="outline">
-            <mat-label>Select Property*</mat-label>
-            <mat-select [(ngModel)]="selected_property">
-              <mat-option *ngFor="let prop of properties" [value]="prop.value">
-                {{prop.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div class="row m-0 mt-3">
+          <div class="col pl-0">
+            <mat-form-field class="mt-2 textField" appearance="outline">
+              <mat-label>Select Property*</mat-label>
+              <mat-select [(ngModel)]="selected_property">
+                <mat-option
+                  *ngFor="let prop of properties"
+                  [value]="prop.value"
+                >
+                  {{prop.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Unit Number*</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 101"
-              [(ngModel)]="unit_number"
-            />
-          </mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>Unit Number*</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 101"
+                [(ngModel)]="unit_number"
+              />
+            </mat-form-field>
 
-          <mat-form-field class="mt-2 textField" appearance="outline">
-            <mat-label>Governemnt Property Id</mat-label>
-            <input matInput placeholder="Ex. EA1x24383" [(ngModel)]="govt_id" />
-          </mat-form-field>
+            <mat-form-field class="mt-2 textField" appearance="outline">
+              <mat-label>Governemnt Property Id</mat-label>
+              <input
+                matInput
+                placeholder="Ex. EA1x24383"
+                [(ngModel)]="govt_id"
+              />
+            </mat-form-field>
 
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Unit Size</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Ex. 100Sqft"
-              [(ngModel)]="unit_size"
-            />
-          </mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>Unit Size</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Ex. 100Sqft"
+                [(ngModel)]="unit_size"
+              />
+            </mat-form-field>
 
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Bathrooms</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 1"
-              [(ngModel)]="bathrooms"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="mt-2 textField" appearance="outline">
-            <mat-label>Unit Type*</mat-label>
-            <mat-select [(ngModel)]="unit_type">
-              <mat-option *ngFor="let type of unitTypes" [value]="type.value">
-                {{type.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="mt-2 textField" appearance="outline">
-            <mat-label>Owner*</mat-label>
-            <mat-select [(ngModel)]="owner">
-              <mat-select-trigger> {{ owner.viewValue }} </mat-select-trigger>
-              <mat-option *ngFor="let usr of users" [value]="usr">
-                <div class="row m-0">
-                  <span>{{usr.viewValue}}</span>
-                  <div
-                    class="my-auto ml-2"
-                    style="
-                      background: #d4aa322e;
-                      height: 30px;
-                      text-align: center;
-                      display: flex;
-                      align-items: center;
-                      padding: 0px 10px;
-                      border-radius: 6px;
-                      font-size: 12px;
-                      font-weight: 600;
-                      border: 1px solid #d4aa32;
-                    "
-                  >
-                    <span style="color: #9c770c"
-                      >{{getUserType(usr.user_type)}}</span
-                    >
-                  </div>
-                </div>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Floors</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 1"
-              [(ngModel)]="floors"
-            />
-          </mat-form-field>
-
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Bedrooms</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 1"
-              [(ngModel)]="bedrooms"
-            />
-          </mat-form-field>
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>No. of Parking</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 2"
-              [(ngModel)]="number_of_parking"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="col" style="height: 31vh; overflow: auto">
-          <div
-            (click)="fileInput.click()"
-            class="btn ml-4"
-            style="background: #d4aa32"
-          >
-            Add Documents
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>Bathrooms</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 1"
+                [(ngModel)]="bathrooms"
+              />
+            </mat-form-field>
+            <mat-form-field class="mt-2" class="textField" appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                rows="2"
+                [(ngModel)]="unit_description"
+              ></textarea>
+            </mat-form-field>
           </div>
-          <input
-            multiple
-            hidden
-            (change)="onFileSelected($event.target.files)"
-            #fileInput
-            type="file"
-            id="file"
-          />
+          <div class="col">
+            <mat-form-field class="mt-2 textField" appearance="outline">
+              <mat-label>Unit Type*</mat-label>
+              <mat-select [(ngModel)]="unit_type">
+                <mat-option *ngFor="let type of unitTypes" [value]="type.value">
+                  {{type.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <div *ngIf="docsFilesUploaded.length != 0">
+            <mat-form-field class="mt-2 textField" appearance="outline">
+              <mat-label>Owner*</mat-label>
+              <mat-select [(ngModel)]="owner">
+                <mat-select-trigger> {{ owner.viewValue }} </mat-select-trigger>
+                <mat-option *ngFor="let usr of users" [value]="usr">
+                  <div class="row m-0">
+                    <span>{{usr.viewValue}}</span>
+                    <div
+                      class="my-auto ml-2"
+                      style="
+                        background: #d4aa322e;
+                        height: 30px;
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        padding: 0px 10px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        font-weight: 600;
+                        border: 1px solid #d4aa32;
+                      "
+                    >
+                      <span style="color: #9c770c"
+                        >{{getUserType(usr.user_type)}}</span
+                      >
+                    </div>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>Floors</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 1"
+                [(ngModel)]="floors"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>Bedrooms</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 1"
+                [(ngModel)]="bedrooms"
+              />
+            </mat-form-field>
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>No. of Parking</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 2"
+                [(ngModel)]="number_of_parking"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col" style="height: 31vh; overflow: auto">
             <div
-              *ngFor="let file of docsFilesUploaded;let index=index"
-              class="row m-0 mt-2 align-items-center"
+              (click)="fileInput.click()"
+              class="btn ml-4"
+              style="background: #d4aa32"
+            >
+              Add Documents
+            </div>
+            <input
+              multiple
+              hidden
+              (change)="onFileSelected($event.target.files)"
+              #fileInput
+              type="file"
+              id="file"
+            />
+
+            <div *ngIf="docsFilesUploaded.length != 0">
+              <div
+                *ngFor="let file of docsFilesUploaded;let index=index"
+                class="row m-0 mt-2 align-items-center"
+                style="
+                  background: #d4aa3230;
+                  border: solid 1px #d4aa32;
+                  border-radius: 5px;
+                  padding: 10px 10px;
+                "
+              >
+                <img src="assets/img/svg/documents/document-text.svg" alt="" />
+                <span
+                  class="m-0 ml-3"
+                  style="
+                    font-weight: 500;
+                    text-overflow: ellipsis;
+                    max-width: 160px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  "
+                  >{{file.name}}</span
+                >
+                <img
+                  (click)="removeUploadedDoc(index)"
+                  src="assets/img/svg/success-dialog/close-square.svg"
+                  alt=""
+                  style="
+                    position: absolute;
+                    right: 25px;
+                    width: 20px;
+                    cursor: pointer;
+                  "
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col pr-0" style="height: 31vh; overflow: auto">
+            <span style="font-size: 17px; font-weight: 500">Amenties</span>
+            <div class="row m-0 align-items-start justify-content-between mt-2">
+              <mat-form-field
+                class="textField"
+                style="width: unset !important"
+                appearance="outline"
+              >
+                <mat-label>Add amenties</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Ex. Water, ELectricity"
+                  [(ngModel)]="new_amenty"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="new_amenty != ''"
+                (click)="addAmenty()"
+                class="btn"
+                style="padding: 7px 10px; background: #d4aa32"
+              >
+                Add
+              </div>
+              <div
+                *ngIf="new_amenty == ''"
+                class="btn"
+                style="padding: 7px 10px"
+              >
+                Add
+              </div>
+            </div>
+            <div
+              class="row m-0 align-items-center my-2"
+              *ngFor="let am of amenties ;let index = index"
               style="
-                background: #d4aa3230;
-                border: solid 1px #d4aa32;
-                border-radius: 5px;
-                padding: 10px 10px;
+                background: #3c485829;
+                padding: 6px 15px;
+                border: 1px solid #3c48585c;
+                border-radius: 6px;
               "
             >
-              <img src="assets/img/svg/documents/document-text.svg" alt="" />
-              <span
-                class="m-0 ml-3"
-                style="
-                  font-weight: 500;
-                  text-overflow: ellipsis;
-                  max-width: 160px;
-                  overflow: hidden;
-                  white-space: nowrap;
-                "
-                >{{file.name}}</span
-              >
+              <span>{{am}}</span>
               <img
-                (click)="removeUploadedDoc(index)"
+                (click)="deleteAmenty(index)"
                 src="assets/img/svg/success-dialog/close-square.svg"
                 alt=""
                 style="
                   position: absolute;
-                  right: 25px;
+                  right: 15px;
                   width: 20px;
                   cursor: pointer;
                 "
@@ -251,213 +335,161 @@
             </div>
           </div>
         </div>
-        <div class="col pr-0" style="height: 31vh; overflow: auto">
-          <span style="font-size: 17px; font-weight: 500">Amenties</span>
-          <div class="row m-0 align-items-start justify-content-between mt-2">
-            <mat-form-field
-              class="textField"
-              style="width: unset !important"
-              appearance="outline"
-            >
-              <mat-label>Add amenties</mat-label>
-              <input
-                matInput
-                type="text"
-                placeholder="Ex. Water, ELectricity"
-                [(ngModel)]="new_amenty"
-              />
-            </mat-form-field>
-            <div
-              *ngIf="new_amenty != ''"
-              (click)="addAmenty()"
-              class="btn"
-              style="padding: 7px 10px; background: #d4aa32"
-            >
-              Add
+        <div class="col p-0">
+          <span style="font-size: 17px; font-weight: 500">Add Inventory</span>
+          <div class="row m-0 mt-3">
+            <div class="col pl-0">
+              <mat-form-field class="textField" appearance="outline">
+                <mat-label>Inventory Name</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Ex. Refrigerator"
+                  [(ngModel)]="inventory_name"
+                />
+              </mat-form-field>
             </div>
-            <div *ngIf="new_amenty == ''" class="btn" style="padding: 7px 10px">
-              Add
+            <div class="col">
+              <mat-form-field class="textField" appearance="outline">
+                <mat-label>Inventory Place</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Ex. Kitchen"
+                  [(ngModel)]="inventory_place"
+                />
+              </mat-form-field>
             </div>
-          </div>
-          <div
-            class="row m-0 align-items-center my-2"
-            *ngFor="let am of amenties ;let index = index"
-            style="
-              background: #3c485829;
-              padding: 6px 15px;
-              border: 1px solid #3c48585c;
-              border-radius: 6px;
-            "
-          >
-            <span>{{am}}</span>
-            <img
-              (click)="deleteAmenty(index)"
-              src="assets/img/svg/success-dialog/close-square.svg"
-              alt=""
-              style="
-                position: absolute;
-                right: 15px;
-                width: 20px;
-                cursor: pointer;
-              "
-            />
-          </div>
-        </div>
-      </div>
-      <div class="col p-0">
-        <span style="font-size: 17px; font-weight: 500">Add Inventory</span>
-        <div class="row m-0 mt-3">
-          <div class="col pl-0">
-            <mat-form-field class="textField" appearance="outline">
-              <mat-label>Inventory Name</mat-label>
-              <input
-                matInput
-                type="text"
-                placeholder="Ex. Refrigerator"
-                [(ngModel)]="inventory_name"
-              />
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field class="textField" appearance="outline">
-              <mat-label>Inventory Place</mat-label>
-              <input
-                matInput
-                type="text"
-                placeholder="Ex. Kitchen"
-                [(ngModel)]="inventory_place"
-              />
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field class="textField" appearance="outline">
-              <mat-label>Inventory Count</mat-label>
-              <input
-                matInput
-                type="number"
-                placeholder="Ex. 2"
-                [(ngModel)]="inventory_count"
-              />
-            </mat-form-field>
-          </div>
-          <div class="col pr-0">
-            <div
-              *ngIf="inventory_name == '' || inventory_place == '' || inventory_count == ''"
-              class="btn"
-              style="padding: 9px 20px"
-            >
-              Add
+            <div class="col">
+              <mat-form-field class="textField" appearance="outline">
+                <mat-label>Inventory Count</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="Ex. 2"
+                  [(ngModel)]="inventory_count"
+                />
+              </mat-form-field>
             </div>
-            <div
-              (click)="addinventory()"
-              *ngIf="inventory_name != '' && inventory_place != '' && inventory_count != ''"
-              class="btn"
-              style="padding: 9px 20px; background: #d4aa32"
-            >
-              Add
-            </div>
-          </div>
-        </div>
-        <div class="d-flex my-3" style="max-width: 100%; overflow: auto">
-          <div
-            class="mx-2 mb-2"
-            *ngFor="let inventory of inventories;let index = index"
-            style="background: #d4aa3229; min-width: 215px"
-          >
-            <div
-              class="row m-0 justify-content-between"
-              style="
-                padding: 5px 10px;
-                border: 1px solid #d4aa3291;
-                border-radius: 7px;
-              "
-            >
-              <span
-                style="
-                  font-weight: 500;
-                  text-overflow: ellipsis;
-                  max-width: 160px;
-                  overflow: hidden;
-                  white-space: nowrap;
-                "
-                >{{inventory.name}}</span
+            <div class="col pr-0">
+              <div
+                *ngIf="inventory_name == '' || inventory_place == '' || inventory_count == ''"
+                class="btn"
+                style="padding: 9px 20px"
               >
-              <img
-                class="ml-2"
-                (click)="deleteInventory(index)"
-                src="assets/img/svg/success-dialog/close-square.svg"
-                alt=""
-                style="width: 20px; cursor: pointer"
-              />
+                Add
+              </div>
+              <div
+                (click)="addinventory()"
+                *ngIf="inventory_name != '' && inventory_place != '' && inventory_count != ''"
+                class="btn"
+                style="padding: 9px 20px; background: #d4aa32"
+              >
+                Add
+              </div>
+            </div>
+          </div>
+          <div class="d-flex my-2" style="max-width: 100%; overflow: auto">
+            <div
+              class="mx-2 mb-2"
+              *ngFor="let inventory of inventories;let index = index"
+              style="background: #d4aa3229; min-width: 215px"
+            >
+              <div
+                class="row m-0 justify-content-between"
+                style="
+                  padding: 5px 10px;
+                  border: 1px solid #d4aa3291;
+                  border-radius: 7px;
+                "
+              >
+                <span
+                  style="
+                    font-weight: 500;
+                    text-overflow: ellipsis;
+                    max-width: 160px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  "
+                  >{{inventory.name}}</span
+                >
+                <img
+                  class="ml-2"
+                  (click)="deleteInventory(index)"
+                  src="assets/img/svg/success-dialog/close-square.svg"
+                  alt=""
+                  style="width: 20px; cursor: pointer"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="row m-0 w-100 justify-content-end align-items-center">
-        <span
-          class="mr-3"
-          *ngIf="formNotFilled"
-          style="
-            color: #ff0000db;
-            font-weight: 500;
-            background: #ff000017;
-            padding: 7px 20px;
-            border: 1px solid #d1000033;
-            border-radius: 7px;
-          "
-          >Please fill the form.</span
-        >
-        <span
-          class="mr-3"
-          *ngIf="imageNotAdded"
-          style="
-            color: #ff0000db;
-            font-weight: 500;
-            background: #ff000017;
-            padding: 7px 20px;
-            border: 1px solid #d1000033;
-            border-radius: 7px;
-          "
-          >Please add atleast 1 image.</span
-        >
-        <span
-          class="mr-3"
-          *ngIf="documentNotAdded"
-          style="
-            color: #ff0000db;
-            font-weight: 500;
-            background: #ff000017;
-            padding: 7px 20px;
-            border: 1px solid #d1000033;
-            border-radius: 7px;
-          "
-          >Please add atleast 1 document.</span
-        >
-        <span
-          *ngIf="uploading"
-          class="mr-3"
-          style="font-size: 19px; font-weight: 600; color: #3c4858"
-          >{{uploading_progress}}%</span
-        >
-        <div class="progress-bar mr-4" *ngIf="uploading">
-          <div
-            class="progress-bar-fill"
-            [ngStyle]="{'width.%': uploading_progress % 100}"
-          ></div>
-        </div>
-        <div
-          class="btn"
-          style="background: #3c4858; min-width: 120px; padding: 10px 20px"
-          (click)="onSubmit()"
-        >
-          <span *ngIf="!uploading">Submit</span>
+        <div class="row m-0 w-100 justify-content-end align-items-center">
+          <span
+            class="mr-3"
+            *ngIf="formNotFilled"
+            style="
+              color: #ff0000db;
+              font-weight: 500;
+              background: #ff000017;
+              padding: 7px 20px;
+              border: 1px solid #d1000033;
+              border-radius: 7px;
+            "
+            >Please fill the form.</span
+          >
+          <span
+            class="mr-3"
+            *ngIf="imageNotAdded"
+            style="
+              color: #ff0000db;
+              font-weight: 500;
+              background: #ff000017;
+              padding: 7px 20px;
+              border: 1px solid #d1000033;
+              border-radius: 7px;
+            "
+            >Please add atleast 1 image.</span
+          >
+          <span
+            class="mr-3"
+            *ngIf="documentNotAdded"
+            style="
+              color: #ff0000db;
+              font-weight: 500;
+              background: #ff000017;
+              padding: 7px 20px;
+              border: 1px solid #d1000033;
+              border-radius: 7px;
+            "
+            >Please add atleast 1 document.</span
+          >
           <span
             *ngIf="uploading"
-            class="spinner-border spinner-border-m mx-auto"
-            style="height: 25px; width: 25px"
+            class="mr-3"
+            style="font-size: 19px; font-weight: 600; color: #3c4858"
+            >{{uploading_progress}}%</span
           >
-          </span>
+          <div class="progress-bar mr-4" *ngIf="uploading">
+            <div
+              class="progress-bar-fill"
+              [ngStyle]="{'width.%': uploading_progress % 100}"
+            ></div>
+          </div>
+          <div
+            class="btn"
+            style="background: #3c4858; min-width: 120px; padding: 10px 20px"
+            (click)="onSubmit()"
+          >
+            <span *ngIf="!uploading">Submit</span>
+            <span
+              *ngIf="uploading"
+              class="spinner-border spinner-border-m mx-auto"
+              style="height: 25px; width: 25px"
+            >
+            </span>
+          </div>
         </div>
       </div>
     </div>
