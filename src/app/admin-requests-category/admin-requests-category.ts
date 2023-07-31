@@ -55,10 +55,6 @@ export class AdminRequestsCategory implements OnInit {
   screenHeight: number;
   screenWidth: number;
   @HostListener("window:resize", ["$event"])
-
-  getDataFromChild(value:boolean){
-    console.log(value);
-  }
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;

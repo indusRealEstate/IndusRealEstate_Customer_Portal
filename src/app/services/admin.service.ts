@@ -336,4 +336,13 @@ export class AdminService {
       })
     );
   }
+
+  downoadLeaseDoc(data:any){
+    const url = `${API_URL}/downloadLeaseDoc.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }
