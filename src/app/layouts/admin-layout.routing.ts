@@ -18,6 +18,7 @@ import { AllUsersComponent } from "app/all-users/all-users";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { DetailsComponents } from "app/property-details/details-properties";
+import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -33,6 +34,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "admin-properties", component: AdminProperties },
   { path: "property-details", component: DetailsComponents },
+  { path: "admin-requests-details", component: AdminRequestsDetails },
   { path: "admin-properties-units", component: AdminPropertiesUnits },
   { path: "all-users", component: AllUsersComponent },
   { path: "admin-lease", component: AllLeasesComponent },
