@@ -1,92 +1,234 @@
-
 <div class="main-content" *ngIf="screenWidth > 430">
-  <div class="card">
-  <div class="row p-3">
-    <div class="card-body">
-              <div class="col-md-12 ">
-                <div id="carouselExampleIndicators" class="carousel slide" 
-                          data-ride="carousel" data-pause="Hover">
-                          <ol class="carousel-indicators" id="indicator"></ol>
-                          <div class="carousel-inner" #carousel id="carousel"></div>
-                          <a class="carousel-control-prev"
-                            href="#carouselExampleIndicators" role="button"
-                            data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                          </a>
-                          <a class="carousel-control-next"
-                            href="#carouselExampleIndicators" role="button"
-                            data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                          </a>
-                        </div>
-              </div>
-            <!-- </div>
-            
-        </div> -->
-        <div class="m-3">
-          <h6 class="card-title" style="font-size: 25px;" *ngIf="prop_data != null">{{prop_data.property_name}}</h6>
-        </div>
-        <div class="col-md-12" >
-          <div class="row">
-            <div class="col-md-4">
-              <div class="">
-                    <img src="../../assets/img/right-chevron.png" style="width:2rem;" >
-                    <span class="d-inline-block m-3 font-weight-bold" >Address:</span>
-                    <span class="d-inline-block ml-2" *ngIf="prop_data != null">{{prop_data.address}}</span>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="">
-                    <img src="../../assets/img/right-chevron.png" style="width:2rem;" >
-                    <div class="d-inline-block m-3 font-weight-bold">Property Type:</div>
-                    <div class="d-inline-block ml-2" *ngIf="prop_data != null">{{prop_data.property_type}}</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="">
-                    <img src="../../assets/img/right-chevron.png" style="width:2rem;" >
-                    <span class="d-inline-block m-3 font-weight-bold" >Locality:</span>
-                    <span class="d-inline-block ml-2" *ngIf="prop_data != null">{{prop_data.locality_name}}</span>
-              </div>
-            </div>
-            
-            
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <div class="">
-                    <img src="../../assets/img/right-chevron.png" style="width:2rem;" >
-                    <div class="d-inline-block m-3 font-weight-bold">Number of Units:</div>
-                    <div class="d-inline-block ml-2" *ngIf="prop_data != null">{{prop_data.no_of_units}}</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="">
-                    <img src="../../assets/img/right-chevron.png" style="width:2rem;" >
-                    <span class="d-inline-block m-3 font-weight-bold" >Property Incharge:</span>
-                    <span class="d-inline-block ml-2" *ngIf="prop_data != null">{{prop_data.property_in_charge}}</span>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="">
-                    <img src="../../assets/img/right-chevron.png" style="width:2rem;" >
-                    <span class="d-inline-block m-3 font-weight-bold">Government Property ID:</span>
-                    <span class="d-inline-block ml-2" *ngIf="prop_data != null">{{prop_data.govt_id}}</span>
-              </div>
-            </div>
-           
-          </div> 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-9">
+        <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          [theme]="{ width: (700) + 'px', height: '40px' }"
+        >
+        </ngx-skeleton-loader>
+        <h6 
+          class="ml-1"
+          style="font-size: 25px"
+          *ngIf="!isContentLoading"
+        >
+          {{prop_data.property_name}}
+        </h6>
+        <h5 class="text-s ml-1">This is test property</h5>
+        <!-- <button class="btn1">Button</button> -->
       </div>
-      <div class="row m-3">
-        <!-- https://www.indusre.app/api/upload/property/{{prop_data.property_id}}/documents/{{doc}} -->
-        <div class="" *ngFor="let doc of doc_array; let index = i" >
-          <button class="m-3 mbtn" (click)="downloadFile(doc)"> Download Document</button>
+      <div class="col-md-3">
+        <button class="btn">This is test button</button>
+      </div>
+    </div>
+ 
+
+  <div class="card-amenities">
+    <p class="card-s-item ml-2 feature">
+      <img
+        class="card-specifications__icon"
+        width="24"
+        height="24"
+        src="../../assets/img/svg/common-icons/bed.svg"/>
+      1 bedroom
+    </p>
+    <p class="card-s-item ml-3 feature">
+      <img
+        class="card-specifications__icon"
+        width="24"
+        height="24"
+        src="../../assets/img/svg/common-icons/bath.svg" />
+
+      2 bathrooms
+    </p>
+    <p class="card-s-item ml-3 feature">
+      <img
+        class="card-specifications__icon"
+        width="24"
+        height="24"
+        src="../../assets/img/svg/common-icons/area.svg" />
+
+      577 Sq.ft
+    </p>
+    <p class="card-s-item ml-3 feature">
+      <img
+        class="card-specifications__icon"
+        width="24"
+        height="24"
+        src="../../assets/img/svg/common-icons/garage.svg"/>
+
+      2 Parking
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mx-2">
+        <!-- <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          [theme]="{ width: (700) + 'px', height: '40px' }"
+        >
+        </ngx-skeleton-loader> -->
+        <div class="card-body p-0">
+          <div class="card carousel-card">
+            <div
+              id="carouselExampleIndicators"
+              class="carousel slide"
+              data-ride="carousel"
+              data-pause="Hover"
+            >
+              <ol class="carousel-indicators" id="indicator"></ol>
+              <div class="carousel-inner" #carousel id="carousel"></div>
+              <a
+                class="carousel-control-prev"
+                href="#carouselExampleIndicators"
+                role="button"
+                data-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a
+                class="carousel-control-next"
+                href="#carouselExampleIndicators"
+                role="button"
+                data-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
         </div>
-      
+      </div>
+    </div>
+    
+  </div>
+
+  
+
+  <div class="row mt-5">
+    <div class="col-md-8">
+      <div class="card">
+        <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          [theme]="{ width: (700) + 'px', height: '40px' }"
+        >
+        </ngx-skeleton-loader>
+        <div class="card-body">
+          <h3 class="f-title">Lorem ipsum, dolor sit amet</h3>
+          <p class="f-weight">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+            et error quisquam molestias amet, beatae illo? Cum accusantium
+            corporis numquam nihil quisquam animi praesentium quam quod, atque
+            obcaecati enim minima.Lorem ipsum, dolor sit amet consectetur
+            adipisicing elit. Veritatis et error quisquam molestias amet, beatae
+            illo? Cum accusantium corporis numquam nihil quisquam animi
+            praesentium quam quod, atque obcaecati enim minima.
+          </p>
+
+          <ul class="property-facts">
+            <li class="property-facts__item">
+              <div class="property-facts__label">
+                <img
+                  width="24"
+                  height="24"
+                  class="property-facts__icon"
+                  src="../../assets/img/svg/common-icons/kitchen.svg"
+                />
+                <span class="ml-2">Property type:</span>
+              </div>
+              <div class="property-facts__value">Apartment</div>
+            </li>
+            <li class="property-facts__item">
+              <div class="property-facts__label">
+                <img
+                  width="24"
+                  height="24"
+                  class="property-facts__icon"
+                  src="../../assets/img/svg/common-icons/kitchen.svg"
+                />
+                <span class="ml-2">Property size:</span>
+              </div>
+              <div class="property-facts__value">
+                <span class="property-facts__text">2,167 sqft</span>
+              </div>
+            </li>
+            <li class="property-facts__item">
+              <div class="property-facts__label">
+                <img
+                  width="24"
+                  height="24"
+                  class="property-facts__icon"
+                  src="../../assets/img/svg/common-icons/kitchen.svg"
+                />
+                <span class="ml-2">Price:</span>
+              </div>
+              <div class="property-facts__value">3M</div>
+            </li>
+            <li class="property-facts__item">
+              <div class="property-facts__label">
+                <img
+                  width="24"
+                  height="24"
+                  class="property-facts__icon"
+                  src="../../assets/img/svg/common-icons/kitchen.svg"
+                />
+                <span class="ml-2">Status</span>
+              </div>
+              <div class="property-facts__value">Rent</div>
+            </li>
+            <li class="property-facts__item">
+              <div class="property-facts__label">
+                <img
+                  width="24"
+                  height="24"
+                  class="property-facts__icon"
+                  src="../../assets/img/svg/common-icons/kitchen.svg"
+                />
+                <span class="ml-2">Parking:</span>
+              </div>
+              <div class="property-facts__value">3</div>
+            </li>
+            <li class="property-facts__item">
+              <div class="property-facts__label">
+                <img
+                  width="24"
+                  height="24"
+                  class="property-facts__icon"
+                  src="../../assets/img/svg/common-icons/kitchen.svg"
+                />
+                <span class="ml-2">Bathrooms:</span>
+              </div>
+              <div class="property-facts__value">4</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          [theme]="{ width: (700) + 'px', height: '40px' }"
+        >
+        </ngx-skeleton-loader>
+        <div class="card-body">
+          <p class="">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+            et error quisquam molestias amet, beatae illo? Cum accusantium
+            corporis numquam nihil quisquam animi praesentium quam quod, atque
+            obcaecati enim minima.Lorem ipsum, dolor sit amet consectetur
+            adipisicing elit. Veritatis e
+          </p>
+        </div>
       </div>
     </div>
   </div>
-  </div>
+</div>
+</div>

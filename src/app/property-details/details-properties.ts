@@ -20,6 +20,7 @@ export class DetailsComponents implements OnInit {
   doc_array: string[] = [];
   d1: string;
   blob: Blob;
+  isContentLoading: boolean = false;
   //downloadService: any;
   // property_name:string;
 
@@ -37,6 +38,8 @@ export class DetailsComponents implements OnInit {
     this.route.queryParams.subscribe((val) => {
       // console.log(val);
       this.prop_id = val.prop_id;
+    }).add(()=>{
+      this.isContentLoading = false;
     });
 
     // this.route.queryParams.subscribe((e) => {
