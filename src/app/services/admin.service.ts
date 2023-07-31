@@ -26,6 +26,15 @@ export class AdminService {
     };
   }
 
+  getAllRequestsAdmin() {
+    const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllLeaseAdmin() {
     const url = `${API_URL}/getAllLeaseAdmin.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -63,6 +72,15 @@ export class AdminService {
 
   addProperty(data: any) {
     const url = `${API_URL}/addProperty.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  addUserBankDetails(data: any) {
+    const url = `${API_URL}/add_user_bank_details.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -211,7 +229,6 @@ export class AdminService {
     return this.http.post<any>(url, { userId: userId }).pipe(
       map((data) => {
         return data;
-        
       })
     );
   }
@@ -228,15 +245,6 @@ export class AdminService {
   declineRegisterToken(data: any) {
     const url = `${API_URL}/register_token_decline.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
-  getAllRequestsAdmin(data: any) {
-    const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
-    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
@@ -279,7 +287,7 @@ export class AdminService {
     );
   }
 
-  getPropDetails(data:any){
+  getPropDetails(data: any) {
     const url = `${API_URL}/selectPropertyDetails.php?apikey=1`;
     return this.http.post(url, data).pipe(
       map((data) => {
@@ -287,7 +295,7 @@ export class AdminService {
       })
     );
   }
-    
+
   insertCategory(data: any) {
     const url = `${API_URL}/insert_request_category.php?apikey=1`;
     return this.http.post(url, data).pipe(
@@ -297,61 +305,60 @@ export class AdminService {
     );
   }
 
-  getDownloadDocument(data:any){
-     //console.log(data);
+  getDownloadDocument(data: any) {
+    //console.log(data);
     const url = `${API_URL}/downloadDocument.php?apikey=1`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
-        
       })
     );
   }
 
-  getAllCategories(data:any) {
+  getAllCategories(data: any) {
     const url = `${API_URL}/select_all_categories.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  deleteServiceCategory(data:any) {
+  deleteServiceCategory(data: any) {
     const url = `${API_URL}/deleteServiceCategory.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  selecteCategory(){
+  selecteCategory() {
     const url = `${API_URL}/select_all_categories.php?apikey=1`;
     return this.http.get(url);
   }
 
-  changeCategoryStatus(data:any){
+  changeCategoryStatus(data: any) {
     const url = `${API_URL}/changeCategoryStatus.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  updateCategory(data:any){
+  updateCategory(data: any) {
     const url = `${API_URL}/updateServiceCategory.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  getUnitAllData(data:any){
+  getUnitAllData(data: any) {
     const url = `${API_URL}/selectUnitAllDetails.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })

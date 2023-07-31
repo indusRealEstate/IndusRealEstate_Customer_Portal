@@ -10,14 +10,18 @@ import { OtherServices } from "app/services/other.service";
 export class LoadingTableAdminReqs implements OnInit {
   displayedColumns: string[] = [
     // "name",
-    "issueDate",
-    "reqNo",
-    "reqType",
-    "propertyName",
-    "clientType",
-    "clientName",
+    "request_id",
+    "request_date",
+    "request_time",
+    "request_type",
+    "building",
+    "unitNo",
+    "reqFor",
+    "reqcategory",
     "status",
-    "actions",
+    "staff",
+    "userName",
+    "more",
   ];
   loadingTable: any[] = [1, 2, 3, 4, 5];
 

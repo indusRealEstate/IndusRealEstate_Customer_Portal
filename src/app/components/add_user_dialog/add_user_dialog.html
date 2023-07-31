@@ -195,7 +195,7 @@
           </mat-form-field>
 
           <mat-form-field class="mt-2 textField" appearance="outline">
-            <mat-label>Select ID Type</mat-label>
+            <mat-label>Select ID Type*</mat-label>
             <mat-select [(ngModel)]="user_id_type">
               <mat-option *ngFor="let id of idType" [value]="id.viewValue">
                 {{id.viewValue}}
@@ -204,7 +204,7 @@
           </mat-form-field>
 
           <mat-form-field class="mt-2 textField" appearance="outline">
-            <mat-label>ID Number</mat-label>
+            <mat-label>ID Number*</mat-label>
             <input
               matInput
               type="text"

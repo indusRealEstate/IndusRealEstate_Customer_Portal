@@ -84,7 +84,11 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
               >
-                {{ getbuildingName(element.property_id) }}
+                <span
+                  class="prop_name"
+                  (click)="navigateToPropertyDetailsPage(element.property_id)"
+                  >{{ getbuildingName(element.property_id) }}</span
+                >
               </td>
             </ng-container>
 
@@ -96,7 +100,11 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
               >
-                {{ getUnitNo(element.unit_id) }}
+                <span
+                  class="prop_name"
+                  (click)="navigateToUnitDetailPage(element.unit_id)"
+                  >{{ getUnitNo(element.unit_id) }}</span
+                >
               </td>
             </ng-container>
 
@@ -108,7 +116,33 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
               >
-                {{ element.status }}
+                <div
+                  *ngIf="element.status == 'inactive'"
+                  style="
+                    color: #d29c00;
+                    background: #d29c0024;
+                    padding: 10px 10px;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    border: 1px solid #d29c0047;
+                  "
+                >
+                  {{ element.status }}
+                </div>
+
+                <div
+                  *ngIf="element.status == 'active'"
+                  style="
+                    color: #37b400;
+                    background: #37b4001c;
+                    padding: 10px 10px;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    border: 1px solid #37b4003b;
+                  "
+                >
+                  {{ element.status }}
+                </div>
               </td>
             </ng-container>
 
@@ -119,7 +153,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                <span
+                <div
                   style="
                     color: red;
                     background: #ff000017;
@@ -128,9 +162,10 @@
                     font-size: 12px;
                     border: 1px solid #ff00003b;
                   "
-                  >{{
-                  getLeaseExpiry(element.contract_start,element.contract_end)}}</span
                 >
+                  {{
+                  getLeaseExpiry(element.contract_start,element.contract_end)}}
+                </div>
               </td>
             </ng-container>
 
@@ -259,7 +294,7 @@
               border-bottom-left-radius: 10px;
               border-bottom-right-radius: 10px;
               height: 15rem;
-              min-width: 1700px;
+              min-width: 1800px;
             "
           >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
@@ -341,7 +376,7 @@
               border-bottom-left-radius: 10px;
               border-bottom-right-radius: 10px;
               height: 15rem;
-              min-width: 1700px;
+              min-width: 1800px;
             "
           >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">

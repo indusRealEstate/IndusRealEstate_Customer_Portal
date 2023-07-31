@@ -107,7 +107,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
               >
-                {{ element.property_type }}
+                {{ element.property_type | titlecase}}
               </td>
             </ng-container>
 

@@ -3,7 +3,7 @@
 * {
   font-family: "Montserrat";
 }
-.unit-row{
+.unit-row {
   cursor: pointer;
 }
 
@@ -617,4 +617,14 @@
   padding: 2px 6px !important;
   max-width: none !important;
   min-width: auto !important;
+}
+
+::ng-deep .prop_name {
+  cursor: pointer;
+  text-decoration: underline !important;
+  color: #c49920;
+  &:hover {
+    text-decoration: none !important;
+    color: #c49920;
+  }
 }

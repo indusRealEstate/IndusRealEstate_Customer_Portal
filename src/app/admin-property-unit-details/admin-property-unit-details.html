@@ -1,6 +1,20 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
+<div id="full-screen-image">
+  <button class="close-btn" title="Exit">
+
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </button>
+  <img src alt id="image">
+</div>
 <div class="main-content reports-bg" *ngIf="screenWidth > 430">
   <div
     class="container-fluid h-100 d-flex justify-content-center"
@@ -13,7 +27,8 @@
               {{all_data.unit_no}} - {{all_data.prop_address}} -
               {{all_data.unit_type}} - {{all_data.prop_name}}
             </h3>
-            <span  *ngIf="all_data != null" class="prop-status">{{all_data.unit_status}}</span>
+            <span *ngIf="all_data != null" class="prop-status"
+              [ngClass]="all_data.unit_status.toLowerCase() == 'vacant' ? 'vacant' : 'occupant'">{{all_data.unit_status.toUpperCase()}}</span>
           </div>
         </div>
 
@@ -57,7 +72,7 @@
                           <li class="mx-1"><img
                               src="../../assets/img/svg/common-icons/bath-2.svg"
                               alt class="over-viewicon card-img-top"></li>
-                          <li class="mx-1">bath {{all_data.unit_bath}}</li>
+                          <li class="mx-1"> {{all_data.unit_bath}}</li>
                         </ul>
                       </div>
                     </div>
@@ -70,7 +85,7 @@
                           <li class="mx-1"><img
                               src="../../assets/img/svg/common-icons/bed.svg"
                               alt class="over-viewicon card-img-top"></li>
-                          <li class="mx-1">beds {{all_data.unit_beds}}</li>
+                          <li class="mx-1"> {{all_data.unit_bed}}</li>
                         </ul>
                       </div>
                     </div>
@@ -83,7 +98,7 @@
                           <li class="mx-1"><img
                               src="../../assets/img/svg/common-icons/property.svg"
                               alt class="over-viewicon card-img-top"></li>
-                          <li class="mx-1">floor {{all_data.unit_floor}}</li>
+                          <li class="mx-1"> {{all_data.unit_floor}}</li>
                         </ul>
                       </div>
                     </div>
@@ -128,49 +143,49 @@
             </div>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="all_data.unit_status.toUpperCase() == 'OCCUPIED'">
             <div class="card card-main h-100">
               <div class="card-body">
                 <div class="row">
                   <div class="col-3 d-flex">
                     <img
-                      src="https://www.indusre.app/api/upload/user/{{all_data.user_uid}}/image/{{all_data.user_profile_img}}"
+                      src="https://www.indusre.app/api/upload/user/{{all_data.tenant_uid}}/image/{{all_data.tenant_profile_img}}"
                       alt class="card-img-top user-image m-auto">
                   </div>
                   <div class="col-9">
-                    <h4 class="user-name">{{all_data.unit_owner}}</h4>
-                    <span class="user-uid text-secondery">{{all_data.user_type}}</span>
+                    <h4 class="user-name">{{all_data.tenant_name}}</h4>
+                    <span class="user-uid text-secondery">Tenant</span>
                     <ul class="user-details">
-                      <li>Email: {{all_data.user_email}}</li>
+                      <li>Email: {{all_data.tenant_email}}</li>
                       <li>Alternative email:
-                        {{all_data.user_alternative_email}}</li>
-                      <li>Phone: {{all_data.user_country_code_number}} -
-                        {{all_data.user_mobile_number}}</li>
+                        {{all_data.tenant_alternative_email}}</li>
+                      <li>Phone: {{all_data.tenant_country_code_number}} -
+                        {{all_data.tenant_mobile_number}}</li>
                       <li>Alternative phone:
-                        {{all_data.user_country_code_alternative_number}} -
-                        {{all_data.user_alternative_mobile_number}}</li>
-                      <li>Gender: {{all_data.user_gender}}</li>
+                        {{all_data.tenant_country_code_alternative_number}} -
+                        {{all_data.tenant_alternative_mobile_number}}</li>
+                      <li>Gender: {{all_data.tenant_gender}}</li>
                     </ul>
                   </div>
                 </div>
                 <div class="row d-flex justify-content-center">
-                  <button class="call-btn btn" (click)="call_person()"
+                  <button class="call-btn btn" (click)="call_tenant_person()"
                     title="CALL"><img
                       src="../../assets/img/svg/common-icons/phone.svg" alt>
-                    <span>{{all_data.user_gender == 'male' ? 'Call him':
+                    <span>{{all_data.tenant_gender == 'male' ? 'Call him':
                       'Call her'}}</span></button>
 
-                  <button class="email-btn btn" (click)="email_person()"
+                  <button class="email-btn btn" (click)="email_tenant_person()"
                     title="MAIL"><img
                       src="../../assets/img/svg/common-icons/email-with-at.svg"
-                      alt> <span>{{all_data.user_gender == 'male' ? 'Mail him':
+                      alt> <span>{{all_data.tenant_gender == 'male' ? 'Mail him':
                       'Mail her'}}</span></button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="all_data.user_uid !== ''">
             <div class="card card-main h-100">
               <div class="card-body">
                 <div class="row">
@@ -180,8 +195,8 @@
                       alt class="card-img-top user-image m-auto">
                   </div>
                   <div class="col-9">
-                    <h4 class="user-name">{{all_data.unit_owner}}</h4>
-                    <span class="user-uid text-secondery">{{all_data.user_type}}</span>
+                    <h4 class="user-name">{{all_data.user_name}}</h4>
+                    <span class="user-uid text-secondery">Owner</span>
                     <ul class="user-details">
                       <li>Email: {{all_data.user_email}}</li>
                       <li>Alternative email:
@@ -219,7 +234,8 @@
             <div class="card card-main amenities h-100">
               <div class="card-body">
                 <h4 class="overview-header">Amenities</h4>
-                <div class="row amenities-item-row d-flex justify-content-center">
+                <div
+                  class="row amenities-item-row d-flex justify-content-center">
                   <div class="col-md-12 d-flex m-auto">
                     <ul class="amenities-item-container">
                       <li class="d-flex"
@@ -233,7 +249,7 @@
             </div>
           </div>
 
-          <div class="col-md-7">
+          <div class="col-md-7" *ngIf="all_data.unit_description !== ''">
             <div class="card card-main h-100">
               <h4 class="overview-header">Description</h4>
               <div class="card-body">
@@ -241,6 +257,16 @@
               </div>
             </div>
           </div>
+
+          <div [ngClass]="all_data.unit_description !== '' ? 'col-md-12': 'col-md-7'" *ngIf="all_data.unit_status.toUpperCase() == 'OCCUPIED'">
+            <div class="card card-main h-100">
+              <h4 class="overview-header">Lease Details</h4>
+              <div class="card-body">
+                
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>

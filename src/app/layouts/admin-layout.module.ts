@@ -62,7 +62,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
-import { AdminReqs } from "app/admin-requests/admin-requests";
+import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
@@ -156,7 +156,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
   declarations: [
     PageNotFoundComponent,
     // AdminRequests,
-    AdminReqs,
+    AdminRequests,
     AdminRequestsArchive,
     AdminRequestsSpam,
     AdminDashboardComponent,

@@ -61,6 +61,8 @@ export class AddUnitDialog implements OnInit {
   inventory_place: any = "";
   inventory_count: any = "";
 
+  unit_description: any = "";
+
   formNotFilled: boolean = false;
   imageNotAdded: boolean = false;
   documentNotAdded: boolean = false;
@@ -292,10 +294,12 @@ export class AddUnitDialog implements OnInit {
       no_of_parking: this.number_of_parking,
       owner: this.owner.viewValue,
       tenant_id: "",
+      lease_id: "",
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
       user_id: this.owner.value,
+      description: this.unit_description,
     };
 
     return JSON.stringify(data);
