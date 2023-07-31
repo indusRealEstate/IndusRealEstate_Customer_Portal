@@ -75,12 +75,59 @@ export class AdminRequests implements OnInit {
     });
   }
 
+  allProperties: any[] = [];
+  allUnits: any[] = [];
+  allUsers: any[] = [];
+
   screenHeight: number;
   screenWidth: number;
   @HostListener("window:resize", ["$event"])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  getbuildingName(prop_id) {
+    if (this.allProperties != null) {
+      var property = this.allProperties.find(
+        (prop) => prop.property_id == prop_id
+      );
+      if (property != undefined) {
+        return property.property_name;
+      } else {
+        return "loading..";
+      }
+    } else {
+      return "loading..";
+    }
+  }
+
+  getUnitNo(unit_id) {
+    if (this.allUnits != null) {
+      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
+
+      if (unit != undefined) {
+        return unit.unit_no;
+      } else {
+        return "loading..";
+      }
+    } else {
+      return "loading..";
+    }
+  }
+
+  getUserName(user_id) {
+    if (this.allUsers != null) {
+      var user = this.allUsers.find((u) => u.user_id == user_id);
+
+      if (user != undefined) {
+        return user.name;
+      } else {
+        return "loading..";
+      }
+    } else {
+      return "loading..";
+    }
   }
 
   isUserSignOut() {
@@ -147,7 +194,46 @@ export class AdminRequests implements OnInit {
     }
   }
 
+  getAllData() {
+    var propertiesDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_session")
+    );
+
+    if (propertiesDataSession == null) {
+      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+        this.allProperties = val;
+      });
+    } else {
+      this.allProperties = propertiesDataSession;
+    }
+
+    var unitsDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_units_session")
+    );
+
+    if (unitsDataSession == null) {
+      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+        this.allUnits = val;
+      });
+    } else {
+      this.allUnits = unitsDataSession;
+    }
+
+    var usersDataSession = JSON.parse(
+      sessionStorage.getItem("all_users_session")
+    );
+
+    if (usersDataSession == null) {
+      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+        this.allUsers = val;
+      });
+    } else {
+      this.allUsers = usersDataSession;
+    }
+  }
+
   async ngOnInit() {
+    this.getAllData();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("admin_all_requests_session_time_admin")
@@ -210,9 +296,9 @@ export class AdminRequests implements OnInit {
       .subscribe((res) => {});
   }
 
-  navigateToDetailPage(unit) {
+  navigateToUnitDetailPage(unit_id) {
     this.router.navigate(["/admin-property-unit-details"], {
-      queryParams: { unit_id: unit.unit_id },
+      queryParams: { unit_id: unit_id },
     });
   }
 

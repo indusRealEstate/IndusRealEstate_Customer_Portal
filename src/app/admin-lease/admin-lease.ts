@@ -117,7 +117,11 @@ export class AllLeasesComponent implements OnInit {
       var property = this.allProperties.find(
         (prop) => prop.property_id == prop_id
       );
-      return property.property_name;
+      if (property != undefined) {
+        return property.property_name;
+      } else {
+        return "loading..";
+      }
     } else {
       return "loading..";
     }
@@ -126,7 +130,12 @@ export class AllLeasesComponent implements OnInit {
   getUnitNo(unit_id) {
     if (this.allUnits != null) {
       var unit = this.allUnits.find((u) => u.unit_id == unit_id);
-      return unit.unit_no;
+
+      if (unit != undefined) {
+        return unit.unit_no;
+      } else {
+        return "loading..";
+      }
     } else {
       return "loading..";
     }
@@ -135,7 +144,12 @@ export class AllLeasesComponent implements OnInit {
   getUserName(user_id) {
     if (this.allUsers != null) {
       var user = this.allUsers.find((u) => u.user_id == user_id);
-      return user.name;
+
+      if (user != undefined) {
+        return user.name;
+      } else {
+        return "loading..";
+      }
     } else {
       return "loading..";
     }
