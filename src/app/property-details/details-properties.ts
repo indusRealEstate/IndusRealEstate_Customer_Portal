@@ -13,13 +13,19 @@ import { HttpClient } from "@angular/common/http";
 export class DetailsComponents implements OnInit {
   isUserSignedIn: boolean = false;
   prop_id: string;
-  prop_data: object | any;
+  all_data: object | any;
   image_array: string[] = [];
   images: string;
   documents: string;
   doc_array: string[] = [];
   d1: string;
   blob: Blob;
+  isContentLoading: boolean = false;
+  property_images: string[] = [];
+  prop_doc: string[] = [];
+  amenities: string[] = [];
+  lease_doc: string[] = [];
+  view_list: boolean = false;
   //downloadService: any;
   // property_name:string;
 
@@ -32,26 +38,12 @@ export class DetailsComponents implements OnInit {
     public http: HttpClient
   ) {
     this.getScreenSize();
+    this.isContentLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
     this.route.queryParams.subscribe((val) => {
-      // console.log(val);
       this.prop_id = val.prop_id;
     });
-
-    // this.route.queryParams.subscribe((e) => {
-    //   if (e == null) {
-    //     router.navigate([`/property-details`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   } else if (e != user[0]["id"]) {
-    //     router.navigate([`/property-details`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   }
-    // });
-
-    
   }
 
   screenHeight: number;
@@ -74,128 +66,166 @@ export class DetailsComponents implements OnInit {
   ngAfterViewInit() {}
 
   async ngOnInit() {
-    
-
     let data = {
       prop_id: this.prop_id,
     };
     this.appAdminService
       .getPropDetails(JSON.stringify(data))
-      .subscribe((val) => {
-        // console.log(val);
-        this.prop_data = val;
+      .subscribe((value) => {
+        console.log(value);
+        this.all_data = value;
 
-        this.images = this.prop_data.images;
-        this.documents = this.prop_data.documents;
-        //  this.property_name = this.prop_data.property_name;
-        // console.log(this.prop_data.images);
-        for (let i = 0; i < JSON.parse(this.prop_data.images).length; i++) {
-          let image = JSON.parse(this.prop_data.images)[i];
-          //console.log(image);
-          this.image_array.push(image);
+        for (let i = 0; i < JSON.parse(this.all_data.prop_images).length; i++) {
+          this.image_array.push(JSON.parse(this.all_data.prop_images)[i]);
+        }
+
+        const newLocal = this;
+        for (
+          let i = 0;
+          i < JSON.parse(newLocal.all_data.prop_doc).length;
+          i++
+        ) {
+          this.prop_doc.push(JSON.parse(this.all_data.prop_doc)[i]);
         }
 
         $(document).ready(() => {
-          console.log('hello');
-          console.log(this.prop_data);
-         for (let i = 0; i < this.image_array.length; i++) {
-          
-           let carousel = document.getElementById("carousel");
-           if (i == 0) {
-             let carouselDiv = document.createElement("div");
-             carouselDiv.classList.add("carousel-item");
-             carouselDiv.classList.add("active");
-             carousel.append(carouselDiv);
-   
-             let imgElmnt = document.createElement("img");
-             imgElmnt.classList.add("d-block");
-             imgElmnt.classList.add("w-100");
-             imgElmnt.classList.add("rounded");
-             imgElmnt.style.height = "50vh";
-             imgElmnt.style.objectFit = "cover";
-             imgElmnt.style.objectPosition = "bottom";
-             imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.prop_id}/images/${this.image_array[i]}`;
-             carouselDiv.append(imgElmnt);
-           } else {
-             let carouselDiv = document.createElement("div");
-             carouselDiv.classList.add("carousel-item");
-             carousel.append(carouselDiv);
-   
-             let imgElmnt = document.createElement("img");
-             imgElmnt.classList.add("d-block");
-             imgElmnt.classList.add("w-100");
-             imgElmnt.classList.add("rounded");
-             imgElmnt.style.height = "50vh";
-             imgElmnt.style.objectFit = "cover";
-             imgElmnt.style.objectPosition = "bottom";
-             imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.prop_id}/images/${this.image_array[i]}`;
-             carouselDiv.append(imgElmnt);
-           }
-         }
-         console.log(this.image_array);
-       });
+          // console.log('hello');
+          let carousel = document.getElementById("carousel");
+          let indicator = document.getElementById("indicator");
 
+          for (let i = 0; i < this.image_array.length; i++) {
+            if (i == 0) {
+              let carouselDiv = document.createElement("div");
+              let indicatorDiv = document.createElement("li");
+              carouselDiv.classList.add("carousel-item");
+              carouselDiv.classList.add("active");
+              indicatorDiv.classList.add("active");
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
+              indicatorDiv.setAttribute("data-slide-to", `${i}`);
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
+              carousel.append(carouselDiv);
+              indicator.append(indicatorDiv);
 
-        console.log(this.prop_data);
-        for (let i = 0; i < JSON.parse(this.prop_data.documents).length; i++) {
-          let documents = JSON.parse(this.prop_data.documents)[i];
-          //console.log(image);
-          this.doc_array.push(documents);
-          // console.log(this.doc_array[i]);
-        }
+              let imgElmnt = document.createElement("img");
+              imgElmnt.classList.add("d-flex");
+              imgElmnt.classList.add("carousel-img");
+              imgElmnt.classList.add("w-100");
+              imgElmnt.style.height = "50vh";
+              imgElmnt.style.objectFit = "cover";
+              imgElmnt.style.objectPosition = "bottom";
+              imgElmnt.style.cursor = "pointer";
+              imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`;
+              imgElmnt.addEventListener("click", () => {
+                this.viewImageOfUnit(
+                  `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`
+                );
+              });
+              carouselDiv.append(imgElmnt);
+            } else {
+              let carouselDiv = document.createElement("div");
+              let indicatorDiv = document.createElement("li");
+              carouselDiv.classList.add("carousel-item");
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
+              indicatorDiv.setAttribute("data-slide-to", `${i}`);
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
+              carousel.append(carouselDiv);
+              indicator.append(indicatorDiv);
 
-        
-        //console.log(this.prop_data);
-      });
-  }
-  // downloadFile(file_name: any) {
-  //   //console.log(data);
-  //   const file_url = `https://indusre.app/api/upload/property/${this.prop_id}/${file_name}`;
-
-  //   // let headers = new Headers({
-  //   //   "Content-Type": "application/json",
-  //   // "Access-Control-Allow-Origin" :"http://localhost:4200",
-  //   //   "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE",
-  //   //   Accept: "application/*", //give file extension
-  //   // });
-  //   // let options = { headers: headers };
-  //    const req = this.http.post(file_url, { responseType: "blob" });
-
-  //   req.subscribe((file: Blob) => {
-  //     const blob = new Blob([file_url], { type: "pdf/docx" });
-  //     const url = window.URL.createObjectURL(blob);
-  //     window.open(url);
-  //   });
-  // }
-
-  downloadDoc(data: any) {
-    //console.log(data);
-    let object = {
-      id: this.prop_data.property_id,
-      data: data,
-    };
-
-    this.appAdminService
-      .getDownloadDocument(JSON.stringify(object))
-      .subscribe((val) => {
-        //this.downloadFile(data);
-        // .subscribe((val) => {
-        console.log(data);
+              let imgElmnt = document.createElement("img");
+              imgElmnt.classList.add("d-block");
+              imgElmnt.classList.add("w-100");
+              imgElmnt.classList.add("carousel-img");
+              imgElmnt.style.height = "50vh";
+              imgElmnt.style.objectFit = "cover";
+              imgElmnt.style.objectPosition = "bottom";
+              imgElmnt.style.cursor = "pointer";
+              imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`;
+              imgElmnt.addEventListener("click", () => {
+                this.viewImageOfUnit(
+                  `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`
+                );
+              });
+              carouselDiv.append(imgElmnt);
+            }
+          }
+        });
+      })
+      .add(() => {
+        this.isContentLoading = false;
       });
   }
 
-  downloadFile(property_id: string, file_name: string) {
-   
-    const url = `https://indusre.app/api/upload/property/${property_id}/documents/${file_name}`;
+  viewImageOfUnit(data: string) {
+    let constainer = document.getElementById("full-screen-image");
+    constainer.style.display = "flex";
+    constainer.style.width = "100vw";
+    constainer.style.height = "100vh";
+    constainer.style.backgroundColor = "#000000bd";
+    constainer.style.position = "fixed";
+    constainer.style.zIndex = "1000";
+    constainer.style.top = "0";
+    constainer.style.left = "0";
+    let image = document.getElementById("image");
+    image.setAttribute("src", data);
+    image.style.width = "75vw";
+    image.style.height = "75vh";
+    image.style.objectFit = "cover";
+    image.style.objectPosition = "bottom";
+    image.style.margin = "auto";
+  }
 
-    this.appdownloadService.download(url).subscribe((blob) => {
-      const a = document.createElement("a");
-      console.log(a);
-      const objectUrl = URL.createObjectURL(blob);
-      a.href = objectUrl;
-      a.download = file_name;
-      a.click();
-      URL.revokeObjectURL(objectUrl);
-    });
+  onCloseDialog() {
+    let constainer = document.getElementById("full-screen-image");
+    constainer.style.display = "none";
+  }
+
+  call_person() {
+    location.href = `tell:${
+      this.all_data.user_country_code_number + this.all_data.user_mobile_number
+    }`;
+  }
+  email_person() {
+    location.href =
+      "mailto:" +
+      this.all_data.user_email +
+      "?cc=" +
+      "sample@sdsd.ae" +
+      "&subject=" +
+      "test" +
+      "&body=" +
+      "hi";
+  }
+  selecteFunction(event) {
+    if (this.view_list == true) {
+      this.view_list = false;
+    } else {
+      this.view_list = true;
+    }
+  }
+
+  downloadDoc() {
+    let doc = $("#selecte_doc").val();
+    // let data = {
+    //   "contract_id": this.all_data.lease_uid,
+    //   "file":doc
+    // }
+    window.open(
+      `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${doc}`
+    );
+    // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
+    //   console.log(val);
+    // })
   }
 }
