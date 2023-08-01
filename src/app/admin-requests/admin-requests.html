@@ -206,6 +206,7 @@
             <tr
               mat-row
               *matRowDef="let row; columns: displayedColumns"
+              (click)="viewRequestsDetails(row)"
               class="unit-row"
             ></tr>
           </table>

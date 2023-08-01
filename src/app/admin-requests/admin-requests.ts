@@ -62,17 +62,17 @@ export class AdminRequests implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-requests`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-requests`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
+    // this.route.queryParams.subscribe((e) => {
+    //   if (e == null) {
+    //     router.navigate([`/admin-requests`], {
+    //       queryParams: { uid: user[0]["id"] },
+    //     });
+    //   } else if (e != user[0]["id"]) {
+    //     router.navigate([`/admin-requests`], {
+    //       queryParams: { uid: user[0]["id"] },
+    //     });
+    //   }
+    // });
   }
 
   allProperties: any[] = [];
@@ -302,12 +302,21 @@ export class AdminRequests implements OnInit {
     });
   }
 
+  
   navigateToPropertyDetailsPage(prop_id) {
     this.router.navigate(["/property-details"], {
       queryParams: { prop_id: prop_id },
     });
   }
 
+  viewRequestsDetails(data:any){
+    this.router.navigate(["/admin-requests-details"], {
+      queryParams: {
+        "request_id": data.request_id
+      },
+    });
+
+  }
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
@@ -319,3 +328,4 @@ export class AdminRequests implements OnInit {
   filterByTimeline() {}
   closeTimelineFilter() {}
 }
+

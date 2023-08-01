@@ -288,7 +288,18 @@ export class AdminService {
   }
 
   getPropDetails(data: any) {
+    
     const url = `${API_URL}/selectPropertyDetails.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getRequestsDetails(data: any) { 
+    // console.log(data);
+    const url = `${API_URL}/selectRequestsDetails.php?apikey=1`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;

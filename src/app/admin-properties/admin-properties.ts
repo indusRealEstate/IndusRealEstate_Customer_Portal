@@ -216,4 +216,6 @@ export class AdminProperties implements OnInit {
       },
     });
   }
+
+  
 }

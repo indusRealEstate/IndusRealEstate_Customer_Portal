@@ -2,6 +2,42 @@
 
 * {
   font-family: "Montserrat";
+  
+}
+h6{
+  color:#2b333e;
+}
+h3{
+  color:#2b333e;
+}
+p{
+  color:#2b333e;
+  font-weight: 500;
+}
+.feature{
+  font-weight: 500;
+}
+.f-weight{
+  font-weight: 500;
+}
+.f-title{
+  font-weight: 600;
+}
+span{
+  font-weight: 500;
+}
+.property-facts__value{
+  font-weight: 500;
+}
+.text-s{
+  color:#d4aa32;
+  font-weight: 500;
+  margin-top: 0rem;
+}
+.btn{
+  background: #d4aa32;
+  color: white;
+  float: right;
 }
 
 ngx-skeleton-loader {

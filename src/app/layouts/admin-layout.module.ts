@@ -81,6 +81,7 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
 import { DetailsComponents } from "app/property-details/details-properties";
+import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 
 // import { BrowserModule } from '@angular/platform-browser';
@@ -167,6 +168,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
 
     AdminProperties,
     DetailsComponents,
+    AdminRequestsDetails,
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,
 

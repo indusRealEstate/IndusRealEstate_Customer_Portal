@@ -44,6 +44,8 @@ export class DetailsComponents implements OnInit {
     var user = JSON.parse(userData);
     this.route.queryParams.subscribe((val) => {
       this.prop_id = val.prop_id;
+    }).add(()=>{
+      this.isContentLoading = false;
     });
   }
 
