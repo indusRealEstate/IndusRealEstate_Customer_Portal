@@ -132,7 +132,9 @@ export class AddUserDialog implements OnInit {
       if (
         this.user_name != "" &&
         this.user_email != "" &&
-        this.user_mobile_number != ""
+        this.user_mobile_number != "" &&
+        this.user_id_type != "" &&
+        this.user_id_number != ""
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
@@ -174,6 +176,19 @@ export class AddUserDialog implements OnInit {
       setTimeout(() => {
         this.documentNotAdded = false;
       }, 3000);
+    }
+
+    if (this.user_bank_name != "" && this.user_bank_ac_no != "") {
+      var bank_data = {
+        user_id: random_id,
+        bank_name: this.user_bank_name,
+        bank_ac_number: this.user_bank_ac_no,
+        swift_code: this.user_bank_swift_code,
+        iban: this.user_bank_iban,
+      };
+      this.adminService
+        .addUserBankDetails(JSON.stringify(bank_data))
+        .subscribe((val) => {});
     }
   }
 

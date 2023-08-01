@@ -38,6 +38,8 @@ export class AdminProperties implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
+  userId: any;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
@@ -55,6 +57,8 @@ export class AdminProperties implements OnInit {
     this.getScreenSize();
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
+
+    this.userId = user[0]["id"];
 
     this.route.queryParams.subscribe((e) => {
       if (e == null) {
@@ -202,5 +206,14 @@ export class AdminProperties implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {});
+  }
+
+  viewPropInfo(data: any) {
+    // console.log(data)
+    this.router.navigate(["/property-details"], {
+      queryParams: {
+        "prop_id": data.property_id
+      },
+    });
   }
 }

@@ -3,6 +3,9 @@
 * {
   font-family: "Montserrat";
 }
+.unit-row {
+  cursor: pointer;
+}
 
 .all-req-card-admin {
   background-color: #f4f4f4;
@@ -402,7 +405,7 @@
 }
 
 .demo-table {
-  min-width: 1250px;
+  min-width: 1800px;
   width: 100%;
   margin-top: 35px;
   border-radius: 10px;
@@ -615,3 +618,14 @@
   max-width: none !important;
   min-width: auto !important;
 }
+
+::ng-deep .prop_name {
+  cursor: pointer;
+  text-decoration: underline !important;
+  color: #c49920;
+  &:hover {
+    text-decoration: none !important;
+    color: #c49920;
+  }
+}
+

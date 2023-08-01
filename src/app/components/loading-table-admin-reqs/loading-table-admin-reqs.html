@@ -4,8 +4,8 @@
   class="mat-elevation-z8 demo-table"
 >
   <!-- Name Column -->
-  <ng-container matColumnDef="issueDate">
-    <th mat-header-cell *matHeaderCellDef>DATE ISSUED</th>
+  <ng-container matColumnDef="request_id">
+    <th mat-header-cell *matHeaderCellDef>Request ID</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"
@@ -18,8 +18,8 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="reqNo">
-    <th mat-header-cell *matHeaderCellDef>REQ NO.</th>
+  <ng-container matColumnDef="request_date">
+    <th mat-header-cell *matHeaderCellDef>Request Date</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"
@@ -33,8 +33,8 @@
   </ng-container>
 
   <!-- Weight Column -->
-  <ng-container matColumnDef="reqType">
-    <th mat-header-cell *matHeaderCellDef>REQUEST TYPE</th>
+  <ng-container matColumnDef="request_time">
+    <th mat-header-cell *matHeaderCellDef>Request Time</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"
@@ -48,8 +48,8 @@
   </ng-container>
 
   <!-- Symbol Column -->
-  <ng-container matColumnDef="propertyName">
-    <th mat-header-cell *matHeaderCellDef>PROPERTY NAME</th>
+  <ng-container matColumnDef="request_type">
+    <th mat-header-cell *matHeaderCellDef>Request Type</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"
@@ -62,8 +62,8 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="clientType">
-    <th mat-header-cell *matHeaderCellDef>CLIENT</th>
+  <ng-container matColumnDef="building">
+    <th mat-header-cell *matHeaderCellDef>Building</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"
@@ -76,8 +76,8 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="clientName">
-    <th mat-header-cell *matHeaderCellDef>CLIENT NAME</th>
+  <ng-container matColumnDef="unitNo">
+    <th mat-header-cell *matHeaderCellDef>Unit No.</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"
@@ -90,8 +90,44 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="reqFor">
+    <th mat-header-cell *matHeaderCellDef>Request For</th>
+    <td mat-cell *matCellDef="let element;let last = last">
+      <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+        <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+        </ngx-skeleton-loader>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="reqcategory">
+    <th mat-header-cell *matHeaderCellDef>Request Category</th>
+    <td mat-cell *matCellDef="let element;let last = last">
+      <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+        <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+        </ngx-skeleton-loader>
+      </div>
+    </td>
+  </ng-container>
   <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef>STATUS</th>
+    <th mat-header-cell *matHeaderCellDef>Request Status</th>
+    <td mat-cell *matCellDef="let element;let last = last">
+      <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+        <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+        </ngx-skeleton-loader>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="staff">
+    <th mat-header-cell *matHeaderCellDef>Assigned Staff</th>
+    <td mat-cell *matCellDef="let element;let last = last">
+      <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
+        <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
+        </ngx-skeleton-loader>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="userName">
+    <th mat-header-cell *matHeaderCellDef>Requested User</th>
     <td mat-cell *matCellDef="let element;let last = last">
       <div style="max-width: 120px; max-height: 30px; border-radius: 9px">
         <ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }">
@@ -100,8 +136,8 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+  <ng-container matColumnDef="more">
+    <th mat-header-cell *matHeaderCellDef>More</th>
     <td
       mat-cell
       *matCellDef="let element;let last = last"

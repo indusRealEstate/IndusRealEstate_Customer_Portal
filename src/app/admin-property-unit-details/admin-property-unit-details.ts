@@ -1,4 +1,10 @@
-import { Component, HostListener, OnChanges, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  HostListener,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
@@ -22,6 +28,9 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   amenities: string[] = [];
   view_lease: boolean = false;
   view_list: boolean = false;
+  isOcupied: boolean = false;
+  property_images: string[] = [];
+  prop_doc: string[] = [];
 
   lease_doc: string[] = [];
 
@@ -49,15 +58,21 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.getScreenSize();
   }
 
-  ngOnChanges(){
-    
-  }
+  ngOnChanges() {}
 
   async ngOnInit() {
     this.adminService
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value) => {
         this.all_data = value;
+
+        if (this.all_data.unit_status.toUpperCase() == "OCCUPIED") {
+          this.isOcupied = true;
+        } else {
+          this.isOcupied = false;
+        }
+
+        // console.log(value);
         console.log(this.all_data);
 
         this.address = this.all_data.prop_address;
@@ -65,6 +80,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
         for (let i = 0; i < JSON.parse(this.all_data.unit_images).length; i++) {
           this.image_array.push(JSON.parse(this.all_data.unit_images)[i]);
+        }
+
+        for (let i = 0; i < JSON.parse(this.all_data.prop_images).length; i++) {
+          this.property_images.push(JSON.parse(this.all_data.prop_images)[i]);
+        }
+
+        for (let i = 0; i < JSON.parse(this.all_data.prop_doc).length; i++) {
+          this.prop_doc.push(JSON.parse(this.all_data.prop_doc)[i]);
         }
 
         for (
@@ -75,14 +98,19 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.amenities.push(JSON.parse(this.all_data.unit_amenties)[i]);
         }
 
-        for (
-          let i = 0;
-          i < JSON.parse(this.all_data.lease_documents).length;
-          i++
-        ) {
-          this.lease_doc.push(JSON.parse(this.all_data.lease_documents)[i]);
+
+
+        if (this.all_data.lease_documents !== undefined) {
+          for (
+            let i = 0;
+            i < JSON.parse(this.all_data.lease_documents).length;
+            i++
+          ) {
+            this.lease_doc.push(JSON.parse(this.all_data.lease_documents)[i]);
+          }
         }
 
+        // Unit carousel
         $(document).ready(() => {
           // console.log('hello');
           let carousel = document.getElementById("carousel");
@@ -100,6 +128,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
                 "#carouselExampleIndicators"
               );
               indicatorDiv.setAttribute("data-slide-to", `${i}`);
+              indicatorDiv.setAttribute("data-target", "#carouselExampleIndicators");
               carousel.append(carouselDiv);
               indicator.append(indicatorDiv);
 
@@ -127,7 +156,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
                 "#carouselExampleIndicators"
               );
               indicatorDiv.setAttribute("data-slide-to", `${i}`);
-
+              indicatorDiv.setAttribute("data-target", "#carouselExampleIndicators");
               carousel.append(carouselDiv);
               indicator.append(indicatorDiv);
 
@@ -155,11 +184,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       });
   }
 
-  selecteFunction(event){
-    if(this.view_list == true){
+  selecteFunction(event) {
+    if (this.view_list == true) {
       this.view_list = false;
-    }
-    else{
+    } else {
       this.view_list = true;
     }
   }
@@ -170,13 +198,23 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.screenWidth = window.innerWidth;
   }
 
-  downloadDoc(){
+  openProperty(){
+    this.router.navigate(["/property-details"], {
+      queryParams: {
+        "prop_id": this.all_data.prop_uid
+      },
+    });
+  }
+
+  downloadDoc() {
     let doc = $("#selecte_doc").val();
     // let data = {
     //   "contract_id": this.all_data.lease_uid,
     //   "file":doc
     // }
-    window.open(`https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${doc}`); 
+    window.open(
+      `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${doc}`
+    );
     // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
     //   console.log(val);
     // })
@@ -249,7 +287,6 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   call_tenant_person() {
-    
     location.href = `tell:${
       this.all_data.tenant_country_code_number +
       this.all_data.tenant_mobile_number

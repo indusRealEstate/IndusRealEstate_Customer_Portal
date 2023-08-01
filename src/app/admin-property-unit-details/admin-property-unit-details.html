@@ -65,12 +65,15 @@
         <!-- *ngIf=" all_data != null" -->
         <div class="row">
 
-          <ngx-skeleton-loader *ngIf="isContentLoading" class="col-md-4"
+          <ngx-skeleton-loader *ngIf="isContentLoading"
+            [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
             [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
           </ngx-skeleton-loader>
-          <div class="col-md-4" *ngIf="!isContentLoading">
+          <div
+            [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
+            *ngIf="!isContentLoading">
 
-            <div class="card card-main h-100">
+            <div class="card card-main h-100 overview-row-card">
               <div class="card-body">
                 <h4 class="overview-header card-header border-0 ms-3">Overview</h4>
                 <div class="row px-3">
@@ -152,9 +155,10 @@
             [theme]="{ width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem' }">
           </ngx-skeleton-loader>
           <div class="col-md-4"
-            *ngIf="!isContentLoading && all_data.unit_status.toUpperCase() == 'OCCUPIED'">
-            <div class="card card-main h-100">
+            *ngIf="!isContentLoading && isOcupied">
+            <div class="card card-main h-100 overview-row-card">
               <div class="card-body">
+                <h4 class="user-name overview-header">Tenant Details</h4>
                 <div class="row">
                   <div class="col-3 d-flex">
                     <img
@@ -162,9 +166,9 @@
                       alt class="card-img-top user-image m-auto">
                   </div>
                   <div class="col-9">
-                    <h4 class="user-name overview-header">{{all_data.tenant_name}}</h4>
-                    <span class="user-uid text-secondery">Tenant</span>
+                    <!-- <span class="user-uid text-secondery">Tenant</span> -->
                     <ul class="user-details">
+                      <li>Name: {{all_data.tenant_name}}</li>
                       <li>Email: {{all_data.tenant_email}}</li>
                       <li>Alternative email:
                         {{all_data.tenant_alternative_email}}</li>
@@ -194,13 +198,15 @@
             </div>
           </div>
 
-          <ngx-skeleton-loader *ngIf="isContentLoading" class="col-md-4"
+          <ngx-skeleton-loader *ngIf="isContentLoading"
+            [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
             [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
           </ngx-skeleton-loader>
-          <div class="col-md-4"
+          <div [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
             *ngIf="!isContentLoading && all_data.user_uid !== ''">
-            <div class="card card-main h-100">
+            <div class="card card-main h-100 overview-row-card">
               <div class="card-body">
+                <h4 class="user-name overview-header">Owner Details</h4>
                 <div class="row">
                   <div class="col-3 d-flex">
                     <img
@@ -208,9 +214,9 @@
                       alt class="card-img-top user-image m-auto">
                   </div>
                   <div class="col-9">
-                    <h4 class="user-name overview-header">{{all_data.user_name}}</h4>
-                    <span class="user-uid text-secondery">Owner</span>
+                    <!-- <span class="user-uid text-secondery">Owner</span> -->
                     <ul class="user-details">
+                      <li>Name: {{all_data.user_name}}</li>
                       <li>Email: {{all_data.user_email}}</li>
                       <li>Alternative email:
                         {{all_data.user_alternative_email}}</li>
@@ -240,6 +246,58 @@
             </div>
           </div>
 
+          <ngx-skeleton-loader *ngIf="isContentLoading"
+            [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
+            [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
+          </ngx-skeleton-loader>
+          <div class="table-row"
+            [ngClass]="isOcupied == true ? 'col-md-12 mt-3' : 'col-md-4'"
+            *ngIf="!isContentLoading">
+            <div class="card main-card">
+              <div class="card-body">
+                <h4 class="overview-header">Property details
+                  <button (click)="openProperty()" class="btn open-external-link-icon" title="extenal"><img
+                      src="../../assets/img/svg/common-icons/open-external-link-icon.svg"
+                      alt></button>
+                </h4>
+                <table class="teble table-striped w-100 px-3 detail-table">
+                  <thead class="thead">
+                    <tr>
+                      <th scope="col" class="p-3">Title</th>
+                      <th scope="col" class="p-3">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tbody text-uppercase">
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">name</th>
+                      <td class="p-3 col-md-8">{{all_data.prop_name}}</td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">address</th>
+                      <td class="p-3 col-md-8">{{all_data.prop_address}}</td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">type</th>
+                      <td class="p-3 col-md-8">{{all_data.prop_type}}</td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">number of units</th>
+                      <td class="p-3 col-md-8">{{all_data.prop_no_of_units}}</td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">locality
+                        name</th>
+                      <td class="p-3 col-md-8">{{all_data.prop_locality_name}}</td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">incharge</th>
+                      <td class="p-3 col-md-8">{{all_data.prop_in_charge}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="row mt-3" *ngIf="all_data != null">
@@ -250,7 +308,7 @@
                 <div
                   class="row amenities-item-row d-flex justify-content-center">
                   <div class="col-md-12 d-flex m-auto">
-                    <ul class="amenities-item-container">
+                    <ul class="amenities-item-container text-uppercase">
                       <li class="d-flex"
                         *ngFor="let item of amenities; let index = i">
                         <p class="amenities-item">{{item}}</p>
@@ -274,10 +332,14 @@
           <div
             [ngClass]="all_data.unit_description !== '' ? 'col-md-12': 'col-md-7'"
             *ngIf="all_data.unit_status.toUpperCase() == 'OCCUPIED'">
-            <div class="card card-main" [ngClass]="all_data.unit_description !== '' ? '': 'h-100'">
+            <div class="card card-main"
+              [ngClass]="all_data.unit_description !== '' ? '': 'h-100'">
               <div class="row">
                 <div class="col-md-12 d-flex">
-                  <h4 class="overview-header">Lease Details <span class="mx-2" [ngClass]="all_data.lease_status == 'active' ? 'lease-active' : 'lease-inactive'"></span> <span [ngClass]="all_data.lease_status == 'active' ? 'lease-active-text' : 'lease-inactive-text'">{{all_data.lease_status}}</span></h4>
+                  <h4 class="overview-header">Lease Details <span class="mx-2"
+                      [ngClass]="all_data.lease_status == 'active' ? 'lease-active' : 'lease-inactive'"></span>
+                    <span
+                      [ngClass]="all_data.lease_status == 'active' ? 'lease-active-text' : 'lease-inactive-text'">{{all_data.lease_status}}</span></h4>
                 </div>
               </div>
               <div class="card-body">
@@ -296,8 +358,10 @@
                       </thead>
                       <tbody class="tbody">
                         <tr scope="row">
-                          <th class="p-3 col-md-4">{{all_data.lease_contract_start | date}}</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_contract_end | date}}</td>
+                          <th class="p-3 col-md-4">{{all_data.lease_contract_start
+                            | date}}</th>
+                          <td class="p-3 col-md-8">{{all_data.lease_contract_end
+                            | date}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -315,8 +379,10 @@
                       </thead>
                       <tbody class="tbody">
                         <tr scope="row">
-                          <th class="p-3 col-md-4">{{all_data.lease_move_in | date}}</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_move_out | date}}</td>
+                          <th class="p-3 col-md-4">{{all_data.lease_move_in |
+                            date}}</th>
+                          <td class="p-3 col-md-8">{{all_data.lease_move_out |
+                            date}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -325,8 +391,9 @@
 
                 <div class="row mt-3 mb-0">
                   <div class="col-md-4">
-                    <button class="btn view-lease-btn" title="VIEW MORE" *ngIf="!view_lease" (click)="viewMorelease()">View more</button>
-                    <button class="btn view-lease-btn" title="VIEW MORE" *ngIf="view_lease" (click)="viewMorelease()">Hide</button>
+                    <button class="btn view-lease-btn" title="VIEW MORE"
+                      (click)="viewMorelease()">{{view_lease == false ?
+                      'View more' : 'Hide'}}</button>
                   </div>
                 </div>
               </div>
@@ -335,7 +402,7 @@
 
         </div>
 
-        <div class="row mt-5"  *ngIf="view_lease && !isContentLoading">
+        <div class="row mt-5" *ngIf="view_lease && !isContentLoading">
           <div class="col-md-12">
             <div class="card card-main">
               <div class="card-body">
@@ -359,23 +426,29 @@
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Contract Start</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_contract_start | date}}</td>
+                          <td class="p-3 col-md-8">{{all_data.lease_contract_start
+                            | date}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Contract End</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_contract_end | date}}</td>
+                          <td class="p-3 col-md-8">{{all_data.lease_contract_end
+                            | date}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Move In</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_move_in | date}}</td>
+                          <td class="p-3 col-md-8">{{all_data.lease_move_in |
+                            date}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Move Out</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_move_out | date}}</td>
+                          <td class="p-3 col-md-8">{{all_data.lease_move_out |
+                            date}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Notice period</th>
-                          <td class="p-3 col-md-8">{{all_data.lease_notice_period}} {{(all_data.lease_notice_period > 1 ? 'months' : 'month')}}</td>
+                          <td class="p-3 col-md-8">{{all_data.lease_notice_period}}
+                            {{(all_data.lease_notice_period > 1 ? 'months' :
+                            'month')}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Payment Currency</th>
@@ -387,26 +460,39 @@
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Rent Amount</th>
-                          <td class="p-3 col-md-8"> {{all_data.lease_rent_amount | currency:'AED '}}</td>
+                          <td class="p-3 col-md-8"> {{all_data.lease_rent_amount
+                            | currency:'AED '}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Security deposit</th>
-                          <td class="p-3 col-md-8"> {{all_data.lease_security_deposit | currency:'AED '}}</td>
+                          <td class="p-3 col-md-8">
+                            {{all_data.lease_security_deposit | currency:'AED '}}</td>
                         </tr>
                         <tr scope="row">
-                          <th class="p-3 col-md-4" scope="row">government charges</th>
-                          <td class="p-3 col-md-8"> {{all_data.lease_govt_charges | currency:'AED '}}</td>
+                          <th class="p-3 col-md-4" scope="row">government
+                            charges</th>
+                          <td class="p-3 col-md-8">
+                            {{all_data.lease_govt_charges | currency:'AED '}}</td>
                         </tr>
                         <tr scope="row">
                           <th class="p-3 col-md-4" scope="row">Documents</th>
                           <td class="p-3 col-md-8">
-                            <img src="../../assets/img/svg/common-icons/angle-down.svg" alt="angle" class="angle" [ngClass]="view_list == true ? 'angle-up' : 'angle-down'">
-                            <select name="selecte_doc" id="selecte_doc" title="Documents" class="form-control" (click)="selecteFunction($event)">
-                              <option class="btn" *ngFor="let item of lease_doc; let index = i" value="{{item}}">
+                            <img
+                              src="../../assets/img/svg/common-icons/angle-down.svg"
+                              alt="angle" class="angle"
+                              [ngClass]="view_list == true ? 'angle-up' : 'angle-down'">
+                            <select name="selecte_doc" id="selecte_doc"
+                              title="Documents" class="form-control"
+                              (click)="selecteFunction($event)">
+                              <option class="btn"
+                                *ngFor="let item of lease_doc; let index = i"
+                                value="{{item}}">
                                 {{item}}
                               </option>
                             </select>
-                            <button class="btn" (click)="downloadDoc()" title="DOWNLOAD DOC" style="background-color: #2b333e">Download Doc</button>
+                            <button class="btn" (click)="downloadDoc()"
+                              title="DOWNLOAD DOC"
+                              style="background-color: #2b333e">Download Doc</button>
                           </td>
                         </tr>
                       </tbody>

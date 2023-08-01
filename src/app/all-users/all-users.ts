@@ -249,4 +249,16 @@ export class AllUsersComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {});
   }
+
+  navigateToUnitDetailPage(unit_id) {
+    this.router.navigate(["/admin-property-unit-details"], {
+      queryParams: { unit_id: unit_id },
+    });
+  }
+
+  navigateToPropertyDetailsPage(prop_id) {
+    this.router.navigate(["/property-details"], {
+      queryParams: { prop_id: prop_id },
+    });
+  }
 }

@@ -1,17 +1,14 @@
 import {
   Component,
   HostListener,
-  OnInit,
-  ViewChild,
-  OnChanges,
-  SimpleChanges,
+  OnInit
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddCategoryDialog } from "app/components/add_category_dialog/add_category_dialog";
 import { EditCategoryDialog } from "app/components/edit_category_dialog/edit_category_dialog";
-import { AuthenticationService } from "app/services/authentication.service";
 import { AdminService } from "app/services/admin.service";
+import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
   selector: "admin-requests-spam",
@@ -60,6 +57,11 @@ export class AdminRequestsCategory implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
+  
+  getDataFromChild(value:boolean){
+    console.log(value);
+  }
+
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -95,49 +97,49 @@ export class AdminRequestsCategory implements OnInit {
     // console.log(this.category_dialog.form_submit);
   }
 
-  // delete_item(data:any){
-  //   this.display_msg = true
-  //   this.apiAdminService.deleteServiceCategory(data).subscribe((value:any)=>{
-  //     if(value.status == 1){
-  //       this.msg = value.msg;
-  //       this.item_deleted = true;
-  //       this.selectAllCategories()
-  //     }
-  //     else{
-  //       this.msg = value.msg;
-  //       this.item_deleted = false;
-  //     }
-  //   })
-  //   setTimeout(()=>{
-  //     this.display_msg = false;
-  //   },2000)
-  // }
+  delete_item(data:any){
+    this.display_msg = true
+    this.apiAdminService.deleteServiceCategory(data).subscribe((value:any)=>{
+      if(value.status == 1){
+        this.msg = value.msg;
+        this.item_deleted = true;
+        this.selectAllCategories()
+      }
+      else{
+        this.msg = value.msg;
+        this.item_deleted = false;
+      }
+    })
+    setTimeout(()=>{
+      this.display_msg = false;
+    },2000)
+  }
 
-  // stauts_change(event,id){
-  //   // console.log(event.checked);
+  stauts_change(event,id){
+    // console.log(event.checked);
 
-  //   let status = (event.checked == true) ? 1 : 0;
-  //   let data = {
-  //     "status" : status,
-  //     "id" : id
-  //   }
-  //   let json_format = JSON.stringify(data);
+    let status = (event.checked == true) ? 1 : 0;
+    let data = {
+      "status" : status,
+      "id" : id
+    }
+    let json_format = JSON.stringify(data);
 
-  //   this.apiAdminService.changeCategoryStatus(json_format).subscribe((value:any)=>{
-  //     // console.log(value);
-  //     this.selectAllCategories()
-  //   })
+    this.apiAdminService.changeCategoryStatus(json_format).subscribe((value:any)=>{
+      // console.log(value);
+      this.selectAllCategories()
+    })
 
-  // }
+  }
 
-  // edit_item(data:any){
+  edit_item(data:any){
 
-  //   this.dialog.open(EditCategoryDialog, {
-  //     data
-  //   }).afterClosed().subscribe((val)=>{
-  //     this.selectAllCategories()
-  //   });
-  // }
+    this.dialog.open(EditCategoryDialog, {
+      data
+    }).afterClosed().subscribe((val)=>{
+      this.selectAllCategories()
+    });
+  }
 
   viewCategory(data:any){
     this.dialog.open(EditCategoryDialog, {

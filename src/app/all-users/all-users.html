@@ -106,7 +106,7 @@
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
               >
                 <span *ngIf="element.user_type == 'new_user'">New User</span>
-                <span *ngIf="element.user_type == 'resident'">Resident</span>
+                <span *ngIf="element.user_type == 'tenant'">Resident</span>
                 <span *ngIf="element.user_type == 'owner'">Property Owner</span>
               </td>
             </ng-container>
@@ -177,7 +177,10 @@
                   style="text-align: center"
                   >-</span
                 >
-                <span *ngIf="element.allocated_unit != ''"
+                <span
+                  class="prop_name"
+                  *ngIf="element.allocated_unit != ''"
+                  (click)="navigateToUnitDetailPage(element.allocated_unit)"
                   >{{getUnitNo(element.allocated_unit)}}</span
                 >
               </td>
@@ -195,7 +198,10 @@
                   style="text-align: center"
                   >-</span
                 >
-                <span *ngIf="element.property_id != ''"
+                <span
+                  class="prop_name"
+                  *ngIf="element.property_id != ''"
+                  (click)="navigateToPropertyDetailsPage(element.property_id)"
                   >{{ getbuildingName(element.property_id)}}</span
                 >
               </td>

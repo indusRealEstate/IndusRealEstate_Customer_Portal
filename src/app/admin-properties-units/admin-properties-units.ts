@@ -201,15 +201,21 @@ export class AdminPropertiesUnits implements OnInit {
     this.dialog
       .open(AddUnitDialog, {
         width: "80%",
-        height: "50rem",
+        height: "60rem",
       })
       .afterClosed()
       .subscribe((res) => {});
   }
 
+  navigateToDetailPage(unit) {
+    this.router.navigate(["/admin-property-unit-details"], {
+      queryParams: { unit_id: unit.unit_id },
+    });
+  }
 
-  navigateToDetailPage(unit){
-    
-    this.router.navigate(['/admin-property-unit-details'], {queryParams : {"unit_id":unit.unit_id}})
+  navigateToPropertyDetailsPage(prop_id) {
+    this.router.navigate(["/property-details"], {
+      queryParams: { prop_id: prop_id },
+    });
   }
 }

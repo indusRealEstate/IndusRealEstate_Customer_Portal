@@ -62,7 +62,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
-import { AdminReqs } from "app/admin-requests/admin-requests";
+import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
@@ -80,6 +80,7 @@ import { AdminPropertiesUnits } from "app/admin-properties-units/admin-propertie
 import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
 import { AllUsersComponent } from "app/all-users/all-users";
 import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
+import { DetailsComponents } from "app/property-details/details-properties";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 
 // import { BrowserModule } from '@angular/platform-browser';
@@ -143,7 +144,6 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     NgxSkeletonLoaderModule,
     DragDropModule,
     NgOptimizedImage,
-    ClipboardModule,
     ChartsModule,
 
     // GoogleMapsModule,
@@ -156,7 +156,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
   declarations: [
     PageNotFoundComponent,
     // AdminRequests,
-    AdminReqs,
+    AdminRequests,
     AdminRequestsArchive,
     AdminRequestsSpam,
     AdminDashboardComponent,
@@ -166,6 +166,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     LoginComponent,
 
     AdminProperties,
+    DetailsComponents,
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,
 
