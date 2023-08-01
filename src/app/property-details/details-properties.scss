@@ -516,10 +516,16 @@ ngx-skeleton-loader {
       tr:last-child {
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        th{
+        th:first-child{
           border-bottom-left-radius: 10px;
         }
-        td{
+        th:last-child{
+          border-bottom-right-radius: 10px;
+        }
+        td:first-child{
+          border-bottom-left-radius: 10px;
+        }
+        td:last-child{
           border-bottom-right-radius: 10px;
         }
       }
