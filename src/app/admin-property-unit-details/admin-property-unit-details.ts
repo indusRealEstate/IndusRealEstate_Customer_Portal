@@ -172,10 +172,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   downloadDoc(){
     let doc = $("#selecte_doc").val();
-    let data = {
-      "contract_id": this.all_data.lease_uid,
-      "file":doc
-    }
+    // let data = {
+    //   "contract_id": this.all_data.lease_uid,
+    //   "file":doc
+    // }
     window.open(`https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${doc}`); 
     // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
     //   console.log(val);
