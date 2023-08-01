@@ -26,6 +26,7 @@ export class DetailsComponents implements OnInit {
   amenities: string[] = [];
   lease_doc: string[] = [];
   view_list: boolean = false;
+  all_units: object[] = [];
   //downloadService: any;
   // property_name:string;
 
@@ -87,6 +88,8 @@ export class DetailsComponents implements OnInit {
         ) {
           this.prop_doc.push(JSON.parse(this.all_data.prop_doc)[i]);
         }
+
+        
 
         $(document).ready(() => {
           // console.log('hello');
@@ -165,6 +168,12 @@ export class DetailsComponents implements OnInit {
       .add(() => {
         this.isContentLoading = false;
       });
+  }
+
+  navigateToDetailPage(unit) {
+    this.router.navigate(["/admin-property-unit-details"], {
+      queryParams: { unit_id: unit },
+    });
   }
 
   viewImageOfUnit(data: string) {

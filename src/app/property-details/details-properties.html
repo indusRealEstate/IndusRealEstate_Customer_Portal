@@ -186,6 +186,35 @@
         </div>
       </div>
 
+      <div class="col-md-8">
+        <div class="table-row">
+          <div class="card main-card">
+            <div class="card-body">
+              <h4 class="overview-header">Unit details
+              </h4>
+              <table class="teble table-striped w-100 px-3 detail-table">
+                <thead class="thead">
+                  <tr>
+                    <th scope="col" class="p-3">unit number</th>
+                    <th scope="col" class="p-3">unit status</th>
+                    <th scope="col" class="p-3">link</th>
+                  </tr>
+                </thead>
+                <tbody class="tbody text-uppercase">
+                  <tr scope="row" *ngFor="let item of all_data.units; let index = i">
+                    <th class="p-3 col-md-4" scope="row">{{item.unit_no}}</th>
+                    <td class="p-3 col-md-4">{{item.status}}</td>
+                    <td class="p-3 col-md-4"><button (click)="navigateToDetailPage(item.unit_id)" class="btn open-external-link-icon" title="extenal"><img
+                      src="assets/img/svg/common-icons/open-external-link-icon.svg"
+                      alt></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
