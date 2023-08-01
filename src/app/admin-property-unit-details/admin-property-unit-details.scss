@@ -160,6 +160,7 @@ ngx-skeleton-loader {
   font-size: 1.5rem;
   font-weight: 600;
   align-items: center;
+  text-shadow: 2px 2px 2px #c1c1c1;
 }
 
 .overview-container {
@@ -198,24 +199,38 @@ ngx-skeleton-loader {
   }
 }
 
-.amenities-item-container {
-  list-style: none;
-  display: flex;
-  padding: 0;
-  flex-wrap: wrap;
-  li {
-    background: #d4aa32;
-    color: white;
-    border-radius: 8px;
-    padding: 0px 10px;
-    margin: 2px;
-    .amenities-item {
-      font-size: 12px;
-      font-weight: 600;
-      margin: 5px;
+.amenities{
+  background: none !important;
+  box-shadow: 0 0 0 0 !important;
+
+  .amenities-item-row{
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
+
+    .amenities-item-container {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      flex-wrap: wrap;
+      li {
+        background: #d4aa32;
+        color: white;
+        border-radius: 8px;
+        padding: 0px 10px;
+        margin: 2px 4px;
+        box-shadow: 4px 3px 7px #c4c4c4, -5px -5px 5px #fff;
+        .amenities-item {
+          font-size: 12px;
+          font-weight: 600;
+          margin: 5px;
+        }
+      }
     }
   }
 }
+
 
 .call-btn {
   background-color: #4caf50;

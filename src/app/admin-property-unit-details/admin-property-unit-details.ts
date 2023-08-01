@@ -249,6 +249,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   call_tenant_person() {
+    
     location.href = `tell:${
       this.all_data.tenant_country_code_number +
       this.all_data.tenant_mobile_number
