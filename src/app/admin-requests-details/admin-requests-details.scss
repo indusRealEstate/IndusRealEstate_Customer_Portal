@@ -49,30 +49,18 @@ color:white;
 border-radius: 0.3rem;
 }
 
-// .overview-card {
-//   background: linear-gradient(
-//     145deg,
-//     rgba(255, 255, 255, 0.8078431373),
-//     #ffffff
-//   );
-//   box-shadow: 4px 3px 7px #c4c4c4, -5px -5px 5px #fff;
-//   border-radius: 15px;
-//   margin-top: 15px;
-//   margin-bottom: 5px;
+h5{
+  margin-bottom:0px !important;
+}
+.maintainance_img{
+margin-top: 1.3rem;
+margin-left: 1rem;
+margin-right: 0.5rem;
+}
+.user-details{
+  list-style: none;
+}
 
-//   .overview-item {
-//     padding: 0rem 0.25rem;
-//   }
-
-//   .icon-container {
-//     list-style: none;
-//     margin: 0;
-//     .card-img-top {
-//       max-width: 2rem;
-//       filter: grayscale(1);
-//     }
-//   }
-// }
 .card-amenities {
   margin-top: .8rem
 }
@@ -119,4 +107,62 @@ border-radius: 0.3rem;
 .card{
   margin-bottom:0px !important;
   margin-top:0px !important;
+}
+
+.table-row {
+  .teble {
+    border-radius: 10px;
+    color: #fff;
+    background-color: #d4aa32;
+    box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
+
+    .tbody {
+      background-color: #f9f9f95c;
+      font-weight: 500;
+      th{
+        font-weight: 500;
+      }
+      td{
+        font-weight: 500;
+      }
+      tr:nth-of-type(odd) {
+        background-color: #d4aa3282;
+      }
+      tr:last-child {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        th:first-child{
+          border-bottom-left-radius: 10px;
+        }
+        th:last-child{
+          border-bottom-right-radius: 10px;
+        }
+        td:first-child{
+          border-bottom-left-radius: 10px;
+        }
+        td:last-child{
+          border-bottom-right-radius: 10px;
+        }
+      }
+    }
+  }
+}
+
+.angle-down{
+  position: absolute;
+  top: 35%;
+  right: 2rem;
+  max-width: 20px;
+  filter: invert(1);
+  transition: 0.5s;
+  transform: translateY(-100%) rotate(0deg);
+}
+.angle-up{
+  position: absolute;
+  top: 35%;
+  right: 2rem;
+  max-width: 20px;
+  filter: invert(1);
+  transition: 0.5s;
+  transform: translateY(-100%) rotate(180deg);
 }

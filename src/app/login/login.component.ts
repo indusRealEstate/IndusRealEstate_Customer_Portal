@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
               var userdata = localStorage.getItem("currentUser");
               var user_id = JSON.parse(userdata)[0]["id"];
               // console.log("socket connected");
-              this.chatService.getAllCLients(user_id);
+              // this.chatService.getAllCLients(user_id);
             });
 
             setTimeout(async () => {

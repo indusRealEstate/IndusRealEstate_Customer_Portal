@@ -87,7 +87,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
               >
-                {{ element.request_type }}
+                <div>{{ element.request_type | titlecase}}</div>
               </td>
             </ng-container>
 
