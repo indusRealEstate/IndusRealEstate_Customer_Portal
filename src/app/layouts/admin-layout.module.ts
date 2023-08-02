@@ -92,6 +92,7 @@ import "hammerjs";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
+import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 
 @NgModule({
   imports: [
@@ -133,6 +134,7 @@ import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
     MatProgressBarModule,
     // MatProgressSpinnerModule,
     MatRadioModule,
+    
     // MatSidenavModule,
     // MatSliderModule,
     MatSlideToggleModule,
@@ -147,7 +149,7 @@ import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
     DragDropModule,
     NgOptimizedImage,
     ChartsModule,
-
+    
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
@@ -162,13 +164,14 @@ import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
     AdminRequestsArchive,
     AdminRequestsSpam,
     AdminDashboardComponent,
-
+    ViewMaintenanceImageDialog,
     ReviewRequestDialog,
 
     LoginComponent,
 
     AdminProperties,
     DetailsComponents,
+    
     AdminRequestsDetails,
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,

@@ -4,16 +4,18 @@ import { AuthenticationService } from "app/services/authentication.service";
 import { AdminService } from "app/services/admin.service";
 import { DownloadService } from "app/services/download.service";
 import { HttpClient } from "@angular/common/http";
+import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: "property-details",
+  selector: "admin-requests-details",
   templateUrl: "./admin-requests-details.html",
   styleUrls: ["./admin-requests-details.scss"],
 })
 export class AdminRequestsDetails implements OnInit {
   isUserSignedIn: boolean = false;
   prop_id: string;
-  request_id:string;
+  request_id: string;
   request_data: object | any;
   image_array: string[] = [];
   images: string;
@@ -22,6 +24,8 @@ export class AdminRequestsDetails implements OnInit {
   d1: string;
   blob: Blob;
   isContentLoading: boolean = false;
+  result_data: object | any;
+  all_data: object | any;
   //downloadService: any;
   // property_name:string;
 
@@ -31,31 +35,21 @@ export class AdminRequestsDetails implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private appdownloadService: DownloadService,
-    public http: HttpClient
+    public http: HttpClient,
+    public dialog: MatDialog
   ) {
+    this.isContentLoading = true;
+
     this.getScreenSize();
+
     var userData = localStorage.getItem("currentUser");
+
     var user = JSON.parse(userData);
+
     this.route.queryParams.subscribe((val) => {
-      // console.log(val);
+      //console.log(val);
       this.request_id = val.request_id;
-    }).add(()=>{
-      this.isContentLoading = false;
     });
-
-    // this.route.queryParams.subscribe((e) => {
-    //   if (e == null) {
-    //     router.navigate([`/property-details`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   } else if (e != user[0]["id"]) {
-    //     router.navigate([`/property-details`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   }
-    // });
-
-    
   }
 
   screenHeight: number;
@@ -78,27 +72,35 @@ export class AdminRequestsDetails implements OnInit {
   ngAfterViewInit() {}
 
   async ngOnInit() {
-    
-
     let data = {
       request_id: this.request_id,
-      requestdata: this.request_data
     };
-    this.appAdminService.getRequestsDetails(JSON.stringify(data)).subscribe((val) => {
-         //console.log(data);
-         let resultdata = val;
-         console.log(resultdata);
-        //  SELECT * FROM `maintenance_requests` INNER JOIN properties WHERE maintenance_requests.property_id = properties.property_id
-        // SELECT * FROM `maintenance_requests` INNER JOIN properties ON  maintenance_requests.property_id =  properties.property_id 
-        // INNER JOIN  properties_units ON  properties_units.unit_id=maintenance_requests.unit_id
-    
-        
+    this.appAdminService
+      .getRequestsDetails(JSON.stringify(data)).subscribe((val) => {
+       // console.log(data);
+        this.all_data = val;
+        console.log(this.all_data);
+       
+
         // this.images = this.prop_data.images;
 
         //  this.property_name = this.prop_data.property_name;
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        // console.log(this.isContentLoading);
       });
-  }
-  
 
-  
+    // onCloseDialog() {
+    //   let constainer = document.getElementById("full-screen-image");
+    //   constainer.style.display = "none";
+    //}
+  }
+
+  openDialog() {
+    this.dialog
+      .open(ViewMaintenanceImageDialog, {})
+      .afterClosed()
+      .subscribe((val) => {});
+  }
 }
