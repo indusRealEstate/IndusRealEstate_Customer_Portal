@@ -40,6 +40,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   screenWidth: number;
 
   @ViewChild("selecte_doc") selecte_doc;
+  profile_image: string;
 
   constructor(
     private router: Router,
@@ -98,7 +99,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.amenities.push(JSON.parse(this.all_data.unit_amenties)[i]);
         }
 
-
+        // this.profile_image = this.all_data.user_profile_img !== '' ? `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/image/${this.all_data.user_profile_img}` : 'assets/img/images/user.png';
 
         if (this.all_data.lease_documents !== undefined) {
           for (

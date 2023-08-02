@@ -8,6 +8,7 @@ import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { param } from "jquery";
 
 @Component({
   selector: "all-users",
@@ -116,7 +117,11 @@ export class AllUsersComponent implements OnInit {
       var property = this.allProperties.find(
         (prop) => prop.property_id == prop_id
       );
-      return property.property_name;
+      if (property != undefined) {
+        return property.property_name;
+      } else {
+        return "loading..";
+      }
     } else {
       return "loading..";
     }
@@ -125,7 +130,12 @@ export class AllUsersComponent implements OnInit {
   getUnitNo(unit_id) {
     if (this.allUnits != null) {
       var unit = this.allUnits.find((u) => u.unit_id == unit_id);
-      return unit.unit_no;
+
+      if (unit != undefined) {
+        return unit.unit_no;
+      } else {
+        return "loading..";
+      }
     } else {
       return "loading..";
     }
@@ -259,6 +269,14 @@ export class AllUsersComponent implements OnInit {
   navigateToPropertyDetailsPage(prop_id) {
     this.router.navigate(["/property-details"], {
       queryParams: { prop_id: prop_id },
+    });
+  }
+
+  viewUser(data: any) {
+    this.router.navigate(["/admin-user-details"], {
+      queryParams: {
+        user_id: data.user_id,
+      },
     });
   }
 }
