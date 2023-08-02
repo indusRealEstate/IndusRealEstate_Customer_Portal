@@ -91,6 +91,7 @@ import { ChartsModule } from "@progress/kendo-angular-charts";
 import "hammerjs";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
+import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 
 @NgModule({
   imports: [
@@ -132,6 +133,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     MatProgressBarModule,
     // MatProgressSpinnerModule,
     MatRadioModule,
+    
     // MatSidenavModule,
     // MatSliderModule,
     MatSlideToggleModule,
@@ -146,7 +148,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     DragDropModule,
     NgOptimizedImage,
     ChartsModule,
-
+    
     // GoogleMapsModule,
     // NgApexchartsModule,
     // NgbModalModule,
@@ -161,13 +163,14 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     AdminRequestsArchive,
     AdminRequestsSpam,
     AdminDashboardComponent,
-
+    ViewMaintenanceImageDialog,
     ReviewRequestDialog,
 
     LoginComponent,
 
     AdminProperties,
     DetailsComponents,
+    
     AdminRequestsDetails,
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,

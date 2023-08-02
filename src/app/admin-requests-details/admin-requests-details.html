@@ -1,6 +1,21 @@
+<!-- <div id="full-screen-image">
+  <button class="close-btn" title="Exit">
+
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </button>
+  <img src alt id="image">
+</div> -->
+
 <div class="main-content" *ngIf="screenWidth > 430">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-7">
         <div class="card">
           <div class="card-body">
@@ -19,31 +34,72 @@
                 <div class="row">
                   <div class="col-4">
                     <h5>Request date:</h5>
-                    <h5 class="font-weight-normal">1/8/2023</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_date}}</h5>
                   </div>
                   <div class="col-4">
                     <h5>Request status:</h5>
-                    <h5 class="font-weight-normal">Completed</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_status}}</h5>
+                  </div>
+                  <div class="col-4">
+                    <h5>Request Type:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_type}}</h5>
                   </div>
                 </div>
 
                 <div class="row mt-3">
                   <div class="col-4">
-                    <h5>Request Type:</h5>
-                    <h5 class="font-weight-normal">Normal</h5>
+                    <h5>User Availability date:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_user_availability_date}}</h5>
                   </div>
                   <div class="col-4">
-                    <h5>Request for:</h5>
-                    <h5 class="font-weight-normal">Unit</h5>
+                    <h5>User Availability Time:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_user_availability_time}}</h5>
+                  </div>
+                  <div class="col-4">
+                    <h5>Description</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_description}}</h5>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-4">
+                    <h5>Request For:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_for}}</h5>
                   </div>
                   <div class="col-4">
                     <h5>Request Category:</h5>
-                    <h5 class="font-weight-normal">Air</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_category}}</h5>
+                  </div>
+                  <div class="col-4">
+                    <h5>Staff Assigned:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_staff_assigned}}</h5>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-4">
+                    <h5>Flag:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_flag}}</h5>
+                  </div>
+                  <div class="col-4">
+                    <h5>Archive:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_archive}}</h5>
+                  </div>
+                  <div class="col-4">
+                    <h5>Spam:</h5>
+                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_spam}}</h5>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-4">
+                    <h5>Feedback:</h5>
+                    <h5 class="font-weight-normal" *ngFor="all_data != null"></h5>
                   </div>
                 </div>
               </div>
               <div class="col-4">
-                <button class="btn">View all Media</button>
+                <button class="btn" id="see-all-img-btn" (click)="openDialog()">View all Media</button>
               </div>
             </div>
           </div>
@@ -67,14 +123,17 @@
                   <!-- <h4 class="user-name"></h4>
                           <span class="user-uid text-secondery"></span> -->
                   <ul class="user-details font-weight-bold">
-                    <li>Name: Kiran</li>
-                    <li>Email: k@gmail.Completed</li>
-                    <li>Alternative email: k@gmail.com</li>
-                    <li>Phone: 0551234545</li>
-                    <li>Alternative phone:06776767545</li>
-                    <li>Gender:Male</li>
-                    <li>Nationality:Indian</li>
-                    <li>DOB:12/06/2034</li>
+                    <li>Name: {{all_data.user_name}}</li>
+                    <li>Email: {{all_data.user_email}}</li>
+                    <li>Alternative email: {{all_data.user_alternative_email}}</li>
+                    <li>Phone:{{all_data.user_country_code_number}} - {{all_data.user_mobile_number}}</li>
+                    <li>Alternative phone:{{all_data.user_country_code_alternative_number}} - {{all_data.user_alternative_mobile_number}}</li>
+                    <li>Gender:{{all_data.user_gender}}</li>
+                    <li>Nationality:{{all_data.user_nationality}}</li>
+                    <li>DOB:{{all_data.user_dob}}</li>
+                    <li>User Type:{{all_data.user_user_type}}</li>
+                    <li>Id Type:{{all_data.user_id_type}}</li>
+                    <li>Id Number:{{all_data.user_id_number}}</li>
                   </ul>
                 </div>
               </div>
@@ -105,38 +164,41 @@
                     <tbody class="tbody text-uppercase">
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property name</th>
-                        <td class="p-3 col-md-8">Test Property</td>
+                        <td class="p-3 col-md-8">{{all_data.user_id_number}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property address</th>
-                        <td class="p-3 col-md-8">JLT, Dubai</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_address}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property type</th>
-                        <td class="p-3 col-md-8">Residentials</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_property_type}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">government id</th>
-                        <td class="p-3 col-md-8">1234</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_govt_id}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">number of units</th>
-                        <td class="p-3 col-md-8">2</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_no_of_units}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">locality
                           name</th>
-                        <td class="p-3 col-md-8">Proepry</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_locality_name}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property incharge</th>
-                        <td class="p-3 col-md-8">property</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_property_in_charge}}</td>
                       </tr>
-                      <tr scope="row" *ngIf="all_data.prop_description !== ''">
+                      <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property description</th>
-                        <td class="p-3 col-md-8">property</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_description}}</td>
                       </tr>
-                     
+                      <!-- SELECT * FROM `maintenance_requests`
+                      JOIN properties ON maintenance_requests.property_id = properties.property_id 
+                      JOIN properties_units ON maintenance_requests.unit_id = properties_units.unit_id
+                       JOIN users ON maintenance_requests.user_id = users.user_id -->
                     </tbody>
                   </table>
                 </div>
