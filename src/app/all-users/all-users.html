@@ -80,7 +80,7 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'first-col-last' : 'first-col'"
+                [ngClass]="last ? 'first-col-last' : 'first-col'" (click)="viewUser(element)"  style="cursor: pointer;"
               >
                 {{ element.name}}
               </td>

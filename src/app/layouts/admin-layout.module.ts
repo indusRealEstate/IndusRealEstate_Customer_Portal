@@ -90,6 +90,7 @@ import { ChartsModule } from "@progress/kendo-angular-charts";
 import "hammerjs";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
+import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 
 @NgModule({
   imports: [
@@ -169,6 +170,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
     DetailsComponents,
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,
+    ViewUserDetails,
 
     IndividualDocumentsComponent,
     AllClientsDocuments,
