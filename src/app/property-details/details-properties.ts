@@ -27,6 +27,8 @@ export class DetailsComponents implements OnInit {
   lease_doc: string[] = [];
   view_list: boolean = false;
   all_units: object[] = [];
+
+  selected_document: any = "";
   //downloadService: any;
   // property_name:string;
 
@@ -42,11 +44,13 @@ export class DetailsComponents implements OnInit {
     this.isContentLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
-    this.route.queryParams.subscribe((val) => {
-      this.prop_id = val.prop_id;
-    }).add(()=>{
-      this.isContentLoading = false;
-    });
+    this.route.queryParams
+      .subscribe((val) => {
+        this.prop_id = val.prop_id;
+      })
+      .add(() => {
+        this.isContentLoading = false;
+      });
   }
 
   screenHeight: number;
@@ -91,8 +95,6 @@ export class DetailsComponents implements OnInit {
           this.prop_doc.push(JSON.parse(this.all_data.prop_doc)[i]);
         }
 
-        
-
         $(document).ready(() => {
           // console.log('hello');
           let carousel = document.getElementById("carousel");
@@ -121,7 +123,7 @@ export class DetailsComponents implements OnInit {
               imgElmnt.classList.add("d-flex");
               imgElmnt.classList.add("carousel-img");
               imgElmnt.classList.add("w-100");
-              imgElmnt.style.height = "50vh";
+              imgElmnt.style.height = "65vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
               imgElmnt.style.cursor = "pointer";
@@ -152,7 +154,7 @@ export class DetailsComponents implements OnInit {
               imgElmnt.classList.add("d-block");
               imgElmnt.classList.add("w-100");
               imgElmnt.classList.add("carousel-img");
-              imgElmnt.style.height = "50vh";
+              imgElmnt.style.height = "65vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
               imgElmnt.style.cursor = "pointer";
@@ -218,23 +220,18 @@ export class DetailsComponents implements OnInit {
       "&body=" +
       "hi";
   }
-  selecteFunction(event) {
-    if (this.view_list == true) {
-      this.view_list = false;
-    } else {
-      this.view_list = true;
-    }
-  }
 
   downloadDoc() {
-    let doc = $("#selecte_doc").val();
     // let data = {
     //   "contract_id": this.all_data.lease_uid,
     //   "file":doc
     // }
-    window.open(
-      `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${doc}`
-    );
+    if (this.selected_document != "") {
+      window.open(
+        `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${this.selected_document}`
+      );
+    }
+
     // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
     //   console.log(val);
     // })

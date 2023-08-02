@@ -2,39 +2,38 @@
 
 * {
   font-family: "Montserrat";
-  
 }
-h6{
-  color:#2b333e;
+h6 {
+  color: #2b333e;
 }
-h3{
-  color:#2b333e;
+h3 {
+  color: #2b333e;
 }
-p{
-  color:#2b333e;
+p {
+  color: #2b333e;
   font-weight: 500;
 }
-.feature{
+.feature {
   font-weight: 500;
 }
-.f-weight{
+.f-weight {
   font-weight: 500;
 }
-.f-title{
+.f-title {
   font-weight: 600;
 }
-span{
+span {
   font-weight: 500;
 }
-.property-facts__value{
+.property-facts__value {
   font-weight: 500;
 }
-.text-s{
-  color:#d4aa32;
+.text-s {
+  color: #d4aa32;
   font-weight: 500;
   margin-top: 0rem;
 }
-.btn{
+.btn {
   background: #d4aa32;
   color: white;
   float: right;
@@ -156,13 +155,34 @@ ngx-skeleton-loader {
   box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
 }
 
-.main-card-body {
-  padding: 2rem 3rem;
+.main-card {
+  box-shadow: none;
+  border: 1px solid #e6ebf1;
+  padding: 0 0;
+  margin-bottom: 0;
+
+  .card-header {
+    border-bottom: 1px solid #e6ebf1;
+    padding: 20px 25px;
+
+    .overview-header {
+      padding: 0;
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0;
+      text-shadow: none;
+    }
+  }
+
+  .card-body {
+    padding: 40px 40px;
+  }
 }
 
 .item-header {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 500;
+  padding-left: 15px;
 }
 
 .prop-status {
@@ -176,8 +196,7 @@ ngx-skeleton-loader {
   .carousel-inner {
     object-fit: cover;
     object-position: bottom;
-    border-radius: 15px;
-    box-shadow: 0rem 0rem 1.25rem 0rem #bbb;
+    border-radius: 10px;
     .carousel-item {
       height: 100vh !important;
     }
@@ -200,15 +219,6 @@ ngx-skeleton-loader {
   list-style: none;
   font-size: 0.903rem;
   font-weight: 600;
-}
-
-.overview-header {
-  display: flex;
-  padding: 1rem 3rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  align-items: center;
-  text-shadow: 2px 2px 2px #c1c1c1;
 }
 
 .overview-row-card {
@@ -567,10 +577,10 @@ ngx-skeleton-loader {
   }
 
   .detail-table {
-    border-radius: 10px;
+    border-radius: 7px;
     color: #fff;
-    background-color: #d4aa32;
-    box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
+    background-color: #c1910aa8;
+    box-shadow: none;
 
     .tbody {
       background-color: #efefef4a;
