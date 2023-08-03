@@ -102,12 +102,12 @@ export class ViewUserDetails implements OnInit {
       });
   }
 
-  navigateToDetailPage(data: any) {
-    // console.log(`https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${data}`);
-    window.open(
-      `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${data}`
-    );
-  }
+  // navigateToDetailPage(data: any) {
+  //   // console.log(`https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${data}`);
+  //   window.open(
+  //     `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${data}`
+  //   );
+  // }
 
   viewImageOfUnit() {
     let constainer = document.getElementById("full-screen-image");
@@ -153,18 +153,11 @@ export class ViewUserDetails implements OnInit {
       "hi";
   }
 
-  downloadDoc() {
-    let doc = $("#selecte_doc").val();
-    // let data = {
-    //   "contract_id": this.all_data.lease_uid,
-    //   "file":doc
-    // }
+  downloadDoc(item) {
+    
     window.open(
-      `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${doc}`
+      `https://indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${item}`
     );
-    // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
-    //   console.log(val);
-    // })
   }
 
   openProperty() {

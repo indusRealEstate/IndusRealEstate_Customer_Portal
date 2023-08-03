@@ -373,8 +373,18 @@ export class AdminService {
       })
     );
   }
+
   getAllUserDetails(data:any){
     const url = `${API_URL}/getUserAllDetails.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  downloadUserDocuments(data:any){
+    const url = `${API_URL}/downloadUserDocuments.php?apikey=1`;
     return this.http.post(url,data).pipe(
       map((data) => {
         return data;

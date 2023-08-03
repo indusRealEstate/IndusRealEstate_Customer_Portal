@@ -45,59 +45,97 @@
             </div>
           </div>
           <div class="card-body profile-body">
-            <div class="row">
-              <div class="col-12">
-                <h4 class="title-header pl-4">{{all_data.user_name}}</h4>
-                <div class="table-row">
-                  <table class="teble table-striped w-100 px-3 detail-table">
-                    <!-- <thead class="thead">
-                      <tr>
-                        <th scope="col" class="p-3">Title</th>
-                        <th scope="col" class="p-3">Details</th>
-                      </tr>
-                    </thead> -->
-                    <tbody class="tbody text-uppercase">
-                      <tr scope="row">
-                        <th class="p-3 col-md-2" scope="row">{{all_data.user_id_type}}</th>
-                        <td class="p-3 col-md-4">{{all_data.user_id_number}}</td>
-                        <th class="p-3 col-md-2" scope="row">gender</th>
-                        <td class="p-3 col-md-4">{{all_data.user_gender}}</td>
-                      </tr>
-                      <tr scope="row">
-                        <th class="p-3 col-md-2" scope="row">email</th>
-                        <td class="p-3 col-md-4">{{all_data.user_email}}</td>
-                        <th class="p-3 col-md-2"
-                          *ngIf="all_data.user_alternative_email != ''"
-                          scope="row">{{all_data.user_alternative_email != ''?
-                          'alternative mail' : ''}}</th>
-                        <td class="p-3 col-md-4"
-                          *ngIf="all_data.user_alternative_email != ''">{{all_data.user_alternative_email
-                          != ''? all_data.user_alternative_email : ''}}</td>
+            <h4 class="title-header">{{all_data.user_name}}</h4>
+            <div class="row text-uppercase">
 
-                      </tr>
-                      <tr scope="row">
-                        <th class="p-3 col-md-2" scope="row">phone</th>
-                        <td class="p-3 col-md-4">{{all_data.user_country_code_number}}
-                          - {{all_data.user_mobile_number}}</td>
-                        <th class="p-3 col-md-2"
-                          *ngIf="all_data.user_alternative_mobile_number != ''"
-                          scope="row"> {{all_data.user_alternative_mobile_number
-                          != ''? 'alternative phone' : ''}}</th>
-                        <td class="p-3 col-md-4"
-                          *ngIf="all_data.user_alternative_mobile_number != ''">{{all_data.user_alternative_mobile_number
-                          != '' ? all_data.user_country_code_alternative_number
-                          + '-' + all_data.user_alternative_mobile_number : ''}}</td>
-                      </tr>
-                      <tr scope="row">
-                        <th class="p-3 col-md-2" scope="row">date of birth</th>
-                        <td class="p-3 col-md-4">{{all_data.user_dob | date}}</td>
-                        <th class="p-3 col-md-2" scope="row">nationality</th>
-                        <td class="p-3 col-md-4">{{all_data.user_nationality}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div class="col-6 pb-2" *ngIf="all_data.user_id_type != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    {{all_data.user_id_type}}
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_id_number}}
+                  </div>
                 </div>
               </div>
+
+              <div class="col-6 pb-2" *ngIf="all_data.user_gender != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    gender
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_gender}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 pb-2" *ngIf="all_data.user_email != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    email
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_email}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 pb-2"  *ngIf="all_data.user_alternative_email != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    alternative email
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_alternative_email}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 pb-2"  *ngIf="all_data.user_mobile_number != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    contact number
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_country_code_number + ' - ' + all_data.user_mobile_number}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 pb-2"  *ngIf="all_data.user_alternative_mobile_number != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    alternative contact number
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_country_code_alternative_number + ' - ' + all_data.user_alternative_mobile_number}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 pb-2"  *ngIf="all_data.user_dob != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    date of birth
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_dob | date}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 pb-2"  *ngIf="all_data.user_nationality != ''">
+                <div class="row w-100">
+                  <div class="col-5 name">
+                    nationality
+                  </div>
+                  <div class="col-7 value">
+                    {{all_data.user_nationality}}
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -105,6 +143,9 @@
 
       <div class="col-md-4">
         <div class="card card-main doc-column">
+          <div class="card-header">
+            <h4 class="title-header">User documents</h4>
+          </div>
           <div class="card-body">
             <div class="row table-row">
               <table class="teble table-striped w-100 px-3 detail-table">
@@ -116,9 +157,9 @@
                 </thead> -->
                 <tbody class="tbody text-uppercase">
                   <tr scope="row" *ngFor="let item of user_doc; let index = i">
-                    <th class="p-3 col-md-8" scope="row">{{item}}</th>
-                    <td class="p-3 col-md-4 d-flex">
-                      <button (click)="navigateToDetailPage(item)"
+                    <th class="p-3 " scope="col-8">{{item}}</th>
+                    <td class="p-3 d-flex" scope="col-4">
+                      <button (click)="downloadDoc(item)"
                         class="btn open-external-link-icon mx-auto"
                         title="extenal"><img
                           src="assets/img/svg/common-icons/open-external-link-icon.svg"
@@ -139,7 +180,7 @@
     <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-12 mx-auto" *ngIf="all_data.property != 'none'">
         <div class="card card-main">
-          <div class="card-header"><h4 class="title-header">Property details</h4></div>
+          <div class="card-header"><h4 class="title-header">Property</h4></div>
           <div class="card-body detail-table">
             <div class="table-row">
               <table class="teble table-striped w-100 px-3 detail-table">
@@ -152,9 +193,9 @@
                 <tbody class="tbody text-uppercase">
                   <tr scope="row"
                     *ngFor="let item of all_data.property; let index = i">
-                    <td class="p-3 col-md-8">{{item.prop_name + ' - ' +
+                    <td class="p-3" scope="col-10">{{item.prop_name + ' - ' +
                       item.prop_address}}</td>
-                    <td class="p-3 col-md-4"><button
+                    <td class="p-3 d-flex" scope="col-2"><button
                         (click)="navigateToProprety(item.prop_uid)"
                         class="btn open-external-link-icon mx-auto"
                         title="extenal"><img
