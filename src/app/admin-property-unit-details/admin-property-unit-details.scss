@@ -8,13 +8,12 @@ ngx-skeleton-loader {
   border-radius: 10px;
 }
 
-.open-external-link-icon{
-  padding: 5px;
+.open-external-link-icon {
+  padding: 8px;
   background: #d4aa32;
-  box-shadow: 0 0 1rem #b9b9b9;
-  border-radius: 5px;
+  border-radius: 3px;
   margin-left: 1rem;
-  img{
+  img {
     width: 1rem;
     filter: invert(1);
   }
@@ -77,11 +76,12 @@ ngx-skeleton-loader {
 // }
 
 .lease-inactive-text {
-  background-color: #ff535354;
+  background-color: #ff535326;
   font-size: 1rem;
-  padding: 0px 20px;
-  border-radius: 50rem;
-  box-shadow: 1px 2px 10px -5px rgba(255, 86, 86, 0.75);
+  padding: 0 20px;
+  border-radius: 5px;
+  color: #ff0000a8;
+  border: 1px solid #ff00001f;
 }
 
 .row-eq-height {
@@ -92,41 +92,51 @@ ngx-skeleton-loader {
 }
 
 .vacant {
-  background-color: #c1c1c1;
-  color: #2b333e !important;
+  background-color: #2b333e1a;
+  color: #2b333eb0 !important;
   font-weight: 600;
   padding: 5px 20px;
-  border-radius: 10px;
+  border-radius: 8px;
+  border: 1px solid #2b333e2e;
+  font-size: 15px !important;
 }
 .occupant {
-  background-color: #84ff88;
-  color: #2b333e !important;
+  background-color: #31d9371f;
+  color: #0bb111 !important;
   font-weight: 600;
   padding: 5px 20px;
-  border-radius: 10px;
-}
-.card-main {
-  // border-radius: 15px;
-  // background: linear-gradient(145deg, #ffffffce, #ffffff);
-  // box-shadow: 10px 10px 34px #c4c4c4, -10px -10px 34px #ffffff;
-  border-radius: 15px;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.8078431373),
-    #ffffff
-  );
-  -moz-box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
-  -webkit-box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
-  box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
+  border-radius: 8px;
+  border: 1px solid #31d9378c;
+  font-size: 15px !important;
 }
 
-.main-card-body {
-  padding: 2rem 3rem;
+.main-card {
+  box-shadow: none;
+  border: 1px solid #e6ebf1;
+  padding: 0 0;
+  margin-bottom: 0;
+
+  .card-header {
+    border-bottom: 1px solid #e6ebf1;
+    padding: 20px 25px;
+
+    .overview-header {
+      padding: 0;
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0;
+      text-shadow: none;
+    }
+  }
+
+  .card-body {
+    padding: 20px;
+  }
 }
 
 .item-header {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .prop-status {
@@ -140,8 +150,7 @@ ngx-skeleton-loader {
   .carousel-inner {
     object-fit: cover;
     object-position: bottom;
-    border-radius: 15px;
-    box-shadow: 0rem 0rem 1.25rem 0rem #bbb;
+    border-radius: 10px;
     .carousel-item {
       height: 100vh !important;
     }
@@ -151,7 +160,6 @@ ngx-skeleton-loader {
 .user-image {
   aspect-ratio: 1/1;
   border-radius: 50%;
-  box-shadow: 0rem 0rem 1rem 0rem #b9b9b9;
 }
 
 .user-name {
@@ -175,7 +183,7 @@ ngx-skeleton-loader {
   text-shadow: 2px 2px 2px #c1c1c1;
 }
 
-.overview-row-card{
+.overview-row-card {
   max-height: 45vh;
 }
 
@@ -201,7 +209,6 @@ ngx-skeleton-loader {
 
       .overview-item {
         padding: 0rem 0.25rem;
-        
       }
 
       .icon-container {
@@ -217,11 +224,11 @@ ngx-skeleton-loader {
   }
 }
 
-.amenities{
+.amenities {
   background: none !important;
   box-shadow: 0 0 0 0 !important;
 
-  .amenities-item-row{
+  .amenities-item-row {
     padding: 15px;
     background-color: #fff;
     border-radius: 10px;
@@ -249,12 +256,12 @@ ngx-skeleton-loader {
   }
 }
 
-
 .call-btn {
   background-color: #4caf50;
   margin: 0.5rem 1rem;
-  box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
-  border-radius: 15px;
+  box-shadow: none;
+  border-radius: 8px;
+  padding: 10px 20px;
   img {
     max-width: 1.25rem;
     filter: invert(1);
@@ -268,8 +275,8 @@ ngx-skeleton-loader {
 .email-btn {
   background-color: #4c87af;
   margin: 0.5rem 1rem;
-  box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
-  border-radius: 15px;
+  border-radius: 9px;
+  padding: 10px 20px;
   img {
     max-width: 1.25rem;
     filter: invert(1);
@@ -496,18 +503,18 @@ ngx-skeleton-loader {
 
 .table-row {
   .teble {
-    border-radius: 10px;
+    border-radius: 7px;
     color: #fff;
-    background-color: #d4aa32;
-    box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
+    background-color: #c1910ac4;
+    box-shadow: none;
 
     .tbody {
       background-color: #f9f9f95c;
       font-weight: 500;
-      th{
+      th {
         font-weight: 500;
       }
-      td{
+      td {
         font-weight: 500;
       }
       tr:nth-of-type(odd) {
@@ -516,10 +523,10 @@ ngx-skeleton-loader {
       tr:last-child {
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        th{
+        th {
           border-bottom-left-radius: 10px;
         }
-        td{
+        td {
           border-bottom-right-radius: 10px;
         }
       }
@@ -527,10 +534,10 @@ ngx-skeleton-loader {
   }
 
   .detail-table {
-    border-radius: 10px;
+    border-radius: 7px;
     color: #fff;
-    background-color: #d4aa32;
-    box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
+    background-color: #c1910aa8;
+    box-shadow: none;
 
     .tbody {
       background-color: #efefef4a;
@@ -548,12 +555,12 @@ ngx-skeleton-loader {
 
 .view-lease-btn {
   color: #fff;
-  background-color: #d4aa32;
-  border-radius: 10px;
-  box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
+  background-color: #2b333ed6;
+  border-radius: 7px;
+  padding: 10px 20px;
 }
 
-.angle-down{
+.angle-down {
   position: absolute;
   top: 35%;
   right: 2rem;
@@ -562,7 +569,7 @@ ngx-skeleton-loader {
   transition: 0.5s;
   transform: translateY(-100%) rotate(0deg);
 }
-.angle-up{
+.angle-up {
   position: absolute;
   top: 35%;
   right: 2rem;

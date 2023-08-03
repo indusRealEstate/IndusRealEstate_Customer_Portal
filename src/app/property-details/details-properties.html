@@ -15,7 +15,7 @@
 
 <div
   class="main-content"
-  style="margin-top: 20px; padding: 30px 40px"
+  style="margin-top: 50px; padding: 30px 40px"
   *ngIf="screenWidth > 430"
 >
   <div class="container-fluid" style="max-width: 100vw">
@@ -24,11 +24,39 @@
       [theme]="{ width: (700) + 'px', height: '40px' }"
     >
     </ngx-skeleton-loader>
-    <div class="row" *ngIf="!isContentLoading">
-      <div class="col-md-12">
-        <h3 class="item-header">
-          {{all_data.prop_address}}, {{all_data.prop_name}}
-        </h3>
+    <div class="row m-0 justify-content-between" *ngIf="!isContentLoading">
+      <span class="item-header">
+        {{all_data.prop_address}}, {{all_data.prop_name}}
+      </span>
+
+      <div class="row m-0">
+        <img
+          matTooltip="Share Property"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          src="assets/img/svg/share.svg"
+          alt=""
+          style="
+            filter: invert(95%) sepia(37%) saturate(5934%) hue-rotate(328deg)
+              brightness(88%) contrast(87%);
+            width: 25px;
+            cursor: pointer;
+          "
+        />
+        <img
+          class="mx-4"
+          matTooltip="More Actions"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          src="assets/img/svg/home-page/more.svg"
+          alt=""
+          style="
+            filter: brightness(0) saturate(100%) invert(73%) sepia(8%)
+              saturate(14%) hue-rotate(333deg) brightness(91%) contrast(77%);
+            width: 25px;
+            cursor: pointer;
+          "
+        />
       </div>
     </div>
 

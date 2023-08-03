@@ -35,6 +35,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   lease_doc: string[] = [];
 
   activatedRoute: any;
+  selected_document: any = "";
 
   screenHeight: number;
   screenWidth: number;
@@ -129,7 +130,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
                 "#carouselExampleIndicators"
               );
               indicatorDiv.setAttribute("data-slide-to", `${i}`);
-              indicatorDiv.setAttribute("data-target", "#carouselExampleIndicators");
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
               carousel.append(carouselDiv);
               indicator.append(indicatorDiv);
 
@@ -157,7 +161,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
                 "#carouselExampleIndicators"
               );
               indicatorDiv.setAttribute("data-slide-to", `${i}`);
-              indicatorDiv.setAttribute("data-target", "#carouselExampleIndicators");
+              indicatorDiv.setAttribute(
+                "data-target",
+                "#carouselExampleIndicators"
+              );
               carousel.append(carouselDiv);
               indicator.append(indicatorDiv);
 
@@ -185,37 +192,30 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       });
   }
 
-  selecteFunction(event) {
-    if (this.view_list == true) {
-      this.view_list = false;
-    } else {
-      this.view_list = true;
-    }
-  }
-
   @HostListener("window:resize", ["$event"])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
   }
 
-  openProperty(){
+  openProperty() {
     this.router.navigate(["/property-details"], {
       queryParams: {
-        "prop_id": this.all_data.prop_uid
+        prop_id: this.all_data.prop_uid,
       },
     });
   }
 
   downloadDoc() {
-    let doc = $("#selecte_doc").val();
     // let data = {
     //   "contract_id": this.all_data.lease_uid,
     //   "file":doc
     // }
-    window.open(
-      `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${doc}`
-    );
+    if (this.selected_document != "") {
+      window.open(
+        `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${this.selected_document}`
+      );
+    }
     // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
     //   console.log(val);
     // })
