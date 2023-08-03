@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { AdminService } from "app/services/admin.service";
 import { DownloadService } from "app/services/download.service";
-import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -14,24 +13,25 @@ import {
 
 
 @Component({
-  selector: "view-maintenance-image-dialog",
-  styleUrls: ["./view-maintenance-image-dialog.scss"],
-  templateUrl: "./view-maintenance-image-dialog.html",
+  selector: "view-unit-image-dialog",
+  styleUrls: ["./view-unit-image-dialog.scss"],
+  templateUrl: "./view-unit-image-dialog.html",
   
 })
-export class ViewMaintenanceImageDialog implements OnInit {
+export class ViewUnitImageDialog implements OnInit {
   request_id:string;
   all_data: Object| any;
-  img_array: string[] = [];
+  unit_img_array: string[] = [];
   isContentLoading: boolean;
-  media: string;
-  media_array: string[] = [];
+  image: string;
+  unit_id: string;
+ 
   
   
  
   constructor(
     // private dialogRef: MatDialogRef,
-    public dialogRef: MatDialogRef<ViewMaintenanceImageDialog>,
+    public dialogRef: MatDialogRef<ViewUnitImageDialog>,
     private appAdminService: AdminService,
     private appdownloadService: DownloadService,
   ) {
@@ -41,41 +41,37 @@ export class ViewMaintenanceImageDialog implements OnInit {
 
   ngAfterViewInit() {}
   ngOnInit() {
-
-    setTimeout(() => {
-      this.isContentLoading = true;
-    }, 1000);
-
     let data = {
-      request_id: this.request_id
+      unit_id: this.unit_id
     };
     this.appAdminService
       .getRequestsDetails(JSON.stringify(data)).subscribe((val) => {
        // console.log(data);
         this.all_data = val;
         console.log(this.all_data);
-        this.media = this.all_data.main_media;
-        console.log(JSON.parse(this.media));
-       
-        for(let i = 0; i < JSON.parse(this.media).length; i++ ){
-         this.media_array.push(JSON.parse(this.media)[i]);
+
+        this.image = this.all_data.unit_images;
+        console.log(JSON.parse(this.image));
+
+        for(let i = 0; i < JSON.parse(this.image).length; i++ ){
+         this.unit_img_array.push(JSON.parse(this.image)[i]);
         }
        
         //  this.property_name = this.prop_data.property_name;
       })
       .add(() => {
-        this.isContentLoading = true;
-         console.log(this.isContentLoading);
+        this.isContentLoading = false;
+        // console.log(this.isContentLoading);
       });
 
      
       
   }
- 
+  
 
   downloadDoc() {
     window.open(
-      `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/${this.media_array}`
+      `https://www.indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/${this.unit_img_array}`
     );
     
   }
