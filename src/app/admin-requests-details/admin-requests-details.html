@@ -30,6 +30,8 @@
                     class="maintainance_img"
                   />
                   <h3 class="font-weight-bold">Maintenance Request Details</h3>
+                  <img src="../../assets/img/flag-bold.png" width="30" height="30" style="margin-top: 1.5rem;" alt="" 
+                  *ngIf="all_data.main_flag!=0">
                 </div>
                 <div class="row">
                   <div class="col-4">
@@ -76,7 +78,7 @@
                   </div>
                 </div>
 
-                <div class="row mt-3">
+                <!-- <div class="row mt-3">
                   <div class="col-4">
                     <h5>Flag:</h5>
                     <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_flag}}</h5>
@@ -89,13 +91,13 @@
                     <h5>Spam:</h5>
                     <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_spam}}</h5>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="row mt-3">
-                  <div class="col-4">
+                  <!-- <div class="col-4">
                     <h5>Feedback:</h5>
                     <h5 class="font-weight-normal" *ngFor="all_data != null"></h5>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-4">
@@ -152,8 +154,14 @@
             <div class="table-row">
               <div class="card main-card">
                 <div class="card-body">
-                  <h3 class=" font-weight-bold">Property details
-                  </h3>
+                  <div class="row">
+                    <div class="col-md-9">
+                      <h3 class=" font-weight-bold">Property details</h3>
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn" id="see-all-img-btn" style="float: right;" (click)="navigateTopPropertyDetailPage(all_data.prop_property_id)">View Property Media</button>
+                    </div>
+                </div>
                   <table class="teble table-striped w-100 px-3 detail-table">
                     <thead class="thead">
                       <tr>
@@ -164,7 +172,7 @@
                     <tbody class="tbody text-uppercase">
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property name</th>
-                        <td class="p-3 col-md-8">{{all_data.user_id_number}}</td>
+                        <td class="p-3 col-md-8">{{all_data.prop_property_name}}</td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">property address</th>
@@ -217,8 +225,8 @@
                   <h3>This is Unit Name</h3>
                 </div>
                 <div class="col-6">
-                  <button class="btn" style="float: right">
-                    View Unit Media
+                  <button class="btn" style="float: right" (click)="navigateToUnitDetailPage(all_data.unit_unit_id)">
+                    View Unit
                   </button>
                 </div>
               </div>
@@ -227,47 +235,71 @@
                   <!-- <img src="../../assets/img/rent.png" alt="" width="30" height="30"> --> 
                   
                   <h5>Unit Number:</h5>
-                  <h5 class="font-weight-normal">1234</h5>
-                </div>
-                <div class="col-4">
-                  <h5>Property Name:</h5>
-                  <h5 class="font-weight-normal">Abcd</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_unit_no}}</h5>
                 </div>
                 <div class="col-4">
                   <h5>Unit Type:</h5>
-                  <h5 class="font-weight-normal">Appartment</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_unit_type}}</h5>
+                </div>
+                <div class="col-4">
+                  <h5>No of Parking:</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_no_of_parking}}</h5>
                 </div>
               </div>
               <div class="row mt-3">
                 <div class="col-4">
                   <h5>Floor:</h5>
-                  <h5 class="font-weight-normal">4</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_floor}}</h5>
                 </div>
                 <div class="col-4">
                   <h5>Size:</h5>
-                  <h5 class="font-weight-normal">200</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_size}}</h5>
                 </div>
                 <div class="col-4">
                   <h5>Unit Type:</h5>
-                  <h5 class="font-weight-normal">Appartment</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_unit_type}}</h5>
                 </div>
               </div>
               <div class="row mt-3">
                 <div class="col-4">
                   <h5>Status:</h5>
-                  <h5 class="font-weight-normal">Occupied</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_status}}</h5>
                 </div>
                 <div class="col-4">
                   <h5>Bedroom:</h5>
-                  <h5 class="font-weight-normal">2</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_bedroom}}</h5>
                 </div>
                 <div class="col-4">
                   <h5>Bathroom:</h5>
-                  <h5 class="font-weight-normal">2</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_bathroom}}</h5>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-4">
+                  <h5>Owner:</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_owner}}</h5>
+                </div>
+                <!-- <div class="col-4">
+                  <h5>Amenities:</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_amenties}}</h5>
+                </div> -->
+                <div class="col-4">
+                  <h5>Description:</h5>
+                  <h5 class="font-weight-normal">{{all_data.unit_description}}</h5>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="row mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="font-weight-bold">Feedback</h3>
+            
+              <h4 class="font-weight-normal">Satisfaction Level : {{request_feedback.mood}}</h4>
+              <h4 class="font-weight-normal">Feedback : {{request_feedback.details}}</h4>
+              </div>
+            </div>
         </div>
       </div>
     </div>
