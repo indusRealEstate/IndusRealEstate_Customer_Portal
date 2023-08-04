@@ -315,7 +315,17 @@ export class AdminRequestsAll implements OnInit {
         "request_id": data.request_id
       },
     });
-
+ 
+  }
+ 
+  updateMore(data:any, type: string){
+    let output = {
+      id : data.request_id,
+      type: type,
+    }
+    this.adminService.updateRequestMore(JSON.stringify(output)).subscribe((value)=>{
+      this.refreshTable();
+    })
   }
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
@@ -323,7 +333,6 @@ export class AdminRequestsAll implements OnInit {
 
   showAllFlaggedRequests() {}
   closeFlaggedRequestFilter() {}
-  showRequestsOnStatus(event) {}
   closeStatusFilter() {}
   filterByTimeline() {}
   closeTimelineFilter() {}

@@ -618,7 +618,7 @@
   max-width: none !important;
   min-width: auto !important;
 }
-
+ 
 ::ng-deep .prop_name {
   cursor: pointer;
   text-decoration: underline !important;
@@ -629,3 +629,35 @@
   }
 }
 
+::ng-deep .more-btn{
+  .flag{
+    width: 20px;
+  }
+}
+
+// ::ng-deep .more-menu {
+//   .more-archived {
+//     background-color: #8ae16b5b;
+//     .mdc-list-item__primary-text{
+//       color: #1c6800 !important;
+//       font-weight: 600;
+//     }
+    
+//   }
+//   .more-span {
+//     background-color: #ffd9004d;
+    
+//     .mdc-list-item__primary-text{
+//       color: #c49920 !important;
+//       font-weight: 600;
+//     }
+//   }
+//   .more-delete {
+//     background-color: #ff00004d;
+    
+//     .mdc-list-item__primary-text{
+//       color: #ff0000 !important;
+//       font-weight: 600;
+//     }
+//   }
+// }
