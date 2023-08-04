@@ -6,7 +6,6 @@ import {
 } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
-import { ReviewRequestDialog } from "../review_req_dialog/review_req_dialog";
 
 @Component({
   selector: "see-all-user-reqs-admin",

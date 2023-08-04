@@ -26,6 +26,22 @@ export class AddLeaseDialog implements OnInit {
     private adminService: AdminService
   ) {
     this.getAllDropdowns();
+
+    if (data != null) {
+      // console.log(data);
+      if (this.properties != null) {
+        this.selectProperty({ value: data.prop_id });
+        this.property_id = data.prop_id;
+
+        setTimeout(() => {
+          if (this.units.length != 0) {
+            var un = this.units.find((u) => u.value == data.unit_id);
+            this.selectUnit({ value: un });
+            this.unit_data = un;
+          }
+        }, 2000);
+      }
+    }
   }
 
   @ViewChild("fileInput") fileInput: ElementRef;
@@ -246,7 +262,7 @@ export class AddLeaseDialog implements OnInit {
       unit_id: this.unit_data.value,
       owner_id: this.owner_id,
       tenant_id: this.tenant_id,
-      status: 'inactive',
+      status: "inactive",
       contract_start: this.contract_start_date,
       contract_end: this.contract_end_date,
       move_in: this.move_in_date,

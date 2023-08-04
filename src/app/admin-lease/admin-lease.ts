@@ -283,7 +283,7 @@ export class AllLeasesComponent implements OnInit {
     this.allLeaseMatTableData.filter = val;
   }
 
-  addUserDialogOpen() {
+  addLeaseDialogOpen() {
     this.dialog
       .open(AddLeaseDialog, {
         width: "80%",

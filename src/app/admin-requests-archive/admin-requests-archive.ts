@@ -8,7 +8,6 @@ import { EmailServices } from "app/services/email.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 import { OtherServices } from "app/services/other.service";
 import { MatMenuTrigger } from "@angular/material/menu";
 

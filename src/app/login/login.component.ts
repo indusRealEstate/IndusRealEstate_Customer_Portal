@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
-import { ChatService } from "app/services/chat.service";
 import { OtherServices } from "app/services/other.service";
 import { io } from "socket.io-client";
 
@@ -33,8 +32,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices,
-    private chatService: ChatService
+    private otherServices: OtherServices
   ) {
     this.getScreenSize();
     // redirect to home if already logged in

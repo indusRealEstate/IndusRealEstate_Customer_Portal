@@ -46,6 +46,15 @@
           </div>
 
           <div
+            *ngIf="all_data != null && all_data.unit_status == 'vacant'"
+            class="btn mr-4"
+            style="padding: 9px 15px; margin: 0; background: #2b333ee3"
+            (click)="addLeaseDialogOpen()"
+          >
+            create new lease
+          </div>
+
+          <div
             *ngIf="all_data != null"
             class="mr-4"
             style="

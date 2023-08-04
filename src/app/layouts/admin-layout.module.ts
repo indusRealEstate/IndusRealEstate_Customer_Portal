@@ -67,7 +67,6 @@ import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
-import { ReviewRequestDialog } from "app/components/review_req_dialog/review_req_dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
@@ -165,7 +164,6 @@ import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-imag
     AdminRequestsSpam,
     AdminDashboardComponent,
     ViewMaintenanceImageDialog,
-    ReviewRequestDialog,
 
     LoginComponent,
 

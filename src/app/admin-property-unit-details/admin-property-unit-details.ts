@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -207,18 +208,11 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   downloadDoc() {
-    // let data = {
-    //   "contract_id": this.all_data.lease_uid,
-    //   "file":doc
-    // }
     if (this.selected_document != "") {
       window.open(
         `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${this.selected_document}`
       );
     }
-    // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
-    //   console.log(val);
-    // })
   }
 
   isUserSignOut() {
@@ -229,22 +223,6 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       this.router.navigate(["/login"]);
     }
   }
-
-  // ngAfterViewInit() {
-  //   if (this.ngAfterViewInitInitialize == true) {
-  //     if (this.allPropertiesMatTableData != undefined) {
-  //       this.allPropertiesMatTableData.paginator = this.paginator;
-  //       this.allPropertiesMatTableData.paginator._changePageSize(10);
-  //     }
-  //   } else {
-  //     setTimeout(() => {
-  //       if (this.allPropertiesMatTableData != undefined) {
-  //         this.allPropertiesMatTableData.paginator = this.paginator;
-  //         this.allPropertiesMatTableData.paginator._changePageSize(10);
-  //       }
-  //     });
-  //   }
-  // }
 
   viewImageOfUnit(data: string) {
     let constainer = document.getElementById("full-screen-image");
@@ -313,7 +291,17 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     }
   }
 
-  // navigateToDetailPage(unit) {
-  //   console.log(unit.unit_id);
-  // }
+  addLeaseDialogOpen() {
+    this.dialog
+      .open(AddLeaseDialog, {
+        width: "80%",
+        height: "50rem",
+        data: {
+          prop_id: this.all_data.prop_uid,
+          unit_id: this.all_data.unit_id,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+  }
 }

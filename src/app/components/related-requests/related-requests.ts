@@ -6,7 +6,6 @@ import {
 } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ApiService } from "app/services/api.service";
-import { ReviewRequestDialog } from "../review_req_dialog/review_req_dialog";
 
 @Component({
   selector: "view-related-requests",
@@ -64,19 +63,5 @@ export class RelatedRequestsDialog implements OnInit {
     } else if (req_type == "INSPECTION_REQ") {
       return "Inspection Request";
     }
-  }
-
-  reviewRequest(req) {
-    this.dialog
-      .open(ReviewRequestDialog, {
-        width: "65%",
-        height: "45rem",
-        data: {
-          req_data: req,
-          section: "prop-related-reqs",
-        },
-      })
-      .afterClosed()
-      .subscribe(async (res) => {});
   }
 }
