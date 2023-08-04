@@ -279,7 +279,7 @@
             <!-- Symbol Column -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="viewDetails(row.contract_id)" style="cursor: pointer;"></tr>
           </table>
           <div
             *ngIf="allLeaseMatTableData.filteredData.length == 0 && allLease.length != 0"
