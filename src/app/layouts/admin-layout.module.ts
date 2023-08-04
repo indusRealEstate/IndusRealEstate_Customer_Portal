@@ -94,6 +94,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
+import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
 
 @NgModule({
   imports: [
@@ -166,6 +167,7 @@ import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
     AdminRequestsSpam,
     AdminDashboardComponent,
     ViewMaintenanceImageDialog,
+    ViewUnitImageDialog,
     ReviewRequestDialog,
 
     LoginComponent,
