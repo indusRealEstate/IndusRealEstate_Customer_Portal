@@ -25,7 +25,7 @@ export class TableFiltersComponent implements OnInit {
   @Output() closeFlaggedReqs = new EventEmitter<string>();
   @Output() timeLineFilter = new EventEmitter<string>();
   @Output() closeTimeLineFilterEmitter = new EventEmitter<string>();
-  @Output() statusFilterEmitter = new EventEmitter<string>();
+  // @Output() statusFilterEmitter = new EventEmitter<string>();
   @Output() closeStatusFilterEmitter = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<string>();
 
@@ -62,12 +62,12 @@ export class TableFiltersComponent implements OnInit {
     }
   }
 
-  showRequestsOnStatus(status, trigger: MatMenuTrigger) {
-    this.statusFilterEmitter.emit(status);
-    this.statusFilter = status;
-    trigger.closeMenu();
-    this.statusFilterOn = true;
-  }
+  // showRequestsOnStatus(status, trigger: MatMenuTrigger) {
+  //   this.statusFilterEmitter.emit(status);
+  //   this.statusFilter = status;
+  //   trigger.closeMenu();
+  //   this.statusFilterOn = true;
+  // }
 
   closeFlaggedRequestFilter() {
     this.closeFlaggedReqs.emit();

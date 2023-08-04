@@ -324,7 +324,6 @@ export class AdminRequestsOpen implements OnInit {
 
   showAllFlaggedRequests() {}
   closeFlaggedRequestFilter() {}
-  showRequestsOnStatus(event) {}
   closeStatusFilter() {}
   filterByTimeline() {}
   closeTimelineFilter() {}
