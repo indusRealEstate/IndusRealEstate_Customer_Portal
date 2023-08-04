@@ -6,6 +6,7 @@ import { DownloadService } from "app/services/download.service";
 import { HttpClient } from "@angular/common/http";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { MatDialog } from "@angular/material/dialog";
+import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
 
 @Component({
   selector: "admin-requests-details",
@@ -15,6 +16,7 @@ import { MatDialog } from "@angular/material/dialog";
 export class AdminRequestsDetails implements OnInit {
   isUserSignedIn: boolean = false;
   prop_id: string;
+  unit_id:string
   request_id: string;
   request_data: object | any;
   image_array: string[] = [];
@@ -26,8 +28,9 @@ export class AdminRequestsDetails implements OnInit {
   isContentLoading: boolean = false;
   result_data: object | any;
   all_data: object | any;
-  //downloadService: any;
-  // property_name:string;
+  feedback_array: string[] = [];
+  request_feedback:object = {mood:'',details:''};
+  
 
   constructor(
     private router: Router,
@@ -74,32 +77,49 @@ export class AdminRequestsDetails implements OnInit {
   async ngOnInit() {
     let data = {
       request_id: this.request_id,
+      feedback:this.feedback
     };
     this.appAdminService
       .getRequestsDetails(JSON.stringify(data)).subscribe((val) => {
        // console.log(data);
         this.all_data = val;
         console.log(this.all_data);
-       
-
-        // this.images = this.prop_data.images;
-
-        //  this.property_name = this.prop_data.property_name;
+        //console.log(this.all_data.main_feedback);
+        
+        // this.feedback = this.all_data.main_feedback;
+        // console.log(this.myJSON);
+        console.log(JSON.parse(this.all_data.main_feedback));
+        this.request_feedback = JSON.parse(this.all_data.main_feedback);
+        
+        
       })
       .add(() => {
         this.isContentLoading = false;
-        // console.log(this.isContentLoading);
       });
-
-    // onCloseDialog() {
-    //   let constainer = document.getElementById("full-screen-image");
-    //   constainer.style.display = "none";
-    //}
+      
   }
-
+  feedback(feedback: any) {
+    throw new Error("Method not implemented.");
+  }
+  navigateToUnitDetailPage(unit_id: any) {
+    this.router.navigate(["/admin-property-unit-details"], {
+      queryParams: { unit_id: unit_id },
+    });
+  }
+  navigateTopPropertyDetailPage(prop_id: any) {
+    this.router.navigate(["/property-details"], {
+      queryParams: { prop_id: prop_id },
+    });
+  }
   openDialog() {
     this.dialog
       .open(ViewMaintenanceImageDialog, {})
+      .afterClosed()
+      .subscribe((val) => {});
+  }
+  openUnitDialog() {
+    this.dialog
+      .open(ViewUnitImageDialog, {})
       .afterClosed()
       .subscribe((val) => {});
   }
