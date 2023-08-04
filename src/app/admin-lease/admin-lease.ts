@@ -304,4 +304,10 @@ export class AllLeasesComponent implements OnInit {
       queryParams: { unit_id: unit_id },
     });
   }
+
+  viewDetails(data:string){
+    this.router.navigate(["/admin-lease-details"],{
+      queryParams : {contact_id : data}
+    })
+  }
 }

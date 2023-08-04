@@ -92,6 +92,7 @@ import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
+import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
 import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
 
 @NgModule({
@@ -176,7 +177,7 @@ import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,
     ViewUserDetails,
-
+    AdminLeaseDetail,
     IndividualDocumentsComponent,
     AllClientsDocuments,
     TableSearchBarComponent,

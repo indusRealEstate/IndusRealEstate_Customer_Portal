@@ -402,4 +402,13 @@ export class AdminService {
       })
     );
   }
+
+  getAllLeaseData(data:any){
+    const url = `${API_URL}/getAllLeaseDetails.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }
