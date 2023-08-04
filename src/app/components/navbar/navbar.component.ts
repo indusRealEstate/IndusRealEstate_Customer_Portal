@@ -206,21 +206,28 @@ export class NavbarComponent implements OnInit {
       if (titlee.charAt(0) === "#") {
         titlee = titlee.slice(1);
       }
-      var title = "";
-      switch (titlee.split("?")[0]) {
-        case "/property-details":
-          title = "/admin-properties";
-        case "/admin-property-unit-details":
-          title = "/admin-properties-units";
-        case "/admin-user-details":
-          title = "/all-users";
-        case "/admin-lease-details":
-          title = "/admin-lease";
-        case "/admin-requests-details":
-          title = "/admin-requests";
-      }
 
-      this.router.navigate([`/${title}`], { queryParams: { uid: userId } });
+      if (titlee.split("?")[0] == "/property-details") {
+        this.router.navigate(["/admin-properties"], {
+          queryParams: { uid: userId },
+        });
+      } else if (titlee.split("?")[0] == "/admin-property-unit-details") {
+        this.router.navigate(["/admin-properties-units"], {
+          queryParams: { uid: userId },
+        });
+      } else if (titlee.split("?")[0] == "/admin-user-details") {
+        this.router.navigate(["/all-users"], {
+          queryParams: { uid: userId },
+        });
+      } else if (titlee.split("?")[0] == "/admin-lease-details") {
+        this.router.navigate(["/admin-lease"], {
+          queryParams: { uid: userId },
+        });
+      } else if (titlee.split("?")[0] == "/admin-requests-details") {
+        this.router.navigate(["/admin-requests"], {
+          queryParams: { uid: userId },
+        });
+      }
     }
   }
 }
