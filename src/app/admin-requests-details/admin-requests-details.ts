@@ -7,6 +7,15 @@ import { HttpClient } from "@angular/common/http";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { MatDialog } from "@angular/material/dialog";
 import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
+//  import { FormsModule } from "@angular/forms";
+interface Staff {
+  value: string;
+  viewValue: string;
+}
+interface Status {
+  svalue: string;
+  sviewValue: string;
+}
 
 @Component({
   selector: "admin-requests-details",
@@ -18,8 +27,11 @@ export class AdminRequestsDetails implements OnInit {
   prop_id: string;
   unit_id:string
   request_id: string;
+  user_id: string;
+  property_id: string;
   request_data: object | any;
   image_array: string[] = [];
+  Staff: string[] = [];
   images: string;
   documents: string;
   doc_array: string[] = [];
@@ -30,6 +42,20 @@ export class AdminRequestsDetails implements OnInit {
   all_data: object | any;
   feedback_array: string[] = [];
   request_feedback:object = {mood:'',details:''};
+  docsFilesUploaded: File[] = [];
+  docsFilesUploaded2: File[] = [];
+  
+
+  staff: Staff[] = [
+    {value: 'Staff-1', viewValue: 'Staff-1'},
+    {value: 'Staff-2', viewValue: 'Staff-2'},
+    {value: 'Staff-3', viewValue: 'Staff-3'},
+  ];
+  status: Status[] = [
+    {svalue: 'Status-1', sviewValue: 'Status-1'},
+    {svalue: 'Status-2', sviewValue: 'Status-2'},
+  ];
+  fileInput: any;
   
 
   constructor(
@@ -88,7 +114,7 @@ export class AdminRequestsDetails implements OnInit {
         
         // this.feedback = this.all_data.main_feedback;
         // console.log(this.myJSON);
-        console.log(JSON.parse(this.all_data.main_feedback));
+      //  console.log(JSON.parse(this.all_data.main_feedback));
         this.request_feedback = JSON.parse(this.all_data.main_feedback);
         
         
@@ -96,8 +122,34 @@ export class AdminRequestsDetails implements OnInit {
       .add(() => {
         this.isContentLoading = false;
       });
+
+      
       
   }
+  onFileSelected(files: Array<any>) {
+    for (var item of files) {
+      this.docsFilesUploaded.push(item);
+    }
+    console.log(this.docsFilesUploaded);
+    this.fileInput.value = "";
+    //console.log(files);
+  }
+  onFileSelected2(files: Array<any>) {
+    for (var item of files) {
+      this.docsFilesUploaded2.push(item);
+    }
+    console.log(this.docsFilesUploaded2);
+    this.fileInput.value = "";
+    //console.log(files);
+  }
+
+  removeUploadedDoc(index) {
+    this.docsFilesUploaded.splice(index, 1);
+  }
+  removeUploadedDoc2(index) {
+    this.docsFilesUploaded2.splice(index, 1);
+  }
+  
   feedback(feedback: any) {
     throw new Error("Method not implemented.");
   }
@@ -113,7 +165,9 @@ export class AdminRequestsDetails implements OnInit {
   }
   openDialog() {
     this.dialog
-      .open(ViewMaintenanceImageDialog, {})
+      .open(ViewMaintenanceImageDialog, {
+        data: {id : this.request_id}
+      })
       .afterClosed()
       .subscribe((val) => {});
   }

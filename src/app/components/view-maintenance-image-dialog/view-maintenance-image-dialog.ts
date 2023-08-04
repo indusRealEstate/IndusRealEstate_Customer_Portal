@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { AdminService } from "app/services/admin.service";
-import { DownloadService } from "app/services/download.service";
-import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
+// import { DownloadService } from "app/services/download.service";
+// import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -26,32 +26,38 @@ export class ViewMaintenanceImageDialog implements OnInit {
   isContentLoading: boolean;
   media: string;
   media_array: string[] = [];
+
   
   
  
   constructor(
     // private dialogRef: MatDialogRef,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewMaintenanceImageDialog>,
     private appAdminService: AdminService,
-    private appdownloadService: DownloadService,
+    // private appdownloadService: DownloadService,
   ) {
    
-    
+   this.request_id = data.id;
+   console.log(this.request_id);
   }
 
   ngAfterViewInit() {}
   ngOnInit() {
 
-    setTimeout(() => {
-      this.isContentLoading = true;
-    }, 1000);
+    // setTimeout(() => {
+    //   this.isContentLoading = true;
+    // }, 1000);
 
     let data = {
       request_id: this.request_id
     };
+
+    console.log(data);
+
     this.appAdminService
       .getRequestsDetails(JSON.stringify(data)).subscribe((val) => {
-       // console.log(data);
+        
         this.all_data = val;
         console.log(this.all_data);
         this.media = this.all_data.main_media;
@@ -60,12 +66,12 @@ export class ViewMaintenanceImageDialog implements OnInit {
         for(let i = 0; i < JSON.parse(this.media).length; i++ ){
          this.media_array.push(JSON.parse(this.media)[i]);
         }
-       
+       console.log(this.media_array);
         //  this.property_name = this.prop_data.property_name;
       })
       .add(() => {
         this.isContentLoading = true;
-         console.log(this.isContentLoading);
+         //console.log(this.isContentLoading);
       });
 
      
