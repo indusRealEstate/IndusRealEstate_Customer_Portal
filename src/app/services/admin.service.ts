@@ -35,6 +35,24 @@ export class AdminService {
     );
   }
 
+  getArchivedRequestsAdmin() {
+    const url = `${API_URL}/get_all_requests_admin_archive.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getSpamRequestsAdmin() {
+    const url = `${API_URL}/get_all_requests_admin_spam.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllLeaseAdmin() {
     const url = `${API_URL}/getAllLeaseAdmin.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -269,26 +287,7 @@ export class AdminService {
     );
   }
 
-  getAllRequestsAdminArchive(data: any) {
-    const url = `${API_URL}/get_all_requests_admin_archive.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
-  getAllRequestsAdminSpam(data: any) {
-    const url = `${API_URL}/get_all_requests_admin_spam.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
   getPropDetails(data: any) {
-    
     const url = `${API_URL}/selectPropertyDetails.php?apikey=1`;
     return this.http.post(url, data).pipe(
       map((data) => {
@@ -297,7 +296,7 @@ export class AdminService {
     );
   }
 
-  getRequestsDetails(data: any) { 
+  getRequestsDetails(data: any) {
     // console.log(data);
     const url = `${API_URL}/selectRequestsDetails.php?apikey=1`;
     return this.http.post(url, data).pipe(
@@ -376,36 +375,36 @@ export class AdminService {
     );
   }
 
-  downoadLeaseDoc(data:any){
+  downoadLeaseDoc(data: any) {
     const url = `${API_URL}/downloadLeaseDoc.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  getAllUserDetails(data:any){
+  getAllUserDetails(data: any) {
     const url = `${API_URL}/getUserAllDetails.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  downloadUserDocuments(data:any){
+  downloadUserDocuments(data: any) {
     const url = `${API_URL}/downloadUserDocuments.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  getAllLeaseData(data:any){
+  getAllLeaseData(data: any) {
     const url = `${API_URL}/getAllLeaseDetails.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })

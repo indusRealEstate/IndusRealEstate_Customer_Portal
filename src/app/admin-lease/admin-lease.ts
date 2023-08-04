@@ -155,15 +155,15 @@ export class AllLeasesComponent implements OnInit {
     }
   }
 
-  getLeaseExpiry(start: any, end: any) {
-    var start_date = new Date(start);
+  getLeaseExpiry(end: any) {
+    var start_date = new Date();
     var end_date = new Date(end);
 
     var difference_In_Time = end_date.getTime() - start_date.getTime();
 
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
 
-    return `${difference_In_Days} Days left`;
+    return `${Math.trunc(difference_In_Days)} Days left`;
   }
 
   fetchData() {
@@ -305,9 +305,9 @@ export class AllLeasesComponent implements OnInit {
     });
   }
 
-  viewDetails(data:string){
-    this.router.navigate(["/admin-lease-details"],{
-      queryParams : {contact_id : data}
-    })
+  viewDetails(data: string) {
+    this.router.navigate(["/admin-lease-details"], {
+      queryParams: { contact_id: data },
+    });
   }
 }

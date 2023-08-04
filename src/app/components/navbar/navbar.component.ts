@@ -1,14 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { ROUTES } from "../sidebar/sidebar.component";
-import {
-  Location,
-  LocationStrategy,
-  PathLocationStrategy,
-} from "@angular/common";
+import { Location } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
-import { User } from "../../../../models/user/user.model";
 import { OtherServices } from "app/services/other.service";
+import { User } from "../../../../models/user/user.model";
 
 @Component({
   selector: "app-navbar",
@@ -16,11 +11,8 @@ import { OtherServices } from "app/services/other.service";
   styleUrls: ["./navbar.component.scss"],
 })
 export class NavbarComponent implements OnInit {
-  private listTitles: any[];
   location: Location;
   mobile_menu_visible: any = 0;
-  private toggleButton: any;
-  private sidebarVisible: boolean;
   user: User;
 
   ///////////////--App Version--////////////////////
@@ -35,114 +27,14 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     location: Location,
-    private element: ElementRef,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices,
+    private otherServices: OtherServices
   ) {
     this.location = location;
-    this.sidebarVisible = false;
   }
 
-  ngOnInit() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
-
-    if (user[0]["auth_type"] == "admin") {
-      this.isUserAdmin = true;
-    }
-    this.getUserDataFromLocal(user);
-
-    ///--------------
-    this.listTitles = ROUTES.filter((listTitle) => listTitle);
-    const navbar: HTMLElement = this.element.nativeElement;
-    this.toggleButton = navbar.getElementsByClassName("navbar-toggler")[0];
-    this.router.events.subscribe((event) => {
-      this.sidebarClose();
-      var $layer: any = document.getElementsByClassName("close-layer")[0];
-      if ($layer) {
-        $layer.remove();
-        this.mobile_menu_visible = 0;
-      }
-    });
-  }
-
-  sidebarOpen() {
-    const toggleButton = this.toggleButton;
-    const body = document.getElementsByTagName("body")[0];
-    setTimeout(function () {
-      toggleButton.classList.add("toggled");
-    }, 500);
-
-    body.classList.add("nav-open");
-
-    this.sidebarVisible = true;
-  }
-  
-  sidebarClose() {
-    const body = document.getElementsByTagName("body")[0];
-    this.toggleButton.classList.remove("toggled");
-    this.sidebarVisible = false;
-    body.classList.remove("nav-open");
-  }
-  sidebarToggle() {
-    // const toggleButton = this.toggleButton;
-    // const body = document.getElementsByTagName('body')[0];
-    var $toggle = document.getElementsByClassName("navbar-toggler")[0];
-
-    if (this.sidebarVisible === false) {
-      this.sidebarOpen();
-    } else {
-      this.sidebarClose();
-    }
-    const body = document.getElementsByTagName("body")[0];
-
-    if (this.mobile_menu_visible == 1) {
-      // $('html').removeClass('nav-open');
-      body.classList.remove("nav-open");
-      if ($layer) {
-        $layer.remove();
-      }
-      setTimeout(function () {
-        $toggle.classList.remove("toggled");
-      }, 400);
-
-      this.mobile_menu_visible = 0;
-    } else {
-      setTimeout(function () {
-        $toggle.classList.add("toggled");
-      }, 430);
-
-      var $layer = document.createElement("div");
-      $layer.setAttribute("class", "close-layer");
-
-      if (body.querySelectorAll(".main-panel")) {
-        document.getElementsByClassName("main-panel")[0].appendChild($layer);
-      } else if (body.classList.contains("off-canvas-sidebar")) {
-        document
-          .getElementsByClassName("wrapper-full-page")[0]
-          .appendChild($layer);
-      }
-
-      setTimeout(function () {
-        $layer.classList.add("visible");
-      }, 100);
-
-      $layer.onclick = function () {
-        //asign a function
-        body.classList.remove("nav-open");
-        this.mobile_menu_visible = 0;
-        $layer.classList.remove("visible");
-        setTimeout(function () {
-          $layer.remove();
-          $toggle.classList.remove("toggled");
-        }, 400);
-      }.bind(this);
-
-      body.classList.add("nav-open");
-      this.mobile_menu_visible = 1;
-    }
-  }
+  ngOnInit() {}
 
   userLogOut() {
     this.otherServices.isLogoutProcessing.next(true);
@@ -156,76 +48,83 @@ export class NavbarComponent implements OnInit {
     }, 1500);
   }
 
-  getUserDataFromLocal(user) {
-    this.user = new User(
-      user[0]["id"],
-      user[0]["auth_type"],
-      user[0]["username"],
-      user[0]["firstname"],
-      user[0]["lastname"],
-      user[0]["password"],
-      user[0]["token"]
-    );
-  }
+  getMiniTabIcon() {
+    this.currentPage = this.router.url.split("?")[0].split("/")[1];
+    var titlee = this.location.prepareExternalUrl(this.location.path());
 
-  navigateOverview() {
-    this.router.navigate(["/my-properties"], {
-      queryParams: { uid: this.user.id },
-    });
-
-    this.otherServices.overviewClickedpropertyPage.next(true);
-  }
-
-  navigateMyRequests(req) {
-    if (req == "maintenance") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.user.id, req_type: "maintenance" },
-      });
-    } else if (req == "tenant-move-in") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.user.id, req_type: "tenant-move-in" },
-      });
-    } else if (req == "tenant-move-out") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.user.id, req_type: "tenant-move-out" },
-      });
-    } else if (req == "payment") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.user.id, req_type: "payment" },
-      });
-    } else if (req == "conditioning") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.user.id, req_type: "conditioning" },
-      });
-    } else if (req == "my-requests") {
-      this.router.navigate(["/requests"], {
-        queryParams: { uid: this.user.id, req_type: "my-requests" },
-      });
+    if (titlee.charAt(0) === "#") {
+      titlee = titlee.slice(1);
     }
 
-    this.otherServices.myRequestsClickedrequestPage.next(true);
-  }
-
-  getLandlordPaymentPlan() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
-
-    this.user_portal_plan = user[0]["plan"];
-
-    if (this.user_portal_plan == "exclusive") {
-      return "Exclusive";
-    } else {
-      return "Open Account";
+    if (
+      titlee.split("?")[0] == "/admin-dashboard" ||
+      titlee.split("?")[0] == "/admin-properties" ||
+      titlee.split("?")[0] == "/admin-properties-units" ||
+      titlee.split("?")[0] == "/all-users" ||
+      titlee.split("?")[0] == "/property-details" ||
+      titlee.split("?")[0] == "/admin-property-unit-details" ||
+      titlee.split("?")[0] == "/admin-user-details"
+    ) {
+      return "assets/img/svg/sidebar/home.svg";
+    } else if (
+      titlee.split("?")[0] == "/admin-requests" ||
+      titlee.split("?")[0] == "/admin-request-category" ||
+      titlee.split("?")[0] == "/admin-requests-details"
+    ) {
+      return "assets/img/svg/sidebar/menu.svg";
+    } else if (
+      titlee.split("?")[0] == "/admin-requests-archive" ||
+      titlee.split("?")[0] == "/admin-requests-spam"
+    ) {
+      return "assets/img/svg/sidebar/archive.svg";
+    } else if (
+      titlee.split("?")[0] == "/admin-lease" ||
+      titlee.split("?")[0] == "/admin-lease-details"
+    ) {
+      return "assets/img/svg/sidebar/lease.svg";
+    } else if (titlee.split("?")[0] == "/user-chats") {
+      return "assets/img/svg/sidebar/messages-1.svg";
     }
   }
 
-  // openMatMenu(trigger) {
-  //   trigger.openMenu();
-  // }
+  getMiniTabTitle() {
+    this.currentPage = this.router.url.split("?")[0].split("/")[1];
+    var titlee = this.location.prepareExternalUrl(this.location.path());
 
-  // closeMatMenu(trigger) {
-  //   trigger.closeMenu();
-  // }
+    if (titlee.charAt(0) === "#") {
+      titlee = titlee.slice(1);
+    }
+
+    if (
+      titlee.split("?")[0] == "/admin-dashboard" ||
+      titlee.split("?")[0] == "/admin-properties" ||
+      titlee.split("?")[0] == "/admin-properties-units" ||
+      titlee.split("?")[0] == "/all-users" ||
+      titlee.split("?")[0] == "/property-details" ||
+      titlee.split("?")[0] == "/admin-property-unit-details" ||
+      titlee.split("?")[0] == "/admin-user-details"
+    ) {
+      return "Dashboard";
+    } else if (
+      titlee.split("?")[0] == "/admin-requests" ||
+      titlee.split("?")[0] == "/admin-request-category" ||
+      titlee.split("?")[0] == "/admin-requests-details"
+    ) {
+      return "Requests";
+    } else if (
+      titlee.split("?")[0] == "/admin-requests-archive" ||
+      titlee.split("?")[0] == "/admin-requests-spam"
+    ) {
+      return "Archives & Spams";
+    } else if (
+      titlee.split("?")[0] == "/admin-lease" ||
+      titlee.split("?")[0] == "/admin-lease-details"
+    ) {
+      return "Lease Management";
+    } else if (titlee.split("?")[0] == "/user-chats") {
+      return "Chats";
+    }
+  }
 
   getTitle() {
     this.currentPage = this.router.url.split("?")[0].split("/")[1];
@@ -236,55 +135,92 @@ export class NavbarComponent implements OnInit {
     }
 
     switch (titlee.split("?")[0]) {
-      case "/my-properties":
-        return "My Properties";
-      case "/documents":
-        this.requestPageType = titlee.split("&")[1].split("=")[1];
-        return "Documents";
-      case "/user-profile":
-        return "User profile";
-      case "/requests":
-        this.requestPageType = titlee.split("&")[1].split("=")[1];
-        return "My Requests";
-      case "/new-payment":
-        return "Payment";
-      case "/reports":
-        return "Reports";
-      case "/appointments":
-        return "Appointments";
-      case "/tenant-register-form":
-        return "Tenant Registration";
-      case "/property-page":
-        return "Property details Page";
-      case "/add-property-form":
-        return "Add Property";
       case "/admin-dashboard":
-        return "Admin Dashboard";
+        return "Overview";
+      case "/admin-properties":
+        return "All Properties";
+      case "/admin-properties-units":
+        return "All Units";
+      case "/all-users":
+        return "All Users";
+      case "/admin-lease":
+        return "All Lease Contracts";
       case "/admin-requests":
-        return "Requests";
-      case "/request-page":
-        this.requestPageType = titlee.split("&")[1].split("=")[1];
-        return "Request Details Page";
-      case "/admin-landlord-clients":
-        return "All Landlord Clients";
-      case "/admin-tenant-clients":
-        return "All Tenant Clients";
-      case "/admin-properties-sale":
-        return "All Properties For Sale";
-      case "/admin-properties-rent":
-        return "All Properties For Rent";
-      case "/customer-care":
-        return "Customer Care";
-      case "/service-temp":
-        this.requestPageType = titlee.split("&")[1].split("=")[1];
-        return "Services";
-      case "/service-recap":
-        this.requestPageType = titlee.split("&")[1].split("=")[1];
-        return "Service Recap";
-      case "/404":
-        return "";
+        return "Maintenance Requests";
+      case "/admin-request-category":
+        return "Maintenance Requests Category";
+      case "/admin-requests-archive":
+        return "Archived Requests";
+      case "/admin-requests-spam":
+        return "Spam Requests";
+      case "/user-chats":
+        return "All Messages";
+      case "/property-details":
+        return "All Properties";
+      case "/admin-property-unit-details":
+        return "All Units";
+      case "/admin-user-details":
+        return "All Users";
+      case "/admin-lease-details":
+        return "All Lease Contracts";
+      case "/admin-requests-details":
+        return "Maintenance Requests";
       default:
         return "Home";
+    }
+  }
+
+  getSubTitle() {
+    this.currentPage = this.router.url.split("?")[0].split("/")[1];
+    var titlee = this.location.prepareExternalUrl(this.location.path());
+
+    if (titlee.charAt(0) === "#") {
+      titlee = titlee.slice(1);
+    }
+
+    switch (titlee.split("?")[0]) {
+      case "/property-details":
+        return "Property Details";
+      case "/admin-property-unit-details":
+        return "Unit Details";
+      case "/admin-user-details":
+        return "User Details";
+      case "/admin-lease-details":
+        return "Lease Details";
+      case "/admin-requests-details":
+        return "Maintenance Request Details";
+      default:
+        return "no-subtitle";
+    }
+  }
+
+  gotoTitlePage() {
+    if (this.getSubTitle() != "no-subtitle") {
+      var userData = localStorage.getItem("currentUser");
+      var user = JSON.parse(userData);
+      var userId = user[0]["id"];
+
+      this.currentPage = this.router.url.split("?")[0].split("/")[1];
+      var titlee = this.location.prepareExternalUrl(this.location.path());
+
+      if (titlee.charAt(0) === "#") {
+        titlee = titlee.slice(1);
+      }
+      var title = "";
+      switch (titlee.split("?")[0]) {
+        case "/property-details":
+          title = "/admin-properties";
+        case "/admin-property-unit-details":
+          title = "/admin-properties-units";
+        case "/admin-user-details":
+          title = "/all-users";
+        case "/admin-lease-details":
+          title = "/admin-lease";
+        case "/admin-requests-details":
+          title = "/admin-requests";
+      }
+
+      this.router.navigate([`/${title}`], { queryParams: { uid: userId } });
     }
   }
 }

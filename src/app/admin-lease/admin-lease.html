@@ -163,8 +163,7 @@
                     border: 1px solid #ff00003b;
                   "
                 >
-                  {{
-                  getLeaseExpiry(element.contract_start,element.contract_end)}}
+                  {{ getLeaseExpiry(element.contract_end)}}
                 </div>
               </td>
             </ng-container>
@@ -279,7 +278,12 @@
             <!-- Symbol Column -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="viewDetails(row.contract_id)" style="cursor: pointer;"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="viewDetails(row.contract_id)"
+              style="cursor: pointer"
+            ></tr>
           </table>
           <div
             *ngIf="allLeaseMatTableData.filteredData.length == 0 && allLease.length != 0"

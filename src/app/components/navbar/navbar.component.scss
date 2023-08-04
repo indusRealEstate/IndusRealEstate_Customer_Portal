@@ -22,79 +22,16 @@
   }
 }
 
-.landlord-payment-plan-card {
-  background: #34ae39;
-  padding: 3px 10px;
-  cursor: pointer;
-
-  p {
-    font-weight: 700;
-  }
-
+.title-class-underline {
   &:hover {
-    background: #5ad05e;
-  }
-}
-
-::ng-deep .payment-plan-mat-menu {
-  margin-top: 0.5rem !important;
-  .mat-menu-content {
-    padding: 0 !important;
-  }
-
-  .content {
-    width: 17rem;
-    height: 20rem;
-    background: #2b333e;
-    color: white;
-
-    .row{
-      background: #d3ab33;
-      height: 15%;
-    }
-
-    img {
-      filter: brightness(0) invert(1);
-      width: 16px;
-    }
-  }
-}
-
-.overview-back-btn-property-page {
-  color: #858585;
-  margin-bottom: 0;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    color: black;
-    border-bottom: 1px solid #858585;
-  }
-}
-
-.navBar-main-top {
-  // background-color: black;
-  top: 0;
-
-  .notification-dropdown {
-    .notification-dropdown-item {
-      &:hover {
-        cursor: pointer;
-        background-color: #2b333e;
-        box-shadow: 0px 0px 5px -200px rgba(0, 0, 0, 0) !important;
-        -webkit-box-shadow: 0px 0px 5px -200px rgba(0, 0, 0, 0) !important;
-        -moz-box-shadow: 0px 0px 5px -200px rgba(0, 0, 0, 0) !important;
-      }
-    }
+    text-decoration: underline;
+    cursor: pointer;
+    color: #d3ab33 !important;
   }
 }
 
 .profile-dropdown {
   cursor: pointer;
-}
-
-:host ::ng-deep .mat-menu-panel {
-  margin-top: 25px !important;
 }
 
 .profile-dropdown-div {
