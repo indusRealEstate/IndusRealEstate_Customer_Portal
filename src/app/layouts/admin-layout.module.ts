@@ -94,6 +94,16 @@ import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
 import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
+import { AdminRequestsAll } from "app/admin-requests/components/all-request/all-request";
+import { AdminRequestsAssigned } from "app/admin-requests/components/assigned-request/assigned-request";
+import { AdminRequestsCancelled } from "app/admin-requests/components/cancelled-request/cancelled-request";
+import { AdminRequestsComplete } from "app/admin-requests/components/complete-request/complete-request";
+import { AdminRequestsHold } from "app/admin-requests/components/hold-request/hold-request";
+import { AdminRequestsInProgress } from "app/admin-requests/components/in-progress-request/in-progress-request";
+import { AdminRequestsOpen } from "app/admin-requests/components/open-request/open-request";
+import { AdminRequestsReassigned } from "app/admin-requests/components/reassigned-request/reassigned-request";
+import { AdminRequestsRejected } from "app/admin-requests/components/rejected-request/rejected-request";
+import { AdminRequestsReOpenTab } from "app/admin-requests/components/reopen-request/reopen-request";
 
 @NgModule({
   imports: [
@@ -167,6 +177,17 @@ import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-
     AdminDashboardComponent,
     ViewMaintenanceImageDialog,
     ViewUnitImageDialog,
+    // all request components
+    AdminRequestsAll,
+    AdminRequestsAssigned,
+    AdminRequestsCancelled,
+    AdminRequestsComplete,
+    AdminRequestsHold,
+    AdminRequestsInProgress,
+    AdminRequestsOpen,
+    AdminRequestsReassigned,
+    AdminRequestsRejected,
+    AdminRequestsReOpenTab,
 
     LoginComponent,
 
