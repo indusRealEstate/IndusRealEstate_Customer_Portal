@@ -6,7 +6,6 @@ import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { DropdownMaterial } from "./tenant-reg-dropdown/dropdown.component";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatListModule } from "@angular/material/list";
 import { MatNativeDateModule } from "@angular/material/core";
@@ -20,15 +19,12 @@ import { SuccessDialogRegister } from "./success-dialog/success_dialog";
 import { DndDirective } from "./dialog/dnd.directive";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { TenantRequestsDropdown } from "./tenant-requests-dropdown/tenant-requests-dropdown";
-import { ViewTenantDialog } from "./view-tenant-dialog/view-tenant-dialog";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-requests-dropdown";
 import { RelatedDocsDialog } from "./related-documents/related-documents";
 import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
 import { RelatedRequestsDialog } from "./related-requests/related-requests";
 import { SeeAllUserReqsAdminDialog } from "./see-all-user-reqs-admin/see-all-user-reqs-admin";
-import { ViewEventDialog } from "./view-event-dialog/view-event-dialog";
 import { AdminViewTenantDialog } from "./admin-view-tenant-dialog/admin-view-tenant-dialog";
 import { AddPropertyDialog } from "./add_property_dialog/add_property_dialog";
 import { MatInputModule } from "@angular/material/input";
@@ -72,19 +68,15 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    DropdownMaterial,
-    TenantRequestsDropdown,
     LandlordRequestsDropdown,
     DocUploadDialogRegister,
     ProgressComponent,
     SuccessDialogRegister,
     DndDirective,
-    ViewTenantDialog,
     RelatedDocsDialog,
     ViewImageDialog,
     RelatedRequestsDialog,
     SeeAllUserReqsAdminDialog,
-    ViewEventDialog,
     AdminViewTenantDialog,
     AddPropertyDialog,
     AddUnitDialog,

@@ -5,7 +5,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
-import { ChatService } from "app/services/chat.service";
 
 @Component({
   selector: "app-admin-layout",
@@ -27,11 +26,10 @@ export class AdminLayoutComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private otherServices: OtherServices,
-    private chatService: ChatService
   ) {
     if (this.authenticationService.currentUserValue) {
       otherServices.isUserSignedOut.next(false);
-      this.chatService.socket_connect();
+      // this.chatService.socket_connect();
     } else {
       otherServices.isUserSignedOut.next(true);
       this.router.navigate(["/login"]);

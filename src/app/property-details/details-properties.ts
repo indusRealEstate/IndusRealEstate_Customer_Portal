@@ -123,7 +123,7 @@ export class DetailsComponents implements OnInit {
               imgElmnt.classList.add("d-flex");
               imgElmnt.classList.add("carousel-img");
               imgElmnt.classList.add("w-100");
-              imgElmnt.style.height = "65vh";
+              imgElmnt.style.height = "50vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
               imgElmnt.style.cursor = "pointer";
@@ -154,7 +154,7 @@ export class DetailsComponents implements OnInit {
               imgElmnt.classList.add("d-block");
               imgElmnt.classList.add("w-100");
               imgElmnt.classList.add("carousel-img");
-              imgElmnt.style.height = "65vh";
+              imgElmnt.style.height = "50vh";
               imgElmnt.style.objectFit = "cover";
               imgElmnt.style.objectPosition = "bottom";
               imgElmnt.style.cursor = "pointer";

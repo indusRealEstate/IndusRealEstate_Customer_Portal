@@ -8,7 +8,6 @@ import {
 import { Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { ApiService } from "app/services/api.service";
-import { ChatService } from "app/services/chat.service";
 
 @Component({
   selector: "edit_category_dialog",
@@ -53,7 +52,6 @@ export class EditCategoryDialog implements OnInit {
     public dialogRef: MatDialogRef<EditCategoryDialog>,
     private apiService: ApiService,
     private apiAdminService: AdminService,
-    private chatService: ChatService,
     private router: Router,
     private formBuilder: FormBuilder,
     private dialog?: MatDialog

@@ -30,6 +30,20 @@
       </span>
 
       <div class="row m-0">
+        <div
+          *ngIf="all_data != null"
+          class="mr-4"
+          style="
+            background: #d4aa32;
+            padding: 6px 15px;
+            border-radius: 5px;
+            font-size: 15px;
+            color: white;
+            font-weight: 500;
+          "
+        >
+          {{all_data.prop_type | titlecase}}
+        </div>
         <img
           matTooltip="Share Property"
           matTooltipClass="tooltip"
