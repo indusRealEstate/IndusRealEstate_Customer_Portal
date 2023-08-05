@@ -1,8 +1,4 @@
-import {
-  Component,
-  HostListener,
-  OnInit
-} from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddCategoryDialog } from "app/components/add_category_dialog/add_category_dialog";
@@ -17,12 +13,13 @@ import { AuthenticationService } from "app/services/authentication.service";
 })
 export class AdminRequestsCategory implements OnInit {
   isUserSignedIn: boolean = false;
+  isCategoryLoading: boolean = false;
   categoryData: object;
   main_array: any[];
   msg: string;
   item_deleted: boolean = false;
   display_msg: boolean = false;
-  is_active : boolean = false;
+  is_active: boolean = false;
 
   // @ViewChild(AddCategoryDialog) category_dialog!: AddCategoryDialog;
 
@@ -33,6 +30,7 @@ export class AdminRequestsCategory implements OnInit {
     public dialog: MatDialog,
     private apiAdminService: AdminService
   ) {
+    this.isCategoryLoading = true;
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
@@ -57,8 +55,7 @@ export class AdminRequestsCategory implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  
-  getDataFromChild(value:boolean){
+  getDataFromChild(value: boolean) {
     console.log(value);
   }
 
@@ -72,80 +69,93 @@ export class AdminRequestsCategory implements OnInit {
   }
 
   openWindow() {
-    this.dialog.open(AddCategoryDialog, {
-      data: {
-        category_name: "sample",
-        icon: "sample_icon",
-      },
-    }).afterClosed().subscribe((val)=>{
-      this.selectAllCategories()
-    });
+    this.dialog
+      .open(AddCategoryDialog, {
+        data: {
+          category_name: "sample",
+          icon: "sample_icon",
+        },
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        this.selectAllCategories();
+      });
   }
 
   ngAfterViewInit() {}
 
-  selectAllCategories():any{
-    this.apiAdminService.selecteCategory().subscribe((val) => {
-      this.categoryData = val;
-    });
+  selectAllCategories(): any {
+    this.apiAdminService
+      .selecteCategory()
+      .subscribe((val) => {
+        this.categoryData = val;
+      })
+      .add(() => {
+        this.isCategoryLoading = false;
+      });
 
     return this.categoryData;
   }
 
   async ngOnInit() {
-    this.selectAllCategories()
+    this.selectAllCategories();
     // console.log(this.category_dialog.form_submit);
   }
 
-  delete_item(data:any){
-    this.display_msg = true
-    this.apiAdminService.deleteServiceCategory(data).subscribe((value:any)=>{
-      if(value.status == 1){
+  delete_item(data: any) {
+    this.display_msg = true;
+    this.apiAdminService.deleteServiceCategory(data).subscribe((value: any) => {
+      if (value.status == 1) {
         this.msg = value.msg;
         this.item_deleted = true;
-        this.selectAllCategories()
-      }
-      else{
+        this.selectAllCategories();
+      } else {
         this.msg = value.msg;
         this.item_deleted = false;
       }
-    })
-    setTimeout(()=>{
+    });
+    setTimeout(() => {
       this.display_msg = false;
-    },2000)
+    }, 2000);
   }
 
-  stauts_change(event,id){
+  stauts_change(event, id) {
     // console.log(event.checked);
 
-    let status = (event.checked == true) ? 1 : 0;
+    let status = event.checked == true ? 1 : 0;
     let data = {
-      "status" : status,
-      "id" : id
-    }
+      status: status,
+      id: id,
+    };
     let json_format = JSON.stringify(data);
 
-    this.apiAdminService.changeCategoryStatus(json_format).subscribe((value:any)=>{
-      // console.log(value);
-      this.selectAllCategories()
-    })
-
+    this.apiAdminService
+      .changeCategoryStatus(json_format)
+      .subscribe((value: any) => {
+        // console.log(value);
+        this.selectAllCategories();
+      });
   }
 
-  edit_item(data:any){
-
-    this.dialog.open(EditCategoryDialog, {
-      data
-    }).afterClosed().subscribe((val)=>{
-      this.selectAllCategories()
-    });
+  edit_item(data: any) {
+    this.dialog
+      .open(EditCategoryDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        this.selectAllCategories();
+      });
   }
 
-  viewCategory(data:any){
-    this.dialog.open(EditCategoryDialog, {
-      data
-    }).afterClosed().subscribe((val)=>{
-      this.selectAllCategories()
-    });
+  viewCategory(data: any) {
+    this.dialog
+      .open(EditCategoryDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        this.selectAllCategories();
+      });
   }
 }
