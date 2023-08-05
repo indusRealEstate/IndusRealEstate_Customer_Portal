@@ -47,6 +47,7 @@
             <ng-container matColumnDef="request_id">
               <th mat-header-cell *matHeaderCellDef>Request ID</th>
               <td
+                class="request-id"
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
@@ -217,40 +218,20 @@
                   matTooltip="Show All Flagged Requests"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
-                  class="flag ml-4"
+                  class="flag ml-4" 
                   src="assets/img/pngs/flag-bold.png"
                   alt
                 />
 
                 <mat-menu #menu="matMenu" class="more-menu">
-                  <button
-                    mat-menu-item
-                    class="more-archived"
-                    (click)="updateMore(element,'flag')"
-                  >
-                    Flag
-                  </button>
-                  <button
-                    mat-menu-item
-                    class="more-archived"
-                    (click)="updateMore(element,'archived')"
-                  >
-                    Archived
-                  </button>
-                  <button
-                    mat-menu-item
-                    class="more-span"
-                    (click)="updateMore(element,'spam')"
-                  >
-                    Spam
-                  </button>
-                  <button
-                    mat-menu-item
-                    class="more-delete"
-                    (click)="updateMore(element,'delete')"
-                  >
-                    Delete
-                  </button>
+                  <button mat-menu-item class="more-archived" 
+                    (click)="element.flag == '0' ? updateMore(element,'flag') : updateMore(element,'unflag')">{{element.flag == '0' ? 'Flag' : 'Unflag'}}</button>
+                  <button mat-menu-item class="more-archived"
+                    (click)="updateMore(element,'archived')">Archived</button>
+                  <button mat-menu-item class="more-span"
+                    (click)="updateMore(element,'spam')">Spam</button>
+                  <button mat-menu-item class="more-delete"
+                    (click)="updateMore(element,'delete')">Delete</button>
                 </mat-menu>
               </td>
             </ng-container>
