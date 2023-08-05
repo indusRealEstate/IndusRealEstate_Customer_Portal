@@ -20,7 +20,6 @@ import { DndDirective } from "./dialog/dnd.directive";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { LandlordRequestsDropdown } from "./landlord-requests-dropdown/landlord-requests-dropdown";
 import { RelatedDocsDialog } from "./related-documents/related-documents";
 import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
 import { RelatedRequestsDialog } from "./related-requests/related-requests";
@@ -68,7 +67,6 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    LandlordRequestsDropdown,
     DocUploadDialogRegister,
     ProgressComponent,
     SuccessDialogRegister,

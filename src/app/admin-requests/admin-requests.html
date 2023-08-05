@@ -4,38 +4,43 @@
 <div class="main-content reports-bg" *ngIf="screenWidth > 430">
   <div
     class="container-fluid h-100 d-flex justify-content-center"
-    style="max-width: 2576px">
+    style="max-width: 2576px"
+  >
     <div class="col mat-tab-requests" style="padding: 0">
-      <mat-tab-group>
+      <mat-tab-group (selectedTabChange)="matTabClick($event)">
         <mat-tab label="All">
-          <all-requests-tab></all-requests-tab>
+          <requests-table [tableTitle]="'All Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="Open">
-          <open-request-tab></open-request-tab>
+          <requests-table [tableTitle]="'Open Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="Assigned">
-          <assigned-request-tab></assigned-request-tab>
+          <requests-table [tableTitle]="'Assigned Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="In Progress">
-          <in-progress-request-tab></in-progress-request-tab>
+          <requests-table
+            [tableTitle]="'In Progress Requests'"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Completed">
-          <complete-request-tab></complete-request-tab>
+          <requests-table [tableTitle]="'Completed Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="Hold">
-          <hold-request-tab></hold-request-tab>
+          <requests-table [tableTitle]="'Hold Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="Re-Open">
-          <reopen-request-tab></reopen-request-tab>
+          <requests-table [tableTitle]="'Re-Open Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="Re-Assigned">
-          <reassigned-request-tab></reassigned-request-tab>
+          <requests-table
+            [tableTitle]="'Re-Assigned Requests'"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Rejected">
-          <rejected-request-tab></rejected-request-tab>
+          <requests-table [tableTitle]="'Rejected Requests'"></requests-table>
         </mat-tab>
         <mat-tab label="Cancelled">
-          <cancelled-request-tab></cancelled-request-tab>
+          <requests-table [tableTitle]="'Cancelled Requests'"></requests-table>
         </mat-tab>
       </mat-tab-group>
     </div>

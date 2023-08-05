@@ -59,6 +59,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
+                style="width: 150px; padding: 10px 15px"
               >
                 {{ element.request_id}}
               </td>
@@ -180,7 +181,11 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ getUserName(element.user_id) }}
+                <span
+                  class="prop_name"
+                  (click)="navigateToUserDetailsPage(element.user_id)"
+                  >{{ getUserName(element.user_id) }}</span
+                >
               </td>
             </ng-container>
 

@@ -172,7 +172,11 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                {{ element.owner}}
+                <span
+                  class="prop_name"
+                  (click)="navigateToUserDetailsPage(element.owner_id)"
+                  >{{ element.owner}}</span
+                >
               </td>
             </ng-container>
 

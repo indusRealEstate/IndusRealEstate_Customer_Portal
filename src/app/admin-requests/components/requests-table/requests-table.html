@@ -4,12 +4,13 @@
 <div class="main-content reports-bg p-0 m-0" *ngIf="screenWidth > 430">
   <div
     class="container-fluid h-100 d-flex justify-content-center"
-    style="max-width: 2576px">
+    style="max-width: 2576px"
+  >
     <div class="col" style="padding: 0">
       <div class="row m-0 w-100 align-items-end justify-content-between">
         <div class="row m-0 align-items-end mb-3">
           <p class="m-0 ml-4 mt-5" style="font-size: 2rem; font-weight: 600">
-            All Requests
+            {{tableTitle}}
           </p>
 
           <table-filters
@@ -19,7 +20,8 @@
             (closeFlaggedReqs)="closeFlaggedRequestFilter()"
             (closeStatusFilterEmitter)="closeStatusFilter()"
             (timeLineFilter)="filterByTimeline()"
-            (closeTimeLineFilterEmitter)="closeTimelineFilter()"></table-filters>
+            (closeTimeLineFilterEmitter)="closeTimelineFilter()"
+          ></table-filters>
         </div>
         <div class="row m-0 align-items-end mb-3">
           <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
@@ -27,7 +29,8 @@
       </div>
 
       <loading-table-admin-reqs
-        *ngIf="isContentLoading == true"></loading-table-admin-reqs>
+        *ngIf="isContentLoading == true"
+      ></loading-table-admin-reqs>
 
       <!------------------------------------ All Properties ----------------------------------------------------->
       <!------------------------------------ All Properties ----------------------------------------------------->
@@ -38,7 +41,8 @@
             mat-table
             [dataSource]="allRequestsMatTableData"
             class="mat-elevation-z8 demo-table"
-            *ngIf="allRequests.length != 0">
+            *ngIf="allRequests.length != 0"
+          >
             <!-- Name Column -->
             <ng-container matColumnDef="request_id">
               <th mat-header-cell *matHeaderCellDef>Request ID</th>
@@ -46,7 +50,9 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
-                (click)="viewRequestsDetails(element)">
+                (click)="viewRequestsDetails(element)"
+                style="width: 150px; padding: 10px 15px"
+              >
                 {{ element.request_id}}
               </td>
             </ng-container>
@@ -56,7 +62,9 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'second-col-last' : 'second-col'">
+                [ngClass]="last ? 'second-col-last' : 'second-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 {{ element.request_date | date:'M/d/y' }}
               </td>
             </ng-container>
@@ -67,7 +75,9 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'third-col-last' : 'third-col'">
+                [ngClass]="last ? 'third-col-last' : 'third-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 {{ element.user_availability_time }}
               </td>
             </ng-container>
@@ -78,7 +88,9 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fourth-col-last' : 'fourth-col'">
+                [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 <div>{{ element.request_type | titlecase}}</div>
               </td>
             </ng-container>
@@ -88,11 +100,13 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+              >
                 <span
                   class="prop_name"
-                  (click)="navigateToPropertyDetailsPage(element.property_id)">{{
-                  getbuildingName(element.property_id) }}</span>
+                  (click)="navigateToPropertyDetailsPage(element.property_id)"
+                  >{{ getbuildingName(element.property_id) }}</span
+                >
               </td>
             </ng-container>
 
@@ -101,11 +115,13 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+              >
                 <span
                   class="prop_name"
-                  (click)="navigateToUnitDetailPage(element.unit_id)">{{
-                  getUnitNo(element.unit_id) }}</span>
+                  (click)="navigateToUnitDetailPage(element.unit_id)"
+                  >{{ getUnitNo(element.unit_id) }}</span
+                >
               </td>
             </ng-container>
 
@@ -114,7 +130,9 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 {{ element.request_for | titlecase}}
               </td>
             </ng-container>
@@ -124,7 +142,9 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 {{ element.request_category}}
               </td>
             </ng-container>
@@ -133,7 +153,9 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 {{ element.request_status | titlecase}}
               </td>
             </ng-container>
@@ -142,10 +164,13 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewRequestsDetails(element)"
+              >
                 <span *ngIf="element.staff_assigned == ''">-</span>
-                <span *ngIf="element.staff_assigned != ''">{{
-                  element.staff_assigned}}</span>
+                <span *ngIf="element.staff_assigned != ''"
+                  >{{ element.staff_assigned}}</span
+                >
               </td>
             </ng-container>
             <ng-container matColumnDef="userName">
@@ -153,8 +178,13 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
-                {{ getUserName(element.user_id) }}
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+              >
+                <span
+                  class="prop_name"
+                  (click)="navigateToUserDetailsPage(element.user_id)"
+                  >{{ getUserName(element.user_id) }}</span
+                >
               </td>
             </ng-container>
 
@@ -164,8 +194,8 @@
                 class="more-btn"
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'eighth-col-last' : 'eighth-col'">
-
+                [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
+              >
                 <img
                   [matMenuTriggerFor]="menu"
                   matTooltip="More Actions"
@@ -179,25 +209,48 @@
                       contrast(77%);
                     width: 20px;
                     cursor: pointer;
-                  " />
+                  "
+                />
 
-                <img *ngIf="element.flag == 1"
+                <img
+                  *ngIf="element.flag == 1"
                   matTooltip="Show All Flagged Requests"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
                   class="flag ml-4"
                   src="assets/img/pngs/flag-bold.png"
-                  alt />
+                  alt
+                />
 
                 <mat-menu #menu="matMenu" class="more-menu">
-                  <button mat-menu-item class="more-archived"
-                    (click)="updateMore(element,'flag')">Flag</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="updateMore(element,'archived')">Archived</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="updateMore(element,'spam')">Spam</button>
-                  <button mat-menu-item class="more-delete"
-                    (click)="updateMore(element,'delete')">Delete</button>
+                  <button
+                    mat-menu-item
+                    class="more-archived"
+                    (click)="updateMore(element,'flag')"
+                  >
+                    Flag
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-archived"
+                    (click)="updateMore(element,'archived')"
+                  >
+                    Archived
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-span"
+                    (click)="updateMore(element,'spam')"
+                  >
+                    Spam
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-delete"
+                    (click)="updateMore(element,'delete')"
+                  >
+                    Delete
+                  </button>
                 </mat-menu>
               </td>
             </ng-container>
@@ -208,23 +261,25 @@
             <tr
               mat-row
               *matRowDef="let row; columns: displayedColumns"
-              class="unit-row"></tr>
+              class="unit-row"
+            ></tr>
           </table>
           <div
             *ngIf="allRequestsMatTableData.filteredData.length == 0 && allRequests.length != 0"
             class="d-flex align-items-center justify-content-center"
             style="
-                background: white;
-                margin-top: 0;
-                text-align: center;
-                box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
-                  0px 0px 1px -5px rgba(0, 0, 0, 0.14),
-                  0px 6px 9px 0px rgba(0, 0, 0, 0.12);
-                border-bottom-left-radius: 10px;
-                border-bottom-right-radius: 10px;
-                height: 15rem;
-                min-width: 1800px;
-              ">
+              background: white;
+              margin-top: 0;
+              text-align: center;
+              box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+              min-width: 1800px;
+            "
+          >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
               NO RESULTS :(
             </p>
@@ -233,7 +288,8 @@
             *ngIf="allRequests.length == 0"
             mat-table
             [dataSource]="loadingTable"
-            class="mat-elevation-z8 demo-table">
+            class="mat-elevation-z8 demo-table"
+          >
             <!-- Name Column -->
             <ng-container matColumnDef="request_id">
               <th mat-header-cell *matHeaderCellDef>Request ID</th>
@@ -286,23 +342,25 @@
             *ngIf="allRequests.length == 0"
             class="d-flex align-items-center justify-content-center"
             style="
-                background: white;
-                margin-top: -2rem;
-                text-align: center;
-                box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
-                  0px 0px 1px -5px rgba(0, 0, 0, 0.14),
-                  0px 6px 9px 0px rgba(0, 0, 0, 0.12);
-                border-bottom-left-radius: 10px;
-                border-bottom-right-radius: 10px;
-                height: 15rem;
-                min-width: 1800px;
-              ">
+              background: white;
+              margin-top: -2rem;
+              text-align: center;
+              box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+                0px 0px 1px -5px rgba(0, 0, 0, 0.14),
+                0px 6px 9px 0px rgba(0, 0, 0, 0.12);
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+              min-width: 1800px;
+            "
+          >
             <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
               No Requests
             </p>
             <p
               class="pl-3"
-              style="font-size: 1.3rem; font-weight: 500; color: #d3ab33">
+              style="font-size: 1.3rem; font-weight: 500; color: #d3ab33"
+            >
               (－_－) zzZ
             </p>
           </div>
@@ -311,7 +369,8 @@
           <mat-paginator
             #paginator
             [pageSizeOptions]="[6, 8, 10, 14, 20]"
-            showFirstLastButtons></mat-paginator>
+            showFirstLastButtons
+          ></mat-paginator>
         </div>
       </div>
       <!-- </div> -->

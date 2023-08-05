@@ -168,13 +168,13 @@ export class SidebarComponent implements OnInit {
       }
     });
 
-    otherServices.allRequestsClickedAdminDashboard.subscribe(
-      (admin_req_val) => {
-        if (admin_req_val == true) {
-          this.miniSideBarClickedRequests();
-        }
-      }
-    );
+    // otherServices.allRequestsClickedAdminDashboard.subscribe(
+    //   (admin_req_val) => {
+    //     if (admin_req_val == true) {
+    //       this.miniSideBarClickedRequests();
+    //     }
+    //   }
+    // );
   }
 
   miniSideBarClick(title: string) {
@@ -239,13 +239,6 @@ export class SidebarComponent implements OnInit {
       return false;
     }
     return true;
-  }
-
-  servicesSideBarClicked() {
-    this.otherServices.servicePageToggle.next(true);
-    setTimeout(() => {
-      this.otherServices.servicePageToggle.next(false);
-    }, 0);
   }
 
   isLinkActive(url, type?): boolean {
