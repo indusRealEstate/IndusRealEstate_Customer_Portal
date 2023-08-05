@@ -289,13 +289,13 @@
             </div>
           </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3" *ngIf="request_feedback!=null">
           <div class="card">
             <div class="card-body">
-              <h3 class="font-weight-bold">Feedback</h3>
+              <h3 class="font-weight-bold" >Feedback</h3>
             
-              <h4 class="font-weight-normal">Satisfaction Level : {{request_feedback.mood}}</h4>
-              <h4 class="font-weight-normal">Feedback : {{request_feedback.details}}</h4>
+              <h4 class="font-weight-normal" *ngIf="request_feedback!=null">Satisfaction Level : {{request_feedback.mood}}</h4>
+              <h4 class="font-weight-normal" *ngIf="request_feedback!=null">Feedback : {{request_feedback.details}}</h4>
               </div>
             </div>
         </div>

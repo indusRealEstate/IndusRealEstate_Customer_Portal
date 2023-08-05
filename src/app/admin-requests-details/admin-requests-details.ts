@@ -114,7 +114,7 @@ export class AdminRequestsDetails implements OnInit {
         
         // this.feedback = this.all_data.main_feedback;
         // console.log(this.myJSON);
-      //  console.log(JSON.parse(this.all_data.main_feedback));
+       console.log(JSON.parse(this.all_data.main_feedback));
         this.request_feedback = JSON.parse(this.all_data.main_feedback);
         
         
