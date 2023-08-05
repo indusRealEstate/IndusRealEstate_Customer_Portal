@@ -635,6 +635,11 @@
   }
 }
 
+::ng-deep .request-id{
+  max-width: 150px !important;
+  padding: 7px 15px !important;
+}
+
 // ::ng-deep .more-menu {
 //   .more-archived {
 //     background-color: #8ae16b5b;
