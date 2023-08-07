@@ -419,4 +419,31 @@ export class AdminService {
       })
     );
   }
+
+  updateRequestStatus(data:any){
+    const url = `${API_URL}/updateRequestStatus.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  selectStaff(){
+    const url = `${API_URL}/selectStaff.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  assignStaff(data:string){
+    const url = `${API_URL}/assignStaff.php?apikey=1`;
+    return this.http.post(url,data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

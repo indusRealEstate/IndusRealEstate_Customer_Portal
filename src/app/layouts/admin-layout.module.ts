@@ -104,6 +104,8 @@ import { AdminRequestsOpen } from "app/admin-requests/components/open-request/op
 import { AdminRequestsReassigned } from "app/admin-requests/components/reassigned-request/reassigned-request";
 import { AdminRequestsRejected } from "app/admin-requests/components/rejected-request/rejected-request";
 import { AdminRequestsReOpenTab } from "app/admin-requests/components/reopen-request/reopen-request";
+import { DialogAssignStaff } from "app/components/assign_staff/assign_staff";
+import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
 
 @NgModule({
   imports: [
@@ -188,6 +190,10 @@ import { AdminRequestsReOpenTab } from "app/admin-requests/components/reopen-req
     AdminRequestsReassigned,
     AdminRequestsRejected,
     AdminRequestsReOpenTab,
+
+    ViewAssignStaff,
+
+    DialogAssignStaff,
 
     LoginComponent,
 

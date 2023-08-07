@@ -1,0 +1,47 @@
+<div
+  class="card card-main category-dialog"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
+  <!-- <div class="card-header"></div> -->
+  <div class="card-header position-relative">
+    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
+    <h4 class="text-center title-header">Assign staff</h4>
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </div>
+  <div class="text-center text-light fw-bold">
+    <div *ngIf="msg !== ''" [ngClass]="status ? 'text-success' : 'text-danger'">{{msg}}</div>
+  </div>
+
+  <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
+    <form action [formGroup]="assignForm" (ngSubmit)="submit()"
+      enctype='multipart/form-data'>
+      <div class="form-group">
+        <mat-form-field class="met">
+          <mat-label>Select staff</mat-label>
+          <mat-select [(ngModel)]="select_user" name="staff" id="staff" formControlName="assigned_user">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let item of all_users" value="{{item.user_id + '->' + item.name}}">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="met">
+          <mat-label>Assign type</mat-label>
+          <input type="text" matInput placeholder="Type the type of job" [(ngModel)]="assign_job" formControlName="job_type">
+        </mat-form-field>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <button class="btn" style="background-color: #d4aa32;color: #fff;">Assign</button>
+      </div>
+    </form>
+  </div>
+</div>

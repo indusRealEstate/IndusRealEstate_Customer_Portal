@@ -1,4 +1,4 @@
-<!-- <div id="full-screen-image">
+<div id="full-screen-image">
   <button class="close-btn" title="Exit">
 
     <img
@@ -11,158 +11,43 @@
       alt />
   </button>
   <img src alt id="image">
-</div> -->
+</div>
 
 <div class="main-content" *ngIf="screenWidth > 430">
   <div class="container-fluid">
-    <div class="row" *ngIf="!isContentLoading">
-      <div class="col-md-7">
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-8">
-                <div class="row">
-                  <img
-                    src="../../assets/img/maintenance.png"
-                    alt=""
-                    width="30"
-                    height="30"
-                    class="maintainance_img"
-                  />
-                  <h3 class="font-weight-bold">Maintenance Request Details</h3>
-                  <img src="../../assets/img/flag-bold.png" width="30" height="30" style="margin-top: 1.5rem;" alt="" 
-                  *ngIf="all_data.main_flag!=0">
-                </div>
-                <div class="row">
-                  <div class="col-4">
-                    <h5>Request date:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_date}}</h5>
-                  </div>
-                  <div class="col-4">
-                    <h5>Request status:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_status}}</h5>
-                  </div>
-                  <div class="col-4">
-                    <h5>Request Type:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_type}}</h5>
-                  </div>
-                </div>
 
-                <div class="row mt-3">
-                  <div class="col-4">
-                    <h5>User Availability date:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_user_availability_date}}</h5>
-                  </div>
-                  <div class="col-4">
-                    <h5>User Availability Time:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_user_availability_time}}</h5>
-                  </div>
-                  <div class="col-4">
-                    <h5>Description</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_description}}</h5>
-                  </div>
-                </div>
+    <div class="row">
+      <ngx-skeleton-loader
+        *ngIf="isContentLoading"
+        [theme]="{ width: (700) + 'px', height: '40px' }">
+      </ngx-skeleton-loader>
+      <div
+        *ngIf="!isContentLoading && all_data != null"
+        class="col p-0 pl-3"
+        style="display: grid">
+        <span class="item-header">
+          {{'Maintenance request - ' + all_data.main_request_category |
+          titlecase}}
+        </span>
+      </div>
+    </div>
 
-                <div class="row mt-3">
-                  <div class="col-4">
-                    <h5>Request For:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_for}}</h5>
-                  </div>
-                  <!-- <div class="col-4">
-                    <h5>Request Category:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_request_category}}</h5>
-                  </div> -->
-                  <!-- <div class="col-4">
-                    <h5>Staff Assigned:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_staff_assigned}}</h5>
-                  </div> -->
-                </div>
+    <div class="row">
+      <div class="col-md-8">
 
-                <!-- <div class="row mt-3">
-                  <div class="col-4">
-                    <h5>Flag:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_flag}}</h5>
-                  </div>
-                  <div class="col-4">
-                    <h5>Archive:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_archive}}</h5>
-                  </div>
-                  <div class="col-4">
-                    <h5>Spam:</h5>
-                    <h5 class="font-weight-normal" *ngIf="all_data != null">{{all_data.main_spam}}</h5>
-                  </div>
-                </div> -->
-
-                <div class="row mt-3">
-                  <!-- <div class="col-4">
-                    <h5>Feedback:</h5>
-                    <h5 class="font-weight-normal" *ngFor="all_data != null"></h5>
-                  </div> -->
-                </div>
-              </div>
-              <div class="col-4">
-                <button class="btn" id="see-all-img-btn" (click)="openDialog()">View all Media</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-3">
+        <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          [theme]="{ width: (((screenWidth/2) + ((screenWidth/2)/2)) - 300) + 'px', height: '50vh' }">
+        </ngx-skeleton-loader>
+        <div class="row" *ngIf="!isContentLoading">
           <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="font-weight-bold">User Details</h3>
-              <div class="row">
-                <div class="col-3">
-                  <img
-                    src="../../assets/img/user.png"
-                    alt
-                    class="card-img-top user-image m-auto rounded-circle img-fluid"
-                    width="100%"
-                  />
-                </div>
-                <div class="col-9">
-                  <!-- <h4 class="user-name"></h4>
-                          <span class="user-uid text-secondery"></span> -->
-                  <ul class="user-details font-weight-bold">
-                    <li>Name: {{all_data.user_name}}</li>
-                    <li>Email: {{all_data.user_email}}</li>
-                    <li>Alternative email: {{all_data.user_alternative_email}}</li>
-                    <li>Phone:{{all_data.user_country_code_number}} - {{all_data.user_mobile_number}}</li>
-                    <li>Alternative phone:{{all_data.user_country_code_alternative_number}} - {{all_data.user_alternative_mobile_number}}</li>
-                    <li>Gender:{{all_data.user_gender}}</li>
-                    <li>Nationality:{{all_data.user_nationality}}</li>
-                    <li>DOB:{{all_data.user_dob}}</li>
-                    <li>User Type:{{all_data.user_user_type}}</li>
-                    <li>Id Type:{{all_data.user_id_type}}</li>
-                    <li>Id Number:{{all_data.user_id_number}}</li>
-                  </ul>
-                </div>
+            <div class="card card-main">
+              <div class="card-header">
+                <h4 class="title-header">Request details</h4>
               </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
-        <div class="row mt-3">
-          <div class="col-md-12">
-            <!-- <div class="card">
               <div class="card-body">
-                <h3 class="font-weight-bold">Property Details</h3>
-              </div>
-            </div> -->
-            <div class="table-row">
-              <div class="card main-card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <h3 class=" font-weight-bold">Property details</h3>
-                    </div>
-                    <div class="col-md-3">
-                      <button class="btn" id="see-all-img-btn" style="float: right;" (click)="navigateTopPropertyDetailPage(all_data.prop_property_id)">View Property Media</button>
-                    </div>
-                </div>
-                  <table class="teble table-striped w-100 px-3 detail-table">
+                <div class="table-row">
+                  <table class="teble table-striped w-100 px-3">
                     <thead class="thead">
                       <tr>
                         <th scope="col" class="p-3">Title</th>
@@ -171,42 +56,68 @@
                     </thead>
                     <tbody class="tbody text-uppercase">
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">property name</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_property_name}}</td>
+                        <th class="p-3 col-md-4" scope="row">Date of request</th>
+                        <td class="p-3 col-md-8">{{all_data.main_request_date |
+                          date}}</td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">property address</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_address}}</td>
+                        <th class="p-3 col-md-4" scope="row">Type of request</th>
+                        <td class="p-3 col-md-8"
+                          [ngStyle]="main_request_type.toLowerCase() == 'urgent' ? {'color':  '#ff0000', 'font-weight' : '700'} : {}">
+                          {{main_request_type}}
+                        </td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">property type</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_property_type}}</td>
+                        <th class="p-3 col-md-4" scope="row">Request for</th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.main_request_for}}
+                        </td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">government id</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_govt_id}}</td>
+                        <th class="p-3 col-md-4" scope="row">Category of request</th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.main_request_category}}
+                        </td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">number of units</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_no_of_units}}</td>
+                        <th class="p-3 col-md-4" scope="row">Status of request</th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.main_request_status}}
+                        </td>
                       </tr>
+                      <!-- <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">Assigned staff</th>
+                        <td class="p-3 col-md-8">
+                          <ul
+                            style="list-style: none; flex-wrap: wrap; display: flex; padding: 0; margin: 0;">
+                            <li
+                              style="padding: 5px 10px; background-color: rgb(180, 138, 0);margin: 0px 5px;border-radius: 5px;"
+                              *ngFor="let item of Staff">{{item}}</li>
+                          </ul>
+                        </td>
+                      </tr> -->
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">locality
-                          name</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_locality_name}}</td>
+                        <th class="p-3 col-md-4" scope="row">Tenant availability</th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.main_user_availability_time}} on
+                          {{all_data.main_user_availability_date | date}}
+                        </td>
                       </tr>
+
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">property incharge</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_property_in_charge}}</td>
+                        <th class="p-3 col-md-4" scope="row">Media</th>
+                        <td class="p-3 col-md-8">
+                          <button
+                            class="btn"
+                            (click)="viewMedia()"
+                            matTooltip="View media"
+                            matTooltipClass="tooltip"
+                            matTooltipPosition="above"
+                            style="background-color: #2b333e;">
+                            View media
+                          </button>
+                        </td>
                       </tr>
-                      <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">property description</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_description}}</td>
-                      </tr>
-                      <!-- SELECT * FROM `maintenance_requests`
-                      JOIN properties ON maintenance_requests.property_id = properties.property_id 
-                      JOIN properties_units ON maintenance_requests.unit_id = properties_units.unit_id
-                       JOIN users ON maintenance_requests.user_id = users.user_id -->
                     </tbody>
                   </table>
                 </div>
@@ -214,285 +125,613 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-5">
+
+        <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          [theme]="{ width: (((screenWidth/2) + ((screenWidth/2)/2)) - 300) + 'px', height: '50vh' }">
+        </ngx-skeleton-loader>
+        <div class="row" *ngIf="!isContentLoading">
+          <div class="col-md-12">
+            <div class="card card-main">
+              <div class="card-header">
+                <h4 class="title-header">Assign Staff details</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-row">
+                  <table class="teble table-striped w-100 px-3">
+                    <thead class="thead">
+                      <tr>
+                        <th scope="col" class="p-3">name</th>
+                        <th scope="col" class="p-3">Assign task</th>
+                        <th scope="col" class="p-3">Assign Date & time</th>
+                      </tr>
+                    </thead>
+                    <tbody class="tbody text-uppercase">
+                      <tr scope="row" *ngFor="let item of all_staff">
+                        <th class="p-3 col-md-4" (click)="viewUser(item.user_id)" style="cursor: pointer;" scope="row">{{item.user_name}}</th>
+                        <td class="p-3 col-md-4">{{item.job}}</td>
+                        <td class="p-3 col-md-4">{{item.date_and_time | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ngx-skeleton-loader
+          *ngIf="isContentLoading"
+          class="col-md-12"
+          [theme]="{ width: (((screenWidth / 2) + ((screenWidth / 2) / 2)) - 300) + 'px', height: '30vh', margin: '1rem' }">
+        </ngx-skeleton-loader>
+        <div class="row" *ngIf="!isContentLoading">
+          <div class="col-md-6">
+            <div class="card card-main h-100">
+              <div class="card-header">
+                <div class="row d-flex">
+                  <div class="col-10 my-auto">
+                    <h4 class="title-header">
+                      Unit details - {{all_data.unit_no}}
+                    </h4>
+                  </div>
+                  <div class="col-2 my-auto d-flex">
+                    <button
+                      matTooltip="Go to Unit Details"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      (click)="navigateToUnit(all_data.unit_id)"
+                      class="btn open-external-link-icon">
+                      <img
+                        src="assets/img/svg/common-icons/open-external-link-icon.svg"
+                        alt />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row m-0">
+                  <div class="col">
+                    <span style="color: #2b333ebf; font-weight: 500">Bedrooms</span>
+                    <div class="row m-0 mt-2">
+                      <span class="mr-3"
+                        style="font-size: 20px; font-weight: 600">{{all_data.unit_bed}}</span>
+                      <img
+                        src="assets/img/svg/bedroom.svg"
+                        alt
+                        style="
+                          filter: invert(95%) sepia(37%) saturate(5934%)
+                            hue-rotate(328deg) brightness(88%) contrast(87%);
+                          width: 20px;
+                          cursor: pointer;
+                        " />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <span style="color: #2b333ebf; font-weight: 500">Bathrooms</span>
+                    <div class="row m-0 mt-2">
+                      <span class="mr-3"
+                        style="font-size: 20px; font-weight: 600">{{all_data.unit_bath}}</span>
+                      <img
+                        src="assets/img/svg/bath.svg"
+                        alt
+                        style="
+                          filter: invert(95%) sepia(37%) saturate(5934%)
+                            hue-rotate(328deg) brightness(88%) contrast(87%);
+                          width: 20px;
+                          cursor: pointer;
+                        " />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <span style="color: #2b333ebf; font-weight: 500">Area</span>
+                    <p class="m-0 mt-2"
+                      style="font-size: 20px; font-weight: 600">
+                      {{all_data.unit_size}} SqFt
+                    </p>
+                  </div>
+                </div>
+                <div class="row m-0 mt-3">
+                  <div class="col">
+                    <span style="color: #2b333ebf; font-weight: 500">Parking</span>
+                    <div class="row m-0 mt-2">
+                      <span class="mr-3"
+                        style="font-size: 20px; font-weight: 600">{{all_data.unit_parking}}</span>
+                      <img
+                        src="assets/img/svg/parking.svg"
+                        alt
+                        style="
+                          filter: invert(95%) sepia(37%) saturate(5934%)
+                            hue-rotate(328deg) brightness(88%) contrast(87%);
+                          width: 20px;
+                          cursor: pointer;
+                        " />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <span style="color: #2b333ebf; font-weight: 500">Floors</span>
+                    <div class="row m-0 mt-2">
+                      <span class="mr-3"
+                        style="font-size: 20px; font-weight: 600">{{all_data.unit_floor}}</span>
+                      <img
+                        src="assets/img/svg/parking.svg"
+                        alt
+                        style="
+                          filter: invert(95%) sepia(37%) saturate(5934%)
+                            hue-rotate(328deg) brightness(88%) contrast(87%);
+                          width: 20px;
+                          cursor: pointer;
+                        " />
+                    </div>
+                  </div>
+                  <div class="col"></div>
+                </div>
+                <div
+                  class="mt-4 mb-3 mx-auto"
+                  style="height: 2px; width: 90%; background: #faebd7a6"></div>
+                <div class="col">
+                  <p class="m-0" style="color: #2b333ebf; font-weight: 500">
+                    Amenities
+                  </p>
+                  <div class="row m-0 d-flex justify-content-start">
+                    <div
+                      style="
+                        padding: 3px 8px;
+                        background: #d4aa3233;
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: #d4aa32;
+                        border-radius: 3px;
+                        margin-right: 10px;
+                      "
+                      class="d-flex mt-2"
+                      *ngFor="let item of amenities; let index = i">
+                      <span>{{item | titlecase}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card card-main h-100">
+              <div class="card-header">
+                <div class="row d-flex">
+                  <div class="col-10 my-auto">
+                    <h4 class="title-header">Property details</h4>
+                  </div>
+                  <div class="col-2 my-auto d-flex">
+                    <button
+                      matTooltip="Go to Property Details"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      (click)="openProperty()"
+                      class="btn open-external-link-icon"
+                      title>
+                      <img
+                        src="assets/img/svg/common-icons/open-external-link-icon.svg"
+                        alt />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-row">
+                  <table class="teble table-striped w-100 px-3">
+                    <thead class="thead">
+                      <tr>
+                        <th scope="col" class="p-3">Title</th>
+                        <th scope="col" class="p-3">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody class="tbody text-uppercase">
+                      <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">name</th>
+                        <td class="p-3 col-md-8">{{all_data.prop_name}}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">address</th>
+                        <td class="p-3 col-md-8">{{all_data.prop_address}}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">type</th>
+                        <td class="p-3 col-md-8">{{all_data.prop_type}}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">number of units</th>
+                        <td class="p-3 col-md-8">{{all_data.prop_no_of_units}}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">locality name</th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.prop_locality_name}}
+                        </td>
+                      </tr>
+                      <tr scope="row">
+                        <th class="p-3 col-md-4" scope="row">incharge</th>
+                        <td class="p-3 col-md-8">{{all_data.prop_in_charge}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
-          <div class="card">
-            <div class="card-body">
-              
-              <div class="row">
-                <div class="col-6"><h3 class="font-weight-bold">Unit Details</h3></div>
-                <div class="col-6">
-                  <button class="btn" style="float: right" (click)="navigateToUnitDetailPage(all_data.unit_unit_id)">
-                    View Unit
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="row">
+          <ngx-skeleton-loader
+            *ngIf="isContentLoading"
+            class="col-md-12"
+            [theme]="{ width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem' }">
+          </ngx-skeleton-loader>
+          <div class="col-md-12 pr-0" *ngIf="!isContentLoading">
+            <div class="card card-main" style="height: 93%">
+              <div class="card-header">
+                <h4 class="title-header">Tenant Details</h4>
+              </div>
+              <div class="card-body" style="padding: 25px 20px">
+                <div class="row m-0 align-items-start">
+                  <div class="col-3 d-flex pl-0">
+                    <img
+                      src="https://www.indusre.app/api/upload/user/{{all_data.tenant_uid}}/image/{{all_data.tenant_profile_img}}"
+                      alt
+                      class="card-img-top user-image m-auto" />
+                  </div>
+                  <div class="col-9 p-0">
+                    <div class="row m-0">
+                      <div class="col-5 pr-0" style="display: grid">
+                        <span
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Name</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Email</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Alternative email</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Phone</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Alternative phone</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Gender</span>
+                      </div>
+                      <div class="col-7 pr-0" style="display: grid">
+                        <span
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">{{all_data.tenant_name}}</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">{{all_data.tenant_email}}</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">
+                          <span *ngIf="all_data.tenant_alternative_email != ''">{{all_data.tenant_alternative_email}}</span>
+                          <span *ngIf="all_data.tenant_alternative_email == ''">-</span>
+                        </span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">
+                          {{all_data.tenant_country_code_number}}
+                          {{all_data.tenant_mobile_number}}
+                        </span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">
+                          <span
+                            *ngIf="all_data.tenant_country_code_alternative_number != '' && all_data.tenant_alternative_mobile_number != ''">{{all_data.tenant_country_code_alternative_number}}
+                            {{all_data.tenant_alternative_mobile_number}}</span>
+                          <span
+                            *ngIf="all_data.tenant_country_code_alternative_number == '' && all_data.tenant_alternative_mobile_number == ''">-</span>
+                        </span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">{{all_data.tenant_gender | titlecase}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row m-0 mt-4 d-flex justify-content-end">
+                  <button
+                    matTooltip="Call"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="call-btn btn"
+                    (click)="call_tenant_person()">
+                    <img
+                      class="mr-1"
+                      style="width: 16px"
+                      src="assets/img/svg/common-icons/phone.svg"
+                      alt />
+                    <span class="ml-2">Call</span>
+                  </button>
+
+                  <button
+                    matTooltip="Mial"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="email-btn btn"
+                    (click)="email_tenant_person()">
+                    <img
+                      class="mr-1"
+                      style="width: 16px"
+                      src="assets/img/svg/common-icons/email-with-at.svg"
+                      alt />
+                    <span class="ml-2">Mail</span>
                   </button>
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-4">
-                  <!-- <img src="../../assets/img/rent.png" alt="" width="30" height="30"> --> 
-                  
-                  <h5>Unit Number:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_unit_no}}</h5>
-                </div>
-                <div class="col-4">
-                  <h5>Unit Type:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_unit_type}}</h5>
-                </div>
-                <div class="col-4">
-                  <h5>No of Parking:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_no_of_parking}}</h5>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-4">
-                  <h5>Floor:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_floor}}</h5>
-                </div>
-                <div class="col-4">
-                  <h5>Size:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_size}}</h5>
-                </div>
-                <div class="col-4">
-                  <h5>Unit Type:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_unit_type}}</h5>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-4">
-                  <h5>Status:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_status}}</h5>
-                </div>
-                <div class="col-4">
-                  <h5>Bedroom:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_bedroom}}</h5>
-                </div>
-                <div class="col-4">
-                  <h5>Bathroom:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_bathroom}}</h5>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-4">
-                  <h5>Owner:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_owner}}</h5>
-                </div>
-                <!-- <div class="col-4">
-                  <h5>Amenities:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_amenties}}</h5>
-                </div> -->
-                <div class="col-4">
-                  <h5>Description:</h5>
-                  <h5 class="font-weight-normal">{{all_data.unit_description}}</h5>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-        <div class="row mt-3" *ngIf="request_feedback!=null">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="font-weight-bold" >Feedback</h3>
-            
-              <h4 class="font-weight-normal" *ngIf="request_feedback!=null">Satisfaction Level : {{request_feedback.mood}}</h4>
-              <h4 class="font-weight-normal" *ngIf="request_feedback!=null">Feedback : {{request_feedback.details}}</h4>
-              </div>
-            </div>
-        </div>
 
-        <div class="row mt-3">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="font-weight-bold">Request Category</h3>
-              <h4 class="font-weight-normal">{{all_data.main_request_category}}</h4> 
-              
+        <div class="row">
+          <ngx-skeleton-loader
+            *ngIf="isContentLoading"
+            [ngClass]="isOcupied == true ? 'col-md-12' : 'col-md-12'"
+            [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
+          </ngx-skeleton-loader>
+          <div
+            class="col-md-12"
+            *ngIf="!isContentLoading">
+            <div class="card card-main" style="height: 93%">
+              <div class="card-header">
+                <h4 class="title-header">Owner Details</h4>
               </div>
-            </div>
-        </div>
-
-        <div class="row mt-3">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="font-weight-bold">Assign Staff</h3>
-              <div class="row">
-                <div class="col-6">
-                  <mat-form-field>
-                    <mat-label>Assign Staff</mat-label>
-                    <mat-select>
-                      <mat-option *ngFor="let item of staff" [value]="item.value">
-                        {{item.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                  <button mat-raised-button class="mt-3">Assign</button>
-                </div>
-                <div class="col-6">
-                 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="font-weight-bold">Change Request Status</h3>
-              <div class="row">
-                <div class="col-6">
-                  <mat-form-field>
-                    <mat-label>Select Status</mat-label>
-                    <mat-select>
-                      <mat-option *ngFor="let item of status" [value]="item.svalue">
-                        {{item.sviewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>Add Comment</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
-                  <button mat-raised-button>Save</button>
-                </div>
-                <div class="col-6">
-                  <!-- <button mat-raised-button type="button" (click)="fileInput.click()" style="float:left;" id="imgInp">
-                    <span>Add Attachment</span>
-                    <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
-                  </button> -->
-                  <div class="row">
-                    <div (click)="fileInput.click()"  class="btn ml-4" style="background: #d4aa32"> Add Documents </div>
+              <div class="card-body" style="padding: 25px 20px">
+                <div class="row m-0 align-items-start">
+                  <div class="col-3 d-flex pl-0">
+                    <img
+                      src="https://indusre.app/api/upload/user/{{all_data.user_uid}}/image/{{all_data.user_profile_img}}"
+                      alt
+                      class="card-img-top user-image m-auto" />
                   </div>
-                  <input multiple hidden (change)="onFileSelected($event.target.files)" #fileInput type="file" id="file"/>
-
-                  <div *ngIf="docsFilesUploaded.length != 0">
-                    <div
-                      *ngFor="let file of docsFilesUploaded;let index=index"
-                      class="row m-0 mt-2 align-items-center"
-                      style="
-                        background: #d4aa3230;
-                        border: solid 1px #d4aa32;
-                        border-radius: 5px;
-                        padding: 10px 10px;
-                      "
-                    >
-                      <img src="assets/img/svg/documents/document-text.svg" alt="" />
-                      <div class="row">
-                      <span
-                        class="m-0 ml-3"
-                        style="
-                          font-weight: 500;
-                          text-overflow: ellipsis;
-                          max-width: 230px;
-                          overflow: hidden;
-                          white-space: nowrap;
-                        "
-                        >{{file.name}}</span
-                      >
+                  <div class="col-9 p-0">
+                    <div class="row m-0">
+                      <div class="col-5 pr-0" style="display: grid">
+                        <span
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Name</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Email</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Alternative email</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Phone</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Alternative phone</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          ">Gender</span>
                       </div>
-                      <img
-                        (click)="removeUploadedDoc(index)"
-                        src="assets/img/svg/success-dialog/close-square.svg"
-                        alt=""
-                        style="
-                        position: absolute;
-                          right: 20px;
-                          width: 20px;
-                          cursor: pointer;
-                        "
-                      />
-                    
-                      <!-- <img
-                        (click)="removeUploadedDoc(index)"
-                        src="assets/img/svg/success-dialog/close-square.svg"
-                        alt=""
-                        style="
-                          position: absolute;
-                          right: 10px;
-                          width: 20px;
-                          cursor: pointer;
-                        "
-                      /> -->
+                      <div class="col-7 pr-0" style="display: grid">
+                        <span
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">{{all_data.user_name}}</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">{{all_data.user_email}}</span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">
+                          <span *ngIf="all_data.user_alternative_email != ''">{{all_data.user_alternative_email}}</span>
+                          <span *ngIf="all_data.user_alternative_email == ''">-</span>
+                        </span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">
+                          {{all_data.user_country_code_number}}
+                          {{all_data.user_mobile_number}}
+                        </span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">
+                          <span
+                            *ngIf="all_data.user_country_code_alternative_number != '' && all_data.user_alternative_mobile_number
+                            != ''">{{all_data.user_country_code_alternative_number}}
+                            {{all_data.user_alternative_mobile_number }}</span>
+                          <span
+                            *ngIf="all_data.user_country_code_alternative_number == '' && all_data.user_alternative_mobile_number
+                            == ''">-</span>
+                        </span>
+                        <span
+                          class="mt-2"
+                          style="
+                            color: #d4aa32;
+                            font-size: 14px;
+                            font-weight: 500;
+                          ">{{all_data.user_gender | titlecase}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div> 
+                <div class="row m-0 mt-4 d-flex justify-content-end">
+                  <button
+                    matTooltip="Call"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="call-btn btn"
+                    (click)="call_person()">
+                    <img
+                      class="mr-1"
+                      style="width: 16px"
+                      src="assets/img/svg/common-icons/phone.svg"
+                      alt />
+                    <span class="ml-2">Call</span>
+                  </button>
+
+                  <button
+                    matTooltip="Mail"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    class="email-btn btn"
+                    (click)="email_person()">
+                    <img
+                      class="mr-1"
+                      style="width: 16px"
+                      src="assets/img/svg/common-icons/email-with-at.svg"
+                      alt />
+                    <span class="ml-2">Mail</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="row mt-3">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="font-weight-bold">Attached Documents</h3>
-              <div class="row">
-                <div class="col-6">
-                  <div class="row">
-                    <div (click)="fileInput2.click()"  class="btn ml-4" style="background: #d4aa32"> Add Documents </div>
-                  </div>
-                  <input multiple hidden (change)="onFileSelected2($event.target.files)" #fileInput2 type="file" id="file"/>
 
-                  <div *ngIf="docsFilesUploaded2.length != 0">
-                    <div
-                      *ngFor="let file of docsFilesUploaded2;let index=index"
-                      class="row m-0 mt-2 align-items-center"
-                      style="
-                        background: #d4aa3230;
-                        border: solid 1px #d4aa32;
-                        border-radius: 5px;
-                        padding: 10px 10px;
-                      "
-                    >
-                      <img src="assets/img/svg/documents/document-text.svg" alt="" />
-                      <div class="row">
-                      <span
-                        class="m-0 ml-3"
-                        style="
-                          font-weight: 500;
-                          text-overflow: ellipsis;
-                          max-width: 230px;
-                          overflow: hidden;
-                          white-space: nowrap;
-                        "
-                        >{{file.name}}</span
-                      >
-                      </div>
-                      <img
-                        (click)="removeUploadedDoc2(index)"
-                        src="assets/img/svg/success-dialog/close-square.svg"
-                        alt=""
-                        style="
-                        position: absolute;
-                          right: 20px;
-                          width: 20px;
-                          cursor: pointer;
-                        "
-                      /> 
-                    
-                      <!-- <img
-                        (click)="removeUploadedDoc(index)"
-                        src="assets/img/svg/success-dialog/close-square.svg"
-                        alt=""
-                        style="
-                          position: absolute;
-                          right: 10px;
-                          width: 20px;
-                          cursor: pointer;
-                        "
-                      /> -->
-                    </div>
-                  </div>
-                </div>
+        <ngx-skeleton-loader
+            *ngIf="isContentLoading"
+            [ngClass]="isOcupied == true ? 'col-md-12' : 'col-md-12'"
+            [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
+          </ngx-skeleton-loader>
+        <div class="row" *ngIf="!isContentLoading">
+          <div class="col-md-12">
+            <div class="card card-main">
+              <div class="card-header">
+                <h4 class="title-header">Options</h4>
               </div>
-              
+              <div class="card-body">
+                <ul
+                  style="list-style: none;margin: 0;padding: 0; flex-wrap: wrap; display: flex;">
+                  <li style="margin: 5px 10px; padding: 5px 10px;">
+                    <button class="btn"
+                      matTooltip="Assign staff"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      (click)="openAssignStaff(all_data.main_request_id)"
+                      style="background-color: #d4aa32;font-weight: 600;">
+                      Assign staff
+                    </button>
+                  </li>
+                  <li style="margin: 5px 10px; padding: 5px 10px;">
+                    <button class="btn"
+                      [matMenuTriggerFor]="menu"
+                      matTooltip="Change Request Status"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      style="background-color: #d4aa32;font-weight: 600;">
+                      Change Request Status
+                    </button>
+                    <mat-menu #menu="matMenu" class="more-menu">
+                      <button mat-menu-item class="more-archived"
+                        (click)="changeStatus(all_data.main_request_id,'urgent')">Urgent</button>
+                      <button mat-menu-item class="more-span"
+                        (click)="changeStatus(all_data.main_request_id,'normal')">Normal</button>
+                    </mat-menu>
+                  </li>
+                </ul>
               </div>
             </div>
+          </div>
         </div>
+
       </div>
     </div>
+
   </div>
 </div>
