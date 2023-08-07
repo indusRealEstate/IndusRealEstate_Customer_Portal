@@ -1,19 +1,26 @@
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
+import { Router } from "@angular/router";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
-  selector: "hold-request-tab",
-  templateUrl: "./hold-request.html",
-  styleUrls: ["./hold-request.scss"],
+  selector: "requests-table",
+  templateUrl: "./requests-table.html",
+  styleUrls: ["./requests-table.scss"],
 })
-export class AdminRequestsHold implements OnInit {
+export class RequestsTable implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -48,31 +55,24 @@ export class AdminRequestsHold implements OnInit {
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
+  @Input() tableTitle = "";
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     private adminService: AdminService,
-    private dialog: MatDialog
+    private otherServices: OtherServices
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
 
-    // this.route.queryParams.subscribe((e) => {
-    //   if (e == null) {
-    //     router.navigate([`/admin-requests`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   } else if (e != user[0]["id"]) {
-    //     router.navigate([`/admin-requests`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   }
-    // });
+    this.otherServices.admin_requests_tab_toggle.subscribe((val) => {
+      if (val == true) {
+        this.fetchData();
+      }
+    });
   }
 
   allProperties: any[] = [];
@@ -156,43 +156,30 @@ export class AdminRequestsHold implements OnInit {
   }
 
   fetchData() {
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_hold_requests_session")
-    );
-    if (adminReqDataSession != null) {
-      this.allRequests = adminReqDataSession;
-      this.allRequestsMatTableData.data = adminReqDataSession;
-      this.isContentLoading = false;
-      this.ngAfterViewInitInitialize = true;
-    } else {
-      this.adminService
-        .getAllRequestsAdmin()
-        .subscribe((va: any[]) => {
-          console.log(va);
-          var final_data = va.filter((req)=> req.request_status == 'hold')
-          this.allRequests = final_data;
-          this.allRequestsMatTableData = new MatTableDataSource(final_data);
-          setTimeout(() => {
-            if (this.allRequestsMatTableData != undefined) {
-              this.allRequestsMatTableData.paginator = this.paginator;
-              // this.allRequestsMatTableData.paginator.pageSize = 10;
-            }
-          });
-        })
-        .add(() => {
-          this.isContentLoading = false;
-          if (this.allRequests.length != 0) {
-            sessionStorage.setItem(
-              "admin_hold_requests_session",
-              JSON.stringify(this.allRequests)
-            );
+    this.adminService
+      .getAllRequestsAdmin()
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        var status = this.getRequestStatusOnIndex();
+        if (status == "no-filter") {
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+        } else {
+          var filteredArray = this.allRequests.filter(
+            (req) => req.request_status == status
+          );
+          this.allRequestsMatTableData = new MatTableDataSource(filteredArray);
+        }
+
+        setTimeout(() => {
+          if (this.allRequestsMatTableData != undefined) {
+            this.allRequestsMatTableData.paginator = this.paginator;
+            // this.allRequestsMatTableData.paginator.pageSize = 10;
           }
         });
-      sessionStorage.setItem(
-        "admin_hold_requests_session_time_admin",
-        JSON.stringify(new Date().getMinutes())
-      );
-    }
+      })
+      .add(() => {
+        this.isContentLoading = false;
+      });
   }
 
   getAllData() {
@@ -235,36 +222,7 @@ export class AdminRequestsHold implements OnInit {
 
   async ngOnInit() {
     this.getAllData();
-    var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("admin_hold_requests_session_time_admin")
-    );
-
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_hold_requests_session")
-    );
-
-    if (previous != null) {
-      var diff = now - Number(previous);
-
-      if (diff >= 5) {
-        sessionStorage.removeItem("admin_hold_requests_session");
-        this.fetchData();
-      } else {
-        if (adminReqDataSession != null) {
-          this.allRequests = adminReqDataSession;
-          this.allRequestsMatTableData = new MatTableDataSource(
-            adminReqDataSession
-          );
-          this.isContentLoading = false;
-          this.ngAfterViewInitInitialize = true;
-        } else {
-          this.fetchData();
-        }
-      }
-    } else {
-      this.fetchData();
-    }
+    this.fetchData();
   }
 
   clearAllVariables() {
@@ -272,7 +230,6 @@ export class AdminRequestsHold implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removeItem("admin_hold_requests_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {
       this.table_filter.flaggedRequestsFilterOn = false;
@@ -287,36 +244,42 @@ export class AdminRequestsHold implements OnInit {
     this.allRequestsMatTableData.filter = val;
   }
 
-  addUnitDialogOpen() {
-    this.dialog
-      .open(AddUnitDialog, {
-        width: "80%",
-        height: "60rem",
-      })
-      .afterClosed()
-      .subscribe((res) => {});
-  }
-
   navigateToUnitDetailPage(unit_id) {
     this.router.navigate(["/admin-property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
   }
 
-  
   navigateToPropertyDetailsPage(prop_id) {
     this.router.navigate(["/property-details"], {
       queryParams: { prop_id: prop_id },
     });
   }
+  
+  navigateToUserDetailsPage(user_id) {
+    this.router.navigate(["/admin-user-details"], {
+      queryParams: { user_id: user_id },
+    });
+  }
 
-  viewRequestsDetails(data:any){
+  viewRequestsDetails(data: any) {
     this.router.navigate(["/admin-requests-details"], {
       queryParams: {
-        "request_id": data.request_id
+        request_id: data.request_id,
       },
     });
+  }
 
+  updateMore(data: any, type: string) {
+    let output = {
+      id: data.request_id,
+      type: type,
+    };
+    this.adminService
+      .updateRequestMore(JSON.stringify(output))
+      .subscribe((value) => {
+        this.refreshTable();
+      });
   }
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
@@ -327,5 +290,31 @@ export class AdminRequestsHold implements OnInit {
   closeStatusFilter() {}
   filterByTimeline() {}
   closeTimelineFilter() {}
-}
 
+  getRequestStatusOnIndex() {
+    switch (this.tableTitle) {
+      case "All Requests":
+        return "no-filter";
+      case "Open Requests":
+        return "open";
+      case "Assigned Requests":
+        return "assigned";
+      case "In Progress Requests":
+        return "inprogress";
+      case "Completed Requests":
+        return "completed";
+      case "Hold Requests":
+        return "hold";
+      case "Re-Open Requests":
+        return "reopen";
+      case "Re-Assigned Requests":
+        return "reassigned";
+      case "Rejected Requests":
+        return "rejected";
+      case "Cancelled Requests":
+        return "cancelled";
+      default:
+        return "no-filter";
+    }
+  }
+}

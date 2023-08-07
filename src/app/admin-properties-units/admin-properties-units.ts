@@ -218,4 +218,10 @@ export class AdminPropertiesUnits implements OnInit {
       queryParams: { prop_id: prop_id },
     });
   }
+
+  navigateToUserDetailsPage(user_id) {
+    this.router.navigate(["/admin-user-details"], {
+      queryParams: { user_id: user_id },
+    });
+  }
 }

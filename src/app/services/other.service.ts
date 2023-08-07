@@ -1,6 +1,6 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, map } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 
 @Injectable({ providedIn: "root" })
 export class OtherServices {
@@ -8,9 +8,6 @@ export class OtherServices {
 
   public isDialogClosed: boolean = false;
   public isLogoutProcessing: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public isProfilePicUpdated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   public isUserSignedOut: BehaviorSubject<boolean> =
@@ -28,54 +25,13 @@ export class OtherServices {
     false
   );
 
-  public homeClickedTenantReg: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public propertyPageClickedUserProfile: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public overviewClickedpropertyPage: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public myRequestsClickedrequestPage: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public myRequestClickedHome: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public myPropertiesClickedHome: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public reportsClickedHome: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public customerCareClickedHome: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public allRequestsClickedAdminDashboard: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public tenantRequestsDropDownCloseLandlord: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public requestsToggle: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public servicePageToggle: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  // public adminCLientsPageToggle: BehaviorSubject<boolean> =
-  //   new BehaviorSubject<boolean>(false);
-
-  public adminPropertyPageToggle: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  public admin_requests_tab_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   //////////////////////////////////////////////////////
 
   public miniSideBarClicked: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  public adminRequestGotApproved: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   public addMessage(data: any) {

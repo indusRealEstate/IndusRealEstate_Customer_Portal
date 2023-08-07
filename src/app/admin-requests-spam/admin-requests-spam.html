@@ -56,7 +56,8 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
-                (click)="viewRequestsDetails(element)">
+                style="width: 150px; padding: 10px 15px"
+              >
                 {{ element.request_id}}
               </td>
             </ng-container>
@@ -163,8 +164,13 @@
               <td
                 mat-cell
                 *matCellDef="let element;let last = last"
-                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'">
-                {{ getUserName(element.user_id) }}
+                [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+              >
+                <span
+                  class="prop_name"
+                  (click)="navigateToUserDetailsPage(element.user_id)"
+                  >{{ getUserName(element.user_id) }}</span
+                >
               </td>
             </ng-container>
 

@@ -1,12 +1,5 @@
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
-import { TableFiltersComponent } from "app/components/table-filters/table-filters";
-import { AdminService } from "app/services/admin.service";
-import { AuthenticationService } from "app/services/authentication.service";
+import { Component, HostListener, OnInit } from "@angular/core";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "admin-requests",
@@ -16,33 +9,14 @@ import { AuthenticationService } from "app/services/authentication.service";
 export class AdminRequests implements OnInit {
   isUserSignedIn: boolean = false;
 
-  ngAfterViewInitInitialize: boolean = false;
-
-  loadingTable: any[] = [1, 2, 3, 4, 5];
-
-  statusMenuOpened: boolean = false;
-  flaggedRequest: boolean = false;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  @ViewChild("table_filter") table_filter: TableFiltersComponent;
-
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
-    private adminService: AdminService,
-    private dialog: MatDialog
-  ) {
-
+  constructor(private otherServices: OtherServices) {
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
   }
 
   allProperties: any[] = [];
   allUnits: any[] = [];
   allUsers: any[] = [];
+
 
   screenHeight: number;
   screenWidth: number;
@@ -52,10 +26,13 @@ export class AdminRequests implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
+  async ngOnInit() {}
 
-  async ngOnInit() {
-    
+  matTabClick(tab: any) {
+    this.otherServices.admin_requests_tab_toggle.next(true);
+
+    setTimeout(() => {
+      this.otherServices.admin_requests_tab_toggle.next(false);
+    });
   }
-
 }
-

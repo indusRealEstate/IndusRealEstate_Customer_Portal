@@ -305,6 +305,12 @@ export class AllLeasesComponent implements OnInit {
     });
   }
 
+  navigateToUserDetailsPage(user_id) {
+    this.router.navigate(["/admin-user-details"], {
+      queryParams: { user_id: user_id },
+    });
+  }
+
   viewDetails(data: string) {
     this.router.navigate(["/admin-lease-details"], {
       queryParams: { contact_id: data },
