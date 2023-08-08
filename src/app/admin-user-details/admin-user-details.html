@@ -1,6 +1,5 @@
 <div id="full-screen-image">
   <button class="close-btn" title="Exit">
-
     <img
       matTooltip="Close"
       matTooltipClass="tooltip"
@@ -8,146 +7,141 @@
       (click)="onCloseDialog()"
       class="mr-2 mt-1 close-icon"
       src="assets/img/svg/req-details/close-circle.svg"
-      alt />
+      alt
+    />
   </button>
-  <img src alt id="image">
+  <img src alt id="image" />
 </div>
 
 <div class="main-content" *ngIf="screenWidth > 430">
-  <div class="container-fluid"
-    style="max-width: 100vw">
-
-    <ngx-skeleton-loader *ngIf="isContentLoading"
-      [theme]="{ width: (500) + 'px', height: '40px' }">
+  <div class="container-fluid" style="max-width: 100vw">
+    <ngx-skeleton-loader
+      *ngIf="isContentLoading"
+      [theme]="{ width: (500) + 'px', height: '40px' }"
+    >
     </ngx-skeleton-loader>
     <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-12">
-        <h4 class="item-header">User profile <span
-            [ngClass]=" isOwner == true ? 'tag-active' : 'tag-deactive'"
-            class="tag text-uppercase">{{all_data.user_type}}</span></h4>
+        <h4 class="item-header">
+          User profile
+          <span
+            class="tag text-uppercase ml-2"
+            style="
+              padding: 8px 15px;
+              border-radius: 5px;
+              background-color: #d4aa3226 !important;
+              border: 1px solid #d4aa3275;
+              color: #cb9909 !important;
+            "
+            >{{all_data.user_type}}</span
+          >
+        </h4>
       </div>
     </div>
 
-    <ngx-skeleton-loader *ngIf="isContentLoading"
-      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }">
+    <ngx-skeleton-loader
+      *ngIf="isContentLoading"
+      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
+    >
     </ngx-skeleton-loader>
     <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-8">
-        <div class="card card-main">
+        <div class="card card-main" style="height: 100%">
           <div class="card-header top-profile">
-            <div class="row profile-top-row">
-
-            </div>
+            <div class="row profile-top-row"></div>
             <div class="row profile-bottom-row">
-              <img src="{{profile_image}}" alt
+              <img
+                src="{{profile_image}}"
+                alt
                 class="card-img-top user-image m-auto"
-                (click)="viewImageOfUnit()">
+                (click)="viewImageOfUnit()"
+              />
             </div>
           </div>
-          <div class="card-body profile-body">
-            <h4 class="title-header">{{all_data.user_name}}</h4>
+          <div class="card-body profile-body" style="padding-top: 0 !important">
+            <h4 class="title-header mb-3">{{all_data.user_name}}</h4>
             <div class="row text-uppercase">
-
               <div class="col-6 pb-2" *ngIf="all_data.user_id_type != ''">
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    {{all_data.user_id_type}}
-                  </div>
-                  <div class="col-7 value">
-                    {{all_data.user_id_number}}
-                  </div>
+                  <div class="col-5 name">{{all_data.user_id_type}}</div>
+                  <div class="col-7 value">{{all_data.user_id_number}}</div>
                 </div>
               </div>
 
               <div class="col-6 pb-2" *ngIf="all_data.user_gender != ''">
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    gender
-                  </div>
-                  <div class="col-7 value">
-                    {{all_data.user_gender}}
-                  </div>
+                  <div class="col-5 name">gender</div>
+                  <div class="col-7 value">{{all_data.user_gender}}</div>
                 </div>
               </div>
 
               <div class="col-6 pb-2" *ngIf="all_data.user_email != ''">
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    email
-                  </div>
-                  <div class="col-7 value">
-                    {{all_data.user_email}}
-                  </div>
+                  <div class="col-5 name">email</div>
+                  <div class="col-7 value">{{all_data.user_email}}</div>
                 </div>
               </div>
 
-              <div class="col-6 pb-2"  *ngIf="all_data.user_alternative_email != ''">
+              <div
+                class="col-6 pb-2"
+                *ngIf="all_data.user_alternative_email != ''"
+              >
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    alternative email
-                  </div>
+                  <div class="col-5 name">alternative email</div>
                   <div class="col-7 value">
                     {{all_data.user_alternative_email}}
                   </div>
                 </div>
               </div>
 
-              <div class="col-6 pb-2"  *ngIf="all_data.user_mobile_number != ''">
+              <div class="col-6 pb-2" *ngIf="all_data.user_mobile_number != ''">
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    contact number
-                  </div>
+                  <div class="col-5 name">contact number</div>
                   <div class="col-7 value">
-                    {{all_data.user_country_code_number + ' - ' + all_data.user_mobile_number}}
+                    {{all_data.user_country_code_number + ' - ' +
+                    all_data.user_mobile_number}}
                   </div>
                 </div>
               </div>
 
-              <div class="col-6 pb-2"  *ngIf="all_data.user_alternative_mobile_number != ''">
+              <div
+                class="col-6 pb-2"
+                *ngIf="all_data.user_alternative_mobile_number != ''"
+              >
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    alternative contact number
-                  </div>
+                  <div class="col-5 name">alternative contact number</div>
                   <div class="col-7 value">
-                    {{all_data.user_country_code_alternative_number + ' - ' + all_data.user_alternative_mobile_number}}
+                    {{all_data.user_country_code_alternative_number + ' - ' +
+                    all_data.user_alternative_mobile_number}}
                   </div>
                 </div>
               </div>
 
-              <div class="col-6 pb-2"  *ngIf="all_data.user_dob != ''">
+              <div class="col-6 pb-2" *ngIf="all_data.user_dob != ''">
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    date of birth
-                  </div>
-                  <div class="col-7 value">
-                    {{all_data.user_dob | date}}
-                  </div>
+                  <div class="col-5 name">date of birth</div>
+                  <div class="col-7 value">{{all_data.user_dob | date}}</div>
                 </div>
               </div>
 
-              <div class="col-6 pb-2"  *ngIf="all_data.user_nationality != ''">
+              <div class="col-6 pb-2" *ngIf="all_data.user_nationality != ''">
                 <div class="row w-100">
-                  <div class="col-5 name">
-                    nationality
-                  </div>
-                  <div class="col-7 value">
-                    {{all_data.user_nationality}}
-                  </div>
+                  <div class="col-5 name">nationality</div>
+                  <div class="col-7 value">{{all_data.user_nationality}}</div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="card card-main doc-column">
+      <div class="col-md-4 pl-0">
+        <div class="card card-main doc-column" style="height: 100%">
           <div class="card-header">
             <h4 class="title-header">User documents</h4>
           </div>
           <div class="card-body">
-            <div class="row table-row">
+            <div class="row table-row m-0">
               <table class="teble table-striped w-100 px-3 detail-table">
                 <!-- <thead class="thead">
                   <tr>
@@ -157,13 +151,19 @@
                 </thead> -->
                 <tbody class="tbody text-uppercase">
                   <tr scope="row" *ngFor="let item of user_doc; let index = i">
-                    <th class="p-3 " scope="col-8">{{item}}</th>
+                    <th class="p-3" scope="col-8">{{item}}</th>
                     <td class="p-3 d-flex" scope="col-4">
-                      <button (click)="downloadDoc(item)"
+                      <button
+                        (click)="downloadDoc(item)"
                         class="btn open-external-link-icon mx-auto"
-                        title="extenal"><img
-                          src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                          alt></button>
+                        title="extenal"
+                      >
+                        <img
+                          style="filter: brightness(0) invert(1); width: 20px"
+                          src="assets/img/svg/document-download.svg"
+                          alt
+                        />
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -174,11 +174,16 @@
       </div>
     </div>
 
-    <ngx-skeleton-loader *ngIf="isContentLoading"
-      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }">
+    <ngx-skeleton-loader
+      *ngIf="isContentLoading"
+      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
+    >
     </ngx-skeleton-loader>
-    <div class="row" *ngIf="!isContentLoading">
-      <div class="col-md-12 mx-auto" *ngIf="all_data.property != 'none'">
+    <div class="row m-0" *ngIf="!isContentLoading">
+      <div
+        class="col-md-12 mx-auto p-0 mt-3"
+        *ngIf="all_data.property != 'none'"
+      >
         <div class="card card-main">
           <div class="card-header"><h4 class="title-header">Property</h4></div>
           <div class="card-body detail-table">
@@ -191,16 +196,23 @@
                   </tr>
                 </thead>
                 <tbody class="tbody text-uppercase">
-                  <tr scope="row"
-                    *ngFor="let item of all_data.property; let index = i">
-                    <td class="p-3" scope="col-10">{{item.prop_name + ' - ' +
-                      item.prop_address}}</td>
-                    <td class="p-3 d-flex" scope="col-2"><button
+                  <tr
+                    scope="row"
+                    *ngFor="let item of all_data.property; let index = i"
+                  >
+                    <td class="p-3" scope="col-10">
+                      {{item.prop_name + ' - ' + item.prop_address}}
+                    </td>
+                    <td class="p-3 d-flex" scope="col-2">
+                      <button
                         (click)="navigateToProprety(item.prop_uid)"
                         class="btn open-external-link-icon mx-auto"
-                        title="extenal"><img
+                        title="extenal"
+                      >
+                        <img
                           src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                          alt>
+                          alt
+                        />
                       </button>
                     </td>
                   </tr>
@@ -212,13 +224,17 @@
       </div>
     </div>
 
-    <ngx-skeleton-loader *ngIf="isContentLoading"
-      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }">
+    <ngx-skeleton-loader
+      *ngIf="isContentLoading"
+      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
+    >
     </ngx-skeleton-loader>
     <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-12 mx-auto" *ngIf="all_data.unit != 'none'">
         <div class="card card-main">
-          <div class="card-header"><h4 class="title-header">Unit details</h4></div>
+          <div class="card-header">
+            <h4 class="title-header">Unit details</h4>
+          </div>
           <div class="card-body detail-table">
             <div class="table-row">
               <table class="teble table-striped w-100 px-3 detail-table">
@@ -230,17 +246,25 @@
                   </tr>
                 </thead>
                 <tbody class="tbody text-uppercase">
-                  <tr scope="row"
-                    *ngFor="let item of all_data.unit; let index = i">
+                  <tr
+                    scope="row"
+                    *ngFor="let item of all_data.unit; let index = i"
+                  >
                     <td class="p-3 col-md-2">{{item.unit_no}}</td>
-                    <td class="p-3 col-md-8">{{item.unit_no + ' - ' + item.prop_name + ' - ' +
-                      item.prop_address}}</td>
-                    <td class="p-3 col-md-2"><button
+                    <td class="p-3 col-md-8">
+                      {{item.unit_no + ' - ' + item.prop_name + ' - ' +
+                      item.prop_address}}
+                    </td>
+                    <td class="p-3 col-md-2">
+                      <button
                         (click)="navigateToUnit(item.unit_id)"
                         class="btn open-external-link-icon mx-auto"
-                        title="extenal"><img
+                        title="extenal"
+                      >
+                        <img
                           src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                          alt>
+                          alt
+                        />
                       </button>
                     </td>
                   </tr>
@@ -250,6 +274,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
+</div>
