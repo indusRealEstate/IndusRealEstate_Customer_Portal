@@ -154,16 +154,19 @@ ngx-skeleton-loader {
           td{
             font-weight: 500;
           }
-          tr:nth-of-type(odd) {
+          tr:nth-of-type(odd) { 
             background-color: #d4aa3282;
           }
           tr:last-child {
             border-bottom-right-radius: 10px;
             border-bottom-left-radius: 10px;
-            th{
+            th:first-child{
               border-bottom-left-radius: 10px;
+              // @if((td:first-child) : false){
+              //   border-bottom-right-radius: 10px;
+              // }
             }
-            td{
+            td:last-child{
               border-bottom-right-radius: 10px;
             }
           }
@@ -601,3 +604,14 @@ select:focus {
   font-weight: 600;
   font-size: 1.01975rem;
 }
+
+::ng-deep mat-icon-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    margin: 0;
+    padding: 0;
+  }
+}
+
