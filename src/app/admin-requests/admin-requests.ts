@@ -9,14 +9,15 @@ import { OtherServices } from "app/services/other.service";
 export class AdminRequests implements OnInit {
   isUserSignedIn: boolean = false;
 
-  constructor(private otherServices: OtherServices) {
+  constructor(
+    private otherServices: OtherServices,
+  ) {
     this.getScreenSize();
   }
 
   allProperties: any[] = [];
   allUnits: any[] = [];
   allUsers: any[] = [];
-
 
   screenHeight: number;
   screenWidth: number;
@@ -27,6 +28,8 @@ export class AdminRequests implements OnInit {
   }
 
   async ngOnInit() {}
+
+  ngAfterViewInit() {}
 
   matTabClick(tab: any) {
     this.otherServices.admin_requests_tab_toggle.next(true);
