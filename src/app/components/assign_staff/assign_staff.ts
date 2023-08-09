@@ -76,34 +76,35 @@ export class DialogAssignStaff implements OnInit {
     let job = this.f.job_type.value;
 
     let data = {
-      request_id : this.request_id,
+      request_id: this.request_id,
       id: user[0],
       job: job,
     };
 
     console.log(this.msg);
 
-    this.apiAdminService.assignStaff(JSON.stringify(data)).subscribe((value:any)=>{
-      if(value.status > 0){
-        this.msg = value.msg;
-        this.status = true;
-      }
-      else{
-        this.msg = value.msg;
-        this.status = false;
-      }
+    this.apiAdminService
+      .assignStaff(JSON.stringify(data))
+      .subscribe((value: any) => {
+        if (value.status > 0) {
+          this.msg = value.msg;
+          this.status = true;
+        } else {
+          this.msg = value.msg;
+          this.status = false;
+        }
 
-      setTimeout(() => {
-        let user = this.select_user.split("->");
-        this.dialogRef.close({
-          data:{
-            user_id: user[0],
-            user_name: user[1],
-            job: this.f.job_type.value
-          }
-        });
-      }, 2000);
-    })
+        let output_data = (value.user_data !== "") ? value.user_data : "";
+
+        console.log(value.user_data);
+
+        setTimeout(() => {
+          let user = this.select_user.split("->");
+          this.dialogRef.close({
+            output_data
+          });
+        }, 2000); 
+      });
   }
 
   get_image_data(event) {

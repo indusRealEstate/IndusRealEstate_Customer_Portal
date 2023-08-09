@@ -1,0 +1,58 @@
+<div
+  class="card card-main category-dialog"
+  style="margin: 0; width: 75vw; height: 75vh;"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
+  <div class="card-header position-relative border-0">
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </div>
+  <div class="card-body">
+
+    <div class="row" style="flex-wrap: wrap;">
+      <div class="col-2 position-relative"
+        *ngFor="let item of media_array; let index = i">
+
+        <button class="btn"
+          (click)="downloadItem(link + item, item.split('.')[1], item)"
+          matTooltip="Download"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          style="
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 2rem !important;
+                height: 2rem !important;
+                padding: 0 !important;
+                display: flex;
+                background: #be9830;
+        ">
+          <img
+            style="
+                display: flex;
+                width: 1.5rem;
+                margin: auto;
+                filter: invert(1);
+            "
+            src="assets/img/svg/common-icons/download.svg"
+            alt />
+        </button>
+        <img *ngIf="image_type_array.includes(item.split('.')[1])"
+          src="{{link + item}}" alt
+          style="object-fit: cover; object-position: center; aspect-ratio: 1/1; width: 100%;">
+
+        <video controls *ngIf="video_type_array.includes(item.split('.')[1])"
+          style="aspect-ratio: 1/1; width: 100%;">
+          <source src="{{link + item}}" type="video/{{item.split('.')[1]}}">
+        </video>
+      </div>
+    </div>
+  </div>
+</div>

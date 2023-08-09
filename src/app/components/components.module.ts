@@ -39,6 +39,7 @@ import { CountryDropdown } from "./country-dropdown/country-dropdown";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
+import { DialogViewMedia } from "./view_media/view_media";
 
 @NgModule({
   imports: [
@@ -84,6 +85,7 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
     AddUserDialog,
     AddLeaseDialog,
     CountryDropdown,
+    DialogViewMedia
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

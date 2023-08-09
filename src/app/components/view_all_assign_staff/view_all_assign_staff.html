@@ -1,0 +1,42 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
+  <!-- <div class="card-header"></div> -->
+  <div class="card-header position-relative">
+    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
+    <h4 class="text-center">Assign Staff details</h4>
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </div>
+
+  <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
+    <div class="table-row">
+      <table class="teble table-striped w-100 px-3">
+        <thead class="thead">
+          <tr>
+            <th scope="col" class="p-3">name</th>
+            <th scope="col" class="p-3">Assign task</th>
+            <th scope="col" class="p-3">Assign Date & time</th>
+          </tr>
+        </thead>
+        <tbody class="tbody text-uppercase">
+          <tr scope="row" *ngFor="let item of assign_staff; let index = i">
+            <th class="p-3 col-md-4" (click)="viewUser(item.user_id)"
+              style="cursor: pointer;" scope="row">{{item.user_name}}</th>
+            <td class="p-3 col-md-4">{{item.job}}</td>
+            <td class="p-3 col-md-4">{{item.date_and_time | date:
+              'yyyy-MM-dd HH:mm:ss'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

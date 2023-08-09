@@ -14,6 +14,8 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ViewAllAsignStaff } from "app/components/view_all_assign_staff/view_all_assign_staff";
 
 @Component({
   selector: "requests-table",
@@ -57,11 +59,19 @@ export class RequestsTable implements OnInit {
 
   @Input() tableTitle = "";
 
+  assigned_user: object = {
+    job: "",
+    user_name: "",
+    user_id: "",
+    date_and_time: "",
+  };
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private adminService: AdminService,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
+    public dialog: MatDialog
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
@@ -160,6 +170,7 @@ export class RequestsTable implements OnInit {
       .getAllRequestsAdmin()
       .subscribe((va: any[]) => {
         this.allRequests = va;
+
         var status = this.getRequestStatusOnIndex();
         if (status == "no-filter") {
           this.allRequestsMatTableData = new MatTableDataSource(va);
@@ -255,7 +266,7 @@ export class RequestsTable implements OnInit {
       queryParams: { prop_id: prop_id },
     });
   }
-  
+
   navigateToUserDetailsPage(user_id) {
     this.router.navigate(["/admin-user-details"], {
       queryParams: { user_id: user_id },
@@ -280,6 +291,11 @@ export class RequestsTable implements OnInit {
       .subscribe((value) => {
         this.refreshTable();
       });
+  }
+
+  getstaffName(data) {
+    var obj = JSON.parse(data.staff_assigned);
+    return obj.user_name;
   }
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
@@ -315,6 +331,25 @@ export class RequestsTable implements OnInit {
         return "cancelled";
       default:
         return "no-filter";
+    }
+  }
+
+  viewAllAssignStaffList(data: any) {
+    this.dialog.open(ViewAllAsignStaff, {
+      data,
+    });
+  }
+
+  getOnlyName(data: any){
+    return JSON.parse(data).name;
+  }
+
+  isNameEmpty(data: any){
+    if(JSON.parse(data).name !== undefined){
+      return true
+    }
+    else{
+      return false
     }
   }
 }
