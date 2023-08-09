@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
+import { FirebaseService } from "app/services/firebase.service";
 import { OtherServices } from "app/services/other.service";
 
 @Component({
@@ -11,13 +12,10 @@ export class AdminRequests implements OnInit {
 
   constructor(
     private otherServices: OtherServices,
+    private firebaseService: FirebaseService
   ) {
     this.getScreenSize();
   }
-
-  allProperties: any[] = [];
-  allUnits: any[] = [];
-  allUsers: any[] = [];
 
   screenHeight: number;
   screenWidth: number;
@@ -27,7 +25,18 @@ export class AdminRequests implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    await this.firebaseService.firebaseLogin().then(async () => {
+      this.firebaseService.getData().subscribe((res : any[]) => {
+         var new_reqs = [];
+         res.forEach((doc)=>{
+          if(doc.seen == false){
+            
+          }
+         })
+      });
+    });
+  }
 
   ngAfterViewInit() {}
 

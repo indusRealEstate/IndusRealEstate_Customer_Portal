@@ -5,13 +5,14 @@
 
 export const environment = {
   firebase: {
-    apiKey: "AIzaSyCSN-OkKzwdGo6FLCDo_9rnGJ6T2E-sXIU",
-    authDomain: "indus-real-time.firebaseapp.com",
-    projectId: "indus-real-time",
-    storageBucket: "indus-real-time.appspot.com",
-    messagingSenderId: "230132059179",
-    appId: "1:230132059179:web:f2d18333b4179e19662e6e",
-    measurementId: "G-L299VNY022",
+    projectId: 'indus-real-time',
+    appId: '1:230132059179:web:f2d18333b4179e19662e6e',
+    databaseURL: 'https://indus-real-time-default-rtdb.firebaseio.com',
+    storageBucket: 'indus-real-time.appspot.com',
+    apiKey: 'AIzaSyCSN-OkKzwdGo6FLCDo_9rnGJ6T2E-sXIU',
+    authDomain: 'indus-real-time.firebaseapp.com',
+    messagingSenderId: '230132059179',
+    measurementId: 'G-L299VNY022',
   },
   production: false,
   GAPI_CLIENT_ID:

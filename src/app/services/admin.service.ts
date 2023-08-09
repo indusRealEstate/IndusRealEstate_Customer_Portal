@@ -26,6 +26,15 @@ export class AdminService {
     };
   }
 
+  getLatestServiceRequest(data: any) {
+    const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllRequestsAdmin() {
     const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -411,25 +420,25 @@ export class AdminService {
     );
   }
 
-  updateRequestMore(data:any){
+  updateRequestMore(data: any) {
     const url = `${API_URL}/updateRequestMore.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  updateRequestStatus(data:any){
+  updateRequestStatus(data: any) {
     const url = `${API_URL}/updateRequestStatus.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  selectStaff(){
+  selectStaff() {
     const url = `${API_URL}/selectStaff.php?apikey=1`;
     return this.http.get<any>(url).pipe(
       map((data) => {
@@ -438,9 +447,9 @@ export class AdminService {
     );
   }
 
-  assignStaff(data:string){
+  assignStaff(data: string) {
     const url = `${API_URL}/assignStaff.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
