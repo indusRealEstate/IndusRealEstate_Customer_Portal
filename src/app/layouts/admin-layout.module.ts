@@ -84,6 +84,7 @@ import { DetailsComponents } from "app/property-details/details-properties";
 import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 import { AdminReport } from "app/admin-report/admin-report";
+import { AdminFinancialReport } from "app/admin-financial-report/admin-financial-report";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
@@ -169,6 +170,7 @@ import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-
     ViewUnitImageDialog,
     ReviewRequestDialog,
     AdminReport,
+    AdminFinancialReport,
     LoginComponent,
 
     AdminProperties,

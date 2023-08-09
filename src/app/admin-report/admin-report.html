@@ -44,22 +44,33 @@
 
       <mat-card>
         <mat-card-content>
-          <div class="row" style="height: 3rem">
+          <div class="row" style="height: 2.3rem">
             <div class="col-md-6">
               <span class="" style="font-weight: 600">Usage</span>
             </div>
             <div class="col-md-2">
-              <mat-form-field style="width: 100%">
+              <!-- <mat-form-field style="width: 100%">
                 <mat-label>All Campaigns</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let item of staff" [value]="item.value">
                     {{item.viewValue}}
                   </mat-option>
                 </mat-select>
+              </mat-form-field> -->
+              <mat-form-field  class="textField w-100 h-50vh" appearance="outline">
+                <mat-label class="m-lable">All Campaigns</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let item of staff"
+                    [value]="item.value"
+                  >
+                    {{item.viewValue}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <div class="col-md-2">
-              <mat-form-field style="width: 100%">
+              <mat-form-field  class="textField w-100" appearance="outline">
                 <mat-label>Usage By Campaigns</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -71,8 +82,8 @@
             <div class="col-md-1">
               <div class="example-button-row">
                 <button
-                  mat-raised-button
-                  class="mt-2"
+                mat-stroked-button
+                  class=" mat-s-btn"
                   style="justify-content: space-between"
                 >
                   <img
@@ -87,9 +98,9 @@
             <div class="col-md-1">
               <div class="example-button-row">
                 <button
-                  mat-raised-button
-                  class="mt-2"
-                  style="justify-content: space-between"
+                mat-stroked-button
+                  class="mat-s-btn"
+                  style=""
                 >
                   <img
                     src="assets/img/svg/admin-dashboard/more.png"
@@ -113,11 +124,11 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-4">
-                <span class="mt-3" style="font-weight: 600; float:right; ">Filters</span>
+                <span class="mt-2" style="font-weight: 600; float:right; ">Filters</span>
               </div>
               <div class="col-4">
-                <mat-form-field style="width: 100%">
-                  <mat-label>All Campaigns</mat-label>
+                <mat-form-field  class="textField w-100" appearance="outline">
+                  <mat-label>Clicks</mat-label>
                   <mat-select>
                     <mat-option *ngFor="let item of staff" [value]="item.value">
                       {{item.viewValue}}
@@ -126,7 +137,7 @@
                 </mat-form-field>
               </div>
               <div class="col-4">
-                <mat-form-field style="width: 100%">
+                <mat-form-field  class="textField w-100" appearance="outline">
                   <mat-label>All Campaigns</mat-label>
                   <mat-select>
                     <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -185,25 +196,44 @@
               </kendo-chart-series>
             </kendo-chart-area>
           </kendo-chart>
-          <div class="row m-0 mt-3 align-items-center justify-content-center">
-            <span style="width: 50px; background: #3db9ac; height: 15px"></span>
-            <span class="ml-2" style="font-weight: 500">No Action</span>
+          <div class="row m-0 mt-3 ">
+            <div style="background: #f4ffff; padding: 0.5rem;">
+              <span class="ml-2 mt-2" style="font-weight: 600">Key</span>
+            <span style="width: 8px; background: #3db9ac; height: 8px; border-radius: 50%;z-index: 1000;position: relative;
+            left: 0px;
+            top: 0px;
+            left:5px;
+            display: inline-block;" class=" ml-2"></span>
+            <span class="ml-2 mt-2" style="font-weight: 500">No Action</span>
             <span
               class="ml-4"
-              style="width: 50px; background: #feda6a; height: 15px"
+              style="width: 8px; background: #feda6a; height: 8px;border-radius: 50%; z-index: 1000;position: relative;
+              left: 0px;
+              top: 0px;
+              left:5px;
+              display: inline-block;" class="mt-2 ml-2"
             ></span>
-            <span class="ml-2" style="font-weight: 500">Contracted</span>
+            <span class="ml-2 mt-2" style="font-weight: 500">Contracted</span>
             <span
               class="ml-4"
-              style="width: 50px; background: #93cf3c; height: 15px"
+              style="width: 8px; background: #93cf3c; height: 8px;border-radius: 50%; z-index: 1000;position: relative;
+              left: 0px;
+              top: 0px;
+              left:5px;
+              display: inline-block;" class="mt-2 ml-2"
             ></span>
             <span class="ml-2" style="font-weight: 500">Renewing</span>
             <span
               class="ml-4"
-              style="width: 50px; background: #fe8178; height: 15px"
+              style="width: 8px; background: #fe8178; height: 8px;border-radius: 50%; z-index: 1000;position: relative;
+              left: 0px;
+              top: 0px;
+              left:5px;
+              display: inline-block;" class="mt-2 ml-2"
             ></span>
             <span class="ml-2" style="font-weight: 500">Not Renewing</span>
           </div>
+        </div>
         </mat-card-content>
       </mat-card>
       <div class="row mt-3">
