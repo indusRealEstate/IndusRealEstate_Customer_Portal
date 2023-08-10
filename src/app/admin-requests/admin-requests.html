@@ -8,8 +8,12 @@
   >
     <div class="col mat-tab-requests" style="padding: 0">
       <mat-tab-group (selectedTabChange)="matTabClick($event)">
+        <!-- [pageIndex]="allRequestsMatTableData != undefined ? allRequestsMatTableData.paginator.pageIndex : ''"
+            [length]="allRequestsMatTableData != undefined ? allRequestsMatTableData.paginator.length : ''"
+            [pageSizeOptions]="allRequestsMatTableData != undefined ? allRequestsMatTableData.paginator.pageSizeOptions : ''" -->
         <mat-tab label="All">
           <requests-table
+            #request_table_0
             [tableTitle]="'All Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -18,6 +22,7 @@
         </mat-tab>
         <mat-tab label="Open">
           <requests-table
+            #request_table_1
             [tableTitle]="'Open Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -26,6 +31,7 @@
         </mat-tab>
         <mat-tab label="Assigned">
           <requests-table
+            #request_table_2
             [tableTitle]="'Assigned Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -34,6 +40,7 @@
         </mat-tab>
         <mat-tab label="In Progress">
           <requests-table
+            #request_table_3
             [tableTitle]="'In Progress Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -42,6 +49,7 @@
         </mat-tab>
         <mat-tab label="Completed">
           <requests-table
+            #request_table_4
             [tableTitle]="'Completed Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -50,6 +58,7 @@
         </mat-tab>
         <mat-tab label="Hold">
           <requests-table
+            #request_table_5
             [tableTitle]="'Hold Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -58,6 +67,7 @@
         </mat-tab>
         <mat-tab label="Re-Open">
           <requests-table
+            #request_table_6
             [tableTitle]="'Re-Open Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -66,6 +76,7 @@
         </mat-tab>
         <mat-tab label="Re-Assigned">
           <requests-table
+            #request_table_7
             [tableTitle]="'Re-Assigned Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -74,6 +85,7 @@
         </mat-tab>
         <mat-tab label="Rejected">
           <requests-table
+            #request_table_8
             [tableTitle]="'Rejected Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"
@@ -82,6 +94,7 @@
         </mat-tab>
         <mat-tab label="Cancelled">
           <requests-table
+            #request_table_9
             [tableTitle]="'Cancelled Requests'"
             [isContentLoading]="isContentLoading"
             [allRequestsMatTableData]="allRequestsMatTableData"

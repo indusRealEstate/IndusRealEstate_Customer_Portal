@@ -1,6 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+import {
+  MatTableDataSource,
+  MatTableDataSourcePaginator,
+} from "@angular/material/table";
 import { AdminService } from "app/services/admin.service";
 import { FirebaseService } from "app/services/firebase.service";
 import { RequestsTable } from "./components/requests-table/requests-table";
@@ -17,8 +20,17 @@ export class AdminRequests implements OnInit {
   allRequestsMatTableData: MatTableDataSource<any>;
   isContentLoading: boolean = false;
 
-  paginator: MatPaginator;
-  @ViewChild(RequestsTable) request_table: RequestsTable;
+  // paginator: MatPaginator;
+  @ViewChild("request_table_0") request_table_0: RequestsTable;
+  @ViewChild("request_table_1") request_table_1: RequestsTable;
+  @ViewChild("request_table_2") request_table_2: RequestsTable;
+  @ViewChild("request_table_3") request_table_3: RequestsTable;
+  @ViewChild("request_table_4") request_table_4: RequestsTable;
+  @ViewChild("request_table_5") request_table_5: RequestsTable;
+  @ViewChild("request_table_6") request_table_6: RequestsTable;
+  @ViewChild("request_table_7") request_table_7: RequestsTable;
+  @ViewChild("request_table_8") request_table_8: RequestsTable;
+  @ViewChild("request_table_9") request_table_9: RequestsTable;
 
   matTabIndex: any = 0;
 
@@ -86,23 +98,6 @@ export class AdminRequests implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    if (
-      this.allRequestsMatTableData != undefined &&
-      this.request_table != undefined
-    ) {
-      this.allRequestsMatTableData.paginator = this.request_table.paginator;
-    }
-  }
-
-  getPaginator() {
-    if (this.allRequestsMatTableData != undefined) {
-      return this.allRequestsMatTableData.paginator;
-    } else {
-      return this.paginator;
-    }
-  }
-
   fetchData() {
     this.adminService
       .getAllRequestsAdmin()
@@ -112,9 +107,14 @@ export class AdminRequests implements OnInit {
       })
       .add(() => {
         this.isContentLoading = false;
+
         if (this.matTabIndex != 0) {
           this.filterRequests(this.matTabIndex);
         }
+
+        setTimeout(() => {
+          this.initializePaginator(this.matTabIndex);
+        });
       });
   }
 
@@ -162,10 +162,48 @@ export class AdminRequests implements OnInit {
     }
   }
 
+  initializePaginator(index) {
+    switch (index) {
+      case 0:
+        this.allRequestsMatTableData.paginator = this.request_table_0.paginator;
+        break;
+      case 1:
+        this.allRequestsMatTableData.paginator = this.request_table_1.paginator;
+        break;
+      case 2:
+        this.allRequestsMatTableData.paginator = this.request_table_2.paginator;
+        break;
+      case 3:
+        this.allRequestsMatTableData.paginator = this.request_table_3.paginator;
+        break;
+      case 4:
+        this.allRequestsMatTableData.paginator = this.request_table_4.paginator;
+        break;
+      case 5:
+        this.allRequestsMatTableData.paginator = this.request_table_5.paginator;
+        break;
+      case 6:
+        this.allRequestsMatTableData.paginator = this.request_table_6.paginator;
+        break;
+      case 7:
+        this.allRequestsMatTableData.paginator = this.request_table_7.paginator;
+        break;
+      case 8:
+        this.allRequestsMatTableData.paginator = this.request_table_8.paginator;
+        break;
+      case 9:
+        this.allRequestsMatTableData.paginator = this.request_table_9.paginator;
+        break;
+      default:
+        this.allRequestsMatTableData.paginator = this.request_table_0.paginator;
+        break;
+    }
+  }
+
   matTabClick(tab: any) {
     this.allRequestsMatTableData.filter = "";
     this.matTabIndex = tab.index;
     this.filterRequests(tab.index);
-    // this.allRequestsMatTableData.paginator = this.request_table.paginator;
+    this.initializePaginator(tab.index);
   }
 }

@@ -139,21 +139,6 @@ export class RequestsTable implements OnInit {
     }
   }
 
-  // ngAfterViewInit() {
-  //   if (this.ngAfterViewInitInitialize == true) {
-  //     if (this.allRequestsMatTableData != undefined) {
-  //       this.allRequestsMatTableData.paginator = this.paginator;
-  //       // this.allRequestsMatTableData.paginator.pageSize = 10;
-  //     }
-  //   } else {
-  //     setTimeout(() => {
-  //       if (this.allRequestsMatTableData != undefined) {
-  //         this.allRequestsMatTableData.paginator = this.paginator;
-  //       }
-  //     });
-  //   }
-  // }
-
   getAllData() {
     var propertiesDataSession = JSON.parse(
       sessionStorage.getItem("admin_properties_session")
