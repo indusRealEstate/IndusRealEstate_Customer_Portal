@@ -19,8 +19,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {Tenant: 'kiran', Rent: 55000, weight: 4.0026, symbol: 'He'},
   {Tenant: 'kiran', Rent: 55000, weight: 6.941, symbol: 'Li'},
   {Tenant: 'kiran', Rent: 55000, weight: 9.0122, symbol: 'Be'},
-  {Tenant: 'kiran', Rent: 55000, weight: 10.811, symbol: 'B'},
-  {Tenant: 'kiran', Rent: 55000, weight: 12.0107, symbol: 'C'},
+  {Tenant: 'kiran', Rent: 55000, weight: 9.0122, symbol: 'Be'},
+ 
+ 
   
 ];
 @Component({
