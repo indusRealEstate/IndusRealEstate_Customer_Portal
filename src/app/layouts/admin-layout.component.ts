@@ -5,6 +5,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import * as $ from "jquery";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import { FirebaseService } from "app/services/firebase.service";
 
 @Component({
   selector: "app-admin-layout",
@@ -26,8 +27,10 @@ export class AdminLayoutComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private otherServices: OtherServices,
+    private firebaseService: FirebaseService
   ) {
     if (this.authenticationService.currentUserValue) {
+      this.firebaseService.firebaseLogin().then(async () => {});
       otherServices.isUserSignedOut.next(false);
       // this.chatService.socket_connect();
     } else {

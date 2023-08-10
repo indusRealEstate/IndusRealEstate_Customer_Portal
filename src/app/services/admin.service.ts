@@ -27,7 +27,7 @@ export class AdminService {
   }
 
   getLatestServiceRequest(data: any) {
-    const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
+    const url = `${API_URL}/get_latest_service_requests.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;

@@ -9,38 +9,84 @@
     <div class="col mat-tab-requests" style="padding: 0">
       <mat-tab-group (selectedTabChange)="matTabClick($event)">
         <mat-tab label="All">
-          <requests-table [tableTitle]="'All Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'All Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Open">
-          <requests-table [tableTitle]="'Open Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Open Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Assigned">
-          <requests-table [tableTitle]="'Assigned Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Assigned Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="In Progress">
           <requests-table
             [tableTitle]="'In Progress Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
         <mat-tab label="Completed">
-          <requests-table [tableTitle]="'Completed Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Completed Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Hold">
-          <requests-table [tableTitle]="'Hold Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Hold Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Re-Open">
-          <requests-table [tableTitle]="'Re-Open Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Re-Open Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Re-Assigned">
           <requests-table
             [tableTitle]="'Re-Assigned Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
         <mat-tab label="Rejected">
-          <requests-table [tableTitle]="'Rejected Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Rejected Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
         <mat-tab label="Cancelled">
-          <requests-table [tableTitle]="'Cancelled Requests'"></requests-table>
+          <requests-table
+            [tableTitle]="'Cancelled Requests'"
+            [isContentLoading]="isContentLoading"
+            [allRequestsMatTableData]="allRequestsMatTableData"
+            (refreshTableEmit)="refreshTable()"
+          ></requests-table>
         </mat-tab>
       </mat-tab-group>
     </div>

@@ -1,16 +1,22 @@
 import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
-import { Observable, map, of } from "rxjs";
+import { Observable, first, map, of } from "rxjs";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
+import {
+  Firestore,
+  collection,
+  collectionChanges,
+} from "@angular/fire/firestore";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseService {
   constructor(
     public http: HttpClient,
     private db: AngularFirestore,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private firestore: Firestore
   ) {}
 
   private handleError<T>(operation = "operation", result?: T) {
@@ -33,10 +39,20 @@ export class FirebaseService {
   }
 
   getData() {
-    var col = this.db
-      .collection("service_requests")
-      .valueChanges();
+    return collectionChanges(
+      collection(this.firestore, "service_requests")
+    ).pipe(
+      map((items) =>
+        items.map((item) => {
+          const data = item.doc.data();
+          const id = item.doc.id;
+          return { id, ...data };
+        })
+      )
+    );
+  }
 
-    return col;
+  async deleteData(id) {
+    await this.db.collection("service_requests").doc(id).delete();
   }
 }
