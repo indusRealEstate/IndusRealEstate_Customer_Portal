@@ -150,6 +150,23 @@ export class AdminService {
     return this.http.request(req);
   }
 
+  uploadAllFilesEditProperty(data: any) {
+    const url = `${API_URL}/upload_edit_property_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
+  }
+
+  updateProperty(data: any) {
+    const url = `${API_URL}/updateProperty.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   uploadAllFilesAddUnit(data: any) {
     const url = `${API_URL}/upload_add_unit_files.php?apikey=1`;
     const req = new HttpRequest("POST", url, data, {
