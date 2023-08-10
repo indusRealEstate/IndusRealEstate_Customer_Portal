@@ -553,6 +553,12 @@ ngx-skeleton-loader {
       }
       td {
         font-weight: 500;
+        .row {
+          .col-12 {
+            max-height: 15rem;
+            overflow-y: auto;
+          }
+        }
       }
       tr:nth-of-type(odd) {
         background-color: #d4aa3282;

@@ -41,9 +41,8 @@ export class DialogViewMedia implements OnInit {
     "swf",
     "webm",
   ];
-  link: string =
-    "https://indusre.app/api/mobile_app/upload/service-request/bc580e20-31f5-11ee-9381-c97879996cac/";
-  all_data: any;
+  link: string = "";
+  all_data: any; 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -52,6 +51,9 @@ export class DialogViewMedia implements OnInit {
   ) {
     console.log(data);
     this.all_data = data;
+    this.link = this.all_data.link;
+
+    console.log(this.link);
   }
 
   get_image_data(event) {}
@@ -60,8 +62,7 @@ export class DialogViewMedia implements OnInit {
     for (let i = 0; i < JSON.parse(this.all_data.data).length; i++) {
       this.media_array.push(JSON.parse(this.all_data.data)[i]);
     }
-    console.log(this.media_array);
-    // this.link = this.all_data.link;
+    
   }
 
   ngAfterViewInit() {}

@@ -254,7 +254,7 @@ export class AdminRequestsDetails implements OnInit {
     this.dialog
       .open(DialogViewMedia, {
         data: {
-          link: `indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
+          link: `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
           data: data,
         },
       })

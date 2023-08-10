@@ -1,9 +1,11 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 import { AdminService } from "app/services/admin.service";
 import { DownloadService } from "app/services/download.service";
 import { HttpClient } from "@angular/common/http";
+import { MatDialog } from "@angular/material/dialog";
+import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 
 @Component({
   selector: "property-details",
@@ -28,6 +30,9 @@ export class DetailsComponents implements OnInit {
   view_list: boolean = false;
   all_units: object[] = [];
 
+  @ViewChild('carousel') carousel;
+  @ViewChild('indicator') indicator;
+
   selected_document: any = "";
   //downloadService: any;
   // property_name:string;
@@ -38,7 +43,8 @@ export class DetailsComponents implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private appdownloadService: DownloadService,
-    public http: HttpClient
+    public http: HttpClient,
+    public dialog: MatDialog
   ) {
     this.getScreenSize();
     this.isContentLoading = true;
@@ -73,6 +79,10 @@ export class DetailsComponents implements OnInit {
   ngAfterViewInit() {}
 
   async ngOnInit() {
+    this.allData();
+  }
+
+  allData() {
     let data = {
       prop_id: this.prop_id,
     };
@@ -82,102 +92,153 @@ export class DetailsComponents implements OnInit {
         console.log(value);
         this.all_data = value;
 
-        for (let i = 0; i < JSON.parse(this.all_data.prop_images).length; i++) {
-          this.image_array.push(JSON.parse(this.all_data.prop_images)[i]);
-        }
+        this.getDoc(this.all_data.prop_doc);
 
-        const newLocal = this;
-        for (
-          let i = 0;
-          i < JSON.parse(newLocal.all_data.prop_doc).length;
-          i++
-        ) {
-          this.prop_doc.push(JSON.parse(this.all_data.prop_doc)[i]);
-        }
-
-        $(document).ready(() => {
-          // console.log('hello');
-          let carousel = document.getElementById("carousel");
-          let indicator = document.getElementById("indicator");
-
-          for (let i = 0; i < this.image_array.length; i++) {
-            if (i == 0) {
-              let carouselDiv = document.createElement("div");
-              let indicatorDiv = document.createElement("li");
-              carouselDiv.classList.add("carousel-item");
-              carouselDiv.classList.add("active");
-              indicatorDiv.classList.add("active");
-              indicatorDiv.setAttribute(
-                "data-target",
-                "#carouselExampleIndicators"
-              );
-              indicatorDiv.setAttribute("data-slide-to", `${i}`);
-              indicatorDiv.setAttribute(
-                "data-target",
-                "#carouselExampleIndicators"
-              );
-              carousel.append(carouselDiv);
-              indicator.append(indicatorDiv);
-
-              let imgElmnt = document.createElement("img");
-              imgElmnt.classList.add("d-flex");
-              imgElmnt.classList.add("carousel-img");
-              imgElmnt.classList.add("w-100");
-              imgElmnt.style.height = "50vh";
-              imgElmnt.style.objectFit = "cover";
-              imgElmnt.style.objectPosition = "bottom";
-              imgElmnt.style.cursor = "pointer";
-              imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`;
-              imgElmnt.addEventListener("click", () => {
-                this.viewImageOfUnit(
-                  `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`
-                );
-              });
-              carouselDiv.append(imgElmnt);
-            } else {
-              let carouselDiv = document.createElement("div");
-              let indicatorDiv = document.createElement("li");
-              carouselDiv.classList.add("carousel-item");
-              indicatorDiv.setAttribute(
-                "data-target",
-                "#carouselExampleIndicators"
-              );
-              indicatorDiv.setAttribute("data-slide-to", `${i}`);
-              indicatorDiv.setAttribute(
-                "data-target",
-                "#carouselExampleIndicators"
-              );
-              carousel.append(carouselDiv);
-              indicator.append(indicatorDiv);
-
-              let imgElmnt = document.createElement("img");
-              imgElmnt.classList.add("d-block");
-              imgElmnt.classList.add("w-100");
-              imgElmnt.classList.add("carousel-img");
-              imgElmnt.style.height = "50vh";
-              imgElmnt.style.objectFit = "cover";
-              imgElmnt.style.objectPosition = "bottom";
-              imgElmnt.style.cursor = "pointer";
-              imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`;
-              imgElmnt.addEventListener("click", () => {
-                this.viewImageOfUnit(
-                  `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${this.image_array[i]}`
-                );
-              });
-              carouselDiv.append(imgElmnt);
-            }
-          }
-        });
+        this.createCarousel(this.all_data.prop_images)
       })
       .add(() => {
         this.isContentLoading = false;
       });
   }
 
+  private getDoc(data: string){
+    this.prop_doc = [];
+    for (
+      let i = 0;
+      i < JSON.parse(data).length;
+      i++
+    ) {
+      this.prop_doc.push(JSON.parse(data)[i]);
+    }
+  }
+
+  private createCarousel(data:string){
+
+    let image_array: string[] = [];
+
+    for (let i = 0; i < JSON.parse(data).length; i++) {
+      image_array.push(JSON.parse(data)[i]);
+    }
+
+    $(document).ready(() => {
+      // console.log('hello');
+      let carousel = document.getElementById("carousel");
+      let indicator = document.getElementById("indicator");
+
+      if(carousel.firstElementChild !== null){
+        while(carousel.firstElementChild){
+          carousel.removeChild(carousel.firstElementChild)
+        }
+      }
+
+      if(indicator.firstElementChild !== null){
+        while(indicator.firstElementChild){
+          indicator.removeChild(indicator.firstElementChild)
+        }
+      }
+
+      // list.removeChild(list.firstElementChild)
+
+      for (let i = 0; i < image_array.length; i++) {
+        if (i == 0) {
+          let carouselDiv = document.createElement("div");
+          let indicatorDiv = document.createElement("li");
+          carouselDiv.classList.add("carousel-item");
+          carouselDiv.classList.add("active");
+          indicatorDiv.classList.add("active");
+          indicatorDiv.setAttribute(
+            "data-target",
+            "#carouselExampleIndicators"
+          );
+          indicatorDiv.setAttribute("data-slide-to", `${i}`);
+          indicatorDiv.setAttribute(
+            "data-target",
+            "#carouselExampleIndicators"
+          );
+          carousel.append(carouselDiv);
+          indicator.append(indicatorDiv);
+
+          let imgElmnt = document.createElement("img");
+          imgElmnt.classList.add("d-flex");
+          imgElmnt.classList.add("carousel-img");
+          imgElmnt.classList.add("w-100");
+          imgElmnt.style.height = "50vh";
+          imgElmnt.style.objectFit = "cover";
+          imgElmnt.style.objectPosition = "bottom";
+          imgElmnt.style.cursor = "pointer";
+          imgElmnt.src = `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${image_array[i]}`;
+          imgElmnt.addEventListener("click", () => {
+            this.viewImageOfUnit(
+              `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${image_array[i]}`
+            );
+          });
+          carouselDiv.append(imgElmnt);
+        } else {
+          let carouselDiv = document.createElement("div");
+          let indicatorDiv = document.createElement("li");
+          carouselDiv.classList.add("carousel-item");
+          indicatorDiv.setAttribute(
+            "data-target",
+            "#carouselExampleIndicators"
+          );
+          indicatorDiv.setAttribute("data-slide-to", `${i}`);
+          indicatorDiv.setAttribute(
+            "data-target",
+            "#carouselExampleIndicators"
+          );
+          carousel.append(carouselDiv);
+          indicator.append(indicatorDiv);
+
+          let imgElmnt = document.createElement("img");
+          imgElmnt.classList.add("d-block");
+          imgElmnt.classList.add("w-100");
+          imgElmnt.classList.add("carousel-img");
+          imgElmnt.style.height = "50vh";
+          imgElmnt.style.objectFit = "cover";
+          imgElmnt.style.objectPosition = "bottom";
+          imgElmnt.style.cursor = "pointer";
+          imgElmnt.src = `https://indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${image_array[i]}`;
+          imgElmnt.addEventListener("click", () => {
+            this.viewImageOfUnit(
+              `https://indusre.app/api/upload/property/${this.all_data.prop_uid}/images/${image_array[i]}`
+            );
+          });
+          carouselDiv.append(imgElmnt);
+        }
+      }
+    });
+  }
+
   navigateToDetailPage(unit) {
     this.router.navigate(["/admin-property-unit-details"], {
       queryParams: { unit_id: unit },
     });
+
+  }
+
+  openEditProperty(data: string) {
+    this.dialog
+      .open(EditPropertyDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        this.all_data.prop_name = value.property_name != undefined ? value.property_name : this.all_data.prop_name;
+        this.all_data.prop_address = value.property_address != undefined ? value.property_address : this.all_data.prop_address;
+        this.all_data.prop_description = value.property_description != undefined ? value.property_description : this.all_data.prop_description;
+        this.all_data.prop_gov_id = value.property_gov_id != undefined ? value.property_gov_id : this.all_data.prop_gov_id;
+        this.all_data.prop_in_charge = value.property_in_charge != undefined ? value.property_in_charge : this.all_data.prop_in_charge;
+        this.all_data.prop_locality_name = value.property_locality != undefined ? value.property_locality : this.all_data.prop_locality_name;
+        this.all_data.prop_no_of_units = value.property_no_of_units != undefined ? value.property_no_of_units : this.all_data.prop_no_of_units;
+
+        this.all_data.prop_doc = value.property_uploaded_doc != undefined ? JSON.stringify(value.property_uploaded_doc) : this.all_data.prop_doc;
+        this.all_data.prop_images = value.property_uploaded_images != undefined ? JSON.stringify(value.property_uploaded_images) : this.all_data.prop_images;
+        
+        this.createCarousel(this.all_data.prop_images);
+        this.getDoc(this.all_data.prop_doc);
+
+        console.log(value);
+      });
   }
 
   viewImageOfUnit(data: string) {

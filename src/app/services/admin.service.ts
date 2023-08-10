@@ -141,6 +141,23 @@ export class AdminService {
     return this.http.request(req);
   }
 
+  uploadAllFilesEditProperty(data: any) {
+    const url = `${API_URL}/upload_edit_property_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
+  }
+
+  updateProperty(data: any) {
+    const url = `${API_URL}/updateProperty.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   uploadAllFilesAddUnit(data: any) {
     const url = `${API_URL}/upload_add_unit_files.php?apikey=1`;
     const req = new HttpRequest("POST", url, data, {
@@ -411,25 +428,25 @@ export class AdminService {
     );
   }
 
-  updateRequestMore(data:any){
+  updateRequestMore(data: any) {
     const url = `${API_URL}/updateRequestMore.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  updateRequestStatus(data:any){
+  updateRequestStatus(data: any) {
     const url = `${API_URL}/updateRequestStatus.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  selectStaff(){
+  selectStaff() {
     const url = `${API_URL}/selectStaff.php?apikey=1`;
     return this.http.get<any>(url).pipe(
       map((data) => {
@@ -438,9 +455,9 @@ export class AdminService {
     );
   }
 
-  assignStaff(data:string){
+  assignStaff(data: string) {
     const url = `${API_URL}/assignStaff.php?apikey=1`;
-    return this.http.post(url,data).pipe(
+    return this.http.post(url, data).pipe(
       map((data) => {
         return data;
       })
