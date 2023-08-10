@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start-local": "ng serve --host 0.0.0.0",
-    "build": "ng build --aot && tar -zcvf archive.tar.gz dist/*",
+    "build": "ng build --configuration production && tar -zcvf archive.tar.gz dist/*",
     "build-stats": "ng build --stats-json",
     "build-stats-json-run": "webpack-bundle-analyzer dist/stats.json",
     "postbuild": "node src/environments/postbuild.js",

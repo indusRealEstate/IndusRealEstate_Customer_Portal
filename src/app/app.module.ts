@@ -10,7 +10,7 @@ import { RouterModule } from "@angular/router";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { IconsModule } from "@progress/kendo-angular-icons";
 import "hammerjs";
-import { environment } from "../environments/environment";
+import { environment } from "../environments/environment.prod";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
