@@ -66,7 +66,11 @@ export class AdminRequestsDetails implements OnInit {
   staff_selected: boolean = false;
   selected_time: string;
   date_select: boolean = false;
-  maintenance_staff: string[] = [];
+  maintenance_staff: object = {
+    name: "",
+    date : "",
+    time: ""
+  };
   staff_assigned: boolean = false;
   reassign: boolean = false;
   staff_empty: boolean = false;
@@ -155,15 +159,10 @@ export class AdminRequestsDetails implements OnInit {
           this.amenities.push(JSON.parse(this.all_data.unit_amenties)[i]);
         }
 
-        this.maintenance_staff = JSON.parse(this.all_data.main_staff_assigned);
+        this.maintenance_staff = this.all_data.main_staff_assigned == "{}" ? undefined : JSON.parse(this.all_data.main_staff_assigned);
 
         console.log(this.maintenance_staff);
 
-        if (Object.keys(this.maintenance_staff).length === 0) {
-          this.staff_empty = true;
-        } else {
-          this.staff_empty = true;
-        }
         this.main_request_status = this.all_data.main_request_status;
       })
       .add(() => {
@@ -254,7 +253,8 @@ export class AdminRequestsDetails implements OnInit {
     this.dialog
       .open(DialogViewMedia, {
         data: {
-          link: `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
+          link: `https://
+          indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
           data: data,
         },
       })

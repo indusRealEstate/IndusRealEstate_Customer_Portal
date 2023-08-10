@@ -18,8 +18,10 @@
           *ngIf="!isContentLoading"
           style="display: grid">
           <span class="item-header">
-            {{'Maintenance request - ' + all_data.main_request_category + ' - ' |
-            titlecase}} <span style="text-transform: capitalize;" [ngStyle]="{'color' : assignColor(main_request_status)}">{{main_request_status}}</span>
+            {{'Maintenance request - ' + all_data.main_request_category + ' - '
+            |
+            titlecase}} <span style="text-transform: capitalize;"
+              [ngStyle]="{'color' : assignColor(main_request_status)}">{{main_request_status}}</span>
           </span>
         </div>
       </div>
@@ -651,6 +653,30 @@
           </div>
         </div>
 
+        <div class="row">
+          <ngx-skeleton-loader
+            *ngIf="isContentLoading"
+            [theme]="{
+              width: sideBar_opened? (((screenWidth/2) - ((screenWidth/2)/2)) - 25) + 'px' : (((screenWidth/2) - ((screenWidth/2)/2))) + 'px', 
+              height: '30vh'
+          }">
+          </ngx-skeleton-loader>
+          <div class="col-12"
+            *ngIf="!isContentLoading && all_data.main_description !== null">
+            <div class="card card-main">
+              <div class="card-header">
+                <h4 class="title-header">Description</h4>
+              </div>
+              <div class="card-body" style="font-size: 1rem;
+              font-weight: 500;
+              height: 14vh;
+              overflow-y: auto;">
+                {{all_data.main_description}}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -679,7 +705,7 @@
                   }">
               </ngx-skeleton-loader>
               <div class="col-md-8 mb-5"
-                *ngIf="!isContentLoading && staff_empty">
+                *ngIf="!isContentLoading && maintenance_staff !== undefined">
                 <div class="table-row">
                   <table
                     class="teble table-striped w-100 px-3 text-uppercase">
@@ -714,52 +740,7 @@
                   (click)="reassignStaff()">Reassign</button>
               </div>
 
-              <div class="col-md-4">
-                <button class="btn mx-auto mb-auto"
-                  [matMenuTriggerFor]="menu"
-                  matTooltip="Change Request Status"
-                  matTooltipClass="tooltip"
-                  matTooltipPosition="above"
-                  style="background-color: #d4aa32;font-weight: 600;">
-                  Change Request Status
-                </button>
-
-                <mat-card class="mt-5"
-                  style="border: 0; background-color: #d4a932;">
-                  <mat-card-content
-                    style="font-weight: 600; font-size: 20px; text-align: center; text-transform: uppercase; color: #ffff;">
-                    current request status <br> <br> <span
-                      style="padding: 5px 10px; border-radius: 10px; margin-top: 5px;"
-                      [ngStyle]="{'background-color': assignColor(main_request_status)}"
-                      >{{main_request_status}}</span>
-                  </mat-card-content>
-                </mat-card>
-                <mat-menu #menu="matMenu" class="more-menu">
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'open')">Open</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'assigned')">Assigned</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'inprogress')">In
-                    Progress</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'complete')">Complete</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'hold')">Hold</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'reopen')">Re
-                    Open</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'reassigned')">Re
-                    Assigned</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'rejected')">Rejected</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'cancelled')">Cancelled</button>
-                </mat-menu>
-              </div>
-
-              <ng-container *ngIf="!staff_empty || reassign">
+              <ng-container *ngIf="maintenance_staff == undefined || reassign">
                 <div class="col-md-8" *ngIf="!staff_assigned">
                   <mat-form-field class="w-100 mat-datepicker textField"
                     appearance="outline" *ngIf="!staff_selected">
@@ -846,6 +827,50 @@
                     STAFF</button>
                 </div>
               </ng-container>
+
+              <div class="col-md-4">
+                <button class="btn mx-auto mb-auto"
+                  [matMenuTriggerFor]="menu"
+                  matTooltip="Change Request Status"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  style="background-color: #d4aa32;font-weight: 600;">
+                  Change Request Status
+                </button>
+
+                <mat-card class="mt-5"
+                  style="border: 0; background-color: #d4a932;">
+                  <mat-card-content
+                    style="font-weight: 600; font-size: 20px; text-align: center; text-transform: uppercase; color: #ffff;">
+                    current request status <br> <br> <span
+                      style="padding: 5px 10px; border-radius: 10px; margin-top: 5px;"
+                      [ngStyle]="{'background-color': assignColor(main_request_status)}">{{main_request_status}}</span>
+                  </mat-card-content>
+                </mat-card>
+                <mat-menu #menu="matMenu" class="more-menu">
+                  <button mat-menu-item class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'open')">Open</button>
+                  <button mat-menu-item class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'assigned')">Assigned</button>
+                  <button mat-menu-item class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'inprogress')">In
+                    Progress</button>
+                  <button mat-menu-item class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'complete')">Complete</button>
+                  <button mat-menu-item class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'hold')">Hold</button>
+                  <button mat-menu-item class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'reopen')">Re
+                    Open</button>
+                  <button mat-menu-item class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'reassigned')">Re
+                    Assigned</button>
+                  <button mat-menu-item class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'rejected')">Rejected</button>
+                  <button mat-menu-item class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'cancelled')">Cancelled</button>
+                </mat-menu>
+              </div>
 
             </div>
             <!-- <ul
