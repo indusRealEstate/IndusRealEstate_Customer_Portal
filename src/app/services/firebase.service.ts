@@ -31,7 +31,7 @@ export class FirebaseService {
     return await this.auth
       .signInWithEmailAndPassword("webtech@indusre.ae", "Ajeermdk@1820#")
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
       })
       .catch((error) => {
         window.alert(error.message);

@@ -1,7 +1,9 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { AdminService } from "app/services/admin.service";
 import { FirebaseService } from "app/services/firebase.service";
+import { RequestsTable } from "./components/requests-table/requests-table";
 
 @Component({
   selector: "admin-requests",
@@ -14,6 +16,9 @@ export class AdminRequests implements OnInit {
   allRequests: any[] = [];
   allRequestsMatTableData: MatTableDataSource<any>;
   isContentLoading: boolean = false;
+
+  paginator: MatPaginator;
+  @ViewChild(RequestsTable) request_table: RequestsTable;
 
   matTabIndex: any = 0;
 
@@ -46,7 +51,7 @@ export class AdminRequests implements OnInit {
           latest_reqs.push(req.id);
           console.log(req, "new request found");
         } else {
-          console.log("all exist");
+          await this.firebaseService.deleteData(req.id);
         }
         count++;
       });
@@ -79,6 +84,23 @@ export class AdminRequests implements OnInit {
       }
       // }, 500);
     });
+  }
+
+  ngAfterViewInit() {
+    if (
+      this.allRequestsMatTableData != undefined &&
+      this.request_table != undefined
+    ) {
+      this.allRequestsMatTableData.paginator = this.request_table.paginator;
+    }
+  }
+
+  getPaginator() {
+    if (this.allRequestsMatTableData != undefined) {
+      return this.allRequestsMatTableData.paginator;
+    } else {
+      return this.paginator;
+    }
   }
 
   fetchData() {
@@ -140,11 +162,10 @@ export class AdminRequests implements OnInit {
     }
   }
 
-  ngAfterViewInit() {}
-
   matTabClick(tab: any) {
     this.allRequestsMatTableData.filter = "";
     this.matTabIndex = tab.index;
     this.filterRequests(tab.index);
+    // this.allRequestsMatTableData.paginator = this.request_table.paginator;
   }
 }

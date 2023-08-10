@@ -15,7 +15,6 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { ViewAllAsignStaff } from "app/components/view_all_assign_staff/view_all_assign_staff";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "requests-table",
@@ -71,7 +70,6 @@ export class RequestsTable implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private adminService: AdminService,
-    private otherServices: OtherServices,
     public dialog: MatDialog
   ) {
     this.getScreenSize();
@@ -141,20 +139,20 @@ export class RequestsTable implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allRequestsMatTableData != undefined) {
-        this.allRequestsMatTableData.paginator = this.paginator;
-        // this.allRequestsMatTableData.paginator.pageSize = 10;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allRequestsMatTableData != undefined) {
-          this.allRequestsMatTableData.paginator = this.paginator;
-        }
-      });
-    }
-  }
+  // ngAfterViewInit() {
+  //   if (this.ngAfterViewInitInitialize == true) {
+  //     if (this.allRequestsMatTableData != undefined) {
+  //       this.allRequestsMatTableData.paginator = this.paginator;
+  //       // this.allRequestsMatTableData.paginator.pageSize = 10;
+  //     }
+  //   } else {
+  //     setTimeout(() => {
+  //       if (this.allRequestsMatTableData != undefined) {
+  //         this.allRequestsMatTableData.paginator = this.paginator;
+  //       }
+  //     });
+  //   }
+  // }
 
   getAllData() {
     var propertiesDataSession = JSON.parse(
