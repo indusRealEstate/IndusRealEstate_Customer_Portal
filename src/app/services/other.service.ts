@@ -25,9 +25,12 @@ export class OtherServices {
     false
   );
 
-  public admin_requests_tab_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  public admin_requests_tab_toggle: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
+  public latest_service_requests: BehaviorSubject<any[]> = new BehaviorSubject<
+    any[]
+  >([]);
 
   //////////////////////////////////////////////////////
 

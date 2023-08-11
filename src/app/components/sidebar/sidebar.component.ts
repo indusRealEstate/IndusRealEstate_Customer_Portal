@@ -37,6 +37,18 @@ export const HOMEROUTEADMIN: any[] = [
     icon: "assets/img/svg/admin-dashboard/profile-2user.svg",
     class: "",
   },
+  {
+    path: "/admin-report",
+    title: "Report",
+    icon: "assets/img/svg/admin-dashboard/report-com.svg",
+    class: "",
+  },
+  {
+    path: "/admin-financial-report",
+    title: "Financial Report",
+    icon: "assets/img/svg/admin-dashboard/report-com.svg",
+    class: "",
+  }
 ];
 
 export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [

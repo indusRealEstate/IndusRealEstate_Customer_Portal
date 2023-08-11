@@ -8,13 +8,12 @@ ngx-skeleton-loader {
   border-radius: 10px;
 }
 
-.open-external-link-icon{
-  padding: 5px;
+.open-external-link-icon {
+  padding: 8px;
   background: #d4aa32;
-  box-shadow: 0 0 1rem #b9b9b9;
-  border-radius: 5px;
+  border-radius: 3px;
   margin-left: auto;
-  img{
+  img {
     width: 1rem;
     filter: invert(1);
   }
@@ -106,8 +105,6 @@ ngx-skeleton-loader {
   border-radius: 10px;
 }
 
-
-
 .card-main {
   // border-radius: 15px;
   // background: linear-gradient(145deg, #ffffffce, #ffffff);
@@ -124,7 +121,7 @@ ngx-skeleton-loader {
   box-shadow: none;
   border: 1px solid #e6ebf1;
   overflow: auto;
-  .card-header{
+  .card-header {
     border-bottom: 1px solid #e6ebf1;
     .title-header {
       display: flex;
@@ -132,26 +129,25 @@ ngx-skeleton-loader {
       font-weight: 500;
       align-items: center;
       // text-shadow: 2px 2px 2px #c1c1c1;
-    } 
+    }
   }
-  .card-body{
+  .card-body {
     .table-row {
       .teble {
         border-radius: 10px;
         color: #fff;
         background-color: #d4aa32;
         // box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;`
-        .thead{
-          
+        .thead {
         }
-    
+
         .tbody {
           background-color: #f9f9f95c;
           font-weight: 500;
-          th{
+          th {
             font-weight: 500;
           }
-          td{
+          td {
             font-weight: 500;
           }
           tr:nth-of-type(odd) {
@@ -160,10 +156,10 @@ ngx-skeleton-loader {
           tr:last-child {
             border-bottom-right-radius: 10px;
             border-bottom-left-radius: 10px;
-            th{
+            th {
               border-bottom-left-radius: 10px;
             }
-            td{
+            td {
               border-bottom-right-radius: 10px;
             }
           }
@@ -204,7 +200,7 @@ ngx-skeleton-loader {
 .user-image {
   aspect-ratio: 1/1;
   border-radius: 50%;
-  box-shadow: 0rem 0rem 1rem 0rem #b9b9b9;
+  box-shadow: none;
 }
 
 .user-name {
@@ -228,7 +224,7 @@ ngx-skeleton-loader {
   text-shadow: 2px 2px 2px #c1c1c1;
 }
 
-.overview-row-card{
+.overview-row-card {
   max-height: 45vh;
 }
 
@@ -254,7 +250,6 @@ ngx-skeleton-loader {
 
       .overview-item {
         padding: 0rem 0.25rem;
-        
       }
 
       .icon-container {
@@ -270,11 +265,11 @@ ngx-skeleton-loader {
   }
 }
 
-.amenities{
+.amenities {
   background: none !important;
   box-shadow: 0 0 0 0 !important;
 
-  .amenities-item-row{
+  .amenities-item-row {
     padding: 15px;
     background-color: #fff;
     border-radius: 10px;
@@ -301,7 +296,6 @@ ngx-skeleton-loader {
     }
   }
 }
-
 
 .call-btn {
   background-color: #4caf50;
@@ -547,9 +541,6 @@ ngx-skeleton-loader {
   text-shadow: 1px 1px 1px #8d8989;
 }
 
-
-
-
 .view-lease-btn {
   color: #fff;
   background-color: #d4aa32;
@@ -557,7 +548,7 @@ ngx-skeleton-loader {
   box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
 }
 
-.angle-down{
+.angle-down {
   position: absolute;
   top: 35%;
   right: 2rem;
@@ -566,7 +557,7 @@ ngx-skeleton-loader {
   transition: 0.5s;
   transform: translateY(-100%) rotate(0deg);
 }
-.angle-up{
+.angle-up {
   position: absolute;
   top: 35%;
   right: 2rem;
@@ -591,12 +582,11 @@ select:focus {
   }
 }
 
-
-.name{
+.name {
   color: #2b333e;
   font-weight: 500;
 }
-.value{
+.value {
   color: #a17700;
   font-weight: 600;
   font-size: 1.01975rem;

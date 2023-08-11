@@ -9,11 +9,10 @@ ngx-skeleton-loader {
 }
 
 .open-external-link-icon {
-  padding: 5px;
-  background: #2b333e;
-  box-shadow: 0 0 1rem #262d36;
-  border-radius: 5px;
-  margin-left: 1rem;
+  padding: 8px;
+  background: #d4aa32;
+  border-radius: 3px;
+  margin-left: auto;
   img {
     width: 1rem;
     filter: invert(1);
@@ -122,7 +121,7 @@ ngx-skeleton-loader {
   border: 1px solid #e6ebf1;
   overflow: auto;
   .card-header {
-    border-bottom: 1px solid #e6ebf1
+    border-bottom: 1px solid #e6ebf1;
   }
 }
 
@@ -198,11 +197,11 @@ span.tag {
 }
 
 .title-header {
-  display: flex;
-  font-size: 1.5rem;
-  font-weight: 600;
-  align-items: center;
-  // text-shadow: 2px 2px 2px #c1c1c1;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  text-shadow: none;
 }
 
 .overview-row-card {
@@ -711,14 +710,14 @@ select:focus {
 .profile-body {
   padding: 1rem 2rem 2rem 2rem !important;
   overflow: auto;
-  .title-header{
+  .title-header {
     color: #a17700;
   }
-  .name{
+  .name {
     color: #2b333e;
     font-weight: 500;
   }
-  .value{
+  .value {
     color: #a17700;
     font-weight: 600;
     font-size: 1.01975rem;
@@ -727,14 +726,14 @@ select:focus {
 
 .detail-table {
   max-height: 50vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
-.name{
+.name {
   color: #2b333e;
   font-weight: 500;
 }
-.value{
+.value {
   color: #a17700;
   font-weight: 600;
   font-size: 1.01975rem;

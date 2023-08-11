@@ -10,7 +10,8 @@
       (click)="onCloseDialog()"
       class="mr-2 mt-1 close-icon"
       src="assets/img/svg/req-details/close-circle.svg"
-      alt />
+      alt
+    />
   </button>
   <img src alt id="image" />
 </div>
@@ -18,17 +19,32 @@
   <div class="container-fluid" style="max-width: 100vw">
     <ngx-skeleton-loader
       *ngIf="isContentLoading"
-      [theme]="{ width: (screenWidth/2 - 100) + 'px', height: '50px' }">
+      [theme]="{ width: (screenWidth/2 - 100) + 'px', height: '50px' }"
+    >
     </ngx-skeleton-loader>
     <h1 *ngIf="!isContentLoading" class="item-header">
-      Lease ID #{{all_data.lease_contract_id}}
+      Contract ID
+      <span
+        class="ml-2"
+        style="
+          font-size: 20px;
+          font-weight: 500;
+          background: #dbb9553b;
+          padding: 5px 15px;
+          border: 1px solid #d4aa328c;
+          border-radius: 5px;
+          color: #b88d11;
+        "
+        >#{{all_data.lease_contract_id}}</span
+      >
     </h1>
 
     <div class="row">
       <ngx-skeleton-loader
         *ngIf="isContentLoading"
         class="col-md-8"
-        [theme]="{ width: ((screenWidth/2 + (screenWidth/2)/2)) - 50 + 'px', height: '100vh' }">
+        [theme]="{ width: ((screenWidth/2 + (screenWidth/2)/2)) - 50 + 'px', height: '100vh' }"
+      >
       </ngx-skeleton-loader>
       <div class="col-md-8" *ngIf="!isContentLoading">
         <div class="card card-main">
@@ -121,7 +137,8 @@
                             <mat-select [(ngModel)]="selectDoc">
                               <mat-option
                                 *ngFor="let item of lease_doc; let index = i"
-                                [value]="item">
+                                [value]="item"
+                              >
                                 {{item}}
                               </mat-option>
                             </mat-select>
@@ -134,7 +151,8 @@
                             matTooltip="Download lease doc"
                             matTooltipClass="tooltip"
                             matTooltipPosition="above"
-                            [ngStyle]="{'background-color' : selectDoc == '' ? '#6d737b' : '#2b333e', 'cursor' : selectDoc == '' ? 'not-allowed' : 'pointer'}">
+                            [ngStyle]="{'background-color' : selectDoc == '' ? '#6d737b' : '#2b333e', 'cursor' : selectDoc == '' ? 'not-allowed' : 'pointer'}"
+                          >
                             Download Doc
                           </button>
                         </div>
@@ -153,7 +171,8 @@
           <ngx-skeleton-loader
             *ngIf="isContentLoading"
             class="col-md-12 d-flex"
-            [theme]="{ width: ((screenWidth/2 - (screenWidth/2)/2)) - 100 + 'px', height: '50vh', right: '0', marginLeft: 'auto' }">
+            [theme]="{ width: ((screenWidth/2 - (screenWidth/2)/2)) - 100 + 'px', height: '50vh', right: '0', marginLeft: 'auto' }"
+          >
           </ngx-skeleton-loader>
           <div class="col-12" *ngIf="!isContentLoading">
             <div class="card card-main">
@@ -161,12 +180,13 @@
                 <h4 class="title-header">Owner</h4>
               </div>
               <div class="card-body">
-                <div class="row d-flex">
-                  <div class="col-4 my-auto">
+                <div class="row d-flex align-items-start">
+                  <div class="col-4" style="padding: 10px 15px">
                     <img
                       src="https://www.indusre.app/api/upload/user/{{all_data.user_uid}}/image/{{all_data.user_profile_img}}"
                       alt
-                      class="card-img-top user-image m-auto" />
+                      class="card-img-top user-image m-auto"
+                    />
                   </div>
                   <div class="col-8 my-auto">
                     <div class="row m-0">
@@ -176,42 +196,54 @@
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Name</span>
+                          "
+                          >Name</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Email</span>
+                          "
+                          >Email</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Alternative email</span>
+                          "
+                          >Alternative email</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Phone</span>
+                          "
+                          >Phone</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Alternative phone</span>
+                          "
+                          >Alternative phone</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Gender</span>
+                          "
+                          >Gender</span
+                        >
                       </div>
                       <div class="col-7 pr-0" style="display: grid">
                         <span
@@ -219,23 +251,32 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.user_name}}</span>
+                          "
+                          >{{all_data.user_name}}</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.user_email}}</span>
+                          "
+                          >{{all_data.user_email}}</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
-                          <span *ngIf="all_data.user_alternative_email != ''">{{all_data.user_alternative_email}}</span>
-                          <span *ngIf="all_data.user_alternative_email == ''">-</span>
+                          "
+                        >
+                          <span *ngIf="all_data.user_alternative_email != ''"
+                            >{{all_data.user_alternative_email}}</span
+                          >
+                          <span *ngIf="all_data.user_alternative_email == ''"
+                            >-</span
+                          >
                         </span>
                         <span
                           class="mt-2"
@@ -243,7 +284,8 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           {{all_data.user_country_code_number}}
                           {{all_data.user_mobile_number}}
                         </span>
@@ -253,14 +295,19 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           <span
                             *ngIf="all_data.user_country_code_alternative_number != '' && all_data.user_alternative_mobile_number
-                            != ''">{{all_data.user_country_code_alternative_number}}
-                            {{all_data.user_alternative_mobile_number }}</span>
+                            != ''"
+                            >{{all_data.user_country_code_alternative_number}}
+                            {{all_data.user_alternative_mobile_number }}</span
+                          >
                           <span
                             *ngIf="all_data.user_country_code_alternative_number == '' && all_data.user_alternative_mobile_number
-                            == ''">-</span>
+                            == ''"
+                            >-</span
+                          >
                         </span>
                         <span
                           class="mt-2"
@@ -268,7 +315,9 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.user_gender | titlecase}}</span>
+                          "
+                          >{{all_data.user_gender | titlecase}}</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -279,12 +328,14 @@
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
                     class="call-btn btn"
-                    (click)="call_person()">
+                    (click)="call_person()"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/phone.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Call</span>
                   </button>
 
@@ -294,12 +345,14 @@
                     matTooltip="Mail Owner"
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
-                    (click)="email_person()">
+                    (click)="email_person()"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/email-with-at.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Mail</span>
                   </button>
                 </div>
@@ -312,20 +365,22 @@
           <ngx-skeleton-loader
             *ngIf="isContentLoading"
             class="col-md-12 d-flex"
-            [theme]="{ width: ((screenWidth/2 - (screenWidth/2)/2)) - 100 + 'px', height: '50vh', right: '0', marginLeft: 'auto' }">
+            [theme]="{ width: ((screenWidth/2 - (screenWidth/2)/2)) - 100 + 'px', height: '50vh', right: '0', marginLeft: 'auto' }"
+          >
           </ngx-skeleton-loader>
           <div class="col-12" *ngIf="!isContentLoading">
             <div class="card card-main">
               <div class="card-header">
-                <h4 class="title-header">Tenent</h4>
+                <h4 class="title-header">Tenant</h4>
               </div>
               <div class="card-body">
-                <div class="row d-flex">
-                  <div class="col-4 my-auto">
+                <div class="row d-flex align-items-start">
+                  <div class="col-4" style="padding: 10px 15px">
                     <img
                       src="https://www.indusre.app/api/upload/user/{{all_data.tenant_uid}}/image/{{all_data.tenant_profile_img}}"
                       alt
-                      class="card-img-top user-image m-auto" />
+                      class="card-img-top user-image m-auto"
+                    />
                   </div>
                   <div class="col-8 my-auto">
                     <div class="row m-0">
@@ -335,42 +390,54 @@
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Name</span>
+                          "
+                          >Name</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Email</span>
+                          "
+                          >Email</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Alternative email</span>
+                          "
+                          >Alternative email</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Phone</span>
+                          "
+                          >Phone</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Alternative phone</span>
+                          "
+                          >Alternative phone</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Gender</span>
+                          "
+                          >Gender</span
+                        >
                       </div>
                       <div class="col-7 pr-0" style="display: grid">
                         <span
@@ -378,23 +445,32 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.tenant_name}}</span>
+                          "
+                          >{{all_data.tenant_name}}</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.tenant_email}}</span>
+                          "
+                          >{{all_data.tenant_email}}</span
+                        >
                         <span
                           class="mt-2"
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
-                          <span *ngIf="all_data.tenant_alternative_email != ''">{{all_data.tenant_alternative_email}}</span>
-                          <span *ngIf="all_data.tenant_alternative_email == ''">-</span>
+                          "
+                        >
+                          <span *ngIf="all_data.tenant_alternative_email != ''"
+                            >{{all_data.tenant_alternative_email}}</span
+                          >
+                          <span *ngIf="all_data.tenant_alternative_email == ''"
+                            >-</span
+                          >
                         </span>
                         <span
                           class="mt-2"
@@ -402,7 +478,8 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           {{all_data.tenant_country_code_number}}
                           {{all_data.tenant_mobile_number}}
                         </span>
@@ -412,14 +489,19 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           <span
                             *ngIf="all_data.tenant_country_code_alternative_number != '' && all_data.tenant_alternative_mobile_number
-                            != ''">{{all_data.tenant_country_code_alternative_number}}
-                            {{all_data.tenant_alternative_mobile_number }}</span>
+                            != ''"
+                            >{{all_data.tenant_country_code_alternative_number}}
+                            {{all_data.tenant_alternative_mobile_number }}</span
+                          >
                           <span
                             *ngIf="all_data.tenant_country_code_alternative_number == '' && all_data.tenant_alternative_mobile_number
-                            == ''">-</span>
+                            == ''"
+                            >-</span
+                          >
                         </span>
                         <span
                           class="mt-2"
@@ -427,7 +509,9 @@
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.tenant_gender | titlecase}}</span>
+                          "
+                          >{{all_data.tenant_gender | titlecase}}</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -438,12 +522,14 @@
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
                     class="call-btn btn"
-                    (click)="call_tenant_person()">
+                    (click)="call_tenant_person()"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/phone.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Call</span>
                   </button>
 
@@ -452,12 +538,14 @@
                     matTooltip="Mail tenant"
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
-                    (click)="email_tenant_person()">
+                    (click)="email_tenant_person()"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/email-with-at.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Mail</span>
                   </button>
                 </div>
@@ -483,10 +571,12 @@
                   matTooltipPosition="above"
                   (click)="openProperty()"
                   class="btn open-external-link-icon"
-                  title>
+                  title
+                >
                   <img
                     src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                    alt />
+                    alt
+                  />
                 </button>
               </div>
             </div>
@@ -549,10 +639,12 @@
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
                   (click)="navigateToUnit(all_data.unit_id)"
-                  class="btn open-external-link-icon">
+                  class="btn open-external-link-icon"
+                >
                   <img
                     src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                    alt />
+                    alt
+                  />
                 </button>
               </div>
             </div>
@@ -562,7 +654,9 @@
               <div class="col">
                 <span style="color: #2b333ebf; font-weight: 500">Bedrooms</span>
                 <div class="row m-0 mt-2">
-                  <span class="mr-3" style="font-size: 20px; font-weight: 600">{{all_data.unit_bed}}</span>
+                  <span class="mr-3" style="font-size: 20px; font-weight: 600"
+                    >{{all_data.unit_bed}}</span
+                  >
                   <img
                     src="assets/img/svg/bedroom.svg"
                     alt
@@ -571,13 +665,18 @@
                         hue-rotate(328deg) brightness(88%) contrast(87%);
                       width: 20px;
                       cursor: pointer;
-                    " />
+                    "
+                  />
                 </div>
               </div>
               <div class="col">
-                <span style="color: #2b333ebf; font-weight: 500">Bathrooms</span>
+                <span style="color: #2b333ebf; font-weight: 500"
+                  >Bathrooms</span
+                >
                 <div class="row m-0 mt-2">
-                  <span class="mr-3" style="font-size: 20px; font-weight: 600">{{all_data.unit_bath}}</span>
+                  <span class="mr-3" style="font-size: 20px; font-weight: 600"
+                    >{{all_data.unit_bath}}</span
+                  >
                   <img
                     src="assets/img/svg/bath.svg"
                     alt
@@ -586,7 +685,8 @@
                         hue-rotate(328deg) brightness(88%) contrast(87%);
                       width: 20px;
                       cursor: pointer;
-                    " />
+                    "
+                  />
                 </div>
               </div>
               <div class="col">
@@ -600,7 +700,9 @@
               <div class="col">
                 <span style="color: #2b333ebf; font-weight: 500">Parking</span>
                 <div class="row m-0 mt-2">
-                  <span class="mr-3" style="font-size: 20px; font-weight: 600">{{all_data.unit_parking}}</span>
+                  <span class="mr-3" style="font-size: 20px; font-weight: 600"
+                    >{{all_data.unit_parking}}</span
+                  >
                   <img
                     src="assets/img/svg/parking.svg"
                     alt
@@ -609,13 +711,16 @@
                         hue-rotate(328deg) brightness(88%) contrast(87%);
                       width: 20px;
                       cursor: pointer;
-                    " />
+                    "
+                  />
                 </div>
               </div>
               <div class="col">
                 <span style="color: #2b333ebf; font-weight: 500">Floors</span>
                 <div class="row m-0 mt-2">
-                  <span class="mr-3" style="font-size: 20px; font-weight: 600">{{all_data.unit_floor}}</span>
+                  <span class="mr-3" style="font-size: 20px; font-weight: 600"
+                    >{{all_data.unit_floor}}</span
+                  >
                   <img
                     src="assets/img/svg/parking.svg"
                     alt
@@ -624,14 +729,16 @@
                         hue-rotate(328deg) brightness(88%) contrast(87%);
                       width: 20px;
                       cursor: pointer;
-                    " />
+                    "
+                  />
                 </div>
               </div>
               <div class="col"></div>
             </div>
             <div
               class="mt-4 mb-3 mx-auto"
-              style="height: 2px; width: 90%; background: #faebd7a6"></div>
+              style="height: 2px; width: 90%; background: #faebd7a6"
+            ></div>
             <div class="col">
               <p class="m-0" style="color: #2b333ebf; font-weight: 500">
                 Amenities
@@ -648,7 +755,8 @@
                     margin-right: 10px;
                   "
                   class="d-flex mt-2"
-                  *ngFor="let item of amenities; let index = i">
+                  *ngFor="let item of amenities; let index = i"
+                >
                   <span>{{item | titlecase}}</span>
                 </div>
               </div>
