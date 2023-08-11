@@ -41,6 +41,7 @@ import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
 import { DialogViewMedia } from "./view_media/view_media";
 import { EditPropertyDialog } from "./edit_property_dialog/edit_property_dialog";
+import { EditUnitDialog } from "./edit_unit_dialog/edit_unit_dialog";
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { EditPropertyDialog } from "./edit_property_dialog/edit_property_dialog"
     AddUserDialog,
     AddLeaseDialog,
     CountryDropdown,
-    DialogViewMedia
+    DialogViewMedia,
+    EditUnitDialog
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

@@ -124,6 +124,15 @@ export class AdminService {
     );
   }
 
+  editUnit(data: any) {
+    const url = `${API_URL}/updateUnit.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   addUser(data: any) {
     const url = `${API_URL}/addUser.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(

@@ -8,6 +8,7 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
+import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -67,6 +68,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.adminService
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value) => {
+
+        console.log(value);
         this.all_data = value;
 
         if (this.all_data.unit_status.toUpperCase() == "OCCUPIED") {
@@ -306,8 +309,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   openEditUnit(data: object){
-    // this.dialog.open(EditUnitDialog,{
-    //   data
-    // })
+    this.dialog.open(EditUnitDialog,{
+      data
+    })
   }
 }
