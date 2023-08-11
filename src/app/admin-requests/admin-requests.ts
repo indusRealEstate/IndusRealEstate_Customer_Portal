@@ -1,10 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import {
-  MatTableDataSource
-} from "@angular/material/table";
+import { MatTableDataSource } from "@angular/material/table";
 import { AdminService } from "app/services/admin.service";
 import { FirebaseService } from "app/services/firebase.service";
 import { RequestsTable } from "./components/requests-table/requests-table";
+import { RequestStatuses } from "app/models/request_statuses";
 
 @Component({
   selector: "admin-requests",
@@ -32,6 +31,16 @@ export class AdminRequests implements OnInit {
 
   matTabIndex: any = 0;
 
+  open_requests_count: any = 0;
+  assigned_requests_count: any = 0;
+  inProgress_requests_count: any = 0;
+  completed_requests_count: any = 0;
+  hold_requests_count: any = 0;
+  reOpen_requests_count: any = 0;
+  reAssigned_requests_count: any = 0;
+  rejected_requests_count: any = 0;
+  cancelled_requests_count: any = 0;
+
   constructor(
     private firebaseService: FirebaseService,
     private adminService: AdminService
@@ -47,6 +56,8 @@ export class AdminRequests implements OnInit {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
   }
+
+  ngAfterViewInit() {}
 
   async ngOnInit() {
     this.fetchData();
@@ -102,6 +113,10 @@ export class AdminRequests implements OnInit {
       .subscribe((va: any[]) => {
         this.allRequests = va;
         this.allRequestsMatTableData = new MatTableDataSource(va);
+
+        va.forEach((r) => {
+          this.addRequestsCount(r.request_status);
+        });
       })
       .add(() => {
         this.isContentLoading = false;
@@ -119,6 +134,40 @@ export class AdminRequests implements OnInit {
   refreshTable() {
     this.isContentLoading = true;
     this.fetchData();
+  }
+
+  addRequestsCount(status) {
+    switch (status) {
+      case RequestStatuses.open:
+        this.open_requests_count++;
+        break;
+      case RequestStatuses.assigned:
+        this.assigned_requests_count++;
+        break;
+      case RequestStatuses.inPropress:
+        this.inProgress_requests_count++;
+        break;
+      case RequestStatuses.completed:
+        this.completed_requests_count++;
+        break;
+      case RequestStatuses.hold:
+        this.hold_requests_count++;
+        break;
+      case RequestStatuses.reOpen:
+        this.reOpen_requests_count++;
+        break;
+      case RequestStatuses.reAssigned:
+        this.reAssigned_requests_count++;
+        break;
+      case RequestStatuses.rejected:
+        this.rejected_requests_count++;
+        break;
+      case RequestStatuses.cancelled:
+        this.cancelled_requests_count++;
+        break;
+      default:
+        break;
+    }
   }
 
   filterRequests(index) {

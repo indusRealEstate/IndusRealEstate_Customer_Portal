@@ -12,10 +12,16 @@
   >
     <div class="col mat-tab-requests" style="padding: 0">
       <mat-tab-group (selectedTabChange)="matTabClick($event)">
-        <!-- [pageIndex]="allRequestsMatTableData != undefined ? allRequestsMatTableData.paginator.pageIndex : ''"
-            [length]="allRequestsMatTableData != undefined ? allRequestsMatTableData.paginator.length : ''"
-            [pageSizeOptions]="allRequestsMatTableData != undefined ? allRequestsMatTableData.paginator.pageSizeOptions : ''" -->
-        <mat-tab label="All">
+        <mat-tab #tab_1>
+          <ng-template mat-tab-label>
+            <span>All</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_1.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{allRequests.length}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_0
             [tableTitle]="'All Requests'"
@@ -24,7 +30,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Open">
+        <mat-tab #tab_2>
+          <ng-template mat-tab-label>
+            <span>Open</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_2.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{open_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_1
             [tableTitle]="'Open Requests'"
@@ -33,7 +48,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Assigned">
+        <mat-tab #tab_3>
+          <ng-template mat-tab-label>
+            <span>Assigned</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_3.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{assigned_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_2
             [tableTitle]="'Assigned Requests'"
@@ -42,7 +66,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="In Progress">
+        <mat-tab #tab_4>
+          <ng-template mat-tab-label>
+            <span>In Progress</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_4.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{inProgress_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_3
             [tableTitle]="'In Progress Requests'"
@@ -51,7 +84,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Completed">
+        <mat-tab #tab_5>
+          <ng-template mat-tab-label>
+            <span>Completed</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_5.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{completed_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_4
             [tableTitle]="'Completed Requests'"
@@ -60,7 +102,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Hold">
+        <mat-tab #tab_6>
+          <ng-template mat-tab-label>
+            <span>Hold</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_6.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{hold_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_5
             [tableTitle]="'Hold Requests'"
@@ -69,7 +120,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Re-Open">
+        <mat-tab #tab_7>
+          <ng-template mat-tab-label>
+            <span>Re-Open</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_7.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{reOpen_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_6
             [tableTitle]="'Re-Open Requests'"
@@ -78,7 +138,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Re-Assigned">
+        <mat-tab #tab_8>
+          <ng-template mat-tab-label>
+            <span>Re-Assigned</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_8.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{reAssigned_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_7
             [tableTitle]="'Re-Assigned Requests'"
@@ -87,7 +156,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Rejected">
+        <mat-tab #tab_9>
+          <ng-template mat-tab-label>
+            <span>Rejected</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_9.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{rejected_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_8
             [tableTitle]="'Rejected Requests'"
@@ -96,7 +174,16 @@
             (refreshTableEmit)="refreshTable()"
           ></requests-table>
         </mat-tab>
-        <mat-tab label="Cancelled">
+        <mat-tab #tab_10>
+          <ng-template mat-tab-label>
+            <span>Cancelled</span>
+            <span
+              class="ml-2"
+              [ngStyle]="{'background' : tab_10.position == 0 ? '#d4aa32' : '#f9dc8e'}"
+              style="color: white; padding: 4px 6px; border-radius: 5px"
+              >{{cancelled_requests_count}}</span
+            >
+          </ng-template>
           <requests-table
             #request_table_9
             [tableTitle]="'Cancelled Requests'"

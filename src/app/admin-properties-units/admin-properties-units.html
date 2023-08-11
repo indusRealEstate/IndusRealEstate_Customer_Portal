@@ -81,6 +81,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 {{ element.unit_no}}
               </td>
@@ -92,6 +93,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 <span
                   class="prop_name"
@@ -108,6 +110,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 {{ element.floor }}
               </td>
@@ -120,6 +123,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 {{ element.size }} Sqft
               </td>
@@ -131,6 +135,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 <div
                   *ngIf="element.status == 'vacant'"
@@ -171,6 +176,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 <span
                   class="prop_name"
@@ -186,6 +192,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 {{ element.bedroom}}
               </td>
@@ -197,6 +204,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="navigateToDetailPage(element)"
               >
                 {{ element.bathroom}}
               </td>
@@ -210,6 +218,7 @@
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
                 <img
+                  [matMenuTriggerFor]="menu"
                   matTooltip="More Actions"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
@@ -223,6 +232,35 @@
                     cursor: pointer;
                   "
                 />
+
+                <mat-menu #menu="matMenu" class="more-menu">
+                  <button mat-menu-item>
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: #c89914">Edit</span>
+                      <img
+                        src="assets/img/svg/property-page/edit.svg"
+                        alt
+                        style="
+                          filter: invert(68%) sepia(13%) saturate(2701%)
+                            hue-rotate(5deg) brightness(110%) contrast(66%);
+                        "
+                      />
+                    </div>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: red">Delete</span>
+                      <img
+                        src="assets/img/svg/delete.svg"
+                        alt
+                        style="
+                          filter: invert(56%) sepia(71%) saturate(3838%)
+                            hue-rotate(328deg) brightness(97%) contrast(90%);
+                        "
+                      />
+                    </div>
+                  </button>
+                </mat-menu>
               </td>
             </ng-container>
 
@@ -232,7 +270,6 @@
             <tr
               mat-row
               *matRowDef="let row; columns: displayedColumns"
-              (click)="navigateToDetailPage(row)"
               class="unit-row"
             ></tr>
           </table>

@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
-import { User } from "../../../../models/user/user.model";
+import { User } from "../../models/user.model";
 
 @Component({
   selector: "app-navbar",
