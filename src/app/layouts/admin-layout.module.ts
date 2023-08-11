@@ -83,6 +83,7 @@ import { IndividualDocumentsComponent } from "app/documents/individual-docs/indi
 import { LoginComponent } from "app/login/login.component";
 import { DetailsComponents } from "app/property-details/details-properties";
 import { UserChatsComponent } from "app/user_chats/user_chats";
+import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
@@ -179,6 +180,7 @@ import "hammerjs";
     DialogAssignStaff,
     AdminReport,
     AdminFinancialReport,
+    ViewFinanceDetailsDialog,
     LoginComponent,
 
     AdminProperties,
