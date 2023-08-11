@@ -4,6 +4,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
+import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -37,6 +38,8 @@ export class AdminProperties implements OnInit {
 
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
+
+  more_menu_prop_all_data: any;
 
   userId: any;
 
@@ -212,5 +215,54 @@ export class AdminProperties implements OnInit {
         prop_id: data.property_id,
       },
     });
+  }
+
+  openMoreMenu(prop_id) {
+    this.adminService
+      .getPropDetails(JSON.stringify({ prop_id: prop_id }))
+      .subscribe((value) => {
+        this.more_menu_prop_all_data = value;
+      });
+  }
+
+  openEditProperty(index) {
+    if (this.more_menu_prop_all_data != undefined) {
+      var data = this.more_menu_prop_all_data;
+      this.dialog
+        .open(EditPropertyDialog, {
+          data,
+        })
+        .afterClosed()
+        .subscribe((value) => {
+          sessionStorage.removeItem("admin_properties_session");
+          this.allProperties[index].property_name =
+            value.property_name != undefined
+              ? value.property_name
+              : this.allProperties[index].property_name;
+          this.allProperties[index].address =
+            value.property_address != undefined
+              ? value.property_address
+              : this.allProperties[index].address;
+          this.allProperties[index].property_type =
+            value.property_building_type != undefined
+              ? value.property_building_type
+              : this.allProperties[index].property_type;
+
+          this.allProperties[index].locality_name =
+            value.property_locality != undefined
+              ? value.property_locality
+              : this.allProperties[index].locality_name;
+
+          this.allProperties[index].govt_id =
+            value.property_gov_id != undefined
+              ? value.property_gov_id
+              : this.allProperties[index].govt_id;
+
+          this.allProperties[index].govt_id =
+            value.property_gov_id != undefined
+              ? value.property_gov_id
+              : this.allProperties[index].govt_id;
+        });
+    }
   }
 }
