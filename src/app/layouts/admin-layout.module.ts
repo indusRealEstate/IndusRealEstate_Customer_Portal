@@ -55,16 +55,25 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 // import { GoogleMapsModule } from "@angular/google-maps";
 // import { NgApexchartsModule } from "ng-apexcharts";
-import { ClipboardModule } from "@angular/cdk/clipboard";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { AdminFinancialReport } from "app/admin-financial-report/admin-financial-report";
+import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
+import { AdminProperties } from "app/admin-properties/admin-properties";
+import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
+import { AdminReport } from "app/admin-report/admin-report";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
+import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
 import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
+import { AllUsersComponent } from "app/all-users/all-users";
 import { BackButtonDirective } from "app/components/back-navigation.directive";
+import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
+import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
+import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
@@ -72,33 +81,23 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
-import { UserChatsComponent } from "app/user_chats/user_chats";
-import { AdminProperties } from "app/admin-properties/admin-properties";
-import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
-import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
-import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
-import { AllUsersComponent } from "app/all-users/all-users";
-import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-all-users/loading-table-admin-all-users";
 import { DetailsComponents } from "app/property-details/details-properties";
-import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
-import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
-import { AdminReport } from "app/admin-report/admin-report";
-import { AdminFinancialReport } from "app/admin-financial-report/admin-financial-report";
+import { UserChatsComponent } from "app/user_chats/user_chats";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
 import { ChartsModule } from "@progress/kendo-angular-charts";
 
-import "hammerjs";
-import { AllLeasesComponent } from "app/admin-lease/admin-lease";
-import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
-import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
-import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
-import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
-import { DialogAssignStaff } from "app/components/assign_staff/assign_staff";
-import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
+import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { RequestsTable } from "app/admin-requests/components/requests-table/requests-table";
+import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
+import { DialogAssignStaff } from "app/components/assign_staff/assign_staff";
+import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
+import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
+import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
+import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
+import "hammerjs";
 
 @NgModule({
   imports: [

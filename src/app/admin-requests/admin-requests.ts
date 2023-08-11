@@ -1,8 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
 import {
-  MatTableDataSource,
-  MatTableDataSourcePaginator,
+  MatTableDataSource
 } from "@angular/material/table";
 import { AdminService } from "app/services/admin.service";
 import { FirebaseService } from "app/services/firebase.service";

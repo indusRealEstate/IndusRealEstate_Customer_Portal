@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
+import { FirebaseService } from "app/services/firebase.service";
 import { OtherServices } from "app/services/other.service";
 import { io } from "socket.io-client";
 
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices
+    private otherServices: OtherServices,
+    private firebaseService: FirebaseService
   ) {
     this.getScreenSize();
     // redirect to home if already logged in
@@ -118,17 +120,8 @@ export class LoginComponent implements OnInit {
             var userData = localStorage.getItem("currentUser");
             var user = JSON.parse(userData);
 
-            // this.chatService.socket_connect();
-
-            var socket = io("https://www.ireproperty.com");
-            socket.on("connect", () => {
-              var userdata = localStorage.getItem("currentUser");
-              var user_id = JSON.parse(userdata)[0]["id"];
-              // console.log("socket connected");
-              // this.chatService.getAllCLients(user_id);
-            });
-
             setTimeout(async () => {
+              await this.firebaseService.firebaseLogin().then(async () => {});
               // await this.authenticationService.getIPAddress();
               // .then((res) => {
               //   var date = this.getCurrentDate();
