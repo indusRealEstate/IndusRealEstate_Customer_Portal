@@ -100,13 +100,11 @@ export class AllLeasesComponent implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allLeaseMatTableData != undefined) {
         this.allLeaseMatTableData.paginator = this.paginator;
-        this.allLeaseMatTableData.paginator.pageSize = 10;
       }
     } else {
       setTimeout(() => {
         if (this.allLeaseMatTableData != undefined) {
           this.allLeaseMatTableData.paginator = this.paginator;
-          this.allLeaseMatTableData.paginator.pageSize = 10;
         }
       });
     }
@@ -176,7 +174,6 @@ export class AllLeasesComponent implements OnInit {
         setTimeout(() => {
           if (this.allLeaseMatTableData != undefined) {
             this.allLeaseMatTableData.paginator = this.paginator;
-            this.allLeaseMatTableData.paginator.pageSize = 10;
           }
         });
       })

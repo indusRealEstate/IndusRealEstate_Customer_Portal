@@ -4,6 +4,7 @@
       <a class="navbar-brand" hidden>{{ getTitle() }}</a>
 
       <div
+        *ngIf="getTitle() != '404'"
         class="row"
         style="
           margin: 0;

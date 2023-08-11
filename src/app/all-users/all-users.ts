@@ -100,13 +100,11 @@ export class AllUsersComponent implements OnInit {
     if (this.ngAfterViewInitInitialize == true) {
       if (this.allUsersMatTableData != undefined) {
         this.allUsersMatTableData.paginator = this.paginator;
-        this.allUsersMatTableData.paginator.pageSize = 10;
       }
     } else {
       setTimeout(() => {
         if (this.allUsersMatTableData != undefined) {
           this.allUsersMatTableData.paginator = this.paginator;
-          this.allUsersMatTableData.paginator.pageSize = 10;
         }
       });
     }
@@ -151,7 +149,6 @@ export class AllUsersComponent implements OnInit {
         setTimeout(() => {
           if (this.allUsersMatTableData != undefined) {
             this.allUsersMatTableData.paginator = this.paginator;
-            this.allUsersMatTableData.paginator.pageSize = 10;
           }
         });
       })
