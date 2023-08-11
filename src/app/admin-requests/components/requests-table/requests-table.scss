@@ -410,8 +410,11 @@
   margin-top: 35px;
   border-radius: 10px;
 
-  box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
-    0px 1px 2px -2px rgba(0, 0, 0, 0.14), 0px 1px 6px 1px rgba(0, 0, 0, 0.12);
+  box-shadow: none !important;
+  border: 1px solid #e6ebf1;
+  .mat-mdc-header-row {
+    background: #d4aa320a;
+  }
 
   .mat-row {
     &:hover {
@@ -618,7 +621,7 @@
   max-width: none !important;
   min-width: auto !important;
 }
- 
+
 ::ng-deep .prop_name {
   cursor: pointer;
   text-decoration: underline !important;
@@ -629,13 +632,13 @@
   }
 }
 
-::ng-deep .more-btn{
-  .flag{
+::ng-deep .more-btn {
+  .flag {
     width: 20px;
   }
 }
 
-::ng-deep .request-id{
+::ng-deep .request-id {
   max-width: 150px !important;
   padding: 7px 15px !important;
 }
@@ -647,11 +650,11 @@
 //       color: #1c6800 !important;
 //       font-weight: 600;
 //     }
-    
+
 //   }
 //   .more-span {
 //     background-color: #ffd9004d;
-    
+
 //     .mdc-list-item__primary-text{
 //       color: #c49920 !important;
 //       font-weight: 600;
@@ -659,7 +662,7 @@
 //   }
 //   .more-delete {
 //     background-color: #ff00004d;
-    
+
 //     .mdc-list-item__primary-text{
 //       color: #ff0000 !important;
 //       font-weight: 600;
