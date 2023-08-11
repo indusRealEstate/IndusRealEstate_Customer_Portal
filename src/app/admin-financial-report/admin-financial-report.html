@@ -51,7 +51,7 @@
                   <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 1rem;">Overview</h4>
                 </div>
                 <div class="col-6">
-                  <mat-form-field class="date-form" style="float: right;">
+                  <!-- <mat-form-field class="date-form" style="float: right;">
                     <mat-label>Date</mat-label>
                     <input matInput [matDatepicker]="picker" />
                     <mat-datepicker-toggle
@@ -59,7 +59,9 @@
                       [for]="picker"
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  
+          <table-filters style="float: right;"></table-filters>
                 </div>
               </div>
               <div class="row">
@@ -104,10 +106,10 @@
                          
                         "
                       >
-                        2,349
+                        55,000
                       </p>
                       <p class="" style="font-weight: 600; color: #adb5bc; ">
-                        1,234,56
+                        Total Amount
                       </p>
                       
                     </div>
@@ -135,26 +137,26 @@
               
                 <div class="col-6">
                   <div class="row">
-                    <div class="col-6 mt-0" style="padding: 1.5rem ;padding-top: 0.5rem;"> 
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">623</p>
-                      <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">545,897</p>
+                    <div class="col-6 mt-0" style="padding: 1rem ;padding-top: 0.5rem;"> 
+                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">40,000</p>
+                      <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">Amount Recieved</p>
                       <div class="text-center" style="width:5rem; background: #c9c5f2; border-radius: 0.5rem; font-weight: 500; color: #6558f0;">draft</div>
                     </div>
                     <div class="col-6 mt-0" style="padding: 1.5rem ;padding-left: 0rem; padding-top: 0.5rem;">
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">623</p>
-                        <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem;color: #adb5bc;">545,897</p>
+                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">15,000</p>
+                        <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem;color: #adb5bc;">Pending Amount</p>
                         <div class="text-center" style="width:5rem; background: #fbe4aa; border-radius: 0.5rem; font-weight: 500; color: #bb8807;">Approve</div>
                     </div>
                   </div> 
                   <div class="row">
                     <div class="col-6 m-0" style="padding: 1rem ;padding-top: 0.5rem;"> 
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">623</p>
-                      <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">545,897</p>
+                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">5,000</p>
+                      <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">Maintanance Amount</p>
                       <div class="text-center" style="width:5rem; background: #c6eef4; border-radius: 0.5rem; font-weight: 500; color: #017789;">draft</div>
                     </div>
                     <div class="col-6 m-0" style="padding: 1rem ;padding-left: 0rem; padding-top: 0.5rem;">
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">623</p>
-                        <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">545,897</p>
+                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">5,000</p>
+                        <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">Security Amount</p>
                         <div class="text-center" style="width:5rem; background: #d3fbd2; border-radius: 0.5rem; font-weight: 500; color: #038e01;">Panding</div>
                     </div>
                   </div> 
@@ -234,6 +236,14 @@
                           The actual rendered columns are set as a property on the row definition" -->
 
                     <!-- Position Column -->
+                    <ng-container matColumnDef="UnitName">
+                      <th mat-header-cell *matHeaderCellDef>Unit Name</th>
+                      <td mat-cell *matCellDef="let element">
+                        {{element.UnitName}}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
                     <ng-container matColumnDef="Tenant">
                       <th mat-header-cell *matHeaderCellDef>Tenant</th>
                       <td mat-cell *matCellDef="let element">
@@ -241,7 +251,7 @@
                       </td>
                     </ng-container>
 
-                    <!-- Name Column -->
+                    <!-- Weight Column -->
                     <ng-container matColumnDef="Rent">
                       <th mat-header-cell *matHeaderCellDef>Rent</th>
                       <td mat-cell *matCellDef="let element">
@@ -249,26 +259,32 @@
                       </td>
                     </ng-container>
 
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="weight">
-                      <th mat-header-cell *matHeaderCellDef>Weight</th>
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="PaymentMode">
+                      <th mat-header-cell *matHeaderCellDef>Payment Mode</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.weight}}
+                        {{element.PaymentMode}}
                       </td>
                     </ng-container>
 
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="symbol">
-                      <th mat-header-cell *matHeaderCellDef>Symbol</th>
+                    <ng-container matColumnDef="PaymentAmount">
+                      <th mat-header-cell *matHeaderCellDef>Payment Amount</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.symbol}}
+                        {{element.PaymentAmount}}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PaymentDetails">
+                      <th mat-header-cell *matHeaderCellDef>Payment Details</th>
+                      <td mat-cell *matCellDef="let element">
+                        {{element.PaymentDetails}}
                       </td>
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr
                       mat-row
-                      *matRowDef="let row; columns: displayedColumns;"
+                      *matRowDef="let row; columns: displayedColumns;"  (click)="financeDetailDialog()"
                     ></tr>
                   </table>
                 </div>
