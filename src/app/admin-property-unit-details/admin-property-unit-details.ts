@@ -304,4 +304,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((res) => {});
   }
+
+  openEditUnit(data: object){
+    // this.dialog.open(EditUnitDialog,{
+    //   data
+    // })
+  }
 }

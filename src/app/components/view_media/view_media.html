@@ -16,15 +16,16 @@
   <div class="card-body">
 
     <div class="row" style="flex-wrap: wrap;">
-      <div class="col-2 position-relative"
+      <div class="col-2 position-relative d-flex"
         *ngFor="let item of media_array; let index = i">
 
-        <button class="btn"
-          (click)="downloadItem(link + item, item.split('.')[1], item)"
-          matTooltip="Download"
-          matTooltipClass="tooltip"
-          matTooltipPosition="above"
-          style="
+        <ng-container *ngIf="image_loaded == true">
+          <button class="btn"
+            (click)="downloadItem(link + item, item.split('.')[1], item)"
+            matTooltip="Download"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            style="
                 position: absolute;
                 top: 0;
                 right: 0;
@@ -34,23 +35,46 @@
                 display: flex;
                 background: #be9830;
         ">
-          <img
-            style="
+            <img
+              style="
                 display: flex;
                 width: 1.5rem;
                 margin: auto;
                 filter: invert(1);
             "
-            src="assets/img/svg/common-icons/download.svg"
-            alt />
-        </button>
-        <img *ngIf="image_type_array.includes(item.split('.')[1])"
-          src="{{link + item}}" alt
-          style="object-fit: cover; object-position: center; aspect-ratio: 1/1; width: 100%;">
+              src="assets/img/svg/common-icons/download.svg"
+              alt />
+          </button>
+        </ng-container>
+
+        <ng-container>
+          <ngx-skeleton-loader
+            *ngIf="!image_loaded"
+            class="skeleton-left"
+            [theme]="{ 
+            width: '150px',
+            height: '150px'
+            }">
+          </ngx-skeleton-loader>
+        </ng-container>
+
+        <ng-container>
+          <img *ngIf="image_type_array.includes(item.split('.')[1])"
+            [src]="link+item" alt (load)="checkImageLoaded($event)"
+            style="
+          object-fit: cover;
+          object-position: center;
+          aspect-ratio: 1/1;
+          width: 150px;
+          height: 150px;"
+            [ngStyle]="{'display': image_loaded ? 'flex' : 'none'}">
+        </ng-container>
 
         <video controls *ngIf="video_type_array.includes(item.split('.')[1])"
-          style="aspect-ratio: 1/1; width: 100%;">
-          <source src="{{link + item}}" type="video/{{item.split('.')[1]}}">
+          style="aspect-ratio: 1/1; width: 150px; height: 150px;"
+          (loadedmetadata)="checkImageLoaded($event)"
+          [ngStyle]="{'display': image_loaded ? 'flex' : 'none'}">
+          <source [src]="link+item" type="video/{{item.split('.')[1]}}">
         </video>
       </div>
     </div>

@@ -42,18 +42,19 @@ export class DialogViewMedia implements OnInit {
     "webm",
   ];
   link: string = "";
-  all_data: any; 
+  all_data: any;
+  image_loaded: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogViewMedia>,
     private downloadServices: DownloadService
   ) {
-    console.log(data);
+    
     this.all_data = data;
     this.link = this.all_data.link;
 
-    console.log(this.link);
+    // console.log(this.link);
   }
 
   get_image_data(event) {}
@@ -62,7 +63,6 @@ export class DialogViewMedia implements OnInit {
     for (let i = 0; i < JSON.parse(this.all_data.data).length; i++) {
       this.media_array.push(JSON.parse(this.all_data.data)[i]);
     }
-    
   }
 
   ngAfterViewInit() {}
@@ -72,8 +72,14 @@ export class DialogViewMedia implements OnInit {
   }
 
   downloadItem(data: any, type: string, file: string) {
-    this.downloadServices.download(data).subscribe((res)=>{
+    this.downloadServices.download(data).subscribe((res) => {
       console.log(res);
     });
+  }
+
+  checkImageLoaded(data: any) {
+    setTimeout(()=>{
+      this.image_loaded = true;
+    },1000)
   }
 }

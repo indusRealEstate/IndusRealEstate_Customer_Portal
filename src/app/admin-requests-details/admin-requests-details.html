@@ -83,7 +83,10 @@
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">Status of request</th>
                         <td class="p-3 col-md-8">
-                          {{main_request_status}}
+                          <span style="text-transform: capitalize; font-weight: 700; padding: 5px 10px; border-radius: 5px;"
+                            [ngStyle]="{'background-color' : assignColor(main_request_status)}">
+                            {{main_request_status}}
+                          </span>
                         </td>
                       </tr>
                       <!-- <tr scope="row">

@@ -68,8 +68,8 @@ export class AdminRequestsDetails implements OnInit {
   date_select: boolean = false;
   maintenance_staff: object = {
     name: "",
-    date : "",
-    time: ""
+    date: "",
+    time: "",
   };
   staff_assigned: boolean = false;
   reassign: boolean = false;
@@ -145,7 +145,7 @@ export class AdminRequestsDetails implements OnInit {
       .subscribe((val) => {
         this.all_data = val;
 
-        console.log(this.all_data);
+        // console.log(this.all_data);
         this.request_feedback = JSON.parse(this.all_data.main_feedback);
 
         for (let i = 0; i < JSON.parse(this.all_data.main_media).length; i++) {
@@ -159,9 +159,10 @@ export class AdminRequestsDetails implements OnInit {
           this.amenities.push(JSON.parse(this.all_data.unit_amenties)[i]);
         }
 
-        this.maintenance_staff = this.all_data.main_staff_assigned == "{}" ? undefined : JSON.parse(this.all_data.main_staff_assigned);
-
-        console.log(this.maintenance_staff);
+        this.maintenance_staff =
+          this.all_data.main_staff_assigned == "{}"
+            ? undefined
+            : JSON.parse(this.all_data.main_staff_assigned);
 
         this.main_request_status = this.all_data.main_request_status;
       })
@@ -253,8 +254,7 @@ export class AdminRequestsDetails implements OnInit {
     this.dialog
       .open(DialogViewMedia, {
         data: {
-          link: `https://
-          indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
+          link: `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
           data: data,
         },
       })
@@ -423,27 +423,27 @@ export class AdminRequestsDetails implements OnInit {
     this.reassign = true;
   }
 
-  assignColor(data: string){
-    switch(data){
-      case "cancelled": 
+  assignColor(data: string) {
+    switch (data) {
+      case "cancelled":
         return "red";
         break;
-      case "rejected": 
+      case "rejected":
         return "red";
         break;
-      case "open": 
+      case "open":
         return "#029fad";
         break;
-      case "reopen": 
+      case "reopen":
         return "#029fad";
         break;
-      case "reassigned": 
+      case "reassigned":
         return "#029fad";
         break;
-      case "inprogress": 
+      case "inprogress":
         return "#c3660b";
         break;
-      case "complete": 
+      case "complete":
         return "green";
         break;
       default:

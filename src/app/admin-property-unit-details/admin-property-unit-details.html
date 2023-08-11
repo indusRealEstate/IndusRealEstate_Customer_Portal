@@ -81,6 +81,7 @@
                 cursor: pointer;
               " />
             <img
+              mat-button [matMenuTriggerFor]="menu" 
               class="mx-4"
               matTooltip="More Actions"
               matTooltipClass="tooltip"
@@ -93,6 +94,9 @@
                 width: 25px;
                 cursor: pointer;
               " />
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openEditUnit(all_data)">Edit</button>
+              </mat-menu>
           </div>
         </div>
 
