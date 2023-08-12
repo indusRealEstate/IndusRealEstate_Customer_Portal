@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl",
+    "start-https": "ng serve --configuration production --ssl --ssl-key C:/cert/new-cert/localhost_android.key --ssl-cert C:/cert/new-cert/localhost_android.crt",
+    "start": "ng serve",
     "start-local": "ng serve --host 0.0.0.0",
     "build": "ng build --configuration production && tar -zcvf archive.tar.gz dist/*",
     "build-stats": "ng build --stats-json",

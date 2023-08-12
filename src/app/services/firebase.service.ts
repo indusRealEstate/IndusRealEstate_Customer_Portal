@@ -8,10 +8,11 @@ import {
   collection,
   collectionChanges,
 } from "@angular/fire/firestore";
-import { Observable, map, of } from "rxjs";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { VAPIDKEYS } from "app/keys/vapid";
 import { environment } from "environments/environment.prod";
-import { initializeApp } from "@angular/fire/app";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
+import { Observable, map, of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseService {
@@ -70,9 +71,9 @@ export class FirebaseService {
   }
 
   getToken() {
-    const app = initializeApp(environment.firebase);
-    const messaging = getMessaging(app);
-    getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+    var app = initializeApp(environment.firebase);
+    var messaging = getMessaging(app);
+    getToken(messaging, { vapidKey: VAPIDKEYS.PUBLIC_KEY })
       .then((currentToken) => {
         if (currentToken) {
           console.log("Hurraaa!!! we got the token.....");

@@ -82,7 +82,9 @@ export class AdminProperties implements OnInit {
     });
 
     // this.testMessage();
-
+    navigator.serviceWorker.ready.then(function (swRegistration) {
+      console.log("service worker ready", swRegistration);
+    });
     firebaseService.requestMessagePermission();
     firebaseService.getToken();
   }

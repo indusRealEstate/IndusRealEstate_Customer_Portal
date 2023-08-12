@@ -16,7 +16,12 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicon.ico", "src/manifest.json"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/firebase-messaging-sw.js",
+              "src/manifest.webmanifest"
+            ],
             "styles": [
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/assets/scss/material-dashboard.scss"
@@ -100,7 +105,12 @@
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/assets/scss/material-dashboard.scss"
             ],
-            "assets": ["src/assets", "src/favicon.ico", "src/manifest.json"]
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/firebase-messaging-sw.js",
+              "src/manifest.webmanifest"
+            ]
           }
         },
         "lint": {
