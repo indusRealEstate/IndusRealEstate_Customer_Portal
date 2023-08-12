@@ -57,7 +57,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field> -->
-              <mat-form-field  class="textField w-100 h-50vh" appearance="outline">
+              <mat-form-field  class="textField-report w-100 h-50vh" appearance="outline">
                 <mat-label class="m-lable">All Campaigns</mat-label>
                 <mat-select>
                   <mat-option
@@ -70,7 +70,7 @@
               </mat-form-field>
             </div>
             <div class="col-md-2">
-              <mat-form-field  class="textField w-100" appearance="outline">
+              <mat-form-field  class="textField-report w-100" appearance="outline">
                 <mat-label>Usage By Campaigns</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -127,7 +127,7 @@
                 <span class="mt-2" style="font-weight: 600; float:right; ">Filters</span>
               </div>
               <div class="col-4">
-                <mat-form-field  class="textField w-100" appearance="outline">
+                <mat-form-field  class="textField-report w-100" appearance="outline">
                   <mat-label>Clicks</mat-label>
                   <mat-select>
                     <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -137,7 +137,7 @@
                 </mat-form-field>
               </div>
               <div class="col-4">
-                <mat-form-field  class="textField w-100" appearance="outline">
+                <mat-form-field  class="textField-report w-100" appearance="outline">
                   <mat-label>All Campaigns</mat-label>
                   <mat-select>
                     <mat-option *ngFor="let item of staff" [value]="item.value">

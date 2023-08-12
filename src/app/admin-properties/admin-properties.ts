@@ -3,11 +3,14 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SwPush } from "@angular/service-worker";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
+import { VAPIDKEYS } from "app/keys/vapid";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { FirebaseService } from "app/services/firebase.service";
 
 @Component({
   selector: "admin-properties",
@@ -47,11 +50,14 @@ export class AdminProperties implements OnInit {
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
+  pushSub: any;
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private firebaseService: FirebaseService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -74,7 +80,31 @@ export class AdminProperties implements OnInit {
         });
       }
     });
+
+    // this.testMessage();
+
+    firebaseService.requestMessagePermission();
+    firebaseService.getToken();
   }
+
+  // async testMessage() {
+  //   await this.firebaseService.requestMessagePermission().then((res) => {
+  //     if (res == "granted") {
+  //       this.swPush
+  //         .requestSubscription({
+  //           serverPublicKey: VAPIDKEYS.PUBLIC_KEY,
+  //         })
+  //         .then((sub) => console.log(sub.toJSON()))
+  //         .catch((err) =>
+  //           console.error("Could not subscribe to notifications", err)
+  //         );
+  //     }
+  //   });
+
+  //   this.swPush.messages.subscribe((messages) => {
+  //     console.log(messages);
+  //   });
+  // }
 
   screenHeight: number;
   screenWidth: number;
@@ -120,7 +150,6 @@ export class AdminProperties implements OnInit {
       this.adminService
         .getallPropertiesAdmin()
         .subscribe((va: any[]) => {
-          console.log(va);
           this.allProperties = va;
           this.allPropertiesMatTableData = new MatTableDataSource(va);
           setTimeout(() => {

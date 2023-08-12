@@ -1,14 +1,17 @@
 import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
-import { Observable, first, map, of } from "rxjs";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import {
   Firestore,
   collection,
   collectionChanges,
 } from "@angular/fire/firestore";
+import { Observable, map, of } from "rxjs";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { environment } from "environments/environment.prod";
+import { initializeApp } from "@angular/fire/app";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseService {
@@ -34,7 +37,8 @@ export class FirebaseService {
         // console.log(result.user);
       })
       .catch((error) => {
-        window.alert(error.message);
+        console.log(error);
+        // window.alert(error.message);
       });
   }
 
@@ -54,5 +58,33 @@ export class FirebaseService {
 
   async deleteData(id) {
     await this.db.collection("service_requests").doc(id).delete();
+  }
+
+  async requestMessagePermission() {
+    if (Notification.permission !== "granted") {
+      var res = await Notification.requestPermission();
+      return res;
+    } else {
+      return "granted";
+    }
+  }
+
+  getToken() {
+    const app = initializeApp(environment.firebase);
+    const messaging = getMessaging(app);
+    getToken(messaging, { vapidKey: environment.firebase.vapidKey })
+      .then((currentToken) => {
+        if (currentToken) {
+          console.log("Hurraaa!!! we got the token.....");
+          console.log(currentToken);
+        } else {
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+      });
   }
 }
