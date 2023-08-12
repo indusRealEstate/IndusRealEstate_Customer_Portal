@@ -1,11 +1,8 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
-<div class="main-content reports-bg" *ngIf="screenWidth > 430">
-  <div
-    class="container-fluid h-100 d-flex justify-content-center"
-    style="max-width: 2576px"
-  >
+<div class="main-content home-bg" *ngIf="screenWidth > 430">
+  <div class="container-fluid" style="max-width: 2576px; ">
     <div class="col" style="padding: 0">
       <div class="row m-0 w-100 align-items-end justify-content-between">
         <div class="row m-0 align-items-end mb-3">
@@ -57,7 +54,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field> -->
-              <mat-form-field  class="textField w-100 h-50vh" appearance="outline">
+              <mat-form-field  class="textField-all w-100 h-50vh" appearance="outline">
                 <mat-label class="m-lable">All Campaigns</mat-label>
                 <mat-select>
                   <mat-option
@@ -70,7 +67,7 @@
               </mat-form-field>
             </div>
             <div class="col-md-2">
-              <mat-form-field  class="textField w-100" appearance="outline">
+              <mat-form-field  class="textField-all w-100" appearance="outline">
                 <mat-label>Usage By Campaigns</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -127,7 +124,7 @@
                 <span class="mt-2" style="font-weight: 600; float:right; ">Filters</span>
               </div>
               <div class="col-4">
-                <mat-form-field  class="textField w-100" appearance="outline">
+                <mat-form-field  class="textField-all w-100" appearance="outline">
                   <mat-label>Clicks</mat-label>
                   <mat-select>
                     <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -137,7 +134,7 @@
                 </mat-form-field>
               </div>
               <div class="col-4">
-                <mat-form-field  class="textField w-100" appearance="outline">
+                <mat-form-field  class="textField-all w-100" appearance="outline">
                   <mat-label>All Campaigns</mat-label>
                   <mat-select>
                     <mat-option *ngFor="let item of staff" [value]="item.value">
@@ -203,7 +200,7 @@
             left: 0px;
             top: 0px;
             left:5px;
-            display: inline-block;" class=" ml-2"></span>
+            display: inline-block;" class="ml-2"></span>
             <span class="ml-2 mt-2" style="font-weight: 500">No Action</span>
             <span
               class="ml-4"
@@ -260,7 +257,7 @@
                         color: #2b333ec4;
                       "
                     >
-                      Impressions
+                      Properties
                     </p>
                     <p
                       class="m-0 mt-2"
@@ -297,7 +294,7 @@
                         color: #2b333ec4;
                       "
                     >
-                      Clicks
+                      Lease
                     </p>
                     <p
                       class="m-0 mt-2"
@@ -335,7 +332,7 @@
                         color: #2b333ec4;
                       "
                     >
-                      Click through rate
+                      Users
                     </p>
                     <p
                       class="m-0 mt-2"

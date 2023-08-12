@@ -76,7 +76,7 @@ export class AdminFinancialReport implements OnInit {
     this.dialog
       .open(ViewFinanceDetailsDialog, {
         width: "75%",
-        height: "43rem",
+        height: "46rem",
       })
       .afterClosed()
       .subscribe((res) => {});
