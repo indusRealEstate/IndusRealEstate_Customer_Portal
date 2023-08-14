@@ -61,6 +61,10 @@ export class RequestsTable implements OnInit {
 
   @Output() requestUpdatedEmit = new EventEmitter<any>();
 
+  @Output() flagFilterEmit = new EventEmitter<any>();
+
+  @Output() timeLineFilterEmit = new EventEmitter<any>();
+
   assigned_user: object = {
     job: "",
     user_name: "",
@@ -242,11 +246,31 @@ export class RequestsTable implements OnInit {
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
 
-  showAllFlaggedRequests() {}
-  closeFlaggedRequestFilter() {}
-  closeStatusFilter() {}
-  filterByTimeline() {}
-  closeTimelineFilter() {}
+  showAllFlaggedRequests() {
+    this.allRequestsMatTableData.data =
+      this.allRequestsMatTableData.data.filter((req) => req.flag == 1);
+  }
+  closeFlaggedRequestFilter() {
+    this.flagFilterEmit.emit(0);
+  }
+  filterByTimeline() {
+    // this.timeLineFilterEmit.emit({
+    //   start: this.table_filter.first_selected_timeline,
+    //   end: this.table_filter.last_selected_timeline,
+    // });
+
+    this.allRequestsMatTableData.data =
+      this.allRequestsMatTableData.data.filter(
+        (req: any) =>
+          new Date(req.request_date).getTime() >=
+            new Date(this.table_filter.first_selected_timeline).getTime() &&
+          new Date(req.request_date).getTime() <=
+            new Date(this.table_filter.last_selected_timeline).getTime()
+      );
+  }
+  closeTimelineFilter() {
+    this.timeLineFilterEmit.emit(0);
+  }
 
   viewAllAssignStaffList(data: any) {
     this.dialog.open(ViewAllAsignStaff, {

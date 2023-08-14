@@ -204,7 +204,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.isLoading = false;
     this.chart_data = [
       {
         share: `${(this.all_occupied_units / this.allUnits.length) * 100}%`,
@@ -215,6 +214,10 @@ export class AdminDashboardComponent implements OnInit {
         color: "#ff5353",
       },
     ];
+    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
   }
 
   navigateToTotalProperties() {

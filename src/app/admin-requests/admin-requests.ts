@@ -99,6 +99,8 @@ export class AdminRequests implements OnInit {
                 this.allRequestsMatTableData = new MatTableDataSource(
                   this.allRequests
                 );
+                this.filterRequests(this.matTabIndex);
+                this.initializePaginator(this.matTabIndex);
               }
             });
           });
@@ -191,6 +193,20 @@ export class AdminRequests implements OnInit {
     this.fetchData();
   }
 
+  closeFilterByFlag(event) {
+    if (event == 0) {
+      this.allRequestsMatTableData.data = this.allRequests;
+      this.filterRequests(this.matTabIndex);
+    }
+  }
+
+  closeTimeLineFilter(event) {
+    if (event == 0) {
+      this.allRequestsMatTableData.data = this.allRequests;
+      this.filterRequests(this.matTabIndex);
+    }
+  }
+
   addRequestsCount(status) {
     switch (status) {
       case RequestStatuses.open:
@@ -267,36 +283,58 @@ export class AdminRequests implements OnInit {
   initializePaginator(index) {
     switch (index) {
       case 0:
+        this.request_table_0.table_filter.closeFlaggedRequestFilter();
+        this.request_table_0.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_0.paginator;
         break;
       case 1:
+        this.request_table_1.table_filter.closeFlaggedRequestFilter();
+        this.request_table_1.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_1.paginator;
         break;
       case 2:
+        this.request_table_2.table_filter.closeFlaggedRequestFilter();
+        this.request_table_2.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_2.paginator;
         break;
       case 3:
+        this.request_table_3.table_filter.closeFlaggedRequestFilter();
+        this.request_table_3.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_3.paginator;
         break;
       case 4:
+        this.request_table_4.table_filter.closeFlaggedRequestFilter();
+        this.request_table_4.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_4.paginator;
         break;
       case 5:
+        this.request_table_5.table_filter.closeFlaggedRequestFilter();
+        this.request_table_5.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_5.paginator;
         break;
       case 6:
+        this.request_table_6.table_filter.closeFlaggedRequestFilter();
+        this.request_table_6.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_6.paginator;
         break;
       case 7:
+        this.request_table_7.table_filter.closeFlaggedRequestFilter();
+        this.request_table_7.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_7.paginator;
         break;
       case 8:
+        this.request_table_8.table_filter.closeFlaggedRequestFilter();
+        this.request_table_8.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_8.paginator;
         break;
       case 9:
+        this.request_table_9.table_filter.closeFlaggedRequestFilter();
+        this.request_table_9.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_9.paginator;
         break;
       default:
+        this.request_table_0.table_filter.closeFlaggedRequestFilter();
+        this.request_table_0.table_filter.closeTimelineFilter();
         this.allRequestsMatTableData.paginator = this.request_table_0.paginator;
         break;
     }
