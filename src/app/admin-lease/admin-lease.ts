@@ -338,9 +338,9 @@ export class AllLeasesComponent implements OnInit {
       data.push({
         UNIT: unit.unit_no,
         "TYPE OF APARTMENT": unit.unit_type,
-        "AREA (SQ/FT)": unit.size + "SQFT",
+        "AREA (SQ/FT)": `${unit.size} SqFt` ,
         TENANT: tenant.name,
-        "PHONE NO": tenant.country_code_number + " " + tenant.mobile_number,
+        "PHONE NO": `${tenant.country_code_number} ${tenant.mobile_number}`,
         "EMAIL ID": tenant.email,
         "CONTRACT START": lease.contract_start,
         "CONTRACT END": lease.contract_end,
@@ -364,6 +364,7 @@ export class AllLeasesComponent implements OnInit {
       { wch: 40 },
       { wch: 40 },
       { wch: 30 },
+      { wch: 35 },
       { wch: 35 },
     ];
 
@@ -410,7 +411,7 @@ export class AllLeasesComponent implements OnInit {
               color: "000000",
             },
           },
-          fill: { fgColor: { rgb: "d4aa32" } },
+          fill: { fgColor: { rgb: "f8e7b4" } },
           alignment: {
             vertical: "center",
             horizontal: "center",
@@ -424,14 +425,14 @@ export class AllLeasesComponent implements OnInit {
         ws[i].s.fill = {
           // background color
           patternType: "solid",
-          fgColor: { rgb: "b2b2b2" },
-          bgColor: { rgb: "b2b2b2" },
+          fgColor: { rgb: "fef7e3" },
+          bgColor: { rgb: "fef7e3" },
         };
       }
     }
 
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, "sample_excel.xlsx");
+    XLSX.writeFile(wb, "Total-Lease-Contracts.xlsx");
   }
 }

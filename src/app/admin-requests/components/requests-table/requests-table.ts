@@ -59,6 +59,8 @@ export class RequestsTable implements OnInit {
 
   @Output() refreshTableEmit = new EventEmitter<string>();
 
+  @Output() requestUpdatedEmit = new EventEmitter<any>();
+
   assigned_user: object = {
     job: "",
     user_name: "",
@@ -85,6 +87,10 @@ export class RequestsTable implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  requestUpdated(req_id, type) {
+    this.requestUpdatedEmit.emit({ req_id: req_id, type: type });
   }
 
   getbuildingName(prop_id) {
@@ -224,7 +230,7 @@ export class RequestsTable implements OnInit {
     this.adminService
       .updateRequestMore(JSON.stringify(output))
       .subscribe((value) => {
-        this.refreshTable();
+        this.requestUpdated(data.request_id, type);
       });
   }
 

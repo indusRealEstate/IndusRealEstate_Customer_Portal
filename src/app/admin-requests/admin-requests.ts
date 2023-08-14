@@ -108,6 +108,7 @@ export class AdminRequests implements OnInit {
   }
 
   fetchData() {
+    this.clearAllData();
     this.adminService
       .getAllRequestsAdmin()
       .subscribe((va: any[]) => {
@@ -129,6 +130,60 @@ export class AdminRequests implements OnInit {
           this.initializePaginator(this.matTabIndex);
         });
       });
+  }
+
+  clearAllData() {
+    this.open_requests_count = 0;
+    this.assigned_requests_count = 0;
+    this.inProgress_requests_count = 0;
+    this.completed_requests_count = 0;
+    this.hold_requests_count = 0;
+    this.reOpen_requests_count = 0;
+    this.reAssigned_requests_count = 0;
+    this.rejected_requests_count = 0;
+    this.cancelled_requests_count = 0;
+  }
+
+  requestUpdate(event) {
+    console.log(event);
+
+    if (event.type == "flag") {
+      var index = this.allRequests.findIndex(
+        (req) => req.request_id == event.req_id
+      );
+      this.allRequests[index].flag = 1;
+    }
+    if (event.type == "unflag") {
+      var index = this.allRequests.findIndex(
+        (req) => req.request_id == event.req_id
+      );
+      this.allRequests[index].flag = 0;
+    }
+
+    if (event.type == "spam") {
+      var index = this.allRequests.findIndex(
+        (req) => req.request_id == event.req_id
+      );
+      this.allRequests.splice(index, 1);
+      this.allRequestsMatTableData._updateChangeSubscription();
+      this.clearAllData();
+      this.allRequests.forEach((r) => {
+        this.addRequestsCount(r.request_status);
+      });
+      this.filterRequests(this.matTabIndex);
+    }
+    if (event.type == "archived") {
+      var index = this.allRequests.findIndex(
+        (req) => req.request_id == event.req_id
+      );
+      this.allRequests.splice(index, 1);
+      this.allRequestsMatTableData._updateChangeSubscription();
+      this.clearAllData();
+      this.allRequests.forEach((r) => {
+        this.addRequestsCount(r.request_status);
+      });
+      this.filterRequests(this.matTabIndex);
+    }
   }
 
   refreshTable() {

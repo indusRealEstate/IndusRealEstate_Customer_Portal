@@ -7,6 +7,20 @@ import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import * as XLSX from "xlsx-js-style";
+
+declare interface Unit {
+  "UNIT No.": number;
+  "UNIT TYPE": string;
+  BUILDING: string;
+  FLOORS: string;
+  "UNIT SIZE": string;
+  "OCCUPANCY STATUS": string;
+  OWNER: string;
+  BEDROOMS: number;
+  BATHROOMS: number;
+  PARKING: number;
+}
 
 @Component({
   selector: "admin-properties-units",
@@ -32,8 +46,8 @@ export class AdminPropertiesUnits implements OnInit {
     "more",
   ];
 
-  allProperties: any[] = [];
-  allPropertiesMatTableData: MatTableDataSource<any>;
+  allUnits: any[] = [];
+  allUnitsMatTableData: MatTableDataSource<any>;
   ngAfterViewInitInitialize: boolean = false;
 
   loadingTable: any[] = [1, 2, 3, 4, 5];
@@ -44,6 +58,8 @@ export class AdminPropertiesUnits implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
+
+  allProperties: any[] = [];
 
   constructor(
     private router: Router,
@@ -91,13 +107,13 @@ export class AdminPropertiesUnits implements OnInit {
 
   ngAfterViewInit() {
     if (this.ngAfterViewInitInitialize == true) {
-      if (this.allPropertiesMatTableData != undefined) {
-        this.allPropertiesMatTableData.paginator = this.paginator;
+      if (this.allUnitsMatTableData != undefined) {
+        this.allUnitsMatTableData.paginator = this.paginator;
       }
     } else {
       setTimeout(() => {
-        if (this.allPropertiesMatTableData != undefined) {
-          this.allPropertiesMatTableData.paginator = this.paginator;
+        if (this.allUnitsMatTableData != undefined) {
+          this.allUnitsMatTableData.paginator = this.paginator;
         }
       });
     }
@@ -108,8 +124,8 @@ export class AdminPropertiesUnits implements OnInit {
       sessionStorage.getItem("admin_properties_units_session")
     );
     if (adminReqDataSession != null) {
-      this.allProperties = adminReqDataSession;
-      this.allPropertiesMatTableData.data = adminReqDataSession;
+      this.allUnits = adminReqDataSession;
+      this.allUnitsMatTableData.data = adminReqDataSession;
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
@@ -117,20 +133,20 @@ export class AdminPropertiesUnits implements OnInit {
         .getallPropertiesUnitsAdmin()
         .subscribe((va: any[]) => {
           console.log(va);
-          this.allProperties = va;
-          this.allPropertiesMatTableData = new MatTableDataSource(va);
+          this.allUnits = va;
+          this.allUnitsMatTableData = new MatTableDataSource(va);
           setTimeout(() => {
-            if (this.allPropertiesMatTableData != undefined) {
-              this.allPropertiesMatTableData.paginator = this.paginator;
+            if (this.allUnitsMatTableData != undefined) {
+              this.allUnitsMatTableData.paginator = this.paginator;
             }
           });
         })
         .add(() => {
           this.isContentLoading = false;
-          if (this.allProperties.length != 0) {
+          if (this.allUnits.length != 0) {
             sessionStorage.setItem(
               "admin_properties_units_session",
-              JSON.stringify(this.allProperties)
+              JSON.stringify(this.allUnits)
             );
           }
         });
@@ -141,7 +157,22 @@ export class AdminPropertiesUnits implements OnInit {
     }
   }
 
+  getAllProperties() {
+    var propertiesDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_session")
+    );
+
+    if (propertiesDataSession == null) {
+      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+        this.allProperties = val;
+      });
+    } else {
+      this.allProperties = propertiesDataSession;
+    }
+  }
+
   async ngOnInit() {
+    this.getAllProperties();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("admin_properties_units_session_time_admin")
@@ -159,8 +190,8 @@ export class AdminPropertiesUnits implements OnInit {
         this.fetchData();
       } else {
         if (adminReqDataSession != null) {
-          this.allProperties = adminReqDataSession;
-          this.allPropertiesMatTableData = new MatTableDataSource(
+          this.allUnits = adminReqDataSession;
+          this.allUnitsMatTableData = new MatTableDataSource(
             adminReqDataSession
           );
           this.isContentLoading = false;
@@ -175,7 +206,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   clearAllVariables() {
-    this.allProperties.length = 0;
+    this.allUnits.length = 0;
   }
 
   refreshTable() {
@@ -191,7 +222,7 @@ export class AdminPropertiesUnits implements OnInit {
 
   applyFilter(filterValue: any) {
     var val = new String(filterValue).trim().toLowerCase();
-    this.allPropertiesMatTableData.filter = val;
+    this.allUnitsMatTableData.filter = val;
   }
 
   addUnitDialogOpen() {
@@ -220,5 +251,109 @@ export class AdminPropertiesUnits implements OnInit {
     this.router.navigate(["/admin-user-details"], {
       queryParams: { user_id: user_id },
     });
+  }
+
+  exportExcelFile() {
+    var data: Unit[] = [];
+
+    this.allUnits.forEach((unit) => {
+      var property = this.allProperties.find(
+        (prop) => prop.property_id == unit.property_id
+      );
+      data.push({
+        "UNIT No.": unit.unit_no,
+        "UNIT TYPE": unit.unit_type,
+        BUILDING: property.property_name,
+        FLOORS: unit.floor,
+        "UNIT SIZE": `${unit.size} SqFt`,
+        "OCCUPANCY STATUS": unit.status,
+        OWNER: unit.owner,
+        BEDROOMS: unit.bedroom,
+        BATHROOMS: unit.bathroom,
+        PARKING: unit.no_of_parking,
+      });
+    });
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    ws["!cols"] = [
+      { wch: 30 },
+      { wch: 40 },
+      { wch: 35 },
+      { wch: 30 },
+      { wch: 35 },
+      { wch: 40 },
+      { wch: 30 },
+      { wch: 30 },
+      { wch: 30 },
+      { wch: 30 },
+    ];
+
+    ws["!rows"] = [{ hpt: 30 }];
+
+    for (var i in ws) {
+      // console.log(ws[i]);
+      if (typeof ws[i] != "object") continue;
+      let cell = XLSX.utils.decode_cell(i);
+
+      ws[i].s = {
+        // styling for all cells
+        font: {
+          name: "arial",
+        },
+        alignment: {
+          vertical: "center",
+          horizontal: "center",
+          wrapText: "1", // any truthy value here
+        },
+        border: {
+          right: {
+            style: "thin",
+            color: "000000",
+          },
+          left: {
+            style: "thin",
+            color: "000000",
+          },
+        },
+      };
+
+      if (cell.r == 0) {
+        // first row
+        ws[i].s = {
+          font: {
+            name: "Calibri",
+            sz: "14",
+            bold: true,
+          },
+          border: {
+            bottom: {
+              style: "thin",
+              color: "000000",
+            },
+          },
+          fill: { fgColor: { rgb: "f8e7b4" } },
+          alignment: {
+            vertical: "center",
+            horizontal: "center",
+            wrapText: "1", // any truthy value here
+          },
+        };
+      }
+
+      if (cell.r % 2) {
+        // every other row
+        ws[i].s.fill = {
+          // background color
+          patternType: "solid",
+          fgColor: { rgb: "fef7e3" },
+          bgColor: { rgb: "fef7e3" },
+        };
+      }
+    }
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, "Total-Units.xlsx");
   }
 }

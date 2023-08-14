@@ -56,6 +56,28 @@
               <p class="m-0">Add Unit</p>
             </div>
           </div>
+          <div
+            class="btn"
+            style="
+              margin: 0;
+              padding: 7px 15px;
+              margin-right: 10px;
+              background: #2b333e;
+            "
+            (click)="exportExcelFile()"
+          >
+            <div
+              class="row m-0 align-items-center"
+              style="width: 125px; justify-content: space-between"
+            >
+              <img
+                src="assets/img/svg/excel.svg"
+                alt=""
+                style="width: 20px; filter: brightness(0) invert(1)"
+              />
+              <p class="m-0">Export Excel</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -70,9 +92,9 @@
         <div style="overflow: auto; padding: 0 5px; padding-bottom: 1rem">
           <table
             mat-table
-            [dataSource]="allPropertiesMatTableData"
+            [dataSource]="allUnitsMatTableData"
             class="mat-elevation-z8 demo-table"
-            *ngIf="allProperties.length != 0"
+            *ngIf="allUnits.length != 0"
           >
             <!-- Name Column -->
             <ng-container matColumnDef="unitNo">
@@ -274,7 +296,7 @@
             ></tr>
           </table>
           <div
-            *ngIf="allPropertiesMatTableData.filteredData.length == 0 && allProperties.length != 0"
+            *ngIf="allUnitsMatTableData.filteredData.length == 0 && allUnits.length != 0"
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;
@@ -295,7 +317,7 @@
             </p>
           </div>
           <table
-            *ngIf="allProperties.length == 0"
+            *ngIf="allUnits.length == 0"
             mat-table
             [dataSource]="loadingTable"
             class="mat-elevation-z8 demo-table"
@@ -340,7 +362,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <div
-            *ngIf="allProperties.length == 0"
+            *ngIf="allUnits.length == 0"
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;

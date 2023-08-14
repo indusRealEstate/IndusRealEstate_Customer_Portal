@@ -9,6 +9,16 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
+import * as XLSX from "xlsx-js-style";
+
+declare interface Property {
+  "PROPERTY NAME": string;
+  "PROPERTY ADDRESS": string;
+  "PROPERTY TYPE": string;
+  LOCALITY: string;
+  "TOTAL UNITS": string;
+  "PROPERTY IN CHARGE": string;
+}
 
 @Component({
   selector: "admin-properties",
@@ -41,6 +51,8 @@ export class AdminProperties implements OnInit {
   flaggedRequest: boolean = false;
 
   more_menu_prop_all_data: any;
+
+  allUnits: any[] = [];
 
   userId: any;
 
@@ -155,7 +167,22 @@ export class AdminProperties implements OnInit {
     }
   }
 
+  getAllUnits() {
+    var unitsDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_units_session")
+    );
+
+    if (unitsDataSession == null) {
+      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+        this.allUnits = val;
+      });
+    } else {
+      this.allUnits = unitsDataSession;
+    }
+  }
+
   async ngOnInit() {
+    this.getAllUnits();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("admin_properties_session_time_admin")
@@ -237,25 +264,11 @@ export class AdminProperties implements OnInit {
 
   getUnitCount(prop_id) {
     var unit_count = 0;
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        val.forEach((unit) => {
-          if (unit.property_id == prop_id) {
-            unit_count++;
-          }
-        });
-      });
-    } else {
-      unitsDataSession.forEach((unit) => {
-        if (unit.property_id == prop_id) {
-          unit_count++;
-        }
-      });
-    }
+    this.allUnits.forEach((unit) => {
+      if (unit.property_id == prop_id) {
+        unit_count++;
+      }
+    });
 
     return unit_count;
   }
@@ -289,5 +302,98 @@ export class AdminProperties implements OnInit {
               : this.allProperties[index].locality_name;
         });
     }
+  }
+
+  exportExcelFile() {
+    var data: Property[] = [];
+
+    this.allProperties.forEach((prop) => {
+      data.push({
+        "PROPERTY NAME": prop.property_name,
+        "PROPERTY ADDRESS": prop.address,
+        "PROPERTY TYPE": prop.property_type,
+        LOCALITY: prop.locality_name,
+        "TOTAL UNITS": JSON.stringify(this.getUnitCount(prop.property_id)),
+        "PROPERTY IN CHARGE": prop.property_in_charge,
+      });
+    });
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    ws["!cols"] = [
+      { wch: 30 },
+      { wch: 40 },
+      { wch: 30 },
+      { wch: 30 },
+      { wch: 35 },
+      { wch: 40 },
+    ];
+
+    ws["!rows"] = [{ hpt: 30 }];
+
+    for (var i in ws) {
+      // console.log(ws[i]);
+      if (typeof ws[i] != "object") continue;
+      let cell = XLSX.utils.decode_cell(i);
+
+      ws[i].s = {
+        // styling for all cells
+        font: {
+          name: "arial",
+        },
+        alignment: {
+          vertical: "center",
+          horizontal: "center",
+          wrapText: "1", // any truthy value here
+        },
+        border: {
+          right: {
+            style: "thin",
+            color: "000000",
+          },
+          left: {
+            style: "thin",
+            color: "000000",
+          },
+        },
+      };
+
+      if (cell.r == 0) {
+        // first row
+        ws[i].s = {
+          font: {
+            name: "Calibri",
+            sz: "14",
+            bold: true,
+          },
+          border: {
+            bottom: {
+              style: "thin",
+              color: "000000",
+            },
+          },
+          fill: { fgColor: { rgb: "f8e7b4" } },
+          alignment: {
+            vertical: "center",
+            horizontal: "center",
+            wrapText: "1", // any truthy value here
+          },
+        };
+      }
+
+      if (cell.r % 2) {
+        // every other row
+        ws[i].s.fill = {
+          // background color
+          patternType: "solid",
+          fgColor: { rgb: "fef7e3" },
+          bgColor: { rgb: "fef7e3" },
+        };
+      }
+    }
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, "Total-Properties.xlsx");
   }
 }
