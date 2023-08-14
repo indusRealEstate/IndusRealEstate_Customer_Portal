@@ -96,7 +96,7 @@
                 cursor: pointer;
               " />
             <img
-              mat-button [matMenuTriggerFor]="menu" 
+              mat-button [matMenuTriggerFor]="menu"
               class="mx-4"
               matTooltip="More Actions"
               matTooltipClass="tooltip"
@@ -109,9 +109,9 @@
                 width: 25px;
                 cursor: pointer;
               " />
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openEditUnit(all_data)">Edit</button>
-              </mat-menu>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openEditUnit(all_data)">Edit</button>
+            </mat-menu>
           </div>
         </div>
 
@@ -584,43 +584,21 @@
 
           <ngx-skeleton-loader
             *ngIf="isContentLoading"
-            [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
-            [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
+            class="col-md-12"
+            [theme]="{width: (screenWidth - 150) + 'px', height: '30vh', margin: '1rem'}">
           </ngx-skeleton-loader>
           <div
-            class="table-row"
-            [ngClass]="isOcupied == true ? 'col-md-12 mt-3' : 'col-md-4'"
+            class="table-row col-md-12 mt-5"
             *ngIf="!isContentLoading">
             <div
               class="card main-card"
               [ngStyle]="{'height' : all_data.unit_status == 'vacant' ? '93%' : '100%', 'margin-top' : all_data.unit_status == 'vacant' ? '30px !important' : '0'}">
               <div class="card-header">
                 <div class="row m-0 justify-content-between">
-                  <h4 class="overview-header">Property Details</h4>
-                  <button
-                    (click)="openProperty()"
-                    class="btn open-external-link-icon"
-                    title="extenal">
-                    <img
-                      src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                      alt />
-                  </button>
+                  <h4 class="overview-header">Unit Details</h4>
                 </div>
               </div>
               <div class="card-body">
-                <!-- <h4 class="overview-header">
-                  Property details
-                  <button
-                    (click)="openProperty()"
-                    class="btn open-external-link-icon"
-                    title="extenal"
-                  >
-                    <img
-                      src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                      alt
-                    />
-                  </button>
-                </h4> -->
                 <table class="teble table-striped w-100 px-3 detail-table">
                   <thead class="thead">
                     <tr>
@@ -630,34 +608,149 @@
                   </thead>
                   <tbody class="tbody text-uppercase">
                     <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">name</th>
-                      <td class="p-3 col-md-8">{{all_data.prop_name}}</td>
+                      <th class="p-3 col-md-4" scope="row">unit number</th>
+                      <td class="p-3 col-md-8">{{all_data.unit_no}}</td>
                     </tr>
                     <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">address</th>
-                      <td class="p-3 col-md-8">{{all_data.prop_address}}</td>
-                    </tr>
-                    <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">type</th>
-                      <td class="p-3 col-md-8">{{all_data.prop_type}}</td>
-                    </tr>
-                    <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">number of units</th>
+                      <th class="p-3 col-md-4" scope="row">inventories</th>
                       <td class="p-3 col-md-8">
-                        {{all_data.prop_no_of_units}}
+                        <button class="btn"
+                          matTooltip="View inventories"
+                          matTooltipClass="tooltip"
+                          matTooltipPosition="above"
+                          (click)="showInventories()"
+                          style="background-color: #2b333e;">inventories</button>
                       </td>
                     </tr>
                     <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">locality name</th>
+                      <th class="p-3 col-md-4" scope="row">Description</th>
                       <td class="p-3 col-md-8">
-                        {{all_data.prop_locality_name}}
+                        <div class="row">
+                          <div class="col-12"
+                            style="max-height: 20vh; overflow-y: auto;">{{all_data.unit_description}}</div>
+                        </div>
+
                       </td>
-                    </tr>
-                    <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">incharge</th>
-                      <td class="p-3 col-md-8">{{all_data.prop_in_charge}}</td>
                     </tr>
                   </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <ngx-skeleton-loader
+            *ngIf="isContentLoading"
+            class="col-md-12"
+            [theme]="{width: (screenWidth - 150) + 'px', height: '30vh', margin: '1rem'}">
+          </ngx-skeleton-loader>
+          <div
+            class="table-row"
+            [ngClass]="isOcupied == true ? 'col-md-12 mt-3' : 'col-md-4'"
+            *ngIf="!isContentLoading">
+            <div
+              class="card main-card"
+              [ngStyle]="{'height' : all_data.unit_status == 'vacant' ? '93%' : '100%', 'margin-top' : all_data.unit_status == 'vacant' ? '30px !important' : '0'}">
+              <div class="card-header">
+                <div class="row m-0">
+                  <div class="col-md-12 d-flex">
+                    <h4 class="overview-header my-auto">Unit Finacial Details</h4>
+                    <ul class="my-auto"
+                      style="display: flex; flex-wrap: wrap; padding: 0; margin-left: 20px; list-style: none;">
+                      <li>
+                        <img
+                          (click)="refreshTable()"
+                          matTooltip="Refresh table"
+                          matTooltipClass="tooltip"
+                          matTooltipPosition="above"
+                          class="refresh-table-btn ml-3"
+                          src="assets/img/svg/home-page/refresh-2.svg"
+                          alt />
+                      </li>
+                      <li>
+                        <img
+                          style="height: 21px"
+                          #timelineMenuTrigger="matMenuTrigger"
+                          [matMenuTriggerFor]="timelineMenu"
+                          matTooltip="Filter By Date"
+                          matTooltipClass="tooltip"
+                          matTooltipPosition="above"
+                          class="sort-table-btn ml-4"
+                          src="assets/img/pngs/timeline.png"
+                          alt />
+
+                        <mat-menu #timelineMenu="matMenu">
+                          <div class="timeline-menu"
+                            (click)="$event.stopPropagation()">
+                            <div class="row m-0">
+                              <div class="col p-0">
+                                <p class="cal-title">From</p>
+                                <mat-calendar
+                                  [(selected)]="first_selected_timeline"></mat-calendar>
+                              </div>
+
+                              <div class="vertical-divider"></div>
+                              <div class="col p-0">
+                                <p class="cal-title">To</p>
+                                <mat-calendar
+                                  [(selected)]="last_selected_timeline"></mat-calendar>
+                              </div>
+                            </div>
+                            <div class="col mt-3 p-0 d-flex justify-content-end">
+                              <div
+                                (click)="filterByTimeline(timelineMenuTrigger)"
+                                class="btn search-btn">
+                                Search
+                              </div>
+                            </div>
+                            <p
+                              class="mb-0 mt-2"
+                              *ngIf="timeLineFilterDateNotSelected == true"
+                              style="text-align: end; font-size: 12px; font-weight: 400; color: red">
+                              Please Select Dates for Filtering.
+                            </p>
+                            <p
+                              class="mb-0 mt-2"
+                              *ngIf="timeLineFilterselectedWrong == true"
+                              style="text-align: end; font-size: 12px; font-weight: 400; color: red">
+                              Please Select Valid Date Timeline.
+                            </p>
+                          </div>
+                        </mat-menu>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <table mat-table [dataSource]="all_data.tenant_payments"
+                  class="mat-elevation-z8 finacial">
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> User Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.user_name}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="method">
+                    <th mat-header-cell *matHeaderCellDef>payment method</th>
+                    <td mat-cell *matCellDef="let element"> {{element.tp_payment_method}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="purpose">
+                    <th mat-header-cell *matHeaderCellDef>purpose</th>
+                    <td mat-cell *matCellDef="let element"> {{element.tp_purpose}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="stauts">
+                    <th mat-header-cell *matHeaderCellDef>stauts</th>
+                    <td mat-cell *matCellDef="let element"> {{element.tp_status}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="more">
+                    <th mat-header-cell *matHeaderCellDef>more</th>
+                    <td mat-cell *matCellDef="let element"> <button class="btn">more details</button>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
               </div>
             </div>
@@ -848,7 +941,8 @@
                       </td>
                     </tr>
                     <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">Yearly Contract Amount</th>
+                      <th class="p-3 col-md-4" scope="row">Yearly Contract
+                        Amount</th>
                       <td class="p-3 col-md-8">
                         {{all_data.lease_yearly_amount | currency:'AED '}}
                       </td>

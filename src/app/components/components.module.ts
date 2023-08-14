@@ -43,6 +43,7 @@ import { DialogViewMedia } from "./view_media/view_media";
 import { EditPropertyDialog } from "./edit_property_dialog/edit_property_dialog";
 import { EditUnitDialog } from "./edit_unit_dialog/edit_unit_dialog";
 import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
+import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 
 @NgModule({
   imports: [
@@ -91,7 +92,8 @@ import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_do
     CountryDropdown,
     DialogViewMedia,
     EditUnitDialog,
-    ViewAllUnitDocuments
+    ViewAllUnitDocuments,
+    ViewAllUnitInventories
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
