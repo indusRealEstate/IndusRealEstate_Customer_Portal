@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule, isDevMode } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
@@ -18,10 +18,6 @@ import { AdminLayoutComponent } from "./layouts/admin-layout.component";
 
 import { FIREBASE_OPTIONS } from "@angular/fire/compat";
 // import { ServiceWorkerModule } from "@angular/service-worker";
-import { getMessaging, provideMessaging } from "@angular/fire/messaging";
-import { SERVICE_WORKER, VAPID_KEY } from "@angular/fire/compat/messaging";
-import { VAPIDKEYS } from "./keys/vapid";
-import { ServiceWorkerModule } from "@angular/service-worker";
 
 @NgModule({
   imports: [
@@ -38,13 +34,13 @@ import { ServiceWorkerModule } from "@angular/service-worker";
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideMessaging(() => getMessaging()),
-    ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: "registerWhenStable:30000",
-    }),
+    // provideMessaging(() => getMessaging()),
+    // ServiceWorkerModule.register("ngsw-worker.js", {
+    //   enabled: environment.production,
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: "registerWhenStable:30000",
+    // }),
   ],
   declarations: [AppComponent, AdminLayoutComponent],
   providers: [

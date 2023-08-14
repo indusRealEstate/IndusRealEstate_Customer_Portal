@@ -3,11 +3,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { SwPush } from "@angular/service-worker";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
-import { VAPIDKEYS } from "app/keys/vapid";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
@@ -82,31 +80,12 @@ export class AdminProperties implements OnInit {
     });
 
     // this.testMessage();
-    navigator.serviceWorker.ready.then(function (swRegistration) {
-      console.log("service worker ready", swRegistration);
-    });
-    firebaseService.requestMessagePermission();
-    firebaseService.getToken();
+    // navigator.serviceWorker.ready.then(function (swRegistration) {
+    //   console.log("service worker ready", swRegistration);
+    // });
+    // firebaseService.requestMessagePermission();
+    // firebaseService.getToken();
   }
-
-  // async testMessage() {
-  //   await this.firebaseService.requestMessagePermission().then((res) => {
-  //     if (res == "granted") {
-  //       this.swPush
-  //         .requestSubscription({
-  //           serverPublicKey: VAPIDKEYS.PUBLIC_KEY,
-  //         })
-  //         .then((sub) => console.log(sub.toJSON()))
-  //         .catch((err) =>
-  //           console.error("Could not subscribe to notifications", err)
-  //         );
-  //     }
-  //   });
-
-  //   this.swPush.messages.subscribe((messages) => {
-  //     console.log(messages);
-  //   });
-  // }
 
   screenHeight: number;
   screenWidth: number;
@@ -256,6 +235,31 @@ export class AdminProperties implements OnInit {
       });
   }
 
+  getUnitCount(prop_id) {
+    var unit_count = 0;
+    var unitsDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_units_session")
+    );
+
+    if (unitsDataSession == null) {
+      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+        val.forEach((unit) => {
+          if (unit.property_id == prop_id) {
+            unit_count++;
+          }
+        });
+      });
+    } else {
+      unitsDataSession.forEach((unit) => {
+        if (unit.property_id == prop_id) {
+          unit_count++;
+        }
+      });
+    }
+
+    return unit_count;
+  }
+
   openEditProperty(index) {
     if (this.more_menu_prop_all_data != undefined) {
       var data = this.more_menu_prop_all_data;
@@ -283,16 +287,6 @@ export class AdminProperties implements OnInit {
             value.property_locality != undefined
               ? value.property_locality
               : this.allProperties[index].locality_name;
-
-          this.allProperties[index].govt_id =
-            value.property_gov_id != undefined
-              ? value.property_gov_id
-              : this.allProperties[index].govt_id;
-
-          this.allProperties[index].govt_id =
-            value.property_gov_id != undefined
-              ? value.property_gov_id
-              : this.allProperties[index].govt_id;
         });
     }
   }
