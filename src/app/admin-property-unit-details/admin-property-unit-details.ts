@@ -1,11 +1,14 @@
 import {
   Component,
+  EventEmitter,
   HostListener,
   OnChanges,
   OnInit,
+  Output,
   ViewChild,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatMenuTrigger } from "@angular/material/menu";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
@@ -45,6 +48,32 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   screenHeight: number;
   screenWidth: number;
+
+  first_selected_timeline: any;
+  last_selected_timeline: any;
+
+  @Output() closeFlaggedReqs = new EventEmitter<string>();
+  @Output() timeLineFilter = new EventEmitter<string>();
+  @Output() closeTimeLineFilterEmitter = new EventEmitter<string>();
+  // @Output() statusFilterEmitter = new EventEmitter<string>();
+  @Output() closeStatusFilterEmitter = new EventEmitter<string>();
+  @Output() refresh = new EventEmitter<string>();
+
+  displayedColumns: string[] = [
+    "name",
+    "method",
+    "purpose",
+    "stauts",
+    "more",
+  ];
+
+
+  flaggedRequestsFilterOn: boolean = false;
+  timeLineFilterOn: boolean = false;
+  statusFilterOn: boolean = false;
+  timeLineFilterDateNotSelected: boolean = false;
+  timeLineFilterselectedWrong: boolean = false;
+  statusFilter: any;
 
   @ViewChild("selecte_doc") selecte_doc;
   profile_image: string;
@@ -397,8 +426,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .open(ViewAllUnitDocuments, {
         data: {
           doc: this.all_data.unit_doc,
-          id: this.all_data.unit_id
-        }
+          id: this.all_data.unit_id,
+        },
       })
       .afterClosed()
       .subscribe((value) => {
@@ -406,12 +435,36 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       });
   }
 
-  showInventories(){
-    this.dialog.open(ViewAllUnitInventories,{
-      data:{
+  showInventories() {
+    this.dialog.open(ViewAllUnitInventories, {
+      data: {
         id: this.all_data.unit_id,
-        inventories: this.all_data.inventories
+        inventories: this.all_data.inventories,
+      },
+    });
+  }
+
+  filterByTimeline(trigger: MatMenuTrigger) {
+    if (this.first_selected_timeline && this.last_selected_timeline) {
+      var first = new Date(this.first_selected_timeline).getTime();
+      var last = new Date(this.last_selected_timeline).getTime();
+      if (last < first) {
+        this.timeLineFilterselectedWrong = true;
+
+        setTimeout(() => {
+          this.timeLineFilterselectedWrong = false;
+        }, 3000);
+      } else {
+        this.timeLineFilter.emit();
+        trigger.closeMenu();
+        this.timeLineFilterOn = true;
       }
-    })
+    } else {
+      this.timeLineFilterDateNotSelected = true;
+
+      setTimeout(() => {
+        this.timeLineFilterDateNotSelected = false;
+      }, 3000);
+    }
   }
 }
