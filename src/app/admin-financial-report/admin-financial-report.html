@@ -22,17 +22,18 @@
               margin-right: 10px;
               background: #d4aa32;
             "
+             (click)="incomeStatementDialog()"
           >
             <div
               class="row m-0 p-1 align-items-center"
-              style="width: 100px; justify-content: space-between"
+              style="width: 180px; justify-content: space-between"
             >
               <img
                 src="assets/img/svg/admin-dashboard/export.svg"
                 alt=""
                 style="width: 20px; filter: brightness(0) invert(1)"
               />
-              <p class="m-0 font-weight-normal">Export</p>
+              <p class="m-0 font-weight-normal">Income Statement</p>
             </div>
           </div>
         </div>
@@ -183,7 +184,31 @@
               </div>
             </mat-card-content>
           </mat-card>
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 1rem;">Occupancy Rates</h4>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-4" style="display: inline-flex;">
+                  <div class="" style="background-color: rgb(1, 84, 1);width: 0.6rem; height: 1rem; border-radius: 4px;margin-top: 0.2rem"></div>
+                  <h4 style="margin-left: 1rem;">Vacant</h4> 
+                </div>
+                <div class="col-4" style="display: inline-flex;">
+                  <div class="" style="background-color: green;width: 0.6rem; height: 1rem; border-radius: 4px; margin-top: 0.2rem"></div>
+                  <h4 style="margin-left: 1rem;">Occupied</h4>
+                 
+                </div>
+                <div class="col-4" style="display: inline-flex;">
+                  <div class="" style="background-color: rgb(124, 182, 124); width: 0.6rem; height: 1rem; border-radius: 4px; margin-top: 0.2rem"></div>
+                  <h4 style="margin-left: 1rem;">Not Ready</h4>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+       
         <div class="col-md-6">
           <mat-card>
             <!-- <mat-card-header >
@@ -253,7 +278,7 @@
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="Rent">
-                      <th mat-header-cell *matHeaderCellDef>Rent</th>
+                      <th mat-header-cell *matHeaderCellDef>Purpose</th>
                       <td mat-cell *matCellDef="let element">
                         {{element.Rent}}
                       </td>

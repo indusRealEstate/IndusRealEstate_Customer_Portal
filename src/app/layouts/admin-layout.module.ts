@@ -84,6 +84,7 @@ import { LoginComponent } from "app/login/login.component";
 import { DetailsComponents } from "app/property-details/details-properties";
 import { UserChatsComponent } from "app/user_chats/user_chats";
 import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
+import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
@@ -185,7 +186,7 @@ import "hammerjs";
 
     AdminProperties,
     DetailsComponents,
-
+    ViewIncomeStatementDialog,
     AdminRequestsDetails,
     AdminPropertiesUnits,
     AdminPropertiesUnitDetails,

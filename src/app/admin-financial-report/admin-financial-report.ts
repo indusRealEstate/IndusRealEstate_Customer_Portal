@@ -5,6 +5,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
+import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -75,6 +76,16 @@ export class AdminFinancialReport implements OnInit {
   financeDetailDialog() {
     this.dialog
       .open(ViewFinanceDetailsDialog, {
+        width: "75%",
+        height: "46rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+  }
+
+  incomeStatementDialog() {
+    this.dialog
+      .open(ViewIncomeStatementDialog, {
         width: "75%",
         height: "46rem",
       })
