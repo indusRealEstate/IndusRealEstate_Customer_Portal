@@ -11,15 +11,10 @@ const BASE_URL_DOC = "https://indusre.app/api/upload/doc/user-documents";
 
 @Injectable({ providedIn: "root" })
 export class ApiService implements OnDestroy {
-  constructor(
-    public http: HttpClient,
-    private otherServices: OtherServices,
-    private chatService: ChatService
-  ) {}
+  constructor(public http: HttpClient) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error); // log to console instead
-      this.otherServices.gotError.next(true);
+      console.error(error);
       // this.otherServices.addMessage({
       //   message: "Error",
       //   description: error.error.error,
@@ -461,13 +456,11 @@ export class ApiService implements OnDestroy {
   //   saveAs(data, `${filename}.${extension}`);
   // }
 
-  insertCategory(data: any){
+  insertCategory(data: any) {
     const url = `${API_URL}/removeAppointment.php?apikey=1`;
 
     return this.http
       .post(url, data)
       .pipe(catchError(this.handleError("removeAppointment", [])));
   }
-
-  
 }

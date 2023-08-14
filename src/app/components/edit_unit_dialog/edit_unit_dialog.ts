@@ -76,6 +76,8 @@ export class EditUnitDialog implements OnInit {
   deleted_images: string[] = [];
   deleted_doc: string[] = [];
 
+  is_submit: boolean = false;
+
   unitTypes: DropDownButtonModel[] = [
     { value: "appartment", viewValue: "Appartment" },
     { value: "penthouse", viewValue: "Penthouse" },
@@ -101,7 +103,7 @@ export class EditUnitDialog implements OnInit {
     this.all_data = data;
     this.getAllTheDropdowns();
 
-    console.log(this.all_data);
+    // console.log(this.all_data);
 
     for (let item of JSON.parse(this.all_data.unit_images)) {
       let link = `https://indusre.app/api/upload/unit/${this.all_data.unit_id}/images/`;
@@ -158,7 +160,7 @@ export class EditUnitDialog implements OnInit {
         var sel_prop = this.properties.find(
           (pr) => pr.value == this.all_data.prop_uid
         );
-        console.log(sel_prop);
+        // console.log(sel_prop);
 
         this.selected_property = sel_prop.value;
       });
@@ -180,7 +182,7 @@ export class EditUnitDialog implements OnInit {
           (result) => result.value == this.all_data.user_uid
         );
         this.owner = selected_user;
-        console.log(selected_user);
+        // console.log(selected_user);
       });
   }
 
@@ -199,7 +201,25 @@ export class EditUnitDialog implements OnInit {
   ngAfterViewInit() {}
 
   onCloseDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close({
+      unit_no: this.is_submit ? this.unit_number : undefined,
+      property_id: this.is_submit ? this.selected_property : undefined ,
+      unit_type: this.is_submit ? this.unit_type : undefined,
+      floor: this.is_submit ? this.floors : undefined,
+      size: this.is_submit ? this.unit_size : undefined,
+      status: this.is_submit ? this.all_data.unit_status : undefined,
+      bedroom: this.is_submit ? this.bedrooms : undefined,
+      bathroom: this.is_submit ?this.bathrooms : undefined,
+      no_of_parking: this.is_submit ? this.number_of_parking : undefined,
+      owner: this.is_submit ? this.owner.viewValue : undefined,
+      tenant_id: this.is_submit ? this.all_data.tenant_uid == undefined ? "" : this.all_data.tenant_uid : undefined,
+      lease_id: this.is_submit ? this.all_data.lease_uid == undefined ? "" : this.all_data.lease_uid : undefined,
+      images: this.is_submit ? JSON.stringify(this.uploaded_images) : undefined,
+      documents: this.is_submit ? JSON.stringify(this.uploaded_doc) : undefined,
+      amenties: this.is_submit ? JSON.stringify(this.amenties) : undefined,
+      user_id: this.is_submit ? this.owner.value : undefined,
+      description: this.is_submit ? this.unit_description : undefined,
+    });
   }
 
   addinventory() {
@@ -236,7 +256,7 @@ export class EditUnitDialog implements OnInit {
 
   removeUploadedDoc(index) {
     let item = this.docsFilesUploaded.splice(index, 1);
-    if(typeof item[0] != 'object'){
+    if (typeof item[0] != "object") {
       this.deleted_doc.push(item[0]);
     }
   }
@@ -245,7 +265,7 @@ export class EditUnitDialog implements OnInit {
     this.imgFilesUploaded.splice(index, 1);
     let item = this.imgFilesBase64Uploaded.splice(index, 1);
 
-    if(typeof item[0] !== 'object'){
+    if (typeof item[0] !== "object") {
       this.deleted_images.push(item[0]);
     }
   }
@@ -325,14 +345,14 @@ export class EditUnitDialog implements OnInit {
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    
-                    this.onCloseDialog()
+                    this.is_submit = true;
+                    this.onCloseDialog();
                   }
                 }),
                 last()
               )
               .subscribe((v) => {
-                console.log(v);
+                // console.log(v);
               });
           }
         });
@@ -399,8 +419,10 @@ export class EditUnitDialog implements OnInit {
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
       owner: this.owner.viewValue,
-      tenant_id: this.all_data.tenant_uid == undefined ? '' : this.all_data.tenant_uid,
-      lease_id: this.all_data.lease_uid == undefined ? '' : this.all_data.lease_uid,
+      tenant_id:
+        this.all_data.tenant_uid == undefined ? "" : this.all_data.tenant_uid,
+      lease_id:
+        this.all_data.lease_uid == undefined ? "" : this.all_data.lease_uid,
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),

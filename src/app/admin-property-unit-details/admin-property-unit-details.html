@@ -57,6 +57,21 @@
               font-size: 15px;
               color: white;
               font-weight: 500;
+              cursor: pointer;
+            "
+            (click)="viewAllDocuments()">
+            View All Docs
+          </div>
+          <div
+            *ngIf="all_data != null"
+            class="mr-4"
+            style="
+              background: #d4aa32;
+              padding: 6px 15px;
+              border-radius: 5px;
+              font-size: 15px;
+              color: white;
+              font-weight: 500;
             ">
             {{all_data.unit_type | titlecase}}
           </div>
@@ -814,10 +829,10 @@
                     </tr>
                     <tr scope="row">
                       <th class="p-3 col-md-4" scope="row">
-                        Payment Frequency
+                        Number of cheques
                       </th>
                       <td class="p-3 col-md-8">
-                        {{all_data.lease_payment_frequency}}
+                        {{all_data.lease_no_of_cheques}}
                       </td>
                     </tr>
                     <tr scope="row">
@@ -830,6 +845,12 @@
                       <th class="p-3 col-md-4" scope="row">Security deposit</th>
                       <td class="p-3 col-md-8">
                         {{all_data.lease_security_deposit | currency:'AED '}}
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">Yearly Contract Amount</th>
+                      <td class="p-3 col-md-8">
+                        {{all_data.lease_yearly_amount | currency:'AED '}}
                       </td>
                     </tr>
                     <tr scope="row">

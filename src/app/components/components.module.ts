@@ -42,11 +42,12 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
 import { DialogViewMedia } from "./view_media/view_media";
 import { EditPropertyDialog } from "./edit_property_dialog/edit_property_dialog";
 import { EditUnitDialog } from "./edit_unit_dialog/edit_unit_dialog";
+import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule, 
     FormsModule,
     MatMenuModule,
     MatFormFieldModule,
@@ -89,7 +90,8 @@ import { EditUnitDialog } from "./edit_unit_dialog/edit_unit_dialog";
     AddLeaseDialog,
     CountryDropdown,
     DialogViewMedia,
-    EditUnitDialog
+    EditUnitDialog,
+    ViewAllUnitDocuments
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
