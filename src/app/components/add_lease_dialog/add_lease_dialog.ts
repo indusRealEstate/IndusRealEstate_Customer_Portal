@@ -65,9 +65,10 @@ export class AddLeaseDialog implements OnInit {
   payment_currency: any = "";
   payment_method: any = "";
   rent_amount: any = "";
-  payment_frequency: any = "";
+  no_of_cheques: any = "";
   govt_charges: any = "";
   security_deposit: any = "";
+  yearly_amount: any = "";
 
   formNotFilled: boolean = false;
   documentNotAdded: boolean = false;
@@ -112,11 +113,14 @@ export class AddLeaseDialog implements OnInit {
     { value: "online", viewValue: "Online" },
   ];
 
-  payment_frequency_list: any[] = [
-    { value: "monthly", viewValue: "Monthly" },
-    { value: "quaterly", viewValue: "Quaterly" },
-    { value: "half_yearly", viewValue: "Half Yearly" },
-    { value: "yearly", viewValue: "Yearly" },
+  no_of_cheques_list: any[] = [
+    { value: "1", viewValue: "1 Cheque" },
+    { value: "2", viewValue: "2 Cheques" },
+    { value: "3", viewValue: "3 Cheques" },
+    { value: "4", viewValue: "4 Cheques" },
+    { value: "5", viewValue: "5 Cheques" },
+    { value: "6", viewValue: "6 Cheques" },
+    { value: "7", viewValue: "7 Cheques" },
   ];
 
   getAllDropdowns() {
@@ -191,10 +195,11 @@ export class AddLeaseDialog implements OnInit {
         this.notice_period != "" &&
         this.purpose != "" &&
         this.payment_currency != "" &&
-        this.payment_frequency != "" &&
+        this.no_of_cheques != "" &&
         this.payment_method != "" &&
         this.rent_amount != "" &&
-        this.security_deposit != ""
+        this.security_deposit != "" &&
+        this.yearly_amount != ""
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
@@ -269,9 +274,10 @@ export class AddLeaseDialog implements OnInit {
       move_out: this.move_out_date,
       notice_period: this.notice_period,
       purpose: this.purpose,
+      yearly_amount: this.yearly_amount,
       payment_currency: this.payment_currency,
       rent_amount: this.rent_amount,
-      payment_frequency: this.payment_frequency,
+      no_of_cheques: this.no_of_cheques,
       govt_charges: this.govt_charges,
       security_deposit: this.security_deposit,
       documents: JSON.stringify(docs_names),

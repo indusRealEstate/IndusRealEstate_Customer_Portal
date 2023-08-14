@@ -196,6 +196,15 @@
               [(ngModel)]="govt_charges"
             />
           </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Yearly Agreed Rent*</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. Jhon"
+              [(ngModel)]="yearly_amount"
+            />
+          </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="textField" appearance="outline">
@@ -211,10 +220,10 @@
           </mat-form-field>
 
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Payment Frequency*</mat-label>
-            <mat-select [(ngModel)]="payment_frequency">
+            <mat-label>No. of Cheques*</mat-label>
+            <mat-select [(ngModel)]="no_of_cheques">
               <mat-option
-                *ngFor="let item of payment_frequency_list"
+                *ngFor="let item of no_of_cheques_list"
                 [value]="item.value"
               >
                 {{item.viewValue}}

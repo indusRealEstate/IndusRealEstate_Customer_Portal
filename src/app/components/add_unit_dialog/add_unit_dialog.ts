@@ -46,7 +46,6 @@ export class AddUnitDialog implements OnInit {
   unit_type: any = "";
   unit_number: any = "";
   owner: any = "";
-  govt_id: any = "";
   floors: any = "";
   unit_size: any = "";
 

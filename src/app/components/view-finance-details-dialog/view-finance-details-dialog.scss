@@ -1,0 +1,76 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+.close-icon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 2rem;
+}
+
+.table-row {
+  .teble {
+    border-radius: 10px;
+    color: #fff;
+    background-color: #d4aa32;
+    box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 5px #ffffff;
+
+    .tbody {
+      background-color: #f9f9f95c;
+      font-weight: 500;
+      th {
+        font-weight: 500;
+      }
+      td {
+        font-weight: 500;
+        .row {
+          .col-12 {
+            max-height: 15rem;
+            overflow-y: auto;
+          }
+        }
+      }
+      tr:nth-of-type(odd) {
+        background-color: #d4aa3282;
+      }
+      tr:last-child {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        th:first-child {
+          border-bottom-left-radius: 10px;
+        }
+        th:last-child {
+          border-bottom-right-radius: 10px;
+        }
+        td:first-child {
+          border-bottom-left-radius: 10px;
+        }
+        td:last-child {
+          border-bottom-right-radius: 10px;
+        }
+      }
+    }
+  }
+
+  .detail-table {
+    border-radius: 7px;
+    color: #fff;
+    background-color: #c1910aa8;
+    box-shadow: none;
+
+    .tbody {
+      background-color: #efefef4a;
+      font-weight: 500;
+      tr:nth-of-type(odd) {
+        background-color: #b9890082;
+      }
+      tr:last-child {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+    }
+  }
+}

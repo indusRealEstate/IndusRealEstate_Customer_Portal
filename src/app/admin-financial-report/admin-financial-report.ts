@@ -4,25 +4,22 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
+import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
 export interface PeriodicElement {
-  weight: number;
-  symbol: string;
+  UnitName: string;
+  PaymentMode: string;
   Tenant:string;
   Rent:number;
+  PaymentAmount:number;
+  PaymentDetails:string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {Tenant: 'kiran', Rent: 55000, weight: 1.0079, symbol: 'H'},
-  {Tenant: 'kiran', Rent: 55000, weight: 4.0026, symbol: 'He'},
-  {Tenant: 'kiran', Rent: 55000, weight: 6.941, symbol: 'Li'},
-  {Tenant: 'kiran', Rent: 55000, weight: 9.0122, symbol: 'Be'},
-  {Tenant: 'kiran', Rent: 55000, weight: 9.0122, symbol: 'Be'},
+  {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
  
- 
-  
 ];
 @Component({
   selector: "admin-financial-report",
@@ -31,7 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   
 })
 export class AdminFinancialReport implements OnInit {
-  displayedColumns: string[] = ['Tenant', 'Rent', 'weight', 'symbol'];
+  displayedColumns: string[] = ['UnitName', 'Tenant', 'Rent', 'PaymentMode', 'PaymentAmount', 'PaymentDetails'];
   dataSource = ELEMENT_DATA;
  
   isUserSignedIn: boolean = false;
@@ -75,12 +72,22 @@ export class AdminFinancialReport implements OnInit {
   
 
   
-
+  financeDetailDialog() {
+    this.dialog
+      .open(ViewFinanceDetailsDialog, {
+        width: "75%",
+        height: "43rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+  }
   
 
   async ngOnInit() {
     
+  
   }
-
   
 }
+
+
