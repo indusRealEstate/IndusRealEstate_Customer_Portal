@@ -3,17 +3,17 @@
 * {
   font-family: "Montserrat";
 }
-::ng-deep .textField-report {
+::ng-deep .textField-all{
   width: 100%;
-
-  .mdc-floating-label {
+  .mdc-floating-label{
     padding-bottom: 1.1rem !important;
   }
-
-  .mat-mdc-select-arrow {
+  
+  .mat-mdc-select-arrow{
     bottom: 0.5rem;
   }
-
+  
+  
   .mdc-notched-outline {
     .mdc-notched-outline__leading {
       border-color: #d4aa32;
@@ -30,7 +30,23 @@
   }
 }
 
+// ::ng-deep .mat-mdc-form-field 
+// {
+//   .mdc-floating-label{
+//     padding-bottom: 1.1rem !important;
+//   }
+  
+//   .mat-mdc-select-arrow{
+//     bottom: 0.5rem;
+//   }
+//     }
+
 .mat-s-btn {
   border-color: #d4aa32 !important;
   height: 4vh !important;
+}
+
+.mat-mdc-card {
+  box-shadow: none !important;
+  border: 0.1rem solid rgb(240 236 236);
 }

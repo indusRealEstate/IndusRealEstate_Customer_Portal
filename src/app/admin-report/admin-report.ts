@@ -19,30 +19,33 @@ interface Staff {
 })
 export class AdminReport implements OnInit {
   staff: Staff[] = [
-    {value: 'Campaigns-1', viewValue: 'Campaigns-1'},
-    {value: 'Campaigns-2', viewValue: 'Campaigns-2'},
-    {value: 'Campaigns-3', viewValue: 'Campaigns-3'},
+    {value: 'Property', viewValue: 'Property'},
+    {value: 'Unit', viewValue: 'Unit'},
+    {value: 'Lease', viewValue: 'Lease'},
+    {value: 'User', viewValue: 'User'},
   ];
+
+  
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
 
   
-  allUsersMatTableData: MatTableDataSource<any>;
-  ngAfterViewInitInitialize: boolean = false;
+  // allUsersMatTableData: MatTableDataSource<any>;
+  // ngAfterViewInitInitialize: boolean = false;
 
-  loadingTable: any[] = [1, 2, 3, 4, 5];
+  // loadingTable: any[] = [1, 2, 3, 4, 5];
 
-  statusMenuOpened: boolean = false;
-  flaggedRequest: boolean = false;
+  // statusMenuOpened: boolean = false;
+  // flaggedRequest: boolean = false;
 
-  allProperties: any[] = [];
-  allUnits: any[] = [];
+  // allProperties: any[] = [];
+  // allUnits: any[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @ViewChild("table_filter") table_filter: TableFiltersComponent;
+  // @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
   constructor(
     private router: Router,

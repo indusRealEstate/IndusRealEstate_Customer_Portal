@@ -3,12 +3,29 @@
 * {
   font-family: "Montserrat";
 }
-.close-icon{
-  position: absolute;
-  top: 0;
+// .close-icon{
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   z-index: 1000;
+//   width: 2rem;
+// }
+.close-icon {
+  filter: brightness(0) saturate(100%) invert(96%) sepia(1%) saturate(0%)
+    hue-rotate(145deg) brightness(84%) contrast(88%);
+  width: 1.5rem;
   right: 0;
-  z-index: 1000;
-  width: 2rem;
+  position: absolute;
+  width: 1.5rem;
+  cursor: pointer;
+z-index: 1000;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    transform: scaleY(1.2) scaleX(1.2);
+    filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+      brightness(90%) contrast(83%);
+  }
 }
 
 .table-row {
@@ -73,4 +90,7 @@
       }
     }
   }
+}
+::ng-deep .mat-mdc-card-header-text {
+  padding: 0rem !important;
 }
