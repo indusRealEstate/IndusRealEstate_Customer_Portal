@@ -96,7 +96,7 @@
                 cursor: pointer;
               " />
             <img
-              mat-button [matMenuTriggerFor]="menu" 
+              mat-button [matMenuTriggerFor]="menu"
               class="mx-4"
               matTooltip="More Actions"
               matTooltipClass="tooltip"
@@ -109,9 +109,9 @@
                 width: 25px;
                 cursor: pointer;
               " />
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openEditUnit(all_data)">Edit</button>
-              </mat-menu>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openEditUnit(all_data)">Edit</button>
+            </mat-menu>
           </div>
         </div>
 
@@ -596,6 +596,63 @@
               [ngStyle]="{'height' : all_data.unit_status == 'vacant' ? '93%' : '100%', 'margin-top' : all_data.unit_status == 'vacant' ? '30px !important' : '0'}">
               <div class="card-header">
                 <div class="row m-0 justify-content-between">
+                  <h4 class="overview-header">Unit Details</h4>
+                </div>
+              </div>
+              <div class="card-body">
+                <table class="teble table-striped w-100 px-3 detail-table">
+                  <thead class="thead">
+                    <tr>
+                      <th scope="col" class="p-3">Title</th>
+                      <th scope="col" class="p-3">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tbody text-uppercase">
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">unit number</th>
+                      <td class="p-3 col-md-8">{{all_data.unit_no}}</td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">inventories</th>
+                      <td class="p-3 col-md-8">
+                        <button class="btn"
+                          matTooltip="View inventories"
+                          matTooltipClass="tooltip"
+                          matTooltipPosition="above"
+                          (click)="showInventories()"
+                          style="background-color: #2b333e;">inventories</button>
+                      </td>
+                    </tr>
+                    <tr scope="row">
+                      <th class="p-3 col-md-4" scope="row">Description</th>
+                      <td class="p-3 col-md-8">
+                        <div class="row">
+                          <div class="col-12"
+                            style="max-height: 20vh; overflow-y: auto;">{{all_data.unit_description}}</div>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <ngx-skeleton-loader
+            *ngIf="isContentLoading"
+            [ngClass]="isOcupied == true ? 'col-md-4' : 'col-md-4'"
+            [theme]="{width: ((screenWidth / 3) - 150) + 'px', height: '30vh', margin: '1rem'}">
+          </ngx-skeleton-loader>
+          <div
+            class="table-row"
+            [ngClass]="isOcupied == true ? 'col-md-12 mt-3' : 'col-md-4'"
+            *ngIf="!isContentLoading">
+            <div
+              class="card main-card"
+              [ngStyle]="{'height' : all_data.unit_status == 'vacant' ? '93%' : '100%', 'margin-top' : all_data.unit_status == 'vacant' ? '30px !important' : '0'}">
+              <div class="card-header">
+                <div class="row m-0 justify-content-between">
                   <h4 class="overview-header">Property Details</h4>
                   <button
                     (click)="openProperty()"
@@ -848,7 +905,8 @@
                       </td>
                     </tr>
                     <tr scope="row">
-                      <th class="p-3 col-md-4" scope="row">Yearly Contract Amount</th>
+                      <th class="p-3 col-md-4" scope="row">Yearly Contract
+                        Amount</th>
                       <td class="p-3 col-md-8">
                         {{all_data.lease_yearly_amount | currency:'AED '}}
                       </td>

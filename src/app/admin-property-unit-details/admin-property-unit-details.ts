@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { ViewAllUnitDocuments } from "app/components/view_all_unit_documents/view_all_unit_documents";
+import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories/view_all_unit_inventories";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -35,6 +36,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   property_images: string[] = [];
   prop_doc: string[] = [];
   unit_doc: string[] = [];
+  // inventories:
 
   lease_doc: string[] = [];
 
@@ -402,5 +404,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .subscribe((value) => {
         console.log(value);
       });
+  }
+
+  showInventories(){
+    this.dialog.open(ViewAllUnitInventories,{
+      data:{
+        id: this.all_data.unit_id,
+        inventories: this.all_data.inventories
+      }
+    })
   }
 }
