@@ -21,6 +21,15 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt
           />
+          <img
+            (click)="removeAllRequests()"
+            matTooltip="Remove All"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="refresh-table-btn ml-3"
+            src="assets/img/svg/remove-all.svg"
+            alt
+          />
           <!-- <table-filters
             #table_filter
             (refresh)="refreshTable()"
@@ -170,10 +179,10 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-                <span *ngIf="element.staff_assigned == ''">-</span>
-                <span *ngIf="element.staff_assigned != ''"
-                  >{{ element.staff_assigned}}</span
-                >
+              <span *ngIf="!isNameEmpty(element.staff_assigned)">-</span>
+              <span *ngIf="isNameEmpty(element.staff_assigned)"
+                >{{getOnlyName(element.staff_assigned)}}</span
+              >
               </td>
             </ng-container>
             <ng-container matColumnDef="userName">
@@ -214,20 +223,39 @@
                   "
                 />
 
-                <mat-menu #menu="matMenu" class="more-menu">
+                <mat-menu #menu="matMenu" class="more-menu-archive">
                   <button
                     mat-menu-item
-                    class="more-archived"
                     (click)="updateMore(element,'undoarchived')"
                   >
-                    Undo
+                    <div
+                      class="row m-0 justify-content-between align-items-center"
+                    >
+                      <span style="color: #c89914">Remove from Archive</span>
+                      <img
+                        src="assets/img/svg/sidebar/archive.svg"
+                        style="
+                          filter: invert(68%) sepia(13%) saturate(2701%)
+                            hue-rotate(5deg) brightness(110%) contrast(66%);
+                        "
+                        alt
+                      />
+                    </div>
                   </button>
-                  <button
-                    mat-menu-item
-                    class="more-delete"
-                    (click)="updateMore(element,'delete')"
-                  >
-                    Delete
+                  <button mat-menu-item (click)="updateMore(element,'delete')">
+                    <div
+                      class="row m-0 justify-content-between align-items-center"
+                    >
+                      <span style="color: red">Delete Request</span>
+                      <img
+                        src="assets/img/svg/delete.svg"
+                        alt
+                        style="
+                          filter: invert(56%) sepia(71%) saturate(3838%)
+                            hue-rotate(328deg) brightness(97%) contrast(90%);
+                        "
+                      />
+                    </div>
                   </button>
                 </mat-menu>
               </td>

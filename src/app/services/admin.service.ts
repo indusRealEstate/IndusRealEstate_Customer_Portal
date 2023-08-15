@@ -26,6 +26,15 @@ export class AdminService {
     };
   }
 
+  removeAllRequestsFromArchive(data: any) {
+    const url = `${API_URL}/remove_all_requests_from_archive_spam.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getLatestServiceRequest(data: any) {
     const url = `${API_URL}/get_latest_service_requests.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(

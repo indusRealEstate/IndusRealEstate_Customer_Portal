@@ -227,15 +227,14 @@ export class RequestsTable implements OnInit {
   }
 
   updateMore(data: any, type: string) {
+    this.requestUpdated(data.request_id, type);
     let output = {
       id: data.request_id,
       type: type,
     };
     this.adminService
       .updateRequestMore(JSON.stringify(output))
-      .subscribe((value) => {
-        this.requestUpdated(data.request_id, type);
-      });
+      .subscribe((value) => {});
   }
 
   getstaffName(data) {
