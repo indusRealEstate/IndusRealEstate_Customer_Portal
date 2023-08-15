@@ -154,7 +154,7 @@ export class AddLeaseDialog implements OnInit {
     this.units = [];
     this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
       val.forEach((un) => {
-        if (un.property_id == event.value) {
+        if (un.property_id == event.value && un.status != "occupied") {
           this.units.push({
             value: un.unit_id,
             viewValue: un.unit_no,
@@ -220,7 +220,7 @@ export class AddLeaseDialog implements OnInit {
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.dialogRef.close();
+                    this.dialogRef.close({ completed: true });
                   }
                 }),
                 last()

@@ -59,14 +59,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   @Output() closeStatusFilterEmitter = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<string>();
 
-  displayedColumns: string[] = [
-    "name",
-    "method",
-    "purpose",
-    "stauts",
-    "more",
-  ];
-
+  displayedColumns: string[] = ["name", "method", "purpose", "stauts", "more"];
 
   flaggedRequestsFilterOn: boolean = false;
   timeLineFilterOn: boolean = false;
@@ -357,7 +350,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
         },
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (res.completed == true) {
+            sessionStorage.removeItem("all_lease_session");
+            sessionStorage.removeItem("admin_properties_units_session");
+          }
+        }
+      });
   }
 
   openEditUnit(data: object) {

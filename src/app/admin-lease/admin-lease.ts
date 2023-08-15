@@ -183,7 +183,6 @@ export class AllLeasesComponent implements OnInit {
     this.adminService
       .getAllLeaseAdmin()
       .subscribe((va: any[]) => {
-        console.log(va);
         this.allLease = va;
         this.allLeaseMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
@@ -302,7 +301,14 @@ export class AllLeasesComponent implements OnInit {
         height: "50rem",
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (res.completed == true) {
+            sessionStorage.removeItem("admin_properties_units_session");
+            this.refreshTable();
+          }
+        }
+      });
   }
 
   navigateToPropertyDetailsPage(prop_id) {
@@ -338,7 +344,7 @@ export class AllLeasesComponent implements OnInit {
       data.push({
         UNIT: unit.unit_no,
         "TYPE OF APARTMENT": unit.unit_type,
-        "AREA (SQ/FT)": `${unit.size} SqFt` ,
+        "AREA (SQ/FT)": `${unit.size} SqFt`,
         TENANT: tenant.name,
         "PHONE NO": `${tenant.country_code_number} ${tenant.mobile_number}`,
         "EMAIL ID": tenant.email,

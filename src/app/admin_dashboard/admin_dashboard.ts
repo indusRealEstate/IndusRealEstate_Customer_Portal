@@ -214,7 +214,7 @@ export class AdminDashboardComponent implements OnInit {
         color: "#ff5353",
       },
     ];
-    
+
     setTimeout(() => {
       this.isLoading = false;
     }, 500);
@@ -236,6 +236,10 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(["/admin-properties-units"], {
       queryParams: { uid: userId },
     });
+  }
+
+  getRoundData(num: number) {
+    return Math.round(num);
   }
 
   /////////////////////////////////////////////////////////  Chart Data ///////////////////////////////////////////////////////////////////////////////
@@ -282,7 +286,7 @@ export class AdminDashboardComponent implements OnInit {
     //
     // http://www.telerik.com/kendo-angular-ui/components/drawing/api/Text/
     const heading = new Text(
-      `${(this.all_vacant_units / this.allUnits.length) * 100}%`,
+      `${Math.round((this.all_vacant_units / this.allUnits.length) * 100)}%`,
       [0, 0],
       {
         font: "25px 'Montserrat'",

@@ -33,7 +33,7 @@
               border: 1px solid #d4aa3275;
               color: #cb9909 !important;
             "
-            >{{all_data.user_type}}</span
+            >{{getUserType(all_data.user_type)}}</span
           >
         </h4>
       </div>
@@ -179,34 +179,36 @@
       [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
     >
     </ngx-skeleton-loader>
-    <div class="row m-0" *ngIf="!isContentLoading">
-      <div
-        class="col-md-12 mx-auto p-0 mt-3"
-        *ngIf="all_data.property != 'none'"
-      >
-        <div class="card card-main">
-          <div class="card-header"><h4 class="title-header">Property</h4></div>
+    <div class="row mt-3" *ngIf="!isContentLoading">
+      <div class="col-md-12 mx-auto" *ngIf="all_data.unit != 'none'">
+        <div class="card card-main mb-0">
+          <div class="card-header">
+            <h4 class="title-header">Unit details</h4>
+          </div>
           <div class="card-body detail-table">
             <div class="table-row">
               <table class="teble table-striped w-100 px-3 detail-table">
                 <thead class="thead">
                   <tr>
-                    <th scope="col" class="p-3">Address</th>
-                    <th scope="col" class="p-3">link</th>
+                    <th scope="col" class="p-3">unit number</th>
+                    <th scope="col" class="p-3">address</th>
+                    <th scope="col" class="p-3 d-flex justify-content-end">link</th>
                   </tr>
                 </thead>
                 <tbody class="tbody text-uppercase">
                   <tr
                     scope="row"
-                    *ngFor="let item of all_data.property; let index = i"
+                    *ngFor="let item of all_data.unit; let index = i"
                   >
-                    <td class="p-3" scope="col-10">
-                      {{item.prop_name + ' - ' + item.prop_address}}
+                    <td class="p-3 col-md-2">{{item.unit_no}}</td>
+                    <td class="p-3 col-md-8">
+                      {{item.unit_no + ' - ' +
+                      getPropertyAddress(item.unit_prop_id)}}
                     </td>
-                    <td class="p-3 d-flex" scope="col-2">
+                    <td class="p-3 d-flex">
                       <button
-                        (click)="navigateToProprety(item.prop_uid)"
-                        class="btn open-external-link-icon mx-auto"
+                        (click)="navigateToUnit(item.unit_id)"
+                        class="btn open-external-link-icon"
                         title="extenal"
                       >
                         <img
@@ -229,36 +231,34 @@
       [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
     >
     </ngx-skeleton-loader>
-    <div class="row" *ngIf="!isContentLoading">
-      <div class="col-md-12 mx-auto" *ngIf="all_data.unit != 'none'">
-        <div class="card card-main">
-          <div class="card-header">
-            <h4 class="title-header">Unit details</h4>
-          </div>
+    <div class="row m-0 mt-3" *ngIf="!isContentLoading">
+      <div
+        class="col-md-12 mx-auto p-0 "
+        *ngIf="all_data.property.length != 0"
+      >
+        <div class="card card-main mt-0 mb-0">
+          <div class="card-header"><h4 class="title-header">Property</h4></div>
           <div class="card-body detail-table">
             <div class="table-row">
               <table class="teble table-striped w-100 px-3 detail-table">
                 <thead class="thead">
                   <tr>
-                    <th scope="col" class="p-3">unit number</th>
-                    <th scope="col" class="p-3">address</th>
-                    <th scope="col" class="p-3">link</th>
+                    <th scope="col" class="p-3">Address</th>
+                    <th scope="col" class="p-3 d-flex justify-content-end">link</th>
                   </tr>
                 </thead>
                 <tbody class="tbody text-uppercase">
                   <tr
                     scope="row"
-                    *ngFor="let item of all_data.unit; let index = i"
+                    *ngFor="let item of all_data.property; let index = i"
                   >
-                    <td class="p-3 col-md-2">{{item.unit_no}}</td>
-                    <td class="p-3 col-md-8">
-                      {{item.unit_no + ' - ' + item.prop_name + ' - ' +
-                      item.prop_address}}
+                    <td class="p-3" scope="col-10">
+                      {{item.prop_name + ' - ' + item.prop_address}}
                     </td>
-                    <td class="p-3 col-md-2">
+                    <td class="p-3 d-flex" scope="col-2">
                       <button
-                        (click)="navigateToUnit(item.unit_id)"
-                        class="btn open-external-link-icon mx-auto"
+                        (click)="navigateToProprety(item.prop_uid)"
+                        class="btn open-external-link-icon"
                         title="extenal"
                       >
                         <img

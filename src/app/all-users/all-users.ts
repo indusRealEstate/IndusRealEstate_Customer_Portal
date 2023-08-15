@@ -158,7 +158,6 @@ export class AllUsersComponent implements OnInit {
     this.adminService
       .getAllUsersAdmin()
       .subscribe((va: any[]) => {
-        console.log(va);
         this.allUsers = va;
         this.allUsersMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
@@ -269,7 +268,13 @@ export class AllUsersComponent implements OnInit {
         height: "50rem",
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (res.completed == true) {
+            this.refreshTable();
+          }
+        }
+      });
   }
 
   navigateToUnitDetailPage(unit_id) {
@@ -288,6 +293,7 @@ export class AllUsersComponent implements OnInit {
     this.router.navigate(["/admin-user-details"], {
       queryParams: {
         user_id: data.user_id,
+        auth: data.user_type,
       },
     });
   }

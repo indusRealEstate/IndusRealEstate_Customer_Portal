@@ -159,10 +159,10 @@ export class SidebarComponent implements OnInit {
       tooltip: "Archives & Spams",
       icon: "assets/img/svg/sidebar/archive.svg",
     },
-    {
-      tooltip: "Chats",
-      icon: "assets/img/svg/sidebar/messages-1.svg",
-    },
+    // {
+    //   tooltip: "Chats",
+    //   icon: "assets/img/svg/sidebar/messages-1.svg",
+    // },
   ];
 
   constructor(

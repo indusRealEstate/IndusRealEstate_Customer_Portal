@@ -17,6 +17,7 @@ declare interface Unit {
   "UNIT SIZE": string;
   "OCCUPANCY STATUS": string;
   OWNER: string;
+  TENANT: string;
   BEDROOMS: number;
   BATHROOMS: number;
   PARKING: number;
@@ -60,6 +61,7 @@ export class AdminPropertiesUnits implements OnInit {
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
   allProperties: any[] = [];
+  allUsers: any[] = [];
 
   constructor(
     private router: Router,
@@ -132,7 +134,6 @@ export class AdminPropertiesUnits implements OnInit {
       this.adminService
         .getallPropertiesUnitsAdmin()
         .subscribe((va: any[]) => {
-          console.log(va);
           this.allUnits = va;
           this.allUnitsMatTableData = new MatTableDataSource(va);
           setTimeout(() => {
@@ -157,7 +158,7 @@ export class AdminPropertiesUnits implements OnInit {
     }
   }
 
-  getAllProperties() {
+  getAllData() {
     var propertiesDataSession = JSON.parse(
       sessionStorage.getItem("admin_properties_session")
     );
@@ -169,10 +170,22 @@ export class AdminPropertiesUnits implements OnInit {
     } else {
       this.allProperties = propertiesDataSession;
     }
+
+    var usersDataSession = JSON.parse(
+      sessionStorage.getItem("all_users_session")
+    );
+
+    if (usersDataSession == null) {
+      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+        this.allUsers = val;
+      });
+    } else {
+      this.allUsers = usersDataSession;
+    }
   }
 
   async ngOnInit() {
-    this.getAllProperties();
+    this.getAllData();
     var now = new Date().getMinutes();
     var previous = JSON.parse(
       sessionStorage.getItem("admin_properties_units_session_time_admin")
@@ -232,7 +245,13 @@ export class AdminPropertiesUnits implements OnInit {
         height: "55rem",
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (res.completed == true) {
+            this.refreshTable();
+          }
+        }
+      });
   }
 
   navigateToDetailPage(unit) {
@@ -268,6 +287,10 @@ export class AdminPropertiesUnits implements OnInit {
         "UNIT SIZE": `${unit.size} SqFt`,
         "OCCUPANCY STATUS": unit.status,
         OWNER: unit.owner,
+        TENANT:
+          unit.tenant_id != ""
+            ? this.allUsers.find((user) => user.user_id == unit.tenant_id).name
+            : "-",
         BEDROOMS: unit.bedroom,
         BATHROOMS: unit.bathroom,
         PARKING: unit.no_of_parking,
@@ -283,6 +306,7 @@ export class AdminPropertiesUnits implements OnInit {
       { wch: 30 },
       { wch: 35 },
       { wch: 40 },
+      { wch: 30 },
       { wch: 30 },
       { wch: 30 },
       { wch: 30 },

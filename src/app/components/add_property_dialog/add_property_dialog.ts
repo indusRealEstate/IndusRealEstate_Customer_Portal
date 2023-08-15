@@ -143,7 +143,7 @@ export class AddPropertyDialog implements OnInit {
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.dialogRef.close();
+                    this.dialogRef.close({ completed: true });
                   }
                 }),
                 last()

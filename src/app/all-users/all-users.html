@@ -131,9 +131,45 @@
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
                 (click)="viewUser(element)"
               >
-                <span *ngIf="element.user_type == 'new_user'">New User</span>
-                <span *ngIf="element.user_type == 'tenant'">Resident</span>
-                <span *ngIf="element.user_type == 'owner'">Property Owner</span>
+                <div
+                  *ngIf="element.user_type == 'new_user'"
+                  style="
+                    color: white;
+                    background: #596677;
+                    padding: 5px 5px;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 3px;
+                  "
+                >
+                  New User
+                </div>
+                <div
+                  *ngIf="element.user_type == 'tenant'"
+                  style="
+                    color: white;
+                    background: #596677;
+                    padding: 5px 5px;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 3px;
+                  "
+                >
+                  Tenant
+                </div>
+                <div
+                  *ngIf="element.user_type == 'owner'"
+                  style="
+                    color: white;
+                    background: #596677;
+                    padding: 5px 5px;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 3px;
+                  "
+                >
+                  Landlord
+                </div>
               </td>
             </ng-container>
 

@@ -256,8 +256,8 @@
                   class="mr-3"
                 ></span>
                 <span style="font-size: 12px; font-weight: 600"
-                  >{{(this.all_occupied_units / this.allUnits.length) * 100}}%
-                  Units Occupied</span
+                  >{{getRoundData((this.all_occupied_units /
+                  this.allUnits.length) * 100)}}% Units Occupied</span
                 >
               </div>
               <div
@@ -268,7 +268,8 @@
                   class="mr-3"
                 ></span>
                 <span style="font-size: 12px; font-weight: 600"
-                  >{{(this.all_vacant_units / this.allUnits.length) * 100}}% Units Vacant</span
+                  >{{getRoundData((this.all_vacant_units / this.allUnits.length)
+                  * 100)}}% Units Vacant</span
                 >
               </div>
             </div>

@@ -13,6 +13,7 @@ import { HttpClient } from "@angular/common/http";
 export class ViewUserDetails implements OnInit {
   isUserSignedIn: boolean = false;
   user_id: string;
+  user_auth: string;
   all_data: object | any;
   image_array: string[] = [];
   images: string;
@@ -50,6 +51,7 @@ export class ViewUserDetails implements OnInit {
 
     this.route.queryParams.subscribe((val) => {
       this.user_id = val.user_id;
+      this.user_auth = val.auth;
     });
   }
 
@@ -72,9 +74,28 @@ export class ViewUserDetails implements OnInit {
 
   ngAfterViewInit() {}
 
+  getUserType(userType) {
+    if (userType == "new_user") {
+      return "New User";
+    } else if (userType == "owner") {
+      return "Landlord";
+    } else {
+      return "Tenant";
+    }
+  }
+
+  getPropertyAddress(prop_id) {
+    var property = this.all_data.property.find(
+      (prop) => prop.prop_uid == prop_id
+    );
+
+    return `${property.prop_name}, ${property.prop_address}`;
+  }
+
   async ngOnInit() {
     let data = {
       user_id: this.user_id,
+      auth: this.user_auth,
     };
     this.appAdminService
       .getAllUserDetails(JSON.stringify(data))
@@ -154,7 +175,6 @@ export class ViewUserDetails implements OnInit {
   }
 
   downloadDoc(item) {
-    
     window.open(
       `https://indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${item}`
     );
@@ -184,7 +204,7 @@ export class ViewUserDetails implements OnInit {
     });
   }
 
-  navigateToProprety(data: any){
+  navigateToProprety(data: any) {
     this.router.navigate(["/property-details"], {
       queryParams: {
         prop_id: data,
@@ -192,7 +212,7 @@ export class ViewUserDetails implements OnInit {
     });
   }
 
-  navigateToUnit(data:any){
+  navigateToUnit(data: any) {
     this.router.navigate(["/admin-property-unit-details"], {
       queryParams: { unit_id: data },
     });

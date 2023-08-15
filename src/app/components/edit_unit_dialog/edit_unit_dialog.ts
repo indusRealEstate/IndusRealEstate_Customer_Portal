@@ -119,12 +119,15 @@ export class EditUnitDialog implements OnInit {
       this.amenties.push(item);
     }
 
-    for (let item of this.all_data.inventories) {
-      this.inventories.push({
-        name: item.inventory_name,
-        place: item.inventory_place,
-        count: item.inventory_count,
-      });
+    if (this.all_data.inventories != undefined) {
+      for (let item of this.all_data.inventories) {
+        this.inventories.push({
+          name: item.inventory_name,
+          place: item.inventory_place,
+          count: item.inventory_count,
+          new: false,
+        });
+      }
     }
 
     this.unit_type = this.all_data.unit_type;
@@ -203,17 +206,25 @@ export class EditUnitDialog implements OnInit {
   onCloseDialog() {
     this.dialogRef.close({
       unit_no: this.is_submit ? this.unit_number : undefined,
-      property_id: this.is_submit ? this.selected_property : undefined ,
+      property_id: this.is_submit ? this.selected_property : undefined,
       unit_type: this.is_submit ? this.unit_type : undefined,
       floor: this.is_submit ? this.floors : undefined,
       size: this.is_submit ? this.unit_size : undefined,
       status: this.is_submit ? this.all_data.unit_status : undefined,
       bedroom: this.is_submit ? this.bedrooms : undefined,
-      bathroom: this.is_submit ?this.bathrooms : undefined,
+      bathroom: this.is_submit ? this.bathrooms : undefined,
       no_of_parking: this.is_submit ? this.number_of_parking : undefined,
       owner: this.is_submit ? this.owner.viewValue : undefined,
-      tenant_id: this.is_submit ? this.all_data.tenant_uid == undefined ? "" : this.all_data.tenant_uid : undefined,
-      lease_id: this.is_submit ? this.all_data.lease_uid == undefined ? "" : this.all_data.lease_uid : undefined,
+      tenant_id: this.is_submit
+        ? this.all_data.tenant_uid == undefined
+          ? ""
+          : this.all_data.tenant_uid
+        : undefined,
+      lease_id: this.is_submit
+        ? this.all_data.lease_uid == undefined
+          ? ""
+          : this.all_data.lease_uid
+        : undefined,
       images: this.is_submit ? JSON.stringify(this.uploaded_images) : undefined,
       documents: this.is_submit ? JSON.stringify(this.uploaded_doc) : undefined,
       amenties: this.is_submit ? JSON.stringify(this.amenties) : undefined,
@@ -227,6 +238,7 @@ export class EditUnitDialog implements OnInit {
       name: this.inventory_name,
       place: this.inventory_place,
       count: this.inventory_count,
+      new: true,
     });
 
     this.inventory_name = "";
@@ -282,6 +294,20 @@ export class EditUnitDialog implements OnInit {
     this.fileInputImage.nativeElement.value = "";
   }
 
+  addInventories(unit_id) {
+    var new_inventories = this.inventories.filter((inv) => inv.new == true);
+    if (new_inventories.length != 0) {
+      var data = {
+        unit_id: unit_id,
+        data: new_inventories,
+      };
+
+      this.adminService.addInventory(JSON.stringify(data)).subscribe((res) => {
+        console.log(res);
+      });
+    }
+  }
+
   onSubmit() {
     if (
       this.imgFilesUploaded.length != 0 &&
@@ -334,6 +360,7 @@ export class EditUnitDialog implements OnInit {
 
         this.adminService.editUnit(data).subscribe((val) => {
           if (val == "success") {
+            this.addInventories(random_id);
             var uploadData = this.setupUploadFiles(
               random_id,
               images_names,

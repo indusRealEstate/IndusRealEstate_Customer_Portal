@@ -242,7 +242,13 @@ export class AdminProperties implements OnInit {
         height: "43rem",
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (res.completed == true) {
+            this.refreshTable();
+          }
+        }
+      });
   }
 
   viewPropInfo(data: any) {

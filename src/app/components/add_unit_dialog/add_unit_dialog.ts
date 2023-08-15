@@ -114,7 +114,7 @@ export class AddUnitDialog implements OnInit {
   getUserType(user_type) {
     if (user_type == "new_user") {
       return "New User";
-    } else if (user_type == "resident") {
+    } else if (user_type == "tenant") {
       return "Resident";
     } else if (user_type == "owner") {
       return "Property Owner";
@@ -182,6 +182,19 @@ export class AddUnitDialog implements OnInit {
     this.fileInputImage.nativeElement.value = "";
   }
 
+  addInventories(unit_id) {
+    if (this.inventories.length != 0) {
+      var data = {
+        unit_id: unit_id,
+        data: this.inventories,
+      };
+
+      this.adminService.addInventory(JSON.stringify(data)).subscribe((res) => {
+        console.log(res);
+      });
+    }
+  }
+
   onSubmit() {
     if (
       this.imgFilesUploaded.length != 0 &&
@@ -210,6 +223,7 @@ export class AddUnitDialog implements OnInit {
         var data = this.setupData(random_id, images_names, docs_names);
         this.adminService.addUnit(data).subscribe((val) => {
           if (val == "success") {
+            this.addInventories(random_id);
             var uploadData = this.setupUploadFiles(
               random_id,
               images_names,
@@ -221,7 +235,7 @@ export class AddUnitDialog implements OnInit {
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.dialogRef.close();
+                    this.dialogRef.close({ completed: true });
                   }
                 }),
                 last()
