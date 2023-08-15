@@ -8,6 +8,7 @@ const API_URL = "https://indusre.app/api/admin";
 
 @Injectable({ providedIn: "root" })
 export class AdminService {
+ 
   constructor(public http: HttpClient, private otherServices: OtherServices) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -472,4 +473,13 @@ export class AdminService {
       })
     );
   }
+
+  selectTenantsPaymentsDetails(data: any) {
+   const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
 }

@@ -46,3 +46,27 @@
     border: 0;
   }
 }
+.summury {
+  background-color: rgb(229, 219, 210);
+}
+
+.small-box img {
+  font-size: 90px;
+  position: absolute;
+  right: 23px;
+  top: 15px;
+  transition: -webkit-transform .3s linear;
+  transition: transform .3s linear;
+  transition: transform .3s linear,-webkit-transform .3s linear;
+}
+.small-box-footer {
+  background-color: #d4aa32;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  padding: 3px 0;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  z-index: 10;
+}
+

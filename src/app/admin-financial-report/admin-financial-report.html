@@ -186,23 +186,36 @@
           </mat-card>
           <div class="card">
             <div class="card-header">
-              <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 1rem;">Occupancy Rates</h4>
+              <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 0rem;">Occupancy Rates</h4>
             </div>
             <div class="card-body">
-              <div class="row">
-                <div class="col-4" style="display: inline-flex;">
-                  <div class="" style="background-color: rgb(1, 84, 1);width: 0.6rem; height: 1rem; border-radius: 4px;margin-top: 0.2rem"></div>
-                  <h4 style="margin-left: 1rem;">Vacant</h4> 
+              <div class="row p-2">
+                <div class="col-4">
+                  <div class="" style="background-color: rgb(46, 108, 46);width: 0.6rem; height: 1rem; border-radius: 4px;margin-top: 0.2rem"></div>
+                  <h4 style="margin-left: 1.5rem;margin-top: -1rem; font-size: 1rem; font-weight: 500;">Vacant</h4> 
+                  <p style="margin-left: 0rem; font-size: 2.5rem;font-weight: 500;">49</p>
                 </div>
-                <div class="col-4" style="display: inline-flex;">
+                <div class="col-4">
                   <div class="" style="background-color: green;width: 0.6rem; height: 1rem; border-radius: 4px; margin-top: 0.2rem"></div>
-                  <h4 style="margin-left: 1rem;">Occupied</h4>
-                 
+                  <h4 style="margin-left: 1rem; margin-top: -1rem;font-size: 1rem; font-weight: 500;">Occupied</h4>
+                  <p style="margin-left: 0rem;font-size: 2.5rem; font-weight: 500;">36</p>
                 </div>
-                <div class="col-4" style="display: inline-flex;">
+                <div class="col-4">
                   <div class="" style="background-color: rgb(124, 182, 124); width: 0.6rem; height: 1rem; border-radius: 4px; margin-top: 0.2rem"></div>
-                  <h4 style="margin-left: 1rem;">Not Ready</h4>
-                  
+                  <h4 style="margin-left: 1rem;margin-top: -1rem;font-size: 1rem; font-weight: 500;">Not Ready</h4> 
+                  <p style="margin-left: 0rem;font-size: 2.5rem; font-weight: 500;">15</p>  
+                </div>
+              </div>
+
+              <div class="row p-3">
+                <div class="col-md-6 p-1" style="background-color: rgb(46, 108, 46);border-radius: 0.8rem;height: 12vh;">
+                
+                </div>
+                <div class="col-md-4 p-1" style="background-color: green;border-radius: 0.8rem;height: 12vh;">
+               
+                </div>
+                <div class="col-md-2 p-1" style="background-color: rgb(124, 182, 124);border-radius: 0.8rem;height: 12vh;">
+                
                 </div>
               </div>
             </div>
@@ -263,8 +276,8 @@
                     <!-- Position Column -->
                     <ng-container matColumnDef="UnitName">
                       <th mat-header-cell *matHeaderCellDef>Unit Name</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{element.UnitName}}
+                      <td mat-cell>
+                       
                       </td>
                     </ng-container>
 
@@ -272,7 +285,7 @@
                     <ng-container matColumnDef="Tenant">
                       <th mat-header-cell *matHeaderCellDef>Tenant</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.Tenant}}
+                       
                       </td>
                     </ng-container>
 
@@ -311,11 +324,103 @@
                       mat-row
                       *matRowDef="let row; columns: displayedColumns;"  (click)="financeDetailDialog()"
                     ></tr>
+                    
                   </table>
+                  <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
                 </div>
               </div>
             </mat-card-content>
           </mat-card>
+          
+              <div class="row mt-3">
+                <div class="col-lg-4 col-6">
+                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
+                    <div class="inner">
+                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;">29</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">PROPERTIES</p>
+                    </div>
+                    <img src="assets/img/pngs/dashboard/property.png" width="60">
+                    <a href="" class="small-box-footer" style="">More info </a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
+                    <div class="inner">
+                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;">26</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">UNITS</p>
+                    </div>
+                    <img src="assets/img/pngs/dashboard/unit.png" width="60">
+                    <a href="" class="small-box-footer" style="">More info </a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
+                    <div class="inner">
+                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;">30</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">TENANTS</p>
+                    </div>
+                    <img src="assets/img/pngs/dashboard/landlord.png" width="60">
+                    <a href="" class="small-box-footer" style="">More info </a>
+                  </div>
+                </div>  
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-lg-4 col-6">
+                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
+                    <div class="inner">
+                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;">29</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">LANDLORDS</p>
+                    </div>
+                    <img src="assets/img/pngs/dashboard/tenant-2.png" width="60">
+                    <a href="" class="small-box-footer" style="">More info </a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
+                    <div class="inner">
+                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;">26</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">MAINTENANCE REQUESTS</p>
+                    </div>
+                    <img src="assets/img/pngs/dashboard/maintenance.png" width="60">
+                    <a href="" class="small-box-footer" style="">More info </a>
+                  </div>
+                </div>
+                <!-- <div class="col-lg-4 col-6">
+                  
+                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
+                    <div class="inner">
+                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;">30</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">BUILDING</p>
+                    </div>
+                    <img src="assets/img/pngs/dashboard/landlord.png" width="60">
+                    <a href="" class="small-box-footer" style="">More info </a>
+                  </div>
+                </div>   -->
+              </div>
+             
         </div>
       </div>
     </div>
