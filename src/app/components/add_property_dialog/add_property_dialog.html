@@ -146,7 +146,7 @@
               <mat-select [(ngModel)]="property_locality">
                 <mat-option
                   *ngFor="let place of locality"
-                  [value]="place.value"
+                  [value]="place.viewValue"
                 >
                   {{place.viewValue}}
                 </mat-option>
