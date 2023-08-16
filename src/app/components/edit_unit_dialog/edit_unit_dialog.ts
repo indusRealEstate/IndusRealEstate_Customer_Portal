@@ -173,11 +173,13 @@ export class EditUnitDialog implements OnInit {
       .getAllUsersAdmin()
       .subscribe((val: any[]) => {
         val.forEach((user) => {
-          this.users.push({
-            value: user.user_id,
-            user_type: user.user_type,
-            viewValue: user.name,
-          });
+          if (user.user_type != "tenant") {
+            this.users.push({
+              value: user.user_id,
+              user_type: user.user_type,
+              viewValue: user.name,
+            });
+          }
         });
       })
       .add(() => {

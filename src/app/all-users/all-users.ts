@@ -22,7 +22,6 @@ declare interface User {
   NATIONALITY: string;
   GENDER: string;
   "ALLOCATED UNIT": string;
-  BUILDING: string;
 }
 
 @Component({
@@ -47,7 +46,6 @@ export class AllUsersComponent implements OnInit {
     "nationality",
     "dob",
     "allocated_unit",
-    "building",
     "more",
   ];
 
@@ -62,6 +60,10 @@ export class AllUsersComponent implements OnInit {
 
   allProperties: any[] = [];
   allUnits: any[] = [];
+
+  fetching_all_units_under_landlord: boolean = true;
+
+  all_units_landlord: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -125,29 +127,69 @@ export class AllUsersComponent implements OnInit {
     }
   }
 
-  getbuildingName(prop_id) {
-    if (this.allProperties != null) {
-      var property = this.allProperties.find(
-        (prop) => prop.property_id == prop_id
-      );
-      if (property != undefined) {
-        return property.property_name;
-      } else {
-        return "loading..";
+  fetchingAllUnitsLandlord(user_id) {
+    this.all_units_landlord.length = 0;
+    if (this.allUnits != null) {
+      var count = 0;
+      this.allUnits.forEach((unit) => {
+        var prop = this.allProperties.find(
+          (pr) => pr.property_id == unit.property_id
+        );
+        if (user_id == unit.owner_id) {
+          this.all_units_landlord.push({ unit: unit, prop: prop });
+        }
+        count++;
+      });
+
+      if (count == this.allUnits.length) {
+        // setTimeout(() => {
+        this.fetching_all_units_under_landlord = false;
+        // }, 1000);
       }
-    } else {
-      return "loading..";
     }
   }
 
-  getUnitNo(unit_id) {
-    if (this.allUnits != null) {
-      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
+  // getbuildingName(prop_id) {
+  //   if (this.allProperties != null) {
+  //     var property = this.allProperties.find(
+  //       (prop) => prop.property_id == prop_id
+  //     );
+  //     if (property != undefined) {
+  //       return property.property_name;
+  //     } else {
+  //       return "loading..";
+  //     }
+  //   } else {
+  //     return "loading..";
+  //   }
+  // }
 
-      if (unit != undefined) {
-        return unit.unit_no;
+  getUnitNo(unit_id, user_type) {
+    if (this.allUnits != null) {
+      if (user_type == "tenant") {
+        var unit = this.allUnits.find((u) => u.unit_id == unit_id);
+
+        if (unit != undefined) {
+          var prop = this.allProperties.find(
+            (pr) => pr.property_id == unit.property_id
+          );
+          if (prop != undefined) {
+            return `${unit.unit_no}, ${prop.property_name}, ${prop.address}`;
+          } else {
+            return "loading..";
+          }
+        } else {
+          return "loading..";
+        }
       } else {
-        return "loading..";
+        var all_units: any[] = JSON.parse(unit_id);
+        if (all_units != undefined) {
+          return `${all_units.length} ${
+            all_units.length == 1 ? "Unit" : "Units"
+          }`;
+        } else {
+          return "loading..";
+        }
       }
     } else {
       return "loading..";
@@ -277,7 +319,17 @@ export class AllUsersComponent implements OnInit {
       });
   }
 
-  navigateToUnitDetailPage(unit_id) {
+  navigateToUnitDetailPage(unit_id, userType, user_id) {
+    if (userType == "tenant") {
+      this.router.navigate(["/admin-property-unit-details"], {
+        queryParams: { unit_id: unit_id },
+      });
+    } else {
+      this.fetchingAllUnitsLandlord(user_id);
+    }
+  }
+
+  navigateToUnitDetailPageFromUnitsListLandlord(unit_id) {
     this.router.navigate(["/admin-property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
@@ -298,10 +350,53 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
+  getArrayUnits(units: any[]) {
+    var all_units = "";
+
+    units.forEach((u) => {
+      all_units = all_units + "   " + u;
+    });
+
+    return all_units;
+  }
+
   exportExcelFile() {
     var data: User[] = [];
 
     this.allUsers.forEach((user) => {
+      var units_val: any[] = [];
+      var unit_val: any = "";
+
+      if (user.user_type == "owner") {
+        var arr: any[] = JSON.parse(user.allocated_unit);
+        arr.forEach((a) => {
+          var unit = this.allUnits.find((unit) => unit.unit_id == a);
+          if (unit != undefined) {
+            console.log(unit);
+            var building = this.allProperties.find(
+              (prop) => prop.property_id == unit.property_id
+            );
+
+            if (building != undefined) {
+              console.log(building);
+              units_val.push(
+                `${unit.unit_no} - ${building.property_name}, ${building.address}`
+              );
+            }
+          }
+        });
+      } else if (user.user_type == "tenant") {
+        var unit = this.allUnits.find(
+          (unit) => unit.unit_id == user.allocated_unit
+        );
+        if (unit != undefined) {
+          var building = this.allProperties.find(
+            (prop) => prop.property_id == unit.property_id
+          );
+          unit_val = `${unit.unit_no} - ${building.property_name}, ${building.address}`;
+        }
+      }
+
       data.push({
         NAME: user.name,
         "MOBILE No.": `${user.country_code_number} ${user.mobile_number}`,
@@ -320,14 +415,9 @@ export class AllUsersComponent implements OnInit {
         GENDER: user.gender,
         "ALLOCATED UNIT":
           user.allocated_unit != ""
-            ? this.allUnits.find((unit) => unit.unit_id == user.allocated_unit)
-                .unit_no
-            : "-",
-        BUILDING:
-          user.property_id != ""
-            ? this.allProperties.find(
-                (prop) => prop.property_id == user.property_id
-              ).property_name
+            ? user.user_type == "owner"
+              ? this.getArrayUnits(units_val)
+              : unit_val
             : "-",
       });
     });

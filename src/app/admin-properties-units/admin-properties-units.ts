@@ -249,6 +249,7 @@ export class AdminPropertiesUnits implements OnInit {
         if (res != undefined) {
           if (res.completed == true) {
             this.refreshTable();
+            sessionStorage.removeItem("all_users_session");
           }
         }
       });

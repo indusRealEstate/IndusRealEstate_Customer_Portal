@@ -238,6 +238,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                style="max-width: 160px"
               >
                 <span
                   *ngIf="element.allocated_unit == ''"
@@ -245,15 +246,50 @@
                   >-</span
                 >
                 <span
+                  [matMenuTriggerFor]="unitInfoMenu"
+                  [ngStyle]="{'color': element.user_type == 'owner'? '#4185e3' : '#c49920'}"
+                  style="
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  "
                   class="prop_name"
                   *ngIf="element.allocated_unit != ''"
-                  (click)="navigateToUnitDetailPage(element.allocated_unit)"
-                  >{{getUnitNo(element.allocated_unit)}}</span
+                  (click)="navigateToUnitDetailPage(element.allocated_unit,element.user_type, element.user_id)"
+                  >{{getUnitNo(element.allocated_unit,
+                  element.user_type)}}</span
                 >
+
+                <mat-menu
+                  #unitInfoMenu="matMenu"
+                  class="landlords-all-units-menu"
+                >
+                  <div *ngIf="!fetching_all_units_under_landlord">
+                    <button
+                      mat-menu-item
+                      *ngFor="let unit of all_units_landlord"
+                      (click)="navigateToUnitDetailPageFromUnitsListLandlord(unit.unit.unit_id)"
+                    >
+                      {{unit.unit.unit_no}}, {{unit.prop.property_name}},
+                      {{unit.prop.address}}
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="fetching_all_units_under_landlord"
+                    class="d-flex justify-content-center align-items-center"
+                    style="height: 150px"
+                  >
+                    <span
+                      class="spinner-border spinner-border-m mr-2"
+                      style="color: #d4aa32"
+                    >
+                    </span>
+                  </div>
+                </mat-menu>
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="building">
+            <!-- <ng-container matColumnDef="building">
               <th mat-header-cell *matHeaderCellDef>Building</th>
               <td
                 mat-cell
@@ -272,7 +308,7 @@
                   >{{ getbuildingName(element.property_id)}}</span
                 >
               </td>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="more">
               <th mat-header-cell *matHeaderCellDef>More</th>
@@ -398,9 +434,9 @@
             <ng-container matColumnDef="allocated_unit">
               <th mat-header-cell *matHeaderCellDef>Allocated unit</th>
             </ng-container>
-            <ng-container matColumnDef="building">
+            <!-- <ng-container matColumnDef="building">
               <th mat-header-cell *matHeaderCellDef>Building</th>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="more">
               <th mat-header-cell *matHeaderCellDef>More</th>
