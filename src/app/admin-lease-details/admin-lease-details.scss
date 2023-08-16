@@ -201,6 +201,8 @@ ngx-skeleton-loader {
   aspect-ratio: 1/1;
   border-radius: 50%;
   box-shadow: none;
+  object-fit: cover;
+  object-position: center;
 }
 
 .user-name {
