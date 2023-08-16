@@ -78,6 +78,8 @@ export class EditUnitDialog implements OnInit {
 
   is_submit: boolean = false;
 
+  images_fully_loaded: boolean = false;
+
   unitTypes: DropDownButtonModel[] = [
     { value: "appartment", viewValue: "Appartment" },
     { value: "penthouse", viewValue: "Penthouse" },
@@ -104,11 +106,15 @@ export class EditUnitDialog implements OnInit {
     this.getAllTheDropdowns();
 
     // console.log(this.all_data);
-
+    var count = 0;
     for (let item of JSON.parse(this.all_data.unit_images)) {
       let link = `https://indusre.app/api/upload/unit/${this.all_data.unit_id}/images/`;
       this.imgFilesBase64Uploaded.push(link + item);
       this.imgFilesUploaded.push(item);
+      count++;
+    }
+    if (count == JSON.parse(this.all_data.unit_images).length) {
+      this.images_fully_loaded = true;
     }
 
     for (let item of JSON.parse(this.all_data.unit_doc)) {
