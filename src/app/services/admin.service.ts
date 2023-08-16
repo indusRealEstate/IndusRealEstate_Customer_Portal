@@ -509,4 +509,14 @@ export class AdminService {
      })
    );
  }
+ paymentsDetails(data: any) {
+  const url = `${API_URL}/paymentsDetails.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
+
+
 }

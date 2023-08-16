@@ -28,14 +28,17 @@ export class ViewIncomeStatementDialog implements OnInit {
     {value: 'Lease', viewValue: 'Lease'},
     {value: 'User', viewValue: 'User'},
   ];
+  all_data: Object |any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewIncomeStatementDialog>,
-    private adminService: AdminService
+    private appAdminService: AdminService
   ) {}
 
- 
-  ngOnInit() {}
+  
+  ngOnInit() {
+  
+  }
 
   ngAfterViewInit() {}
 

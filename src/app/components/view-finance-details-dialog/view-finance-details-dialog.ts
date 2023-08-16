@@ -19,14 +19,38 @@ import * as uuid from "uuid";
   templateUrl: "./view-finance-details-dialog.html",
 })
 export class ViewFinanceDetailsDialog implements OnInit {
+  all_data: Object | any;
+  id: string = "";
+  type: string = "";
+
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewFinanceDetailsDialog>,
-    private adminService: AdminService
-  ) {}
+    private appAdminService: AdminService
+  ) {
+    console.log(data);
+    this.id = data.id;
+    this.type = data.type;
+
+
+  }
 
  
-  ngOnInit() {}
+  async ngOnInit() {
+    let data = {
+     id :this.id,
+     type: this.type
+    };
+    this.appAdminService
+      .paymentsDetails(JSON.stringify(data))
+      .subscribe((val) => {
+        this.all_data = val;
+         console.log(this.all_data);
+  
+  });
+  
+}
 
   ngAfterViewInit() {}
 
