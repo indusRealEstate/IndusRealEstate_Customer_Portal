@@ -60,14 +60,19 @@ export class AdminFinancialReport implements OnInit {
    
   }
 
-  financeDetailDialog() {
+  financeDetailDialog(id: string, type: string) {
+    let data: object = {
+      id : id,
+      type: type
+    }
     this.dialog
       .open(ViewFinanceDetailsDialog, {
-        width: "75%",
-        height: "46rem",
+        data
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((value) => {
+        //console.log(value)
+      });
   }
 
   incomeStatementDialog() {
@@ -92,6 +97,10 @@ export class AdminFinancialReport implements OnInit {
 
          console.log(this.all_data);
          //console.log(this.all_data.t_amount);
+
+        //  for(let item of this.all_data){
+        //   console.log(item.t_amount);
+        //  }
   
   });
   

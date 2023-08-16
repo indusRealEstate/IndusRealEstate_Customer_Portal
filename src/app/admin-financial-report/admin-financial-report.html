@@ -267,17 +267,18 @@
                 <div class="col-12">
                   <table
                     mat-table
-                    [dataSource]="dataSource"
+                    [dataSource]="all_data"
                     class="mat-elevation-z8 table-finance"
                   >
                     <!--- Note that these columns can be defined in any order.
                           The actual rendered columns are set as a property on the row definition" -->
 
                     <!-- Position Column -->
+                     
                     <ng-container matColumnDef="UnitName">
-                      <th mat-header-cell *matHeaderCellDef>Unit Name</th>
-                      <td mat-cell>
-                       
+                      <th mat-header-cell *matHeaderCellDef>Unit Number</th>
+                      <td mat-cell *matCellDef="let element">
+                      {{element.p_no}}
                       </td>
                     </ng-container>
 
@@ -285,15 +286,15 @@
                     <ng-container matColumnDef="Tenant">
                       <th mat-header-cell *matHeaderCellDef>Tenant</th>
                       <td mat-cell *matCellDef="let element">
-                       
+                      {{element.u_name}}
                       </td>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="Rent">
                       <th mat-header-cell *matHeaderCellDef>Purpose</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{element.Rent}}
+                      <td mat-cell *matCellDef="let element" >
+                       {{element.t_purpose}}
                       </td>
                     </ng-container>
 
@@ -301,28 +302,29 @@
                     <ng-container matColumnDef="PaymentMode">
                       <th mat-header-cell *matHeaderCellDef>Payment Mode</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.PaymentMode}}
+                        {{element.t_payment_method}}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="PaymentAmount">
                       <th mat-header-cell *matHeaderCellDef>Payment Amount</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.PaymentAmount}}
+                        {{element.t_amount}}
                       </td>
                     </ng-container>
 
                     <ng-container matColumnDef="PaymentDetails">
                       <th mat-header-cell *matHeaderCellDef>Payment Details</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{element.PaymentDetails}}
+                      <td mat-cell *matCellDef="let element"
+                      class="redirect details" (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)" id="{{element.t_payment_id}}">
+                        {{element.t_status}}
                       </td>
                     </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                 
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"  ></tr>
                     <tr
                       mat-row
-                      *matRowDef="let row; columns: displayedColumns;"  (click)="financeDetailDialog()"
+                      *matRowDef="let row; columns: displayedColumns;"  
                     ></tr>
                     
                   </table>
@@ -330,7 +332,7 @@
               [pageSize]="10"
               [pageSizeOptions]="[5, 10, 25, 100]"
               aria-label="Select page">
-</mat-paginator>
+              </mat-paginator>
                 </div>
               </div>
             </mat-card-content>
