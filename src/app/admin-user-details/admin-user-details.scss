@@ -164,6 +164,8 @@ ngx-skeleton-loader {
   transform: translate(30%, -50%);
   border: 5px solid #fff;
   cursor: pointer;
+  object-fit: cover;
+  object-position: center;
 }
 
 .user-name {

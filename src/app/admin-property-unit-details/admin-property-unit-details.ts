@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   OnChanges,
@@ -52,12 +53,15 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   first_selected_timeline: any;
   last_selected_timeline: any;
 
+  is_data_loaded: boolean = false;
+
   @Output() closeFlaggedReqs = new EventEmitter<string>();
   @Output() timeLineFilter = new EventEmitter<string>();
   @Output() closeTimeLineFilterEmitter = new EventEmitter<string>();
   // @Output() statusFilterEmitter = new EventEmitter<string>();
   @Output() closeStatusFilterEmitter = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<string>();
+
 
   displayedColumns: string[] = ["name", "method", "purpose", "stauts", "more"];
 
@@ -95,7 +99,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value) => {
         this.all_data = value;
-
+        this.is_data_loaded = true;
         if (this.all_data.unit_status.toUpperCase() == "OCCUPIED") {
           this.isOcupied = true;
         } else {
@@ -467,4 +471,33 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       }, 3000);
     }
   }
+
+  private selectTenantDetails(data: string){
+    this.adminService.selectTenantPayments(data).subscribe((value)=>{
+      this.all_data.tenant_payments = value;
+      this.is_data_loaded = true;
+    })
+  }
+
+  refreshTable(){
+    this.is_data_loaded = false;
+
+    if(!this.is_data_loaded){
+      // LoadingTableUnitPaymentTenant
+    }
+    let data = { 
+      id : this.unit_id
+    }
+    this.selectTenantDetails(JSON.stringify(data));
+    
+    let btn = document.getElementById("refresh_btn");
+    btn.style.transform = "rotate(360deg)";
+    btn.style.transition = "1s ease all";
+    setTimeout(()=>{
+      btn.style.transition = "0s ease all";
+      btn.style.transform = "rotate(0deg)"; 
+    },2000)
+  }
+
+
 }

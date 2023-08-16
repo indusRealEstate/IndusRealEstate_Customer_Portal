@@ -30,6 +30,7 @@ export class ViewUserDetails implements OnInit {
   all_units: object[] = [];
   isOwner: boolean = false;
   profile_image: string;
+  unit_array: object[] = []
   //downloadService: any;
   // property_name:string;
 
@@ -105,6 +106,11 @@ export class ViewUserDetails implements OnInit {
         this.isOwner =
           this.all_data.user_type.toLowerCase() == "owner" ? true : false;
         // user_doc
+
+        // for(let item of this.all_data.user_allocates_unit){
+
+        // }
+
         for (
           let i = 0;
           i < JSON.parse(this.all_data.user_documents).length;

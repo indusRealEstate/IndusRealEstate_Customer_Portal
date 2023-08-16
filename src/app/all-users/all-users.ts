@@ -33,7 +33,7 @@ export class AllUsersComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
-  isContentLoading: boolean = false;
+  isContentLoading: boolean = false; 
 
   displayedColumns: string[] = [
     // "name",

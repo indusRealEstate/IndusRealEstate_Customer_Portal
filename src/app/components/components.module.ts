@@ -93,7 +93,7 @@ import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_uni
     DialogViewMedia,
     EditUnitDialog,
     ViewAllUnitDocuments,
-    ViewAllUnitInventories
+    ViewAllUnitInventories,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
