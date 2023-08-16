@@ -22,7 +22,6 @@ import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
 import { AdminReport } from "app/admin-report/admin-report";
-import { AdminFinancialReport } from "app/admin-financial-report/admin-financial-report";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -42,7 +41,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-properties-units", component: AdminPropertiesUnits },
   { path: "all-users", component: AllUsersComponent },
   { path: "admin-report", component: AdminReport },
-  { path: "admin-financial-report", component: AdminFinancialReport },
   { path: "admin-lease", component: AllLeasesComponent },
   { path: "404", component: PageNotFoundComponent },
   { path: "admin-request-category", component: AdminRequestsCategory },
