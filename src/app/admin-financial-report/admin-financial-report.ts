@@ -9,19 +9,12 @@ import { ViewIncomeStatementDialog } from "app/components/view-income-statement-
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
-export interface PeriodicElement {
-  UnitName: string;
-  PaymentMode: string;
-  Tenant:string;
-  Rent:number;
-  PaymentAmount:number;
-  PaymentDetails:string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
+//   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
  
-];
+// ];
 @Component({
   selector: "admin-financial-report",
   templateUrl: "./admin-financial-report.html",
@@ -29,24 +22,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   
 })
 export class AdminFinancialReport implements OnInit {
+  all_data: object | any;
   displayedColumns: string[] = ['UnitName', 'Tenant', 'Rent', 'PaymentMode', 'PaymentAmount', 'PaymentDetails'];
-  dataSource = ELEMENT_DATA;
+ 
  
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
-
-  
- 
-
- 
+  payment_id: number;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private adminService: AdminService,
+    private appAdminService: AdminService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -70,9 +60,6 @@ export class AdminFinancialReport implements OnInit {
    
   }
 
-  
-
-  
   financeDetailDialog() {
     this.dialog
       .open(ViewFinanceDetailsDialog, {
@@ -95,10 +82,19 @@ export class AdminFinancialReport implements OnInit {
   
 
   async ngOnInit() {
-    
+    let data = {
+     
+    };
+    this.appAdminService
+      .selectTenantsPaymentsDetails(JSON.stringify(data))
+      .subscribe((val) => {
+        this.all_data = val;
+
+         console.log(this.all_data);
+         //console.log(this.all_data.t_amount);
   
-  }
+  });
   
 }
 
-
+}
