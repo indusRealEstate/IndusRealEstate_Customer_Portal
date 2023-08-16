@@ -10,6 +10,8 @@ import {
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
@@ -42,6 +44,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   unit_doc: string[] = [];
   // inventories:
 
+  ngAfterViewInitInitialize: boolean = false;
+
   lease_doc: string[] = [];
 
   activatedRoute: any;
@@ -55,6 +59,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   is_data_loaded: boolean = false;
 
+  all_payments_data: MatTableDataSource<any>;
+
   @Output() closeFlaggedReqs = new EventEmitter<string>();
   @Output() timeLineFilter = new EventEmitter<string>();
   @Output() closeTimeLineFilterEmitter = new EventEmitter<string>();
@@ -62,8 +68,16 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   @Output() closeStatusFilterEmitter = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<string>();
 
+  @ViewChild("paginator_payments") paginator: MatPaginator;
 
-  displayedColumns: string[] = ["name", "method", "purpose", "stauts", "more"];
+  displayedColumns: string[] = [
+    "name",
+    "date",
+    "method",
+    "purpose",
+    "stauts",
+    "more",
+  ];
 
   flaggedRequestsFilterOn: boolean = false;
   timeLineFilterOn: boolean = false;
@@ -97,8 +111,26 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   async ngOnInit() {
     this.adminService
       .getUnitAllData({ id: this.unit_id })
-      .subscribe((value) => {
+      .subscribe((value: any) => {
         this.all_data = value;
+        this.all_payments_data = new MatTableDataSource<any>(
+          value.tenant_payments
+        );
+
+        setTimeout(() => {
+          if (this.all_payments_data != undefined) {
+            this.all_payments_data.paginator = this.paginator;
+          } else {
+            setTimeout(() => {
+              this.all_payments_data.paginator = this.paginator;
+            }, 3000);
+          }
+        });
+
+        // if(this.all_payments_data != undefined){
+        //   this.all_payments_data.paginator = this.paginator;
+        // }
+
         this.is_data_loaded = true;
         if (this.all_data.unit_status.toUpperCase() == "OCCUPIED") {
           this.isOcupied = true;
@@ -137,6 +169,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
         this.isContentLoading = false;
       });
   }
+
+  ngAfterViewInit() {}
 
   unitDoc(data: string) {
     this.unit_doc = [];
@@ -449,6 +483,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   filterByTimeline(trigger: MatMenuTrigger) {
+    console.log(this.first_selected_timeline);
     if (this.first_selected_timeline && this.last_selected_timeline) {
       var first = new Date(this.first_selected_timeline).getTime();
       var last = new Date(this.last_selected_timeline).getTime();
@@ -459,7 +494,12 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.timeLineFilterselectedWrong = false;
         }, 3000);
       } else {
-        this.timeLineFilter.emit();
+        // console.log(this.all_data.tenant_payments[0].date)
+        this.all_payments_data.data = this.all_data.tenant_payments.filter(
+          (pay: any) =>
+            new Date(pay.tp_date).getTime() >= first &&
+            new Date(pay.tp_date).getTime() <= last
+        );
         trigger.closeMenu();
         this.timeLineFilterOn = true;
       }
@@ -472,35 +512,34 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     }
   }
 
-  private selectTenantDetails(data: string){
-    this.adminService.selectTenantPayments(data).subscribe((value)=>{
+  private selectTenantDetails(data: string) {
+    this.adminService.selectTenantPayments(data).subscribe((value) => {
       this.all_data.tenant_payments = value;
       this.is_data_loaded = true;
-    })
+    });
   }
 
-  refreshTable(){
+  refreshTable() {
     this.is_data_loaded = false;
 
-    if(!this.is_data_loaded){
+    if (!this.is_data_loaded) {
       // LoadingTableUnitPaymentTenant
     }
-    let data = { 
-      id : this.unit_id
-    }
+    let data = {
+      id: this.unit_id,
+    };
     this.selectTenantDetails(JSON.stringify(data));
-    
+
     let btn = document.getElementById("refresh_btn");
     btn.style.transform = "rotate(360deg)";
     btn.style.transition = "1s ease all";
-    setTimeout(()=>{
+    setTimeout(() => {
       btn.style.transition = "0s ease all";
-      btn.style.transform = "rotate(0deg)"; 
-    },2000)
+      btn.style.transform = "rotate(0deg)";
+    }, 2000);
   }
 
-  moreDetails(data: string){
-    console.log();
+  moreDetails(id: string, data: string) {
+    console.log(id);
   }
-
 }

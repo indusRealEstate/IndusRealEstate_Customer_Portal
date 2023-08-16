@@ -44,6 +44,7 @@ import { EditPropertyDialog } from "./edit_property_dialog/edit_property_dialog"
 import { EditUnitDialog } from "./edit_unit_dialog/edit_unit_dialog";
 import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
+import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog/view-payment-details-more-dialog";
 
 @NgModule({
   imports: [
@@ -94,6 +95,7 @@ import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_uni
     EditUnitDialog,
     ViewAllUnitDocuments,
     ViewAllUnitInventories,
+    ViewPaymentDetailsMoreDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
