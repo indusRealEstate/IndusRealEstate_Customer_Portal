@@ -22,7 +22,9 @@ export class ViewFinanceDetailsDialog implements OnInit {
   all_data: Object | any;
   id: string = "";
   type: string = "";
-
+  // is_cheque: boolean = false;
+  // is_online: boolean = false;
+  // is_cash: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,7 +35,7 @@ export class ViewFinanceDetailsDialog implements OnInit {
     this.id = data.id;
     this.type = data.type;
 
-
+   
   }
 
  
@@ -43,7 +45,7 @@ export class ViewFinanceDetailsDialog implements OnInit {
      type: this.type
     };
     this.appAdminService
-      .paymentsDetails(JSON.stringify(data))
+      .selectTenantsPaymentsDetails(JSON.stringify(data))
       .subscribe((val) => {
         this.all_data = val;
          console.log(this.all_data);

@@ -4,13 +4,17 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
+import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
+import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
-interface Staff {
-  value: string;
-  viewValue: string;
-}
+
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
+//   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
+ 
+// ];
 @Component({
   selector: "admin-report",
   templateUrl: "./admin-report.html",
@@ -18,40 +22,21 @@ interface Staff {
   
 })
 export class AdminReport implements OnInit {
-  staff: Staff[] = [
-    {value: 'Property', viewValue: 'Property'},
-    {value: 'Unit', viewValue: 'Unit'},
-    {value: 'Lease', viewValue: 'Lease'},
-    {value: 'User', viewValue: 'User'},
-  ];
-
-  
+  all_data: object | any;
+  displayedColumns: string[] = ['UnitName', 'Tenant', 'Rent', 'PaymentMode', 'PaymentAmount', 'PaymentDetails'];
+ 
+ 
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
-
-  
-  // allUsersMatTableData: MatTableDataSource<any>;
-  // ngAfterViewInitInitialize: boolean = false;
-
-  // loadingTable: any[] = [1, 2, 3, 4, 5];
-
-  // statusMenuOpened: boolean = false;
-  // flaggedRequest: boolean = false;
-
-  // allProperties: any[] = [];
-  // allUnits: any[] = [];
-
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  // @ViewChild("table_filter") table_filter: TableFiltersComponent;
+  payment_id: number;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private adminService: AdminService,
+    private appAdminService: AdminService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -61,17 +46,6 @@ export class AdminReport implements OnInit {
     var userData = localStorage.getItem("currentUser");
     var user = JSON.parse(userData);
 
-    // this.route.queryParams.subscribe((e) => {
-    //   if (e == null) {
-    //     router.navigate([`/all-users`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   } else if (e != user[0]["id"]) {
-    //     router.navigate([`/all-users`], {
-    //       queryParams: { uid: user[0]["id"] },
-    //     });
-    //   }
-    // });
   }
 
   screenHeight: number;
@@ -82,28 +56,54 @@ export class AdminReport implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  // isUserSignOut() {
-  //   if (this.authenticationService.currentUserValue) {
-  //     this.isUserSignedIn = true;
-  //   } else {
-  //     this.isUserSignedIn = false;
-  //     this.router.navigate(["/login"]);
-  //   }
-  // }
-
   ngAfterViewInit() {
    
   }
 
-  
+  financeDetailDialog(id: string, type: string) {
+    let data: object = {
+      id : id,
+      type: type
+    }
+    this.dialog
+      .open(ViewFinanceDetailsDialog, {
+        data
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        //console.log(value)
+      });
+  }
 
-  
-
+  incomeStatementDialog() {
+    this.dialog
+      .open(ViewIncomeStatementDialog, {
+        width: "75%",
+        height: "46rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+  }
   
 
   async ngOnInit() {
-    
-  }
+    let data = {
+     
+    };
+    this.appAdminService
+      .selectTenantsPaymentsDetails(JSON.stringify(data))
+      .subscribe((val) => {
+        this.all_data = val;
 
+         console.log(this.all_data);
+         //console.log(this.all_data.t_amount);
+
+        //  for(let item of this.all_data){
+        //   console.log(item.t_amount);
+        //  }
   
+  });
+  
+}
+
 }
