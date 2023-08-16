@@ -499,5 +499,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     },2000)
   }
 
+  moreDetails(data: string){
+    console.log();
+  }
 
 }

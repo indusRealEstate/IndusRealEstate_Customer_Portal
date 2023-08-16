@@ -30,7 +30,7 @@ export class ViewUserDetails implements OnInit {
   all_units: object[] = [];
   isOwner: boolean = false;
   profile_image: string;
-  unit_array: object[] = []
+  is_object: boolean = false;
   //downloadService: any;
   // property_name:string;
 
@@ -105,6 +105,9 @@ export class ViewUserDetails implements OnInit {
         this.all_data = value;
         this.isOwner =
           this.all_data.user_type.toLowerCase() == "owner" ? true : false;
+        
+
+        this.all_data.user_allocates_unit.length > 1 ? this.is_object = true : this.is_object = false;
         // user_doc
 
         // for(let item of this.all_data.user_allocates_unit){
