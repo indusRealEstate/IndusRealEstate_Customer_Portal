@@ -223,7 +223,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removeItem("admin_properties_units_session");
+    sessionStorage.removkeItem("admin_properties_units_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {
       this.table_filter.flaggedRequestsFilterOn = false;

@@ -174,7 +174,6 @@
             </div>
           </div>
         </div>
-        <!-- *ngIf=" all_data != null" -->
         <div class="row">
           <ngx-skeleton-loader
             *ngIf="isContentLoading"
@@ -810,7 +809,7 @@
             >
               <div
                 class="card main-card"
-                [ngStyle]="{'height' : all_data.unit_status == 'vacant' ? '93%' : '100%', 'margin-top' : all_data.unit_status == 'vacant' ? '30px !important' : '0'}"
+                [ngStyle]="{'height' : all_data.unit_status.toLowerCase() == 'vacant' ? '93%' : '100%', 'margin-top' : all_data.unit_status == 'vacant' ? '30px !important' : '0'}"
               >
                 <div class="card-header">
                   <div class="row m-0">
@@ -832,6 +831,7 @@
                             matTooltip="Refresh table"
                             matTooltipClass="tooltip"
                             matTooltipPosition="above"
+                            id="refresh_btn"
                             class="refresh-table-btn ml-3"
                             src="assets/img/svg/home-page/refresh-2.svg"
                             alt
@@ -921,31 +921,36 @@
                     <ng-container matColumnDef="name">
                       <th mat-header-cell *matHeaderCellDef>User Name</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.user_name}}
+                        <span *ngIf="is_data_loaded">{{element.user_name}}</span>
+                        <span *ngIf="!is_data_loaded"><ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader></span>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="method">
                       <th mat-header-cell *matHeaderCellDef>payment method</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{element.tp_payment_method}}
+                      <td mat-cell *matCellDef="let element"> 
+                        <span *ngIf="is_data_loaded">{{element.tp_payment_method}}</span>
+                        <span *ngIf="!is_data_loaded"><ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader></span>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="purpose">
                       <th mat-header-cell *matHeaderCellDef>purpose</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.tp_purpose}}
+                        <span *ngIf="is_data_loaded">{{element.tp_purpose}}</span>
+                        <span *ngIf="!is_data_loaded"><ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader></span>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="stauts">
                       <th mat-header-cell *matHeaderCellDef>stauts</th>
                       <td mat-cell *matCellDef="let element">
-                        {{element.tp_status}}
+                        <span *ngIf="is_data_loaded">{{element.tp_status}}</span>
+                        <span *ngIf="!is_data_loaded"><ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader></span>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="more">
                       <th mat-header-cell *matHeaderCellDef>more</th>
                       <td mat-cell *matCellDef="let element">
-                        <button class="btn">more details</button>
+                        <span *ngIf="is_data_loaded"><button class="btn">more details</button></span>
+                        <span *ngIf="!is_data_loaded"><ngx-skeleton-loader [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader></span>
                       </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -961,14 +966,7 @@
         </div>
 
         <div class="row mt-3" *ngIf="all_data != null">
-          <!-- <div class="col-md-7" *ngIf="all_data.unit_description !== ''">
-            <div class="card card-main h-100">
-              <h4 class="overview-header">Description</h4>
-              <div class="card-body">
-                <p>{{all_data.unit_description}}</p>
-              </div>
-            </div>
-          </div> -->
+         
 
           <div
             class="col"
@@ -982,10 +980,7 @@
                 <div class="row m-0 justify-content-between">
                   <h4 class="overview-header">
                     Lease Details
-                    <!-- <span
-                      class="mx-2"
-                      [ngClass]="all_data.lease_status == 'active' ? 'lease-active' : 'lease-inactive'"
-                    ></span> -->
+                    
                     <span
                       class="ml-3"
                       [ngClass]="all_data.lease_status == 'active' ? 'lease-active-text' : 'lease-inactive-text'"
@@ -1198,37 +1193,6 @@
                           Download Doc
                         </button>
                       </td>
-                      <!-- <td class="p-3 col-md-8">
-                        <img
-                          src="assets/img/svg/common-icons/angle-down.svg"
-                          alt="angle"
-                          class="angle"
-                          [ngClass]="view_list == true ? 'angle-up' : 'angle-down'"
-                        />
-                        <select
-                          name="selecte_doc"
-                          id="selecte_doc"
-                          title="Documents"
-                          class="form-control"
-                          (click)="selecteFunction($event)"
-                        >
-                          <option
-                            class="btn"
-                            *ngFor="let item of lease_doc; let index = i"
-                            value="{{item}}"
-                          >
-                            {{item}}
-                          </option>
-                        </select>
-                        <button
-                          class="btn"
-                          (click)="downloadDoc()"
-                          title="DOWNLOAD DOC"
-                          style="background-color: #2b333e"
-                        >
-                          Download Doc
-                        </button>
-                      </td> -->
                     </tr>
                   </tbody>
                 </table>

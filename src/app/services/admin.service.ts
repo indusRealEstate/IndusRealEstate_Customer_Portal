@@ -500,4 +500,13 @@ export class AdminService {
      })
    );
  }
+
+ selectTenantPayments(data: string) {
+   const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
 }
