@@ -15,6 +15,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
+import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { ViewAllUnitDocuments } from "app/components/view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories/view_all_unit_inventories";
 import { AdminService } from "app/services/admin.service";
@@ -539,7 +540,12 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     }, 2000);
   }
 
-  moreDetails(id: string, data: string) {
-    console.log(id);
+  moreDetails(id: string, method: string) {
+    this.dialog.open(ViewPaymentDetailsMoreDialog,{
+      data: {
+        id: id,
+        method: method
+      }
+    })
   }
 }

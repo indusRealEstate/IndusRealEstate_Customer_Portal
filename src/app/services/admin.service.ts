@@ -518,4 +518,12 @@ export class AdminService {
   );
 }
  
+ selectPaymentAccordeingToTheMothod(data: string) {
+   const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
 }

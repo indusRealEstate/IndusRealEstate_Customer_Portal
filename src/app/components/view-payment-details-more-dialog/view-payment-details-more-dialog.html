@@ -5,392 +5,132 @@
   (click)="onCloseDialog()"
   class="mr-2 mt-1 close-icon"
   src="../../../assets/img/svg/req-details/close-circle.svg"
-  alt
-/>
+  alt />
 
 <div class="card main-card" style="box-shadow: none !important">
   <div class="card-header">
-    <div class="row">
-      <div class="col-8">
-        <h3 style="font-size: 1.5rem; font-weight: 500; margin-left: 1.3rem">
-          Income Statement
-        </h3>
-      </div>
-      <div class="col-2">
-        <mat-form-field
-          class="textField-all"
-          appearance="outline"
-          style="height: 2.5rem; float: right"
-        >
-          <mat-label class="m-lable">All Campaigns</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let item of staff" [value]="item.value">
-              {{item.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-2">
-        <div
-          class="btn"
-          style="
-            margin: 0;
-            padding: 7px 15px;
-            margin-right: 10px;
-            background: #d4aa32;
-            height: 4vh;
-            float: right;
-          "
-        >
-          <div
-            class="row m-0 p-1 align-items-center"
-            style="width: 130px; height: 1vh; justify-content: space-between"
-          >
-            <img
-              src="assets/img/svg/admin-dashboard/export.svg"
-              alt=""
-              style="width: 15px; filter: brightness(0) invert(1)"
-            />
-            <p class="m-0 font-weight-normal">Download</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h3 class="title-header">
+      <span *ngIf="is_cheque">cheque</span>
+      <span *ngIf="is_online">online</span>
+      <span *ngIf="is_cash">cash</span> details
+    </h3>
   </div>
   <div class="card-body">
     <div class="table-row">
-      <table class="teble table-bordered w-100">
+      <table class="table text-uppercase table-striped w-100 px-3">
         <thead class="thead">
-          <tr>
-            <th
-              scope="col"
-              rowspan="2"
-              class="p-3 col-md-7"
-              style="
-                color: rgb(75, 75, 206);
-                font-size: 1.3rem;
-                font-weight: 500;
-              "
-            >
-              Billan pasif
-            </th>
-            <th
-              scope="col"
-              class="p-3 col-md-3 text-center"
-              colspan="3"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              Title2
-            </th>
-            <th
-              scope="col"
-              class="p-3 col-md-1"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              Title3
-            </th>
-            <th
-              scope="col"
-              class="p-3 col-md-1"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              Title4
-            </th>
-          </tr>
-          <tr>
-            <th
-              scope="col"
-              class="p-3"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              test1
-            </th>
-            <th
-              scope="col"
-              class="p-3 text-center"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              test2
-            </th>
-            <th
-              scope="col"
-              class="p-3"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              test3
-            </th>
-            <th
-              scope="col"
-              class="p-3"
-              style="background-color: rgb(246, 248, 255)"
-            >
-              test4
-            </th>
-            <th
-              scope="col"
-              class="p-3"
-              style="background-color: rgb(246, 248, 255)"
-            ></th>
+          <tr scope="row">
+            <ng-container *ngIf="is_cheque">
+              <th scope="col">cheque number</th>
+              <th scope="col">cheque date</th>
+              <th scope="col">name on cheque</th>
+            </ng-container>
+            <ng-container *ngIf="is_online">
+              <th scope="col">bank name</th>
+              <th scope="col">branch</th>
+              <th scope="col">account number</th>
+              <th scope="col">name of holder</th>
+              <th scope="col">iban</th>
+            </ng-container>
+            <ng-container *ngIf="is_cash">
+              <th scope="col">details</th>
+            </ng-container>
           </tr>
         </thead>
-        <tbody class="tbody text-uppercase">
-          <tr scope="row" data-toggle="collapse" data-target=".order1">
-            <th class="p-3 col-md-7" scope="row">
-              Income statement
-              <img
-                src="../../../assets/img/svg/admin-dashboard/dropdown.svg"
-                width="20"
-                height="20"
-              />
-              <div>
-                <ul
-                  style="list-style: none; padding: 0rem !important"
-                  class="collapse order1"
-                >
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                </ul>
-              </div>
-            </th>
-
-            <td class="p-3 col-md-1">
-              main-1
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order1"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              main-2
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order1"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              main-3
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order1"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              main-4
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order1"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              main-5
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order1"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-          </tr>
-          <tr scope="row" data-toggle="collapse" data-target=".order2">
-            <th class="p-3 col-md-7" scope="row">
-              Income statement2
-              <img
-                src="../../../assets/img/svg/admin-dashboard/dropdown.svg"
-                width="20"
-                height="20"
-              />
-              <div>
-                <ul
-                  style="list-style: none; padding: 0rem !important"
-                  class="collapse order2"
-                >
-                  <li>Income statement2</li>
-                  <li>Income statement2</li>
-                </ul>
-              </div>
-            </th>
-
-            <td class="p-3 col-md-1">
-              10 200
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order2"
-              >
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              10 290
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order2"
-              >
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              10 250
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order2"
-              >
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              10 230
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order2"
-              >
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              10 203
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order2"
-              >
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-          </tr>
+        <tbody class="tbody">
           <tr scope="row">
-            <th class="p-3 col-md-7" scope="row">Unit Name</th>
-            <td class="p-3 col-md-1">title1</td>
-            <td class="p-3 col-md-1">title2</td>
-            <td class="p-3 col-md-1">title3</td>
-            <td class="p-3 col-md-1">title4</td>
-            <td class="p-3 col-md-1">title5</td>
-          </tr>
-          <tr scope="row" data-toggle="collapse" data-target=".order3">
-            <th class="p-3 col-md-7" scope="row">
-              Income statement
-              <img
-                src="../../../assets/img/svg/admin-dashboard/dropdown.svg"
-                width="20"
-                height="20"
-              />
-              <div>
-                <ul
-                  style="list-style: none; padding: 0rem !important"
-                  class="collapse order3"
-                >
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                  <li>Income statement</li>
-                </ul>
-              </div>
-            </th>
+            <ng-container *ngIf="is_cheque">
+              <td scope="col" class="col-4">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.cheque_no}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+              <td scope="col" class="col-4">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.cheque_date}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+              <td scope="col" class="col-4">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.name_on_cheque}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+            </ng-container>
 
-            <td class="p-3 col-md-1">
-              Unit-1
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order3"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              Unit-1
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order3"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              Unit-1
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order3"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              Unit-1
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order3"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
-            <td class="p-3 col-md-1">
-              Unit-1
-              <ul
-                style="list-style: none; padding: 0rem !important"
-                class="collapse order3"
-              >
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-                <li>1234</li>
-              </ul>
-            </td>
+            <ng-container *ngIf="is_online">
+              <td scope="col" class="col-2">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.bank_name}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+              <td scope="col" class="col-2">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.branch}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+              <td scope="col" class="col-4">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.ac_no}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+              <td scope="col" class="col-2">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.bank_holder_name}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+              <td scope="col" class="col-2">
+                <span *ngIf="is_data_loaded">
+                  {{all_data.iban}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container  *ngIf="is_cash">
+              <td>
+                <span *ngIf="is_data_loaded">
+                  {{all_data.details}}
+                </span>
+                <span *ngIf="!is_data_loaded">
+                  <ngx-skeleton-loader
+                    [theme]="{ width: '500px', height: '50px' }"></ngx-skeleton-loader>
+                </span>
+              </td>
+            </ng-container>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
