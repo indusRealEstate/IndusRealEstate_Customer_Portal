@@ -130,6 +130,10 @@ export class EditPropertyDialog implements OnInit {
 
   ngAfterViewInit() {}
 
+  closeDialogWithoutSaving() {
+    this.dialogRef.close();
+  }
+
   onCloseDialog() {
     this.assignImages();
     this.assignDoc();

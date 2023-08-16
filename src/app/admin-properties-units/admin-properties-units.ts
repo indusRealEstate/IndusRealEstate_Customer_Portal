@@ -4,6 +4,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
+import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -55,6 +56,9 @@ export class AdminPropertiesUnits implements OnInit {
 
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
+
+  more_menu_unit_all_data: any = "";
+  more_menu_unit_loaded: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -223,7 +227,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removkeItem("admin_properties_units_session");
+    sessionStorage.removeItem("admin_properties_units_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {
       this.table_filter.flaggedRequestsFilterOn = false;
@@ -251,6 +255,62 @@ export class AdminPropertiesUnits implements OnInit {
             this.refreshTable();
             sessionStorage.removeItem("all_users_session");
           }
+        }
+      });
+  }
+
+  openMoreMenu(unit_id) {
+    this.more_menu_unit_all_data = "";
+    this.adminService
+      .getUnitAllData({ id: unit_id })
+      .subscribe((value) => {
+        this.more_menu_unit_all_data = value;
+      })
+      .add(() => {
+        this.more_menu_unit_loaded = true;
+      });
+  }
+
+  openEditUnit(index) {
+    var data = this.more_menu_unit_all_data;
+    this.dialog
+      .open(EditUnitDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data != undefined) {
+          sessionStorage.removeItem("admin_properties_units_session");
+          this.allUnits[index].unit_no =
+            data.unit_no != undefined
+              ? data.unit_no
+              : this.allUnits[index].unit_no;
+          this.allUnits[index].property_id =
+            data.property_id != undefined
+              ? data.property_id
+              : this.allUnits[index].property_id;
+          this.allUnits[index].property_name =
+            data.property_name != undefined
+              ? data.property_name
+              : this.allUnits[index].property_name;
+          this.allUnits[index].floor =
+            data.floor != undefined ? data.floor : this.allUnits[index].floor;
+          this.allUnits[index].size =
+            data.size != undefined ? data.size : this.allUnits[index].size;
+          this.allUnits[index].owner_id =
+            data.owner_id != undefined
+              ? data.owner_id
+              : this.allUnits[index].owner_id;
+          this.allUnits[index].owner =
+            data.owner != undefined ? data.owner : this.allUnits[index].owner;
+          this.allUnits[index].bedroom =
+            data.bedroom != undefined
+              ? data.bedroom
+              : this.allUnits[index].bedroom;
+          this.allUnits[index].bathroom =
+            data.bathroom != undefined
+              ? data.bathroom
+              : this.allUnits[index].bathroom;
         }
       });
   }

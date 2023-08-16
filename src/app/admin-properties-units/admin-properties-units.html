@@ -236,10 +236,11 @@
               <th mat-header-cell *matHeaderCellDef>More</th>
               <td
                 mat-cell
-                *matCellDef="let element;let last = last"
+                *matCellDef="let element;let last = last;let index = index"
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
                 <img
+                  (click)="openMoreMenu(element.unit_id)"
                   [matMenuTriggerFor]="menu"
                   matTooltip="More Actions"
                   matTooltipClass="tooltip"
@@ -256,32 +257,46 @@
                 />
 
                 <mat-menu #menu="matMenu" class="more-menu">
-                  <button mat-menu-item>
-                    <div class="row m-0 justify-content-between">
-                      <span style="color: #c89914">Edit</span>
-                      <img
-                        src="assets/img/svg/property-page/edit.svg"
-                        alt
-                        style="
-                          filter: invert(68%) sepia(13%) saturate(2701%)
-                            hue-rotate(5deg) brightness(110%) contrast(66%);
-                        "
-                      />
-                    </div>
-                  </button>
-                  <button mat-menu-item>
-                    <div class="row m-0 justify-content-between">
-                      <span style="color: red">Delete</span>
-                      <img
-                        src="assets/img/svg/delete.svg"
-                        alt
-                        style="
-                          filter: invert(56%) sepia(71%) saturate(3838%)
-                            hue-rotate(328deg) brightness(97%) contrast(90%);
-                        "
-                      />
-                    </div>
-                  </button>
+                  <div
+                    *ngIf="!more_menu_unit_loaded || more_menu_unit_all_data == ''"
+                    class="d-flex justify-content-center align-items-center"
+                    style="height: 110px"
+                  >
+                    <span
+                      class="spinner-border spinner-border-m mr-2"
+                      style="color: #d4aa32"
+                    >
+                    </span>
+                  </div>
+
+                  <div *ngIf="more_menu_unit_loaded && more_menu_unit_all_data != ''">
+                    <button mat-menu-item (click)="openEditUnit(index)">
+                      <div class="row m-0 justify-content-between">
+                        <span style="color: #c89914">Edit</span>
+                        <img
+                          src="assets/img/svg/property-page/edit.svg"
+                          alt
+                          style="
+                            filter: invert(68%) sepia(13%) saturate(2701%)
+                              hue-rotate(5deg) brightness(110%) contrast(66%);
+                          "
+                        />
+                      </div>
+                    </button>
+                    <button mat-menu-item>
+                      <div class="row m-0 justify-content-between">
+                        <span style="color: red">Delete</span>
+                        <img
+                          src="assets/img/svg/delete.svg"
+                          alt
+                          style="
+                            filter: invert(56%) sepia(71%) saturate(3838%)
+                              hue-rotate(328deg) brightness(97%) contrast(90%);
+                          "
+                        />
+                      </div>
+                    </button>
+                  </div>
                 </mat-menu>
               </td>
             </ng-container>

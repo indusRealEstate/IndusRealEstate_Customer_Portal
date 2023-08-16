@@ -211,10 +211,21 @@ export class EditUnitDialog implements OnInit {
 
   ngAfterViewInit() {}
 
+  closeDialogWithoutSaving() {
+    this.dialogRef.close();
+  }
+
   onCloseDialog() {
+    if (this.is_submit == true) {
+      var sel_prop_name = this.properties.find(
+        (pr) => pr.value == this.selected_property
+      ).viewValue;
+    }
+
     this.dialogRef.close({
       unit_no: this.is_submit ? this.unit_number : undefined,
       property_id: this.is_submit ? this.selected_property : undefined,
+      property_name: this.is_submit ? sel_prop_name : undefined,
       unit_type: this.is_submit ? this.unit_type : undefined,
       floor: this.is_submit ? this.floors : undefined,
       size: this.is_submit ? this.unit_size : undefined,
@@ -223,6 +234,7 @@ export class EditUnitDialog implements OnInit {
       bathroom: this.is_submit ? this.bathrooms : undefined,
       no_of_parking: this.is_submit ? this.number_of_parking : undefined,
       owner: this.is_submit ? this.owner.viewValue : undefined,
+      owner_id: this.is_submit ? this.owner.value : undefined,
       tenant_id: this.is_submit
         ? this.all_data.tenant_uid == undefined
           ? ""
