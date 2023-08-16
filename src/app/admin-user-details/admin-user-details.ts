@@ -103,16 +103,13 @@ export class ViewUserDetails implements OnInit {
       .subscribe((value) => {
         console.log(value);
         this.all_data = value;
-        this.isOwner =
-          this.all_data.user_type.toLowerCase() == "owner" ? true : false;
-        
-
-        this.all_data.user_allocates_unit.length > 1 ? this.is_object = true : this.is_object = false;
-        // user_doc
-
-        // for(let item of this.all_data.user_allocates_unit){
-
-        // }
+        if (this.all_data.user_allocates_unit != undefined) {
+          if (this.all_data.user_type == "owner") {
+            this.is_object = false;
+          } else {
+            this.is_object = true;
+          }
+        }
 
         for (
           let i = 0;
