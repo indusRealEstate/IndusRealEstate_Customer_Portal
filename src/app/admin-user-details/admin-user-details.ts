@@ -1,9 +1,8 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthenticationService } from "app/services/authentication.service";
 import { AdminService } from "app/services/admin.service";
-import { DownloadService } from "app/services/download.service";
-import { HttpClient } from "@angular/common/http";
+import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
   selector: "admin-user-details",
@@ -34,21 +33,18 @@ export class ViewUserDetails implements OnInit {
   //downloadService: any;
   // property_name:string;
 
+  is_user_image_loading: boolean = true;
+
   constructor(
     private router: Router,
     private appAdminService: AdminService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private appdownloadService: DownloadService,
     public http: HttpClient
   ) {
     this.getScreenSize();
 
     this.isContentLoading = true;
-
-    var userData = localStorage.getItem("currentUser");
-
-    var user = JSON.parse(userData);
 
     this.route.queryParams.subscribe((val) => {
       this.user_id = val.user_id;
@@ -62,6 +58,10 @@ export class ViewUserDetails implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  finishLoadingImage() {
+    this.is_user_image_loading = false;
   }
 
   isUserSignOut() {

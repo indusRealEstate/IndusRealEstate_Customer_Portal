@@ -9,8 +9,8 @@
     <div class="col" style="padding: 0">
       <div class="row m-0 w-100 align-items-end justify-content-between">
         <div class="row m-0 align-items-end mb-3">
-          <p class="m-0 ml-0 mt-5" style="font-size: 2rem; font-weight: 600">
-           Report
+          <p class="m-0 ml-0" style="font-size: 2rem; font-weight: 600">
+            Report
           </p>
         </div>
         <div class="row m-0 align-items-end mb-3">
@@ -22,7 +22,7 @@
               margin-right: 10px;
               background: #d4aa32;
             "
-             (click)="incomeStatementDialog()"
+            (click)="incomeStatementDialog()"
           >
             <div
               class="row m-0 p-1 align-items-center"
@@ -45,11 +45,19 @@
 
       <div class="row mt-3">
         <div class="col-md-6">
-          <mat-card style="border: 0.1rem solid rgb(240,236,236);">
-            <mat-card-content style=" border: 0;">
+          <mat-card style="border: 0.1rem solid rgb(240, 236, 236)">
+            <mat-card-content style="border: 0">
               <div class="row" style="border-bottom: 1px solid #e6ebf1">
                 <div class="col-6">
-                  <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 1rem;">Overview</h4>
+                  <h4
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 500;
+                      padding-left: 1rem;
+                    "
+                  >
+                    Overview
+                  </h4>
                 </div>
                 <div class="col-6">
                   <!-- <mat-form-field class="date-form" style="float: right;">
@@ -61,27 +69,38 @@
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field> -->
-                  
-          <table-filters style="float: right;"></table-filters>
+
+                  <table-filters style="float: right"></table-filters>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
-                  <h5 class="" style="font-size:0.9rem ;font-weight: 500;padding-left: 1rem; padding-top: 1rem; color: #adb5bc;">Docs in Pipeline</h5>
+                  <h5
+                    class=""
+                    style="
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      padding-left: 1rem;
+                      padding-top: 1rem;
+                      color: #adb5bc;
+                    "
+                  >
+                    Docs in Pipeline
+                  </h5>
                 </div>
               </div>
-              <div class="row"  style="border-bottom: 1px solid #e6ebf1" >
-                <div class="col-6" >
-                  <div class="row" style="padding-left: 1.5rem;
-                        padding-top: 1rem;">
+              <div class="row" style="border-bottom: 1px solid #e6ebf1">
+                <div class="col-6">
+                  <div
+                    class="row"
+                    style="padding-left: 1.5rem; padding-top: 1rem"
+                  >
                     <div
                       style="
                         height: 3.3rem;
                         width: 3.3rem;
-                        background-color:#e5e2ff;
+                        background-color: #e5e2ff;
                         border-radius: 50%;
-                        
-                      
                       "
                     >
                       <img
@@ -93,7 +112,6 @@
                           left: 30%;
                           width: 1.2rem;
                           height: 1.2rem;
-
                         "
                       />
                     </div>
@@ -104,124 +122,465 @@
                           font-size: 2rem;
                           font-weight: 700;
                           color: #2b333ec4;
-                         
                         "
                       >
                         55,000
                       </p>
-                      <p class="" style="font-weight: 600; color: #adb5bc; ">
+                      <p class="" style="font-weight: 600; color: #adb5bc">
                         Total Amount
                       </p>
-                      
                     </div>
                   </div>
-                  <div class="row" style="padding: 0rem 0.3rem;
-                  margin-top: 2rem;">
+                  <div
+                    class="row"
+                    style="padding: 0rem 0.3rem; margin-top: 2rem"
+                  >
                     <div class="col-3 text-center">
-                      <p style="font-size: 1rem; font-weight: 700; margin: 0rem;">623</p>
-                      <p style="font-size: 0.8rem; font-weight: 500; margin: 0rem;color: #adb5bc;">MSL</p>
+                      <p
+                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
+                      >
+                        623
+                      </p>
+                      <p
+                        style="
+                          font-size: 0.8rem;
+                          font-weight: 500;
+                          margin: 0rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        MSL
+                      </p>
                     </div>
-                    <div class="col-3 text-center ">
-                      <p style="font-size: 1rem; font-weight: 700; margin: 0rem;">623</p>
-                      <p style="font-size: 0.8rem; font-weight: 500; margin: 0rem;color: #adb5bc;">MSL</p>
+                    <div class="col-3 text-center">
+                      <p
+                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
+                      >
+                        623
+                      </p>
+                      <p
+                        style="
+                          font-size: 0.8rem;
+                          font-weight: 500;
+                          margin: 0rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        MSL
+                      </p>
                     </div>
-                    <div class="col-3 text-center" style="background: #e5e2ff; border-radius: 0.8rem;" >
-                      <p style="font-size: 1rem; font-weight: 700; margin: 0rem;">623</p>
-                      <p style="font-size: 0.8rem; font-weight: 500; margin: 0rem;color: #adb5bc;">MSL</p>
+                    <div
+                      class="col-3 text-center"
+                      style="background: #e5e2ff; border-radius: 0.8rem"
+                    >
+                      <p
+                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
+                      >
+                        623
+                      </p>
+                      <p
+                        style="
+                          font-size: 0.8rem;
+                          font-weight: 500;
+                          margin: 0rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        MSL
+                      </p>
                     </div>
-                    <div class="col-3 text-center ">
-                      <p style="font-size: 1rem; font-weight: 700; margin: 0rem;">623</p>
-                      <p style="font-size: 0.8rem; font-weight: 500; margin: 0rem;color: #adb5bc;">MSL</p>
+                    <div class="col-3 text-center">
+                      <p
+                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
+                      >
+                        623
+                      </p>
+                      <p
+                        style="
+                          font-size: 0.8rem;
+                          font-weight: 500;
+                          margin: 0rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        MSL
+                      </p>
                     </div>
                   </div>
                 </div>
-              
+
                 <div class="col-6">
                   <div class="row">
-                    <div class="col-6 mt-0" style="padding: 1rem ;padding-top: 0.5rem;"> 
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">40,000</p>
-                      <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">Amount Recieved</p>
-                      <div class="text-center" style="width:5rem; background: #c9c5f2; border-radius: 0.5rem; font-weight: 500; color: #6558f0;">draft</div>
+                    <div
+                      class="col-6 mt-0"
+                      style="padding: 1rem; padding-top: 0.5rem"
+                    >
+                      <p
+                        style="
+                          font-size: 1.3rem;
+                          font-weight: 700;
+                          margin: 0.3rem;
+                        "
+                      >
+                        40,000
+                      </p>
+                      <p
+                        style="
+                          font-size: 1rem;
+                          font-weight: 500;
+                          margin: 0.3rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        Amount Recieved
+                      </p>
+                      <div
+                        class="text-center"
+                        style="
+                          width: 5rem;
+                          background: #c9c5f2;
+                          border-radius: 0.5rem;
+                          font-weight: 500;
+                          color: #6558f0;
+                        "
+                      >
+                        draft
+                      </div>
                     </div>
-                    <div class="col-6 mt-0" style="padding: 1.5rem ;padding-left: 0rem; padding-top: 0.5rem;">
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">15,000</p>
-                        <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem;color: #adb5bc;">Pending Amount</p>
-                        <div class="text-center" style="width:5rem; background: #fbe4aa; border-radius: 0.5rem; font-weight: 500; color: #bb8807;">Approve</div>
+                    <div
+                      class="col-6 mt-0"
+                      style="
+                        padding: 1.5rem;
+                        padding-left: 0rem;
+                        padding-top: 0.5rem;
+                      "
+                    >
+                      <p
+                        style="
+                          font-size: 1.3rem;
+                          font-weight: 700;
+                          margin: 0.3rem;
+                        "
+                      >
+                        15,000
+                      </p>
+                      <p
+                        style="
+                          font-size: 1rem;
+                          font-weight: 500;
+                          margin: 0.3rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        Pending Amount
+                      </p>
+                      <div
+                        class="text-center"
+                        style="
+                          width: 5rem;
+                          background: #fbe4aa;
+                          border-radius: 0.5rem;
+                          font-weight: 500;
+                          color: #bb8807;
+                        "
+                      >
+                        Approve
+                      </div>
                     </div>
-                  </div> 
+                  </div>
                   <div class="row">
-                    <div class="col-6 m-0" style="padding: 1rem ;padding-top: 0.5rem;"> 
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">5,000</p>
-                      <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">Maintanance Amount</p>
-                      <div class="text-center" style="width:5rem; background: #c6eef4; border-radius: 0.5rem; font-weight: 500; color: #017789;">draft</div>
+                    <div
+                      class="col-6 m-0"
+                      style="padding: 1rem; padding-top: 0.5rem"
+                    >
+                      <p
+                        style="
+                          font-size: 1.3rem;
+                          font-weight: 700;
+                          margin: 0.3rem;
+                        "
+                      >
+                        5,000
+                      </p>
+                      <p
+                        style="
+                          font-size: 1rem;
+                          font-weight: 500;
+                          margin: 0.3rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        Maintanance Amount
+                      </p>
+                      <div
+                        class="text-center"
+                        style="
+                          width: 5rem;
+                          background: #c6eef4;
+                          border-radius: 0.5rem;
+                          font-weight: 500;
+                          color: #017789;
+                        "
+                      >
+                        draft
+                      </div>
                     </div>
-                    <div class="col-6 m-0" style="padding: 1rem ;padding-left: 0rem; padding-top: 0.5rem;">
-                      <p style="font-size: 1.3rem; font-weight: 700; margin: 0.3rem;">5,000</p>
-                        <p style="font-size: 1rem; font-weight: 500; margin: 0.3rem; color: #adb5bc;">Security Amount</p>
-                        <div class="text-center" style="width:5rem; background: #d3fbd2; border-radius: 0.5rem; font-weight: 500; color: #038e01;">Panding</div>
+                    <div
+                      class="col-6 m-0"
+                      style="
+                        padding: 1rem;
+                        padding-left: 0rem;
+                        padding-top: 0.5rem;
+                      "
+                    >
+                      <p
+                        style="
+                          font-size: 1.3rem;
+                          font-weight: 700;
+                          margin: 0.3rem;
+                        "
+                      >
+                        5,000
+                      </p>
+                      <p
+                        style="
+                          font-size: 1rem;
+                          font-weight: 500;
+                          margin: 0.3rem;
+                          color: #adb5bc;
+                        "
+                      >
+                        Security Amount
+                      </p>
+                      <div
+                        class="text-center"
+                        style="
+                          width: 5rem;
+                          background: #d3fbd2;
+                          border-radius: 0.5rem;
+                          font-weight: 500;
+                          color: #038e01;
+                        "
+                      >
+                        Panding
+                      </div>
                     </div>
-                  </div> 
+                  </div>
                 </div>
               </div>
-              
+
               <div class="row mt-1">
                 <div class="col-3">
-                  <p style="font-size: 0.9rem; font-weight: 500;color: #7a7b7c; margin: 0.3rem;">Net Value in Pipeline</p>
-                  <p style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem;">$879,768</p>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: #7a7b7c;
+                      margin: 0.3rem;
+                    "
+                  >
+                    Net Value in Pipeline
+                  </p>
+                  <p
+                    style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem"
+                  >
+                    $879,768
+                  </p>
                 </div>
                 <div class="col-3">
-                  <p style="font-size: 0.9rem; font-weight: 500;color: #7a7b7c; margin: 0.3rem;">Achieved So Far</p>
-                      <p style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem;">$765,989</p>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: #7a7b7c;
+                      margin: 0.3rem;
+                    "
+                  >
+                    Achieved So Far
+                  </p>
+                  <p
+                    style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem"
+                  >
+                    $765,989
+                  </p>
                 </div>
                 <div class="col-3">
-                  <p style="font-size: 0.9rem; font-weight: 500;color: #7a7b7c; margin: 0.3rem;">Differance</p>
-                      <p style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem; color:#f0c760;">$897,243</p>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: #7a7b7c;
+                      margin: 0.3rem;
+                    "
+                  >
+                    Differance
+                  </p>
+                  <p
+                    style="
+                      font-size: 1.2rem;
+                      font-weight: 500;
+                      margin: 0.3rem;
+                      color: #f0c760;
+                    "
+                  >
+                    $897,243
+                  </p>
                 </div>
                 <div class="col-3">
-                  <p style="font-size: 0.9rem; font-weight: 500;color: #7a7b7c; margin: 0.3rem;">Target</p>
-                      <p style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem;">$356,989</p>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      color: #7a7b7c;
+                      margin: 0.3rem;
+                    "
+                  >
+                    Target
+                  </p>
+                  <p
+                    style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem"
+                  >
+                    $356,989
+                  </p>
                 </div>
               </div>
             </mat-card-content>
           </mat-card>
           <div class="card">
             <div class="card-header">
-              <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 0rem;">Occupancy Rates</h4>
+              <h4
+                style="font-size: 1.5rem; font-weight: 500; padding-left: 0rem"
+              >
+                Occupancy Rates
+              </h4>
             </div>
             <div class="card-body">
               <div class="row p-2">
                 <div class="col-4">
-                  <div class="" style="background-color: rgb(46, 108, 46);width: 0.6rem; height: 1rem; border-radius: 4px;margin-top: 0.2rem"></div>
-                  <h4 style="margin-left: 1.5rem;margin-top: -1rem; font-size: 1rem; font-weight: 500;">Vacant</h4> 
-                  <p style="margin-left: 0rem; font-size: 2.5rem;font-weight: 500;">49</p>
+                  <div
+                    class=""
+                    style="
+                      background-color: rgb(46, 108, 46);
+                      width: 0.6rem;
+                      height: 1rem;
+                      border-radius: 4px;
+                      margin-top: 0.2rem;
+                    "
+                  ></div>
+                  <h4
+                    style="
+                      margin-left: 1.5rem;
+                      margin-top: -1rem;
+                      font-size: 1rem;
+                      font-weight: 500;
+                    "
+                  >
+                    Vacant
+                  </h4>
+                  <p
+                    style="
+                      margin-left: 0rem;
+                      font-size: 2.5rem;
+                      font-weight: 500;
+                    "
+                  >
+                    49
+                  </p>
                 </div>
                 <div class="col-4">
-                  <div class="" style="background-color: green;width: 0.6rem; height: 1rem; border-radius: 4px; margin-top: 0.2rem"></div>
-                  <h4 style="margin-left: 1rem; margin-top: -1rem;font-size: 1rem; font-weight: 500;">Occupied</h4>
-                  <p style="margin-left: 0rem;font-size: 2.5rem; font-weight: 500;">36</p>
+                  <div
+                    class=""
+                    style="
+                      background-color: green;
+                      width: 0.6rem;
+                      height: 1rem;
+                      border-radius: 4px;
+                      margin-top: 0.2rem;
+                    "
+                  ></div>
+                  <h4
+                    style="
+                      margin-left: 1rem;
+                      margin-top: -1rem;
+                      font-size: 1rem;
+                      font-weight: 500;
+                    "
+                  >
+                    Occupied
+                  </h4>
+                  <p
+                    style="
+                      margin-left: 0rem;
+                      font-size: 2.5rem;
+                      font-weight: 500;
+                    "
+                  >
+                    36
+                  </p>
                 </div>
                 <div class="col-4">
-                  <div class="" style="background-color: rgb(124, 182, 124); width: 0.6rem; height: 1rem; border-radius: 4px; margin-top: 0.2rem"></div>
-                  <h4 style="margin-left: 1rem;margin-top: -1rem;font-size: 1rem; font-weight: 500;">Not Ready</h4> 
-                  <p style="margin-left: 0rem;font-size: 2.5rem; font-weight: 500;">15</p>  
+                  <div
+                    class=""
+                    style="
+                      background-color: rgb(124, 182, 124);
+                      width: 0.6rem;
+                      height: 1rem;
+                      border-radius: 4px;
+                      margin-top: 0.2rem;
+                    "
+                  ></div>
+                  <h4
+                    style="
+                      margin-left: 1rem;
+                      margin-top: -1rem;
+                      font-size: 1rem;
+                      font-weight: 500;
+                    "
+                  >
+                    Not Ready
+                  </h4>
+                  <p
+                    style="
+                      margin-left: 0rem;
+                      font-size: 2.5rem;
+                      font-weight: 500;
+                    "
+                  >
+                    15
+                  </p>
                 </div>
               </div>
 
               <div class="row p-3">
-                <div class="col-md-6 p-1" style="background-color: rgb(46, 108, 46);border-radius: 0.8rem;height: 12vh;">
-                
-                </div>
-                <div class="col-md-4 p-1" style="background-color: green;border-radius: 0.8rem;height: 12vh;">
-               
-                </div>
-                <div class="col-md-2 p-1" style="background-color: rgb(124, 182, 124);border-radius: 0.8rem;height: 12vh;">
-                
-                </div>
+                <div
+                  class="col-md-6 p-1"
+                  style="
+                    background-color: rgb(46, 108, 46);
+                    border-radius: 0.8rem;
+                    height: 12vh;
+                  "
+                ></div>
+                <div
+                  class="col-md-4 p-1"
+                  style="
+                    background-color: green;
+                    border-radius: 0.8rem;
+                    height: 12vh;
+                  "
+                ></div>
+                <div
+                  class="col-md-2 p-1"
+                  style="
+                    background-color: rgb(124, 182, 124);
+                    border-radius: 0.8rem;
+                    height: 12vh;
+                  "
+                ></div>
               </div>
             </div>
           </div>
         </div>
-       
+
         <div class="col-md-6">
           <mat-card>
             <!-- <mat-card-header >
@@ -230,10 +589,18 @@
             <mat-card-content class="">
               <div class="row" style="border-bottom: 1px solid #e6ebf1">
                 <div class="col">
-                  <h4 style="font-size:1.5rem;font-weight: 500; padding-left: 1rem;">High Value Deals</h4>
+                  <h4
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 500;
+                      padding-left: 1rem;
+                    "
+                  >
+                    High Value Deals
+                  </h4>
                 </div>
                 <div class="col">
-                  <mat-form-field style="float: right">
+                  <mat-form-field style="float: right" class="report-textfield">
                     <mat-label>Date</mat-label>
                     <input matInput [matDatepicker]="picker" />
                     <mat-datepicker-toggle
@@ -246,7 +613,8 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <div class=""
+                  <div
+                    class=""
                     style="
                       background: #e5e2ff;
                       border-radius: 0.3rem;
@@ -256,10 +624,9 @@
                       font-weight: 500;
                       margin-left: 0.8rem;
                       margin-top: 1rem;
-                     
                     "
                   >
-                   Total Value: AED 2M
+                    Total Value: AED 2M
                   </div>
                 </div>
               </div>
@@ -274,11 +641,11 @@
                           The actual rendered columns are set as a property on the row definition" -->
 
                     <!-- Position Column -->
-                     
+
                     <ng-container matColumnDef="UnitName">
                       <th mat-header-cell *matHeaderCellDef>Unit Number</th>
                       <td mat-cell *matCellDef="let element">
-                      {{element.p_no}}
+                        {{element.p_no}}
                       </td>
                     </ng-container>
 
@@ -286,15 +653,15 @@
                     <ng-container matColumnDef="Tenant">
                       <th mat-header-cell *matHeaderCellDef>Tenant</th>
                       <td mat-cell *matCellDef="let element">
-                      {{element.u_name}}
+                        {{element.u_name}}
                       </td>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="Rent">
                       <th mat-header-cell *matHeaderCellDef>Purpose</th>
-                      <td mat-cell *matCellDef="let element" >
-                       {{element.t_purpose}}
+                      <td mat-cell *matCellDef="let element">
+                        {{element.t_purpose}}
                       </td>
                     </ng-container>
 
@@ -315,100 +682,208 @@
 
                     <ng-container matColumnDef="PaymentDetails">
                       <th mat-header-cell *matHeaderCellDef>Payment Details</th>
-                      <td mat-cell *matCellDef="let element"
-                      class="redirect details" (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)" id="{{element.t_payment_id}}">
-                        {{element.t_status}} 
+                      <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="redirect details"
+                        (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)"
+                        id="{{element.t_payment_id}}"
+                      >
+                        {{element.t_status}}
                       </td>
                     </ng-container>
-                    
-                 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"  ></tr>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr
                       mat-row
-                      *matRowDef="let row; columns: displayedColumns;"  
+                      *matRowDef="let row; columns: displayedColumns;"
                     ></tr>
-                    
                   </table>
-                  <mat-paginator [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page">
-              </mat-paginator>
+                  <mat-paginator
+                    [length]="100"
+                    [pageSize]="10"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page"
+                  >
+                  </mat-paginator>
                 </div>
               </div>
             </mat-card-content>
           </mat-card>
-          
-              <div class="row mt-3">
-                <div class="col-lg-4 col-6">
-                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
-                    <div class="inner">
-                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
-                      margin: 0 0 10px;
-                      padding: 0.5rem;
-                      white-space: nowrap;">29</h3>
-                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">PROPERTIES</p>
-                    </div>
-                    <img src="assets/img/pngs/dashboard/property.png" width="60">
-                    <a href="" class="small-box-footer" style="">More info </a>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-6">
-                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
-                    <div class="inner">
-                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
-                      margin: 0 0 10px;
-                      padding: 0.5rem;
-                      white-space: nowrap;">26</h3>
-                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">UNITS</p>
-                    </div>
-                    <img src="assets/img/pngs/dashboard/unit.png" width="60">
-                    <a href="" class="small-box-footer" style="">More info </a>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-6">
-                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
-                    <div class="inner">
-                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
-                      margin: 0 0 10px;
-                      padding: 0.5rem;
-                      white-space: nowrap;">30</h3>
-                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">TENANTS</p>
-                    </div>
-                    <img src="assets/img/pngs/dashboard/landlord.png" width="60">
-                    <a href="" class="small-box-footer" style="">More info </a>
-                  </div>
-                </div>  
-              </div>
 
-              <div class="row mt-3">
-                <div class="col-lg-4 col-6">
-                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
-                    <div class="inner">
-                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+          <div class="row mt-3">
+            <div class="col-lg-4 col-6">
+              <div
+                class="small-box"
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
+              >
+                <div class="inner">
+                  <h3
+                    class=""
+                    style="
+                      font-size: 2.2rem;
+                      font-weight: 700;
                       margin: 0 0 10px;
                       padding: 0.5rem;
-                      white-space: nowrap;">29</h3>
-                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">LANDLORDS</p>
-                    </div>
-                    <img src="assets/img/pngs/dashboard/tenant-2.png" width="60">
-                    <a href="" class="small-box-footer" style="">More info </a>
-                  </div>
+                      white-space: nowrap;
+                    "
+                  >
+                    29
+                  </h3>
+                  <p
+                    style="
+                      font-size: 1rem;
+                      font-weight: 500;
+                      padding: 0.3rem;
+                      margin-left: 0.5rem;
+                    "
+                  >
+                    PROPERTIES
+                  </p>
                 </div>
-                <div class="col-lg-4 col-6">
-                  <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
-                    <div class="inner">
-                      <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
+                <img src="assets/img/pngs/dashboard/property.png" width="60" />
+                <a href="" class="small-box-footer" style="">More info </a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-6">
+              <div
+                class="small-box"
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
+              >
+                <div class="inner">
+                  <h3
+                    class=""
+                    style="
+                      font-size: 2.2rem;
+                      font-weight: 700;
                       margin: 0 0 10px;
                       padding: 0.5rem;
-                      white-space: nowrap;">26</h3>
-                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">MAINTENANCE REQUESTS</p>
-                    </div>
-                    <img src="assets/img/pngs/dashboard/maintenance.png" width="60">
-                    <a href="" class="small-box-footer" style="">More info </a>
-                  </div>
+                      white-space: nowrap;
+                    "
+                  >
+                    26
+                  </h3>
+                  <p
+                    style="
+                      font-size: 1rem;
+                      font-weight: 500;
+                      padding: 0.3rem;
+                      margin-left: 0.5rem;
+                    "
+                  >
+                    UNITS
+                  </p>
                 </div>
-                <!-- <div class="col-lg-4 col-6">
+                <img src="assets/img/pngs/dashboard/unit.png" width="60" />
+                <a href="" class="small-box-footer" style="">More info </a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-6">
+              <div
+                class="small-box"
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
+              >
+                <div class="inner">
+                  <h3
+                    class=""
+                    style="
+                      font-size: 2.2rem;
+                      font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;
+                    "
+                  >
+                    30
+                  </h3>
+                  <p
+                    style="
+                      font-size: 1rem;
+                      font-weight: 500;
+                      padding: 0.3rem;
+                      margin-left: 0.5rem;
+                    "
+                  >
+                    TENANTS
+                  </p>
+                </div>
+                <img src="assets/img/pngs/dashboard/landlord.png" width="60" />
+                <a href="" class="small-box-footer" style="">More info </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-lg-4 col-6">
+              <div
+                class="small-box"
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
+              >
+                <div class="inner">
+                  <h3
+                    class=""
+                    style="
+                      font-size: 2.2rem;
+                      font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;
+                    "
+                  >
+                    29
+                  </h3>
+                  <p
+                    style="
+                      font-size: 1rem;
+                      font-weight: 500;
+                      padding: 0.3rem;
+                      margin-left: 0.5rem;
+                    "
+                  >
+                    LANDLORDS
+                  </p>
+                </div>
+                <img src="assets/img/pngs/dashboard/tenant-2.png" width="60" />
+                <a href="" class="small-box-footer" style="">More info </a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-6">
+              <div
+                class="small-box"
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
+              >
+                <div class="inner">
+                  <h3
+                    class=""
+                    style="
+                      font-size: 2.2rem;
+                      font-weight: 700;
+                      margin: 0 0 10px;
+                      padding: 0.5rem;
+                      white-space: nowrap;
+                    "
+                  >
+                    26
+                  </h3>
+                  <p
+                    style="
+                      font-size: 1rem;
+                      font-weight: 500;
+                      padding: 0.3rem;
+                      margin-left: 0.5rem;
+                    "
+                  >
+                    MAINTENANCE REQUESTS
+                  </p>
+                </div>
+                <img
+                  src="assets/img/pngs/dashboard/maintenance.png"
+                  width="60"
+                />
+                <a href="" class="small-box-footer" style="">More info </a>
+              </div>
+            </div>
+            <!-- <div class="col-lg-4 col-6">
                   
                   <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
                     <div class="inner">
@@ -422,8 +897,7 @@
                     <a href="" class="small-box-footer" style="">More info </a>
                   </div>
                 </div>   -->
-              </div>
-             
+          </div>
         </div>
       </div>
     </div>
