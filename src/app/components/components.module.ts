@@ -45,6 +45,7 @@ import { EditUnitDialog } from "./edit_unit_dialog/edit_unit_dialog";
 import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog/view-payment-details-more-dialog";
+import { EditUserDialog } from "./edit_user_dialog/edit_user_dialog";
 
 @NgModule({
   imports: [
@@ -96,6 +97,7 @@ import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog
     ViewAllUnitDocuments,
     ViewAllUnitInventories,
     ViewPaymentDetailsMoreDialog,
+    EditUserDialog
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
