@@ -1,4 +1,5 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Router } from "@angular/router";
 import {
   RenderEvent,
@@ -35,15 +36,22 @@ export class AdminDashboardComponent implements OnInit {
   all_vacant_units: number = 0;
   all_occupied_units: number = 0;
 
+  total_contracts_reminders: any[] = [1, 2, 3];
+  total_contracts_reminders_source: any[] = [];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private adminService: AdminService,
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private authenticationService: AuthenticationService
   ) {
     this.isLoading = true;
     // }
 
     this.getScreenSize();
+
+    this.total_contracts_reminders_source = this.total_contracts_reminders;
   }
 
   dashboardMainCards: any[] = [
@@ -83,6 +91,10 @@ export class AdminDashboardComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  onPaginateChange(event) {
+    console.log(event);
   }
 
   isUserSignOut() {
