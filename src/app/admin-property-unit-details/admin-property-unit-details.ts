@@ -547,5 +547,5 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
         method: method
       }
     })
-  }
+  } 
 }
