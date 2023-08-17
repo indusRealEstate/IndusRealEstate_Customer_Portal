@@ -255,6 +255,11 @@ export class AdminRequestsArchive implements OnInit {
   }
 
   updateMore(data: any, type: string) {
+    var index = this.allRequests.findIndex(
+      (req) => req.request_id == data.request_id
+    );
+    this.allRequests.splice(index, 1);
+    this.allRequestsMatTableData._updateChangeSubscription();
     let output = {
       id: data.request_id,
       type: type,
@@ -262,17 +267,38 @@ export class AdminRequestsArchive implements OnInit {
     this.adminService
       .updateRequestMore(JSON.stringify(output))
       .subscribe((value) => {
-        this.refreshTable();
+        // this.refreshTable();
       });
   }
-  ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
 
-  showAllFlaggedRequests() {}
-  closeFlaggedRequestFilter() {}
-  showRequestsOnStatus(event) {}
-  closeStatusFilter() {}
-  filterByTimeline() {}
-  closeTimelineFilter() {}
+  removeAllRequests() {
+    var data = [];
+    this.allRequests.forEach((req) => {
+      data.push(req.request_id);
+    });
+
+    if (data.length == this.allRequests.length) {
+      this.allRequests.length = 0;
+      this.allRequestsMatTableData._updateChangeSubscription();
+      this.adminService
+        .removeAllRequestsFromArchive(
+          JSON.stringify({ reqs: data, type: "archive" })
+        )
+        .subscribe((res) => {
+          console.log(res);
+        });
+    }
+  }
+
+  getOnlyName(data: any) {
+    return JSON.parse(data).name;
+  }
+
+  isNameEmpty(data: any) {
+    if (JSON.parse(data).name !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

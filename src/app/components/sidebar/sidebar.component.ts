@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
-import { User } from "../../../../models/user/user.model";
+import { User } from "../../models/user.model";
 
 declare const $: any;
 declare interface RouteInfo {
@@ -159,10 +159,10 @@ export class SidebarComponent implements OnInit {
       tooltip: "Archives & Spams",
       icon: "assets/img/svg/sidebar/archive.svg",
     },
-    {
-      tooltip: "Chats",
-      icon: "assets/img/svg/sidebar/messages-1.svg",
-    },
+    // {
+    //   tooltip: "Chats",
+    //   icon: "assets/img/svg/sidebar/messages-1.svg",
+    // },
   ];
 
   constructor(

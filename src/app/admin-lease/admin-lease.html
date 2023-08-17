@@ -46,6 +46,28 @@
               <p class="m-0">Add New Lease</p>
             </div>
           </div>
+          <div
+            class="btn"
+            style="
+              margin: 0;
+              padding: 7px 15px;
+              margin-right: 10px;
+              background: #2b333e;
+            "
+            (click)="exportExcelFile()"
+          >
+            <div
+              class="row m-0 align-items-center"
+              style="width: 125px; justify-content: space-between"
+            >
+              <img
+                src="assets/img/svg/excel.svg"
+                alt=""
+                style="width: 20px; filter: brightness(0) invert(1)"
+              />
+              <p class="m-0">Export Excel</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -152,6 +174,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                style="width: 140px"
               >
                 <div
                   style="

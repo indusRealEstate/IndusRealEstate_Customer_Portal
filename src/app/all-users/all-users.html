@@ -21,7 +21,7 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt=""
           />
-          <!-- <table-filters
+          <!-- <table-filters 
             #table_filter
             (refresh)="refreshTable()"
             (showAllFlaggedReqs)="showAllFlaggedRequests()"
@@ -56,6 +56,28 @@
               <p class="m-0">Add User</p>
             </div>
           </div>
+          <div
+            class="btn"
+            style="
+              margin: 0;
+              padding: 7px 15px;
+              margin-right: 10px;
+              background: #2b333e;
+            "
+            (click)="exportExcelFile()"
+          >
+            <div
+              class="row m-0 align-items-center"
+              style="width: 125px; justify-content: space-between"
+            >
+              <img
+                src="assets/img/svg/excel.svg"
+                alt=""
+                style="width: 20px; filter: brightness(0) invert(1)"
+              />
+              <p class="m-0">Export Excel</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -81,6 +103,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
+                (click)="viewUser(element)"
                 style="cursor: pointer"
               >
                 {{ element.name}}
@@ -93,6 +116,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
+                (click)="viewUser(element)"
               >
                 {{ element.country_code_number }} {{ element.mobile_number }}
               </td>
@@ -105,10 +129,47 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
+                (click)="viewUser(element)"
               >
-                <span *ngIf="element.user_type == 'new_user'">New User</span>
-                <span *ngIf="element.user_type == 'tenant'">Resident</span>
-                <span *ngIf="element.user_type == 'owner'">Property Owner</span>
+                <div
+                  *ngIf="element.user_type == 'new_user'"
+                  style="
+                    color: white;
+                    background: #596677;
+                    padding: 5px 5px;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 3px;
+                  "
+                >
+                  New User
+                </div>
+                <div
+                  *ngIf="element.user_type == 'tenant'"
+                  style="
+                    color: white;
+                    background: #596677;
+                    padding: 5px 5px;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 3px;
+                  "
+                >
+                  Tenant
+                </div>
+                <div
+                  *ngIf="element.user_type == 'owner'"
+                  style="
+                    color: white;
+                    background: #596677;
+                    padding: 5px 5px;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 3px;
+                  "
+                >
+                  Landlord
+                </div>
               </td>
             </ng-container>
 
@@ -119,6 +180,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
+                (click)="viewUser(element)"
               >
                 {{ element.email }}
               </td>
@@ -130,6 +192,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewUser(element)"
               >
                 {{ element.id_type}}
               </td>
@@ -141,6 +204,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewUser(element)"
               >
                 {{ element.id_number}}
               </td>
@@ -151,6 +215,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewUser(element)"
               >
                 {{ element.nationality}}
               </td>
@@ -161,6 +226,7 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
+                (click)="viewUser(element)"
               >
                 {{ element.dob | date:'M/d/y'}}
               </td>
@@ -216,6 +282,7 @@
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
                 <img
+                  [matMenuTriggerFor]="menu"
                   matTooltip="More Actions"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
@@ -229,6 +296,35 @@
                     cursor: pointer;
                   "
                 />
+
+                <mat-menu #menu="matMenu" class="more-menu">
+                  <button mat-menu-item>
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: #c89914">Edit</span>
+                      <img
+                        src="assets/img/svg/property-page/edit.svg"
+                        alt
+                        style="
+                          filter: invert(68%) sepia(13%) saturate(2701%)
+                            hue-rotate(5deg) brightness(110%) contrast(66%);
+                        "
+                      />
+                    </div>
+                  </button>
+                  <button mat-menu-item>
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: red">Delete</span>
+                      <img
+                        src="assets/img/svg/delete.svg"
+                        alt
+                        style="
+                          filter: invert(56%) sepia(71%) saturate(3838%)
+                            hue-rotate(328deg) brightness(97%) contrast(90%);
+                        "
+                      />
+                    </div>
+                  </button>
+                </mat-menu>
               </td>
             </ng-container>
 
@@ -238,7 +334,6 @@
             <tr
               mat-row
               *matRowDef="let row; columns: displayedColumns"
-              (click)="viewUser(row)"
               style="cursor: pointer"
             ></tr>
           </table>

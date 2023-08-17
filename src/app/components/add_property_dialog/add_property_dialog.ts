@@ -37,7 +37,6 @@ export class AddPropertyDialog implements OnInit {
 
   property_name: any = "";
   property_address: any = "";
-  property_govt_id: any = "";
   property_no_of_units: any = "";
   property_in_charge: any = "";
 
@@ -144,7 +143,7 @@ export class AddPropertyDialog implements OnInit {
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.dialogRef.close();
+                    this.dialogRef.close({ completed: true });
                   }
                 }),
                 last()
@@ -205,7 +204,6 @@ export class AddPropertyDialog implements OnInit {
   setupData(random_id: any, images_names: any[], docs_names: any[]): string {
     var data = {
       property_id: random_id,
-      govt_id: this.property_govt_id,
       property_name: this.property_name,
       address: this.property_address,
       property_type: this.property_building_type,

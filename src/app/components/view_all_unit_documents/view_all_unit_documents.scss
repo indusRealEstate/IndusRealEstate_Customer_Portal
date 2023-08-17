@@ -1,0 +1,129 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 1rem;
+}
+
+.category-dialog {
+  width: 40rem;
+  .form-control:focus {
+    color: #495057;
+    background-color: #0000;
+    border-color: none !important;
+    outline: 0;
+    box-shadow: 0 0 0 0rem !important;
+  }
+
+  .form-control,
+  .is-focused .form-control {
+    background-image: linear-gradient(
+        to top,
+        #d4aa32 2px,
+        rgba(156, 39, 176, 0) 2px
+      ),
+      linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+  }
+
+  .btn-info {
+    color: #fff;
+    background-color: #1d232a;
+    border-color: #1d232a;
+    box-shadow: 0 2px 2px #00bcd424, 0 3px 1px -2px #00bcd433,
+      0 1px 5px #00bcd41f;
+  }
+  .priview-image {
+    max-width: 4rem;
+    max-height: 4rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    min-width: 1rem;
+    min-height: 1rem;
+  }
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0;
+    background-color: #f44336;
+    border-radius: 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .header-arrow-icon {
+    filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+      brightness(90%) contrast(83%);
+    width: 1rem;
+  }
+
+  .close-icon {
+    filter: brightness(0) saturate(100%) invert(96%) sepia(1%) saturate(0%)
+      hue-rotate(145deg) brightness(84%) contrast(88%);
+    width: 1.5rem;
+    right: 0;
+    position: absolute;
+    width: 1.5rem;
+    z-index: 100;
+    top: 0;
+    cursor: pointer;
+
+    transition: 0.3s all ease-in-out;
+
+    &:hover {
+      transform: scaleY(1.2) scaleX(1.2);
+      filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+        brightness(90%) contrast(83%);
+    }
+  }
+}
+
+.table-row {
+  .teble {
+    border-radius: 7px;
+    color: #fff;
+    background-color: #c1910ac4;
+    box-shadow: none;
+    padding: 10px !important;
+
+    .thead{
+      tr{
+        th{
+          padding: 1rem;
+        }
+      }
+    }
+
+    .tbody {
+      background-color: #f9f9f95c;
+      font-weight: 500;
+      th {
+        font-weight: 500;
+        padding: 1rem;
+      }
+      td {
+        font-weight: 500;
+        padding: 1rem;
+      }
+      tr:nth-of-type(odd) {
+        background-color: #d4aa3282;
+      }
+      tr:last-child {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        th {
+          border-bottom-left-radius: 10px;
+        }
+        td {
+          border-bottom-right-radius: 10px;
+        }
+      }
+    }
+  }
+}

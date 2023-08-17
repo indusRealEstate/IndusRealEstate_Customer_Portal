@@ -27,6 +27,15 @@ export class AdminService {
     };
   }
 
+  removeAllRequestsFromArchive(data: any) {
+    const url = `${API_URL}/remove_all_requests_from_archive_spam.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getLatestServiceRequest(data: any) {
     const url = `${API_URL}/get_latest_service_requests.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
@@ -118,6 +127,15 @@ export class AdminService {
 
   addUnit(data: any) {
     const url = `${API_URL}/addUnit.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  editUnit(data: any) {
+    const url = `${API_URL}/updateUnit.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -482,7 +500,27 @@ export class AdminService {
      })
    );
  }
+<<<<<<< HEAD
  
 
 
+=======
+
+ selectTenantPayments(data: string) {
+   const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
+ selectPaymentAccordeingToTheMothod(data: string) {
+   const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
+>>>>>>> origin/budhika-indus-portal
 }

@@ -1,22 +1,19 @@
-import { OtherServices } from "./../services/other.service";
+import { HttpClient } from "@angular/common/http";
 import {
   Component,
-  ElementRef,
   HostListener,
-  Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthenticationService } from "app/services/authentication.service";
-import { AdminService } from "app/services/admin.service";
-import { DownloadService } from "app/services/download.service";
-import { HttpClient } from "@angular/common/http";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
-import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
-import { DialogAssignStaff } from "app/components/assign_staff/assign_staff";
 import { DialogViewMedia } from "app/components/view_media/view_media";
+import { AdminService } from "app/services/admin.service";
+import { AuthenticationService } from "app/services/authentication.service";
+import { DownloadService } from "app/services/download.service";
+import { OtherServices } from "./../services/other.service";
 //  import { FormsModule } from "@angular/forms";
 interface Staff {
   value: string;

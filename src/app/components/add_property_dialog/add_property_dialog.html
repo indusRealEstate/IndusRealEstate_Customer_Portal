@@ -115,11 +115,11 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field class="mt-2" class="textField" appearance="outline">
-              <mat-label>Governemnt Property Id</mat-label>
+              <mat-label>Property In Charge</mat-label>
               <input
                 matInput
-                placeholder="Ex. EA1x24383"
-                [(ngModel)]="property_govt_id"
+                placeholder="Ex. Jhon Due"
+                [(ngModel)]="property_in_charge"
               />
             </mat-form-field>
             <mat-form-field class="mt-2" class="textField" appearance="outline">
@@ -146,20 +146,11 @@
               <mat-select [(ngModel)]="property_locality">
                 <mat-option
                   *ngFor="let place of locality"
-                  [value]="place.value"
+                  [value]="place.viewValue"
                 >
                   {{place.viewValue}}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="mt-2" class="textField" appearance="outline">
-              <mat-label>Property In Charge</mat-label>
-              <input
-                matInput
-                placeholder="Ex. Jhon Due"
-                [(ngModel)]="property_in_charge"
-              />
             </mat-form-field>
             <mat-form-field class="mt-2" class="textField" appearance="outline">
               <mat-label>No. of Units</mat-label>

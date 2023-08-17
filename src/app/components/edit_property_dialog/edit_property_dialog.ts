@@ -39,7 +39,7 @@ export class EditPropertyDialog implements OnInit {
 
   property_name: any = "";
   property_address: any = "";
-  property_govt_id: any = "";
+  // property_govt_id: any = "";
   property_no_of_units: any = "";
   property_in_charge: any = "";
 
@@ -82,7 +82,7 @@ export class EditPropertyDialog implements OnInit {
 
     this.property_name = this.all_data.prop_name;
     this.property_address = this.all_data.prop_address;
-    this.property_govt_id = this.all_data.prop_gov_id;
+    // this.property_govt_id = this.all_data.prop_gov_id;
     this.property_no_of_units = this.all_data.prop_no_of_units;
     this.property_in_charge = this.all_data.prop_in_charge;
 
@@ -132,8 +132,8 @@ export class EditPropertyDialog implements OnInit {
         this.uploaded == true ? this.property_building_type : undefined,
       property_locality:
         this.uploaded == true ? this.property_locality : undefined,
-      property_gov_id:
-        this.uploaded == true ? this.property_govt_id : undefined,
+      // property_gov_id:
+      //   this.uploaded == true ? this.property_govt_id : undefined,
       property_in_charge:
         this.uploaded == true ? this.property_in_charge : undefined,
       property_description:
@@ -342,7 +342,7 @@ export class EditPropertyDialog implements OnInit {
   setupData(random_id: any, images_names: any[], docs_names: any[]): string {
     var data = {
       property_id: random_id,
-      govt_id: this.property_govt_id,
+      // govt_id: this.property_govt_id,
       property_name: this.property_name,
       address: this.property_address,
       property_type: this.property_building_type,

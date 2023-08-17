@@ -59,6 +59,12 @@ export class RequestsTable implements OnInit {
 
   @Output() refreshTableEmit = new EventEmitter<string>();
 
+  @Output() requestUpdatedEmit = new EventEmitter<any>();
+
+  @Output() flagFilterEmit = new EventEmitter<any>();
+
+  @Output() timeLineFilterEmit = new EventEmitter<any>();
+
   assigned_user: object = {
     job: "",
     user_name: "",
@@ -85,6 +91,10 @@ export class RequestsTable implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  requestUpdated(req_id, type) {
+    this.requestUpdatedEmit.emit({ req_id: req_id, type: type });
   }
 
   getbuildingName(prop_id) {
@@ -217,15 +227,14 @@ export class RequestsTable implements OnInit {
   }
 
   updateMore(data: any, type: string) {
+    this.requestUpdated(data.request_id, type);
     let output = {
       id: data.request_id,
       type: type,
     };
     this.adminService
       .updateRequestMore(JSON.stringify(output))
-      .subscribe((value) => {
-        this.refreshTable();
-      });
+      .subscribe((value) => {});
   }
 
   getstaffName(data) {
@@ -236,11 +245,31 @@ export class RequestsTable implements OnInit {
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
 
-  showAllFlaggedRequests() {}
-  closeFlaggedRequestFilter() {}
-  closeStatusFilter() {}
-  filterByTimeline() {}
-  closeTimelineFilter() {}
+  showAllFlaggedRequests() {
+    this.allRequestsMatTableData.data =
+      this.allRequestsMatTableData.data.filter((req) => req.flag == 1);
+  }
+  closeFlaggedRequestFilter() {
+    this.flagFilterEmit.emit(0);
+  }
+  filterByTimeline() {
+    // this.timeLineFilterEmit.emit({
+    //   start: this.table_filter.first_selected_timeline,
+    //   end: this.table_filter.last_selected_timeline,
+    // });
+
+    this.allRequestsMatTableData.data =
+      this.allRequestsMatTableData.data.filter(
+        (req: any) =>
+          new Date(req.request_date).getTime() >=
+            new Date(this.table_filter.first_selected_timeline).getTime() &&
+          new Date(req.request_date).getTime() <=
+            new Date(this.table_filter.last_selected_timeline).getTime()
+      );
+  }
+  closeTimelineFilter() {
+    this.timeLineFilterEmit.emit(0);
+  }
 
   viewAllAssignStaffList(data: any) {
     this.dialog.open(ViewAllAsignStaff, {

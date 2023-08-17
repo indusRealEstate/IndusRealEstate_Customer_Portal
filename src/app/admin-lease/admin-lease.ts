@@ -4,9 +4,24 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
-import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import * as XLSX from "xlsx-js-style";
+
+declare interface Lease {
+  UNIT: number;
+  "TYPE OF APARTMENT": string;
+  "AREA (SQ/FT)": string;
+  TENANT: string;
+  "PHONE NO": string;
+  "EMAIL ID": string;
+  "CONTRACT START": string;
+  "CONTRACT END": string;
+  "CONTRACT PERIOD (MONTHS)": string;
+  "CONTRACT VALUE (AED)": string;
+  "NO. OF CHEQUES": string;
+  "SECURITY DEPOSIT (AED)": string;
+}
 
 @Component({
   selector: "admin-lease",
@@ -168,7 +183,6 @@ export class AllLeasesComponent implements OnInit {
     this.adminService
       .getAllLeaseAdmin()
       .subscribe((va: any[]) => {
-        console.log(va);
         this.allLease = va;
         this.allLeaseMatTableData = new MatTableDataSource(va);
         setTimeout(() => {
@@ -287,7 +301,14 @@ export class AllLeasesComponent implements OnInit {
         height: "50rem",
       })
       .afterClosed()
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (res.completed == true) {
+            sessionStorage.removeItem("admin_properties_units_session");
+            this.refreshTable();
+          }
+        }
+      });
   }
 
   navigateToPropertyDetailsPage(prop_id) {
@@ -312,5 +333,112 @@ export class AllLeasesComponent implements OnInit {
     this.router.navigate(["/admin-lease-details"], {
       queryParams: { contact_id: data },
     });
+  }
+
+  exportExcelFile() {
+    var data: Lease[] = [];
+
+    this.allLease.forEach((lease) => {
+      var unit = this.allUnits.find((u) => u.unit_id == lease.unit_id);
+      var tenant = this.allUsers.find((us) => us.user_id == lease.tenant_id);
+      data.push({
+        UNIT: unit.unit_no,
+        "TYPE OF APARTMENT": unit.unit_type,
+        "AREA (SQ/FT)": `${unit.size} SqFt`,
+        TENANT: tenant.name,
+        "PHONE NO": `${tenant.country_code_number} ${tenant.mobile_number}`,
+        "EMAIL ID": tenant.email,
+        "CONTRACT START": lease.contract_start,
+        "CONTRACT END": lease.contract_end,
+        "CONTRACT PERIOD (MONTHS)": "12",
+        "CONTRACT VALUE (AED)": lease.yearly_amount,
+        "NO. OF CHEQUES": lease.no_of_cheques,
+        "SECURITY DEPOSIT (AED)": lease.security_deposit,
+      });
+    });
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    ws["!cols"] = [
+      { wch: 15 },
+      { wch: 30 },
+      { wch: 25 },
+      { wch: 25 },
+      { wch: 25 },
+      { wch: 30 },
+      { wch: 30 },
+      { wch: 40 },
+      { wch: 40 },
+      { wch: 30 },
+      { wch: 35 },
+      { wch: 35 },
+    ];
+
+    ws["!rows"] = [{ hpt: 30 }];
+
+    for (var i in ws) {
+      // console.log(ws[i]);
+      if (typeof ws[i] != "object") continue;
+      let cell = XLSX.utils.decode_cell(i);
+
+      ws[i].s = {
+        // styling for all cells
+        font: {
+          name: "arial",
+        },
+        alignment: {
+          vertical: "center",
+          horizontal: "center",
+          wrapText: "1", // any truthy value here
+        },
+        border: {
+          right: {
+            style: "thin",
+            color: "000000",
+          },
+          left: {
+            style: "thin",
+            color: "000000",
+          },
+        },
+      };
+
+      if (cell.r == 0) {
+        // first row
+        ws[i].s = {
+          font: {
+            name: "Calibri",
+            sz: "14",
+            bold: true,
+          },
+          border: {
+            bottom: {
+              style: "thin",
+              color: "000000",
+            },
+          },
+          fill: { fgColor: { rgb: "f8e7b4" } },
+          alignment: {
+            vertical: "center",
+            horizontal: "center",
+            wrapText: "1", // any truthy value here
+          },
+        };
+      }
+
+      if (cell.r % 2) {
+        // every other row
+        ws[i].s.fill = {
+          // background color
+          patternType: "solid",
+          fgColor: { rgb: "fef7e3" },
+          bgColor: { rgb: "fef7e3" },
+        };
+      }
+    }
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, "Total-Lease-Contracts.xlsx");
   }
 }

@@ -17,9 +17,7 @@ import { ComponentsModule } from "./components/components.module";
 import { AdminLayoutComponent } from "./layouts/admin-layout.component";
 
 import { FIREBASE_OPTIONS } from "@angular/fire/compat";
-import { SETTINGS as AUTH_SETTINGS } from "@angular/fire/compat/auth";
-
-import { SETTINGS as FIRESTORE_SETTINGS } from "@angular/fire/compat/firestore";
+// import { ServiceWorkerModule } from "@angular/service-worker";
 
 @NgModule({
   imports: [
@@ -36,18 +34,25 @@ import { SETTINGS as FIRESTORE_SETTINGS } from "@angular/fire/compat/firestore";
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    // provideMessaging(() => getMessaging()),
+    // ServiceWorkerModule.register("ngsw-worker.js", {
+    //   enabled: environment.production,
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: "registerWhenStable:30000",
+    // }),
   ],
   declarations: [AppComponent, AdminLayoutComponent],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    {
-      provide: AUTH_SETTINGS,
-      useValue: { appVerificationDisabledForTesting: true },
-    },
-    {
-      provide: FIRESTORE_SETTINGS,
-      useValue: { appVerificationDisabledForTesting: true },
-    },
+    // {
+    //   provide: SERVICE_WORKER,
+    //   useValue: "ngsw-worker.js",
+    // },
+    // {
+    //   provide: VAPID_KEY,
+    //   useValue: VAPIDKEYS.PUBLIC_KEY,
+    // },
   ],
   bootstrap: [AppComponent],
 })

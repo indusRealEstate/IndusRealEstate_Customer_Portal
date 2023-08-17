@@ -1,0 +1,50 @@
+<div
+  class="card"
+  style="margin: 0; min-width: 50vw; max-height: 75vh; min-height: 50vh; overflow-y: auto;"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
+  <!-- <div class="card-header"></div> -->
+  <div class="card-header position-relative">
+    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
+    <h4 class="text-center">View unit inventories</h4>
+    <img
+      matTooltip="Close"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      (click)="onCloseDialog()"
+      class="mr-2 mt-1 close-icon"
+      src="assets/img/svg/req-details/close-circle.svg"
+      alt />
+  </div>
+
+  <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-row">
+          <table class="teble table-striped w-100 text-uppercase">
+            <thead class="thead p-3">
+              <tr scope="row">
+                <th scope="col">
+                  name
+                </th>
+                <th scope="col">
+                  place
+                </th>
+                <th scope="col">
+                  count
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+              <tr scope="row" *ngFor="let item of unit_inventories_array; let index = i">
+                <th class="col-4" scope="col">{{item.inventory_name}}</th>
+                <th class="col-4" scope="col">{{item.inventory_place}}</th>
+                <td class="col-4" scope="col">{{item.inventory_count}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

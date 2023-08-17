@@ -593,3 +593,55 @@ select:focus {
     background: #2b333e;
   }
 }
+
+::ng-deep .timeline-menu {
+  padding: 0 15px;
+
+  .cal-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #d4aa32;
+    margin-bottom: 0;
+  }
+
+  .search-btn {
+    padding: 6px 12px;
+    background: #2b333e;
+    font-weight: 500;
+  }
+
+  .mat-calendar {
+    width: 15rem;
+  }
+
+  .vertical-divider {
+    width: 1px;
+    background: #93939340;
+    margin: 0 30px;
+  }
+}
+::ng-deep .mat-mdc-menu-panel {
+  max-width: none !important; 
+}
+
+::ng-deep .finacial {
+  box-shadow: 0px 0px 0px;
+  
+  th {
+    text-transform: uppercase;
+  }
+  td {
+    text-transform: uppercase;
+  }
+  button,
+  button:hover {
+    background-color: #cfaa43;
+    align-items: flex-end;
+    display: flex;
+  }
+
+  .mat-mdc-row:nth-child(odd),
+  .mat-mdc-row:nth-child(odd):hover {
+    background-color: rgb(207 170 67 / 9%);;
+  }
+}

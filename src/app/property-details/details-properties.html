@@ -143,10 +143,10 @@
                     <th class="p-3 col-md-4" scope="row">property type</th>
                     <td class="p-3 col-md-8">{{all_data.prop_type}}</td>
                   </tr>
-                  <tr scope="row">
+                  <!-- <tr scope="row">
                     <th class="p-3 col-md-4" scope="row">government id</th>
                     <td class="p-3 col-md-8">{{all_data.prop_gov_id}}</td>
-                  </tr>
+                  </tr> -->
                   <tr scope="row">
                     <th class="p-3 col-md-4" scope="row">number of units</th>
                     <td class="p-3 col-md-8">{{all_data.prop_no_of_units}}</td>
@@ -270,7 +270,7 @@
         </div>
       </div> -->
 
-      <div class="col">
+      <div class="col" *ngIf="all_data.units != undefined">
         <div class="table-row">
           <div class="card main-card">
             <div class="card-header">
