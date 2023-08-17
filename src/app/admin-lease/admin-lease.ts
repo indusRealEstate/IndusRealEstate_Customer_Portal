@@ -66,6 +66,7 @@ export class AllLeasesComponent implements OnInit {
   allUsers: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  current_sort_option: any = "all";
 
   constructor(
     private router: Router,
@@ -85,6 +86,17 @@ export class AllLeasesComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  changeSortOption(option: string) {
+    this.current_sort_option = option;
+    if (option != "all") {
+      this.allLeaseMatTableData.data = this.allLease.filter(
+        (unit) => unit.status == option
+      );
+    } else {
+      this.allLeaseMatTableData.data = this.allLease;
+    }
   }
 
   isUserSignOut() {
@@ -268,6 +280,7 @@ export class AllLeasesComponent implements OnInit {
   }
 
   refreshTable() {
+    this.current_sort_option = "all";
     sessionStorage.removeItem("all_lease_session");
     this.isContentLoading = true;
 
