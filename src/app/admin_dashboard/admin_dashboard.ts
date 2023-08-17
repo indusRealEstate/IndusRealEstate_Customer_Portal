@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import {
   RenderEvent,
   SeriesLabelsContentArgs,
@@ -39,26 +39,11 @@ export class AdminDashboardComponent implements OnInit {
     private adminService: AdminService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
   ) {
     this.isLoading = true;
     // }
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/admin-dashboard"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate(["/admin-dashboard"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
   }
 
   dashboardMainCards: any[] = [

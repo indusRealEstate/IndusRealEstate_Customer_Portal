@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
@@ -64,13 +64,14 @@ export class AdminPropertiesUnits implements OnInit {
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
+  current_sort_option: any = "all";
+
   allProperties: any[] = [];
   allUsers: any[] = [];
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     private adminService: AdminService,
     private dialog: MatDialog
   ) {
@@ -78,20 +79,6 @@ export class AdminPropertiesUnits implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-properties-units`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-properties-units`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
   }
 
   screenHeight: number;
@@ -100,6 +87,17 @@ export class AdminPropertiesUnits implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  changeSortOption(option: string) {
+    this.current_sort_option = option;
+    if (option != "all") {
+      this.allUnitsMatTableData.data = this.allUnits.filter(
+        (unit) => unit.status == option
+      );
+    } else {
+      this.allUnitsMatTableData.data = this.allUnits;
+    }
   }
 
   isUserSignOut() {
@@ -227,6 +225,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   refreshTable() {
+    this.current_sort_option = "all";
     sessionStorage.removeItem("admin_properties_units_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {

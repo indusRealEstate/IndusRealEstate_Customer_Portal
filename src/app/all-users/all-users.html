@@ -21,16 +21,36 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt=""
           />
-          <!-- <table-filters 
-            #table_filter
-            (refresh)="refreshTable()"
-            (showAllFlaggedReqs)="showAllFlaggedRequests()"
-            (closeFlaggedReqs)="closeFlaggedRequestFilter()"
-            (statusFilterEmitter)="showRequestsOnStatus($event)"
-            (closeStatusFilterEmitter)="closeStatusFilter()"
-            (timeLineFilter)="filterByTimeline()"
-            (closeTimeLineFilterEmitter)="closeTimelineFilter()"
-          ></table-filters> -->
+          <div class="row m-0 align-items-end">
+            <div
+              [ngClass]="current_sort_option == 'all' ? 'sort-user-btns-active' : 'sort-user-btns'"
+              class="btn m-0 ml-3"
+              (click)="changeSortOption('all')"
+            >
+              All Users
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'owner' ? 'sort-user-btns-active' : 'sort-user-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('owner')"
+            >
+              Landlords
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'tenant' ? 'sort-user-btns-active' : 'sort-user-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('tenant')"
+            >
+              Tenants
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'new_user' ? 'sort-user-btns-active' : 'sort-user-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('new_user')"
+            >
+              New Users
+            </div>
+          </div>
         </div>
         <div class="row m-0 align-items-end mb-3">
           <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>

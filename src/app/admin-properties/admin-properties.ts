@@ -2,13 +2,12 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { FirebaseService } from "app/services/firebase.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Property {
@@ -66,9 +65,7 @@ export class AdminProperties implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     private adminService: AdminService,
-    private firebaseService: FirebaseService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -79,18 +76,6 @@ export class AdminProperties implements OnInit {
     var user = JSON.parse(userData);
 
     this.userId = user[0]["id"];
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-properties`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-properties`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
 
     // this.testMessage();
     // navigator.serviceWorker.ready.then(function (swRegistration) {

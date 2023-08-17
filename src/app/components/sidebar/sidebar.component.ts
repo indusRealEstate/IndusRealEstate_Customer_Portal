@@ -48,7 +48,7 @@ export const HOMEROUTEADMIN: any[] = [
     title: "Report",
     icon: "assets/img/svg/admin-dashboard/report-com.svg",
     class: "",
-  }
+  },
 ];
 
 export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
@@ -170,6 +170,14 @@ export class SidebarComponent implements OnInit {
     private router: Router,
     private otherServices: OtherServices
   ) {
+    var sessionDataSideBar: string = sessionStorage.getItem(
+      "current_side_bar_item"
+    );
+
+    if (sessionDataSideBar != undefined) {
+      this.miniSideBarClick(sessionDataSideBar);
+    }
+
     otherServices.miniSideBarClicked.subscribe((val) => {
       this.sideBarClicked = val;
     });
@@ -192,18 +200,23 @@ export class SidebarComponent implements OnInit {
   miniSideBarClick(title: string) {
     switch (title) {
       case "Dashboard":
+        sessionStorage.setItem("current_side_bar_item", "Dashboard");
         this.miniSideBarClickedDashboard();
         break;
       case "Lease Management":
+        sessionStorage.setItem("current_side_bar_item", "Lease Management");
         this.miniSideBarClickedLease();
         break;
       case "Requests":
+        sessionStorage.setItem("current_side_bar_item", "Requests");
         this.miniSideBarClickedRequests();
         break;
       case "Archives & Spams":
+        sessionStorage.setItem("current_side_bar_item", "Archives & Spams");
         this.miniSideBarClickedArchivedRequests();
         break;
       case "Chats":
+        sessionStorage.setItem("current_side_bar_item", "Chats");
         this.miniSideBarClickedChats();
         break;
       default:

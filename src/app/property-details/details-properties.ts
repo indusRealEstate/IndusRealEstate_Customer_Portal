@@ -1,11 +1,10 @@
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AuthenticationService } from "app/services/authentication.service";
-import { AdminService } from "app/services/admin.service";
-import { DownloadService } from "app/services/download.service";
 import { HttpClient } from "@angular/common/http";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute, Router } from "@angular/router";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
+import { AdminService } from "app/services/admin.service";
+import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
   selector: "property-details",
@@ -42,7 +41,6 @@ export class DetailsComponents implements OnInit {
     private appAdminService: AdminService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private appdownloadService: DownloadService,
     public http: HttpClient,
     public dialog: MatDialog
   ) {

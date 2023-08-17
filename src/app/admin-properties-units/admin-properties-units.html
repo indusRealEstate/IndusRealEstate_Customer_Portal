@@ -21,16 +21,29 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt=""
           />
-          <!-- <table-filters
-            #table_filter
-            (refresh)="refreshTable()"
-            (showAllFlaggedReqs)="showAllFlaggedRequests()"
-            (closeFlaggedReqs)="closeFlaggedRequestFilter()"
-            (statusFilterEmitter)="showRequestsOnStatus($event)"
-            (closeStatusFilterEmitter)="closeStatusFilter()"
-            (timeLineFilter)="filterByTimeline()"
-            (closeTimeLineFilterEmitter)="closeTimelineFilter()"
-          ></table-filters> -->
+          <div class="row m-0 align-items-end">
+            <div
+              [ngClass]="current_sort_option == 'all' ? 'sort-unit-btns-active' : 'sort-unit-btns'"
+              class="btn m-0 ml-3"
+              (click)="changeSortOption('all')"
+            >
+              All
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'occupied' ? 'sort-unit-btns-active' : 'sort-unit-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('occupied')"
+            >
+              Occupied
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'vacant' ? 'sort-unit-btns-active' : 'sort-unit-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('vacant')"
+            >
+              Vacant
+            </div>
+          </div>
         </div>
         <div class="row m-0 align-items-end mb-3">
           <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
@@ -269,7 +282,9 @@
                     </span>
                   </div>
 
-                  <div *ngIf="more_menu_unit_loaded && more_menu_unit_all_data != ''">
+                  <div
+                    *ngIf="more_menu_unit_loaded && more_menu_unit_all_data != ''"
+                  >
                     <button mat-menu-item (click)="openEditUnit(index)">
                       <div class="row m-0 justify-content-between">
                         <span style="color: #c89914">Edit</span>
