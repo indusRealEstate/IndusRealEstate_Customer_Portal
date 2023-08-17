@@ -58,7 +58,6 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { AdminFinancialReport } from "app/admin-financial-report/admin-financial-report";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
@@ -180,7 +179,6 @@ import "hammerjs";
 
     DialogAssignStaff,
     AdminReport,
-    AdminFinancialReport,
     ViewFinanceDetailsDialog,
     LoginComponent,
 

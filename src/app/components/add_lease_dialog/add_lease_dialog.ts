@@ -134,13 +134,15 @@ export class AddLeaseDialog implements OnInit {
     });
 
     this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-      val.forEach((user) =>
-        this.users.push({
-          value: user.user_id,
-          user_type: user.user_type,
-          viewValue: user.name,
-        })
-      );
+      val.forEach((user) => {
+        if (user.user_type != "owner" && user.user_type != "tenant") {
+          this.users.push({
+            value: user.user_id,
+            user_type: user.user_type,
+            viewValue: user.name,
+          });
+        }
+      });
     });
   }
 

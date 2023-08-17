@@ -7,7 +7,8 @@
       (click)="onCloseDialog()"
       class="mr-2 mt-1 close-icon"
       src="assets/img/svg/req-details/close-circle.svg"
-      alt />
+      alt
+    />
   </button>
   <img src alt id="image" />
 </div>
@@ -16,7 +17,8 @@
   <div class="container-fluid" style="max-width: 100vw">
     <ngx-skeleton-loader
       *ngIf="isContentLoading"
-      [theme]="{ width: (500) + 'px', height: '40px' }">
+      [theme]="{ width: (500) + 'px', height: '40px' }"
+    >
     </ngx-skeleton-loader>
     <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-12">
@@ -30,14 +32,17 @@
               background-color: #d4aa3226 !important;
               border: 1px solid #d4aa3275;
               color: #cb9909 !important;
-            ">{{getUserType(all_data.user_type)}}</span>
+            "
+            >{{getUserType(all_data.user_type)}}</span
+          >
         </h4>
       </div>
     </div>
 
     <ngx-skeleton-loader
       *ngIf="isContentLoading"
-      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }">
+      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
+    >
     </ngx-skeleton-loader>
     <div class="row" *ngIf="!isContentLoading">
       <div class="col-md-8">
@@ -49,7 +54,8 @@
                 src="{{profile_image}}"
                 alt
                 class="card-img-top user-image m-auto"
-                (click)="viewImageOfUnit()" />
+                (click)="viewImageOfUnit()"
+              />
             </div>
           </div>
           <div class="card-body profile-body" style="padding-top: 0 !important">
@@ -78,7 +84,8 @@
 
               <div
                 class="col-6 pb-2"
-                *ngIf="all_data.user_alternative_email != ''">
+                *ngIf="all_data.user_alternative_email != ''"
+              >
                 <div class="row w-100">
                   <div class="col-5 name">alternative email</div>
                   <div class="col-7 value">
@@ -99,7 +106,8 @@
 
               <div
                 class="col-6 pb-2"
-                *ngIf="all_data.user_alternative_mobile_number != ''">
+                *ngIf="all_data.user_alternative_mobile_number != ''"
+              >
                 <div class="row w-100">
                   <div class="col-5 name">alternative contact number</div>
                   <div class="col-7 value">
@@ -142,11 +150,13 @@
                       <button
                         (click)="downloadDoc(item)"
                         class="btn open-external-link-icon mx-auto"
-                        title="extenal">
+                        title="extenal"
+                      >
                         <img
                           style="filter: brightness(0) invert(1); width: 20px"
                           src="assets/img/svg/document-download.svg"
-                          alt />
+                          alt
+                        />
                       </button>
                     </td>
                   </tr>
@@ -160,13 +170,17 @@
 
     <ngx-skeleton-loader
       *ngIf="isContentLoading"
-      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }">
+      [theme]="{ width: (screenWidth - 120) + 'px', height: '50vh' }"
+    >
     </ngx-skeleton-loader>
-    <div class="row mt-3" *ngIf="!isContentLoading">
+    <div
+      class="row mt-3"
+      *ngIf="!isContentLoading && all_data.user_allocates_unit != ''"
+    >
       <div class="col-md-12 mx-auto" *ngIf="all_data.unit != 'none'">
         <div class="card card-main mb-0">
           <div class="card-header">
-            <h4 class="title-header">Unit details</h4>
+            <h4 class="title-header">{{is_object ? 'Tenant Unit' : 'Landlord Units'}}</h4>
           </div>
           <div class="card-body detail-table">
             <div class="table-row">
@@ -175,52 +189,58 @@
                   <tr>
                     <th scope="col" class="p-3">unit number</th>
                     <th scope="col" class="p-3">address</th>
-                    <th scope="col" class="p-3 d-flex justify-content-end">link</th>
+                    <th scope="col" class="p-3 d-flex justify-content-end">
+                      link
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="tbody text-uppercase">
-                  <ng-container *ngIf="is_object then object; else non_object"></ng-container>
-                  <ng-template #non_object>
+                  <ng-container *ngIf="is_object">
                     <tr scope="row">
-                      <td class="p-3 col-md-2">{{all_data.user_allocates_unit.unit_no}}</td>
+                      <td class="p-3 col-md-2">
+                        {{all_data.user_allocates_unit.unit_no}}
+                      </td>
                       <td class="p-3 col-md-8">
-                        {{all_data.user_allocates_unit.unit_no + ' - ' + all_data.user_allocates_unit.prop_name + ', ' +
+                        {{ all_data.user_allocates_unit.prop_name + ', ' +
                         all_data.user_allocates_unit.prop_address}}
                       </td>
                       <td class="p-3 d-flex">
                         <button
                           (click)="navigateToUnit(all_data.user_allocates_unit.unit_id)"
                           class="btn open-external-link-icon"
-                          title="extenal">
+                          title="extenal"
+                        >
                           <img
                             src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                            alt />
+                            alt
+                          />
                         </button>
                       </td>
                     </tr>
-                  </ng-template>
-                  <ng-template #object>
+                  </ng-container>
+                  <ng-container *ngIf="!is_object">
                     <tr
                       scope="row"
-                      *ngFor="let item of all_data.user_allocates_unit; let index = i">
+                      *ngFor="let item of all_data.user_allocates_unit; let index = i"
+                    >
                       <td class="p-3 col-md-2">{{item.unit_no}}</td>
                       <td class="p-3 col-md-8">
-                        {{item.unit_no + ' - ' + item.prop_name + ', ' +
-                        item.prop_address}}
+                        {{ item.prop_name + ', ' + item.prop_address}}
                       </td>
                       <td class="p-3 d-flex">
                         <button
                           (click)="navigateToUnit(item.unit_id)"
                           class="btn open-external-link-icon"
-                          title="extenal">
+                          title="extenal"
+                        >
                           <img
                             src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                            alt />
+                            alt
+                          />
                         </button>
                       </td>
                     </tr>
-                  </ng-template>
-
+                  </ng-container>
                 </tbody>
               </table>
             </div>

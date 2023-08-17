@@ -44,8 +44,8 @@ export const HOMEROUTEADMIN: any[] = [
   //   class: "",
   // },
   {
-    path: "/admin-financial-report",
-    title: "Financial Report",
+    path: "/admin-report",
+    title: "Report",
     icon: "assets/img/svg/admin-dashboard/report-com.svg",
     class: "",
   }
