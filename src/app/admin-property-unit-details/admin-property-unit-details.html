@@ -825,7 +825,7 @@
                     <ng-container matColumnDef="more">
                       <th mat-header-cell *matHeaderCellDef>more</th>
                       <td mat-cell *matCellDef="let element">
-                        <span *ngIf="is_data_loaded"><button class="btn"
+                        <span *ngIf="is_data_loaded"><button class="btn btn-more"
                             (click)="moreDetails(element.tp_payment_id,element.tp_payment_method)">more
                             details</button></span>
                         <span *ngIf="!is_data_loaded"><ngx-skeleton-loader
