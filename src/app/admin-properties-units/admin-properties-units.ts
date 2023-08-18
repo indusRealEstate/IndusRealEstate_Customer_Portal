@@ -2,8 +2,9 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
+import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -56,9 +57,14 @@ export class AdminPropertiesUnits implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
+  more_menu_unit_all_data: any = "";
+  more_menu_unit_loaded: boolean = false;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
+
+  current_sort_option: any = "all";
 
   allProperties: any[] = [];
   allUsers: any[] = [];
@@ -66,7 +72,6 @@ export class AdminPropertiesUnits implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     private adminService: AdminService,
     private dialog: MatDialog
   ) {
@@ -74,20 +79,6 @@ export class AdminPropertiesUnits implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-properties-units`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-properties-units`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
   }
 
   screenHeight: number;
@@ -96,6 +87,17 @@ export class AdminPropertiesUnits implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  changeSortOption(option: string) {
+    this.current_sort_option = option;
+    if (option != "all") {
+      this.allUnitsMatTableData.data = this.allUnits.filter(
+        (unit) => unit.status == option
+      );
+    } else {
+      this.allUnitsMatTableData.data = this.allUnits;
+    }
   }
 
   isUserSignOut() {
@@ -223,7 +225,8 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removkeItem("admin_properties_units_session");
+    this.current_sort_option = "all";
+    sessionStorage.removeItem("admin_properties_units_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {
       this.table_filter.flaggedRequestsFilterOn = false;
@@ -249,7 +252,64 @@ export class AdminPropertiesUnits implements OnInit {
         if (res != undefined) {
           if (res.completed == true) {
             this.refreshTable();
+            sessionStorage.removeItem("all_users_session");
           }
+        }
+      });
+  }
+
+  openMoreMenu(unit_id) {
+    this.more_menu_unit_all_data = "";
+    this.adminService
+      .getUnitAllData({ id: unit_id })
+      .subscribe((value) => {
+        this.more_menu_unit_all_data = value;
+      })
+      .add(() => {
+        this.more_menu_unit_loaded = true;
+      });
+  }
+
+  openEditUnit(index) {
+    var data = this.more_menu_unit_all_data;
+    this.dialog
+      .open(EditUnitDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data != undefined) {
+          sessionStorage.removeItem("admin_properties_units_session");
+          this.allUnits[index].unit_no =
+            data.unit_no != undefined
+              ? data.unit_no
+              : this.allUnits[index].unit_no;
+          this.allUnits[index].property_id =
+            data.property_id != undefined
+              ? data.property_id
+              : this.allUnits[index].property_id;
+          this.allUnits[index].property_name =
+            data.property_name != undefined
+              ? data.property_name
+              : this.allUnits[index].property_name;
+          this.allUnits[index].floor =
+            data.floor != undefined ? data.floor : this.allUnits[index].floor;
+          this.allUnits[index].size =
+            data.size != undefined ? data.size : this.allUnits[index].size;
+          this.allUnits[index].owner_id =
+            data.owner_id != undefined
+              ? data.owner_id
+              : this.allUnits[index].owner_id;
+          this.allUnits[index].owner =
+            data.owner != undefined ? data.owner : this.allUnits[index].owner;
+          this.allUnits[index].bedroom =
+            data.bedroom != undefined
+              ? data.bedroom
+              : this.allUnits[index].bedroom;
+          this.allUnits[index].bathroom =
+            data.bathroom != undefined
+              ? data.bathroom
+              : this.allUnits[index].bathroom;
         }
       });
   }

@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -66,11 +66,11 @@ export class AllLeasesComponent implements OnInit {
   allUsers: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  current_sort_option: any = "all";
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     private adminService: AdminService,
     private dialog: MatDialog
   ) {
@@ -78,20 +78,6 @@ export class AllLeasesComponent implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-lease`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-lease`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
   }
 
   screenHeight: number;
@@ -100,6 +86,17 @@ export class AllLeasesComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  changeSortOption(option: string) {
+    this.current_sort_option = option;
+    if (option != "all") {
+      this.allLeaseMatTableData.data = this.allLease.filter(
+        (unit) => unit.status == option
+      );
+    } else {
+      this.allLeaseMatTableData.data = this.allLease;
+    }
   }
 
   isUserSignOut() {
@@ -283,6 +280,7 @@ export class AllLeasesComponent implements OnInit {
   }
 
   refreshTable() {
+    this.current_sort_option = "all";
     sessionStorage.removeItem("all_lease_session");
     this.isContentLoading = true;
 

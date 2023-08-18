@@ -1,14 +1,18 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
-<div class="main-content reports-bg" *ngIf="screenWidth > 430">
+<div
+  class="main-content reports-bg"
+  *ngIf="screenWidth > 430"
+  style="padding: 20px 15px"
+>
   <div
     class="container-fluid h-100 d-flex justify-content-center"
     style="max-width: 2576px"
   >
     <div class="col" style="padding: 0">
-      <div class="row m-0 w-100 align-items-end justify-content-between">
-        <div class="row m-0 align-items-end mb-3">
+      <div class="row m-0 w-100 align-items-center justify-content-between">
+        <div class="row m-0 align-items-center">
           <p class="m-0 ml-4" style="font-size: 2rem; font-weight: 600">
             All Lease Contracts
           </p>
@@ -21,14 +25,37 @@
             src="assets/img/svg/home-page/refresh-2.svg"
             alt=""
           />
+          <div class="row m-0 align-items-end">
+            <div
+              [ngClass]="current_sort_option == 'all' ? 'sort-lease-btns-active' : 'sort-lease-btns'"
+              class="btn m-0 ml-4"
+              (click)="changeSortOption('all')"
+            >
+              All
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'active' ? 'sort-lease-btns-active' : 'sort-lease-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('active')"
+            >
+              Active
+            </div>
+            <div
+              [ngClass]="current_sort_option == 'inactive' ? 'sort-lease-btns-active' : 'sort-lease-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('inactive')"
+            >
+              Inactive
+            </div>
+          </div>
         </div>
-        <div class="row m-0 align-items-end mb-3">
+        <div class="row m-0 align-items-center">
           <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
           <div
             class="btn"
             style="
               margin: 0;
-              padding: 7px 15px;
+              padding: 7px 10px;
               margin-right: 10px;
               background: #d4aa32;
             "
@@ -41,32 +68,29 @@
               <img
                 src="assets/img/svg/add-square.svg"
                 alt=""
-                style="width: 20px; filter: brightness(0) invert(1)"
+                style="width: 15px; filter: brightness(0) invert(1)"
               />
               <p class="m-0">Add New Lease</p>
             </div>
           </div>
           <div
+            matTooltip="Export Excel File"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
             class="btn"
             style="
               margin: 0;
-              padding: 7px 15px;
+              padding: 5px 10px;
               margin-right: 10px;
               background: #2b333e;
             "
             (click)="exportExcelFile()"
           >
-            <div
-              class="row m-0 align-items-center"
-              style="width: 125px; justify-content: space-between"
-            >
-              <img
-                src="assets/img/svg/excel.svg"
-                alt=""
-                style="width: 20px; filter: brightness(0) invert(1)"
-              />
-              <p class="m-0">Export Excel</p>
-            </div>
+            <img
+              src="assets/img/svg/excel.svg"
+              alt=""
+              style="width: 20px; filter: brightness(0) invert(1)"
+            />
           </div>
         </div>
       </div>
@@ -90,10 +114,18 @@
             <ng-container matColumnDef="contractId">
               <th mat-header-cell *matHeaderCellDef>Contract ID</th>
               <td
-                style="max-width: 150px; padding: 10px 15px"
+                style="
+                  max-width: 150px;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
+                matTooltip="{{element.contract_id}}"
+                matTooltipClass="tooltip"
+                matTooltipPosition="above"
               >
                 {{ element.contract_id}}
               </td>
@@ -140,30 +172,32 @@
               >
                 <div
                   *ngIf="element.status == 'inactive'"
+                  class="d-flex justify-content-center"
                   style="
                     color: #d29c00;
                     background: #d29c0024;
-                    padding: 10px 10px;
+                    padding: 5px 7px;
                     border-radius: 5px;
                     font-size: 12px;
                     border: 1px solid #d29c0047;
                   "
                 >
-                  {{ element.status }}
+                  INACTIVE
                 </div>
 
                 <div
                   *ngIf="element.status == 'active'"
+                  class="d-flex justify-content-center"
                   style="
                     color: #37b400;
                     background: #37b4001c;
-                    padding: 10px 10px;
+                    padding: 5px 7px;
                     border-radius: 5px;
                     font-size: 12px;
                     border: 1px solid #37b4003b;
                   "
                 >
-                  {{ element.status }}
+                  ACTIVE
                 </div>
               </td>
             </ng-container>
@@ -177,10 +211,11 @@
                 style="width: 140px"
               >
                 <div
+                  class="d-flex justify-content-center"
                   style="
                     color: red;
                     background: #ff000017;
-                    padding: 10px 10px;
+                    padding: 5px 7px;
                     border-radius: 5px;
                     font-size: 12px;
                     border: 1px solid #ff00003b;

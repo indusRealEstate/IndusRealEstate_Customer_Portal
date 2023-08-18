@@ -226,9 +226,9 @@ export class AddUserDialog implements OnInit {
       nationality: this.country_dropdown.selectedCountry,
       dob: this.user_dob,
       allocated_unit: "",
-      property_id: "",
       profile_img: this.imgFileUploaded.name,
       documents: JSON.stringify(docs_names),
+      joined_date: new Date(),
     };
 
     return JSON.stringify(data);

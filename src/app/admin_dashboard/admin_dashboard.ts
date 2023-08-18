@@ -1,5 +1,6 @@
-import { Component, HostListener, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Router } from "@angular/router";
 import {
   RenderEvent,
   SeriesLabelsContentArgs,
@@ -35,30 +36,22 @@ export class AdminDashboardComponent implements OnInit {
   all_vacant_units: number = 0;
   all_occupied_units: number = 0;
 
+  total_contracts_reminders: any[] = [1, 2, 3];
+  total_contracts_reminders_source: any[] = [];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private adminService: AdminService,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
+    private authenticationService: AuthenticationService
   ) {
     this.isLoading = true;
     // }
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
 
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/admin-dashboard"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate(["/admin-dashboard"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
+    this.total_contracts_reminders_source = this.total_contracts_reminders;
   }
 
   dashboardMainCards: any[] = [
@@ -98,6 +91,10 @@ export class AdminDashboardComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  onPaginateChange(event) {
+    console.log(event);
   }
 
   isUserSignOut() {

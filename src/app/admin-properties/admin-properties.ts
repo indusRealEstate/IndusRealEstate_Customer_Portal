@@ -2,13 +2,12 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { FirebaseService } from "app/services/firebase.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Property {
@@ -50,7 +49,8 @@ export class AdminProperties implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
-  more_menu_prop_all_data: any;
+  more_menu_prop_all_data: any = "";
+  more_menu_prop_loaded: boolean = false;
 
   allUnits: any[] = [];
 
@@ -65,9 +65,7 @@ export class AdminProperties implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     private adminService: AdminService,
-    private firebaseService: FirebaseService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -78,18 +76,6 @@ export class AdminProperties implements OnInit {
     var user = JSON.parse(userData);
 
     this.userId = user[0]["id"];
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-properties`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-properties`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
 
     // this.testMessage();
     // navigator.serviceWorker.ready.then(function (swRegistration) {
@@ -261,10 +247,14 @@ export class AdminProperties implements OnInit {
   }
 
   openMoreMenu(prop_id) {
+    this.more_menu_prop_all_data = "";
     this.adminService
       .getPropDetails(JSON.stringify({ prop_id: prop_id }))
       .subscribe((value) => {
         this.more_menu_prop_all_data = value;
+      })
+      .add(() => {
+        this.more_menu_prop_loaded = true;
       });
   }
 
@@ -288,24 +278,26 @@ export class AdminProperties implements OnInit {
         })
         .afterClosed()
         .subscribe((value) => {
-          sessionStorage.removeItem("admin_properties_session");
-          this.allProperties[index].property_name =
-            value.property_name != undefined
-              ? value.property_name
-              : this.allProperties[index].property_name;
-          this.allProperties[index].address =
-            value.property_address != undefined
-              ? value.property_address
-              : this.allProperties[index].address;
-          this.allProperties[index].property_type =
-            value.property_building_type != undefined
-              ? value.property_building_type
-              : this.allProperties[index].property_type;
+          if (value != undefined) {
+            sessionStorage.removeItem("admin_properties_session");
+            this.allProperties[index].property_name =
+              value.property_name != undefined
+                ? value.property_name
+                : this.allProperties[index].property_name;
+            this.allProperties[index].address =
+              value.property_address != undefined
+                ? value.property_address
+                : this.allProperties[index].address;
+            this.allProperties[index].property_type =
+              value.property_building_type != undefined
+                ? value.property_building_type
+                : this.allProperties[index].property_type;
 
-          this.allProperties[index].locality_name =
-            value.property_locality != undefined
-              ? value.property_locality
-              : this.allProperties[index].locality_name;
+            this.allProperties[index].locality_name =
+              value.property_locality != undefined
+                ? value.property_locality
+                : this.allProperties[index].locality_name;
+          }
         });
     }
   }

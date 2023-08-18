@@ -109,6 +109,101 @@
               "
             >
               <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
+                <div class="row m-0 justify-content-between">
+                  <span style="font-weight: 600">Upcoming Contracts</span>
+                  <span style="font-weight: 600; color: #d4aa32"
+                    >Total Reminders : 10</span
+                  >
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div
+                  *ngFor="let contract of total_contracts_reminders_source"
+                  class="row m-0 mb-2 justify-content-between"
+                  style="
+                    padding: 8px 15px;
+                    background: #537096;
+                    border-radius: 5px;
+                    color: white;
+                  "
+                >
+                  <div class="row m-0">
+                    <img
+                      class="mx-2"
+                      src="assets/img/svg/sidebar/lease.svg"
+                      alt=""
+                      style="width: 30px; filter: invert(1)"
+                    />
+                    <div class="col">
+                      <p class="mb-1" style="font-weight: 600; font-size: 12px">
+                        #398d168c-b9cb-4812-943b-98fb1ec771c7
+                      </p>
+                      <p
+                        class="mb-1"
+                        style="
+                          font-weight: 600;
+                          background: white;
+                          color: red;
+                          padding: 0px 10px;
+                          border-radius: 5px;
+                          font-size: 12px;
+                        "
+                      >
+                        This contract will end within 90 days.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row m-0 align-items-center">
+                    <div
+                      class="btn"
+                      style="padding: 5px 10px; background: #d4aa32"
+                    >
+                      Send Reminder
+                    </div>
+                    <div
+                      class="btn ml-2"
+                      style="padding: 5px 10px; background: #ff5353"
+                    >
+                      Ignore
+                    </div>
+                  </div>
+                </div>
+
+                <mat-paginator
+                  #paginator
+                  (page)="onPaginateChange($event)"
+                  [length]="total_contracts_reminders.length"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[2, 5, 10, 25, 100]"
+                  aria-label="Select page"
+                >
+                </mat-paginator>
+
+                <div class="row m-0 w-100 mt-1 justify-content-end">
+                  <div
+                    class="btn"
+                    style="padding: 5px 15px; background: #313a46"
+                  >
+                    Clear All
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col pl-0">
+            <div
+              class="card mt-3"
+              style="
+                margin: 0;
+                box-shadow: none;
+                border: 1px solid #e6ebf1;
+                background: white;
+              "
+            >
+              <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
                 <span style="font-weight: 600">Contracts Status By Month</span>
               </div>
 
@@ -208,7 +303,7 @@
               <div class="row m-0 justify-content-between">
                 <span style="font-weight: 600">Unit Stats</span>
                 <span style="font-weight: 600; color: #d4aa32"
-                  >Total Units : 15</span
+                  >Total Units : {{allUnits.length}}</span
                 >
               </div>
             </div>

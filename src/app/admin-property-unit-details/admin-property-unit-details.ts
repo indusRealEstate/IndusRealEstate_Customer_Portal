@@ -20,6 +20,7 @@ import { ViewAllUnitDocuments } from "app/components/view_all_unit_documents/vie
 import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories/view_all_unit_inventories";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "admin-property-unit-details",
@@ -90,11 +91,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   @ViewChild("selecte_doc") selecte_doc;
   profile_image: string;
 
+  sidebar_opened: boolean = false;
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private otherServices: OtherServices,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
   ) {
     // this.isLoading = true;
@@ -105,6 +109,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     });
 
     this.getScreenSize();
+
+    this.otherServices.miniSideBarClicked.subscribe((val) => {
+      this.sidebar_opened = val;
+    });
   }
 
   ngOnChanges() {}
@@ -541,11 +549,11 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   moreDetails(id: string, method: string) {
-    this.dialog.open(ViewPaymentDetailsMoreDialog,{
+    this.dialog.open(ViewPaymentDetailsMoreDialog, {
       data: {
         id: id,
-        method: method
-      }
-    })
-  } 
+        method: method,
+      },
+    });
+  }
 }

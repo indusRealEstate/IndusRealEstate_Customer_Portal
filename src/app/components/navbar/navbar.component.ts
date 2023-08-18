@@ -63,7 +63,8 @@ export class NavbarComponent implements OnInit {
       titlee.split("?")[0] == "/all-users" ||
       titlee.split("?")[0] == "/property-details" ||
       titlee.split("?")[0] == "/admin-property-unit-details" ||
-      titlee.split("?")[0] == "/admin-user-details"
+      titlee.split("?")[0] == "/admin-user-details" ||
+      titlee.split("?")[0] == "/admin-report"
     ) {
       return "assets/img/svg/sidebar/home.svg";
     } else if (
@@ -104,7 +105,8 @@ export class NavbarComponent implements OnInit {
       titlee.split("?")[0] == "/all-users" ||
       titlee.split("?")[0] == "/property-details" ||
       titlee.split("?")[0] == "/admin-property-unit-details" ||
-      titlee.split("?")[0] == "/admin-user-details"
+      titlee.split("?")[0] == "/admin-user-details" ||
+      titlee.split("?")[0] == "/admin-report"
     ) {
       return "Dashboard";
     } else if (
@@ -169,6 +171,8 @@ export class NavbarComponent implements OnInit {
         return "All Lease Contracts";
       case "/admin-requests-details":
         return "Maintenance Requests";
+      case "/admin-report":
+        return "Report";
       default:
         return "404";
     }
@@ -212,25 +216,15 @@ export class NavbarComponent implements OnInit {
       }
 
       if (titlee.split("?")[0] == "/property-details") {
-        this.router.navigate(["/admin-properties"], {
-          queryParams: { uid: userId },
-        });
+        this.router.navigate(["/admin-properties"]);
       } else if (titlee.split("?")[0] == "/admin-property-unit-details") {
-        this.router.navigate(["/admin-properties-units"], {
-          queryParams: { uid: userId },
-        });
+        this.router.navigate(["/admin-properties-units"]);
       } else if (titlee.split("?")[0] == "/admin-user-details") {
-        this.router.navigate(["/all-users"], {
-          queryParams: { uid: userId },
-        });
+        this.router.navigate(["/all-users"]);
       } else if (titlee.split("?")[0] == "/admin-lease-details") {
-        this.router.navigate(["/admin-lease"], {
-          queryParams: { uid: userId },
-        });
+        this.router.navigate(["/admin-lease"]);
       } else if (titlee.split("?")[0] == "/admin-requests-details") {
-        this.router.navigate(["/admin-requests"], {
-          queryParams: { uid: userId },
-        });
+        this.router.navigate(["/admin-requests"]);
       }
     }
   }

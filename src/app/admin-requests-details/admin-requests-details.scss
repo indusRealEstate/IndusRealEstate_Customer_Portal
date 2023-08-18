@@ -207,7 +207,8 @@ ngx-skeleton-loader {
 .user-image {
   aspect-ratio: 1/1;
   border-radius: 50%;
-  box-shadow: 0rem 0rem 1rem 0rem #b9b9b9;
+  object-fit: cover;
+  object-position: center;
 }
 
 .user-name {

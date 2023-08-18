@@ -101,13 +101,15 @@ export class AddUnitDialog implements OnInit {
     });
 
     this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-      val.forEach((user) =>
-        this.users.push({
-          value: user.user_id,
-          user_type: user.user_type,
-          viewValue: user.name,
-        })
-      );
+      val.forEach((user) => {
+        if (user.user_type != "tenant") {
+          this.users.push({
+            value: user.user_id,
+            user_type: user.user_type,
+            viewValue: user.name,
+          });
+        }
+      });
     });
   }
 
@@ -222,6 +224,7 @@ export class AddUnitDialog implements OnInit {
 
         var data = this.setupData(random_id, images_names, docs_names);
         this.adminService.addUnit(data).subscribe((val) => {
+          console.log(val);
           if (val == "success") {
             this.addInventories(random_id);
             var uploadData = this.setupUploadFiles(

@@ -59,11 +59,6 @@ export class ViewFinanceDetailsDialog implements OnInit {
       .subscribe((val) => {
         this.all_data = val;
          console.log(this.all_data);
-         //console.log(this.all_data.t_amount);
-
-        //  for(let item of this.all_data){
-        //   console.log(item.t_amount);
-        //  }
   
   }).add(() => {
     this.is_data_loaded = true;

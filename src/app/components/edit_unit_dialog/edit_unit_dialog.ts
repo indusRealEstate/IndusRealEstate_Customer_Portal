@@ -78,6 +78,8 @@ export class EditUnitDialog implements OnInit {
 
   is_submit: boolean = false;
 
+  images_fully_loaded: boolean = false;
+
   unitTypes: DropDownButtonModel[] = [
     { value: "appartment", viewValue: "Appartment" },
     { value: "penthouse", viewValue: "Penthouse" },
@@ -104,11 +106,15 @@ export class EditUnitDialog implements OnInit {
     this.getAllTheDropdowns();
 
     // console.log(this.all_data);
-
+    var count = 0;
     for (let item of JSON.parse(this.all_data.unit_images)) {
       let link = `https://indusre.app/api/upload/unit/${this.all_data.unit_id}/images/`;
       this.imgFilesBase64Uploaded.push(link + item);
       this.imgFilesUploaded.push(item);
+      count++;
+    }
+    if (count == JSON.parse(this.all_data.unit_images).length) {
+      this.images_fully_loaded = true;
     }
 
     for (let item of JSON.parse(this.all_data.unit_doc)) {
@@ -173,11 +179,13 @@ export class EditUnitDialog implements OnInit {
       .getAllUsersAdmin()
       .subscribe((val: any[]) => {
         val.forEach((user) => {
-          this.users.push({
-            value: user.user_id,
-            user_type: user.user_type,
-            viewValue: user.name,
-          });
+          if (user.user_type != "tenant") {
+            this.users.push({
+              value: user.user_id,
+              user_type: user.user_type,
+              viewValue: user.name,
+            });
+          }
         });
       })
       .add(() => {
@@ -203,10 +211,21 @@ export class EditUnitDialog implements OnInit {
 
   ngAfterViewInit() {}
 
+  closeDialogWithoutSaving() {
+    this.dialogRef.close();
+  }
+
   onCloseDialog() {
+    if (this.is_submit == true) {
+      var sel_prop_name = this.properties.find(
+        (pr) => pr.value == this.selected_property
+      ).viewValue;
+    }
+
     this.dialogRef.close({
       unit_no: this.is_submit ? this.unit_number : undefined,
       property_id: this.is_submit ? this.selected_property : undefined,
+      property_name: this.is_submit ? sel_prop_name : undefined,
       unit_type: this.is_submit ? this.unit_type : undefined,
       floor: this.is_submit ? this.floors : undefined,
       size: this.is_submit ? this.unit_size : undefined,
@@ -215,6 +234,7 @@ export class EditUnitDialog implements OnInit {
       bathroom: this.is_submit ? this.bathrooms : undefined,
       no_of_parking: this.is_submit ? this.number_of_parking : undefined,
       owner: this.is_submit ? this.owner.viewValue : undefined,
+      owner_id: this.is_submit ? this.owner.value : undefined,
       tenant_id: this.is_submit
         ? this.all_data.tenant_uid == undefined
           ? ""

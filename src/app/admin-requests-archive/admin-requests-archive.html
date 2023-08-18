@@ -70,7 +70,15 @@
                 mat-cell
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
-                style="width: 150px; padding: 10px 15px"
+                style="
+                  width: 150px;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+                matTooltip="{{element.request_id}}"
+                matTooltipClass="tooltip"
+                matTooltipPosition="above"
               >
                 {{ element.request_id}}
               </td>
@@ -179,10 +187,10 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
-              <span *ngIf="!isNameEmpty(element.staff_assigned)">-</span>
-              <span *ngIf="isNameEmpty(element.staff_assigned)"
-                >{{getOnlyName(element.staff_assigned)}}</span
-              >
+                <span *ngIf="!isNameEmpty(element.staff_assigned)">-</span>
+                <span *ngIf="isNameEmpty(element.staff_assigned)"
+                  >{{getOnlyName(element.staff_assigned)}}</span
+                >
               </td>
             </ng-container>
             <ng-container matColumnDef="userName">

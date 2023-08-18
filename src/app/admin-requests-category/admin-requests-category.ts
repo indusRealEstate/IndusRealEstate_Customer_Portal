@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddCategoryDialog } from "app/components/add_category_dialog/add_category_dialog";
 import { EditCategoryDialog } from "app/components/edit_category_dialog/edit_category_dialog";
 import { AdminService } from "app/services/admin.service";
@@ -26,25 +26,10 @@ export class AdminRequestsCategory implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
     public dialog: MatDialog,
     private apiAdminService: AdminService
   ) {
     this.isCategoryLoading = true;
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/admin-request-category`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/admin-request-category`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
   }
 
   screenHeight: number;

@@ -56,6 +56,8 @@ export class EditPropertyDialog implements OnInit {
 
   uploading_progress: any = 0;
 
+  images_fully_loaded: boolean = false;
+
   buildingTypes: DropDownButtonModel[] = [
     { value: "commercial", viewValue: "Commercial" },
     { value: "co_living", viewValue: "Co-Living" },
@@ -71,6 +73,7 @@ export class EditPropertyDialog implements OnInit {
     { value: "3", viewValue: "Nashama Town Square" },
     { value: "4", viewValue: "JVC" },
   ];
+
   testImage: any;
 
   constructor(
@@ -95,7 +98,8 @@ export class EditPropertyDialog implements OnInit {
     this.assignDoc();
   }
 
-  assignImages() {
+  async assignImages() {
+    var count = 0;
     for (let i = 0; i < JSON.parse(this.all_data.prop_images).length; i++) {
       let image_URL: string = `https://indusre.app/api/upload/property/${
         this.all_data.prop_uid
@@ -104,10 +108,15 @@ export class EditPropertyDialog implements OnInit {
       this.imgFilesUploaded.push(JSON.parse(this.all_data.prop_images)[i]);
 
       this.imgFilesBase64Uploaded.push(image_URL);
+      count++;
+    }
+
+    if (count == JSON.parse(this.all_data.prop_images).length) {
+      this.images_fully_loaded = true;
     }
   }
 
-  assignDoc() {
+  async assignDoc() {
     for (let i = 0; i < JSON.parse(this.all_data.prop_doc).length; i++) {
       let doc_URL: string = `https://indusre.app/api/upload/property/${
         this.all_data.prop_uid
@@ -120,6 +129,10 @@ export class EditPropertyDialog implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {}
+
+  closeDialogWithoutSaving() {
+    this.dialogRef.close();
+  }
 
   onCloseDialog() {
     this.assignImages();
