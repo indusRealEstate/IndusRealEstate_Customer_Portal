@@ -1,7 +1,11 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
-<div class="main-content reports-bg" *ngIf="screenWidth > 430">
+<div
+  class="main-content reports-bg"
+  *ngIf="screenWidth > 430"
+  style="padding: 20px 15px"
+>
   <div
     class="container-fluid h-100 d-flex justify-content-center"
     style="max-width: 2576px"
@@ -16,20 +20,20 @@
             class="btn"
             style="
               margin: 0;
-              padding: 7px 15px;
+              padding: 7px 10px;
               margin-right: 10px;
               background: #d4aa32;
             "
             (click)="incomeStatementDialog()"
           >
             <div
-              class="row m-0 p-1 align-items-center"
-              style="width: 180px; justify-content: space-between"
+              class="row m-0 align-items-center"
+              style="width: 160px; justify-content: space-between"
             >
               <img
-                src="assets/img/svg/admin-dashboard/export.svg"
+                src="assets/img/svg/income-statements.svg"
                 alt=""
-                style="width: 20px; filter: brightness(0) invert(1)"
+                style="width: 15px; filter: brightness(0) invert(1)"
               />
               <p class="m-0 font-weight-normal">Income Statement</p>
             </div>
@@ -41,35 +45,31 @@
       <!------------------------------------ All Properties ----------------------------------------------------->
       <!------------------------------------ All Properties ----------------------------------------------------->
 
-      <div class="row mt-3">
+      <div class="row mt-4">
         <div class="col-md-6">
-          <mat-card style="border: 0.1rem solid rgb(240, 236, 236)">
-            <mat-card-content style="border: 0">
-              <div class="row" style="border-bottom: 1px solid #e6ebf1">
-                <div class="col-6">
-                  <h4
-                    style="
-                      font-size: 1.5rem;
-                      font-weight: 500;
-                      padding-left: 1rem;
-                    "
-                  >
-                    Overview
-                  </h4>
-                </div>
-                <div class="col-6">
-                  <!-- <mat-form-field class="date-form" style="float: right;">
-                    <mat-label>Date</mat-label>
-                    <input matInput [matDatepicker]="picker" />
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field> -->
-                  <mat-form-field class="mt-2" class="textField" appearance="outline">
-                    <mat-label>Filter by Date</mat-label>
-                    <mat-select [(ngModel)]="property_building_type">
+          <div
+            class="card"
+            style="
+              margin: 0;
+              box-shadow: none;
+              border: 1px solid #e6ebf1;
+              background: white;
+            "
+          >
+            <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
+              <div
+                class="row m-0 w-100 justify-content-between align-items-center"
+              >
+                <span style="font-weight: 600; font-size: 17px">
+                  Overview
+                </span>
+
+                <div class="textfield-dropdown">
+                  <mat-form-field appearance="outline">
+                    <mat-select
+                      [(ngModel)]="property_building_type"
+                      placeholder="Select Month"
+                    >
                       <mat-option
                         *ngFor="let type of dateFilter"
                         [value]="type.value"
@@ -78,10 +78,10 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-
-                  <table-filters style="float: right"></table-filters>
                 </div>
               </div>
+            </div>
+            <div class="card-body" style="border: 0">
               <div class="row">
                 <div class="col-12">
                   <h5
@@ -98,7 +98,7 @@
                   </h5>
                 </div>
               </div>
-              <div class="row" >
+              <div class="row">
                 <div class="col-6">
                   <div
                     class="row"
@@ -140,82 +140,6 @@
                       </p>
                     </div>
                   </div>
-                  <!-- <div
-                    class="row"
-                    style="padding: 0rem 0.3rem; margin-top: 2rem"
-                  >
-                    <div class="col-3 text-center">
-                      <p
-                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
-                      >
-                        623
-                      </p>
-                      <p
-                        style="
-                          font-size: 0.8rem;
-                          font-weight: 500;
-                          margin: 0rem;
-                          color: #adb5bc;
-                        "
-                      >
-                        MSL
-                      </p>
-                    </div>
-                    <div class="col-3 text-center">
-                      <p
-                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
-                      >
-                        623
-                      </p>
-                      <p
-                        style="
-                          font-size: 0.8rem;
-                          font-weight: 500;
-                          margin: 0rem;
-                          color: #adb5bc;
-                        "
-                      >
-                        MSL
-                      </p>
-                    </div>
-                    <div
-                      class="col-3 text-center"
-                      style="background: #e5e2ff; border-radius: 0.8rem"
-                    >
-                      <p
-                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
-                      >
-                        623
-                      </p>
-                      <p
-                        style="
-                          font-size: 0.8rem;
-                          font-weight: 500;
-                          margin: 0rem;
-                          color: #adb5bc;
-                        "
-                      >
-                        MSL
-                      </p>
-                    </div>
-                    <div class="col-3 text-center">
-                      <p
-                        style="font-size: 1rem; font-weight: 700; margin: 0rem"
-                      >
-                        623
-                      </p>
-                      <p
-                        style="
-                          font-size: 0.8rem;
-                          font-weight: 500;
-                          margin: 0rem;
-                          color: #adb5bc;
-                        "
-                      >
-                        MSL
-                      </p>
-                    </div>
-                  </div> -->
                 </div>
 
                 <div class="col-6">
@@ -377,84 +301,8 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="row mt-1">
-                <div class="col-3">
-                  <p
-                    style="
-                      font-size: 0.9rem;
-                      font-weight: 500;
-                      color: #7a7b7c;
-                      margin: 0.3rem;
-                    "
-                  >
-                    Net Value in Pipeline
-                  </p>
-                  <p
-                    style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem"
-                  >
-                    $879,768
-                  </p>
-                </div>
-                <div class="col-3">
-                  <p
-                    style="
-                      font-size: 0.9rem;
-                      font-weight: 500;
-                      color: #7a7b7c;
-                      margin: 0.3rem;
-                    "
-                  >
-                    Achieved So Far
-                  </p>
-                  <p
-                    style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem"
-                  >
-                    $765,989
-                  </p>
-                </div>
-                <div class="col-3">
-                  <p
-                    style="
-                      font-size: 0.9rem;
-                      font-weight: 500;
-                      color: #7a7b7c;
-                      margin: 0.3rem;
-                    "
-                  >
-                    Differance
-                  </p>
-                  <p
-                    style="
-                      font-size: 1.2rem;
-                      font-weight: 500;
-                      margin: 0.3rem;
-                      color: #f0c760;
-                    "
-                  >
-                    $897,243
-                  </p>
-                </div>
-                <div class="col-3">
-                  <p
-                    style="
-                      font-size: 0.9rem;
-                      font-weight: 500;
-                      color: #7a7b7c;
-                      margin: 0.3rem;
-                    "
-                  >
-                    Target
-                  </p>
-                  <p
-                    style="font-size: 1.2rem; font-weight: 500; margin: 0.3rem"
-                  >
-                    $356,989
-                  </p>
-                </div>
-              </div> -->
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </div>
           <div class="card">
             <div class="card-header">
               <h4
@@ -704,12 +552,13 @@
                     <ng-container matColumnDef="More">
                       <th mat-header-cell *matHeaderCellDef>More</th>
                       <td mat-cell *matCellDef="let element">
-                       <button
-                            class="btn" style="background-color: #d4aa32;"
-                            (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)"
-                          >
+                        <button
+                          class="btn"
+                          style="background-color: #d4aa32"
+                          (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)"
+                        >
                           details
-                          </button>
+                        </button>
                       </td>
                     </ng-container>
 
@@ -734,7 +583,7 @@
             <div class="col-lg-4 col-6" *ngFor="let card of dashboardMainCards">
               <div
                 class="small-box"
-                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem" 
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
               >
                 <div class="inner">
                   <h3
@@ -747,7 +596,7 @@
                       white-space: nowrap;
                     "
                   >
-                  {{getStatsCount(card.title)}}
+                    {{getStatsCount(card.title)}}
                   </h3>
                   <p
                     style="
@@ -757,13 +606,11 @@
                       margin-left: 0.5rem;
                     "
                   >
-                  {{card.title}}
+                    {{card.title}}
                   </p>
                 </div>
                 <img src="{{card.icon}}" width="60" />
-                <a
-                  routerLink="{{card.url}}"
-                  class="small-box-footer"
+                <a routerLink="{{card.url}}" class="small-box-footer"
                   >More info
                 </a>
               </div>
@@ -837,7 +684,10 @@
           </div>
 
           <div class="row mt-3">
-            <div class="col-lg-4 col-6"  *ngFor="let card of dashboardMainCardsPartTwo">
+            <div
+              class="col-lg-4 col-6"
+              *ngFor="let card of dashboardMainCardsPartTwo"
+            >
               <div
                 class="small-box"
                 style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
@@ -853,7 +703,7 @@
                       white-space: nowrap;
                     "
                   >
-                  {{getStatsCount(card.title)}}
+                    {{getStatsCount(card.title)}}
                   </h3>
                   <p
                     style="
@@ -863,11 +713,13 @@
                       margin-left: 0.5rem;
                     "
                   >
-                  {{card.title}}
+                    {{card.title}}
                   </p>
                 </div>
                 <img src="{{card.icon}}" width="60" />
-                <a routerLink="{{card.url}}" class="small-box-footer" style="">More info </a>
+                <a routerLink="{{card.url}}" class="small-box-footer" style=""
+                  >More info
+                </a>
               </div>
             </div>
             <!-- <div class="col-lg-4 col-6">
