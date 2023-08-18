@@ -126,11 +126,10 @@ export class AdminReport implements OnInit {
   }
   
   viewProperty(data:any) {
-    this.router.navigate(["/admin-properties"], {
-      queryParams: {
-        
-      },
-    });
+    this.router.navigate(["/admin-properties"]
+      // queryParams: {
+      // },
+    );
   }
 
   
