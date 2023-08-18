@@ -10,10 +10,237 @@
     class="container-fluid h-100 d-flex justify-content-center"
     style="max-width: 2576px"
   >
-    <div class="col p-0">
-      <p class="m-0 ml-4" style="font-size: 2rem; font-weight: 600">
-        Announcements
-      </p>
+    <div class="col" style="padding: 0">
+      <div class="row m-0 w-100 align-items-center justify-content-between">
+        <div class="row m-0 align-items-center">
+          <p class="m-0 ml-4" style="font-size: 2rem; font-weight: 600">
+            Announcements
+          </p>
+          <img
+            (click)="refreshTable()"
+            matTooltip="Refresh table"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="refresh-table-btn ml-3"
+            src="assets/img/svg/home-page/refresh-2.svg"
+            alt=""
+          />
+          <!-- <table-filters
+            #table_filter
+            (refresh)="refreshTable()"
+            (showAllFlaggedReqs)="showAllFlaggedRequests()"
+            (closeFlaggedReqs)="closeFlaggedRequestFilter()"
+            (statusFilterEmitter)="showRequestsOnStatus($event)"
+            (closeStatusFilterEmitter)="closeStatusFilter()"
+            (timeLineFilter)="filterByTimeline()"
+            (closeTimeLineFilterEmitter)="closeTimelineFilter()"
+          ></table-filters> -->
+        </div>
+        <div class="row m-0 align-items-center">
+          <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
+          <div
+            class="btn"
+            style="
+              margin: 0;
+              padding: 7px 10px;
+              margin-right: 10px;
+              background: #d4aa32;
+            "
+            (click)="addAnnouncements()"
+          >
+            <div
+              class="row m-0 align-items-center"
+              style="width: 170px; justify-content: space-between"
+            >
+              <img
+                src="assets/img/svg/add-square.svg"
+                alt=""
+                style="width: 15px; filter: brightness(0) invert(1)"
+              />
+              <p class="m-0">Add Announcement</p>
+            </div>
+          </div>
+          <div
+            matTooltip="Export Excel File"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            class="btn"
+            style="
+              margin: 0;
+              padding: 5px 10px;
+              margin-right: 10px;
+              background: #2b333e;
+            "
+            (click)="exportExcelFile()"
+          >
+            <img
+              src="assets/img/svg/excel.svg"
+              alt=""
+              style="width: 20px; filter: brightness(0) invert(1)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <loading-table-admin-properties
+        *ngIf="isContentLoading == true"
+      ></loading-table-admin-properties>
+
+      <!------------------------------------ All Properties ----------------------------------------------------->
+      <!------------------------------------ All Properties ----------------------------------------------------->
+      <!------------------------------------ All Properties ----------------------------------------------------->
+      <div *ngIf="isContentLoading == false">
+        <div style="overflow: auto; padding: 0 5px; padding-bottom: 1rem">
+          <table
+            mat-table
+            [dataSource]=""
+            class="mat-elevation-z8 demo-table"
+            
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="Id">
+              <th mat-header-cell *matHeaderCellDef>id</th>
+              <td
+                mat-cell
+                
+              >
+               1
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Type">
+              <th mat-header-cell *matHeaderCellDef>Type</th>
+              <td
+                mat-cell
+                *matCellDef="" 
+                
+              >
+              Emergency
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+              <td
+                mat-cell
+                
+              >
+               Water supply 
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td
+                mat-cell
+                
+              >
+                Water Supply not be available from 9:00 am to 11:00 am
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              style="cursor: pointer"
+            ></tr>
+          </table>
+          <div
+            *ngIf="allPropertiesMatTableData.filteredData.length == 0 && allProperties.length != 0"
+            class="d-flex align-items-center justify-content-center"
+            style="
+              background: white;
+              margin-top: 0;
+              text-align: center;
+              box-shadow: none !important;
+              border-bottom: 1px solid #e6ebf1;
+              border-left: 1px solid #e6ebf1;
+              border-right: 1px solid #e6ebf1;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+              min-width: 1250px;
+            "
+          >
+            <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+              NO RESULTS :(
+            </p>
+          </div>
+          <table
+            *ngIf="allProperties.length == 0"
+            mat-table
+            [dataSource]="loadingTable"
+            class="mat-elevation-z8 demo-table"
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="Id">
+              <th mat-header-cell *matHeaderCellDef>Id</th>
+            </ng-container>
+
+            <ng-container matColumnDef="Type">
+              <th mat-header-cell *matHeaderCellDef>Type</th>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+            </ng-container>
+            
+
+            <!-- Symbol Column -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <div
+            *ngIf="allProperties.length == 0"
+            class="d-flex align-items-center justify-content-center"
+            style="
+              background: white;
+              margin-top: -2rem;
+              text-align: center;
+              box-shadow: none !important;
+              border-bottom: 1px solid #e6ebf1;
+              border-left: 1px solid #e6ebf1;
+              border-right: 1px solid #e6ebf1;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              height: 15rem;
+              min-width: 1250px;
+            "
+          >
+            <p style="font-size: 1.5rem; font-weight: 500; color: #d3ab33">
+              No Properties
+            </p>
+            <p
+              class="pl-3"
+              style="font-size: 1.3rem; font-weight: 500; color: #d3ab33"
+            >
+              (－_－) zzZ
+            </p>
+          </div>
+        </div>
+        <div style="margin-top: 25px" class="table-paginator">
+          <mat-paginator
+            #paginator
+            [pageSizeOptions]="[6, 8, 10, 14, 20]"
+            showFirstLastButtons
+          ></mat-paginator>
+        </div>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- </div> -->
     </div>
   </div>
 </div>
