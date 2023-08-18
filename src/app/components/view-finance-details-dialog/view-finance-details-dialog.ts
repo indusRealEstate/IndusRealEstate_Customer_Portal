@@ -21,35 +21,47 @@ import * as uuid from "uuid";
 export class ViewFinanceDetailsDialog implements OnInit {
   all_data: Object | any;
   id: string = "";
-  type: string = "";
-  // is_cheque: boolean = false;
-  // is_online: boolean = false;
-  // is_cash: boolean = false;
+  method: string = "";
+  is_cheque: boolean = false;
+  is_online: boolean = false;
+  is_cash: boolean = false;
+  is_data_loaded: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewFinanceDetailsDialog>,
     private appAdminService: AdminService
   ) {
-    console.log(data);
+    //console.log(data.type);
     this.id = data.id;
-    this.type = data.type;
-
-   
+    this.method = data.method;
+    switch (data.method) {
+      case "cheque":
+        this.is_cheque = true;
+        break;
+      case "online":
+        this.is_online = true;
+        break;
+      case "cash":
+        this.is_cash = true;
+        break;
+    }
   }
 
  
   async ngOnInit() {
     let data = {
      id :this.id,
-     type: this.type
+     method: this.method
     };
     this.appAdminService
-      .selectTenantsPaymentsDetails(JSON.stringify(data))
+      .selectPaymentAccordeingToTheMothod(JSON.stringify(data))
       .subscribe((val) => {
         this.all_data = val;
          console.log(this.all_data);
   
+  }).add(() => {
+    this.is_data_loaded = true;
   });
   
 }

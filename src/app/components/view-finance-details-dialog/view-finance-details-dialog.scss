@@ -14,11 +14,12 @@
   filter: brightness(0) saturate(100%) invert(96%) sepia(1%) saturate(0%)
     hue-rotate(145deg) brightness(84%) contrast(88%);
   width: 1.5rem;
-  right: 0;
+  right: 0.5rem;
+  top: 0.5rem;
   position: absolute;
   width: 1.5rem;
   cursor: pointer;
-z-index: 1000;
+  z-index: 1000;
   transition: 0.3s all ease-in-out;
 
   &:hover {

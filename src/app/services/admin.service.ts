@@ -508,33 +508,56 @@ export class AdminService {
      })
    );
  }
+
+ selectTenantPayments(data: string) {
+   const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
+ paymentsDetails(data: any) {
+  const url = `${API_URL}/paymentsDetails.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
  
+ selectPaymentAccordeingToTheMothod(data: string) {
+   const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
 
+ totalTenantPayment(data: string) {
+  const url = `${API_URL}/totalTenantPayment.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
 
-
-  selectTenantPayments(data: string) {
-    const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-  paymentsDetails(data: any) {
-    const url = `${API_URL}/paymentsDetails.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
-  selectPaymentAccordeingToTheMothod(data: string) {
-    const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
+paidTenantPayment(data: string) {
+  const url = `${API_URL}/paidTenantPayment.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
+unpaidTenantPayment(data: string) {
+  const url = `${API_URL}/unpaidTenantPayment.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
 }

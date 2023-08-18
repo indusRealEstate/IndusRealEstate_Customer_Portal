@@ -67,6 +67,17 @@
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field> -->
+                  <mat-form-field class="mt-2" class="textField" appearance="outline">
+                    <mat-label>Filter by Date</mat-label>
+                    <mat-select [(ngModel)]="property_building_type">
+                      <mat-option
+                        *ngFor="let type of dateFilter"
+                        [value]="type.value"
+                      >
+                        {{type.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
 
                   <table-filters style="float: right"></table-filters>
                 </div>
@@ -87,7 +98,7 @@
                   </h5>
                 </div>
               </div>
-              <div class="row" style="border-bottom: 1px solid #e6ebf1">
+              <div class="row" >
                 <div class="col-6">
                   <div
                     class="row"
@@ -122,14 +133,14 @@
                           color: #2b333ec4;
                         "
                       >
-                        55,000
+                        {{all_tenant_payment.total_amount | number}}
                       </p>
                       <p class="" style="font-weight: 600; color: #adb5bc">
                         Total Amount
                       </p>
                     </div>
                   </div>
-                  <div
+                  <!-- <div
                     class="row"
                     style="padding: 0rem 0.3rem; margin-top: 2rem"
                   >
@@ -204,7 +215,7 @@
                         MSL
                       </p>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="col-6">
@@ -220,7 +231,7 @@
                           margin: 0.3rem;
                         "
                       >
-                        40,000
+                        {{tenant_paid_payment.paid_amount | number}}
                       </p>
                       <p
                         style="
@@ -260,7 +271,7 @@
                           margin: 0.3rem;
                         "
                       >
-                        15,000
+                        {{tenant_unpaid_payment.unpaid_amount | number}}
                       </p>
                       <p
                         style="
@@ -367,7 +378,7 @@
                 </div>
               </div>
 
-              <div class="row mt-1">
+              <!-- <div class="row mt-1">
                 <div class="col-3">
                   <p
                     style="
@@ -441,7 +452,7 @@
                     $356,989
                   </p>
                 </div>
-              </div>
+              </div> -->
             </mat-card-content>
           </mat-card>
           <div class="card">
@@ -632,7 +643,7 @@
                 <div class="col-12">
                   <table
                     mat-table
-                    [dataSource]="all_data"
+                    [dataSource]="allMatTableData"
                     class="mat-elevation-z8 table-finance"
                   >
                     <!--- Note that these columns can be defined in any order.
@@ -683,11 +694,22 @@
                       <td
                         mat-cell
                         *matCellDef="let element"
-                        class="redirect details"
-                        (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)"
+                        class=" "
                         id="{{element.t_payment_id}}"
                       >
                         {{element.t_status}}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="More">
+                      <th mat-header-cell *matHeaderCellDef>More</th>
+                      <td mat-cell *matCellDef="let element">
+                       <button
+                            class="btn" style="background-color: #d4aa32;"
+                            (click)="financeDetailDialog(element.t_payment_id, element.t_payment_method)"
+                          >
+                          details
+                          </button>
                       </td>
                     </ng-container>
 
@@ -698,9 +720,8 @@
                     ></tr>
                   </table>
                   <mat-paginator
-                    [length]="100"
-                    [pageSize]="10"
-                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    #paginator
+                    [pageSizeOptions]="[2, 4, 6, 8]"
                     aria-label="Select page"
                   >
                   </mat-paginator>
@@ -710,10 +731,10 @@
           </mat-card>
 
           <div class="row mt-3">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-6" *ngFor="let card of dashboardMainCards">
               <div
                 class="small-box"
-                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
+                style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem" 
               >
                 <div class="inner">
                   <h3
@@ -726,7 +747,7 @@
                       white-space: nowrap;
                     "
                   >
-                    29
+                  {{getStatsCount(card.title)}}
                   </h3>
                   <p
                     style="
@@ -736,14 +757,18 @@
                       margin-left: 0.5rem;
                     "
                   >
-                    PROPERTIES
+                  {{card.title}}
                   </p>
                 </div>
-                <img src="assets/img/pngs/dashboard/property.png" width="60" />
-                <a href="" class="small-box-footer" style="">More info </a>
+                <img src="{{card.icon}}" width="60" />
+                <a
+                  routerLink="{{card.url}}"
+                  class="small-box-footer"
+                  >More info
+                </a>
               </div>
             </div>
-            <div class="col-lg-4 col-6">
+            <!-- <div class="col-lg-4 col-6">
               <div
                 class="small-box"
                 style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
@@ -759,7 +784,7 @@
                       white-space: nowrap;
                     "
                   >
-                    26
+                    {{allUnits.length}}
                   </h3>
                   <p
                     style="
@@ -773,7 +798,7 @@
                   </p>
                 </div>
                 <img src="assets/img/pngs/dashboard/unit.png" width="60" />
-                <a href="" class="small-box-footer" style="">More info </a>
+                <a routerLink="/admin-properties-units" class="small-box-footer" >More info </a>
               </div>
             </div>
             <div class="col-lg-4 col-6">
@@ -792,7 +817,7 @@
                       white-space: nowrap;
                     "
                   >
-                    30
+                  {{getStatsCount('Total Tenants')}}
                   </h3>
                   <p
                     style="
@@ -806,13 +831,13 @@
                   </p>
                 </div>
                 <img src="assets/img/pngs/dashboard/landlord.png" width="60" />
-                <a href="" class="small-box-footer" style="">More info </a>
+                <a routerLink="/all-users" class="small-box-footer" style="">More info </a>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="row mt-3">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-6"  *ngFor="let card of dashboardMainCardsPartTwo">
               <div
                 class="small-box"
                 style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
@@ -828,7 +853,7 @@
                       white-space: nowrap;
                     "
                   >
-                    29
+                  {{getStatsCount(card.title)}}
                   </h3>
                   <p
                     style="
@@ -838,14 +863,14 @@
                       margin-left: 0.5rem;
                     "
                   >
-                    LANDLORDS
+                  {{card.title}}
                   </p>
                 </div>
-                <img src="assets/img/pngs/dashboard/tenant-2.png" width="60" />
-                <a href="" class="small-box-footer" style="">More info </a>
+                <img src="{{card.icon}}" width="60" />
+                <a routerLink="{{card.url}}" class="small-box-footer" style="">More info </a>
               </div>
             </div>
-            <div class="col-lg-4 col-6">
+            <!-- <div class="col-lg-4 col-6">
               <div
                 class="small-box"
                 style="border: 0.1rem solid #e8eaed; border-radius: 0.2rem"
@@ -861,7 +886,7 @@
                       white-space: nowrap;
                     "
                   >
-                    26
+                    {{allRequests.length}}
                   </h3>
                   <p
                     style="
@@ -878,21 +903,21 @@
                   src="assets/img/pngs/dashboard/maintenance.png"
                   width="60"
                 />
-                <a href="" class="small-box-footer" style="">More info </a>
+                <a routerLink="/admin-requests" class="small-box-footer">More info </a>
               </div>
             </div>
-            <!-- <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-6">
                   
                   <div class="small-box" style="border:0.1rem solid #e8eaed; border-radius: 0.2rem;">
                     <div class="inner">
                       <h3 class="" style=" font-size: 2.2rem; font-weight: 700;
                       margin: 0 0 10px;
                       padding: 0.5rem;
-                      white-space: nowrap;">30</h3>
-                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">BUILDING</p>
+                      white-space: nowrap;">{{allContracts.length}}</h3>
+                      <p style="font-size: 1rem; font-weight: 500;padding: 0.3rem; margin-left: 0.5rem">Contracts</p>
                     </div>
                     <img src="assets/img/pngs/dashboard/landlord.png" width="60">
-                    <a href="" class="small-box-footer" style="">More info </a>
+                    <a href="" class="small-box-footer" >More info </a>
                   </div>
                 </div>   -->
           </div>
