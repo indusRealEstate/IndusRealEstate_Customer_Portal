@@ -117,7 +117,6 @@ export class LoginComponent implements OnInit {
             var user = JSON.parse(userData);
 
             setTimeout(async () => {
-              await this.firebaseService.firebaseLogin().then(async () => {});
               // await this.authenticationService.getIPAddress();
               // .then((res) => {
               //   var date = this.getCurrentDate();

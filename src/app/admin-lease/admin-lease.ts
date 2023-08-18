@@ -173,7 +173,7 @@ export class AllLeasesComponent implements OnInit {
 
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
 
-    return `${Math.trunc(difference_In_Days)} Days left`;
+    return `${Math.round(difference_In_Days)} Days left`;
   }
 
   fetchData() {

@@ -99,6 +99,7 @@ import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-imag
 import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
 import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
 import "hammerjs";
+import { Announcements } from "app/announcements/announcements";
 
 @NgModule({
   imports: [
@@ -207,6 +208,7 @@ import "hammerjs";
 
     BackButtonDirective,
     AllLeasesComponent,
+    Announcements,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })

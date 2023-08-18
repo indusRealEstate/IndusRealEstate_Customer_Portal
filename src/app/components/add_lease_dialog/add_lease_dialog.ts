@@ -79,6 +79,7 @@ export class AddLeaseDialog implements OnInit {
   properties: any[] = [];
   units: any[] = [];
   users: any[] = [];
+  all_users: any[] = [];
 
   notice_period_lists: any[] = [
     { value: "1", viewValue: "1 Month" },
@@ -135,6 +136,11 @@ export class AddLeaseDialog implements OnInit {
 
     this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
       val.forEach((user) => {
+        this.all_users.push({
+          value: user.user_id,
+          user_type: user.user_type,
+          viewValue: user.name,
+        });
         if (user.user_type != "owner" && user.user_type != "tenant") {
           this.users.push({
             value: user.user_id,
@@ -147,7 +153,7 @@ export class AddLeaseDialog implements OnInit {
   }
 
   selectUnit(event: any) {
-    var e = this.users.find((u) => u.value == event.value.owner_id);
+    var e = this.all_users.find((u) => u.value == event.value.owner_id);
     this.owner = e.viewValue;
     this.owner_id = e.value;
   }

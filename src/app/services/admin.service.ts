@@ -8,7 +8,6 @@ const API_URL = "https://indusre.app/api/admin";
 
 @Injectable({ providedIn: "root" })
 export class AdminService {
- 
   constructor(public http: HttpClient, private otherServices: OtherServices) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -25,6 +24,15 @@ export class AdminService {
 
       return of(result as T);
     };
+  }
+
+  getAllContractsReminders() {
+    const url = `${API_URL}/get_all_contracts_reminders.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
   }
 
   removeAllRequestsFromArchive(data: any) {
@@ -493,37 +501,37 @@ export class AdminService {
   }
 
   selectTenantsPaymentsDetails(data: any) {
-   const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
-   return this.http.post(url, data).pipe(
-     map((data) => {
-       return data;
-     })
-   );
- }
+    const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
- selectTenantPayments(data: string) {
-   const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
-   return this.http.post(url, data).pipe(
-     map((data) => {
-       return data;
-     })
-   );
- }
- paymentsDetails(data: any) {
-  const url = `${API_URL}/paymentsDetails.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
- 
- selectPaymentAccordeingToTheMothod(data: string) {
-   const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
-   return this.http.post(url, data).pipe(
-     map((data) => {
-       return data;
-     })
-   );
- }
+  selectTenantPayments(data: string) {
+    const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  paymentsDetails(data: any) {
+    const url = `${API_URL}/paymentsDetails.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  selectPaymentAccordeingToTheMothod(data: string) {
+    const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

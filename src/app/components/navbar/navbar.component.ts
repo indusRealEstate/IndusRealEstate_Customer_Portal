@@ -64,7 +64,8 @@ export class NavbarComponent implements OnInit {
       titlee.split("?")[0] == "/property-details" ||
       titlee.split("?")[0] == "/admin-property-unit-details" ||
       titlee.split("?")[0] == "/admin-user-details" ||
-      titlee.split("?")[0] == "/admin-report"
+      titlee.split("?")[0] == "/admin-report" ||
+      titlee.split("?")[0] == "/announcements"
     ) {
       return "assets/img/svg/sidebar/home.svg";
     } else if (
@@ -106,7 +107,8 @@ export class NavbarComponent implements OnInit {
       titlee.split("?")[0] == "/property-details" ||
       titlee.split("?")[0] == "/admin-property-unit-details" ||
       titlee.split("?")[0] == "/admin-user-details" ||
-      titlee.split("?")[0] == "/admin-report"
+      titlee.split("?")[0] == "/admin-report" ||
+      titlee.split("?")[0] == "/announcements"
     ) {
       return "Dashboard";
     } else if (
@@ -173,6 +175,8 @@ export class NavbarComponent implements OnInit {
         return "Maintenance Requests";
       case "/admin-report":
         return "Report";
+      case "/announcements":
+        return "Announcements";
       default:
         return "404";
     }
