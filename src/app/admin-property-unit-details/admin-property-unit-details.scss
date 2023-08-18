@@ -623,7 +623,7 @@ select:focus {
   }
 }
 ::ng-deep .mat-mdc-menu-panel {
-  max-width: none !important; 
+  max-width: none !important;
 }
 
 ::ng-deep .finacial {
@@ -646,4 +646,17 @@ select:focus {
   .mat-mdc-row:nth-child(odd):hover {
     background-color: rgb(207 170 67 / 9%);
   }
+}
+
+.btn-more:active {
+  background-color: #2b333e;
+}
+
+.btn-more:focus {
+  background-color: #cfaa43;
+}
+
+img {
+  object-fit: cover;
+  object-position: center;
 }

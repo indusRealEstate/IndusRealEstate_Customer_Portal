@@ -501,13 +501,16 @@ export class AdminService {
   }
 
   selectTenantsPaymentsDetails(data: any) {
-    const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
+   const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
+   return this.http.post(url, data).pipe(
+     map((data) => {
+       return data;
+     })
+   );
+ }
+ 
+
+
 
   selectTenantPayments(data: string) {
     const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
