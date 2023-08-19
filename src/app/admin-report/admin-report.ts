@@ -23,9 +23,9 @@ interface DropDownButtonModel {
 })
 export class AdminReport implements OnInit {
   all_data: object | any;
-  all_tenant_payment:Object | any;
-  tenant_unpaid_payment:Object | any;
-  tenant_paid_payment : Object| any;
+  all_tenant_payment: Object | any;
+  tenant_unpaid_payment: Object | any;
+  tenant_paid_payment: Object | any;
   displayedColumns: string[] = [
     "UnitName",
     "Tenant",
@@ -33,13 +33,12 @@ export class AdminReport implements OnInit {
     "PaymentMode",
     "PaymentAmount",
     "PaymentDetails",
-    "More"
+    "More",
   ];
   dateFilter: DropDownButtonModel[] = [
     { value: "current_month", viewValue: "Current-month" },
     { value: "Last-3-month", viewValue: "Last-3-month" },
     { value: "Last-6-month", viewValue: "Last-6-month" },
-    
   ];
 
   isUserSignedIn: boolean = false;
@@ -56,6 +55,10 @@ export class AdminReport implements OnInit {
   allRequests: any[] = [];
 
   allMatTableData: MatTableDataSource<any>;
+
+  all_vacant_units: number = 0;
+  all_occupied_units: number = 0;
+
   constructor(
     private appAdminService: AdminService,
     private dialog: MatDialog
@@ -68,17 +71,17 @@ export class AdminReport implements OnInit {
     {
       title: "Total Landlords",
       icon: "assets/img/pngs/dashboard/landlord.png",
-      url:"/all-users"
+      url: "/all-users",
     },
     {
       title: "Total Maintenance Requests",
       icon: "assets/img/pngs/dashboard/maintenance.png",
-      url:"/admin-requests"
+      url: "/admin-requests",
     },
     {
       title: "Total Units",
       icon: "assets/img/pngs/dashboard/unit.png",
-      url:"/admin-properties-units"
+      url: "/admin-properties-units",
     },
   ];
 
@@ -86,21 +89,18 @@ export class AdminReport implements OnInit {
     {
       title: "Total Tenants",
       icon: "assets/img/pngs/dashboard/tenant-2.png",
-      url:"/all-users"
+      url: "/all-users",
     },
     {
       title: "Total Active Contracts",
       icon: "assets/img/pngs/dashboard/contract.png",
-     
     },
     {
       title: "Total Buildings",
       icon: "assets/img/pngs/dashboard/property.png",
-      url:"/admin-properties"
+      url: "/admin-properties",
     },
   ];
-
- 
 
   screenHeight: number;
   screenWidth: number;
@@ -134,9 +134,23 @@ export class AdminReport implements OnInit {
         .getallPropertiesUnitsAdmin()
         .subscribe((val: any[]) => {
           this.allUnits = val;
+          val.forEach((unit) => {
+            if (unit.status == "occupied") {
+              this.all_occupied_units++;
+            } else {
+              this.all_vacant_units++;
+            }
+          });
         });
     } else {
       this.allUnits = unitsDataSession;
+      unitsDataSession.forEach((unit) => {
+        if (unit.status == "occupied") {
+          this.all_occupied_units++;
+        } else {
+          this.all_vacant_units++;
+        }
+      });
     }
 
     var usersDataSession = JSON.parse(
@@ -146,7 +160,6 @@ export class AdminReport implements OnInit {
     if (usersDataSession == null) {
       this.appAdminService.getAllUsersAdmin().subscribe((val: any[]) => {
         this.allUsers = val;
-        
       });
     } else {
       this.allUsers = usersDataSession;
@@ -156,16 +169,19 @@ export class AdminReport implements OnInit {
       sessionStorage.getItem("all_lease_session")
     );
 
-   
+    if (leaseDataSession == null) {
       this.appAdminService.getAllLeaseAdmin().subscribe((val: any[]) => {
         this.allContracts = val;
       });
-   
+    } else {
+      this.allContracts = leaseDataSession;
+    }
 
     this.appAdminService.getAllRequestsAdmin().subscribe((val: any[]) => {
       this.allRequests = val;
     });
   }
+
   getStatsCount(title) {
     switch (title) {
       case "Total Landlords":
@@ -198,7 +214,7 @@ export class AdminReport implements OnInit {
       .open(ViewFinanceDetailsDialog, {
         width: "50%",
         height: "20rem",
-        data
+        data,
       })
       .afterClosed()
       .subscribe((value) => {
@@ -218,13 +234,12 @@ export class AdminReport implements OnInit {
 
   async ngOnInit() {
     this.getAllData();
-    
+
     let data = {};
     this.appAdminService
       .selectTenantsPaymentsDetails(JSON.stringify(data))
       .subscribe((val) => {
         this.all_data = val;
-        console.log(this.all_data);
         this.allMatTableData = this.all_data;
         this.allMatTableData = new MatTableDataSource<any>(this.all_data);
         setTimeout(() => {
@@ -236,26 +251,29 @@ export class AdminReport implements OnInit {
             }, 3000);
           }
         });
-
-        console.log(this.all_data);
+      })
+      .add(() => {
+        this.isContentLoading = false;
       });
 
-      this.appAdminService.totalTenantPayment(JSON.stringify(data))
+    this.appAdminService
+      .totalTenantPayment(JSON.stringify(data))
       .subscribe((val) => {
         this.all_tenant_payment = val;
-       // console.log(this.all_tenant_payment);
+        // console.log(this.all_tenant_payment);
       });
 
-      this.appAdminService.paidTenantPayment(JSON.stringify(data))
+    this.appAdminService
+      .paidTenantPayment(JSON.stringify(data))
       .subscribe((val) => {
         this.tenant_paid_payment = val;
-       // console.log(this.tenant_paid_payment);
+        // console.log(this.tenant_paid_payment);
       });
 
-      this.appAdminService.unpaidTenantPayment(JSON.stringify(data))
+    this.appAdminService
+      .unpaidTenantPayment(JSON.stringify(data))
       .subscribe((value) => {
         this.tenant_unpaid_payment = value;
-        console.log(this.tenant_unpaid_payment);
       });
   }
 }
