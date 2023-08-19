@@ -98,7 +98,6 @@
               <a
                 class="nav-link"
                 [routerLink]="[item.path]"
-                [queryParams]="{ uid: user.id }"
                 [class.active]="isLinkActive(item.path)"
               >
                 <!-- <i class="material-icons">{{ item.icon }}</i> -->
@@ -147,7 +146,6 @@
             <a
               class="nav-link"
               [routerLink]="[item.path]"
-              [queryParams]="{ uid: user.id }"
               [class.active]="isLinkActive(item.path)"
             >
               <!-- <i class="material-icons">{{ item.icon }}</i> -->
@@ -164,7 +162,7 @@
           </li>
         </div>
 
-        <div *ngIf="isDocumentsOpened == true" style="height: 80%">
+        <!-- <div *ngIf="isDocumentsOpened == true" style="height: 80%">
           <li
             *ngFor="let item of documentsRouteAdmin"
             class="{{ item.class }} nav-item sideBarNav-Item"
@@ -172,10 +170,8 @@
             <a
               class="nav-link"
               [routerLink]="[item.path]"
-              [queryParams]="{ uid: user.id }"
               [class.active]="isLinkActive(item.path)"
             >
-              <!-- <i class="material-icons">{{ item.icon }}</i> -->
               <div class="row">
                 <img
                   class="sidebar-items-icon"
@@ -186,7 +182,7 @@
               </div>
             </a>
           </li>
-        </div>
+        </div> -->
 
         <div *ngIf="isRequestsOpened == true" style="height: 80%">
           <li
@@ -196,7 +192,6 @@
             <a
               class="nav-link"
               [routerLink]="[item.path]"
-              [queryParams]="{ uid: user.id }"
               [class.active]="isLinkActive(item.path)"
             >
               <!-- <i class="material-icons">{{ item.icon }}</i> -->
@@ -220,7 +215,6 @@
             <a
               class="nav-link"
               [routerLink]="[item.path]"
-              [queryParams]="{ uid: user.id }"
               [class.active]="isLinkActive(item.path)"
             >
               <!-- <i class="material-icons">{{ item.icon }}</i> -->

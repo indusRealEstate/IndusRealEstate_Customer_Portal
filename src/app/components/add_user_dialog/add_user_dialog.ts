@@ -228,6 +228,7 @@ export class AddUserDialog implements OnInit {
       allocated_unit: "",
       profile_img: this.imgFileUploaded.name,
       documents: JSON.stringify(docs_names),
+      joined_date: new Date(),
     };
 
     return JSON.stringify(data);

@@ -22,6 +22,7 @@ import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
 import { AdminReport } from "app/admin-report/admin-report";
+import { Announcements } from "app/announcements/announcements";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -44,8 +45,12 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-lease", component: AllLeasesComponent },
   { path: "404", component: PageNotFoundComponent },
   { path: "admin-request-category", component: AdminRequestsCategory },
-  { path: "admin-property-unit-details", component: AdminPropertiesUnitDetails },
+  {
+    path: "admin-property-unit-details",
+    component: AdminPropertiesUnitDetails,
+  },
   { path: "admin-lease-details", component: AdminLeaseDetail },
   { path: "admin-user-details", component: ViewUserDetails },
+  { path: "announcements", component: Announcements },
   { path: "**", redirectTo: "/404" },
 ];

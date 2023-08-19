@@ -1,14 +1,18 @@
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
 <!------------------------------------ Desktop Screen ----------------------------------------------------->
-<div class="main-content reports-bg" *ngIf="screenWidth > 430">
+<div
+  class="main-content reports-bg"
+  *ngIf="screenWidth > 430"
+  style="padding: 20px 15px"
+>
   <div
     class="container-fluid h-100 d-flex justify-content-center"
     style="max-width: 2576px"
   >
     <div class="col" style="padding: 0">
-      <div class="row m-0 w-100 align-items-end justify-content-between">
-        <div class="row m-0 align-items-end mb-3">
+      <div class="row m-0 w-100 align-items-center justify-content-between">
+        <div class="row m-0 align-items-center">
           <p class="m-0 ml-4" style="font-size: 2rem; font-weight: 600">
             All Properties
           </p>
@@ -32,13 +36,13 @@
             (closeTimeLineFilterEmitter)="closeTimelineFilter()"
           ></table-filters> -->
         </div>
-        <div class="row m-0 align-items-end mb-3">
+        <div class="row m-0 align-items-center">
           <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
           <div
             class="btn"
             style="
               margin: 0;
-              padding: 7px 15px;
+              padding: 7px 10px;
               margin-right: 10px;
               background: #d4aa32;
             "
@@ -51,32 +55,29 @@
               <img
                 src="assets/img/svg/add-square.svg"
                 alt=""
-                style="width: 20px; filter: brightness(0) invert(1)"
+                style="width: 15px; filter: brightness(0) invert(1)"
               />
               <p class="m-0">Add Property</p>
             </div>
           </div>
           <div
+            matTooltip="Export Excel File"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
             class="btn"
             style="
               margin: 0;
-              padding: 7px 15px;
+              padding: 5px 10px;
               margin-right: 10px;
               background: #2b333e;
             "
             (click)="exportExcelFile()"
           >
-            <div
-              class="row m-0 align-items-center"
-              style="width: 125px; justify-content: space-between"
-            >
-              <img
-                src="assets/img/svg/excel.svg"
-                alt=""
-                style="width: 20px; filter: brightness(0) invert(1)"
-              />
-              <p class="m-0">Export Excel</p>
-            </div>
+            <img
+              src="assets/img/svg/excel.svg"
+              alt=""
+              style="width: 20px; filter: brightness(0) invert(1)"
+            />
           </div>
         </div>
       </div>
@@ -195,7 +196,9 @@
                     >
                     </span>
                   </div>
-                  <div *ngIf="more_menu_prop_loaded && more_menu_prop_all_data != ''">
+                  <div
+                    *ngIf="more_menu_prop_loaded && more_menu_prop_all_data != ''"
+                  >
                     <button mat-menu-item (click)="openEditProperty(index)">
                       <div class="row m-0 justify-content-between">
                         <span style="color: #c89914">Edit</span>

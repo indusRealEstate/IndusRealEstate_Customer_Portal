@@ -39,11 +39,7 @@ export class LoginComponent implements OnInit {
     this.getScreenSize();
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-      this.router.navigate([`/admin-dashboard`], {
-        queryParams: { uid: user[0]["id"] },
-      });
+      this.router.navigate([`/admin-dashboard`]);
     }
   }
 
@@ -121,7 +117,6 @@ export class LoginComponent implements OnInit {
             var user = JSON.parse(userData);
 
             setTimeout(async () => {
-              await this.firebaseService.firebaseLogin().then(async () => {});
               // await this.authenticationService.getIPAddress();
               // .then((res) => {
               //   var date = this.getCurrentDate();
@@ -143,10 +138,7 @@ export class LoginComponent implements OnInit {
               // });
 
               // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
-              this.router.navigate(["/admin-dashboard"], {
-                // replaceUrl: true,
-                queryParams: { uid: user[0]["id"] },
-              });
+              this.router.navigate(["/admin-dashboard"]);
               this.otherServices.userSignedIn.next(true);
             });
           }

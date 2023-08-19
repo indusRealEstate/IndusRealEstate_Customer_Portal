@@ -1,5 +1,6 @@
-import { Component, HostListener, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Router } from "@angular/router";
 import {
   RenderEvent,
   SeriesLabelsContentArgs,
@@ -15,6 +16,7 @@ import {
 } from "@progress/kendo-drawing";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { FirebaseService } from "app/services/firebase.service";
 
 @Component({
   selector: "admin-dashboard",
@@ -35,29 +37,38 @@ export class AdminDashboardComponent implements OnInit {
   all_vacant_units: number = 0;
   all_occupied_units: number = 0;
 
+  total_contracts_reminders_items: any[] = [];
+  total_contracts_currentItemsToShow: any[] = [];
+
+  total_contracts_reminders_loading: boolean = true;
+
+  donut_chart_loading: boolean = true;
+
+  firestore_contracts_reminders: any[] = [];
+
+  reminder_button_loading: boolean = true;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private adminService: AdminService,
+    private firebaseService: FirebaseService,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private route: ActivatedRoute
+    private authenticationService: AuthenticationService
   ) {
     this.isLoading = true;
-    // }
-
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
 
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/admin-dashboard"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate(["/admin-dashboard"], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
+    this.firebaseService.firebaseLogin().then(() => {
+      this.firebaseService.userLoggedIn.subscribe(async (res) => {
+        if (res == true) {
+          await this.firebaseService.getAllContractsReminders().then((obs) => {
+            obs.subscribe((val: any[]) => {
+              this.firestore_contracts_reminders = val;
+            });
+          });
+        }
+      });
     });
   }
 
@@ -98,6 +109,32 @@ export class AdminDashboardComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  onPaginateChange($event) {
+    this.total_contracts_currentItemsToShow =
+      this.total_contracts_reminders_items.slice(
+        $event.pageIndex * $event.pageSize,
+        $event.pageIndex * $event.pageSize + $event.pageSize
+      );
+  }
+
+  async sendContractReminder(contract_id, end_date, index) {
+    var days_left = this.getContractsEndsInPeriod(end_date);
+    await this.firebaseService.addContractReminder(contract_id, days_left);
+    Object.assign(this.total_contracts_currentItemsToShow[index], {
+      disable: true,
+      send_time: "now",
+    });
+
+    var item_index = this.total_contracts_reminders_items.findIndex(
+      (contract) => contract.contract_id == contract_id
+    );
+
+    Object.assign(this.total_contracts_reminders_items[item_index], {
+      disable: true,
+      send_time: "now",
+    });
   }
 
   isUserSignOut() {
@@ -175,6 +212,48 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.getAllRequestsAdmin().subscribe((val: any[]) => {
       this.allRequests = val;
     });
+
+    this.adminService.getAllContractsReminders().subscribe((res: any[]) => {
+      this.total_contracts_reminders_items = res;
+      this.total_contracts_currentItemsToShow = res;
+
+      setTimeout(() => {
+        res.forEach((contract) => {
+          var now = new Date().getTime();
+          if (this.firestore_contracts_reminders.length != 0) {
+            var reminder = this.firestore_contracts_reminders.find(
+              (co) => co.id == contract.contract_id
+            );
+            if (reminder != undefined) {
+              var timestamp = new Date(reminder.timestamp.toDate()).getTime();
+              var difference_In_Time = timestamp - now;
+              var difference_In_Days = Math.abs(
+                Math.round(difference_In_Time / (1000 * 3600 * 24))
+              );
+
+              var diffHrs = Math.floor(
+                ((now - timestamp) % 86400000) / 3600000
+              );
+
+              if (difference_In_Days < 1) {
+                Object.assign(contract, {
+                  disable: true,
+                  send_time:
+                    diffHrs >= 1
+                      ? diffHrs * 60
+                      : Math.abs(
+                          Math.round(
+                            ((difference_In_Time % 86400000) % 3600000) / 60000
+                          )
+                        ),
+                });
+              }
+            }
+          }
+        });
+        this.reminder_button_loading = false;
+      }, 1200);
+    });
   }
 
   getStatsCount(title) {
@@ -198,26 +277,49 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
+  getContractsEndsInPeriod(end: any) {
+    var start_date = new Date();
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    return Math.round(difference_In_Days);
+  }
+
   async ngOnInit() {
     await this.getAllData();
     this.isUserSignOut();
   }
 
   ngAfterViewInit() {
-    this.chart_data = [
-      {
-        share: `${(this.all_occupied_units / this.allUnits.length) * 100}%`,
-        color: "#fac83a",
-      },
-      {
-        share: `${(this.all_vacant_units / this.allUnits.length) * 100}%`,
-        color: "#ff5353",
-      },
-    ];
+    this.isLoading = false;
 
     setTimeout(() => {
-      this.isLoading = false;
-    }, 500);
+      if (this.paginator != undefined) {
+        this.total_contracts_currentItemsToShow =
+          this.total_contracts_reminders_items.slice(
+            this.paginator.pageIndex * this.paginator.pageSize,
+            this.paginator.pageIndex * this.paginator.pageSize +
+              this.paginator.pageSize
+          );
+
+        this.total_contracts_reminders_loading = false;
+      }
+
+      this.chart_data = [
+        {
+          share: `${(this.all_occupied_units / this.allUnits.length) * 100}%`,
+          color: "#fac83a",
+        },
+        {
+          share: `${(this.all_vacant_units / this.allUnits.length) * 100}%`,
+          color: "#ff5353",
+        },
+      ];
+      this.donut_chart_loading = false;
+    }, 1500);
   }
 
   navigateToTotalProperties() {

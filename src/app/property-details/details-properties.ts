@@ -1,11 +1,11 @@
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AuthenticationService } from "app/services/authentication.service";
-import { AdminService } from "app/services/admin.service";
-import { DownloadService } from "app/services/download.service";
 import { HttpClient } from "@angular/common/http";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute, Router } from "@angular/router";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
+import { AdminService } from "app/services/admin.service";
+import { AuthenticationService } from "app/services/authentication.service";
+import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "property-details",
@@ -30,19 +30,21 @@ export class DetailsComponents implements OnInit {
   view_list: boolean = false;
   all_units: object[] = [];
 
-  @ViewChild('carousel') carousel;
-  @ViewChild('indicator') indicator;
+  @ViewChild("carousel") carousel;
+  @ViewChild("indicator") indicator;
 
   selected_document: any = "";
   //downloadService: any;
   // property_name:string;
+
+  sidebar_opened: boolean = false;
 
   constructor(
     private router: Router,
     private appAdminService: AdminService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private appdownloadService: DownloadService,
+    private otherServices: OtherServices,
     public http: HttpClient,
     public dialog: MatDialog
   ) {
@@ -57,6 +59,10 @@ export class DetailsComponents implements OnInit {
       .add(() => {
         this.isContentLoading = false;
       });
+
+    this.otherServices.miniSideBarClicked.subscribe((val) => {
+      this.sidebar_opened = val;
+    });
   }
 
   screenHeight: number;
@@ -94,26 +100,21 @@ export class DetailsComponents implements OnInit {
 
         this.getDoc(this.all_data.prop_doc);
 
-        this.createCarousel(this.all_data.prop_images)
+        this.createCarousel(this.all_data.prop_images);
       })
       .add(() => {
         this.isContentLoading = false;
       });
   }
 
-  private getDoc(data: string){
+  private getDoc(data: string) {
     this.prop_doc = [];
-    for (
-      let i = 0;
-      i < JSON.parse(data).length;
-      i++
-    ) {
+    for (let i = 0; i < JSON.parse(data).length; i++) {
       this.prop_doc.push(JSON.parse(data)[i]);
     }
   }
 
-  private createCarousel(data:string){
-
+  private createCarousel(data: string) {
     let image_array: string[] = [];
 
     for (let i = 0; i < JSON.parse(data).length; i++) {
@@ -125,15 +126,15 @@ export class DetailsComponents implements OnInit {
       let carousel = document.getElementById("carousel");
       let indicator = document.getElementById("indicator");
 
-      if(carousel.firstElementChild !== null){
-        while(carousel.firstElementChild){
-          carousel.removeChild(carousel.firstElementChild)
+      if (carousel.firstElementChild !== null) {
+        while (carousel.firstElementChild) {
+          carousel.removeChild(carousel.firstElementChild);
         }
       }
 
-      if(indicator.firstElementChild !== null){
-        while(indicator.firstElementChild){
-          indicator.removeChild(indicator.firstElementChild)
+      if (indicator.firstElementChild !== null) {
+        while (indicator.firstElementChild) {
+          indicator.removeChild(indicator.firstElementChild);
         }
       }
 
@@ -213,7 +214,6 @@ export class DetailsComponents implements OnInit {
     this.router.navigate(["/admin-property-unit-details"], {
       queryParams: { unit_id: unit },
     });
-
   }
 
   openEditProperty(data: string) {
@@ -223,17 +223,44 @@ export class DetailsComponents implements OnInit {
       })
       .afterClosed()
       .subscribe((value) => {
-        this.all_data.prop_name = value.property_name != undefined ? value.property_name : this.all_data.prop_name;
-        this.all_data.prop_address = value.property_address != undefined ? value.property_address : this.all_data.prop_address;
-        this.all_data.prop_description = value.property_description != undefined ? value.property_description : this.all_data.prop_description;
-        this.all_data.prop_gov_id = value.property_gov_id != undefined ? value.property_gov_id : this.all_data.prop_gov_id;
-        this.all_data.prop_in_charge = value.property_in_charge != undefined ? value.property_in_charge : this.all_data.prop_in_charge;
-        this.all_data.prop_locality_name = value.property_locality != undefined ? value.property_locality : this.all_data.prop_locality_name;
-        this.all_data.prop_no_of_units = value.property_no_of_units != undefined ? value.property_no_of_units : this.all_data.prop_no_of_units;
+        this.all_data.prop_name =
+          value.property_name != undefined
+            ? value.property_name
+            : this.all_data.prop_name;
+        this.all_data.prop_address =
+          value.property_address != undefined
+            ? value.property_address
+            : this.all_data.prop_address;
+        this.all_data.prop_description =
+          value.property_description != undefined
+            ? value.property_description
+            : this.all_data.prop_description;
+        this.all_data.prop_gov_id =
+          value.property_gov_id != undefined
+            ? value.property_gov_id
+            : this.all_data.prop_gov_id;
+        this.all_data.prop_in_charge =
+          value.property_in_charge != undefined
+            ? value.property_in_charge
+            : this.all_data.prop_in_charge;
+        this.all_data.prop_locality_name =
+          value.property_locality != undefined
+            ? value.property_locality
+            : this.all_data.prop_locality_name;
+        this.all_data.prop_no_of_units =
+          value.property_no_of_units != undefined
+            ? value.property_no_of_units
+            : this.all_data.prop_no_of_units;
 
-        this.all_data.prop_doc = value.property_uploaded_doc != undefined ? JSON.stringify(value.property_uploaded_doc) : this.all_data.prop_doc;
-        this.all_data.prop_images = value.property_uploaded_images != undefined ? JSON.stringify(value.property_uploaded_images) : this.all_data.prop_images;
-        
+        this.all_data.prop_doc =
+          value.property_uploaded_doc != undefined
+            ? JSON.stringify(value.property_uploaded_doc)
+            : this.all_data.prop_doc;
+        this.all_data.prop_images =
+          value.property_uploaded_images != undefined
+            ? JSON.stringify(value.property_uploaded_images)
+            : this.all_data.prop_images;
+
         this.createCarousel(this.all_data.prop_images);
         this.getDoc(this.all_data.prop_doc);
 

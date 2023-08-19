@@ -12,10 +12,11 @@ import { VAPIDKEYS } from "app/keys/vapid";
 import { environment } from "environments/environment.prod";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
-import { Observable, map, of } from "rxjs";
+import { BehaviorSubject, Observable, map, of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseService {
+  userLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
     public http: HttpClient,
     private db: AngularFirestore,
@@ -32,15 +33,45 @@ export class FirebaseService {
   }
 
   async firebaseLogin() {
-    return await this.auth
-      .signInWithEmailAndPassword("webtech@indusre.ae", "Ajeermdk@1820#")
-      .then((result) => {
-        // console.log(result.user);
-      })
-      .catch((error) => {
-        console.log(error);
-        // window.alert(error.message);
-      });
+    this.auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        // console.log("already logged in");
+        this.userLoggedIn.next(true);
+      } else {
+        // console.log("logging in..");
+        // this.userLoggedIn.next(false);
+        await this.auth
+          .signInWithEmailAndPassword("webtech@indusre.ae", "Ajeermdk@1820#")
+          .then((result) => {
+            // console.log(result);
+          })
+          .catch((error) => {
+            console.log(error);
+            // window.alert(error.message);
+          });
+      }
+    });
+  }
+
+  async getAllContractsReminders() {
+    return collectionChanges(
+      collection(this.firestore, "contract_reminders")
+    ).pipe(
+      map((items) =>
+        items.map((item) => {
+          const data = item.doc.data();
+          const id = item.doc.id;
+          return { id, ...data };
+        })
+      )
+    );
+  }
+
+  async addContractReminder(contract_id, days_left) {
+    await this.db.collection("contract_reminders").doc(contract_id).set({
+      days_left: days_left,
+      timestamp: new Date(),
+    });
   }
 
   getData() {

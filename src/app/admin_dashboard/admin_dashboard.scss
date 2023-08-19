@@ -4,6 +4,17 @@
   font-family: "Montserrat";
 }
 
+.contract-reminder-id {
+  font-weight: 600;
+  font-size: 12px;
+
+  &:hover{
+    cursor: pointer;
+    color: #d4aa32;
+    text-decoration: underline;
+  }
+}
+
 .small-cards {
   border: 1px solid #e6ebf1;
   border-radius: 7px;

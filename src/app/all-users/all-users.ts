@@ -33,7 +33,7 @@ export class AllUsersComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
-  isContentLoading: boolean = false; 
+  isContentLoading: boolean = false;
 
   displayedColumns: string[] = [
     // "name",
@@ -65,6 +65,8 @@ export class AllUsersComponent implements OnInit {
 
   all_units_landlord: any[] = [];
 
+  current_sort_option: any = "all";
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
@@ -80,20 +82,6 @@ export class AllUsersComponent implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate([`/all-users`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      } else if (e != user[0]["id"]) {
-        router.navigate([`/all-users`], {
-          queryParams: { uid: user[0]["id"] },
-        });
-      }
-    });
   }
 
   screenHeight: number;
@@ -102,6 +90,17 @@ export class AllUsersComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  changeSortOption(option: string) {
+    this.current_sort_option = option;
+    if (option != "all") {
+      this.allUsersMatTableData.data = this.allUsers.filter(
+        (user) => user.user_type == option
+      );
+    } else {
+      this.allUsersMatTableData.data = this.allUsers;
+    }
   }
 
   isUserSignOut() {
@@ -288,6 +287,7 @@ export class AllUsersComponent implements OnInit {
   }
 
   refreshTable() {
+    this.current_sort_option = "all";
     sessionStorage.removeItem("all_users_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {

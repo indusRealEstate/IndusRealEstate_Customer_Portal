@@ -109,6 +109,161 @@
               "
             >
               <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
+                <div class="row m-0 justify-content-between">
+                  <span style="font-weight: 600">Upcoming Contracts</span>
+                  <span style="font-weight: 600; color: #d4aa32"
+                    >Total Reminders : 10</span
+                  >
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div
+                  *ngIf="total_contracts_reminders_loading"
+                  class="d-flex w-100 justify-content-center align-items-center"
+                  style="height: 150px"
+                >
+                  <span
+                    class="spinner-border spinner-border-m mr-2"
+                    style="color: #d4aa32"
+                  >
+                  </span>
+                </div>
+
+                <div
+                  *ngIf="!total_contracts_reminders_loading && total_contracts_reminders_items.length == 0"
+                  class="d-flex w-100 justify-content-center align-items-center"
+                  style="height: 80px"
+                >
+                  <span
+                    style="font-size: 20px; font-weight: 500; color: #537096"
+                    >No Reminders :-)</span
+                  >
+                </div>
+                <div
+                  *ngIf="!total_contracts_reminders_loading && total_contracts_reminders_items.length != 0"
+                >
+                  <div
+                    *ngFor="let contract of total_contracts_currentItemsToShow;let index = index"
+                    class="row m-0 mb-2 justify-content-between"
+                    style="
+                      padding: 8px 15px;
+                      background: #537096;
+                      border-radius: 5px;
+                      color: white;
+                    "
+                  >
+                    <div class="row m-0">
+                      <img
+                        class="mx-2"
+                        src="assets/img/svg/sidebar/lease.svg"
+                        alt=""
+                        style="width: 30px; filter: invert(1)"
+                      />
+                      <div class="col">
+                        <p
+                          [routerLink]="['/admin-lease-details']"
+                          [queryParams]="{contact_id : contract.contract_id }"
+                          class="mb-1 contract-reminder-id"
+                        >
+                          #{{contract.contract_id}}
+                        </p>
+                        <p
+                          class="mb-1"
+                          style="
+                            font-weight: 600;
+                            background: white;
+                            color: red;
+                            padding: 0px 10px;
+                            border-radius: 5px;
+                            font-size: 12px;
+                          "
+                        >
+                          This contract will end within
+                          {{getContractsEndsInPeriod(contract.contract_end)}}
+                          days.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="row m-0 align-items-center">
+                      <p
+                        class="m-0 mr-3"
+                        *ngIf="contract.disable == true"
+                        style="font-size: 12px; font-weight: 500"
+                      >
+                        {{
+                          contract.send_time == 'now' ? 
+                               'Reminder Sended Now' 
+                                  :contract.send_time != 0 && contract.send_time < 60 ? 
+                                     'Reminder Sended' + ' ' + contract.send_time + ' ' + 'minutes ago' 
+                                  : contract.send_time >= 60 ? 
+                                     'Reminder Sended' + ' ' + contract.send_time / 60 + ' ' + ((contract.send_time / 60) == 1 ? 'hour ago' : 'hours ago')
+                                  : 'Reminder Sended Now'
+                        }}
+                      </p>
+                      <div
+                        *ngIf="contract.disable == undefined && reminder_button_loading == false"
+                        (click)="sendContractReminder(contract.contract_id,contract.contract_end,index)"
+                        class="btn"
+                        style="padding: 5px 10px; background: #d4aa32"
+                      >
+                        Send Reminder
+                      </div>
+                      <div
+                        *ngIf="contract.disable == true"
+                        class="btn"
+                        style="
+                          padding: 5px 10px;
+                          background: #a9a9a9;
+                          cursor: default;
+                        "
+                      >
+                        Send Reminder
+                      </div>
+                      <div
+                        class="btn ml-2"
+                        style="padding: 5px 10px; background: #ff5353"
+                      >
+                        Ignore
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <mat-paginator
+                  #paginator
+                  (page)="onPaginateChange($event)"
+                  [length]="total_contracts_reminders_items.length"
+                  [pageSize]="3"
+                  [pageSizeOptions]="[3, 5, 10]"
+                  aria-label="Select page"
+                >
+                </mat-paginator>
+
+                <div class="row m-0 w-100 mt-1 justify-content-end">
+                  <div
+                    class="btn"
+                    style="padding: 5px 15px; background: #313a46"
+                  >
+                    Clear All
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col pl-0">
+            <div
+              class="card mt-3"
+              style="
+                margin: 0;
+                box-shadow: none;
+                border: 1px solid #e6ebf1;
+                background: white;
+              "
+            >
+              <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
                 <span style="font-weight: 600">Contracts Status By Month</span>
               </div>
 
@@ -208,15 +363,27 @@
               <div class="row m-0 justify-content-between">
                 <span style="font-weight: 600">Unit Stats</span>
                 <span style="font-weight: 600; color: #d4aa32"
-                  >Total Units : 15</span
+                  >Total Units : {{allUnits.length}}</span
                 >
               </div>
             </div>
             <div class="card-body" #card_body>
+              <div
+                *ngIf="donut_chart_loading"
+                class="d-flex w-100 justify-content-center align-items-center"
+                style="height: 420px"
+              >
+                <span
+                  class="spinner-border spinner-border-m mr-2"
+                  style="color: #d4aa32"
+                >
+                </span>
+              </div>
               <!------------------------------------------------------------------ Donut Chart -------------------------------------------->
               <!------------------------------------------------------------------ Donut Chart -------------------------------------------->
               <!------------------------------------------------------------------ Donut Chart -------------------------------------------->
               <kendo-chart
+                *ngIf="!donut_chart_loading"
                 (render)="onRender($event)"
                 style="height: 330px; display: flex; width: 100%"
               >
