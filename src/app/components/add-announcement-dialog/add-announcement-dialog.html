@@ -1,0 +1,98 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div class="card-body" >
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 20px"
+        >
+          Add Announcement
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Title*</mat-label>
+            <input
+              matInput
+              [(ngModel)]="title"
+              placeholder="Ex. Water"
+              
+            />
+          </mat-form-field>
+
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
+            <mat-label>Building Name*</mat-label>
+            <mat-select [(ngModel)]="building_name">
+              <mat-option
+                *ngFor="let type of buildingName"
+                [value]="type.viewValue"
+              >
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field class="mt-2" class="textField" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              rows="4"
+              [(ngModel)]="description"
+             
+            ></textarea>
+          </mat-form-field>
+        
+          <span style="font-size: 1rem; font-weight: 500;color: #3c4858b5;">Is this a emergency notification?</span><br>
+       
+       
+          <mat-slide-toggle class="mt-2" [(ngModel)]="type"></mat-slide-toggle>
+        </div>
+        <div class="col-md-12">
+          <div
+            class="btn"
+            style="background: #3c4858; min-width: 120px; position:absolute;right:0rem; "
+            (click)="onSubmit()"
+          >
+            <span>Announce</span>
+      
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="row w-100 justify-content-end align-items-center my-3">
+        <span
+          class="mr-3"
+          *ngIf="formNotFilled"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 7px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+            position: absolute;
+            left: 2rem;
+            bottom: 1rem;
+                  "
+          >Please fill the form.</span
+        >
+      </div>
+    </div>
+  </div>
+
