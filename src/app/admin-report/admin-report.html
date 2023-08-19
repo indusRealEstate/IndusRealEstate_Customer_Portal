@@ -136,7 +136,7 @@
                         "
                       >
                         {{all_tenant_payment != undefined ?
-                        all_tenant_payment.total_amount : 0 | number}}
+                        (all_tenant_payment.total_amount | number) : 0 }}
                       </p>
                       <p class="" style="font-weight: 600; color: #adb5bc">
                         Total Amount
@@ -156,7 +156,7 @@
                         "
                       >
                         {{tenant_paid_payment != undefined ?
-                        tenant_paid_payment.paid_amount : 0 | number}}
+                        (tenant_paid_payment.paid_amount | number) : 0 }}
                       </p>
                       <p
                         style="
@@ -190,7 +190,7 @@
                         "
                       >
                         {{tenant_unpaid_payment != undefined ?
-                        tenant_unpaid_payment.unpaid_amount : 0 | number}}
+                        (tenant_unpaid_payment.unpaid_amount | number) : 0 }}
                       </p>
                       <p
                         style="
