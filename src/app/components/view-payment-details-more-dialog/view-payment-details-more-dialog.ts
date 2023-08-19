@@ -12,7 +12,7 @@ export class ViewPaymentDetailsMoreDialog implements OnInit {
   is_online: boolean = false;
   is_cash: boolean = false;
 
-  all_data: any;
+  all_data: any; 
 
   is_data_loaded: boolean = false;
 

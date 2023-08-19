@@ -416,7 +416,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((data) => {
         console.log(data);
-        this.all_data.unit_amenties =
+        this.all_data.unit_amenties = 
           data.amenties != undefined
             ? data.amenties
             : this.all_data.unit_amenties;
@@ -472,9 +472,11 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   viewAllDocuments() {
     this.dialog
       .open(ViewAllUnitDocuments, {
+        height: '70vh',
+        width: '100%',
         data: {
           doc: this.all_data.unit_doc,
-          id: this.all_data.unit_id,
+          id: this.all_data.unit_id, 
         },
       })
       .afterClosed()
@@ -553,6 +555,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   moreDetails(id: string, method: string) {
     this.dialog.open(ViewPaymentDetailsMoreDialog, {
+      width: '75vw',
+      height: '50vh',
       data: {
         id: id,
         method: method,

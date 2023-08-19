@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
@@ -38,9 +38,16 @@ export class ViewAllUnitDocuments implements OnInit {
     console.log(this.unit_doc_array);
   }
 
+  ngOnChanges(){
+    
+  }
+
 
   ngOnInit() {
-    
+    window.addEventListener("scrol",()=>{
+      console.log("hi");
+    })
+
   }
 
   ngAfterViewInit() {}

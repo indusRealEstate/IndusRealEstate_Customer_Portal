@@ -1,10 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import {
-  Component,
-  HostListener,
-  OnInit,
-  ViewChild
-} from "@angular/core";
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
@@ -61,7 +56,8 @@ export class AdminRequestsDetails implements OnInit {
   main_request_status: string = "";
   select_staff: string = "";
   staff_selected: boolean = false;
-  selected_time: string;
+  selected_time: string = "";
+  is_time_selected: boolean = false;
   date_select: boolean = false;
   maintenance_staff: object = {
     name: "",
@@ -250,6 +246,8 @@ export class AdminRequestsDetails implements OnInit {
   viewMedia(data: string) {
     this.dialog
       .open(DialogViewMedia, {
+        height: "75vh",
+        width: "75vw",
         data: {
           link: `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
           data: data,
@@ -360,6 +358,7 @@ export class AdminRequestsDetails implements OnInit {
   timeSlotSelectedValues: any[] = [];
 
   getDateTime() {
+    this.date_select = false;
     this.timeSlotSelectedValues = [];
     let today = new Date().toLocaleDateString("en-US");
     let selected_date = this.assign_date.toLocaleDateString("en-US");
@@ -385,39 +384,50 @@ export class AdminRequestsDetails implements OnInit {
 
   assignValue(data: string) {
     this.selected_time = data;
+    this.is_time_selected = true;
     return data;
   }
 
   assignStaff() {
-    if (this.selected_time !== "" && this.select_staff !== "") {
-      this.staff_assigned = true;
-      let format = new Intl.DateTimeFormat("en", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-      }).format(this.assign_date);
-      let selected_date = this.assign_date.toLocaleDateString("en-US");
+    if (this.date_select) {
+      if (this.selected_time !== "" && this.select_staff !== "") {
+        this.staff_assigned = true;
+        let format = new Intl.DateTimeFormat("en", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+        }).format(this.assign_date);
+        let selected_date = this.assign_date.toLocaleDateString("en-US");
 
-      let data = {
-        id: this.all_data.main_request_id,
-        name: this.select_staff,
-        date: format,
-        time: this.selected_time,
-      };
+        let data = {
+          id: this.all_data.main_request_id,
+          name: this.select_staff,
+          date: format,
+          time: this.selected_time,
+        };
 
-      this.appAdminService
-        .assignStaff(JSON.stringify(data))
-        .subscribe((value: any) => {
-          console.log(value);
-          this.maintenance_staff = value.data;
-        });
+        this.appAdminService
+          .assignStaff(JSON.stringify(data))
+          .subscribe((value: any) => {
+            console.log(value);
+            this.maintenance_staff = value.data;
+          });
 
-      this.reassign = false;
+        this.reassign = false;
+      }
     }
   }
 
   reassignStaff() {
-    this.reassign = true;
+    this.maintenance_staff = undefined;
+    this.date_select = false;
+    this.is_time_selected = false;
+    this.staff_selected = false;
+    this.staff_assigned = false;
+    this.selected_time = "";
+    this.assign_date = null;
+    this.select_staff = "";
+    // this.reassign = true;
   }
 
   assignColor(data: string) {
@@ -440,7 +450,7 @@ export class AdminRequestsDetails implements OnInit {
       case "inprogress":
         return "#c3660b";
         break;
-      case "complete":
+      case "completed":
         return "green";
         break;
       default:

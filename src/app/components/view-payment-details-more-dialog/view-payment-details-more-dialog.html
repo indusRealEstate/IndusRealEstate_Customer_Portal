@@ -1,136 +1,163 @@
-<img
-  matTooltip="Close"
-  matTooltipClass="tooltip"
-  matTooltipPosition="above"
-  (click)="onCloseDialog()"
-  class="mr-2 mt-1 close-icon"
-  src="../../../assets/img/svg/req-details/close-circle.svg"
-  alt />
 
-<div class="card main-card" style="box-shadow: none !important">
-  <div class="card-header">
-    <h3 class="title-header">
-      <span *ngIf="is_cheque">cheque</span>
-      <span *ngIf="is_online">online</span>
-      <span *ngIf="is_cash">cash</span> details
-    </h3>
-  </div>
+
+<div class="card main-card category-dialog"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  style="box-shadow: none !important; padding: 1.5rem;margin: 0;">
   <div class="card-body">
-    <div class="table-row">
-      <table class="table text-uppercase table-striped w-100 px-3">
-        <thead class="thead">
-          <tr scope="row">
-            <ng-container *ngIf="is_cheque">
-              <th scope="col">cheque number</th>
-              <th scope="col">cheque date</th>
-              <th scope="col">name on cheque</th>
-            </ng-container>
-            <ng-container *ngIf="is_online">
-              <th scope="col">bank name</th>
-              <th scope="col">branch</th>
-              <th scope="col">account number</th>
-              <th scope="col">name of holder</th>
-              <th scope="col">iban</th>
-            </ng-container>
-            <ng-container *ngIf="is_cash">
-              <th scope="col">details</th>
-            </ng-container>
-          </tr>
-        </thead>
-        <tbody class="tbody">
-          <tr scope="row">
-            <ng-container *ngIf="is_cheque">
-              <td scope="col" class="col-4">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.cheque_no}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-              <td scope="col" class="col-4">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.cheque_date}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-              <td scope="col" class="col-4">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.name_on_cheque}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-            </ng-container>
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">All Units</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          Unit Details
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          Payment Details
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt />
+      </div>
+      <div class="row m-0 align-items-start w-100">
+        <p class="details-title my-4">
+          <span *ngIf="is_cheque">Cheque</span>
+          <span *ngIf="is_online">Online</span>
+          <span *ngIf="is_cash">Cash</span> details
+        </p>
+      </div>
 
-            <ng-container *ngIf="is_online">
-              <td scope="col" class="col-2">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.bank_name}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-              <td scope="col" class="col-2">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.branch}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-              <td scope="col" class="col-4">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.ac_no}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-              <td scope="col" class="col-2">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.bank_holder_name}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-              <td scope="col" class="col-2">
-                <span *ngIf="is_data_loaded">
-                  {{all_data.iban}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-            </ng-container>
+      <div class="table-row">
+        <table class="table text-uppercase table-striped w-100 px-3">
+          <thead class="thead">
+            <tr scope="row">
+              <ng-container *ngIf="is_cheque">
+                <th scope="col">cheque number</th>
+                <th scope="col">cheque date</th>
+                <th scope="col">name on cheque</th>
+              </ng-container>
+              <ng-container *ngIf="is_online">
+                <th scope="col">bank name</th>
+                <th scope="col">branch</th>
+                <th scope="col">account number</th>
+                <th scope="col">name of holder</th>
+                <th scope="col">iban</th>
+              </ng-container>
+              <ng-container *ngIf="is_cash">
+                <th scope="col">details</th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody class="tbody">
+            <tr scope="row">
+              <ng-container *ngIf="is_cheque">
+                <td scope="col" class="col-4">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.cheque_no}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+                <td scope="col" class="col-4">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.cheque_date}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+                <td scope="col" class="col-4">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.name_on_cheque}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+              </ng-container>
 
-            <ng-container  *ngIf="is_cash">
-              <td>
-                <span *ngIf="is_data_loaded">
-                  {{all_data.details}}
-                </span>
-                <span *ngIf="!is_data_loaded">
-                  <ngx-skeleton-loader
-                    [theme]="{ width: '75vw', height: '50px' }"></ngx-skeleton-loader>
-                </span>
-              </td>
-            </ng-container>
-          </tr>
-        </tbody>
-      </table>
+              <ng-container *ngIf="is_online">
+                <td scope="col" class="col-2">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.bank_name}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+                <td scope="col" class="col-2">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.branch}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+                <td scope="col" class="col-4">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.ac_no}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '20vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+                <td scope="col" class="col-2">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.bank_holder_name}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+                <td scope="col" class="col-2">
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.iban}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '10vw', height: '30px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container *ngIf="is_cash">
+                <td>
+                  <span *ngIf="is_data_loaded">
+                    {{all_data.details}}
+                  </span>
+                  <span *ngIf="!is_data_loaded">
+                    <ngx-skeleton-loader
+                      [theme]="{ width: '50vw', height: '50px' }"></ngx-skeleton-loader>
+                  </span>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

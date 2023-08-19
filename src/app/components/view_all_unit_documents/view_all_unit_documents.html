@@ -1,53 +1,77 @@
 <div
-  class="card"
-  style="margin: 0; min-width: 75vw; max-height: 75vh; min-height: 50vh; height: 50vh; overflow-y: auto;"
+  class="card category-dialog"
+  style="margin: 0; min-width: 75vw; max-height: 75vh; min-height: 50vh; height: 50vh; width: 100%;"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
-  <!-- <div class="card-header"></div> -->
-  <div class="card-header position-relative">
-    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
-    <h4 class="text-center">View unit documents</h4>
-    <img
-      matTooltip="Close"
-      matTooltipClass="tooltip"
-      matTooltipPosition="above"
-      (click)="onCloseDialog()"
-      class="mr-2 mt-1 close-icon"
-      src="assets/img/svg/req-details/close-circle.svg"
-      alt />
-  </div>
 
   <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
-    <div class="row">
-      <div class="col-12">
-        <div class="table-row">
-          <table class="teble table-striped w-100 text-uppercase">
-            <thead class="thead p-3">
-              <tr scope="row">
-                <th scope="col">
-                  file name
-                </th>
-                <th scope="col">
-                  download
-                </th>
-              </tr>
-            </thead>
-            <tbody class="tbody">
-              <tr scope="row" *ngFor="let item of unit_doc_array">
-                <th class="col-8" scope="col"><span style="cursor: pointer;" (click)="downloadDoc(item)">{{item}}</span></th>
-                <td class="col-4" scope="col">
-                  <button class="btn ms-auto"
-                    matTooltip="Download Docs"
-                    matTooltipClass="tooltip"
-                    matTooltipPosition="above"
-                    style="background-color: #1d232a;"
-                    (click)="downloadDoc(item)">
-                    Download Docs
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">All
+          Units</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          Unit Details
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          View all Docs
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt />
+      </div>
+      <div class="row m-0 align-items-start w-100">
+        <p class="details-title my-4">View all Documents</p>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-row">
+            <table class="teble table-striped w-100 text-uppercase">
+              <thead class="thead p-3">
+                <tr scope="row">
+                  <th scope="col">
+                    file name
+                  </th>
+                  <th scope="col">
+                    download
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="tbody" #tbody>
+                <tr scope="row" *ngFor="let item of unit_doc_array">
+                  <th class="col-8" scope="col"><span style="cursor: pointer;"
+                      (click)="downloadDoc(item)">{{item}}</span></th>
+                  <td class="col-4" scope="col">
+                    <button class="btn ms-auto"
+                      matTooltip="Download Docs"
+                      matTooltipClass="tooltip"
+                      matTooltipPosition="above"
+                      style="background-color: #2b333e;"
+                      (click)="downloadDoc(item)">
+                      Download
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
