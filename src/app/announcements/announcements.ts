@@ -8,6 +8,13 @@ import { AdminService } from "app/services/admin.service";
   styleUrls: ["./announcements.scss"],
 })
 export class Announcements implements OnInit {
+  displayedColumns: string[] = [
+    // "name",
+    "Id",
+    "Type",
+    "Title",
+    "Description"
+  ];
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -33,5 +40,17 @@ export class Announcements implements OnInit {
 
   ngAfterViewInit() {}
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    // addAnnouncements() {
+    //   this.dialog
+    //     .open(AddAnnouncementDialog, {
+    //       width: "75%",
+    //       height: "43rem",
+    //     })
+    //     .afterClosed()
+    //     .subscribe((res) => {
+          
+    //     });
+    // }
+  }
 }
