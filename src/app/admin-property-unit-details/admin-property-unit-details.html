@@ -16,7 +16,7 @@
   <img src alt id="image" />
 </div>
 <div class="main-content" style="margin-top: 50px" *ngIf="screenWidth > 430">
-  <div class="container-fluid h-100 d-flex justify-content-center">
+  <div class="container-fluid" style="max-width: 100vw">
     <div class="row m-0">
       <div class="col">
         <div class="row m-0 align-items-center">
@@ -71,12 +71,13 @@
             *ngIf="all_data != null"
             class="mr-4"
             style="
-              background: #d4aa32;
+              background: #d4aa3212;
               padding: 6px 15px;
               border-radius: 5px;
               font-size: 15px;
-              color: white;
-              font-weight: 500;
+              color: #cea32a;
+              font-weight: 600;
+              border: 1px solid #d4aa3259;
             "
           >
             {{all_data.unit_type | titlecase}}
@@ -128,7 +129,7 @@
         </div>
 
         <div class="row m-0">
-          <div class="col">
+          <div class="col p-0">
             <ngx-skeleton-loader
               *ngIf="isContentLoading"
               [theme]="{ width: sidebar_opened ? (screenWidth - 320) + 'px' : (screenWidth - 120) + 'px', height: '50vh' }"
@@ -174,7 +175,7 @@
         <div class="row m-0">
           <ngx-skeleton-loader
             *ngIf="isContentLoading"
-            [theme]="{width: sidebar_opened ? (screenWidth - 320) + 'px' : (screenWidth - 120) + 'px', height: '30vh', margin: '1rem'}"
+            [theme]="{width: sidebar_opened ? (screenWidth - 320) + 'px' : (screenWidth - 120) + 'px', height: '30vh'}"
           >
           </ngx-skeleton-loader>
           <div
@@ -964,11 +965,19 @@
                     <ng-container matColumnDef="more">
                       <th mat-header-cell *matHeaderCellDef>more</th>
                       <td mat-cell *matCellDef="let element">
-                        <span *ngIf="is_data_loaded"><button class="btn btn-more"
-                            (click)="moreDetails(element.tp_payment_id,element.tp_payment_method)">more
-                            details</button></span>
-                        <span *ngIf="!is_data_loaded"><ngx-skeleton-loader
-                            [theme]="{ width: '120px', height: '30px' }"></ngx-skeleton-loader></span>
+                        <span *ngIf="is_data_loaded"
+                          ><button
+                            class="btn btn-more"
+                            (click)="moreDetails(element.tp_payment_id,element.tp_payment_method)"
+                          >
+                            more details
+                          </button></span
+                        >
+                        <span *ngIf="!is_data_loaded"
+                          ><ngx-skeleton-loader
+                            [theme]="{ width: '120px', height: '30px' }"
+                          ></ngx-skeleton-loader
+                        ></span>
                       </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
