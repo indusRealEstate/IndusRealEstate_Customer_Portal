@@ -560,4 +560,46 @@ unpaidTenantPayment(data: string) {
     })
   );
 }
+addAnnouncement(data: string) {
+  const url = `${API_URL}/addAnnouncement.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
+selectAllAnnouncement(data: string) {
+  const url = `${API_URL}/selectAllAnnouncement.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
+
+getAnnouncementDetails(data: any) {
+  const url = `${API_URL}/selectSingleAnnouncementDetail.php?apikey=1`;
+  return this.http.post(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
+
+updateAnnouncement(data: any) {
+  const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
+  return this.http.post<any>(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
+deleteAnnouncement(data: any) {
+  const url = `${API_URL}/deleteAnnouncement.php?apikey=1`;
+  return this.http.post<any>(url, data).pipe(
+    map((data) => {
+      return data;
+    })
+  );
+}
 }

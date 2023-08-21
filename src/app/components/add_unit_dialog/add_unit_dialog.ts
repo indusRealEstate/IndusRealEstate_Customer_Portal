@@ -97,6 +97,7 @@ export class AddUnitDialog implements OnInit {
           value: prop.property_id,
           viewValue: prop.property_name,
         })
+        
       );
     });
 

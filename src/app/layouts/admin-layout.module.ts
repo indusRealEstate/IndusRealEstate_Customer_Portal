@@ -100,6 +100,8 @@ import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-
 import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
 import "hammerjs";
 import { Announcements } from "app/announcements/announcements";
+import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/add-announcement-dialog";
+import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 
 @NgModule({
   imports: [
@@ -181,6 +183,7 @@ import { Announcements } from "app/announcements/announcements";
     DialogAssignStaff,
     AdminReport,
     ViewFinanceDetailsDialog,
+    AddAnnouncementDialog,
     LoginComponent,
 
     AdminProperties,
@@ -203,6 +206,7 @@ import { Announcements } from "app/announcements/announcements";
     LoadingTableAdminAllUsers,
     LoadingTableAdminAllLease,
     UserChatsComponent,
+    EditAnnouncementDialog,
 
     AllUsersComponent,
 
