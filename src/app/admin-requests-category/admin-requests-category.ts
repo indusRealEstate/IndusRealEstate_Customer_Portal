@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AddCategoryDialog } from "app/components/add_category_dialog/add_category_dialog";
@@ -14,14 +20,27 @@ import { AuthenticationService } from "app/services/authentication.service";
 export class AdminRequestsCategory implements OnInit {
   isUserSignedIn: boolean = false;
   isCategoryLoading: boolean = false;
-  categoryData: object;
+  categoryData: any[] = [];
   main_array: any[];
   msg: string;
   item_deleted: boolean = false;
   display_msg: boolean = false;
   is_active: boolean = false;
 
-  // @ViewChild(AddCategoryDialog) category_dialog!: AddCategoryDialog;
+  property_id: any = "all";
+
+  properties: any[] = [
+    { testfield: true },
+    { value: "all", viewValue: "All Categories" },
+  ];
+
+  propertiesFilter: any[] = [];
+
+  searchTextValue: any = "";
+
+  categories_props: any[] = [];
+
+  @ViewChild("inputBox") inputBox!: ElementRef;
 
   constructor(
     private router: Router,
@@ -30,6 +49,29 @@ export class AdminRequestsCategory implements OnInit {
     private apiAdminService: AdminService
   ) {
     this.isCategoryLoading = true;
+    this.propertiesFilter = this.properties;
+
+    var propertiesDataSession = JSON.parse(
+      sessionStorage.getItem("admin_properties_session")
+    );
+
+    if (propertiesDataSession == null) {
+      this.apiAdminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+        val.forEach((prop) => {
+          this.properties.push({
+            value: prop.property_id,
+            viewValue: prop.property_name,
+          });
+        });
+      });
+    } else {
+      propertiesDataSession.forEach((prop) => {
+        this.properties.push({
+          value: prop.property_id,
+          viewValue: prop.property_name,
+        });
+      });
+    }
   }
 
   screenHeight: number;
@@ -38,6 +80,46 @@ export class AdminRequestsCategory implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  selectProperty(event) {
+    this.propertiesFilter = this.properties;
+    // console.log(event.value);
+    if (event.value == "all" || event.value == undefined) {
+      this.categories_props = this.categoryData;
+    } else {
+      this.categories_props = this.categoryData.filter(
+        (catg) => catg.prop_id == event.value
+      );
+    }
+  }
+
+  resetMatSelect() {
+    this.searchTextValue = "";
+    this.propertiesFilter = [...this.properties];
+  }
+
+  focusOnInput($event) {
+    this.inputBox.nativeElement.focus();
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
+  searchBuilding(searchText, $event) {
+    $event.stopPropagation();
+    if (searchText == "") {
+      this.propertiesFilter = [...this.properties];
+    } else {
+      var val = new String(searchText).trim().toLowerCase();
+      var data = this.properties.filter((prop) =>
+        String(prop.viewValue).toLowerCase().startsWith(val)
+      );
+
+      this.propertiesFilter.splice(1, this.propertiesFilter.length - 1);
+      data.forEach((p) => {
+        this.propertiesFilter.push(p);
+      });
+    }
   }
 
   getDataFromChild(value: boolean) {
@@ -72,8 +154,9 @@ export class AdminRequestsCategory implements OnInit {
   selectAllCategories(): any {
     this.apiAdminService
       .selecteCategory()
-      .subscribe((val) => {
+      .subscribe((val: any[]) => {
         this.categoryData = val;
+        this.categories_props = val;
       })
       .add(() => {
         this.isCategoryLoading = false;
