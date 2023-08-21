@@ -1,10 +1,9 @@
 <div
-  class="card category-dialog"
-  style="margin: 0; min-width: 75vw; max-height: 75vh; min-height: 50vh; height: 50vh; width: 100%;"
+  class="card main-card m-0"
   cdkDrag
-  cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
+  cdkDragRootElement=".cdk-overlay-pane">
 
-  <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
     <div class="col">
       <div class="row m-0 align-items-start w-100">
         <p class="mr-2"
@@ -42,34 +41,28 @@
       <div class="row">
         <div class="col-12">
           <div class="table-row">
-            <table class="teble table-striped w-100 text-uppercase">
-              <thead class="thead p-3">
-                <tr scope="row">
-                  <th scope="col">
-                    file name
-                  </th>
-                  <th scope="col">
-                    download
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="tbody" #tbody>
-                <tr scope="row" *ngFor="let item of unit_doc_array">
-                  <th class="col-8" scope="col"><span style="cursor: pointer;"
-                      (click)="downloadDoc(item)">{{item}}</span></th>
-                  <td class="col-4" scope="col">
-                    <button class="btn ms-auto"
-                      matTooltip="Download Docs"
-                      matTooltipClass="tooltip"
-                      matTooltipPosition="above"
-                      style="background-color: #2b333e;"
-                      (click)="downloadDoc(item)">
-                      Download
-                    </button>
-                  </td>
-                </tr>
-
-              </tbody>
+            <table mat-table [dataSource]="data_source" class="mat-elevation-z8">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>File Name</th>
+                <td mat-cell *matCellDef="let element"
+                  [ngClass]="element !== '' ? 'text-dark' : 'text-danger'">
+                  {{element !== '' ? element : 'No data'}}</td>
+              </ng-container>
+              <ng-container matColumnDef="download">
+                <th mat-header-cell *matHeaderCellDef>File Download</th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn ms-auto"
+                    matTooltip="Download Docs"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    style="background-color: #2b333e;"
+                    (click)="downloadDoc(element)">
+                    Download
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           </div>
         </div>

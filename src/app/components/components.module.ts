@@ -99,7 +99,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ViewAllUnitDocuments,
     ViewAllUnitInventories,
     ViewPaymentDetailsMoreDialog,
-    EditUserDialog
+    EditUserDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
