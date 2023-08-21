@@ -26,6 +26,7 @@ export class AdminRequestsCategory implements OnInit {
   item_deleted: boolean = false;
   display_msg: boolean = false;
   is_active: boolean = false;
+  item_inserted: boolean = false;
 
   property_id: any = "all";
 
@@ -138,14 +139,21 @@ export class AdminRequestsCategory implements OnInit {
   openWindow() {
     this.dialog
       .open(AddCategoryDialog, {
-        data: {
-          category_name: "sample",
-          icon: "sample_icon",
-        },
+        width: '50vw',
+        height: 'auto',
       })
       .afterClosed()
       .subscribe((val) => {
+        console.log(val);
+        this.item_inserted = val.status;
+        this.msg = val.msg;
+        
+        this.display_msg = true;
         this.selectAllCategories();
+        setTimeout(() => {
+          this.display_msg = false;
+        }, 2000);
+        
       });
   }
 
