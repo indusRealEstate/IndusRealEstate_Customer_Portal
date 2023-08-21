@@ -12,7 +12,7 @@
           class="mr-2"
           style="font-weight: 500; color: #3c4858b5; font-size: 20px"
         >
-          Add Announcement
+          Edit Announcement
         </p>
         <img
           matTooltip="Close"
@@ -36,6 +36,17 @@
             />
           </mat-form-field>
 
+          <!-- <mat-form-field class="mt-2" class="textField" appearance="outline">
+            <mat-label>Building Name*</mat-label>
+            <mat-select [(ngModel)]="building_name">
+              <mat-option
+                *ngFor="let type of buildingName"
+                [value]="type.viewValue"
+              >
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
           <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>Building Name*</mat-label>
             <mat-select [(ngModel)]="selected_property">

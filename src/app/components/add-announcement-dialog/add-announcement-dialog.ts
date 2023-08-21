@@ -11,10 +11,10 @@ import { AdminService } from "app/services/admin.service";
 import { catchError, last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
-interface DropDownButtonModel {
-  value: string;
-  viewValue: string;
-}
+// interface DropDownButtonModel {
+//   value: string;
+//   viewValue: string;
+// }
 
 @Component({
   selector: "add-announcement-dialog",
@@ -23,13 +23,6 @@ interface DropDownButtonModel {
 })
 export class AddAnnouncementDialog implements OnInit {
   router: any;
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddAnnouncementDialog>,
-    private adminService: AdminService
-  ) {}
-
-  
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
   type: boolean = false;
@@ -38,17 +31,43 @@ export class AddAnnouncementDialog implements OnInit {
   description: any = "";
   uploading: boolean = false;
   formNotFilled: boolean = false;
-  
+  properties: any[] = [];
+  selected_property: any = "";
+  property_id: any;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<AddAnnouncementDialog>,
+    private adminService: AdminService
+  ) {
+    this.getAllPropertiesName();
+    console.log(this.properties);
+  }
 
-  buildingName: DropDownButtonModel[] = [
-    { value: "alsima tower", viewValue: "alsima tower" },
-    { value: "Marina gate", viewValue: "Marina gate" },
+  
+  
+  
+  // buildingName: DropDownButtonModel[] = [
+  //   { value: "alsima tower", viewValue: "alsima tower" },
+  //   { value: "Marina gate", viewValue: "Marina gate" },
     
-  ];
+  // ];
 
-  
 
-  ngOnInit() {}
+  getAllPropertiesName() {
+    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      val.forEach((item) =>
+        this.properties.push({
+          value: item.property_id,
+          viewValue: item.property_name,
+        })
+
+      );
+    });
+  }
+
+  ngOnInit() {
+    
+   }
 
   ngAfterViewInit() {}
 
@@ -59,19 +78,22 @@ export class AddAnnouncementDialog implements OnInit {
   setupData(): string {
     var data = {
       type: this.type,
-      building: this.building_name,
+      property_id:this.selected_property,
+      
+      //building: this.building_name,
       title: this.title,
       description: this.description,
     };
-
+  console.log(this.selected_property);
     return JSON.stringify(data);
   }
   onSubmit() {
     
       if (
-        this.building_name != "" &&
+        // this.building_name != "" &&
         this.title != "" &&
-        this.description != ""
+        this.description != "" &&
+        this.property_id!= ""
       ) {
         this.uploading = true;
        
@@ -80,8 +102,8 @@ export class AddAnnouncementDialog implements OnInit {
 
           if (val == "success") {
             //this.router.navigateByUrl('/announcements',{ queryParams: { val: val } });
-            this.dialogRef.close();
-            window.location.reload();
+            //this.dialogRef.close();
+           // window.location.reload();
           }
           else{
             console.log("not inserted");
@@ -95,6 +117,7 @@ export class AddAnnouncementDialog implements OnInit {
       }
     
   }
+  
   
   
 }

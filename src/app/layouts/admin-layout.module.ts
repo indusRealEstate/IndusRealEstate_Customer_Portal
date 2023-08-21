@@ -101,6 +101,7 @@ import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_st
 import "hammerjs";
 import { Announcements } from "app/announcements/announcements";
 import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/add-announcement-dialog";
+import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 
 @NgModule({
   imports: [
@@ -205,6 +206,7 @@ import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/ad
     LoadingTableAdminAllUsers,
     LoadingTableAdminAllLease,
     UserChatsComponent,
+    EditAnnouncementDialog,
 
     AllUsersComponent,
 
