@@ -1,50 +1,88 @@
 <div
   class="card"
-  style="margin: 0; min-width: 50vw; max-height: 75vh; min-height: 50vh; overflow-y: auto;"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
-  <!-- <div class="card-header"></div> -->
-  <div class="card-header position-relative">
-    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
-    <h4 class="text-center">View unit inventories</h4>
-    <img
-      matTooltip="Close"
-      matTooltipClass="tooltip"
-      matTooltipPosition="above"
-      (click)="onCloseDialog()"
-      class="mr-2 mt-1 close-icon"
-      src="assets/img/svg/req-details/close-circle.svg"
-      alt />
-  </div>
+  <div class="card-body">
+    <div class="col">
 
-  <div class="card-body position-relative" style="padding: 1.5rem 1.5rem">
-    <div class="row">
-      <div class="col-12">
+      <div class="row m-0 align-items-start w-100 top-bar">
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">All
+          {{parent}}</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          {{sub_parent}} 
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          {{child}}
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt />
+      </div>
+
+      <div class="row m-0 align-items-start w-100">
+        <p class="details-title my-4">
+          Inventories details
+        </p>
+      </div>
+
+      <ng-container *ngIf="!is_data_loaded">
+        <div class="row  table-header">
+          <div class="col" *ngFor="let item of displayPreloadCol">{{item}}</div>
+        </div>
+        <div class="row table-body">
+          <span
+            class="spinner-border spinner-border-m mr-2"
+            style="color: #e0b35d">
+          </span>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="is_data_loaded">
         <div class="table-row">
-          <table class="teble table-striped w-100 text-uppercase">
-            <thead class="thead p-3">
-              <tr scope="row">
-                <th scope="col">
-                  name
-                </th>
-                <th scope="col">
-                  place
-                </th>
-                <th scope="col">
-                  count
-                </th>
-              </tr>
-            </thead>
-            <tbody class="tbody">
-              <tr scope="row" *ngFor="let item of unit_inventories_array; let index = i">
-                <th class="col-4" scope="col">{{item.inventory_name}}</th>
-                <th class="col-4" scope="col">{{item.inventory_place}}</th>
-                <td class="col-4" scope="col">{{item.inventory_count}}</td>
-              </tr>
-            </tbody>
+          <table mat-table [dataSource]="data_source" class="mat-elevation-z8">
+            <ng-container matColumnDef="inventory_name">
+              <th mat-header-cell *matHeaderCellDef>Inventory name</th>
+              <td mat-cell *matCellDef="let element"
+                [ngClass]="element.inventory_name !== '' ? 'text-dark' : 'text-danger'">
+                {{element.inventory_name !== '' ? element.inventory_name :
+                'No data'}}</td>
+            </ng-container>
+            <ng-container matColumnDef="inventory_place">
+              <th mat-header-cell *matHeaderCellDef>Inventory place</th>
+              <td mat-cell *matCellDef="let element"
+                [ngClass]="element.inventory_place !== '' ? 'text-dark' : 'text-danger'">
+                {{element.inventory_place !== '' ? element.inventory_place :
+                'No data'}}</td>
+            </ng-container>
+            <ng-container matColumnDef="inventory_count">
+              <th mat-header-cell *matHeaderCellDef>Inventory count</th>
+              <td mat-cell *matCellDef="let element"
+                [ngClass]="element.inventory_count !== '' ? 'text-dark' : 'text-danger'">
+                {{element.inventory_count !== '' ? element.inventory_count :
+                'No data'}}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-      </div>
+      </ng-container>
+
     </div>
   </div>
 </div>

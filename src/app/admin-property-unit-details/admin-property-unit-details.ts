@@ -1,12 +1,11 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   HostListener,
   OnChanges,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
@@ -15,7 +14,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
-import { RelatedRequestsDialog } from "app/components/related-requests/related-requests";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { ViewAllUnitDocuments } from "app/components/view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories/view_all_unit_inventories";
@@ -411,6 +409,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   openEditUnit(data: object) {
     this.dialog
       .open(EditUnitDialog, {
+        width: "80vw",
+        height: "100vh",
         data,
       })
       .afterClosed()
@@ -472,6 +472,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   viewAllDocuments() {
     this.dialog
       .open(ViewAllUnitDocuments, {
+        height: "auto",
+        width: "100%",
         data: {
           doc: this.all_data.unit_doc,
           id: this.all_data.unit_id,
@@ -480,16 +482,19 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((value) => {
         console.log(value);
-      });
+      }); 
   }
 
   showInventories() {
-    this.dialog.open(RelatedRequestsDialog, {
-      height: '50rem',
-      width : '60%',
+    this.dialog.open(ViewAllUnitInventories, {
+      height: "50vh",
+      width: "60vw",
       data: {
         id: this.all_data.unit_id,
         inventories: this.all_data.inventories,
+        parent: 'Units',
+        sub_parent: 'Unit Details',
+        child: 'Inventorues Details',
       },
     });
   }
@@ -553,10 +558,16 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   moreDetails(id: string, method: string) {
     this.dialog.open(ViewPaymentDetailsMoreDialog, {
+      width: "75vw",
+      height: "50vh",
       data: {
         id: id,
         method: method,
+        parent: 'Units',
+        sub_parent: 'Unit Details',
+        child: 'Payment Details',
       },
     });
   }
+
 }

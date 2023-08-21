@@ -13,7 +13,7 @@
     <div class="col">
       <div
         class="alert-msg"
-        [ngClass]="[item_deleted ? 'bg-success' : 'bg-danger']"
+        [ngClass]="[item_deleted || item_inserted ? 'bg-success' : 'bg-danger']"
         *ngIf="display_msg"
       >
         {{msg}}

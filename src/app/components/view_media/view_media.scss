@@ -9,6 +9,12 @@
   border-radius: 1rem;
 }
 
+.details-title {
+  color: #3c4858;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
 .category-dialog {
   width: 40rem;
   .form-control:focus {
@@ -70,14 +76,12 @@
     right: 0;
     position: absolute;
     width: 1.5rem;
-    z-index: 100;
-    top: 0;
     cursor: pointer;
-    transform: translate(-50%, 50%);
+
     transition: 0.3s all ease-in-out;
 
     &:hover {
-      // transform: scale(1.2);
+      transform: scaleY(1.2) scaleX(1.2);
       filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
         brightness(90%) contrast(83%);
     }
@@ -111,7 +115,6 @@
     }
   }
   .card-body {
-    
     .table-row {
       .teble {
         border-radius: 10px;
@@ -149,6 +152,6 @@
   }
 }
 
-::ng-deep .met{
+::ng-deep .met {
   width: 100% !important;
 }

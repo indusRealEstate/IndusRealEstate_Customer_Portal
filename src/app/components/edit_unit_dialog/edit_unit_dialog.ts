@@ -211,15 +211,13 @@ export class EditUnitDialog implements OnInit {
 
   ngAfterViewInit() {}
 
-  closeDialogWithoutSaving() {
-    this.dialogRef.close();
-  }
+  
 
   onCloseDialog() {
     if (this.is_submit == true) {
       var sel_prop_name = this.properties.find(
         (pr) => pr.value == this.selected_property
-      ).viewValue;
+      ).viewValue; 
     }
 
     this.dialogRef.close({

@@ -46,6 +46,7 @@ import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_do
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { EditUserDialog } from "./edit_user_dialog/edit_user_dialog";
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
@@ -69,6 +70,7 @@ import { EditUserDialog } from "./edit_user_dialog/edit_user_dialog";
     MatDatepickerModule,
     NgxMatIntlTelInputComponent,
     MatProgressBarModule,
+    ScrollingModule
   ],
   declarations: [
     FooterComponent,
@@ -97,7 +99,7 @@ import { EditUserDialog } from "./edit_user_dialog/edit_user_dialog";
     ViewAllUnitDocuments,
     ViewAllUnitInventories,
     ViewPaymentDetailsMoreDialog,
-    EditUserDialog
+    EditUserDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
