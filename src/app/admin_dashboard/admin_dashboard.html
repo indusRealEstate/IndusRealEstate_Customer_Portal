@@ -189,21 +189,13 @@
                     <div class="row m-0 align-items-center">
                       <p
                         class="m-0 mr-3"
-                        *ngIf="contract.disable == true"
+                        *ngIf="getReminderSendedTime(contract) != 'loading..'"
                         style="font-size: 12px; font-weight: 500"
                       >
-                        {{
-                          contract.send_time == 'now' ? 
-                               'Reminder Sended Now' 
-                                  :contract.send_time != 0 && contract.send_time < 60 ? 
-                                     'Reminder Sended' + ' ' + contract.send_time + ' ' + 'minutes ago' 
-                                  : contract.send_time >= 60 ? 
-                                     'Reminder Sended' + ' ' + contract.send_time / 60 + ' ' + ((contract.send_time / 60) == 1 ? 'hour ago' : 'hours ago')
-                                  : 'Reminder Sended Now'
-                        }}
+                        {{getReminderSendedTime(contract)}}
                       </p>
                       <div
-                        *ngIf="contract.disable == undefined && reminder_button_loading == false"
+                        *ngIf="getReminderSendedTime(contract) == 'loading..'"
                         (click)="sendContractReminder(contract.contract_id,contract.contract_end,index)"
                         class="btn"
                         style="padding: 5px 10px; background: #d4aa32"
@@ -211,7 +203,7 @@
                         Send Reminder
                       </div>
                       <div
-                        *ngIf="contract.disable == true"
+                        *ngIf="getReminderSendedTime(contract) != 'loading..'"
                         class="btn"
                         style="
                           padding: 5px 10px;
