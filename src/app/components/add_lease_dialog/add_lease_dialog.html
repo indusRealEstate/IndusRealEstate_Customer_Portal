@@ -130,6 +130,14 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #move_in_date_picker></mat-datepicker>
           </mat-form-field>
+          <div class="row m-0 justify-content-between">
+            <div class="checkbox-add-lease">
+              <mat-checkbox [(ngModel)]="dewa">Dewa Inclusive</mat-checkbox>
+            </div>
+            <div class="checkbox-add-lease">
+              <mat-checkbox [(ngModel)]="chiller">Chiller Inclusive</mat-checkbox>
+            </div>
+          </div>
         </div>
 
         <div class="col">
@@ -155,6 +163,9 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #move_out_date_picker></mat-datepicker>
           </mat-form-field>
+          <div class="checkbox-add-lease">
+            <mat-checkbox [(ngModel)]="gas">Gas Inclusive</mat-checkbox>
+          </div>
         </div>
       </div>
       <div
