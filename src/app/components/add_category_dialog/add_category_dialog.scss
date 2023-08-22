@@ -16,11 +16,6 @@
     padding: 1.5rem;
 
     .col {
-      ::ng-deep mat-form-field{
-        .mdc-notched-outline{
-          border: #d4aa32 !important;
-        }
-      }
       .details-title {
         color: #3c4858;
         font-size: 1.2rem;
@@ -156,3 +151,29 @@
   }
 }
 
+// ::ng-deep .mdc-notched-outline {
+//   border: 2px solid #d4aa32 !important;
+//   border-radius: 5px;
+//   .mdc-notched-outline__leading{
+//     border: 0;
+//   }
+//   .mdc-notched-outline__trailing{
+//     border: 0;
+//   }
+// }
+
+::ng-deep .textField {
+  width: 100%;
+
+  .mdc-notched-outline {
+    .mdc-notched-outline__leading {
+      border-color: #d4aa32;
+    }
+    .mdc-notched-outline__notch {
+      border-color: #d4aa32;
+    }
+    .mdc-notched-outline__trailing {
+      border-color: #d4aa32;
+    }
+  }
+}

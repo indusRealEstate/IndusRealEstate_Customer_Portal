@@ -26,6 +26,7 @@ export class AddCategoryDialog implements OnInit {
   @Output() valueEmitter: EventEmitter<boolean> = new EventEmitter();
 
   form_submit: boolean = false;
+  msg_status: boolean = false;
   category_name: string = "";
   category_icon: string = undefined;
 
@@ -51,7 +52,7 @@ export class AddCategoryDialog implements OnInit {
   image_selected: boolean = false;
 
   searchTextValue: string = "";
-  propertiesFilter: string[] = [];
+  unitsFilter: string[] = [];
 
   categoryData: any[] = [];
 
@@ -59,8 +60,8 @@ export class AddCategoryDialog implements OnInit {
 
   @ViewChild("inputBox") inputBox!: ElementRef;
 
-  properties: any[] = [{ testfield: true }];
-  property_id: any = "";
+  units: any[] = [{ testfield: true }];
+  unit_id: any = "";
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -71,16 +72,17 @@ export class AddCategoryDialog implements OnInit {
     private formBuilder: FormBuilder,
     private dialog?: MatDialog
   ) {
-    this.apiAdminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-      val.forEach((prop) => {
-        this.properties.push({
-          value: prop.property_id,
-          viewValue: prop.property_name,
+    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+
+      val.forEach((unit) => {
+        this.units.push({
+          value: unit.id,
+          viewValue: unit.type,
         });
       });
     });
 
-    console.log(this.properties);
+    console.log(this.units);
   }
 
   get f() {
@@ -109,11 +111,11 @@ export class AddCategoryDialog implements OnInit {
 
   resetMatSelect() {
     this.searchTextValue = "";
-    this.propertiesFilter = [...this.properties];
+    this.unitsFilter = [...this.units];
   }
 
-  selectProperty(event) {
-    this.propertiesFilter = this.properties;
+  selectunit(event) {
+    this.unitsFilter = this.units;
     // console.log(event.value);
     if (event.value == "all" || event.value == undefined) {
       this.categories_props = this.categoryData;
@@ -136,9 +138,12 @@ export class AddCategoryDialog implements OnInit {
   // this.form_submit
   onCloseDialog() {
     this.dialogRef.close({
-      status : this.form_submit ? this.form_submit : undefined,
+      form_submit: this.form_submit,
+      status : this.msg_status,
       msg: this.form_submit ? this.alert_msg : undefined,
     });
+
+    this.form_submit = false;
   }
 
   focusOnInput($event) {
@@ -150,28 +155,28 @@ export class AddCategoryDialog implements OnInit {
   searchBuilding(searchText, $event) {
     $event.stopPropagation();
     if (searchText == "") {
-      this.propertiesFilter = [...this.properties];
+      this.unitsFilter = [...this.units];
     } else {
       var val = new String(searchText).trim().toLowerCase();
-      var data = this.properties.filter((prop) =>
+      var data = this.units.filter((prop) =>
         String(prop.viewValue).toLowerCase().startsWith(val)
       );
 
-      this.propertiesFilter.splice(1, this.propertiesFilter.length - 1);
+      this.unitsFilter.splice(1, this.unitsFilter.length - 1);
       data.forEach((p) => {
-        this.propertiesFilter.push(p);
+        this.unitsFilter.push(p);
       });
     }
   }
 
   submit() {
     if (
-      this.property_id !== "" &&
+      this.unit_id !== "" &&
       this.category_name !== "" &&
       this.category_icon != undefined &&
       this.preview_image != undefined
     ) {
-      console.log(this.property_id);
+      console.log(this.unit_id);
       this.input_array = [];
 
       let image_array = this.preview_image.split(";base64,");
@@ -183,7 +188,7 @@ export class AddCategoryDialog implements OnInit {
         icon: image_data,
         size: this.file_size,
         type: image_type,
-        property: this.property_id,
+        unit: this.unit_id,
       });
 
       this.apiAdminService
@@ -191,11 +196,12 @@ export class AddCategoryDialog implements OnInit {
         .subscribe((value: any) => {
 
           this.alert_msg = value.msg;
-          this.form_submit = value.status > 0 ? true : false;
+          this.msg_status = value.status > 0 ? true : false;
           this.preview_image = "";
           this.image_selected = false;
+          this.form_submit = true;
 
-          this.property_id = "";
+          this.unit_id = "";
           this.category_name = "";
           this.category_icon = undefined;
           this.onCloseDialog();

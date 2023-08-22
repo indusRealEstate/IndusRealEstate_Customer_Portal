@@ -111,7 +111,7 @@ export class AdminRequestsCategory implements OnInit {
   }
 
   getDataFromChild(value: boolean) {
-    console.log(value);
+    // console.log(value);
   }
 
   isUserSignOut() {
@@ -131,11 +131,11 @@ export class AdminRequestsCategory implements OnInit {
       })
       .afterClosed()
       .subscribe((val) => {
-        console.log(val);
+        // console.log(val);
         this.item_inserted = val.status;
         this.msg = val.msg;
 
-        this.display_msg = true;
+        this.display_msg = this.msg != undefined ? true : false;
         this.selectAllCategories();
         setTimeout(() => {
           this.display_msg = false;
@@ -149,7 +149,7 @@ export class AdminRequestsCategory implements OnInit {
     this.apiAdminService
       .selecteCategory()
       .subscribe((val: any[]) => {
-        console.log(val);
+        // console.log(val);
         this.categoryData = val;
         this.categories_props = val;
       })
@@ -203,11 +203,21 @@ export class AdminRequestsCategory implements OnInit {
   edit_item(data: any) {
     this.dialog
       .open(EditCategoryDialog, {
+        width: "50vw",
+        height: "50vh",
         data,
       })
       .afterClosed()
       .subscribe((val) => {
+        // console.log(val);
+        this.item_inserted = val.status;
+        this.msg = val.msg;
+
+        this.display_msg = this.msg != undefined ? true : false;
         this.selectAllCategories();
+        setTimeout(() => {
+          this.display_msg = false;
+        }, 2000);
       });
   }
 
