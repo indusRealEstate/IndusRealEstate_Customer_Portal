@@ -5,12 +5,12 @@ import { AdminService } from "app/services/admin.service";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
+import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 export interface PeriodicElement {
   Id: number;
   Building:string;
   Type: boolean;
   Title: string;
-  Description: string;
 
 }
 
@@ -26,7 +26,7 @@ export interface PeriodicElement {
 })
 export class Announcements implements OnInit {
   //dataSource = ELEMENT_DATA;
-  @ViewChild("paginator") paginator: MatPaginator;
+ 
   more_menu_all_data: any = "";
   allAnnouncement: any[] = [];
   more_menu_loaded: boolean = false;
@@ -36,7 +36,6 @@ export class Announcements implements OnInit {
     "Emergency",
     "Building Name",
     "Title",
-    "Description",
     "More"
   ];
   isUserSignedIn: boolean = false;
@@ -47,15 +46,17 @@ export class Announcements implements OnInit {
   display_msg: boolean = false;
   msg: string;
   item_deleted: boolean = false;
-  allMatTableData: MatTableDataSource<any>;
+  MatTableData: MatTableDataSource<any>;
+  ngAfterViewInitInitialize: boolean = false;
 
+  @ViewChild("announcement_paginator") paginator: MatPaginator;
   constructor(
     private appAdminService: AdminService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
-
+    this.selectAllAnnouncement();
     this.getScreenSize();
   }
 
@@ -68,25 +69,17 @@ export class Announcements implements OnInit {
   }
 
   ngAfterViewInit() {
-    
-    if (this.allMatTableData != undefined) {
-      this.allMatTableData.paginator = this.paginator;
-    } else {
-      setTimeout(() => {
-        this.allMatTableData.paginator = this.paginator;
-      }, 3000);
-    }
   }
   
   addAnnouncements() {
     this.dialog
       .open(AddAnnouncementDialog, {
-        width: "40%",
-        height: "30rem",
+        width: "60%",
+        //height: "40rem",
       })
       .afterClosed()
       .subscribe((res) => {
-        
+        this.selectAllAnnouncement();
       });
   }
   
@@ -97,7 +90,7 @@ export class Announcements implements OnInit {
       .getAnnouncementDetails(JSON.stringify({ a_id: a_id }))
       .subscribe((value) => {
         this.more_menu_all_data = value;
-        console.log(this.more_menu_all_data);
+        //console.log(this.more_menu_all_data);
       })
       .add(() => {
         this.more_menu_loaded = true;
@@ -114,29 +107,29 @@ export class Announcements implements OnInit {
         console.log( this.annoucement_data);
       })
 
-    return this.allMatTableData;
+    // return this.MatTableData;
   }
   
-  deleteAnnouncement(data: any) {
+  // deleteAnnouncement(data: any) {
 
-    this.display_msg = true;
-    this.appAdminService.deleteAnnouncement(data).subscribe((value: any) => {
-      console.log(data);
-      if (value.status == 1) {
-        this.msg = value.msg;
-        console.log(this.msg);
-        this.item_deleted = true;
-        this.selectAllAnnouncement();
-      } else {
-        this.msg = value.msg;
-        console.log(this.msg);
-        this.item_deleted = false;
-      }
-    });
-    setTimeout(() => {
-      this.display_msg = false;
-    }, 2000);
-  }
+  //   this.display_msg = true;
+  //   this.appAdminService.deleteAnnouncement(data).subscribe((value: any) => {
+  //     console.log(data);
+  //     if (value.status == 1) {
+  //       this.msg = value.msg;
+  //       console.log(this.msg);
+  //       this.item_deleted = true;
+  //       this.selectAllAnnouncement();
+  //     } else {
+  //       this.msg = value.msg;
+  //       console.log(this.msg);
+  //       this.item_deleted = false;
+  //     }
+  //   });
+  //   setTimeout(() => {
+  //     this.display_msg = false;
+  //   }, 2000);
+  // }
 
   
 
@@ -144,10 +137,11 @@ export class Announcements implements OnInit {
     
     if (this.more_menu_all_data != undefined) {
       var data = this.more_menu_all_data;
+      console.log(this.more_menu_all_data);
       this.dialog
         .open(EditAnnouncementDialog, {
-          width: "40%",
-          height: "30rem",
+          width: "50%",
+          // height: "30rem",
           data,
         })
         .afterClosed()
@@ -181,21 +175,35 @@ export class Announcements implements OnInit {
     let data = {};
     this.appAdminService
       .selectAllAnnouncement(JSON.stringify(data))
-      .subscribe((val) => {
+      .subscribe((val: any[]) => {
         this.annoucement_data = val;
         console.log(this.annoucement_data);
-        this.allMatTableData = this.annoucement_data;
-        this.allMatTableData = new MatTableDataSource<any>(this.annoucement_data);
-        if (this.allMatTableData != undefined) {
-          this.allMatTableData.paginator = this.paginator;
-        } else {
-          setTimeout(() => {
-            this.allMatTableData.paginator = this.paginator;
-          }, 3000);
-        }
+        this.MatTableData = this.annoucement_data;
+        this.MatTableData = new MatTableDataSource<any>(this.annoucement_data);
+        setTimeout(() => {
+          if (this.MatTableData != undefined) {
+            this.MatTableData.paginator = this.paginator;
+          } else {
+            setTimeout(() => {
+              this.MatTableData.paginator = this.paginator;
+            }, 3000);
+          }
+        });
       });
+        // this.allMatTableData = new MatTableDataSource<any>(this.annoucement_data);
+        // this.allMatTableData = new MatTableDataSource(val);
+        // if (this.allMatTableData != undefined) {
+        //   this.allMatTableData.paginator = this.paginator;
+        // } else {
+        //   setTimeout(() => {
+        //     this.allMatTableData.paginator = this.paginator;
+        //   }, 3000);
+        // }
+      //});
     
       
-}
-}
+      }
+    }
+
+  
 
