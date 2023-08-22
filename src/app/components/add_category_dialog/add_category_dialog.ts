@@ -26,6 +26,7 @@ export class AddCategoryDialog implements OnInit {
   @Output() valueEmitter: EventEmitter<boolean> = new EventEmitter();
 
   form_submit: boolean = false;
+  msg_status: boolean = false;
   category_name: string = "";
   category_icon: string = undefined;
 
@@ -136,9 +137,12 @@ export class AddCategoryDialog implements OnInit {
   // this.form_submit
   onCloseDialog() {
     this.dialogRef.close({
-      status : this.form_submit ? this.form_submit : undefined,
+      form_submit: this.form_submit,
+      status : this.msg_status,
       msg: this.form_submit ? this.alert_msg : undefined,
     });
+
+    this.form_submit = false;
   }
 
   focusOnInput($event) {
@@ -191,9 +195,10 @@ export class AddCategoryDialog implements OnInit {
         .subscribe((value: any) => {
 
           this.alert_msg = value.msg;
-          this.form_submit = value.status > 0 ? true : false;
+          this.msg_status = value.status > 0 ? true : false;
           this.preview_image = "";
           this.image_selected = false;
+          this.form_submit = true;
 
           this.property_id = "";
           this.category_name = "";

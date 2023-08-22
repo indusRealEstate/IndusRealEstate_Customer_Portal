@@ -139,21 +139,20 @@ export class AdminRequestsCategory implements OnInit {
   openWindow() {
     this.dialog
       .open(AddCategoryDialog, {
-        width: '50vw',
-        height: 'auto',
+        width: "50vw",
+        height: "auto",
       })
       .afterClosed()
       .subscribe((val) => {
         console.log(val);
         this.item_inserted = val.status;
         this.msg = val.msg;
-        
-        this.display_msg = true;
+
+        this.display_msg = this.msg != undefined ? true : false;
         this.selectAllCategories();
         setTimeout(() => {
           this.display_msg = false;
         }, 2000);
-        
       });
   }
 
@@ -216,6 +215,8 @@ export class AdminRequestsCategory implements OnInit {
   edit_item(data: any) {
     this.dialog
       .open(EditCategoryDialog, {
+        width: "50vw",
+        height: "50vh",
         data,
       })
       .afterClosed()

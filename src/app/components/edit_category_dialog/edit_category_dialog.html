@@ -3,9 +3,144 @@
   style="margin: 0"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane">
-  <!-- <div class="card-header"></div> -->
+  <div class="card-body">
+    <div class="col">
+      <div class="row m-0 align-items-start w-100 top-bar">
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">Requests</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          Maintenance Requests Category
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          Edit Ctegory
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt />
+      </div>
+
+      <div class="row mx-0 mt-0 mb-1 align-items-start w-100">
+        <p class="details-title my-4">
+          Edit category
+        </p>
+      </div>
+
+      <div class="row" #edit>
+        <div class="col-12">
+          <mat-form-field class="textField w-100" appearance="outline">
+            <mat-select
+              matInput
+              (click)="resetMatSelect()"
+              [(ngModel)]="property_id"
+              placeholder="Select Building" class="textField">
+
+              <mat-option
+                class="textfield-options-category"
+                *ngFor="let prop of propertiesFilter;let first = first;"
+                [value]="prop.value">
+                <div
+                  *ngIf="first"
+                  class="row m-0 align-items-center input-search"
+                  style="position: relative; display: flex; align-items: center;">
+                  <input
+                    style="position: relative; z-index: 10000; width: 100%;"
+                    [(ngModel)]="searchTextValue"
+                    placeholder="Search Building"
+                    #inputBox
+                    type="text"
+                    (click)="focusOnInput($event)"
+                    (keyup)="searchBuilding(inputBox.value,$event)" />
+                  <img
+                    class="search-icon mr-1"
+                    style="position: absolute;right: 10px;z-index: 10000;"
+                    src="assets/img/svg/searchbar/search-normal-1.svg"
+                    alt />
+                </div>
+
+                <span *ngIf="!first">{{prop.viewValue | titlecase}}</span>
+
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- {{selected_property.viewValue}} -->
+
+          <mat-form-field class="textField w-100" appearance="outline">
+            <mat-label>Category</mat-label>
+            <input type="text" matInput [(ngModel)]="category_name">
+          </mat-form-field>
+
+          <div class="row">
+            <div class="col-12">
+              <ul
+                style="list-style: none;flex-wrap: wrap; display: inline-flex; padding: 0; margin: 0;">
+                <li>
+                  <ng-container>
+                    <label for="file">
+                      <div class="col"
+                        style="display: grid; max-width: 130px; background: #d4aa323b; border: 2px solid #d4aa32; border-radius: 8px; padding: 10px 10px; cursor: pointer;"><img
+                          src="assets/img/pngs/add-image.png" alt
+                          class="mx-auto" style="width: 30px;">
+                        <span class="mx-auto mt-2">Edit Icon</span>
+
+                      </div>
+                    </label>
+                    <input id="file" multiple hidden type="file"
+                      accept="image/*"
+                      (change)="get_image_data($event)">
+                  </ng-container>
+                </li>
+                <li
+                  style="margin-left: 10px; margin-top: auto; margin-bottom: auto;">
+                  <img src="{{preview_image}}"
+                    alt="preview image" class="priview-image">
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 d-flex justify-content-end">
+              <button type="submit" (click)="submit()"
+                matTooltip="Save"
+                matTooltipClass="tooltip"
+                matTooltipPosition="above"
+                style="
+                  margin: 0;
+                  padding: 5px 20px;
+                  margin-right: 10px; 
+                  border-radius: 5px;
+                  border: 0px;
+                  color: #fff;
+                  font-weight: 500;"
+                [ngStyle]="{'background' : this.property_id !== '' && this.category_name !== '' && this.category_icon != undefined ? '#d4aa32' : '#d4aa3294','cursor': this.property_id !== '' && this.category_name !== '' && this.category_icon != undefined ? 'pointer' : 'not-allowed'}">
+                Save
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <div class="card-header"></div>
   <div class="card-header position-relative">
-    <!-- <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button> -->
+    <button (click)="onCloseDialog()" class="close-btn" title="close btn">X</button>
     <h4 class="dialog-head">Edit Srevice Category</h4>
     <img
       matTooltip="Close"
@@ -40,7 +175,7 @@
                   src="assets/img/svg/property-page/edit.svg"
                   alt
                   style="width: 20px; filter: brightness(0) invert(1)" />
-                <!-- <span class="m-auto px-2">Edit</span> -->
+                <span class="m-auto px-2">Edit</span>
               </p>
             </button>
           </div>
@@ -58,7 +193,7 @@
                   src="assets/img/svg/delete.svg"
                   alt
                   style="width: 20px; filter: brightness(0) invert(1)" />
-                <!-- <span class="m-auto px-2">Delete</span> -->
+                <span class="m-auto px-2">Delete</span>
               </p>
             </button>
           </div>
@@ -122,5 +257,5 @@
       </div>
     </form>
 
-  </div>
+  </div> -->
 </div>

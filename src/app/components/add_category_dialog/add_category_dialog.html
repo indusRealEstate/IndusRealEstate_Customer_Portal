@@ -37,7 +37,7 @@
 
       <div class="row mx-0 mt-0 mb-1 align-items-start w-100">
         <p class="details-title my-4">
-          Inventories details
+          Add category
         </p>
       </div>
 
@@ -49,7 +49,7 @@
               (click)="resetMatSelect()"
               [(ngModel)]="property_id"
               (selectionChange)="selectProperty($event)"
-              placeholder="Select Building">
+              placeholder="Select Building" class="textField">
 
               <mat-option
                 class="textfield-options-category"
@@ -85,24 +85,30 @@
           </mat-form-field>
 
           <div class="row">
-            <div class="col-6">
-              <ng-container>
-                <label for="file">
-                  <div class="col"
-                    style="display: grid; max-width: 130px; background: #d4aa323b; border: 2px solid #d4aa32; border-radius: 8px; padding: 10px 10px; cursor: pointer;"><img
-                      src="assets/img/pngs/add-image.png" alt
-                      class="mx-auto" style="width: 30px;">
-                    <span class="mx-auto mt-2">Add Icon</span>
+            <div class="col-12">
+              <ul
+                style="list-style: none;flex-wrap: wrap; display: inline-flex; padding: 0; margin: 0;">
+                <li>
+                  <ng-container>
+                    <label for="file">
+                      <div class="col"
+                        style="display: grid; max-width: 130px; background: #d4aa323b; border: 2px solid #d4aa32; border-radius: 8px; padding: 10px 10px; cursor: pointer;"><img
+                          src="assets/img/pngs/add-image.png" alt
+                          class="mx-auto" style="width: 30px;">
+                        <span class="mx-auto mt-2">Add Icon</span>
 
-                  </div>
-                </label>
-                <input id="file" multiple hidden type="file" accept="image/*"
-                  (change)="get_image_data($event)">
-              </ng-container>
-            </div>
-            <div class="col-6">
-              <img *ngIf="image_selected" src="{{preview_image}}"
-                alt="preview image" class="priview-image">
+                      </div>
+                    </label>
+                    <input id="file" multiple hidden type="file"
+                      accept="image/*"
+                      (change)="get_image_data($event)">
+                  </ng-container>
+                </li>
+                <li style="margin-left: 5px;">
+                  <img *ngIf="image_selected" src="{{preview_image}}"
+                    alt="preview image" class="priview-image">
+                </li>
+              </ul>
             </div>
           </div>
           <div class="row d-flex justify-content-end">
