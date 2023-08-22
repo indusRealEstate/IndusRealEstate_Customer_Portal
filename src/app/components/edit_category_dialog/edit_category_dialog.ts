@@ -52,7 +52,7 @@ export class EditCategoryDialog implements OnInit {
   image_selected: boolean = false;
 
   searchTextValue: string = "";
-  propertiesFilter: string[] = [];
+  unitsFilter: string[] = [];
 
   categoryData: any[] = [];
 
@@ -60,8 +60,8 @@ export class EditCategoryDialog implements OnInit {
 
   @ViewChild("inputBox") inputBox!: ElementRef;
 
-  properties: any[] = [{ testfield: true }];
-  property_id: any = "";
+  units: any[] = [{ testfield: true }];
+  unit_id: any = "";
 
   id: Number;
   name: string;
@@ -77,7 +77,10 @@ export class EditCategoryDialog implements OnInit {
 
   edit_show: boolean = false;
 
-  selected_property: any;
+  selected_unit: object = {
+    value: '',
+    viewValue: ''
+  };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -88,7 +91,6 @@ export class EditCategoryDialog implements OnInit {
     private formBuilder: FormBuilder,
     private dialog?: MatDialog
   ) {
-    console.log(data);
     this.category_data = data;
     this.name = data.name;
     this.id = data.id;
@@ -100,28 +102,33 @@ export class EditCategoryDialog implements OnInit {
 
     this.preview_image = `https://indusre.app/api/upload/category/${this.image}`;
 
-    this.apiAdminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+      console.log(val);
+
       var count = 0;
-      val.forEach((prop) => {
-        this.properties.push({
-          value: prop.property_id,
-          viewValue: prop.property_name,
+      val.forEach((unit) => {
+        this.units.push({
+          value: unit.id,
+          viewValue: unit.type,
         });
         count++;
       });
 
+      console.log(this.units);
+
       if (count == val.length) {
-        this.propertiesFilter = [...this.properties];
-        let data_filter = this.properties.filter(
-          (item) => item.value == data.prop_id
+        this.unitsFilter = [...this.units];
+
+        let data_filter = this.units.filter(
+          (item) => item.value == data.unit_type
         );
-        this.selected_property = {
+
+        this.selected_unit = {
           value: data_filter[0].value,
           viewValue: data_filter[0].viewValue,
         };
 
-        this.property_id = data_filter[0].value;
-        console.log(this.selected_property.value);
+        this.unit_id = data_filter[0].value;
       }
     });
   }
@@ -155,7 +162,7 @@ export class EditCategoryDialog implements OnInit {
 
   resetMatSelect() {
     this.searchTextValue = "";
-    this.propertiesFilter = [...this.properties];
+    this.unitsFilter = [...this.units];
   }
 
   focusOnInput($event) {
@@ -167,16 +174,16 @@ export class EditCategoryDialog implements OnInit {
   searchBuilding(searchText, $event) {
     $event.stopPropagation();
     if (searchText == "") {
-      this.propertiesFilter = [...this.properties];
+      this.unitsFilter = [...this.units];
     } else {
       var val = new String(searchText).trim().toLowerCase();
-      var data = this.properties.filter((prop) =>
+      var data = this.units.filter((prop) =>
         String(prop.viewValue).toLowerCase().startsWith(val)
       );
 
-      this.propertiesFilter.splice(1, this.propertiesFilter.length - 1);
+      this.unitsFilter.splice(1, this.unitsFilter.length - 1);
       data.forEach((p) => {
-        this.propertiesFilter.push(p);
+        this.unitsFilter.push(p);
       });
     }
   }
@@ -185,7 +192,9 @@ export class EditCategoryDialog implements OnInit {
 
   onCloseDialog() {
     this.dialogRef.close({
-      data: this.form_submit,
+      form_submit: this.form_submit,
+      status : this.msg_status,
+      msg: this.form_submit ? this.alert_msg : undefined,
     });
   }
 
@@ -229,7 +238,7 @@ export class EditCategoryDialog implements OnInit {
   }
 
   submit() {
-    if (this.category_name !== "" && this.property_id !== "") {
+    if (this.category_name !== "" && this.unit_id !== "") {
       this.input_array = [];
 
       let image_array =
@@ -247,7 +256,7 @@ export class EditCategoryDialog implements OnInit {
         size: image_array != undefined ? this.file_size : "",
         type: image_type != undefined ? image_type : "",
         icon_available: image_array != undefined ? 1 : 0,
-        property: this.property_id,
+        unit_type: this.unit_id,
       });
 
       this.apiAdminService
@@ -260,10 +269,10 @@ export class EditCategoryDialog implements OnInit {
           this.image_selected = false;
           this.form_submit = true;
 
-          this.property_id = "";
+          this.unit_id = "";
           this.category_name = "";
           this.category_icon = undefined;
-          // this.onCloseDialog();
+          this.onCloseDialog();
         });
     }
   }

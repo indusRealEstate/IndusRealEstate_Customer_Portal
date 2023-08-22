@@ -47,13 +47,13 @@
             <mat-select
               matInput
               (click)="resetMatSelect()"
-              [(ngModel)]="property_id"
-              (selectionChange)="selectProperty($event)"
+              [(ngModel)]="unit_id"
+              (selectionChange)="selectunit($event)"
               placeholder="Select Building" class="textField">
 
               <mat-option
                 class="textfield-options-category"
-                *ngFor="let prop of propertiesFilter;let first = first;"
+                *ngFor="let prop of unitsFilter;let first = first;"
                 [value]="prop.value">
                 <div
                   *ngIf="first"
@@ -62,7 +62,7 @@
                   <input
                     style="position: relative; z-index: 10000; width: 100%;"
                     [(ngModel)]="searchTextValue"
-                    placeholder="Search Building"
+                    placeholder="Search Unit Type"
                     #inputBox
                     type="text"
                     (click)="focusOnInput($event)"
@@ -104,7 +104,7 @@
                       (change)="get_image_data($event)">
                   </ng-container>
                 </li>
-                <li style="margin-left: 5px;">
+                <li style="margin-left: 10px;">
                   <img *ngIf="image_selected" src="{{preview_image}}"
                     alt="preview image" class="priview-image">
                 </li>
@@ -121,7 +121,7 @@
                   border: 0px;
                   color: #fff;
                   font-weight: 500;"
-              [ngStyle]="{'background' : this.property_id !== '' && this.category_name !== '' && this.category_icon != undefined ? '#d4aa32' : '#d4aa3294','cursor': this.property_id !== '' && this.category_name !== '' && this.category_icon != undefined ? 'pointer' : 'not-allowed'}">
+              [ngStyle]="{'background' : this.unit_id !== '' && this.category_name !== '' && this.category_icon != undefined ? '#d4aa32' : '#d4aa3294','cursor': this.unit_id !== '' && this.category_name !== '' && this.category_icon != undefined ? 'pointer' : 'not-allowed'}">
               Add
             </button>
           </div>
