@@ -262,7 +262,6 @@ export class EditCategoryDialog implements OnInit {
       this.apiAdminService
         .updateCategory(JSON.stringify(this.input_array))
         .subscribe((value: any) => {
-          console.log(value);
           this.alert_msg = value.msg;
           this.msg_status = value.status > 0 ? true : false;
           this.preview_image = "";

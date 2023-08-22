@@ -102,6 +102,7 @@ import "hammerjs";
 import { Announcements } from "app/announcements/announcements";
 import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/add-announcement-dialog";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
   imports: [
@@ -118,6 +119,7 @@ import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/
     MatTooltipModule,
     MatDialogModule,
     MatCardModule,
+    MatSnackBarModule,
     // A11yModule,
     // DragDropModule,
     // PortalModule,

@@ -149,7 +149,7 @@
               <mat-label>Unit Type*</mat-label>
               <mat-select [(ngModel)]="unit_type">
                 <mat-option *ngFor="let type of unitTypes" [value]="type.value">
-                  {{type.viewValue}}
+                  {{type.viewValue | titlecase}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

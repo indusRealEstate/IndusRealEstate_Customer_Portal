@@ -4,8 +4,10 @@ import {
   HostListener,
   OnInit,
   ViewChild,
+  ViewEncapsulation,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AddCategoryDialog } from "app/components/add_category_dialog/add_category_dialog";
 import { EditCategoryDialog } from "app/components/edit_category_dialog/edit_category_dialog";
@@ -24,7 +26,6 @@ export class AdminRequestsCategory implements OnInit {
   main_array: any[];
   msg: string;
   item_deleted: boolean = false;
-  display_msg: boolean = false;
   is_active: boolean = false;
   item_inserted: boolean = false;
 
@@ -47,6 +48,7 @@ export class AdminRequestsCategory implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     private apiAdminService: AdminService
   ) {
     this.isCategoryLoading = true;
@@ -68,6 +70,14 @@ export class AdminRequestsCategory implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   selectUnitType(event) {
@@ -135,11 +145,11 @@ export class AdminRequestsCategory implements OnInit {
         this.item_inserted = val.status;
         this.msg = val.msg;
 
-        this.display_msg = this.msg != undefined ? true : false;
+        if (this.item_inserted == true) {
+          this.openSnackBar("Category Added Succesfully", "Close");
+        }
+
         this.selectAllCategories();
-        setTimeout(() => {
-          this.display_msg = false;
-        }, 2000);
       });
   }
 
@@ -166,20 +176,21 @@ export class AdminRequestsCategory implements OnInit {
   }
 
   delete_item(data: any) {
-    this.display_msg = true;
-    this.apiAdminService.deleteServiceCategory(data).subscribe((value: any) => {
-      if (value.status == 1) {
-        this.msg = value.msg;
-        this.item_deleted = true;
-        this.selectAllCategories();
-      } else {
-        this.msg = value.msg;
-        this.item_deleted = false;
-      }
-    });
-    setTimeout(() => {
-      this.display_msg = false;
-    }, 2000);
+    this.apiAdminService
+      .deleteServiceCategory(data)
+      .subscribe((value: any) => {
+        if (value.status == 1) {
+          this.msg = value.msg;
+          this.item_deleted = true;
+          this.selectAllCategories();
+        } else {
+          this.msg = value.msg;
+          this.item_deleted = false;
+        }
+      })
+      .add(() => {
+        this.openSnackBar("Category Deleted Succesfully", "Close");
+      });
   }
 
   stauts_change(event, id) {
@@ -213,11 +224,11 @@ export class AdminRequestsCategory implements OnInit {
         this.item_inserted = val.status;
         this.msg = val.msg;
 
-        this.display_msg = this.msg != undefined ? true : false;
+        if (this.item_inserted == true) {
+          this.openSnackBar("Category Edited Succesfully", "Close");
+        }
+
         this.selectAllCategories();
-        setTimeout(() => {
-          this.display_msg = false;
-        }, 2000);
       });
   }
 
