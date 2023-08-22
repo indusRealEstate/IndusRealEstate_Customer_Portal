@@ -70,6 +70,10 @@ export class AddLeaseDialog implements OnInit {
   security_deposit: any = "";
   yearly_amount: any = "";
 
+  dewa: boolean = false;
+  chiller: boolean = false;
+  gas: boolean = false;
+
   formNotFilled: boolean = false;
   documentNotAdded: boolean = false;
   uploading: boolean = false;
@@ -289,6 +293,9 @@ export class AddLeaseDialog implements OnInit {
       govt_charges: this.govt_charges,
       security_deposit: this.security_deposit,
       documents: JSON.stringify(docs_names),
+      dewa: this.dewa == false ? 0 : 1,
+      chiller: this.chiller == false ? 0 : 1,
+      gas: this.gas == false ? 0 : 1,
     };
 
     return JSON.stringify(data);

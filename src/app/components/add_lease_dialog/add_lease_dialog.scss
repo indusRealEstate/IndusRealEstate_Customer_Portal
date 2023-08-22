@@ -4,13 +4,26 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .checkbox-add-lease {
+  .mat-mdc-checkbox-checked {
+    .mdc-checkbox__background {
+      background-color: #d4aa32 !important;
+      border-color: #d4aa32 !important;
+    }
+  }
+
+  label {
+    margin: 0 !important;
+  }
+}
+
 ::ng-deep .mat-dialog-container {
   padding: 0 !important;
   border-radius: 1rem;
 }
 
 .card-body {
-  height: 50rem;
+  height: auto;
 
   .header-arrow-icon {
     filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)

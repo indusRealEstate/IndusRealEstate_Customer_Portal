@@ -27,12 +27,12 @@
               <mat-select
                 (click)="resetMatSelect()"
                 [(ngModel)]="property_id"
-                (selectionChange)="selectProperty($event)"
-                placeholder="Select Building"
+                (selectionChange)="selectUnitType($event)"
+                placeholder="Select Type"
               >
                 <mat-option
                   class="textfield-options-category"
-                  *ngFor="let prop of propertiesFilter;let first = first;"
+                  *ngFor="let prop of unitTypesFilter;let first = first;"
                   [value]="prop.value"
                 >
                   <div
@@ -50,7 +50,7 @@
                       #inputBox
                       type="text"
                       (click)="focusOnInput($event)"
-                      (keyup)="searchBuilding(inputBox.value,$event)"
+                      (keyup)="searchUnitType(inputBox.value,$event)"
                     />
                   </div>
 
@@ -105,6 +105,15 @@
         *ngIf="!isCategoryLoading"
         class="row d-flex align-items-stretch mt-2"
       >
+        <div
+          class="w-100 d-flex justify-content-center align-items-center"
+          style="height: 35rem"
+          *ngIf="categories_props.length == 0"
+        >
+          <p style="font-size: 25px; font-weight: 500">
+            No Categories in this Unit Type!
+          </p>
+        </div>
         <div
           class="col-lg-4"
           *ngFor="let category of categories_props; let index = i"

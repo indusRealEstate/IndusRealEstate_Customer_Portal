@@ -295,14 +295,15 @@ export class AllLeasesComponent implements OnInit {
   addLeaseDialogOpen() {
     this.dialog
       .open(AddLeaseDialog, {
-        width: "80%",
-        height: "50rem",
+        width: "90%",
+        height: "auto",
       })
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
           if (res.completed == true) {
             sessionStorage.removeItem("admin_properties_units_session");
+            sessionStorage.removeItem("all_users_session");
             this.refreshTable();
           }
         }

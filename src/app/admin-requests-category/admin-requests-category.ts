@@ -30,12 +30,12 @@ export class AdminRequestsCategory implements OnInit {
 
   property_id: any = "all";
 
-  properties: any[] = [
+  unitTypes: any[] = [
     { testfield: true },
     { value: "all", viewValue: "All Categories" },
   ];
 
-  propertiesFilter: any[] = [];
+  unitTypesFilter: any[] = [];
 
   searchTextValue: any = "";
 
@@ -50,29 +50,16 @@ export class AdminRequestsCategory implements OnInit {
     private apiAdminService: AdminService
   ) {
     this.isCategoryLoading = true;
-    this.propertiesFilter = this.properties;
+    this.unitTypesFilter = this.unitTypes;
 
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.apiAdminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        val.forEach((prop) => {
-          this.properties.push({
-            value: prop.property_id,
-            viewValue: prop.property_name,
-          });
+    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+      val.forEach((unit_type) => {
+        this.unitTypes.push({
+          value: unit_type.id,
+          viewValue: unit_type.type,
         });
       });
-    } else {
-      propertiesDataSession.forEach((prop) => {
-        this.properties.push({
-          value: prop.property_id,
-          viewValue: prop.property_name,
-        });
-      });
-    }
+    });
   }
 
   screenHeight: number;
@@ -83,21 +70,21 @@ export class AdminRequestsCategory implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  selectProperty(event) {
-    this.propertiesFilter = this.properties;
+  selectUnitType(event) {
+    this.unitTypesFilter = this.unitTypes;
     // console.log(event.value);
     if (event.value == "all" || event.value == undefined) {
       this.categories_props = this.categoryData;
     } else {
       this.categories_props = this.categoryData.filter(
-        (catg) => catg.prop_id == event.value
+        (catg) => catg.unit_type == event.value
       );
     }
   }
 
   resetMatSelect() {
     this.searchTextValue = "";
-    this.propertiesFilter = [...this.properties];
+    this.unitTypesFilter = [...this.unitTypes];
   }
 
   focusOnInput($event) {
@@ -106,19 +93,19 @@ export class AdminRequestsCategory implements OnInit {
     $event.preventDefault();
   }
 
-  searchBuilding(searchText, $event) {
+  searchUnitType(searchText, $event) {
     $event.stopPropagation();
     if (searchText == "") {
-      this.propertiesFilter = [...this.properties];
+      this.unitTypesFilter = [...this.unitTypes];
     } else {
       var val = new String(searchText).trim().toLowerCase();
-      var data = this.properties.filter((prop) =>
+      var data = this.unitTypes.filter((prop) =>
         String(prop.viewValue).toLowerCase().startsWith(val)
       );
 
-      this.propertiesFilter.splice(1, this.propertiesFilter.length - 1);
+      this.unitTypesFilter.splice(1, this.unitTypesFilter.length - 1);
       data.forEach((p) => {
-        this.propertiesFilter.push(p);
+        this.unitTypesFilter.push(p);
       });
     }
   }
@@ -139,21 +126,20 @@ export class AdminRequestsCategory implements OnInit {
   openWindow() {
     this.dialog
       .open(AddCategoryDialog, {
-        width: '50vw',
-        height: 'auto',
+        width: "50vw",
+        height: "auto",
       })
       .afterClosed()
       .subscribe((val) => {
         console.log(val);
         this.item_inserted = val.status;
         this.msg = val.msg;
-        
+
         this.display_msg = true;
         this.selectAllCategories();
         setTimeout(() => {
           this.display_msg = false;
         }, 2000);
-        
       });
   }
 
@@ -163,6 +149,7 @@ export class AdminRequestsCategory implements OnInit {
     this.apiAdminService
       .selecteCategory()
       .subscribe((val: any[]) => {
+        console.log(val);
         this.categoryData = val;
         this.categories_props = val;
       })

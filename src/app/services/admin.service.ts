@@ -106,6 +106,15 @@ export class AdminService {
     );
   }
 
+  getallUnitTypes() {
+    const url = `${API_URL}/getAll_unit_types.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getallPropertiesUnitsAdmin() {
     const url = `${API_URL}/getAllPropertiesUnits.php?apikey=1`;
     return this.http.get<any>(url).pipe(

@@ -401,6 +401,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           if (res.completed == true) {
             sessionStorage.removeItem("all_lease_session");
             sessionStorage.removeItem("admin_properties_units_session");
+            sessionStorage.removeItem("all_users_session");
           }
         }
       });

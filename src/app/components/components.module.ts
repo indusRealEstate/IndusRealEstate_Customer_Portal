@@ -46,12 +46,13 @@ import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_do
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { EditUserDialog } from "./edit_user_dialog/edit_user_dialog";
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from "@angular/cdk/scrolling";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule, 
+    RouterModule,
     FormsModule,
     MatMenuModule,
     MatFormFieldModule,
@@ -70,7 +71,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatDatepickerModule,
     NgxMatIntlTelInputComponent,
     MatProgressBarModule,
-    ScrollingModule
+    ScrollingModule,
+    MatCheckboxModule,
   ],
   declarations: [
     FooterComponent,
