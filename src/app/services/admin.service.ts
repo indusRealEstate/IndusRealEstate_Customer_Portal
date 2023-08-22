@@ -611,4 +611,11 @@ deleteAnnouncement(data: any) {
     })
   );
 }
+uploadAllFilesAddAnnouncement(data: any) {
+  const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
+  const req = new HttpRequest("POST", url, data, {
+    reportProgress: true,
+  });
+  return this.http.request(req);
+}
 }
