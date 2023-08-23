@@ -64,9 +64,13 @@
         </div>
       </div>
 
-      <!-- <loading-table-admin-properties
+      <!-- <loading-table-announcement
         *ngIf="isContentLoading == true"
-      ></loading-table-admin-properties> -->
+      ></loading-table-announcement> 
+    *ngIf="isContentLoading == false"-->
+
+    <div >
+
       <table
   mat-table
   [dataSource]="MatTableData"
@@ -198,10 +202,11 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+</div>
 <div style="margin-top: 25px" class="table-paginator">
   <mat-paginator
     #announcement_paginator
-    [pageSizeOptions]="[5, 10, 15, 20, 25]"
+    [pageSizeOptions]="[10, 20, 30, 40, 50]"
     aria-label="Select page"
   ></mat-paginator>
 </div>

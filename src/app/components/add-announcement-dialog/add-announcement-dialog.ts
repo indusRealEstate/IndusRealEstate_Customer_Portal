@@ -40,6 +40,7 @@ export class AddAnnouncementDialog implements OnInit {
   imageNotAdded: boolean;
   uploading_progress: any = 0;
   documentNotAdded: boolean = false;
+  isContentLoading: boolean = false;
   
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
