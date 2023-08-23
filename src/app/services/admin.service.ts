@@ -613,35 +613,35 @@ export class AdminService {
     );
   }
 
-updateAnnouncement(data: any) {
-  const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
-  return this.http.post<any>(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-deleteAnnouncement(data: any) {
-  const url = `${API_URL}/deleteAnnouncement.php?apikey=1`;
-  return this.http.post<any>(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-uploadAllFilesAddAnnouncement(data: any) {
-  const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
-  const req = new HttpRequest("POST", url, data, {
-    reportProgress: true,
-  });
-  return this.http.request(req);
-}
+  updateAnnouncement(data: any) {
+    const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  deleteAnnouncement(data: any) {
+    const url = `${API_URL}/deleteAnnouncement.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  uploadAllFilesAddAnnouncement(data: any) {
+    const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
+  }
 
-uploadAllFilesEditAnnouncement(data: any) {
-  const url = `${API_URL}/upload_edit_announcement_files.php?apikey=1`;
-  const req = new HttpRequest("POST", url, data, {
-    reportProgress: true,
-  });
-  return this.http.request(req);
-}
+  uploadAllFilesEditAnnouncement(data: any) {
+    const url = `${API_URL}/upload_edit_announcement_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
+  }
 }
