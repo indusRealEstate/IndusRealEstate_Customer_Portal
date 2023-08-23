@@ -33,13 +33,21 @@ export class EditAnnouncementDialog implements OnInit {
   description: any = "";
   emergency: boolean = false;
   announce_id: number;
+  ann_id:number;
   properties: any[] = [];
   selected_property: any = "";
   property_id: any;
   formNotFilled: boolean = false;
   uploading: boolean = false;
   uploaded: boolean = false;
-  //property_building_type: any = "";
+  documentNotAdded: boolean = false;
+  docsFilesUploaded: any[] = [];
+  property_building_type: any = "";
+  deleted_doc_array: string[] = [];
+  new_selected_doc: File[] = [];
+  uploading_progress: any = 0;
+  uploaded_doc: string[] = [];
+  
   //  buildingName: DropDownButtonModel[] = [
   //   { value: "alsima tower", viewValue: "alsima tower" },
   //   { value: "Marina gate", viewValue: "Marina gate" },
@@ -56,16 +64,20 @@ export class EditAnnouncementDialog implements OnInit {
     this.all_data = data;
 
     this.title = this.all_data.a_title;
-    //this.building_name = this.all_data.a_building;
-    this.selected_property = this.all_data.selected_property;
+    this.announce_id = this.all_data.ann_id;
+    
     this.description = this.all_data.a_description;
-    this.emergency = this.all_data.a_emergency;
+    this.emergency = this.all_data.a_emergency > '0' ?true:false;
     this.p_id = this.all_data.p_id;
     this.p_name = this.all_data.p_name;
+    console.log(this.all_data.a_emergency);
 
     this.getAllPropertiesName();
-    console.log(this.properties);
-    
+    let selected = this.properties.filter((val)=> val.value == this.p_id);
+    console.log(selected);
+    this.selected_property = this.p_id;
+    //console.log(this.properties);
+    this.assignDoc();
   }
 
   
@@ -81,6 +93,16 @@ export class EditAnnouncementDialog implements OnInit {
     });
   }
   
+  async assignDoc() {
+    for (let i = 0; i < JSON.parse(this.all_data.attachments).length; i++) {
+      let doc_URL: string = `https://indusre.app/api/upload/announcement/${
+        this.all_data.ann_id
+      }/${JSON.parse(this.all_data.attachments)[i]}`;
+      
+      this.docsFilesUploaded.push(JSON.parse(this.all_data.attachments)[i]);
+      //console.log(doc_URL);
+    }
+  }
   ngOnInit() {}
 
   ngAfterViewInit() {}
@@ -103,27 +125,84 @@ export class EditAnnouncementDialog implements OnInit {
     });
   }
 
- 
+  onFileSelected(files: Array<any>) {
+    for (var item of files) {
+      this.docsFilesUploaded.push(item);
+    }
+    this.fileInput.nativeElement.value = "";
+  }
+
+  removeUploadedDoc(index) {
+    let remove_item = this.docsFilesUploaded.splice(index, 1);
+
+    if (typeof remove_item[0] == "string") {
+      this.deleted_doc_array.push(remove_item[0]);
+    }
+    console.log(this.deleted_doc_array);
+  }
  
 
   onSubmit() {
-
-    
+    let uploaded_doc: File[] = [];
+    let exist_doc: string[] = [];
+    if (
+      this.docsFilesUploaded.length != 0
+    ) {
+      this.docsFilesUploaded.forEach((value) => {
+        if (typeof value == "object") {
+          this.new_selected_doc.push(value);
+        } else {
+          exist_doc.push(value);
+        }
+      });
       if (
         this.title != "" &&
-        this.building_name != "" &&
+        this.selected_property != "" &&
         this.description != ""
       ) {
         this.uploading = true;
+        let docs_names = [];
+
+        for (let doc of this.new_selected_doc) {
+          docs_names.push(doc.name);
+        }
+        if (docs_names.length != 0) {
+          exist_doc = exist_doc.concat(docs_names);
+        }
+        //console.log(exist_doc);
+
         let announce_id = this.all_data.a_id;
-        let data = this.setupData(announce_id);
+        let r_id = this.all_data.ann_id;
+       
+        let data = this.setupData(announce_id,exist_doc);
 
         this.adminService.updateAnnouncement(data).subscribe((value) => {
-          console.log(announce_id);
+          console.log(data);
           if (value == "success") {
-            console.log("edited successfully");
-            console.log(announce_id);
+            this.uploading_progress = 0;
+            let uploadData = this.setupUploadFiles(
+              r_id,
+              docs_names,
             
+            );
+            
+            this.adminService
+              .uploadAllFilesEditAnnouncement(uploadData)
+              .pipe(
+                map((event) => this.getEventMessage(event)),
+                tap((message) => {
+                  if (message == "File was completely uploaded!") {
+                    this.uploaded = true;
+                    this.uploaded_doc = exist_doc;
+                    this.onCloseDialog();
+                    // this.dialogRef.close();
+                  }
+                }),
+                last()
+              )
+              .subscribe((v) => {
+                console.log(v);
+              });
           }
 
           console.log(value);
@@ -134,21 +213,72 @@ export class EditAnnouncementDialog implements OnInit {
           this.formNotFilled = false;
         }, 3000);
       }
-    
+    }else if (this.docsFilesUploaded.length == 0) {
+      this.documentNotAdded = true;
+      setTimeout(() => {
+        this.documentNotAdded = false;
+      }, 3000);
+    }
   }
-  setupData(announce_id: any): string {
+  setupUploadFiles(
+    random_id: any,
+    docs_names: any[]
+  ): FormData {
+    const formdata: FormData = new FormData();
+    formdata.append("docs_names", JSON.stringify(docs_names));
+    formdata.append("deleted_doc", JSON.stringify(this.deleted_doc_array));
+
+    var doc_count = 0;
+    for (let doc of this.new_selected_doc) {
+      formdata.append(`doc_${doc_count}`, doc);
+      doc_count++;
+    }
+
+    formdata.append("announcement_id", random_id);
+
+    return formdata;
+  }
+
+  setupData(announce_id: any,docs_names: any[]): string {
     var data = {
+      // announcement_id: random_id,
+      //testid:this.ann_id,
       id: announce_id,
       title: this.title,
-      building_name: this.building_name,
       emergency: this.emergency,
       description: this.description,
-      p_id:this.p_id,
-      p_name:this.p_name
+      p_id:this.selected_property,
+      p_name:this.p_name,
+      documents: JSON.stringify(docs_names),
+      //an_id:this.ann_id
       
     };
-console.log(data);
+//console.log(data);
     return JSON.stringify(data);
+  }
+
+  /** Return distinct message for sent, upload progress, & response events */
+  private getEventMessage(event: HttpEvent<any>) {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        return `Uploading file `;
+
+      case HttpEventType.UploadProgress:
+        // Compute and show the % done:
+        const percentDone = event.total
+          ? Math.round((100 * event.loaded) / event.total)
+          : 0;
+
+        this.uploading_progress = percentDone;
+        return `File is ${percentDone}% uploaded.`;
+
+      case HttpEventType.Response:
+        this.uploading = false;
+        return `File was completely uploaded!`;
+
+      default:
+        return `File surprising upload event: ${event.type}.`;
+    }
   }
 
 }

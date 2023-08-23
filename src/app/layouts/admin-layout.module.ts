@@ -75,6 +75,7 @@ import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-a
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
 import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
+import { LoadingTableAnnouncement } from "app/components/loading-table-announcement/loading-table-announcement";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
@@ -207,6 +208,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     LoadingTableAdminPropertiesUnits,
     LoadingTableAdminAllUsers,
     LoadingTableAdminAllLease,
+    LoadingTableAnnouncement,
     UserChatsComponent,
     EditAnnouncementDialog,
 

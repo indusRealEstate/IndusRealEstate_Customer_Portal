@@ -56,6 +56,7 @@ export class Announcements implements OnInit {
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
+   // console.log(this.isContentLoading);
     this.selectAllAnnouncement();
     this.getScreenSize();
   }
@@ -98,16 +99,37 @@ export class Announcements implements OnInit {
   }
 
   selectAllAnnouncement(): any {
-    let data = {
-    };
+    // let data = {
+    // };
+    // this.appAdminService
+    //   .selectAllAnnouncement(JSON.stringify(data))
+    //   .subscribe((val) => {
+    //     this.annoucement_data = val;
+    //     console.log( this.annoucement_data);
+    //   })
+    //this.isContentLoading = false;
+    let data = {};
     this.appAdminService
       .selectAllAnnouncement(JSON.stringify(data))
-      .subscribe((val) => {
+      .subscribe((val: any[]) => {
         this.annoucement_data = val;
-        console.log( this.annoucement_data);
+        console.log(this.annoucement_data);
+        this.MatTableData = this.annoucement_data;
+        this.MatTableData = new MatTableDataSource<any>(this.annoucement_data);
+        setTimeout(() => {
+          if (this.MatTableData != undefined) {
+            this.MatTableData.paginator = this.paginator;
+          } else {
+            setTimeout(() => {
+              this.MatTableData.paginator = this.paginator;
+            }, 3000);
+          }
+        });
       })
-
-    // return this.MatTableData;
+        // .add(() => {
+        //   this.isContentLoading = false;
+        // });
+   
   }
   
   // deleteAnnouncement(data: any) {
@@ -172,38 +194,9 @@ export class Announcements implements OnInit {
   }
 
   async ngOnInit() {
-    let data = {};
-    this.appAdminService
-      .selectAllAnnouncement(JSON.stringify(data))
-      .subscribe((val: any[]) => {
-        this.annoucement_data = val;
-        console.log(this.annoucement_data);
-        this.MatTableData = this.annoucement_data;
-        this.MatTableData = new MatTableDataSource<any>(this.annoucement_data);
-        setTimeout(() => {
-          if (this.MatTableData != undefined) {
-            this.MatTableData.paginator = this.paginator;
-          } else {
-            setTimeout(() => {
-              this.MatTableData.paginator = this.paginator;
-            }, 3000);
-          }
-        });
-      });
-        // this.allMatTableData = new MatTableDataSource<any>(this.annoucement_data);
-        // this.allMatTableData = new MatTableDataSource(val);
-        // if (this.allMatTableData != undefined) {
-        //   this.allMatTableData.paginator = this.paginator;
-        // } else {
-        //   setTimeout(() => {
-        //     this.allMatTableData.paginator = this.paginator;
-        //   }, 3000);
-        // }
-      //});
-    
-      
-      }
-    }
+    this.selectAllAnnouncement();
+  }
+}
 
   
 
