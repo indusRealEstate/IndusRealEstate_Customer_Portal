@@ -196,7 +196,7 @@
                       </p>
                       <div
                         *ngIf="getReminderSendedTime(contract) == 'loading..'"
-                        (click)="sendContractReminder(contract.contract_id,contract.contract_end,index)"
+                        (click)="sendContractReminder(contract)"
                         class="btn"
                         style="padding: 5px 10px; background: #d4aa32"
                       >

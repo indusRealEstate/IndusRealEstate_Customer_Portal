@@ -48,6 +48,7 @@ import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog
 import { EditUserDialog } from "./edit_user_dialog/edit_user_dialog";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { EditLeaseDialog } from "./edit_lease_dialog/edit_lease_dialog";
 
 @NgModule({
   imports: [
@@ -102,6 +103,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     ViewAllUnitInventories,
     ViewPaymentDetailsMoreDialog,
     EditUserDialog,
+    EditLeaseDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

@@ -147,9 +147,8 @@ export class AdminRequestsCategory implements OnInit {
 
         if (this.item_inserted == true) {
           this.openSnackBar("Category Added Succesfully", "Close");
+          this.selectAllCategories();
         }
-
-        this.selectAllCategories();
       });
   }
 
@@ -226,20 +225,19 @@ export class AdminRequestsCategory implements OnInit {
 
         if (this.item_inserted == true) {
           this.openSnackBar("Category Edited Succesfully", "Close");
+          this.selectAllCategories();
         }
-
-        this.selectAllCategories();
       });
   }
 
-  viewCategory(data: any) {
-    this.dialog
-      .open(EditCategoryDialog, {
-        data,
-      })
-      .afterClosed()
-      .subscribe((val) => {
-        this.selectAllCategories();
-      });
-  }
+  // viewCategory(data: any) {
+  //   this.dialog
+  //     .open(EditCategoryDialog, {
+  //       data,
+  //     })
+  //     .afterClosed()
+  //     .subscribe((val) => {
+  //       this.selectAllCategories();
+  //     });
+  // }
 }

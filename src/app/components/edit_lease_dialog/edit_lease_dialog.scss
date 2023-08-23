@@ -1,0 +1,86 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+
+::ng-deep .checkbox-add-lease {
+  .mat-mdc-checkbox-checked {
+    .mdc-checkbox__background {
+      background-color: #d4aa32 !important;
+      border-color: #d4aa32 !important;
+    }
+  }
+
+  label {
+    margin: 0 !important;
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 1rem;
+}
+
+.card-body {
+  height: auto;
+
+  .header-arrow-icon {
+    filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+      brightness(90%) contrast(83%);
+    width: 1rem;
+  }
+
+  .close-icon {
+    filter: brightness(0) saturate(100%) invert(96%) sepia(1%) saturate(0%)
+      hue-rotate(145deg) brightness(84%) contrast(88%);
+    width: 1.5rem;
+    right: 0;
+    position: absolute;
+    width: 1.5rem;
+    cursor: pointer;
+
+    transition: 0.3s all ease-in-out;
+
+    &:hover {
+      transform: scaleY(1.2) scaleX(1.2);
+      filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
+        brightness(90%) contrast(83%);
+    }
+  }
+
+  .progress-bar {
+    width: 400px;
+    height: 25px;
+    background-color: #f5ebd0a8;
+    border: 1px solid #d4aa32;
+    border-radius: 6px;
+  }
+
+  .progress-bar-fill {
+    background: #d4aa32;
+    height: 100%;
+  }
+}
+
+::ng-deep .mat-datepicker {
+  .mat-form-field-infix {
+    display: flex !important;
+  }
+}
+
+::ng-deep .textField {
+  width: 100%;
+
+  .mdc-notched-outline {
+    .mdc-notched-outline__leading {
+      border-color: #d4aa32;
+    }
+    .mdc-notched-outline__notch {
+      border-color: #d4aa32;
+    }
+    .mdc-notched-outline__trailing {
+      border-color: #d4aa32;
+    }
+  }
+}

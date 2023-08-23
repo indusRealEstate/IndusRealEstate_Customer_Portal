@@ -6,13 +6,21 @@
 >
   <!-- <div class="card-header"></div> -->
   <div class="card-body" style="padding: 1.5rem 1.5rem">
-    <div class="col">
+    <div
+      class="d-flex justify-content-center align-items-center"
+      *ngIf="loading_all_data"
+      style="height: 10rem; width: 10rem;"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <div class="col" *ngIf="!loading_all_data">
       <div class="row m-0 align-items-start w-100">
         <p
           class="mr-2"
           style="font-weight: 500; color: #3c4858b5; font-size: 20px"
         >
-          Add New Lease
+          Edit Lease
         </p>
         <img
           matTooltip="Close"
@@ -29,14 +37,12 @@
         <div class="col pl-0">
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Select Property*</mat-label>
-            <mat-select
-              [(ngModel)]="property_id"
-              (selectionChange)="selectProperty($event)"
-            >
-              <mat-option *ngFor="let prop of properties" [value]="prop.value">
-                {{prop.viewValue}}
-              </mat-option>
-            </mat-select>
+            <input
+              matInput
+              type="text"
+              value="{{property}}"
+              disabled
+            />
           </mat-form-field>
           <mat-form-field class="mat-datepicker textField" appearance="outline">
             <mat-label>Choose Contract Start Date</mat-label>
@@ -66,17 +72,12 @@
         <div class="col">
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Select Unit*</mat-label>
-            <mat-select
-              [(ngModel)]="unit_data"
-              (selectionChange)="selectUnit($event)"
-            >
-              <mat-select-trigger>
-                {{ unit_data.viewValue }}
-              </mat-select-trigger>
-              <mat-option *ngFor="let unit of units" [value]="unit">
-                {{unit.viewValue}}
-              </mat-option>
-            </mat-select>
+            <input
+              matInput
+              type="text"
+              value="{{unit_data}}"
+              disabled
+            />
           </mat-form-field>
 
           <mat-form-field class="mat-datepicker textField" appearance="outline">
@@ -111,7 +112,6 @@
             <input
               matInput
               type="text"
-              placeholder="Ex. Jhon"
               value="{{owner}}"
               disabled
             />
@@ -135,7 +135,9 @@
               <mat-checkbox [(ngModel)]="dewa">Dewa Inclusive</mat-checkbox>
             </div>
             <div class="checkbox-add-lease">
-              <mat-checkbox [(ngModel)]="chiller">Chiller Inclusive</mat-checkbox>
+              <mat-checkbox [(ngModel)]="chiller"
+                >Chiller Inclusive</mat-checkbox
+              >
             </div>
           </div>
         </div>
@@ -143,11 +145,12 @@
         <div class="col">
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Select Tenant*</mat-label>
-            <mat-select [(ngModel)]="tenant_id">
-              <mat-option *ngFor="let usr of users" [value]="usr.value">
-                {{usr.viewValue}}
-              </mat-option>
-            </mat-select>
+            <input
+              matInput
+              type="text"
+              value="{{tenant}}"
+              disabled
+            />
           </mat-form-field>
 
           <mat-form-field class="mat-datepicker textField" appearance="outline">
@@ -292,7 +295,7 @@
                 >{{file.name}}</span
               >
               <img
-                (click)="removeUploadedDoc(index)"
+                (click)="removeUploadedDoc(index,file)"
                 src="assets/img/svg/success-dialog/close-square.svg"
                 alt=""
                 style="

@@ -21,13 +21,6 @@ import { last, map, tap } from "rxjs";
   // imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class EditUserDialog implements OnInit {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<EditUserDialog>,
-    private adminService: AdminService,
-    private formBuilder: FormBuilder
-  ) {}
-
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
 
@@ -77,13 +70,47 @@ export class EditUserDialog implements OnInit {
     { value: "passprt", viewValue: "Passport" },
   ];
 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<EditUserDialog>,
+    private adminService: AdminService,
+    private formBuilder: FormBuilder
+  ) {
+    console.log(data);
+    this.user_name = data.user_name;
+    this.user_email = data.user_email;
+    this.user_alternative_email = data.user_alternative_email;
+    this.user_country_code = data.user_country_code_number;
+    this.user_mobile_number = data.user_mobile_number;
+    this.user_alternative_country_code =
+      data.user_country_code_alternative_number;
+    this.user_alternative_number = data.user_alternative_mobile_number;
+    this.user_dob = data.user_dob;
+    this.user_gender = data.user_gender;
+    this.user_id_type = data.user_id_type;
+    this.user_id_number = data.user_id_number;
+
+    this.imgFileBase64Uploaded = `https://indusre.app/api/upload/user/${data.user_uid}/image/${data.user_profile_img}`;
+
+    if (data.bank_details != undefined) {
+      this.user_bank_ac_no = data.bank_details.bank_ac_number;
+      this.user_bank_name = data.bank_details.bank_name;
+      this.user_bank_iban = data.bank_details.iban;
+      this.user_bank_swift_code = data.bank_details.swift_code;
+    }
+  }
+
   ngOnInit() {
     this.phoneForm = this.formBuilder.group({
       phone: ["", Validators.required],
     });
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    if (this.country_dropdown != undefined) {
+      this.country_dropdown.selectedCountry = this.data.user_nationality;
+    }
+  }
 
   onCloseDialog() {
     this.dialogRef.close();
@@ -91,9 +118,6 @@ export class EditUserDialog implements OnInit {
 
   phoneNumberChanged(event) {
     this.user_country_code = "+" + event.dialCode;
-    // if (this.phone_number_input != undefined) {
-    //   this.user_mobile_number = this.phone_number_input.phoneNumber;
-    // }
   }
 
   alternativePhoneNumberChanged(event) {
@@ -228,6 +252,7 @@ export class EditUserDialog implements OnInit {
       allocated_unit: "",
       profile_img: this.imgFileUploaded.name,
       documents: JSON.stringify(docs_names),
+      joined_date: new Date(),
     };
 
     return JSON.stringify(data);

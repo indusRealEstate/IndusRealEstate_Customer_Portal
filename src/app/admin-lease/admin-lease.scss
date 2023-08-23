@@ -4,6 +4,61 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .more-menu {
+  .mat-mdc-menu-content {
+    padding: 5px 15px;
+    width: 170px;
+
+    .mat-mdc-menu-item:first-child {
+      border: 1px solid #e6ebf1;
+      border-radius: 5px;
+      margin: 10px 0;
+      min-height: 40px;
+
+      &:hover {
+        background: #d4a9321a;
+      }
+
+      .mdc-list-item__primary-text {
+        width: 100%;
+        .row {
+          span {
+            font-size: 14px;
+          }
+
+          img {
+            width: 15px;
+          }
+        }
+      }
+    }
+
+    .mat-mdc-menu-item:last-child {
+      border: 1px solid #e6ebf1;
+      border-radius: 5px;
+      margin: 10px 0;
+      min-height: 40px;
+
+      &:hover {
+        background: rgba(255, 0, 0, 0.053);
+      }
+
+      .mdc-list-item__primary-text {
+        width: 100%;
+        .row {
+          span {
+            font-size: 14px;
+          }
+
+          img {
+            width: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
 .sort-lease-btns {
   padding: 5px 10px;
   font-size: 12px;

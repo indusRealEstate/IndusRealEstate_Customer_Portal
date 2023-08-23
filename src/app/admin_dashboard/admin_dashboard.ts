@@ -125,9 +125,14 @@ export class AdminDashboardComponent implements OnInit {
       );
   }
 
-  async sendContractReminder(contract_id, end_date, index) {
-    var days_left = this.getContractsEndsInPeriod(end_date);
-    await this.firebaseService.addContractReminder(contract_id, days_left);
+  async sendContractReminder(contract) {
+    var days_left = this.getContractsEndsInPeriod(contract.contract_end);
+    await this.firebaseService.addContractReminder(
+      contract.contract_id,
+      days_left
+    );
+
+    this.getReminderSendedTime(contract);
   }
 
   isUserSignOut() {
@@ -247,6 +252,8 @@ export class AdminDashboardComponent implements OnInit {
                 : `Sended ${minutes} minute ago.`
               : "Sended now.";
           }
+        } else {
+          return "loading..";
         }
       } else {
         return "loading..";

@@ -73,7 +73,6 @@ export class AddCategoryDialog implements OnInit {
     private dialog?: MatDialog
   ) {
     this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
-
       val.forEach((unit) => {
         this.units.push({
           value: unit.id,
@@ -81,8 +80,6 @@ export class AddCategoryDialog implements OnInit {
         });
       });
     });
-
-    console.log(this.units);
   }
 
   get f() {
@@ -103,8 +100,7 @@ export class AddCategoryDialog implements OnInit {
       reader.readAsDataURL(file);
 
       this.image_selected = true;
-    }
-    else{
+    } else {
       this.preview_image = undefined;
     }
   }
@@ -139,7 +135,7 @@ export class AddCategoryDialog implements OnInit {
   onCloseDialog() {
     this.dialogRef.close({
       form_submit: this.form_submit,
-      status : this.msg_status,
+      status: this.msg_status,
       msg: this.form_submit ? this.alert_msg : undefined,
     });
 
@@ -194,7 +190,6 @@ export class AddCategoryDialog implements OnInit {
       this.apiAdminService
         .insertCategory(JSON.stringify(this.input_array))
         .subscribe((value: any) => {
-
           this.alert_msg = value.msg;
           this.msg_status = value.status > 0 ? true : false;
           this.preview_image = "";

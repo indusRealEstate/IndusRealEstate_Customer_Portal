@@ -68,7 +68,7 @@
             View All Docs
           </div>
           <div
-            *ngIf="all_data != null"
+            *ngIf="unit_type_is_loading != true"
             class="mr-4"
             style="
               background: #d4aa3212;
@@ -80,7 +80,7 @@
               border: 1px solid #d4aa3259;
             "
           >
-            {{all_data.unit_type | titlecase}}
+            {{getUnitType(all_data.unit_type) | titlecase}}
           </div>
 
           <div
@@ -814,7 +814,7 @@
                             class="refresh-table-btn ml-3"
                             src="assets/img/svg/home-page/refresh-2.svg"
                             alt
-                          /> 
+                          />
                         </li>
                         <li>
                           <img

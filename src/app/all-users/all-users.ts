@@ -4,6 +4,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
+import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -64,6 +65,8 @@ export class AllUsersComponent implements OnInit {
   fetching_all_units_under_landlord: boolean = true;
 
   all_units_landlord: any[] = [];
+  more_menu_user_all_data: any = "";
+  more_menu_user_loaded: boolean = false;
 
   current_sort_option: any = "all";
 
@@ -315,6 +318,32 @@ export class AllUsersComponent implements OnInit {
           if (res.completed == true) {
             this.refreshTable();
           }
+        }
+      });
+  }
+
+  openMoreMenu(user_id) {
+    this.more_menu_user_all_data = "";
+    this.adminService
+      .getUserDetailsForEdit({ user_id: user_id })
+      .subscribe((res) => {
+        this.more_menu_user_all_data = res;
+      })
+      .add(() => {
+        this.more_menu_user_loaded = true;
+      });
+  }
+
+  editUserDialogOpen(index) {
+    this.dialog
+      .open(EditUserDialog, {
+        data: this.more_menu_user_all_data,
+        width: "75%",
+        height: "50rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
         }
       });
   }

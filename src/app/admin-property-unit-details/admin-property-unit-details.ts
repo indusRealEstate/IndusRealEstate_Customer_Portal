@@ -5,7 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
@@ -92,6 +92,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   sidebar_opened: boolean = false;
 
+  unitTypes: any[] = [];
+
+  unit_type_is_loading: boolean = true;
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -175,7 +179,28 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       })
       .add(() => {
         this.isContentLoading = false;
+        this.adminService
+          .getallUnitTypes()
+          .subscribe((val: any[]) => {
+            val.forEach((unit_type) => {
+              this.unitTypes.push({
+                value: unit_type.id,
+                viewValue: unit_type.type,
+              });
+            });
+          })
+          .add(() => {
+            this.unit_type_is_loading = false;
+          });
       });
+  }
+
+  getUnitType(unit_type_id) {
+    if (this.unitTypes.length != 0) {
+      return this.unitTypes.find((type) => type.value == unit_type_id).viewValue;
+    } else {
+      return "Loading..";
+    }
   }
 
   ngAfterViewInit() {}
@@ -483,7 +508,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((value) => {
         console.log(value);
-      }); 
+      });
   }
 
   showInventories() {
@@ -493,9 +518,9 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       data: {
         id: this.all_data.unit_id,
         inventories: this.all_data.inventories,
-        parent: 'Units',
-        sub_parent: 'Unit Details',
-        child: 'Inventorues Details',
+        parent: "Units",
+        sub_parent: "Unit Details",
+        child: "Inventorues Details",
       },
     });
   }
@@ -564,11 +589,10 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       data: {
         id: id,
         method: method,
-        parent: 'Units',
-        sub_parent: 'Unit Details',
-        child: 'Payment Details',
+        parent: "Units",
+        sub_parent: "Unit Details",
+        child: "Payment Details",
       },
     });
   }
-
 }
