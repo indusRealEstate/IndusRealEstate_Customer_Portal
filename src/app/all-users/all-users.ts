@@ -212,6 +212,7 @@ export class AllUsersComponent implements OnInit {
     this.adminService
       .getAllUsersAdmin()
       .subscribe((va: any[]) => {
+        // console.log(va);
         this.allUsers = va;
         this.allUsersMatTableData = new MatTableDataSource(va);
         setTimeout(() => {

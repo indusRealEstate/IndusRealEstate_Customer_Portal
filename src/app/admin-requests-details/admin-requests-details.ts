@@ -3,7 +3,6 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
-import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
 import { DialogViewMedia } from "app/components/view_media/view_media";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -206,12 +205,6 @@ export class AdminRequestsDetails implements OnInit {
       .open(ViewMaintenanceImageDialog, {
         data: { id: this.request_id },
       })
-      .afterClosed()
-      .subscribe((val) => {});
-  }
-  openUnitDialog() {
-    this.dialog
-      .open(ViewUnitImageDialog, {})
       .afterClosed()
       .subscribe((val) => {});
   }

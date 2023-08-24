@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
 import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { AdminService } from "app/services/admin.service";
@@ -204,22 +203,17 @@ export class AdminReport implements OnInit {
   }
 
   financeDetailDialog(id: string, method: string) {
-    console.log(id);
-    console.log(method);
-    let data: object = {
-      id: id,
-      method: method,
-    };
-    this.dialog
-      .open(ViewFinanceDetailsDialog, {
-        width: "50%",
-        height: "20rem",
-        data,
-      })
-      .afterClosed()
-      .subscribe((value) => {
-        //console.log(value)
-      });
+    this.dialog.open(ViewPaymentDetailsMoreDialog, {
+      width: "75vw",
+      height: "50vh",
+      data: {
+        id: id,
+        method: method,
+        parent: "Report",
+        sub_parent: "All Payments",
+        child: "Payment Details",
+      },
+    });
   }
 
   incomeStatementDialog() {

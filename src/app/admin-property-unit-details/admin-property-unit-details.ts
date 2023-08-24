@@ -425,7 +425,6 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.dialog
       .open(AddLeaseDialog, {
         width: "80%",
-        height: "50rem",
         data: {
           prop_id: this.all_data.prop_uid,
           unit_id: this.all_data.unit_id,
@@ -604,7 +603,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       data: {
         id: id,
         method: method,
-        parent: "Units",
+        parent: "All Units",
         sub_parent: "Unit Details",
         child: "Payment Details",
       },

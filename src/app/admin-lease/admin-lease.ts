@@ -353,6 +353,20 @@ export class AllLeasesComponent implements OnInit {
     }
   }
 
+  terminateLease(lease_id, unit_id, tenant_id, index) {
+    this.adminService
+      .terminateLease(
+        JSON.stringify({
+          lease_id: lease_id,
+          unit_id: unit_id,
+          tenant_id: tenant_id,
+        })
+      )
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+
   updateData(data, index) {
     var updated_data = data.data;
     sessionStorage.removeItem("all_lease_session");

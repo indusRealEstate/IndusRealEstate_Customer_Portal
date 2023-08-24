@@ -1,29 +1,38 @@
-
-
-<div class="card main-card category-dialog"
+<div
+  class="card main-card category-dialog"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane"
-  style="box-shadow: none !important; padding: 1.5rem;margin: 0;">
-  <div class="card-body">
-    <div class="col">
+  style="box-shadow: none !important; padding: 1.5rem; margin: 0"
+>
+  <div class="card-body" style="padding: 0 5px">
+    <div class="col p-0">
       <div class="row m-0 align-items-start w-100">
-        <p class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">All
-          {{parent}}</p>
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
+        >
+          {{parent}}
+        </p>
         <img
           class="mr-2 mt-1 header-arrow-icon"
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
-          alt />
-        <p class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          alt
+        />
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
+        >
           {{sub_parent}}
         </p>
         <img
           class="mr-2 mt-1 header-arrow-icon"
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
-          alt />
-        <p class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          alt
+        />
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
+        >
           {{child}}
         </p>
         <img
@@ -33,21 +42,21 @@
           (click)="onCloseDialog()"
           class="mr-2 mt-1 close-icon"
           src="assets/img/svg/req-details/close-circle.svg"
-          alt />
+          alt
+        />
       </div>
       <div class="row m-0 align-items-start w-100">
-        <p class="details-title my-4">
-          {{capitalizeAllWords(method)}} details
-        </p>
+        <p class="details-title my-4">{{capitalizeAllWords(method)}} details</p>
       </div>
       <ng-container *ngIf="!is_data_loaded">
-        <div class="row  table-header">
+        <div class="row m-0 table-header">
           <div class="col" *ngFor="let item of displayPreloadCol">{{item}}</div>
         </div>
-        <div class="row table-body">
+        <div class="row m-0 table-body">
           <span
             class="spinner-border spinner-border-m mr-2"
-            style="color: #e0b35d">
+            style="color: #e0b35d"
+          >
           </span>
         </div>
       </ng-container>
@@ -58,69 +67,101 @@
             <ng-container *ngIf="is_cheque">
               <ng-container matColumnDef="cheque_number">
                 <th mat-header-cell *matHeaderCellDef>Cheque number</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.cheque_no !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.cheque_no !== '' ? element.cheque_no :
-                  'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.cheque_no !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.cheque_no !== '' ? element.cheque_no : 'No data'}}
+                </td>
               </ng-container>
               <ng-container matColumnDef="cheque_date">
                 <th mat-header-cell *matHeaderCellDef>Cheque date</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.cheque_date !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.cheque_date !== '' ? element.cheque_date :
-                  'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.cheque_date !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.cheque_date !== '' ? element.cheque_date : 'No
+                  data'}}
+                </td>
               </ng-container>
               <ng-container matColumnDef="name_on_cheque">
                 <th mat-header-cell *matHeaderCellDef>Name on cheque</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.name_on_cheque !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.name_on_cheque !== '' ? element.name_on_cheque :
-                  'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.name_on_cheque !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.name_on_cheque !== '' ? element.name_on_cheque : 'No
+                  data'}}
+                </td>
               </ng-container>
             </ng-container>
 
             <ng-container *ngIf="is_online">
               <ng-container matColumnDef="bank_name">
                 <th mat-header-cell *matHeaderCellDef>Bank name</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.bank_name !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.bank_name !== '' ? element.bank_name :
-                  'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.bank_name !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.bank_name !== '' ? element.bank_name : 'No data'}}
+                </td>
               </ng-container>
               <ng-container matColumnDef="branch">
                 <th mat-header-cell *matHeaderCellDef>Branch</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.branch !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.branch !== '' ? element.branch :
-                  'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.branch !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.branch !== '' ? element.branch : 'No data'}}
+                </td>
               </ng-container>
               <ng-container matColumnDef="account_number">
                 <th mat-header-cell *matHeaderCellDef>AC Number</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.ac_no !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.ac_no !== '' ? element.ac_no :
-                  'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.ac_no !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.ac_no !== '' ? element.ac_no : 'No data'}}
+                </td>
               </ng-container>
               <ng-container matColumnDef="name_of_holder">
                 <th mat-header-cell *matHeaderCellDef>Name of holder</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.bank_holder_name !== '' ? 'text-dark' : 'text-danger'">
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.bank_holder_name !== '' ? 'text-dark' : 'text-danger'"
+                >
                   {{element.bank_holder_name !== '' ? element.bank_holder_name :
-                  'No data'}}</td>
+                  'No data'}}
+                </td>
               </ng-container>
               <ng-container matColumnDef="iban">
                 <th mat-header-cell *matHeaderCellDef>IBAN</th>
-                <td mat-cell *matCellDef="let element"
-                  [ngClass]="element.iban !== '' ? 'text-dark' : 'text-danger'">
-                  {{element.iban !== '' ? element.iban : 'No data'}}</td>
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngClass]="element.iban !== '' ? 'text-dark' : 'text-danger'"
+                >
+                  {{element.iban !== '' ? element.iban : 'No data'}}
+                </td>
               </ng-container>
             </ng-container>
 
             <ng-container *ngIf="is_cash">
               <ng-container matColumnDef="details">
                 <th mat-header-cell *matHeaderCellDef>Details</th>
-                <td mat-cell *matCellDef="let element" [ngStyle]="{'height' : element.details !== '' ? 'auto' : '20vh','font-size' : element.details !== '' ? '' : '1.25rem'}"
-                  [ngClass]="element.details !== '' ? 'text-dark' : 'text-danger text-center'">
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [ngStyle]="{'height' : element.details !== '' ? 'auto' : '20vh','font-size' : element.details !== '' ? '' : '1.25rem'}"
+                  [ngClass]="element.details !== '' ? 'text-dark' : 'text-danger text-center'"
+                >
                   {{element.details !== '' ? element.details : 'No data'}}
                 </td>
               </ng-container>

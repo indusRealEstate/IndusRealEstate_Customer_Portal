@@ -74,36 +74,33 @@ import { LoadingTableAdminAllUsers } from "app/components/loading-table-admin-al
 import { LoadingTableAdminPropertiesUnits } from "app/components/loading-table-admin-properties-units/loading-table-admin-properties-units";
 import { LoadingTableAdminProperties } from "app/components/loading-table-admin-properties/loading-table-admin-properties";
 import { LoadingTableAdminReqs } from "app/components/loading-table-admin-reqs/loading-table-admin-reqs";
-import { RequestTimelineComponent } from "app/components/request-timeline/request-timeline";
 import { LoadingTableAnnouncement } from "app/components/loading-table-announcement/loading-table-announcement";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
+import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
 import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { DetailsComponents } from "app/property-details/details-properties";
 import { UserChatsComponent } from "app/user_chats/user_chats";
-import { ViewFinanceDetailsDialog } from "app/components/view-finance-details-dialog/view-finance-details-dialog";
-import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';``
 import { ChartsModule } from "@progress/kendo-angular-charts";
 
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { RequestsTable } from "app/admin-requests/components/requests-table/requests-table";
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
-import { DialogAssignStaff } from "app/components/assign_staff/assign_staff";
-import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
-import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
-import { ViewUnitImageDialog } from "app/components/view-unit-image-dialog/view-unit-image-dialog";
-import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
-import "hammerjs";
 import { Announcements } from "app/announcements/announcements";
 import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/add-announcement-dialog";
+import { DialogAssignStaff } from "app/components/assign_staff/assign_staff";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-all-lease/loading-table-admin-all-lease";
+import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
+import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
+import "hammerjs";
 
 @NgModule({
   imports: [
@@ -177,18 +174,13 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     AdminRequestsSpam,
     AdminDashboardComponent,
     ViewMaintenanceImageDialog,
-    ViewUnitImageDialog,
     // all request components
     RequestsTable,
-
     ViewAssignStaff,
-
     DialogAssignStaff,
     AdminReport,
-    ViewFinanceDetailsDialog,
     AddAnnouncementDialog,
     LoginComponent,
-
     AdminProperties,
     DetailsComponents,
     ViewIncomeStatementDialog,
@@ -201,7 +193,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     AllClientsDocuments,
     TableSearchBarComponent,
     TableFiltersComponent,
-    RequestTimelineComponent,
     ReviewRequestAdmin,
     LoadingTableAdminReqs,
     LoadingTableAdminProperties,
@@ -211,9 +202,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     LoadingTableAnnouncement,
     UserChatsComponent,
     EditAnnouncementDialog,
-
     AllUsersComponent,
-
     BackButtonDirective,
     AllLeasesComponent,
     Announcements,

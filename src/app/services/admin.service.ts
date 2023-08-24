@@ -205,6 +205,15 @@ export class AdminService {
     );
   }
 
+  terminateLease(data: any) {
+    const url = `${API_URL}/terminateLease.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   deleteRemovedLeaseDocs(data: any) {
     const url = `${API_URL}/deleteRemovedLeaseDocs.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
