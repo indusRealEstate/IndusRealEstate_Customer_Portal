@@ -662,4 +662,22 @@ export class AdminService {
     });
     return this.http.request(req);
   }
+
+  selectSingleAnnouncementDetail(data: any) {
+    const url = `${API_URL}/selectSingleAnnouncementDetail.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  deleteAnnouncementDocs(data: any) {
+    const url = `${API_URL}/deleteAnnouncementDocs.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

@@ -88,10 +88,10 @@ export class Announcements implements OnInit {
     console.log(a_id);
     this.more_menu_all_data = "";
     this.appAdminService
-      .selectAllAnnouncement(JSON.stringify({ a_id: a_id }))
+      .selectSingleAnnouncementDetail(JSON.stringify({ a_id: a_id }))
       .subscribe((value) => {
         this.more_menu_all_data = value;
-        //console.log(this.more_menu_all_data);
+        console.log(this.more_menu_all_data);
       })
       .add(() => {
         this.more_menu_loaded = true;
@@ -113,7 +113,7 @@ export class Announcements implements OnInit {
       .selectAllAnnouncement(JSON.stringify(data))
       .subscribe((val: any[]) => {
         this.annoucement_data = val;
-        console.log(this.annoucement_data);
+        //console.log(this.annoucement_data);
         this.MatTableData = this.annoucement_data;
         this.MatTableData = new MatTableDataSource<any>(this.annoucement_data);
         setTimeout(() => {
@@ -159,7 +159,7 @@ export class Announcements implements OnInit {
     
     if (this.more_menu_all_data != undefined) {
       var data = this.more_menu_all_data;
-      console.log(this.more_menu_all_data);
+      //console.log(this.more_menu_all_data);
       this.dialog
         .open(EditAnnouncementDialog, {
           width: "50%",
@@ -170,24 +170,24 @@ export class Announcements implements OnInit {
         .subscribe((value) => {
           if (value != undefined) {
             sessionStorage.removeItem("admin_properties_session");
-            // this.allAnnouncement[index].title =
-            //   value.title != undefined
-            //     ? value.title
-            //     : this.allAnnouncement[index].title;
+          //   this.allAnnouncement[index].title =
+          //     value.title != undefined
+          //       ? value.title
+          //       : this.allAnnouncement[index].title;
 
-            // this.allAnnouncement[index].address =
-            //   value.property_address != undefined
-            //     ? value.property_address
-            //     : this.allAnnouncement[index].address;
-            // this.allAnnouncement[index].property_type =
-            //   value.property_building_type != undefined
-            //     ? value.property_building_type
-            //     : this.allAnnouncement[index].property_type;
+          //   this.allAnnouncement[index].address =
+          //     value.property_address != undefined
+          //       ? value.property_address
+          //       : this.allAnnouncement[index].address;
+          //   this.allAnnouncement[index].property_type =
+          //     value.property_building_type != undefined
+          //       ? value.property_building_type
+          //       : this.allAnnouncement[index].property_type;
 
-            // this.allAnnouncement[index].locality_name =
-            //   value.property_locality != undefined
-            //     ? value.property_locality
-            //     : this.allAnnouncement[index].locality_name;
+          //   this.allAnnouncement[index].locality_name =
+          //     value.property_locality != undefined
+          //       ? value.property_locality
+          //       : this.allAnnouncement[index].locality_name;
           }
         });
     }
