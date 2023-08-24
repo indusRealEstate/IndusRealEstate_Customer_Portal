@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
@@ -73,6 +74,7 @@ export class AdminPropertiesUnits implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private adminService: AdminService,
+    private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -87,6 +89,14 @@ export class AdminPropertiesUnits implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   changeSortOption(option: string) {
@@ -244,8 +254,7 @@ export class AdminPropertiesUnits implements OnInit {
   addUnitDialogOpen() {
     this.dialog
       .open(AddUnitDialog, {
-        width: "80%",
-        height: "55rem",
+        width: "100%",
       })
       .afterClosed()
       .subscribe((res) => {
@@ -253,6 +262,7 @@ export class AdminPropertiesUnits implements OnInit {
           if (res.completed == true) {
             this.refreshTable();
             sessionStorage.removeItem("all_users_session");
+            this.openSnackBar("New Unit added successfully", "Close");
           }
         }
       });
@@ -274,6 +284,7 @@ export class AdminPropertiesUnits implements OnInit {
     var data = this.more_menu_unit_all_data;
     this.dialog
       .open(EditUnitDialog, {
+        width: "100%",
         data,
       })
       .afterClosed()
@@ -310,6 +321,8 @@ export class AdminPropertiesUnits implements OnInit {
             data.bathroom != undefined
               ? data.bathroom
               : this.allUnits[index].bathroom;
+
+          this.openSnackBar("Unit updated successfully", "Close");
         }
       });
   }

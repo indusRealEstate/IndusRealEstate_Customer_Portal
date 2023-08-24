@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
@@ -66,6 +67,7 @@ export class AdminProperties implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private adminService: AdminService,
+    private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -91,6 +93,14 @@ export class AdminProperties implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   isUserSignOut() {
@@ -223,15 +233,13 @@ export class AdminProperties implements OnInit {
 
   addPropertyDialogOpen() {
     this.dialog
-      .open(AddPropertyDialog, {
-        width: "75%",
-        height: "43rem",
-      })
+      .open(AddPropertyDialog)
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
           if (res.completed == true) {
             this.refreshTable();
+            this.openSnackBar("New property added successfully", "Close");
           }
         }
       });
@@ -297,6 +305,8 @@ export class AdminProperties implements OnInit {
               value.property_locality != undefined
                 ? value.property_locality
                 : this.allProperties[index].locality_name;
+
+            this.openSnackBar("Property updated successfully", "Close");
           }
         });
     }

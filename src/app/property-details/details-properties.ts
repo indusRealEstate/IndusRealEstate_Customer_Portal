@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { AdminService } from "app/services/admin.service";
@@ -45,6 +46,7 @@ export class DetailsComponents implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private otherServices: OtherServices,
+    private _snackBar: MatSnackBar,
     public http: HttpClient,
     public dialog: MatDialog
   ) {
@@ -71,6 +73,14 @@ export class DetailsComponents implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   isUserSignOut() {
@@ -223,48 +233,50 @@ export class DetailsComponents implements OnInit {
       })
       .afterClosed()
       .subscribe((value) => {
-        this.all_data.prop_name =
-          value.property_name != undefined
-            ? value.property_name
-            : this.all_data.prop_name;
-        this.all_data.prop_address =
-          value.property_address != undefined
-            ? value.property_address
-            : this.all_data.prop_address;
-        this.all_data.prop_description =
-          value.property_description != undefined
-            ? value.property_description
-            : this.all_data.prop_description;
-        this.all_data.prop_gov_id =
-          value.property_gov_id != undefined
-            ? value.property_gov_id
-            : this.all_data.prop_gov_id;
-        this.all_data.prop_in_charge =
-          value.property_in_charge != undefined
-            ? value.property_in_charge
-            : this.all_data.prop_in_charge;
-        this.all_data.prop_locality_name =
-          value.property_locality != undefined
-            ? value.property_locality
-            : this.all_data.prop_locality_name;
-        this.all_data.prop_no_of_units =
-          value.property_no_of_units != undefined
-            ? value.property_no_of_units
-            : this.all_data.prop_no_of_units;
+        if (value != undefined) {
+          this.all_data.prop_name =
+            value.property_name != undefined
+              ? value.property_name
+              : this.all_data.prop_name;
+          this.all_data.prop_address =
+            value.property_address != undefined
+              ? value.property_address
+              : this.all_data.prop_address;
+          this.all_data.prop_description =
+            value.property_description != undefined
+              ? value.property_description
+              : this.all_data.prop_description;
+          this.all_data.prop_gov_id =
+            value.property_gov_id != undefined
+              ? value.property_gov_id
+              : this.all_data.prop_gov_id;
+          this.all_data.prop_in_charge =
+            value.property_in_charge != undefined
+              ? value.property_in_charge
+              : this.all_data.prop_in_charge;
+          this.all_data.prop_locality_name =
+            value.property_locality != undefined
+              ? value.property_locality
+              : this.all_data.prop_locality_name;
+          this.all_data.prop_no_of_units =
+            value.property_no_of_units != undefined
+              ? value.property_no_of_units
+              : this.all_data.prop_no_of_units;
 
-        this.all_data.prop_doc =
-          value.property_uploaded_doc != undefined
-            ? JSON.stringify(value.property_uploaded_doc)
-            : this.all_data.prop_doc;
-        this.all_data.prop_images =
-          value.property_uploaded_images != undefined
-            ? JSON.stringify(value.property_uploaded_images)
-            : this.all_data.prop_images;
+          this.all_data.prop_doc =
+            value.property_uploaded_doc != undefined
+              ? JSON.stringify(value.property_uploaded_doc)
+              : this.all_data.prop_doc;
+          this.all_data.prop_images =
+            value.property_uploaded_images != undefined
+              ? JSON.stringify(value.property_uploaded_images)
+              : this.all_data.prop_images;
 
-        this.createCarousel(this.all_data.prop_images);
-        this.getDoc(this.all_data.prop_doc);
+          this.createCarousel(this.all_data.prop_images);
+          this.getDoc(this.all_data.prop_doc);
 
-        console.log(value);
+          this.openSnackBar("Property updated successfully", "Close");
+        }
       });
   }
 

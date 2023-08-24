@@ -4,6 +4,17 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .mdc-snackbar__surface {
+  background-color: #313a46 !important;
+
+  .mat-mdc-button-ripple {
+    color: #d4aa32 !important;
+  }
+  .mdc-button__label {
+    color: #d4aa32 !important;
+  }
+}
+
 ngx-skeleton-loader {
   border-radius: 10px;
 }
@@ -636,7 +647,7 @@ select:focus {
     text-transform: uppercase;
   }
   button,
-  button:hover { 
+  button:hover {
     background-color: #cfaa43;
     align-items: flex-end;
     display: flex;

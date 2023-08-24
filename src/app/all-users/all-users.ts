@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
@@ -79,6 +80,7 @@ export class AllUsersComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -93,6 +95,14 @@ export class AllUsersComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   changeSortOption(option: string) {
@@ -317,6 +327,7 @@ export class AllUsersComponent implements OnInit {
         if (res != undefined) {
           if (res.completed == true) {
             this.refreshTable();
+            this.openSnackBar("New User added successfully", "Close");
           }
         }
       });
@@ -344,8 +355,28 @@ export class AllUsersComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
+          this.updateData(res, index);
         }
       });
+  }
+
+  updateData(data, index) {
+    if (data.data != undefined) {
+      sessionStorage.removeItem("all_users_session");
+      var updated_data = data.data;
+      console.log(updated_data);
+
+      this.allUsers[index].name = updated_data.name;
+      this.allUsers[index].country_code_number =
+        updated_data.country_code_number;
+      this.allUsers[index].mobile_number = updated_data.mobile_number;
+      this.allUsers[index].email = updated_data.email;
+      this.allUsers[index].id_type = updated_data.id_type;
+      this.allUsers[index].id_number = updated_data.id_number;
+      this.allUsers[index].nationality = updated_data.nationality;
+      this.allUsers[index].dob = updated_data.dob;
+    }
+    this.openSnackBar("User updated successfully", "Close");
   }
 
   navigateToUnitDetailPage(unit_id, userType, user_id) {

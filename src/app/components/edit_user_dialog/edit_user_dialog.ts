@@ -237,7 +237,10 @@ export class EditUserDialog implements OnInit {
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.dialogRef.close({ completed: true });
+                    this.dialogRef.close({
+                      completed: true,
+                      data: JSON.parse(data),
+                    });
                   }
                 }),
                 last()
@@ -301,7 +304,11 @@ export class EditUserDialog implements OnInit {
       country_code_number: this.user_country_code,
       mobile_number: this.user_mobile_number,
       country_code_alternative_number: this.user_alternative_country_code,
-      alternative_mobile_number: this.user_alternative_number,
+      alternative_mobile_number:
+        this.user_alternative_number == 0 ||
+        this.user_alternative_number == undefined
+          ? 0
+          : this.user_alternative_number,
       email: this.user_email,
       alternative_email: this.user_alternative_email,
       id_type: this.user_id_type,

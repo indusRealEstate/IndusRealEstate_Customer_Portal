@@ -10,6 +10,7 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
@@ -102,6 +103,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
     private otherServices: OtherServices,
+    private _snackBar: MatSnackBar,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
   ) {
     // this.isLoading = true;
@@ -115,6 +117,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
     this.otherServices.miniSideBarClicked.subscribe((val) => {
       this.sidebar_opened = val;
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
     });
   }
 
@@ -197,7 +207,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   getUnitType(unit_type_id) {
     if (this.unitTypes.length != 0) {
-      return this.unitTypes.find((type) => type.value == unit_type_id).viewValue;
+      return this.unitTypes.find((type) => type.value == unit_type_id)
+        .viewValue;
     } else {
       return "Loading..";
     }
@@ -435,63 +446,67 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   openEditUnit(data: object) {
     this.dialog
       .open(EditUnitDialog, {
-        width: "80vw",
-        height: "100vh",
         data,
       })
       .afterClosed()
       .subscribe((data) => {
-        console.log(data);
-        this.all_data.unit_amenties =
-          data.amenties != undefined
-            ? data.amenties
-            : this.all_data.unit_amenties;
-        this.all_data.unit_bath =
-          data.bathroom != undefined ? data.bathroom : this.all_data.unit_bath;
-        this.all_data.unit_bed =
-          data.bedroom != undefined ? data.bedroom : this.all_data.unit_bed;
-        this.all_data.unit_description =
-          data.description != undefined
-            ? data.description
-            : this.all_data.unit_description;
-        this.all_data.unit_doc =
-          data.documents != undefined ? data.documents : this.all_data.unit_doc;
-        this.all_data.unit_floor =
-          data.floor != undefined ? data.floor : this.all_data.unit_floor;
-        this.all_data.unit_images =
-          data.images != undefined ? data.images : this.all_data.unit_images;
-        this.all_data.unit_parking =
-          data.no_of_parking != undefined
-            ? data.no_of_parking
-            : this.all_data.unit_parking;
-        this.all_data.unit_owner =
-          data.owner != undefined ? data.owner : this.all_data.unit_owner;
-        this.all_data.user_name =
-          data.owner != undefined ? data.owner : this.all_data.user_name;
-        this.all_data.unit_prop_id =
-          data.property_id != undefined
-            ? data.property_id
-            : this.all_data.unit_prop_id;
-        this.all_data.unit_size =
-          data.size != undefined ? data.size : this.all_data.unit_size;
-        this.all_data.unit_status =
-          data.status != undefined ? data.status : this.all_data.unit_status;
-        this.all_data.tenant_uid =
-          data.tenant_id != undefined
-            ? data.tenant_id
-            : this.all_data.tenant_uid;
-        this.all_data.unit_no =
-          data.unit_no != undefined ? data.unit_no : this.all_data.unit_no;
-        this.all_data.unit_type =
-          data.unit_type != undefined
-            ? data.unit_type
-            : this.all_data.unit_type;
-        this.all_data.user_uid =
-          data.user_id != undefined ? data.user_id : this.all_data.user_uid;
+        if (data != undefined) {
+          this.all_data.unit_amenties =
+            data.amenties != undefined
+              ? data.amenties
+              : this.all_data.unit_amenties;
+          this.all_data.unit_bath =
+            data.bathroom != undefined
+              ? data.bathroom
+              : this.all_data.unit_bath;
+          this.all_data.unit_bed =
+            data.bedroom != undefined ? data.bedroom : this.all_data.unit_bed;
+          this.all_data.unit_description =
+            data.description != undefined
+              ? data.description
+              : this.all_data.unit_description;
+          this.all_data.unit_doc =
+            data.documents != undefined
+              ? data.documents
+              : this.all_data.unit_doc;
+          this.all_data.unit_floor =
+            data.floor != undefined ? data.floor : this.all_data.unit_floor;
+          this.all_data.unit_images =
+            data.images != undefined ? data.images : this.all_data.unit_images;
+          this.all_data.unit_parking =
+            data.no_of_parking != undefined
+              ? data.no_of_parking
+              : this.all_data.unit_parking;
+          this.all_data.unit_owner =
+            data.owner != undefined ? data.owner : this.all_data.unit_owner;
+          this.all_data.user_name =
+            data.owner != undefined ? data.owner : this.all_data.user_name;
+          this.all_data.unit_prop_id =
+            data.property_id != undefined
+              ? data.property_id
+              : this.all_data.unit_prop_id;
+          this.all_data.unit_size =
+            data.size != undefined ? data.size : this.all_data.unit_size;
+          this.all_data.unit_status =
+            data.status != undefined ? data.status : this.all_data.unit_status;
+          this.all_data.tenant_uid =
+            data.tenant_id != undefined
+              ? data.tenant_id
+              : this.all_data.tenant_uid;
+          this.all_data.unit_no =
+            data.unit_no != undefined ? data.unit_no : this.all_data.unit_no;
+          this.all_data.unit_type =
+            data.unit_type != undefined
+              ? data.unit_type
+              : this.all_data.unit_type;
+          this.all_data.user_uid =
+            data.user_id != undefined ? data.user_id : this.all_data.user_uid;
 
-        this.createCarousel(this.all_data.unit_images);
-        this.amenties(this.all_data.unit_amenties);
-        this.unitDoc(this.all_data.unit_doc);
+          this.createCarousel(this.all_data.unit_images);
+          this.amenties(this.all_data.unit_amenties);
+          this.unitDoc(this.all_data.unit_doc);
+          this.openSnackBar("Unit updated successfully", "Close");
+        }
       });
   }
 

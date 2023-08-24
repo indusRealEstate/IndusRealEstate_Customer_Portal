@@ -1,6 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, HostListener, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
+import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -40,6 +43,8 @@ export class ViewUserDetails implements OnInit {
     private appAdminService: AdminService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog,
     public http: HttpClient
   ) {
     this.getScreenSize();
@@ -58,6 +63,14 @@ export class ViewUserDetails implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   finishLoadingImage() {
@@ -83,6 +96,52 @@ export class ViewUserDetails implements OnInit {
     } else {
       return "Tenant";
     }
+  }
+
+  openEditUser() {
+    this.dialog
+      .open(EditUserDialog, {
+        data: this.all_data,
+        width: "75%",
+        height: "50rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          this.updateData(res);
+        }
+      });
+  }
+
+  updateData(data) {
+    if (data.data != undefined) {
+      var updated_data = data.data;
+      this.all_data.user_profile_img = updated_data.profile_img;
+      this.all_data.user_nationality = updated_data.nationality;
+      this.all_data.user_name = updated_data.name;
+      this.all_data.user_mobile_number = updated_data.mobile_number;
+      this.all_data.user_id_type = updated_data.id_type;
+      this.all_data.user_id_number = updated_data.id_number;
+      this.all_data.user_gender = updated_data.gender;
+      this.all_data.user_email = updated_data.email;
+      this.all_data.user_documents = updated_data.documents;
+      this.all_data.user_dob = updated_data.dob;
+      this.all_data.user_country_code_number = updated_data.country_code_number;
+      this.all_data.user_country_code_alternative_number =
+        updated_data.country_code_alternative_number;
+      this.all_data.user_alternative_mobile_number =
+        updated_data.alternative_mobile_number;
+      this.all_data.user_alternative_email = updated_data.alternative_email;
+
+      this.user_doc.length = 0;
+
+      JSON.parse(updated_data.documents).forEach((doc) => {
+        this.user_doc.push(doc);
+      });
+
+      this.profile_image = `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/image/${updated_data.profile_img}`;
+    }
+    this.openSnackBar("User updated successfully", "Close");
   }
 
   getPropertyAddress(prop_id) {

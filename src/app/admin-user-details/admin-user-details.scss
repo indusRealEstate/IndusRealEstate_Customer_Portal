@@ -4,6 +4,17 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .mdc-snackbar__surface {
+  background-color: #313a46 !important;
+  
+  .mat-mdc-button-ripple{
+    color: #d4aa32 !important;
+  }
+  .mdc-button__label {
+    color: #d4aa32 !important;
+  }
+}
+
 .docs-list {
   border: 1px solid #e8d190;
   padding: 10px 15px;

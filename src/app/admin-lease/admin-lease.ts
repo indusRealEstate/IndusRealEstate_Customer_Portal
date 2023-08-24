@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
@@ -76,6 +77,7 @@ export class AllLeasesComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private adminService: AdminService,
+    private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -90,6 +92,14 @@ export class AllLeasesComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   changeSortOption(option: string) {
@@ -309,6 +319,7 @@ export class AllLeasesComponent implements OnInit {
             sessionStorage.removeItem("admin_properties_units_session");
             sessionStorage.removeItem("all_users_session");
             this.refreshTable();
+            this.openSnackBar("New Lease added successfully", "Close");
           }
         }
       });
@@ -336,17 +347,24 @@ export class AllLeasesComponent implements OnInit {
         .afterClosed()
         .subscribe((value) => {
           if (value != undefined) {
-            this.updateData(value);
-            sessionStorage.removeItem("all_lease_session");
-            sessionStorage.removeItem("admin_properties_units_session");
-            sessionStorage.removeItem("all_users_session");
+            this.updateData(value, index);
           }
         });
     }
   }
 
-  updateData(data){
-    console.log(data);
+  updateData(data, index) {
+    var updated_data = data.data;
+    sessionStorage.removeItem("all_lease_session");
+
+    this.allLease[index].contract_end = updated_data.contract_end;
+    this.allLease[index].move_in = updated_data.move_in;
+    this.allLease[index].move_out = updated_data.move_out;
+    this.allLease[index].contract_start = updated_data.contract_start;
+    this.allLease[index].security_deposit = updated_data.security_deposit;
+    this.allLease[index].rent_amount = updated_data.rent_amount;
+
+    this.openSnackBar("Lease updated successfully", "Close");
   }
 
   navigateToPropertyDetailsPage(prop_id) {

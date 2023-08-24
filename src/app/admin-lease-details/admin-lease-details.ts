@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
@@ -39,6 +40,7 @@ export class AdminLeaseDetail implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private adminService: AdminService,
+    private _snackBar: MatSnackBar,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
   ) {
     this.isContentLoading = true;
@@ -48,6 +50,14 @@ export class AdminLeaseDetail implements OnInit {
     });
 
     this.getScreenSize();
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
   }
 
   async ngOnInit() {
@@ -115,14 +125,12 @@ export class AdminLeaseDetail implements OnInit {
       .subscribe((value) => {
         if (value != undefined) {
           this.updateData(value);
-          sessionStorage.removeItem("all_lease_session");
-          sessionStorage.removeItem("admin_properties_units_session");
-          sessionStorage.removeItem("all_users_session");
         }
       });
   }
 
   updateData(data) {
+    sessionStorage.removeItem("all_lease_session");
     var updated_data = data.data;
 
     this.all_data.lease_chiller_inclusive =
@@ -137,15 +145,13 @@ export class AdminLeaseDetail implements OnInit {
     this.all_data.lease_move_out = updated_data.move_out;
     this.all_data.lease_no_of_cheques = updated_data.no_of_cheques;
     this.all_data.lease_notice_period = updated_data.notice_period;
-    this.all_data.lease_owner_id = updated_data.owner_id;
     this.all_data.lease_payment_currency = updated_data.payment_currency;
-    this.all_data.lease_property_id = updated_data.property_id;
     this.all_data.lease_purpose = updated_data.purpose;
     this.all_data.lease_rent_amount = updated_data.rent_amount;
     this.all_data.lease_security_deposit = updated_data.security_deposit;
-    this.all_data.lease_tenant_id = updated_data.tenant_id;
-    this.all_data.lease_unit_id = updated_data.unit_id;
     this.all_data.lease_yearly_amount = updated_data.yearly_amount;
+
+    this.openSnackBar("Lease updated successfully", "Close");
   }
 
   // ngAfterViewInit() {

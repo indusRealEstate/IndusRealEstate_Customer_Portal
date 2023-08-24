@@ -310,6 +310,12 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="viewDetails(element.contract_id)"
+                style="
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  max-width: 200px;
+                "
               >
                 {{ element.security_deposit | currency:'AED '}}
               </td>
@@ -321,6 +327,12 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="viewDetails(element.contract_id)"
+                style="
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  max-width: 200px;
+                "
               >
                 {{ element.rent_amount | currency:'AED '}}
               </td>
@@ -330,7 +342,7 @@
               <th mat-header-cell *matHeaderCellDef>More</th>
               <td
                 mat-cell
-                *matCellDef="let element;let last = last"
+                *matCellDef="let element;let last = last;let index = index"
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
                 <img
@@ -350,7 +362,7 @@
                   "
                 />
 
-                <mat-menu #menu="matMenu" class="more-menu">
+                <mat-menu #menu="matMenu" class="more-menu-lease">
                   <div
                     *ngIf="!more_menu_lease_loaded || more_menu_lease_all_data == ''"
                     class="d-flex justify-content-center align-items-center"
@@ -519,6 +531,7 @@
         <div style="margin-top: 25px" class="table-paginator">
           <mat-paginator
             #paginator
+            [pageSize]="10"
             [pageSizeOptions]="[6, 8, 10, 14, 20]"
             showFirstLastButtons
           ></mat-paginator>
