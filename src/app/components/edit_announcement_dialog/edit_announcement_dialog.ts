@@ -166,13 +166,15 @@ export class EditAnnouncementDialog implements OnInit {
         for (let doc of this.new_selected_doc) {
           docs_names.push(doc.name);
         }
+        console.log(docs_names);
         if (docs_names.length != 0) {
           exist_doc = exist_doc.concat(docs_names);
         }
-        //console.log(exist_doc);
+        console.log(exist_doc);
 
         let announce_id = this.all_data.a_id;
         let r_id = this.all_data.ann_id;
+        //console.log(r_id);
        
         let data = this.setupData(announce_id,exist_doc);
 
@@ -186,6 +188,7 @@ export class EditAnnouncementDialog implements OnInit {
             
             );
             
+            console.log(this.deleted_doc_array);
             this.adminService
               .uploadAllFilesEditAnnouncement(uploadData)
               .pipe(
@@ -196,6 +199,7 @@ export class EditAnnouncementDialog implements OnInit {
                     this.uploaded_doc = exist_doc;
                     this.onCloseDialog();
                     // this.dialogRef.close();
+                    
                   }
                 }),
                 last()
@@ -221,7 +225,7 @@ export class EditAnnouncementDialog implements OnInit {
     }
   }
   setupUploadFiles(
-    random_id: any,
+    r_id: any,
     docs_names: any[]
   ): FormData {
     const formdata: FormData = new FormData();
@@ -234,7 +238,7 @@ export class EditAnnouncementDialog implements OnInit {
       doc_count++;
     }
 
-    formdata.append("announcement_id", random_id);
+    formdata.append("announcement_id", r_id);
 
     return formdata;
   }
