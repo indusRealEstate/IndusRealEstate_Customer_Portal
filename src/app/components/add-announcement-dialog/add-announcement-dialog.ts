@@ -8,13 +8,8 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
-import { catchError, last, map, tap } from "rxjs";
+import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
-
-// interface DropDownButtonModel {
-//   value: string;
-//   viewValue: string;
-// }
 
 @Component({
   selector: "add-announcement-dialog",
@@ -34,14 +29,13 @@ export class AddAnnouncementDialog implements OnInit {
   properties: any[] = [];
   selected_property: any = "";
   property_id: any;
-  imgFilesBase64Uploaded: any[] = [];
-  imgFilesUploaded: File[] = [];
+
   docsFilesUploaded: File[] = [];
   imageNotAdded: boolean;
   uploading_progress: any = 0;
   documentNotAdded: boolean = false;
   isContentLoading: boolean = false;
-  
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddAnnouncementDialog>,
@@ -51,16 +45,6 @@ export class AddAnnouncementDialog implements OnInit {
     console.log(this.properties);
   }
 
-  
-  
-  
-  // buildingName: DropDownButtonModel[] = [
-  //   { value: "alsima tower", viewValue: "alsima tower" },
-  //   { value: "Marina gate", viewValue: "Marina gate" },
-    
-  // ];
-
-
   getAllPropertiesName() {
     this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
       val.forEach((item) =>
@@ -68,26 +52,16 @@ export class AddAnnouncementDialog implements OnInit {
           value: item.property_id,
           viewValue: item.property_name,
         })
-
       );
     });
   }
 
-  ngOnInit() {
-    
-   }
+  ngOnInit() {}
 
   ngAfterViewInit() {}
 
   onCloseDialog() {
     this.dialogRef.close();
-  }
-
-  
-  
-  removeUploadedImg(index) {
-    this.imgFilesUploaded.splice(index, 1);
-    this.imgFilesBase64Uploaded.splice(index, 1);
   }
 
   removeUploadedDoc(index) {
@@ -100,55 +74,29 @@ export class AddAnnouncementDialog implements OnInit {
     this.fileInput.nativeElement.value = "";
   }
 
-  onImageFileSelected(files: Array<any>) {
-    for (var item of files) {
-      this.imgFilesUploaded.push(item);
-      const reader = new FileReader();
-      reader.readAsDataURL(item);
-      reader.onload = (event) => {
-        this.imgFilesBase64Uploaded.push(event.target.result);
-        
-      };
-    }
-    console.log(this.imgFilesBase64Uploaded);
-    console.log(this.imgFilesUploaded);
-    this.fileInputImage.nativeElement.value = "";
-  }
-
-  
-
-
   onSubmit() {
     if (
-      // this.imgFilesUploaded.length != 0 
+      // this.imgFilesUploaded.length != 0
       this.docsFilesUploaded.length != 0
     ) {
       if (
         // this.building_name != "" &&
         this.title != "" &&
         this.description != "" &&
-        this.property_id!= ""
+        this.property_id != ""
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
 
-        // var images_names = [];
         var docs_names = [];
-        // for (var img of this.imgFilesUploaded) {
-        //   images_names.push(img.name);
-        // }
         for (var doc of this.docsFilesUploaded) {
           docs_names.push(doc.name);
         }
         var data = this.setupData(random_id, docs_names);
         this.adminService.addAnnouncement(data).subscribe((val) => {
-
           if (val == "success") {
             this.uploading_progress = 0;
-            var uploadData = this.setupUploadFiles(
-              random_id,
-              docs_names
-            );
+            var uploadData = this.setupUploadFiles(random_id, docs_names);
             this.adminService
               .uploadAllFilesAddAnnouncement(uploadData)
               .pipe(
@@ -163,8 +111,7 @@ export class AddAnnouncementDialog implements OnInit {
               .subscribe((v) => {
                 console.log(v);
               });
-          }
-          else{
+          } else {
             console.log("not inserted");
           }
         });
@@ -174,8 +121,7 @@ export class AddAnnouncementDialog implements OnInit {
           this.formNotFilled = false;
         }, 1000000);
       }
-    }
-    else {
+    } else {
       if (this.docsFilesUploaded.length == 0) {
         this.documentNotAdded = true;
         setTimeout(() => {
@@ -184,11 +130,8 @@ export class AddAnnouncementDialog implements OnInit {
       }
     }
   }
-  
-  setupUploadFiles(
-    random_id: any,
-    docs_names: any[]
-  ): FormData {
+
+  setupUploadFiles(random_id: any, docs_names: any[]): FormData {
     const formdata: FormData = new FormData();
     formdata.append("docs_names", JSON.stringify(docs_names));
 
@@ -202,20 +145,20 @@ export class AddAnnouncementDialog implements OnInit {
 
     return formdata;
   }
+
   setupData(random_id: any, docs_names: any[]): string {
     var data = {
       emergency: this.emergency,
-      property_id:this.selected_property,
+      property_id: this.selected_property,
       announcement_id: random_id,
       title: this.title,
       attachments: JSON.stringify(docs_names),
       description: this.description,
     };
- // console.log(this.data);
+
     return JSON.stringify(data);
-    //console.log(this.setupData);
   }
-  
+
   private getEventMessage(event: HttpEvent<any>) {
     switch (event.type) {
       case HttpEventType.Sent:
@@ -238,6 +181,4 @@ export class AddAnnouncementDialog implements OnInit {
         return `File surprising upload event: ${event.type}.`;
     }
   }
-  
-  
 }

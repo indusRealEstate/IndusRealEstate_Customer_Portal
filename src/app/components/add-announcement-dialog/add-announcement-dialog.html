@@ -24,7 +24,7 @@
           alt=""
         />
       </div>
-      <div class="row">
+      <div class="row m-0">
         <div class="col pl-0">
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Title*</mat-label>
@@ -54,112 +54,94 @@
             class="mt-2"
             [(ngModel)]="emergency"
           ></mat-slide-toggle>
-
-          
         </div>
-      <div class="col pr-0" style="height:35vh; overflow: auto">
-        <div
-          (click)="fileInput.click()"
-          class="btn ml-0 mb-3"
-          style="background: #d4aa32"
-        >
-          Add Documents
-        </div>
-        <input
-          multiple
-          hidden
-          (change)="onFileSelected($event.target.files)"
-          #fileInput
-          type="file"
-          id="file"
-        />
-
-        <div *ngIf="docsFilesUploaded.length != 0">
+        <div class="col pr-0" style="height: 35vh; overflow: auto">
           <div
-            *ngFor="let file of docsFilesUploaded;let index=index"
-            class="row m-0 mt-2 align-items-center"
-            style="
-              background: #d4aa3230;
-              border: solid 1px #d4aa32;
-              border-radius: 5px;
-              padding: 10px 10px;
-            "
+            (click)="fileInput.click()"
+            class="btn ml-0 mb-3"
+            style="background: #d4aa32"
           >
-            <img src="assets/img/svg/documents/document-text.svg" alt="" />
-            <span
-              class="m-0 ml-3"
+            Add Documents
+          </div>
+          <input
+            multiple
+            hidden
+            (change)="onFileSelected($event.target.files)"
+            #fileInput
+            type="file"
+            id="file"
+          />
+
+          <div *ngIf="docsFilesUploaded.length != 0">
+            <div
+              *ngFor="let file of docsFilesUploaded;let index=index"
+              class="row m-0 mt-2 align-items-center"
               style="
-                font-weight: 500;
-                text-overflow: ellipsis;
-                max-width: 230px;
-                overflow: hidden;
-                white-space: nowrap;
+                background: #d4aa3230;
+                border: solid 1px #d4aa32;
+                border-radius: 5px;
+                padding: 10px 10px;
               "
-              >{{file.name}}</span
             >
-            <img
-              (click)="removeUploadedDoc(index)"
-              src="assets/img/svg/success-dialog/close-square.svg"
-              alt=""
-              style="
-                position: absolute;
-                right: 10px;
-                width: 20px;
-                cursor: pointer;
-              "
-            />
+              <img src="assets/img/svg/documents/document-text.svg" alt="" />
+              <span
+                class="m-0 ml-3"
+                style="
+                  font-weight: 500;
+                  text-overflow: ellipsis;
+                  max-width: 230px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+                >{{file.name}}</span
+              >
+              <img
+                (click)="removeUploadedDoc(index)"
+                src="assets/img/svg/success-dialog/close-square.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 10px;
+                  width: 20px;
+                  cursor: pointer;
+                "
+              />
+            </div>
           </div>
         </div>
-        
-      </div>
-      <!-- <div class="row w-100">
-        <div
-            class="btn"
-            style="
-              background: #3c4858;
-              min-width: 120px;
-              position: absolute;
-              right: 0rem;
-              bottom:0;
-            "
-            (click)="onSubmit()"
-          >
-            <span>Announce</span>
-          </div>
-      </div> -->
 
-      <div class="row w-100 justify-content-end align-items-center my-3">
-        <span
-          class="mt-3"
-          *ngIf="formNotFilled"
-          style="
-            color: #ff0000db;
-            font-weight: 500;
-            background: #ff000017;
-            padding: 7px 7px;
-            border: 1px solid #d1000033;
-            border-radius: 7px;
-            position: absolute;
-            left: 2rem;
-          "
-          >Please fill the form.</span
-        >
-        <span
-          class="mt-3"
-          *ngIf="documentNotAdded"
-          style="
-            color: #ff0000db;
-            font-weight: 500;
-            background: #ff000017;
-            padding: 7px 20px;
-            border: 1px solid #d1000033;
-            border-radius: 7px;
-            position: absolute;
-            left: 2rem;
-          "
-          >Please add atleast 1 document.</span
-        >
-        <span
+        <div class="row m-0 w-100 justify-content-end align-items-center my-3">
+          <span
+            class="mt-3"
+            *ngIf="formNotFilled"
+            style="
+              color: #ff0000db;
+              font-weight: 500;
+              background: #ff000017;
+              padding: 7px 7px;
+              border: 1px solid #d1000033;
+              border-radius: 7px;
+              position: absolute;
+              left: 2rem;
+            "
+            >Please fill the form.</span
+          >
+          <span
+            class="mt-3"
+            *ngIf="documentNotAdded"
+            style="
+              color: #ff0000db;
+              font-weight: 500;
+              background: #ff000017;
+              padding: 7px 20px;
+              border: 1px solid #d1000033;
+              border-radius: 7px;
+              position: absolute;
+              left: 2rem;
+            "
+            >Please add atleast 1 document.</span
+          >
+          <span
             *ngIf="uploading"
             class="mr-3"
             style="font-size: 19px; font-weight: 600; color: #3c4858"
@@ -173,8 +155,7 @@
           </div>
           <div
             class="btn"
-            style="background: #3c4858; min-width: 120px;position: absolute; right: 0rem;
-            bottom: 0;"
+            style="background: #3c4858; min-width: 120px"
             (click)="onSubmit()"
           >
             <span *ngIf="!uploading">Announce</span>
@@ -185,6 +166,7 @@
             >
             </span>
           </div>
+        </div>
       </div>
     </div>
   </div>

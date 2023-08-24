@@ -8,13 +8,7 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
-import { catchError, last, map, tap } from "rxjs";
-import * as uuid from "uuid";
-
-// interface DropDownButtonModel {
-//   value: string;
-//   viewValue: string;
-// }
+import { last, map, tap } from "rxjs";
 
 @Component({
   selector: "edit_announcement_dialog",
@@ -50,12 +44,6 @@ export class EditAnnouncementDialog implements OnInit {
   docsFilesUploaded_new: File[] = [];
   removed_existing_docs: any[] = [];
 
-  //  buildingName: DropDownButtonModel[] = [
-  //   { value: "alsima tower", viewValue: "alsima tower" },
-  //   { value: "Marina gate", viewValue: "Marina gate" },
-
-  // ];
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditAnnouncementDialog>,
@@ -73,11 +61,11 @@ export class EditAnnouncementDialog implements OnInit {
     //console.log(this.all_data.a_emergency);
 
     this.getAllPropertiesName();
-    let selected = this.properties.filter((val) => val.value == this.p_id);
-    //console.log(selected);
     this.selected_property = this.p_id;
-    //console.log(this.properties);
-    this.assignDoc();
+
+    JSON.parse(this.data.attachments).forEach((doc) => {
+      this.docsFilesUploaded.push({ name: doc, old: true });
+    });
   }
 
   getAllPropertiesName() {
@@ -91,24 +79,7 @@ export class EditAnnouncementDialog implements OnInit {
     });
   }
 
-  async assignDoc() {
-    console.log(this.all_data);
-    for (let i = 0; i < JSON.parse(this.all_data.attachments).length; i++) {
-      let doc_URL: string = `https://indusre.app/api/upload/announcement/${
-        this.all_data.ann_id
-      }/${JSON.parse(this.all_data.attachments)[i]}`;
-
-      this.docsFilesUploaded.push(JSON.parse(this.all_data.attachments)[i]);
-      //console.log(doc_URL);
-    }
-  }
   ngOnInit() {}
-
-  ngAfterViewInit() {
-    // JSON.parse(this.all_data.attachments).forEach((doc) => {
-    //   this.docsFilesUploaded.push({ name: doc, old: true });
-    // });
-  }
 
   closeDialogWithoutSaving() {
     this.dialogRef.close();
@@ -127,29 +98,11 @@ export class EditAnnouncementDialog implements OnInit {
   onFileSelected(files: Array<any>) {
     for (var item of files) {
       this.docsFilesUploaded.push(item);
+      this.docsFilesUploaded_new.push(item);
     }
     this.fileInput.nativeElement.value = "";
   }
 
-  // removeUploadedDoc(index) {
-  //   let remove_item = this.docsFilesUploaded.splice(index, 1);
-
-  //   if (typeof remove_item[0] == "string") {
-  //     this.deleted_doc_array.push(remove_item[0]);
-  //   }
-  //   //console.log(this.deleted_doc_array);
-  // }
-
-  // removeUploadedDoc(index: number, file: any) {
-  //   if (this.docsFilesUploaded_new.includes(file)) {
-  //     var i = this.docsFilesUploaded_new.findIndex((f) => f.name == file.name);
-  //     this.docsFilesUploaded_new.splice(i, 1);
-  //   } else {
-  //     this.removed_existing_docs.push(file);
-  //   }
-  //   this.docsFilesUploaded.splice(index, 1);
-  //   console.log( this.docsFilesUploaded);
-  // }
   removeUploadedDoc(index: number, file: any) {
     if (this.docsFilesUploaded_new.includes(file)) {
       var i = this.docsFilesUploaded_new.findIndex((f) => f.name == file.name);
@@ -159,21 +112,9 @@ export class EditAnnouncementDialog implements OnInit {
     }
     this.docsFilesUploaded.splice(index, 1);
   }
-  
 
   onSubmit() {
-    let uploaded_doc: File[] = [];
-    let exist_doc: string[] = [];
     if (this.docsFilesUploaded.length != 0) {
-     
-      // this.docsFilesUploaded.forEach((value) => {
-      //   if (typeof value == "object") {
-      //     this.new_selected_doc.push(value);
-      //   } else {
-      //     exist_doc.push(value);
-      //   }
-      // });
-
       if (
         this.title != "" &&
         this.selected_property != "" &&
@@ -182,14 +123,6 @@ export class EditAnnouncementDialog implements OnInit {
         this.uploading = true;
         let docs_names = [];
 
-      //   for (let doc of this.docsFilesUploaded) {
-      //     docs_names.push(doc.name);
-      //   }
-      //   if (docs_names.length != 0) {
-      //     exist_doc = exist_doc.concat(docs_names);
-      //   }
-      //  console.log('document name is'+docs_names);
-
         var docs_names_new = [];
 
         for (var doc of this.docsFilesUploaded) {
@@ -197,30 +130,15 @@ export class EditAnnouncementDialog implements OnInit {
           if (doc.old == undefined) {
             docs_names_new.push(doc.name);
           }
-          console.log(docs_names_new);
         }
 
-        let announce_id = this.all_data.a_id;
         let r_id = this.all_data.ann_id;
 
-        let data = this.setupData(r_id, announce_id, docs_names);
-       // console.log(this.removed_existing_docs);
+        let data = this.setupData(r_id, docs_names);
+        // console.log(this.removed_existing_docs);
         this.adminService.updateAnnouncement(data).subscribe((value) => {
-         // console.log(data);
+          // console.log(data);
           if (value == "success") {
-            // if (this.removed_existing_docs.length != 0) {
-            //   this.adminService
-            //     .deleteAnnouncementDocs(
-            //       JSON.stringify({
-            //         names: this.removed_existing_docs,
-            //         id: r_id,
-            //       })
-            //     )
-            //     .subscribe((res) => {
-            //       console.log(res);
-            //     });
-            // }
-
             if (this.removed_existing_docs.length != 0) {
               this.adminService
                 .deleteAnnouncementDocs(
@@ -235,27 +153,22 @@ export class EditAnnouncementDialog implements OnInit {
             }
             this.uploading_progress = 0;
             let uploadData = this.setupUploadFiles(r_id, docs_names_new);
-            console.log(this.removed_existing_docs);
+            // console.log(uploadData);
             this.adminService
-              .uploadAllFilesEditAnnouncement(uploadData)
+              .uploadAllFilesAddAnnouncement(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.uploaded = true;
-                    this.uploaded_doc = exist_doc;
                     this.onCloseDialog();
-                    // this.dialogRef.close();
                   }
                 }),
                 last()
               )
               .subscribe((v) => {
-                console.log(v);
+                console.log(v, "uploaded..");
               });
           }
-
-          console.log(value);
         });
       } else {
         this.formNotFilled = true;
@@ -270,32 +183,16 @@ export class EditAnnouncementDialog implements OnInit {
       }, 3000);
     }
   }
-  // setupUploadFiles(r_id: any, docs_names: any[]): FormData {
-  //   const formdata: FormData = new FormData();
-  //   formdata.append("docs_names", JSON.stringify(docs_names));
-  //   formdata.append("deleted_doc", JSON.stringify(this.deleted_doc_array));
-
-  //   var doc_count = 0;
-  //   for (let doc of this.new_selected_doc) {
-  //     formdata.append(`doc_${doc_count}`, doc);
-  //     doc_count++;
-  //   }
-
-  //   formdata.append("announcement_id", r_id);
-
-  //   return formdata;
-  // }
 
   setupUploadFiles(r_id: any, docs_names: any[]): FormData {
     const formdata: FormData = new FormData();
 
     formdata.append("docs_names", JSON.stringify(docs_names));
-    formdata.append("deleted_doc", JSON.stringify(this.removed_existing_docs));
 
     var doc_count = 0;
-    for (let doc of this.docsFilesUploaded_new) {
-      doc_count++;
+    for (let doc of this.docsFilesUploaded_new) { 
       formdata.append(`doc_${doc_count}`, doc);
+      doc_count++;
     }
 
     formdata.append("announcement_id", r_id);
@@ -303,18 +200,14 @@ export class EditAnnouncementDialog implements OnInit {
     return formdata;
   }
 
-  setupData(r_id, announce_id: any, docs_names_new: any[]): string {
+  setupData(announce_id: any, docs_names_new: any[]): string {
     var data = {
-      // announcement_id: random_id,
-      //testid:this.ann_id,
       id: announce_id,
       title: this.title,
       emergency: this.emergency,
       description: this.description,
       p_id: this.selected_property,
-      p_name: this.p_name,
       documents: JSON.stringify(docs_names_new),
-      //an_id:this.ann_id
     };
     //console.log(data);
     return JSON.stringify(data);

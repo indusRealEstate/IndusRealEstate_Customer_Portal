@@ -631,9 +631,9 @@ export class AdminService {
       })
     );
   }
-  selectAllAnnouncement(data: string) {
+  selectAllAnnouncement() {
     const url = `${API_URL}/selectAllAnnouncement.php?apikey=1`;
-    return this.http.post(url, data).pipe(
+    return this.http.get(url).pipe(
       map((data) => {
         return data;
       })
@@ -658,14 +658,6 @@ export class AdminService {
   }
   uploadAllFilesAddAnnouncement(data: any) {
     const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
-    const req = new HttpRequest("POST", url, data, {
-      reportProgress: true,
-    });
-    return this.http.request(req);
-  }
-
-  uploadAllFilesEditAnnouncement(data: any) {
-    const url = `${API_URL}/upload_edit_announcement_files.php?apikey=1`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
