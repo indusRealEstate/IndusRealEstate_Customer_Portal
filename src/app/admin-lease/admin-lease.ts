@@ -5,9 +5,11 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
+import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { data } from "jquery";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Lease {
@@ -351,6 +353,21 @@ export class AllLeasesComponent implements OnInit {
           }
         });
     }
+  }
+
+  openCautionDialog(lease_id, unit_id, tenant_id, index) {
+    var data = {
+      title : 'Do you want to terminate the contract?'
+    };
+    this.dialog
+      .open(CautionDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+        }
+      });
   }
 
   terminateLease(lease_id, unit_id, tenant_id, index) {

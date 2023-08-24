@@ -45,6 +45,7 @@ import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog
 import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { DialogViewMedia } from "./view_media/view_media";
+import { CautionDialog } from "./caution-dialog/caution-dialog";
 
 @NgModule({
   imports: [
@@ -96,6 +97,7 @@ import { DialogViewMedia } from "./view_media/view_media";
     ViewPaymentDetailsMoreDialog,
     EditUserDialog,
     EditLeaseDialog,
+    CautionDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

@@ -1,0 +1,28 @@
+<div class="card m-0" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div
+    class="card-header"
+    style="border-bottom: 1px solid #e6ebf1; padding: 25px 25px"
+  >
+    <span style="font-size: 20px; font-weight: 500">{{title}}</span>
+  </div>
+  <div class="card-body" style="padding: 30px 25px">
+    <div class="col p-0">
+      <div class="row m-0 mt-3 justify-content-center">
+        <div
+          class="btn mr-4"
+          style="background: #de6458"
+          (click)="onCloseDialog(true)"
+        >
+          Yes
+        </div>
+        <div
+          class="btn"
+          style="background: #596677"
+          (click)="onCloseDialog(false)"
+        >
+          No
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
