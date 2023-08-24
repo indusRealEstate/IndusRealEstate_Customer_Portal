@@ -29,15 +29,15 @@
         <div class="col-2 pl-0">
           <div
             *ngIf="imgFileBase64Uploaded != ''"
+            [ngStyle]="{'background-image' : checkUrlContainsSpace(imgFileBase64Uploaded) == true ? 'url(\'' + imgFileBase64Uploaded + '\')' : 'url(' + imgFileBase64Uploaded + ')'}"
             style="
               width: 100%;
               height: 10rem;
               overflow: hidden;
-              background-image: url('{{ imgFileBase64Uploaded }}');
               background-size: cover;
               background-position: center;
               background-repeat: no-repeat;
-              border-radius: 10px
+              border-radius: 10px;
             "
           >
             <img
@@ -158,7 +158,7 @@
                 name="phone"
                 describedBy="phoneInput"
                 (countryChanged)="alternativePhoneNumberChanged($event)"
-                formControlName="phone"
+                formControlName="alt_phone"
                 #phone_alt
               ></ngx-mat-intl-tel-input>
               <mat-hint
@@ -305,7 +305,7 @@
                 >{{file.name}}</span
               >
               <img
-                (click)="removeUploadedDoc(index)"
+                (click)="removeUploadedDoc(index, file)"
                 src="assets/img/svg/success-dialog/close-square.svg"
                 alt=""
                 style="

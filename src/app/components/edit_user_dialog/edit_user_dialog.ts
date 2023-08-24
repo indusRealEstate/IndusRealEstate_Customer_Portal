@@ -1,3 +1,4 @@
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {
   Component,
   ElementRef,
@@ -8,10 +9,8 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
-import * as uuid from "uuid";
-import { CountryDropdown } from "../country-dropdown/country-dropdown";
-import { HttpEvent, HttpEventType } from "@angular/common/http";
 import { last, map, tap } from "rxjs";
+import { CountryDropdown } from "../country-dropdown/country-dropdown";
 
 @Component({
   // standalone: true,
@@ -29,7 +28,8 @@ export class EditUserDialog implements OnInit {
 
   @ViewChild("country_dropdown") country_dropdown: CountryDropdown;
 
-  docsFilesUploaded: File[] = [];
+  docsFilesUploaded: any[] = [];
+  docsFilesUploaded_new: File[] = [];
 
   imgFileUploaded: File;
   imgFileBase64Uploaded: any = "";
@@ -60,6 +60,10 @@ export class EditUserDialog implements OnInit {
 
   uploading_progress: any = 0;
 
+  existing_img_removed: boolean = false;
+
+  removed_existing_docs: any[] = [];
+
   genders: any[] = [
     { value: "male", viewValue: "Male" },
     { value: "female", viewValue: "Female" },
@@ -80,17 +84,22 @@ export class EditUserDialog implements OnInit {
     this.user_name = data.user_name;
     this.user_email = data.user_email;
     this.user_alternative_email = data.user_alternative_email;
-    this.user_country_code = data.user_country_code_number;
-    this.user_mobile_number = data.user_mobile_number;
-    this.user_alternative_country_code =
-      data.user_country_code_alternative_number;
-    this.user_alternative_number = data.user_alternative_mobile_number;
     this.user_dob = data.user_dob;
     this.user_gender = data.user_gender;
     this.user_id_type = data.user_id_type;
     this.user_id_number = data.user_id_number;
 
+    this.user_country_code = data.user_country_code_number;
+    this.user_mobile_number = data.user_mobile_number;
+    this.user_alternative_country_code =
+      data.user_country_code_alternative_number;
+    this.user_alternative_number = data.user_alternative_mobile_number;
+
     this.imgFileBase64Uploaded = `https://indusre.app/api/upload/user/${data.user_uid}/image/${data.user_profile_img}`;
+
+    JSON.parse(data.user_documents).forEach((doc) => {
+      this.docsFilesUploaded.push({ name: doc, old: true });
+    });
 
     if (data.bank_details != undefined) {
       this.user_bank_ac_no = data.bank_details.bank_ac_number;
@@ -102,7 +111,16 @@ export class EditUserDialog implements OnInit {
 
   ngOnInit() {
     this.phoneForm = this.formBuilder.group({
-      phone: ["", Validators.required],
+      phone: [
+        this.data.user_country_code_number + this.data.user_mobile_number,
+        Validators.required,
+      ],
+      alt_phone: [
+        this.data.user_alternative_mobile_number == 0
+          ? ""
+          : this.data.user_country_code_alternative_number +
+            this.data.user_alternative_mobile_number,
+      ],
     });
   }
 
@@ -125,6 +143,7 @@ export class EditUserDialog implements OnInit {
   }
 
   removeProfileImg() {
+    this.existing_img_removed = true;
     this.imgFileBase64Uploaded = "";
     this.imgFileUploaded = null;
   }
@@ -141,12 +160,27 @@ export class EditUserDialog implements OnInit {
   onFileSelected(files: Array<any>) {
     for (var item of files) {
       this.docsFilesUploaded.push(item);
+      this.docsFilesUploaded_new.push(item);
     }
     this.fileInput.nativeElement.value = "";
   }
 
-  removeUploadedDoc(index) {
+  removeUploadedDoc(index, file) {
+    if (this.docsFilesUploaded_new.includes(file)) {
+      var i = this.docsFilesUploaded_new.findIndex((f) => f.name == file.name);
+      this.docsFilesUploaded_new.splice(i, 1);
+    } else {
+      this.removed_existing_docs.push(file);
+    }
     this.docsFilesUploaded.splice(index, 1);
+  }
+
+  checkUrlContainsSpace(url: string) {
+    if (url.includes(" ")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   onSubmit() {
@@ -161,18 +195,42 @@ export class EditUserDialog implements OnInit {
         this.user_id_number != ""
       ) {
         this.uploading = true;
-        var random_id = uuid.v4();
+        var random_id = this.data.user_uid;
 
         var docs_names = [];
+        var docs_names_new = [];
 
         for (var doc of this.docsFilesUploaded) {
           docs_names.push(doc.name);
+          if (doc.old == undefined) {
+            docs_names_new.push(doc.name);
+          }
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.adminService.addUser(data).subscribe((val) => {
+        this.adminService.editUser(data).subscribe((val) => {
           if (val == "success") {
-            var uploadData = this.setupUploadFiles(random_id, docs_names);
+            if (
+              this.existing_img_removed == true ||
+              this.removed_existing_docs.length != 0
+            ) {
+              this.adminService
+                .deleteRemovedUserFiles(
+                  JSON.stringify({
+                    img:
+                      this.existing_img_removed == true
+                        ? this.data.user_profile_img
+                        : "",
+                    names: this.removed_existing_docs,
+                    id: this.data.user_uid,
+                  })
+                )
+                .subscribe((res) => {
+                  console.log(res);
+                });
+            }
+
+            var uploadData = this.setupUploadFiles(random_id, docs_names_new);
             this.adminService
               .uploadAllFilesAddUser(uploadData)
               .pipe(
@@ -219,11 +277,14 @@ export class EditUserDialog implements OnInit {
   setupUploadFiles(random_id: any, docs_names: any[]): FormData {
     const formdata: FormData = new FormData();
 
-    formdata.append("img", this.imgFileUploaded);
+    formdata.append(
+      "img",
+      this.existing_img_removed == true ? this.imgFileUploaded : ""
+    );
     formdata.append("docs_names", JSON.stringify(docs_names));
 
     var doc_count = 0;
-    for (let doc of this.docsFilesUploaded) {
+    for (let doc of this.docsFilesUploaded_new) {
       doc_count++;
       formdata.append(`doc_${doc_count}`, doc);
     }
@@ -241,7 +302,6 @@ export class EditUserDialog implements OnInit {
       mobile_number: this.user_mobile_number,
       country_code_alternative_number: this.user_alternative_country_code,
       alternative_mobile_number: this.user_alternative_number,
-      user_type: "new_user",
       email: this.user_email,
       alternative_email: this.user_alternative_email,
       id_type: this.user_id_type,
@@ -249,10 +309,11 @@ export class EditUserDialog implements OnInit {
       gender: this.user_gender,
       nationality: this.country_dropdown.selectedCountry,
       dob: this.user_dob,
-      allocated_unit: "",
-      profile_img: this.imgFileUploaded.name,
+      profile_img:
+        this.existing_img_removed == true
+          ? this.imgFileUploaded.name
+          : this.data.user_profile_img,
       documents: JSON.stringify(docs_names),
-      joined_date: new Date(),
     };
 
     return JSON.stringify(data);

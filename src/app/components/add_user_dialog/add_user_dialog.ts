@@ -80,6 +80,7 @@ export class AddUserDialog implements OnInit {
   ngOnInit() {
     this.phoneForm = this.formBuilder.group({
       phone: ["", Validators.required],
+      alt_phone: [""],
     });
   }
 

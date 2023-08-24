@@ -178,6 +178,15 @@ export class AdminService {
     );
   }
 
+  editUser(data: any) {
+    const url = `${API_URL}/editUser.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   addNewLease(data: any) {
     const url = `${API_URL}/addNewLease.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
@@ -198,6 +207,15 @@ export class AdminService {
 
   deleteRemovedLeaseDocs(data: any) {
     const url = `${API_URL}/deleteRemovedLeaseDocs.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  deleteRemovedUserFiles(data: any) {
+    const url = `${API_URL}/deleteRemovedUserFiles.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;

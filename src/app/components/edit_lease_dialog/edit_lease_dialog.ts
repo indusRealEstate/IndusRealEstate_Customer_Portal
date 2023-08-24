@@ -23,8 +23,7 @@ export class EditLeaseDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditLeaseDialog>,
     private adminService: AdminService
-  ) {
-  }
+  ) {}
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
@@ -69,11 +68,7 @@ export class EditLeaseDialog implements OnInit {
   users: any[] = [];
   all_users: any[] = [];
 
-  fetched_all_datas: BehaviorSubject<any> = new BehaviorSubject<any>(0);
-
   removed_existing_docs: any[] = [];
-
-  loading_all_data: boolean = true;
 
   notice_period_lists: any[] = [
     { value: "1", viewValue: "1 Month" },
@@ -144,8 +139,6 @@ export class EditLeaseDialog implements OnInit {
     JSON.parse(this.data.lease_docs).forEach((doc) => {
       this.docsFilesUploaded.push({ name: doc, old: true });
     });
-
-    this.loading_all_data = false;
   }
 
   onCloseDialog() {
