@@ -1,5 +1,13 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AddCategoryDialog } from "app/components/add_category_dialog/add_category_dialog";
 import { EditCategoryDialog } from "app/components/edit_category_dialog/edit_category_dialog";
@@ -14,22 +22,46 @@ import { AuthenticationService } from "app/services/authentication.service";
 export class AdminRequestsCategory implements OnInit {
   isUserSignedIn: boolean = false;
   isCategoryLoading: boolean = false;
-  categoryData: object;
+  categoryData: any[] = [];
   main_array: any[];
   msg: string;
   item_deleted: boolean = false;
-  display_msg: boolean = false;
   is_active: boolean = false;
+  item_inserted: boolean = false;
 
-  // @ViewChild(AddCategoryDialog) category_dialog!: AddCategoryDialog;
+  property_id: any = "all";
+
+  unitTypes: any[] = [
+    { testfield: true },
+    { value: "all", viewValue: "All Categories" },
+  ];
+
+  unitTypesFilter: any[] = [];
+
+  searchTextValue: any = "";
+
+  categories_props: any[] = [];
+
+  @ViewChild("inputBox") inputBox!: ElementRef;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     private apiAdminService: AdminService
   ) {
     this.isCategoryLoading = true;
+    this.unitTypesFilter = this.unitTypes;
+
+    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+      val.forEach((unit_type) => {
+        this.unitTypes.push({
+          value: unit_type.id,
+          viewValue: unit_type.type,
+        });
+      });
+    });
   }
 
   screenHeight: number;
@@ -40,8 +72,56 @@ export class AdminRequestsCategory implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
+  }
+
+  selectUnitType(event) {
+    this.unitTypesFilter = this.unitTypes;
+    // console.log(event.value);
+    if (event.value == "all" || event.value == undefined) {
+      this.categories_props = this.categoryData;
+    } else {
+      this.categories_props = this.categoryData.filter(
+        (catg) => catg.unit_type == event.value
+      );
+    }
+  }
+
+  resetMatSelect() {
+    this.searchTextValue = "";
+    this.unitTypesFilter = [...this.unitTypes];
+  }
+
+  focusOnInput($event) {
+    this.inputBox.nativeElement.focus();
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
+  searchUnitType(searchText, $event) {
+    $event.stopPropagation();
+    if (searchText == "") {
+      this.unitTypesFilter = [...this.unitTypes];
+    } else {
+      var val = new String(searchText).trim().toLowerCase();
+      var data = this.unitTypes.filter((prop) =>
+        String(prop.viewValue).toLowerCase().startsWith(val)
+      );
+
+      this.unitTypesFilter.splice(1, this.unitTypesFilter.length - 1);
+      data.forEach((p) => {
+        this.unitTypesFilter.push(p);
+      });
+    }
+  }
+
   getDataFromChild(value: boolean) {
-    console.log(value);
+    // console.log(value);
   }
 
   isUserSignOut() {
@@ -56,14 +136,19 @@ export class AdminRequestsCategory implements OnInit {
   openWindow() {
     this.dialog
       .open(AddCategoryDialog, {
-        data: {
-          category_name: "sample",
-          icon: "sample_icon",
-        },
+        width: "50vw",
+        height: "auto",
       })
       .afterClosed()
       .subscribe((val) => {
-        this.selectAllCategories();
+        // console.log(val);
+        this.item_inserted = val.status;
+        this.msg = val.msg;
+
+        if (this.item_inserted == true) {
+          this.openSnackBar("Category Added Succesfully", "Close");
+          this.selectAllCategories();
+        }
       });
   }
 
@@ -72,8 +157,10 @@ export class AdminRequestsCategory implements OnInit {
   selectAllCategories(): any {
     this.apiAdminService
       .selecteCategory()
-      .subscribe((val) => {
+      .subscribe((val: any[]) => {
+        // console.log(val);
         this.categoryData = val;
+        this.categories_props = val;
       })
       .add(() => {
         this.isCategoryLoading = false;
@@ -88,20 +175,21 @@ export class AdminRequestsCategory implements OnInit {
   }
 
   delete_item(data: any) {
-    this.display_msg = true;
-    this.apiAdminService.deleteServiceCategory(data).subscribe((value: any) => {
-      if (value.status == 1) {
-        this.msg = value.msg;
-        this.item_deleted = true;
-        this.selectAllCategories();
-      } else {
-        this.msg = value.msg;
-        this.item_deleted = false;
-      }
-    });
-    setTimeout(() => {
-      this.display_msg = false;
-    }, 2000);
+    this.apiAdminService
+      .deleteServiceCategory(data)
+      .subscribe((value: any) => {
+        if (value.status == 1) {
+          this.msg = value.msg;
+          this.item_deleted = true;
+          this.selectAllCategories();
+        } else {
+          this.msg = value.msg;
+          this.item_deleted = false;
+        }
+      })
+      .add(() => {
+        this.openSnackBar("Category Deleted Succesfully", "Close");
+      });
   }
 
   stauts_change(event, id) {
@@ -125,22 +213,31 @@ export class AdminRequestsCategory implements OnInit {
   edit_item(data: any) {
     this.dialog
       .open(EditCategoryDialog, {
+        width: "50vw",
+        height: "50vh",
         data,
       })
       .afterClosed()
       .subscribe((val) => {
-        this.selectAllCategories();
+        // console.log(val);
+        this.item_inserted = val.status;
+        this.msg = val.msg;
+
+        if (this.item_inserted == true) {
+          this.openSnackBar("Category Edited Succesfully", "Close");
+          this.selectAllCategories();
+        }
       });
   }
 
-  viewCategory(data: any) {
-    this.dialog
-      .open(EditCategoryDialog, {
-        data,
-      })
-      .afterClosed()
-      .subscribe((val) => {
-        this.selectAllCategories();
-      });
-  }
+  // viewCategory(data: any) {
+  //   this.dialog
+  //     .open(EditCategoryDialog, {
+  //       data,
+  //     })
+  //     .afterClosed()
+  //     .subscribe((val) => {
+  //       this.selectAllCategories();
+  //     });
+  // }
 }

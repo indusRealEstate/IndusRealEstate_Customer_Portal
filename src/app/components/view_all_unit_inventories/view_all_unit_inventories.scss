@@ -3,48 +3,127 @@
 * {
   font-family: "Montserrat";
 }
+// .close-icon{
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   z-index: 1000;
+//   width: 2rem;
+// }
 
-::ng-deep .mat-dialog-container {
-  padding: 0 !important;
-  border-radius: 1rem;
+// .card {
+//   // width: 100%;
+//   // overflow-y: auto;
+//   .card-header {
+//     .title-header {
+//       text-transform: uppercase;
+//       font-size: 1.5rem;
+//       font-weight: 600;
+//       margin: 0;
+//     }
+//   }
+//   .card-body {
+//     .col {
+//     }
+//   }
+// }
+
+.details-title {
+  color: #3c4858;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
-.category-dialog {
-  width: 40rem;
-  .form-control:focus {
-    color: #495057;
-    background-color: #0000;
-    border-color: none !important;
-    outline: 0;
-    box-shadow: 0 0 0 0rem !important;
-  }
+.form-control:focus {
+  color: #495057;
+  background-color: #0000;
+  border-color: none !important;
+  outline: 0;
+  box-shadow: 0 0 0 0rem !important;
+}
 
-  .form-control,
-  .is-focused .form-control {
-    background-image: linear-gradient(
-        to top,
-        #d4aa32 2px,
-        rgba(156, 39, 176, 0) 2px
-      ),
-      linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
-  }
+.form-control,
+.is-focused .form-control {
+  background-image: linear-gradient(
+      to top,
+      #d4aa32 2px,
+      rgba(156, 39, 176, 0) 2px
+    ),
+    linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+}
 
-  .btn-info {
-    color: #fff;
-    background-color: #1d232a;
-    border-color: #1d232a;
-    box-shadow: 0 2px 2px #00bcd424, 0 3px 1px -2px #00bcd433,
-      0 1px 5px #00bcd41f;
+.btn-info {
+  color: #fff;
+  background-color: #1d232a;
+  border-color: #1d232a;
+  box-shadow: 0 2px 2px #00bcd424, 0 3px 1px -2px #00bcd433, 0 1px 5px #00bcd41f;
+}
+.priview-image {
+  max-width: 4rem;
+  max-height: 4rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
+  min-width: 1rem;
+  min-height: 1rem;
+}
+
+.table-header {
+  box-shadow: 0rem 0rem 0rem !important;
+  background-color: rgb(219 165 62 / 83%) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  .col {
+    padding: 1rem 1.5rem;
   }
-  .priview-image {
-    max-width: 4rem;
-    max-height: 4rem;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    object-position: center;
-    min-width: 1rem;
-    min-height: 1rem;
+}
+
+.table-body {
+  background-color: #faf4e7 !important;
+  height: 25vh;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-row {
+  ::ng-deep .mat-mdc-table {
+    box-shadow: 0rem 0rem 0rem !important;
+    border-radius: 10px !important;
+    background-color: #faf4e7 !important;
+    thead {
+      background-color: rgb(219 165 62 / 50%) !important;
+      th {
+        color: #fff !important;
+        font-weight: 600 !important;
+      }
+      :first-child {
+        border-top-left-radius: 10px !important;
+      }
+      :last-child {
+        border-top-right-radius: 10px !important;
+      }
+    }
+    tbody {
+      background-color: #faf4e7 !important;
+      min-height: 10vh !important;
+      tr:last-child {
+        :first-child {
+          border-bottom-left-radius: 10px !important;
+        }
+        :last-child {
+          border-bottom-right-radius: 10px !important;
+        }
+      }
+    }
   }
+}
+
+.top-bar {
   .close-btn {
     position: absolute;
     top: 1rem;
@@ -70,8 +149,6 @@
     right: 0;
     position: absolute;
     width: 1.5rem;
-    z-index: 100;
-    top: 0;
     cursor: pointer;
 
     transition: 0.3s all ease-in-out;
@@ -80,50 +157,6 @@
       transform: scaleY(1.2) scaleX(1.2);
       filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
         brightness(90%) contrast(83%);
-    }
-  }
-}
-
-.table-row {
-  .teble {
-    border-radius: 7px;
-    color: #fff;
-    background-color: #c1910ac4;
-    box-shadow: none;
-    padding: 10px !important;
-
-    .thead{
-      tr{
-        th{
-          padding: 1rem;
-        }
-      }
-    }
-
-    .tbody {
-      background-color: #f9f9f95c;
-      font-weight: 500;
-      th {
-        font-weight: 500;
-        padding: 1rem;
-      }
-      td {
-        font-weight: 500;
-        padding: 1rem;
-      }
-      tr:nth-of-type(odd) {
-        background-color: #d4aa3282;
-      }
-      tr:last-child {
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-        th {
-          border-bottom-left-radius: 10px;
-        }
-        td {
-          border-bottom-right-radius: 10px;
-        }
-      }
     }
   }
 }

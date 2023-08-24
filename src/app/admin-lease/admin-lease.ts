@@ -4,6 +4,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
+import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import * as XLSX from "xlsx-js-style";
@@ -67,6 +68,9 @@ export class AllLeasesComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   current_sort_option: any = "all";
+
+  more_menu_lease_all_data: any = "";
+  more_menu_lease_loaded: boolean = false;
 
   constructor(
     private router: Router,
@@ -295,18 +299,54 @@ export class AllLeasesComponent implements OnInit {
   addLeaseDialogOpen() {
     this.dialog
       .open(AddLeaseDialog, {
-        width: "80%",
-        height: "50rem",
+        width: "90%",
+        height: "auto",
       })
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
           if (res.completed == true) {
             sessionStorage.removeItem("admin_properties_units_session");
+            sessionStorage.removeItem("all_users_session");
             this.refreshTable();
           }
         }
       });
+  }
+
+  openMoreMenu(lease_id) {
+    this.more_menu_lease_all_data = "";
+    this.adminService
+      .getAllLeaseData({ id: lease_id })
+      .subscribe((value) => {
+        this.more_menu_lease_all_data = value;
+      })
+      .add(() => {
+        this.more_menu_lease_loaded = true;
+      });
+  }
+
+  openEditLease(index) {
+    if (this.more_menu_lease_all_data != undefined) {
+      var data = this.more_menu_lease_all_data;
+      this.dialog
+        .open(EditLeaseDialog, {
+          data,
+        })
+        .afterClosed()
+        .subscribe((value) => {
+          if (value != undefined) {
+            this.updateData(value);
+            sessionStorage.removeItem("all_lease_session");
+            sessionStorage.removeItem("admin_properties_units_session");
+            sessionStorage.removeItem("all_users_session");
+          }
+        });
+    }
+  }
+
+  updateData(data){
+    console.log(data);
   }
 
   navigateToPropertyDetailsPage(prop_id) {

@@ -743,7 +743,7 @@
                   (click)="reassignStaff()">Reassign</button>
               </div>
 
-              <ng-container *ngIf="maintenance_staff == undefined || reassign">
+              <ng-container *ngIf="maintenance_staff == undefined">
                 <div class="col-md-8" *ngIf="!staff_assigned">
                   <mat-form-field class="w-100 mat-datepicker textField"
                     appearance="outline" *ngIf="!staff_selected">
@@ -800,7 +800,7 @@
                       [matDatepicker]="start_date_picker"
                       [(ngModel)]="assign_date"
                       [min]="current_date"
-                      (dateChange)="getDateTime()" />
+                      (dateChange)="getDateTime()" [disabled]="staff_selected ? 'false' : 'true'"/>
 
                     <mat-datepicker-toggle
                       matIconSuffix
@@ -825,7 +825,8 @@
                     matTooltip="Assign staff"
                     matTooltipClass="tooltip"
                     matTooltipPosition="above"
-                    style="background-color: #d4aa32;font-weight: 600; color: #fff; margin-top: 10px;"
+                    [ngStyle]="{'background-color' : date_select && is_time_selected && staff_selected ? '#d4aa32' : '#ffe290', 'cursor': date_select && is_time_selected && staff_selected ? 'pointer' : 'not-allowed'}"
+                    style="font-weight: 600; color: #fff; margin-top: 10px;"
                     (click)="assignStaff()">ASSIGN
                     STAFF</button>
                 </div>

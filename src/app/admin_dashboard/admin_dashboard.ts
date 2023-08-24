@@ -64,7 +64,13 @@ export class AdminDashboardComponent implements OnInit {
         if (res == true) {
           await this.firebaseService.getAllContractsReminders().then((obs) => {
             obs.subscribe((val: any[]) => {
-              this.firestore_contracts_reminders = val;
+              if (this.firestore_contracts_reminders.length == 0) {
+                this.firestore_contracts_reminders = val;
+              } else {
+                val.forEach((r) => {
+                  this.firestore_contracts_reminders.push(r);
+                });
+              }
             });
           });
         }
@@ -119,22 +125,14 @@ export class AdminDashboardComponent implements OnInit {
       );
   }
 
-  async sendContractReminder(contract_id, end_date, index) {
-    var days_left = this.getContractsEndsInPeriod(end_date);
-    await this.firebaseService.addContractReminder(contract_id, days_left);
-    Object.assign(this.total_contracts_currentItemsToShow[index], {
-      disable: true,
-      send_time: "now",
-    });
-
-    var item_index = this.total_contracts_reminders_items.findIndex(
-      (contract) => contract.contract_id == contract_id
+  async sendContractReminder(contract) {
+    var days_left = this.getContractsEndsInPeriod(contract.contract_end);
+    await this.firebaseService.addContractReminder(
+      contract.contract_id,
+      days_left
     );
 
-    Object.assign(this.total_contracts_reminders_items[item_index], {
-      disable: true,
-      send_time: "now",
-    });
+    this.getReminderSendedTime(contract);
   }
 
   isUserSignOut() {
@@ -213,47 +211,56 @@ export class AdminDashboardComponent implements OnInit {
       this.allRequests = val;
     });
 
-    this.adminService.getAllContractsReminders().subscribe((res: any[]) => {
-      this.total_contracts_reminders_items = res;
-      this.total_contracts_currentItemsToShow = res;
+    this.adminService
+      .getAllContractsReminders()
+      .subscribe((res: any[]) => {
+        this.total_contracts_reminders_items = res;
+        this.total_contracts_currentItemsToShow = res;
+      })
+      .add(() => {
+        this.total_contracts_reminders_loading = false;
+      });
+  }
 
-      setTimeout(() => {
-        res.forEach((contract) => {
-          var now = new Date().getTime();
-          if (this.firestore_contracts_reminders.length != 0) {
-            var reminder = this.firestore_contracts_reminders.find(
-              (co) => co.id == contract.contract_id
+  getReminderSendedTime(contract) {
+    var now = new Date().getTime();
+    if (this.firestore_contracts_reminders.length != 0) {
+      var reminder = this.firestore_contracts_reminders.find(
+        (co) => co.id == contract.contract_id
+      );
+      if (reminder != undefined) {
+        var timestamp = new Date(reminder.timestamp.toDate()).getTime();
+        var difference_In_Time = timestamp - now;
+        var difference_In_Days = Math.abs(
+          Math.round(difference_In_Time / (1000 * 3600 * 24))
+        );
+
+        var diffHrs = Math.floor(((now - timestamp) % 86400000) / 3600000);
+
+        if (difference_In_Days < 1) {
+          if (diffHrs >= 1) {
+            return diffHrs != 1
+              ? `Sended ${diffHrs} hours ago.`
+              : `Sended ${diffHrs} hour ago.`;
+          } else {
+            var minutes = Math.abs(
+              Math.round(((difference_In_Time % 86400000) % 3600000) / 60000)
             );
-            if (reminder != undefined) {
-              var timestamp = new Date(reminder.timestamp.toDate()).getTime();
-              var difference_In_Time = timestamp - now;
-              var difference_In_Days = Math.abs(
-                Math.round(difference_In_Time / (1000 * 3600 * 24))
-              );
-
-              var diffHrs = Math.floor(
-                ((now - timestamp) % 86400000) / 3600000
-              );
-
-              if (difference_In_Days < 1) {
-                Object.assign(contract, {
-                  disable: true,
-                  send_time:
-                    diffHrs >= 1
-                      ? diffHrs * 60
-                      : Math.abs(
-                          Math.round(
-                            ((difference_In_Time % 86400000) % 3600000) / 60000
-                          )
-                        ),
-                });
-              }
-            }
+            return minutes != 0
+              ? minutes != 1
+                ? `Sended ${minutes} minutes ago.`
+                : `Sended ${minutes} minute ago.`
+              : "Sended now.";
           }
-        });
-        this.reminder_button_loading = false;
-      }, 1200);
-    });
+        } else {
+          return "loading..";
+        }
+      } else {
+        return "loading..";
+      }
+    } else {
+      return "loading..";
+    }
   }
 
   getStatsCount(title) {
@@ -304,10 +311,10 @@ export class AdminDashboardComponent implements OnInit {
             this.paginator.pageIndex * this.paginator.pageSize +
               this.paginator.pageSize
           );
-
-        this.total_contracts_reminders_loading = false;
       }
+    });
 
+    setTimeout(() => {
       this.chart_data = [
         {
           share: `${(this.all_occupied_units / this.allUnits.length) * 100}%`,

@@ -24,12 +24,23 @@ interface DropDownButtonModel {
   // imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class AddUnitDialog implements OnInit {
+  unitTypes: any[] = [];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddUnitDialog>,
     private adminService: AdminService
   ) {
     this.getAllProperties();
+
+    this.adminService.getallUnitTypes().subscribe((val: any[]) => {
+      val.forEach((unit_type) => {
+        this.unitTypes.push({
+          value: unit_type.id,
+          viewValue: unit_type.type,
+        });
+      });
+    });
   }
 
   @ViewChild("fileInput") fileInput: ElementRef;
@@ -73,15 +84,6 @@ export class AddUnitDialog implements OnInit {
 
   users: any[] = [];
 
-  unitTypes: DropDownButtonModel[] = [
-    { value: "appartment", viewValue: "Appartment" },
-    { value: "penthouse", viewValue: "Penthouse" },
-    { value: "duplex", viewValue: "Duplex" },
-    { value: "office", viewValue: "Office" },
-    { value: "shop", viewValue: "Shop" },
-    { value: "villa", viewValue: "Villa" },
-  ];
-
   locality: DropDownButtonModel[] = [
     { value: "0", viewValue: "Al Barsha" },
     { value: "1", viewValue: "Dubai Internet City" },
@@ -97,7 +99,6 @@ export class AddUnitDialog implements OnInit {
           value: prop.property_id,
           viewValue: prop.property_name,
         })
-        
       );
     });
 

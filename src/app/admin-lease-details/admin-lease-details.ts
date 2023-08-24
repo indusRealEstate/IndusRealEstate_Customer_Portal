@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 
@@ -102,6 +103,49 @@ export class AdminLeaseDetail implements OnInit {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
     }
+  }
+
+  openEditLease() {
+    var data = this.all_data;
+    this.dialog
+      .open(EditLeaseDialog, {
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          this.updateData(value);
+          sessionStorage.removeItem("all_lease_session");
+          sessionStorage.removeItem("admin_properties_units_session");
+          sessionStorage.removeItem("all_users_session");
+        }
+      });
+  }
+
+  updateData(data) {
+    var updated_data = data.data;
+
+    this.all_data.lease_chiller_inclusive =
+      updated_data.chiller == 1 ? "1" : "0";
+    this.all_data.lease_contract_end = updated_data.contract_end;
+    this.all_data.lease_contract_start = updated_data.contract_start;
+    this.all_data.lease_dewa_inclusive = updated_data.dewa == 1 ? "1" : "0";
+    this.all_data.lease_docs = updated_data.documents;
+    this.all_data.lease_gas_inclusive = updated_data.gas == 1 ? "1" : "0";
+    this.all_data.lease_govt_charges = updated_data.govt_charges;
+    this.all_data.lease_move_in = updated_data.move_in;
+    this.all_data.lease_move_out = updated_data.move_out;
+    this.all_data.lease_no_of_cheques = updated_data.no_of_cheques;
+    this.all_data.lease_notice_period = updated_data.notice_period;
+    this.all_data.lease_owner_id = updated_data.owner_id;
+    this.all_data.lease_payment_currency = updated_data.payment_currency;
+    this.all_data.lease_property_id = updated_data.property_id;
+    this.all_data.lease_purpose = updated_data.purpose;
+    this.all_data.lease_rent_amount = updated_data.rent_amount;
+    this.all_data.lease_security_deposit = updated_data.security_deposit;
+    this.all_data.lease_tenant_id = updated_data.tenant_id;
+    this.all_data.lease_unit_id = updated_data.unit_id;
+    this.all_data.lease_yearly_amount = updated_data.yearly_amount;
   }
 
   // ngAfterViewInit() {

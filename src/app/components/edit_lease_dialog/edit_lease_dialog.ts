@@ -8,54 +8,36 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
-import { last, map, tap } from "rxjs";
-import * as uuid from "uuid";
+import { BehaviorSubject, last, map, tap } from "rxjs";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
 
 @Component({
   // standalone: true,
-  selector: "add_lease_dialog",
-  styleUrls: ["./add_lease_dialog.scss"],
-  templateUrl: "./add_lease_dialog.html",
+  selector: "edit_lease_dialog",
+  styleUrls: ["./edit_lease_dialog.scss"],
+  templateUrl: "./edit_lease_dialog.html",
   // imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class AddLeaseDialog implements OnInit {
+export class EditLeaseDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddLeaseDialog>,
+    public dialogRef: MatDialogRef<EditLeaseDialog>,
     private adminService: AdminService
-  ) {
-    this.getAllDropdowns();
-
-    if (data != null) {
-      // console.log(data);
-      if (this.properties != null) {
-        this.selectProperty({ value: data.prop_id });
-        this.property_id = data.prop_id;
-
-        setTimeout(() => {
-          if (this.units.length != 0) {
-            var un = this.units.find((u) => u.value == data.unit_id);
-            this.selectUnit({ value: un });
-            this.unit_data = un;
-          }
-        }, 2000);
-      }
-    }
-  }
+  ) {}
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
 
   @ViewChild("country_dropdown") country_dropdown: CountryDropdown;
 
-  docsFilesUploaded: File[] = [];
+  docsFilesUploaded: any[] = [];
 
-  property_id: any = "";
+  docsFilesUploaded_new: File[] = [];
+
+  property: any = "";
   unit_data: any = "";
   owner: any = "Select a Unit";
-  owner_id: any = "";
-  tenant_id: any = "";
+  tenant: any = "";
   contract_start_date: any = "";
   contract_end_date: any = "";
   move_in_date: any = "";
@@ -81,9 +63,12 @@ export class AddLeaseDialog implements OnInit {
   uploading_progress: any = 0;
 
   properties: any[] = [];
+  all_units: any[] = [];
   units: any[] = [];
   users: any[] = [];
   all_users: any[] = [];
+
+  removed_existing_docs: any[] = [];
 
   notice_period_lists: any[] = [
     { value: "1", viewValue: "1 Month" },
@@ -128,58 +113,33 @@ export class AddLeaseDialog implements OnInit {
     { value: "7", viewValue: "7 Cheques" },
   ];
 
-  getAllDropdowns() {
-    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-      val.forEach((prop) =>
-        this.properties.push({
-          value: prop.property_id,
-          viewValue: prop.property_name,
-        })
-      );
-    });
-
-    this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-      val.forEach((user) => {
-        this.all_users.push({
-          value: user.user_id,
-          user_type: user.user_type,
-          viewValue: user.name,
-        });
-        if (user.user_type != "owner" && user.user_type != "tenant") {
-          this.users.push({
-            value: user.user_id,
-            user_type: user.user_type,
-            viewValue: user.name,
-          });
-        }
-      });
-    });
-  }
-
-  selectUnit(event: any) {
-    var e = this.all_users.find((u) => u.value == event.value.owner_id);
-    this.owner = e.viewValue;
-    this.owner_id = e.value;
-  }
-
-  selectProperty(event: any) {
-    this.units = [];
-    this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-      val.forEach((un) => {
-        if (un.property_id == event.value && un.status != "occupied") {
-          this.units.push({
-            value: un.unit_id,
-            viewValue: un.unit_no,
-            owner_id: un.owner_id,
-          });
-        }
-      });
-    });
-  }
-
   ngOnInit() {}
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.property = this.data.prop_name;
+    this.unit_data = this.data.unit_no;
+    this.owner = this.data.user_name;
+    this.tenant = this.data.tenant_name;
+    this.contract_start_date = this.data.lease_contract_start;
+    this.contract_end_date = this.data.lease_contract_end;
+    this.move_in_date = this.data.lease_move_in;
+    this.move_out_date = this.data.lease_move_out;
+    this.notice_period = this.data.lease_notice_period;
+    this.purpose = this.data.lease_purpose;
+    this.dewa = this.data.lease_dewa_inclusive == "0" ? false : true;
+    this.chiller = this.data.lease_chiller_inclusive == "0" ? false : true;
+    this.gas = this.data.lease_gas_inclusive == "0" ? false : true;
+    this.payment_currency = this.data.lease_payment_currency;
+    this.yearly_amount = this.data.lease_yearly_amount;
+    this.rent_amount = this.data.lease_rent_amount;
+    this.no_of_cheques = this.data.lease_no_of_cheques;
+    this.govt_charges = this.data.lease_govt_charges;
+    this.security_deposit = this.data.lease_security_deposit;
+
+    JSON.parse(this.data.lease_docs).forEach((doc) => {
+      this.docsFilesUploaded.push({ name: doc, old: true });
+    });
+  }
 
   onCloseDialog() {
     this.dialogRef.close();
@@ -188,20 +148,24 @@ export class AddLeaseDialog implements OnInit {
   onFileSelected(files: Array<any>) {
     for (var item of files) {
       this.docsFilesUploaded.push(item);
+      this.docsFilesUploaded_new.push(item);
     }
     this.fileInput.nativeElement.value = "";
   }
 
-  removeUploadedDoc(index) {
+  removeUploadedDoc(index: number, file: any) {
+    if (this.docsFilesUploaded_new.includes(file)) {
+      var i = this.docsFilesUploaded_new.findIndex((f) => f.name == file.name);
+      this.docsFilesUploaded_new.splice(i, 1);
+    } else {
+      this.removed_existing_docs.push(file);
+    }
     this.docsFilesUploaded.splice(index, 1);
   }
 
   onSubmit() {
     if (this.docsFilesUploaded.length != 0) {
       if (
-        this.property_id != "" &&
-        this.unit_data != "" &&
-        this.tenant_id != "" &&
         this.contract_start_date != "" &&
         this.contract_end_date != "" &&
         this.notice_period != "" &&
@@ -213,25 +177,44 @@ export class AddLeaseDialog implements OnInit {
         this.yearly_amount != ""
       ) {
         this.uploading = true;
-        var random_id = uuid.v4();
+        var random_id = this.data.lease_contract_id;
 
         var docs_names = [];
+        var docs_names_new = [];
 
         for (var doc of this.docsFilesUploaded) {
           docs_names.push(doc.name);
+          if (doc.old == undefined) {
+            docs_names_new.push(doc.name);
+          }
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.adminService.addNewLease(data).subscribe((val) => {
+        this.adminService.editLease(data).subscribe((val) => {
           if (val == "success") {
-            var uploadData = this.setupUploadFiles(random_id, docs_names);
+            if (this.removed_existing_docs.length != 0) {
+              this.adminService
+                .deleteRemovedLeaseDocs(
+                  JSON.stringify({
+                    names: this.removed_existing_docs,
+                    id: random_id,
+                  })
+                )
+                .subscribe((res) => {
+                  console.log(res);
+                });
+            }
+            var uploadData = this.setupUploadFiles(random_id, docs_names_new);
             this.adminService
               .uploadAllFilesAddNewLease(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
                   if (message == "File was completely uploaded!") {
-                    this.dialogRef.close({ completed: true });
+                    this.dialogRef.close({
+                      completed: true,
+                      data: JSON.parse(data),
+                    });
                   }
                 }),
                 last()
@@ -261,7 +244,7 @@ export class AddLeaseDialog implements OnInit {
     formdata.append("docs_names", JSON.stringify(docs_names));
 
     var doc_count = 0;
-    for (let doc of this.docsFilesUploaded) {
+    for (let doc of this.docsFilesUploaded_new) {
       doc_count++;
       formdata.append(`doc_${doc_count}`, doc);
     }
@@ -274,11 +257,6 @@ export class AddLeaseDialog implements OnInit {
   setupData(random_id: any, docs_names: any[]): string {
     var data = {
       contract_id: random_id,
-      property_id: this.property_id,
-      unit_id: this.unit_data.value,
-      owner_id: this.owner_id,
-      tenant_id: this.tenant_id,
-      status: "inactive",
       contract_start: this.contract_start_date,
       contract_end: this.contract_end_date,
       move_in: this.move_in_date,

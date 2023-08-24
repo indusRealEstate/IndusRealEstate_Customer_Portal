@@ -26,6 +26,15 @@ export class AdminService {
     };
   }
 
+  getUserDetailsForEdit(data: any) {
+    const url = `${API_URL}/getUserDetailsForEdit.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllContractsReminders() {
     const url = `${API_URL}/get_all_contracts_reminders.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -106,6 +115,15 @@ export class AdminService {
     );
   }
 
+  getallUnitTypes() {
+    const url = `${API_URL}/getAll_unit_types.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getallPropertiesUnitsAdmin() {
     const url = `${API_URL}/getAllPropertiesUnits.php?apikey=1`;
     return this.http.get<any>(url).pipe(
@@ -160,8 +178,44 @@ export class AdminService {
     );
   }
 
+  editUser(data: any) {
+    const url = `${API_URL}/editUser.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   addNewLease(data: any) {
     const url = `${API_URL}/addNewLease.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  editLease(data: any) {
+    const url = `${API_URL}/editLease.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  deleteRemovedLeaseDocs(data: any) {
+    const url = `${API_URL}/deleteRemovedLeaseDocs.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  deleteRemovedUserFiles(data: any) {
+    const url = `${API_URL}/deleteRemovedUserFiles.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -501,120 +555,111 @@ export class AdminService {
   }
 
   selectTenantsPaymentsDetails(data: any) {
-   const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
-   return this.http.post(url, data).pipe(
-     map((data) => {
-       return data;
-     })
-   );
- }
+    const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
- selectTenantPayments(data: string) {
-   const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
-   return this.http.post(url, data).pipe(
-     map((data) => {
-       return data;
-     })
-   );
- }
- paymentsDetails(data: any) {
-  const url = `${API_URL}/paymentsDetails.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
- 
- selectPaymentAccordeingToTheMothod(data: string) {
-   const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
-   return this.http.post(url, data).pipe(
-     map((data) => {
-       return data;
-     })
-   );
- }
+  selectTenantPayments(data: string) {
+    const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  paymentsDetails(data: any) {
+    const url = `${API_URL}/paymentsDetails.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
- totalTenantPayment(data: string) {
-  const url = `${API_URL}/totalTenantPayment.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
+  selectPaymentAccordeingToTheMothod(data: string) {
+    const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
-paidTenantPayment(data: string) {
-  const url = `${API_URL}/paidTenantPayment.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-unpaidTenantPayment(data: string) {
-  const url = `${API_URL}/unpaidTenantPayment.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-addAnnouncement(data: string) {
-  const url = `${API_URL}/addAnnouncement.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-selectAllAnnouncement(data: string) {
-  const url = `${API_URL}/selectAllAnnouncement.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
+  totalTenantPayment(data: string) {
+    const url = `${API_URL}/totalTenantPayment.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
-getAnnouncementDetails(data: any) {
-  const url = `${API_URL}/selectSingleAnnouncementDetail.php?apikey=1`;
-  return this.http.post(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
+  paidTenantPayment(data: string) {
+    const url = `${API_URL}/paidTenantPayment.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  unpaidTenantPayment(data: string) {
+    const url = `${API_URL}/unpaidTenantPayment.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  addAnnouncement(data: string) {
+    const url = `${API_URL}/addAnnouncement.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  selectAllAnnouncement(data: string) {
+    const url = `${API_URL}/selectAllAnnouncement.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 
-updateAnnouncement(data: any) {
-  const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
-  return this.http.post<any>(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-deleteAnnouncement(data: any) {
-  const url = `${API_URL}/deleteAnnouncement.php?apikey=1`;
-  return this.http.post<any>(url, data).pipe(
-    map((data) => {
-      return data;
-    })
-  );
-}
-uploadAllFilesAddAnnouncement(data: any) {
-  const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
-  const req = new HttpRequest("POST", url, data, {
-    reportProgress: true,
-  });
-  return this.http.request(req);
-}
+  updateAnnouncement(data: any) {
+    const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  deleteAnnouncement(data: any) {
+    const url = `${API_URL}/deleteAnnouncement.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+  uploadAllFilesAddAnnouncement(data: any) {
+    const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
+  }
 
-uploadAllFilesEditAnnouncement(data: any) {
-  const url = `${API_URL}/upload_edit_announcement_files.php?apikey=1`;
-  const req = new HttpRequest("POST", url, data, {
-    reportProgress: true,
-  });
-  return this.http.request(req);
-}
+  uploadAllFilesEditAnnouncement(data: any) {
+    const url = `${API_URL}/upload_edit_announcement_files.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+    return this.http.request(req);
+  }
 }

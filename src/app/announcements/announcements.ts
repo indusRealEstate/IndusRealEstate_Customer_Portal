@@ -88,7 +88,7 @@ export class Announcements implements OnInit {
     console.log(a_id);
     this.more_menu_all_data = "";
     this.appAdminService
-      .getAnnouncementDetails(JSON.stringify({ a_id: a_id }))
+      .selectAllAnnouncement(JSON.stringify({ a_id: a_id }))
       .subscribe((value) => {
         this.more_menu_all_data = value;
         //console.log(this.more_menu_all_data);

@@ -1,9 +1,9 @@
 <div
   class="card card-main category-dialog"
-  style="margin: 0; width: 75vw; height: 75vh;"
+  style="margin: 0; width: 75vw; height: 75vh; padding: 1.5rem;"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
-  <div class="card-header position-relative border-0">
+  <!-- <div class="card-header position-relative border-0">
     <img
       matTooltip="Close"
       matTooltipClass="tooltip"
@@ -12,70 +12,100 @@
       class="mr-2 mt-1 close-icon"
       src="assets/img/svg/req-details/close-circle.svg"
       alt />
-  </div>
-  <div class="card-body">
+  </div> -->
+  <div class="card-body px-2 py-0 position-relative">
+    <div class="col">
+      <div class="row m-0 align-items-start w-100">
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">Maintenance
+          Requests</p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          Maintenance Request Details
+        </p>
+        <img
+          class="mr-2 mt-1 header-arrow-icon"
+          src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+          alt />
+        <p class="mr-2" style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
+          View all Media
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt />
+      </div>
+      <div class="row m-0 align-items-start w-100">
+        <p class="details-title my-4">View all Media</p>
+      </div>
+      <div class="row" style="flex-wrap: wrap;">
+        <div class="col-2 position-relative d-flex"
+          *ngFor="let item of media_array; let index = i">
 
-    <div class="row" style="flex-wrap: wrap;">
-      <div class="col-2 position-relative d-flex"
-        *ngFor="let item of media_array; let index = i">
-
-        <ng-container *ngIf="image_loaded == true">
-          <button class="btn"
-            (click)="downloadItem(link + item, item.split('.')[1], item)"
-            matTooltip="Download"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            style="
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 2rem !important;
-                height: 2rem !important;
-                padding: 0 !important;
-                display: flex;
-                background: #be9830;
-        ">
-            <img
+          <ng-container *ngIf="image_loaded == true">
+            <button class="btn"
+              (click)="downloadItem(link + item, item.split('.')[1], item)"
+              matTooltip="Download"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
               style="
-                display: flex;
-                width: 1.5rem;
-                margin: auto;
-                filter: invert(1);
-            "
-              src="assets/img/svg/common-icons/download.svg"
-              alt />
-          </button>
-        </ng-container>
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 2rem !important;
+                  height: 2rem !important;
+                  padding: 0 !important;
+                  display: flex;
+                  background: #be9830;
+          ">
+              <img
+                style="
+                  display: flex;
+                  width: 1.5rem;
+                  margin: auto;
+                  filter: invert(1);
+              "
+                src="assets/img/svg/common-icons/download.svg"
+                alt />
+            </button>
+          </ng-container>
 
-        <ng-container>
-          <ngx-skeleton-loader
-            *ngIf="!image_loaded"
-            class="skeleton-left"
-            [theme]="{ 
-            width: '150px',
-            height: '150px'
-            }">
-          </ngx-skeleton-loader>
-        </ng-container>
+          <ng-container>
+            <ngx-skeleton-loader
+              *ngIf="!image_loaded"
+              class="skeleton-left"
+              [theme]="{ 
+              width: '150px',
+              height: '150px'
+              }">
+            </ngx-skeleton-loader>
+          </ng-container>
 
-        <ng-container>
-          <img *ngIf="image_type_array.includes(item.split('.')[1])"
-            [src]="link+item" alt (load)="checkImageLoaded($event)"
-            style="
-          object-fit: cover;
-          object-position: center;
-          aspect-ratio: 1/1;
-          width: 150px;
-          height: 150px;"
+          <ng-container>
+            <img *ngIf="image_type_array.includes(item.split('.')[1])"
+              [src]="link+item" alt (load)="checkImageLoaded($event)"
+              style="
+            object-fit: cover;
+            object-position: center;
+            aspect-ratio: 1/1;
+            width: 150px;
+            height: 150px;"
+              [ngStyle]="{'display': image_loaded ? 'flex' : 'none'}">
+          </ng-container>
+
+          <video controls *ngIf="video_type_array.includes(item.split('.')[1])"
+            style="aspect-ratio: 1/1; width: 150px; height: 150px;"
+            (loadedmetadata)="checkImageLoaded($event)"
             [ngStyle]="{'display': image_loaded ? 'flex' : 'none'}">
-        </ng-container>
-
-        <video controls *ngIf="video_type_array.includes(item.split('.')[1])"
-          style="aspect-ratio: 1/1; width: 150px; height: 150px;"
-          (loadedmetadata)="checkImageLoaded($event)"
-          [ngStyle]="{'display': image_loaded ? 'flex' : 'none'}">
-          <source [src]="link+item" type="video/{{item.split('.')[1]}}">
-        </video>
+            <source [src]="link+item" type="video/{{item.split('.')[1]}}">
+          </video>
+        </div>
       </div>
     </div>
   </div>

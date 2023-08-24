@@ -22,22 +22,49 @@
       [theme]="{ width: (screenWidth/2 - 100) + 'px', height: '50px' }"
     >
     </ngx-skeleton-loader>
-    <h1 *ngIf="!isContentLoading" class="item-header">
-      Contract ID
-      <span
-        class="ml-2"
-        style="
-          font-size: 20px;
-          font-weight: 500;
-          background: #dbb9553b;
-          padding: 5px 15px;
-          border: 1px solid #d4aa328c;
-          border-radius: 5px;
-          color: #b88d11;
-        "
-        >#{{all_data.lease_contract_id}}</span
+    <div class="row m-0 justify-content-between">
+      <h1
+        *ngIf="!isContentLoading"
+        class="item-header"
+        style="font-weight: 600"
       >
-    </h1>
+        Contract ID
+        <span
+          class="ml-2"
+          style="
+            font-size: 20px;
+            font-weight: 500;
+            background: #dbb9553b;
+            padding: 5px 15px;
+            border: 1px solid #d4aa328c;
+            border-radius: 5px;
+            color: #b88d11;
+          "
+          >#{{all_data.lease_contract_id}}</span
+        >
+      </h1>
+      <img
+        *ngIf="!isContentLoading"
+        mat-button
+        [matMenuTriggerFor]="menuEdit"
+        class="mx-4"
+        matTooltip="More Actions"
+        matTooltipClass="tooltip"
+        matTooltipPosition="above"
+        src="assets/img/svg/home-page/more.svg"
+        alt
+        style="
+          filter: brightness(0) saturate(100%) invert(73%) sepia(8%)
+            saturate(14%) hue-rotate(333deg) brightness(91%) contrast(77%);
+          width: 25px;
+          cursor: pointer;
+        "
+      />
+      <mat-menu #menuEdit="matMenu">
+        <button mat-menu-item (click)="openEditLease()">Edit</button>
+        <button mat-menu-item>Terminate Lease</button>
+      </mat-menu>
+    </div>
 
     <div class="row">
       <ngx-skeleton-loader
@@ -52,6 +79,59 @@
             <h4 class="title-header">Lease details</h4>
           </div>
           <div class="card-body">
+            <div
+              class="card mt-1 mb-3"
+              style="
+                padding: 15px 15px;
+                box-shadow: none;
+                border: 1px solid #e6ebf1;
+              "
+            >
+              <div class="row m-0">
+                <div
+                  *ngIf="all_data.lease_dewa_inclusive == '1'"
+                  class="row m-0 mr-5 align-items-center"
+                >
+                  <img
+                    class="mr-2"
+                    style="width: 40px"
+                    src="assets/img/svg/dewa.svg"
+                    alt=""
+                  />
+                  <p class="m-0" style="font-size: 17px; font-weight: 500">
+                    Dewa Inclusive
+                  </p>
+                </div>
+                <div
+                  *ngIf="all_data.lease_chiller_inclusive == '1'"
+                  class="row m-0 mr-5 align-items-center"
+                >
+                  <img
+                    class="mr-2"
+                    style="width: 40px"
+                    src="assets/img/svg/chiller.svg"
+                    alt=""
+                  />
+                  <p class="m-0" style="font-size: 17px; font-weight: 500">
+                    Chiller Inclusive
+                  </p>
+                </div>
+                <div
+                  *ngIf="all_data.lease_gas_inclusive == '1'"
+                  class="row m-0 align-items-center"
+                >
+                  <img
+                    class="mr-2"
+                    style="width: 40px"
+                    src="assets/img/svg/gas.svg"
+                    alt=""
+                  />
+                  <p class="m-0" style="font-size: 17px; font-weight: 500">
+                    Gas Inclusive
+                  </p>
+                </div>
+              </div>
+            </div>
             <div class="table-row">
               <table class="teble table-striped w-100 px-3">
                 <thead class="thead">

@@ -51,7 +51,7 @@ export class DialogViewMedia implements OnInit {
     private downloadServices: DownloadService
   ) {
     
-    this.all_data = data;
+    this.all_data = data; 
     this.link = this.all_data.link;
 
     // console.log(this.link);

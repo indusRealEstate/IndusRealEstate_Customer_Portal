@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { MatTableDataSource } from '@angular/material/table';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
@@ -19,6 +20,8 @@ export class ViewAllUnitDocuments implements OnInit {
   unit_doc_array: string[] = [];
   unit_id: string;
   selected_doc: string = "";
+  data_source: MatTableDataSource<any>;
+  displayedColumns: string[] = ["name","download"];
   
 
   constructor( 
@@ -35,12 +38,21 @@ export class ViewAllUnitDocuments implements OnInit {
     }
     this.unit_id = data.id;
 
+    this.data_source = new MatTableDataSource<any>(this.unit_doc_array);
+
     console.log(this.unit_doc_array);
+  }
+
+  ngOnChanges(){
+    
   }
 
 
   ngOnInit() {
-    
+    window.addEventListener("scrol",()=>{
+      console.log("hi");
+    })
+
   }
 
   ngAfterViewInit() {}
