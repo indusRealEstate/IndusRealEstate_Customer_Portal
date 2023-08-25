@@ -8,6 +8,7 @@ import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/ad
 import { AnnouncementDetailsDialog } from "app/components/announcement-details-dialog/announcement-details-dialog";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 import { AdminService } from "app/services/admin.service";
+import { FirebaseService } from "app/services/firebase.service";
 
 @Component({
   selector: "announcements",
@@ -37,6 +38,7 @@ export class Announcements implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private appAdminService: AdminService,
+    private firebaseService: FirebaseService,
     private _snackBar: MatSnackBar,
     private router: Router,
     private dialog: MatDialog
@@ -94,12 +96,14 @@ export class Announcements implements OnInit {
       .subscribe((res) => {});
   }
 
-  deleteAnnouncement(ann_id) {
+  deleteAnnouncement(ann_id, index) {
     this.appAdminService
       .deleteAnnouncement(JSON.stringify({ id: ann_id }))
-      .subscribe((res) => {
+      .subscribe(async (res) => {
         if (res.status == 1) {
-          this.refreshTable();
+          this.allAnnouncement.splice(index, 1);
+          this.allAnnouncementMatTableData.data = this.allAnnouncement;
+          await this.firebaseService.deleteAnnouncementData(ann_id);
           this.openSnackBar("Announcement deleted successfully", "Close");
         }
       });

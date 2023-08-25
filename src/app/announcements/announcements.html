@@ -177,13 +177,12 @@
                       />
                     </div>
                   </button>
-                  <button mat-menu-item>
+                  <button
+                    mat-menu-item
+                    (click)="deleteAnnouncement(element.ann_id, index)"
+                  >
                     <div class="row m-0 justify-content-between">
-                      <span
-                        style="color: red"
-                        (click)="deleteAnnouncement(element.ann_id)"
-                        >Delete</span
-                      >
+                      <span style="color: red">Delete</span>
                       <img
                         src="assets/img/svg/delete.svg"
                         alt

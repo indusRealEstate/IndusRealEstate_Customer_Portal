@@ -99,6 +99,10 @@ export class FirebaseService {
     await this.db.collection("service_requests").doc(id).delete();
   }
 
+  async deleteAnnouncementData(id) {
+    await this.db.collection("announcements").doc(id).delete();
+  }
+
   async requestMessagePermission() {
     if (Notification.permission !== "granted") {
       var res = await Notification.requestPermission();
