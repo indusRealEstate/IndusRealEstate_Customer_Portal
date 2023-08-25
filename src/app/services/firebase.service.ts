@@ -74,6 +74,13 @@ export class FirebaseService {
     });
   }
 
+  async addNewAnnouncement(announcement_id, prop_id) {
+    await this.db.collection("announcements").doc(announcement_id).set({
+      prop_id: prop_id,
+      timestamp: new Date(),
+    });
+  }
+
   getData() {
     return collectionChanges(
       collection(this.firestore, "service_requests")

@@ -34,7 +34,6 @@ export class EditAnnouncementDialog implements OnInit {
   formNotFilled: boolean = false;
   uploading: boolean = false;
   uploaded: boolean = false;
-  documentNotAdded: boolean = false;
   docsFilesUploaded: any[] = [];
   property_building_type: any = "";
   deleted_doc_array: string[] = [];
@@ -114,43 +113,43 @@ export class EditAnnouncementDialog implements OnInit {
   }
 
   onSubmit() {
-    if (this.docsFilesUploaded.length != 0) {
-      if (
-        this.title != "" &&
-        this.selected_property != "" &&
-        this.description != ""
-      ) {
-        this.uploading = true;
-        let docs_names = [];
+    if (
+      this.title != "" &&
+      this.selected_property != "" &&
+      this.description != ""
+    ) {
+      this.uploading = true;
+      let docs_names = [];
 
-        var docs_names_new = [];
+      var docs_names_new = [];
 
-        for (var doc of this.docsFilesUploaded) {
-          docs_names.push(doc.name);
-          if (doc.old == undefined) {
-            docs_names_new.push(doc.name);
-          }
+      for (var doc of this.docsFilesUploaded) {
+        docs_names.push(doc.name);
+        if (doc.old == undefined) {
+          docs_names_new.push(doc.name);
         }
+      }
 
-        let r_id = this.all_data.ann_id;
+      let r_id = this.all_data.ann_id;
 
-        let data = this.setupData(r_id, docs_names);
-        // console.log(this.removed_existing_docs);
-        this.adminService.updateAnnouncement(data).subscribe((value) => {
-          // console.log(data);
-          if (value == "success") {
-            if (this.removed_existing_docs.length != 0) {
-              this.adminService
-                .deleteAnnouncementDocs(
-                  JSON.stringify({
-                    names: this.removed_existing_docs,
-                    id: r_id,
-                  })
-                )
-                .subscribe((res) => {
-                  console.log(res);
-                });
-            }
+      let data = this.setupData(r_id, docs_names);
+      // console.log(this.removed_existing_docs);
+      this.adminService.updateAnnouncement(data).subscribe((value) => {
+        // console.log(data);
+        if (value == "success") {
+          if (this.removed_existing_docs.length != 0) {
+            this.adminService
+              .deleteAnnouncementDocs(
+                JSON.stringify({
+                  names: this.removed_existing_docs,
+                  id: r_id,
+                })
+              )
+              .subscribe((res) => {
+                console.log(res);
+              });
+          }
+          if (this.docsFilesUploaded_new.length != 0) {
             this.uploading_progress = 0;
             let uploadData = this.setupUploadFiles(r_id, docs_names_new);
             // console.log(uploadData);
@@ -168,18 +167,15 @@ export class EditAnnouncementDialog implements OnInit {
               .subscribe((v) => {
                 console.log(v, "uploaded..");
               });
+          } else {
+            this.onCloseDialog();
           }
-        });
-      } else {
-        this.formNotFilled = true;
-        setTimeout(() => {
-          this.formNotFilled = false;
-        }, 3000);
-      }
-    } else if (this.docsFilesUploaded.length == 0) {
-      this.documentNotAdded = true;
+        }
+      });
+    } else {
+      this.formNotFilled = true;
       setTimeout(() => {
-        this.documentNotAdded = false;
+        this.formNotFilled = false;
       }, 3000);
     }
   }

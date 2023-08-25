@@ -130,7 +130,11 @@
             <p style="font-size: 18px; font-weight: 500; color: #596677">
               Attached Files
             </p>
-            <div style="height: 20rem; overflow: auto">
+            <p *ngIf="attachments.length == 0">No Attachments!</p>
+            <div
+              *ngIf="attachments.length != 0"
+              style="height: 20rem; overflow: auto"
+            >
               <div
                 class="row m-0 mb-2 justify-content-between"
                 *ngFor="let att of attachments"

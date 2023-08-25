@@ -1,3 +1,4 @@
+import { formatDate } from "@angular/common";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {
   Component,
@@ -8,6 +9,7 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
+import { FirebaseService } from "app/services/firebase.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
@@ -28,18 +30,18 @@ export class AddAnnouncementDialog implements OnInit {
   formNotFilled: boolean = false;
   properties: any[] = [];
   selected_property: any = "";
-  property_id: any;
 
   docsFilesUploaded: File[] = [];
   imageNotAdded: boolean;
   uploading_progress: any = 0;
-  documentNotAdded: boolean = false;
+  // documentNotAdded: boolean = false;
   isContentLoading: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddAnnouncementDialog>,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private firbaseService: FirebaseService
   ) {
     this.getAllPropertiesName();
     console.log(this.properties);
@@ -76,33 +78,34 @@ export class AddAnnouncementDialog implements OnInit {
 
   onSubmit() {
     if (
-      // this.imgFilesUploaded.length != 0
-      this.docsFilesUploaded.length != 0
+      // this.building_name != "" &&
+      this.title != "" &&
+      this.description != "" &&
+      this.selected_property != ""
     ) {
-      if (
-        // this.building_name != "" &&
-        this.title != "" &&
-        this.description != "" &&
-        this.property_id != ""
-      ) {
-        this.uploading = true;
-        var random_id = uuid.v4();
+      this.uploading = true;
+      var random_id = uuid.v4();
 
-        var docs_names = [];
-        for (var doc of this.docsFilesUploaded) {
-          docs_names.push(doc.name);
-        }
-        var data = this.setupData(random_id, docs_names);
-        this.adminService.addAnnouncement(data).subscribe((val) => {
-          if (val == "success") {
+      var docs_names = [];
+      for (var doc of this.docsFilesUploaded) {
+        docs_names.push(doc.name);
+      }
+      var data = this.setupData(random_id, docs_names);
+      this.adminService.addAnnouncement(data).subscribe(async (val) => {
+        if (val == "success") {
+          if (this.docsFilesUploaded.length != 0) {
             this.uploading_progress = 0;
             var uploadData = this.setupUploadFiles(random_id, docs_names);
             this.adminService
               .uploadAllFilesAddAnnouncement(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
-                tap((message) => {
+                tap(async (message) => {
                   if (message == "File was completely uploaded!") {
+                    await this.firbaseService.addNewAnnouncement(
+                      random_id,
+                      this.selected_property
+                    );
                     this.dialogRef.close({ completed: true });
                   }
                 }),
@@ -112,22 +115,19 @@ export class AddAnnouncementDialog implements OnInit {
                 console.log(v);
               });
           } else {
-            console.log("not inserted");
+            await this.firbaseService.addNewAnnouncement(
+              random_id,
+              this.selected_property
+            );
+            this.dialogRef.close({ completed: true });
           }
-        });
-      } else {
-        this.formNotFilled = true;
-        setTimeout(() => {
-          this.formNotFilled = false;
-        }, 1000000);
-      }
+        }
+      });
     } else {
-      if (this.docsFilesUploaded.length == 0) {
-        this.documentNotAdded = true;
-        setTimeout(() => {
-          this.documentNotAdded = false;
-        }, 3000);
-      }
+      this.formNotFilled = true;
+      setTimeout(() => {
+        this.formNotFilled = false;
+      }, 1000000);
     }
   }
 
@@ -147,6 +147,7 @@ export class AddAnnouncementDialog implements OnInit {
   }
 
   setupData(random_id: any, docs_names: any[]): string {
+    var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       emergency: this.emergency,
       property_id: this.selected_property,
@@ -154,6 +155,7 @@ export class AddAnnouncementDialog implements OnInit {
       title: this.title,
       attachments: JSON.stringify(docs_names),
       description: this.description,
+      date: timeStamp,
     };
 
     return JSON.stringify(data);
