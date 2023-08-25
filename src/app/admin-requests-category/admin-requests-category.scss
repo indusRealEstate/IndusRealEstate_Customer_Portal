@@ -6,8 +6,8 @@
 
 ::ng-deep .mdc-snackbar__surface {
   background-color: #313a46 !important;
-  
-  .mat-mdc-button-ripple{
+
+  .mat-mdc-button-ripple {
     color: #d4aa32 !important;
   }
   .mdc-button__label {
@@ -253,14 +253,6 @@
         filter: brightness(0) invert(1);
       }
     }
-  }
-
-  mat-slide-toggle {
-    color: #34ae39 !important;
-  }
-
-  mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: #34ae39 !important;
   }
 }
 

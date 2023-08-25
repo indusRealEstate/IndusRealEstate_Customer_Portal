@@ -1,26 +1,44 @@
 <div class="card m-0" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
-  <div
-    class="card-header"
-    style="border-bottom: 1px solid #e6ebf1; padding: 25px 25px"
-  >
-    <span style="font-size: 20px; font-weight: 500">{{title}}</span>
-  </div>
-  <div class="card-body" style="padding: 30px 25px">
-    <div class="col p-0">
-      <div class="row m-0 mt-3 justify-content-center">
+  <div class="card-body" style="padding: 3rem 3rem">
+    <div class="col p-0 text-center">
+      <p style="font-size: 25px; font-weight: 600" class="mb-4">{{title}}</p>
+      <p style="font-size: 18px; font-weight: 400" class="mb-4">{{subtitle}}</p>
+      <div
+        class="row m-0 align-items-start"
+        style="
+          background: #ffe8d9;
+          border-left: 4px solid #f9713f;
+          border-radius: 5px;
+          padding: 20px 20px;
+        "
+      >
+        <img src="assets/img/svg/warning.svg" alt="" style="width: 30px" />
+        <div class="col" style="text-align: start">
+          <p
+            style="font-size: 20px; font-weight: 600; color: #cb1717"
+            class="mb-2"
+          >
+            Warning
+          </p>
+          <p style="font-size: 17px; font-weight: 400; color: #c70000">
+            {{warning}}
+          </p>
+        </div>
+      </div>
+      <div class="row m-0 mt-4 justify-content-center">
         <div
           class="btn mr-4"
-          style="background: #de6458"
-          (click)="onCloseDialog(true)"
+          style="background: #596677; width: 13rem"
+          (click)="onCloseDialog(false)"
         >
-          Yes
+          Cancel
         </div>
         <div
           class="btn"
-          style="background: #596677"
-          (click)="onCloseDialog(false)"
+          style="background: #de6458; width: 13rem"
+          (click)="onCloseDialog(true)"
         >
-          No
+          Terminate Contract
         </div>
       </div>
     </div>

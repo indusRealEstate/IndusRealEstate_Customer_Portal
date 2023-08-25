@@ -355,22 +355,34 @@ export class AllLeasesComponent implements OnInit {
     }
   }
 
-  openCautionDialog(lease_id, unit_id, tenant_id, index) {
+  openCautionDialog(lease_id, unit_id, tenant_id) {
     var data = {
-      title : 'Do you want to terminate the contract?'
+      title: "Terminate contract?",
+      subtitle:
+        "Are you sure you want to terminate this contract? You can't undo this action.",
+      warning:
+        "By terminating this agreement, Unit will be designated as empty and current tenant's lease would be revoked.",
     };
     this.dialog
       .open(CautionDialog, {
+        width: "45%",
         data,
       })
       .afterClosed()
       .subscribe((value) => {
         if (value != undefined) {
+          if (value == true) {
+            this.terminateLease(lease_id, unit_id, tenant_id);
+            this.refreshTable();
+            this.openSnackBar("Lease terminated successfully", "Close");
+            sessionStorage.removeItem("admin_properties_units_session");
+            sessionStorage.removeItem("all_users_session");
+          }
         }
       });
   }
 
-  terminateLease(lease_id, unit_id, tenant_id, index) {
+  terminateLease(lease_id, unit_id, tenant_id) {
     this.adminService
       .terminateLease(
         JSON.stringify({

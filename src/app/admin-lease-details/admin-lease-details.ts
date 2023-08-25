@@ -8,6 +8,7 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
+import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -104,6 +105,52 @@ export class AdminLeaseDetail implements OnInit {
         `https://www.indusre.app/api/upload/contract/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
       );
     }
+  }
+
+  openCautionDialog() {
+    var data = {
+      title: "Terminate contract?",
+      subtitle:
+        "Are you sure you want to terminate this contract? You can't undo this action.",
+      warning:
+        "By terminating this agreement, Unit will be designated as empty and current tenant's lease would be revoked.",
+    };
+    this.dialog
+      .open(CautionDialog, {
+        width: "45%",
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          if (value == true) {
+            this.terminateLease(
+              this.all_data.lease_contract_id,
+              this.all_data.lease_unit_id,
+              this.all_data.lease_tenant_id
+            );
+            this.openSnackBar("Lease terminated successfully", "Close");
+            sessionStorage.removeItem("all_lease_session");
+            sessionStorage.removeItem("admin_properties_units_session");
+            sessionStorage.removeItem("all_users_session");
+            this.router.navigate(["/admin-lease"]);
+          }
+        }
+      });
+  }
+
+  terminateLease(lease_id, unit_id, tenant_id) {
+    this.adminService
+      .terminateLease(
+        JSON.stringify({
+          lease_id: lease_id,
+          unit_id: unit_id,
+          tenant_id: tenant_id,
+        })
+      )
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   isUserSignOut() {

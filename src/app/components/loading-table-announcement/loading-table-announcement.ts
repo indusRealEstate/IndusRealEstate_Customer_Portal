@@ -11,10 +11,11 @@ export class LoadingTableAnnouncement implements OnInit {
   displayedColumns: string[] = [
     // "name",
     "id",
-    "emergency",
-    "buildingName",
     "title",
-    "more"
+    "building",
+    "emergency",
+    "date",
+    "more",
   ];
   loadingTable: any[] = [1, 2, 3, 4, 5];
 

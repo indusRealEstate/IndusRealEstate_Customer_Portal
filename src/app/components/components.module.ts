@@ -46,6 +46,7 @@ import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_do
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { DialogViewMedia } from "./view_media/view_media";
 import { CautionDialog } from "./caution-dialog/caution-dialog";
+import { AnnouncementDetailsDialog } from "./announcement-details-dialog/announcement-details-dialog";
 
 @NgModule({
   imports: [
@@ -98,6 +99,7 @@ import { CautionDialog } from "./caution-dialog/caution-dialog";
     EditUserDialog,
     EditLeaseDialog,
     CautionDialog,
+    AnnouncementDetailsDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

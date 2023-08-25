@@ -190,7 +190,7 @@ export class EditAnnouncementDialog implements OnInit {
     formdata.append("docs_names", JSON.stringify(docs_names));
 
     var doc_count = 0;
-    for (let doc of this.docsFilesUploaded_new) { 
+    for (let doc of this.docsFilesUploaded_new) {
       formdata.append(`doc_${doc_count}`, doc);
       doc_count++;
     }

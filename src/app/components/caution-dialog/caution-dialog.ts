@@ -8,11 +8,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 })
 export class CautionDialog implements OnInit {
   title: any = "";
+  subtitle: any = "";
+  warning: any = "";
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CautionDialog>
   ) {
     this.title = data.title;
+    this.subtitle = data.subtitle;
+    this.warning = data.warning;
   }
 
   ngOnInit() {}

@@ -62,7 +62,9 @@
       />
       <mat-menu #menuEdit="matMenu">
         <button mat-menu-item (click)="openEditLease()">Edit</button>
-        <button mat-menu-item>Terminate Lease</button>
+        <button mat-menu-item (click)="openCautionDialog()">
+          Terminate Lease
+        </button>
       </mat-menu>
     </div>
 

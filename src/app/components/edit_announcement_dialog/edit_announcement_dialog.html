@@ -9,7 +9,7 @@
     <div class="col">
       <div class="row m-0 align-items-start w-100">
         <p
-          class="mr-2"
+          class="mr-2 mb-4"
           style="font-weight: 500; color: #3c4858b5; font-size: 20px"
         >
           Edit Announcement
@@ -18,7 +18,7 @@
           matTooltip="Close"
           matTooltipClass="tooltip"
           matTooltipPosition="above"
-          (click)="onCloseDialog()"
+          (click)="closeDialogWithoutSaving()"
           class="mr-2 mt-1 close-icon"
           src="assets/img/svg/req-details/close-circle.svg"
           alt=""
@@ -61,7 +61,7 @@
             class="btn ml-0 mb-3"
             style="background: #d4aa32"
           >
-            Add Documents
+            Add Attachments
           </div>
           <input
             multiple

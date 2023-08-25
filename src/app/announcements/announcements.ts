@@ -1,8 +1,11 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
 import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/add-announcement-dialog";
+import { AnnouncementDetailsDialog } from "app/components/announcement-details-dialog/announcement-details-dialog";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 import { AdminService } from "app/services/admin.service";
 
@@ -14,15 +17,14 @@ import { AdminService } from "app/services/admin.service";
 export class Announcements implements OnInit {
   //dataSource = ELEMENT_DATA;
 
-  more_menu_all_data: any = "";
   allAnnouncement: any[] = [];
-  more_menu_loaded: boolean = false;
   displayedColumns: string[] = [
     // "name",
     "id",
-    "emergency",
-    "building",
     "title",
+    "building",
+    "emergency",
+    "date",
     "more",
   ];
   isUserSignedIn: boolean = false;
@@ -35,6 +37,8 @@ export class Announcements implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private appAdminService: AdminService,
+    private _snackBar: MatSnackBar,
+    private router: Router,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -55,6 +59,14 @@ export class Announcements implements OnInit {
     this.selectAllAnnouncement();
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition: "top",
+      horizontalPosition: "right",
+      duration: 3000,
+    });
+  }
+
   ngAfterViewInit() {}
 
   addAnnouncements() {
@@ -65,19 +77,31 @@ export class Announcements implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
-        this.selectAllAnnouncement();
+        if (res != undefined) {
+          this.selectAllAnnouncement();
+          this.openSnackBar("Announcement added successfully", "Close");
+        }
       });
   }
 
-  openMoreMenu(a_id) {
-    this.more_menu_all_data = "";
-    this.appAdminService
-      .selectSingleAnnouncementDetail(JSON.stringify({ a_id: a_id }))
-      .subscribe((value) => {
-        this.more_menu_all_data = value;
+  openAnnouncementDetails(ann_data) {
+    this.dialog
+      .open(AnnouncementDetailsDialog, {
+        width: "70%",
+        data: ann_data,
       })
-      .add(() => {
-        this.more_menu_loaded = true;
+      .afterClosed()
+      .subscribe((res) => {});
+  }
+
+  deleteAnnouncement(ann_id) {
+    this.appAdminService
+      .deleteAnnouncement(JSON.stringify({ id: ann_id }))
+      .subscribe((res) => {
+        if (res.status == 1) {
+          this.refreshTable();
+          this.openSnackBar("Announcement deleted successfully", "Close");
+        }
       });
   }
 
@@ -102,23 +126,33 @@ export class Announcements implements OnInit {
       });
   }
 
-  openEditProperty(index) {
-    if (this.more_menu_all_data != undefined) {
-      var data = this.more_menu_all_data;
-      this.dialog
-        .open(EditAnnouncementDialog, {
-          width: "60%",
-          data,
-        })
-        .afterClosed()
-        .subscribe((value) => {
-          if (value != undefined) {
-          }
-        });
-    }
+  openEditProperty(data, index) {
+    this.dialog
+      .open(EditAnnouncementDialog, {
+        width: "60%",
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          this.selectAllAnnouncement();
+          this.openSnackBar("Announcement updated successfully", "Close");
+        }
+      });
   }
 
   async ngOnInit() {
     this.selectAllAnnouncement();
+  }
+
+  applyFilter(filterValue: any) {
+    var val = new String(filterValue).trim().toLowerCase();
+    this.allAnnouncementMatTableData.filter = val;
+  }
+
+  navigateToPropertyDetailsPage(prop_id) {
+    this.router.navigate(["/property-details"], {
+      queryParams: { prop_id: prop_id },
+    });
   }
 }
