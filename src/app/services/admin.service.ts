@@ -35,6 +35,15 @@ export class AdminService {
     );
   }
 
+  getallStaffsAdmin() {
+    const url = `${API_URL}/get_all_staffs.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllContractsReminders() {
     const url = `${API_URL}/get_all_contracts_reminders.php?apikey=1`;
     return this.http.get<any>(url).pipe(

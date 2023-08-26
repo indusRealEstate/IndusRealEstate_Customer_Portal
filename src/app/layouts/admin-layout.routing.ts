@@ -2,27 +2,27 @@ import { Routes } from "@angular/router";
 
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
-import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
-import { LoginComponent } from "app/login/login.component";
-import { AdminRequests } from "app/admin-requests/admin-requests";
-import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
-import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
+import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
+import { AllLeasesComponent } from "app/admin-lease/admin-lease";
+import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
+import { AdminProperties } from "app/admin-properties/admin-properties";
+import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
+import { AdminReport } from "app/admin-report/admin-report";
 import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
-import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
-import { UserChatsComponent } from "app/user_chats/user_chats";
-import { AdminProperties } from "app/admin-properties/admin-properties";
-import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { AdminRequestsCategory } from "app/admin-requests-category/admin-requests-category";
-import { AllUsersComponent } from "app/all-users/all-users";
-import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
-import { AllLeasesComponent } from "app/admin-lease/admin-lease";
-import { DetailsComponents } from "app/property-details/details-properties";
 import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
+import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
+import { AdminRequests } from "app/admin-requests/admin-requests";
 import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
-import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
-import { AdminReport } from "app/admin-report/admin-report";
+import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
+import { AllUsersComponent } from "app/all-users/all-users";
 import { Announcements } from "app/announcements/announcements";
+import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
+import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
+import { LoginComponent } from "app/login/login.component";
+import { DetailsComponents } from "app/property-details/details-properties";
+import { UserChatsComponent } from "app/user_chats/user_chats";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "all-clients-documents", component: AllClientsDocuments },
@@ -52,5 +52,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "admin-lease-details", component: AdminLeaseDetail },
   { path: "admin-user-details", component: ViewUserDetails },
   { path: "announcements", component: Announcements },
+  // { path: "staffs", component: AdminStaffs },
   { path: "**", redirectTo: "/404" },
 ];
