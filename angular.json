@@ -16,7 +16,12 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/manifest.webmanifest",
+              "src/firebase-messaging-sw.js"
+            ],
             "styles": [
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/assets/scss/material-dashboard.scss"
@@ -30,7 +35,9 @@
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",
               "jquery"
-            ]
+            ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -98,7 +105,12 @@
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/assets/scss/material-dashboard.scss"
             ],
-            "assets": ["src/assets", "src/favicon.ico"]
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/manifest.webmanifest",
+              "src/firebase-messaging-sw.js"
+            ]
           }
         },
         "lint": {

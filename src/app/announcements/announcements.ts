@@ -82,6 +82,15 @@ export class Announcements implements OnInit {
         if (res != undefined) {
           this.selectAllAnnouncement();
           this.openSnackBar("Announcement added successfully", "Close");
+
+          this.firebaseService
+            .sendPushNotification(
+              "New Announcement",
+              "Dear tenants new Announcement has been posted. Thank you."
+            )
+            .subscribe((res) => {
+              console.log(res);
+            });
         }
       });
   }

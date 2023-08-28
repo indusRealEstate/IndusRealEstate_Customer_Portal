@@ -3,25 +3,27 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AngularFireMessaging } from "@angular/fire/compat/messaging";
 import {
   Firestore,
   collection,
   collectionChanges,
 } from "@angular/fire/firestore";
-import { VAPIDKEYS } from "app/keys/vapid";
-import { environment } from "environments/environment.prod";
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
 import { BehaviorSubject, Observable, map, of } from "rxjs";
+
+// import { Messaging } from '@angular/fire/messaging';
 
 @Injectable({ providedIn: "root" })
 export class FirebaseService {
   userLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  currentToken: any = "";
   constructor(
     public http: HttpClient,
     private db: AngularFirestore,
     private auth: AngularFireAuth,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private msg: AngularFireMessaging
   ) {}
 
   private handleError<T>(operation = "operation", result?: T) {
@@ -30,6 +32,52 @@ export class FirebaseService {
 
       return of(result as T);
     };
+  }
+
+  requestToken() {
+    this.msg.requestToken.subscribe(
+      async (token: any) => {
+        // console.log(token);
+        this.currentToken = token;
+        await this.db
+          .collection("push_notification")
+          .doc("admin")
+          .set({ token: token });
+      },
+      (err: any) => {
+        console.error("Unable to get permission to notify.", err);
+      }
+    );
+  }
+
+  recieveMessages() {
+    this.msg.messages.subscribe((payload) => {
+      console.log("new msg recieved", payload);
+    });
+  }
+
+  sendPushNotification(title: string, body: string) {
+    var post_obj = {
+      notification: {
+        title: title,
+        body: body,
+      },
+      to: "/topics/all",
+    };
+    const url = "https://fcm.googleapis.com/fcm/send";
+    return this.http
+      .post<any>(url, JSON.stringify(post_obj), {
+        headers: {
+          Authorization:
+            "key=AAAANZTwjCs:APA91bHYWwS8S_rwe5bxYHd8ad7H38Xxfj2j47nW-t3e6XXrekwjdcYjM3Je6afwh9xEtlEErQNU5THugPnTWF7mm83acWHLAybssRuzIf1vIHTYO8OZoe6bG3HoyQSU15GFpINDuiwV",
+          "Content-Type": "application/json",
+        },
+      })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   async firebaseLogin() {
@@ -110,24 +158,5 @@ export class FirebaseService {
     } else {
       return "granted";
     }
-  }
-
-  getToken() {
-    var app = initializeApp(environment.firebase);
-    var messaging = getMessaging(app);
-    getToken(messaging, { vapidKey: VAPIDKEYS.PUBLIC_KEY })
-      .then((currentToken) => {
-        if (currentToken) {
-          console.log("Hurraaa!!! we got the token.....");
-          console.log(currentToken);
-        } else {
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-        }
-      })
-      .catch((err) => {
-        console.log("An error occurred while retrieving token. ", err);
-      });
   }
 }
