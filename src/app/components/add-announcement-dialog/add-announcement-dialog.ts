@@ -106,7 +106,10 @@ export class AddAnnouncementDialog implements OnInit {
                       random_id,
                       this.selected_property
                     );
-                    this.dialogRef.close({ completed: true });
+                    this.dialogRef.close({
+                      completed: true,
+                      prop_id: this.selected_property,
+                    });
                   }
                 }),
                 last()
@@ -119,7 +122,10 @@ export class AddAnnouncementDialog implements OnInit {
               random_id,
               this.selected_property
             );
-            this.dialogRef.close({ completed: true });
+            this.dialogRef.close({
+              completed: true,
+              prop_id: this.selected_property,
+            });
           }
         }
       });

@@ -56,11 +56,14 @@ export class FirebaseService {
     });
   }
 
-  sendPushNotification(title: string, body: string) {
+  sendPushNotification(title: string, body: string, prop_id: string) {
     var post_obj = {
       notification: {
         title: title,
         body: body,
+      },
+      data: {
+        prop_id: prop_id,
       },
       to: "/topics/all",
     };

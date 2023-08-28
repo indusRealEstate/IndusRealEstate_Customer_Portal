@@ -86,10 +86,11 @@ export class Announcements implements OnInit {
           this.firebaseService
             .sendPushNotification(
               "New Announcement",
-              "Dear tenants new Announcement has been posted. Thank you."
+              "Dear tenants new Announcement has been posted. Thank you.",
+              res.prop_id
             )
             .subscribe((res) => {
-              console.log(res);
+              // console.log(res);
             });
         }
       });
