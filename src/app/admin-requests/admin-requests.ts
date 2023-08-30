@@ -111,11 +111,13 @@ export class AdminRequests implements OnInit {
       })
       .add(() => {
         this.isContentLoading = false;
-        this.resetPageChangeLoader();
 
         if (edit == true) {
           this.resetPaginatorLength();
           this.getAllRequestsCount();
+          this.resetPageChangeLoader();
+        } else {
+          this.resetPageChangeLoader();
         }
       });
   }
@@ -198,18 +200,17 @@ export class AdminRequests implements OnInit {
         (req) => req.request_id == event.req_id
       );
       this.allRequests[index].flag = 1;
+      this.resetPageChangeLoader();
     }
     if (event.type == "unflag") {
       var index = this.allRequests.findIndex(
         (req) => req.request_id == event.req_id
       );
       this.allRequests[index].flag = 0;
+      this.resetPageChangeLoader();
     }
 
     if (event.type == "spam") {
-      var index = this.allRequests.findIndex(
-        (req) => req.request_id == event.req_id
-      );
       this.clearAllData();
       var ev = this.getPageChangeEvent(this.matTabIndex);
       this.request_table_0.requestUpdating.subscribe((res) => {
@@ -218,10 +219,19 @@ export class AdminRequests implements OnInit {
         }
       });
     }
+
     if (event.type == "archived") {
-      var index = this.allRequests.findIndex(
-        (req) => req.request_id == event.req_id
-      );
+      this.clearAllData();
+      var ev = this.getPageChangeEvent(this.matTabIndex);
+      this.request_table_0.requestUpdating.subscribe((res) => {
+        if (res == false) {
+          console.log(ev);
+          this.pageChange(ev, true);
+        }
+      });
+    }
+    
+    if (event.type == "delete") {
       this.clearAllData();
       var ev = this.getPageChangeEvent(this.matTabIndex);
       this.request_table_0.requestUpdating.subscribe((res) => {
