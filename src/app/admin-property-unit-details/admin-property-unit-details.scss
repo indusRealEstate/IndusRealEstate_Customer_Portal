@@ -237,37 +237,37 @@ ngx-skeleton-loader {
   }
 }
 
-.amenities {
-  background: none !important;
-  box-shadow: 0 0 0 0 !important;
+// .amenities {
+//   background: none !important;
+//   box-shadow: 0 0 0 0 !important;
 
-  .amenities-item-row {
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
+//   .amenities-item-row {
+//     padding: 15px;
+//     background-color: #fff;
+//     border-radius: 10px;
+//     box-shadow: 1px 2px 10px -5px rgba(143, 143, 143, 0.75);
 
-    .amenities-item-container {
-      list-style: none;
-      display: flex;
-      padding: 0;
-      flex-wrap: wrap;
-      li {
-        background: #d4aa32;
-        color: white;
-        border-radius: 8px;
-        padding: 0px 10px;
-        margin: 2px 4px;
-        box-shadow: 4px 3px 7px #c4c4c4, -5px -5px 5px #fff;
-        .amenities-item {
-          font-size: 12px;
-          font-weight: 600;
-          margin: 5px;
-        }
-      }
-    }
-  }
-}
+//     .amenities-item-container {
+//       list-style: none;
+//       display: flex;
+//       padding: 0;
+//       flex-wrap: wrap;
+//       li {
+//         background: #d4aa32;
+//         color: white;
+//         border-radius: 8px;
+//         padding: 0px 10px;
+//         margin: 2px 4px;
+//         box-shadow: 4px 3px 7px #c4c4c4, -5px -5px 5px #fff;
+//         .amenities-item {
+//           font-size: 12px;
+//           font-weight: 600;
+//           margin: 5px;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .call-btn {
   background-color: #4caf50;
@@ -300,150 +300,150 @@ ngx-skeleton-loader {
   }
 }
 
-.contract-id {
-  background-color: #b9b9b9;
-  color: #2b333e;
-  font-size: 1.125rem;
-  padding: 5px 15px;
-  border-radius: 10px;
+// .contract-id {
+//   background-color: #b9b9b9;
+//   color: #2b333e;
+//   font-size: 1.125rem;
+//   padding: 5px 15px;
+//   border-radius: 10px;
 
-  box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
-    0px 1px 2px -2px rgba(0, 0, 0, 0.14), 0px 1px 6px 1px rgba(0, 0, 0, 0.12);
+//   box-shadow: 0px 2px 2px -3px rgba(0, 0, 0, 0.2),
+//     0px 1px 2px -2px rgba(0, 0, 0, 0.14), 0px 1px 6px 1px rgba(0, 0, 0, 0.12);
 
-  .mat-row {
-    &:hover {
-      cursor: pointer;
-      background: #fbf9f2;
+//   .mat-row {
+//     &:hover {
+//       cursor: pointer;
+//       background: #fbf9f2;
 
-      .more-btn {
-        display: block !important;
-      }
-      .more-btn-disabled {
-        display: none;
-      }
-    }
-  }
+//       .more-btn {
+//         display: block !important;
+//       }
+//       .more-btn-disabled {
+//         display: none;
+//       }
+//     }
+//   }
 
-  .hidden {
-    display: none;
-  }
+//   .hidden {
+//     display: none;
+//   }
 
-  .first-col {
-    border-bottom-left-radius: 10px;
-    font-weight: 600;
-  }
+//   .first-col {
+//     border-bottom-left-radius: 10px;
+//     font-weight: 600;
+//   }
 
-  .first-col-last {
-    border-bottom-left-radius: 10px;
-    border-bottom: none;
-    font-weight: 600;
-  }
+//   .first-col-last {
+//     border-bottom-left-radius: 10px;
+//     border-bottom: none;
+//     font-weight: 600;
+//   }
 
-  .second-col {
-    color: #a3a3a3;
-    font-weight: 600;
-  }
-  .second-col-last {
-    border-bottom: none;
-    color: #a3a3a3;
-    font-weight: 600;
-  }
+//   .second-col {
+//     color: #a3a3a3;
+//     font-weight: 600;
+//   }
+//   .second-col-last {
+//     border-bottom: none;
+//     color: #a3a3a3;
+//     font-weight: 600;
+//   }
 
-  .third-col {
-    font-weight: 600;
-  }
-  .third-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
+//   .third-col {
+//     font-weight: 600;
+//   }
+//   .third-col-last {
+//     border-bottom: none;
+//     font-weight: 600;
+//   }
 
-  .fourth-col {
-    font-weight: 600;
-  }
-  .fourth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
+//   .fourth-col {
+//     font-weight: 600;
+//   }
+//   .fourth-col-last {
+//     border-bottom: none;
+//     font-weight: 600;
+//   }
 
-  .fifth-col {
-    font-weight: 600;
-  }
-  .fifth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
+//   .fifth-col {
+//     font-weight: 600;
+//   }
+//   .fifth-col-last {
+//     border-bottom: none;
+//     font-weight: 600;
+//   }
 
-  .sixth-col {
-    font-weight: 600;
-  }
-  .sixth-col-last {
-    border-bottom: none;
-    font-weight: 600;
-  }
+//   .sixth-col {
+//     font-weight: 600;
+//   }
+//   .sixth-col-last {
+//     border-bottom: none;
+//     font-weight: 600;
+//   }
 
-  .approved-status::before {
-    color: #8ae16b;
-    font-weight: 600;
-    content: "APPROVED";
-    background-color: #e9ffed;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-size: 10px;
-    border: 1px solid #a9e16b85;
-  }
-  .declined-status::before {
-    color: #ff0000;
-    font-weight: 600;
-    content: "DECLINED";
-    background-color: #fff2f5;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-size: 10px;
-    border: 1px solid #ff00003d;
-  }
-  .pending-status::before {
-    color: #2b333ea6;
-    font-weight: 700;
-    content: "PENDING";
-    background-color: #2b333e0f;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-size: 10px;
-    border: 1px solid #2b333e2b;
-  }
-  .review-status::before {
-    color: #d4aa32;
-    font-weight: 600;
-    content: "REVIEW";
-    background-color: #fbf8ef;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-size: 10px;
-    border: 1px solid #e6a60040;
-  }
+//   .approved-status::before {
+//     color: #8ae16b;
+//     font-weight: 600;
+//     content: "APPROVED";
+//     background-color: #e9ffed;
+//     padding: 5px 15px;
+//     border-radius: 8px;
+//     font-size: 10px;
+//     border: 1px solid #a9e16b85;
+//   }
+//   .declined-status::before {
+//     color: #ff0000;
+//     font-weight: 600;
+//     content: "DECLINED";
+//     background-color: #fff2f5;
+//     padding: 5px 15px;
+//     border-radius: 8px;
+//     font-size: 10px;
+//     border: 1px solid #ff00003d;
+//   }
+//   .pending-status::before {
+//     color: #2b333ea6;
+//     font-weight: 700;
+//     content: "PENDING";
+//     background-color: #2b333e0f;
+//     padding: 5px 15px;
+//     border-radius: 8px;
+//     font-size: 10px;
+//     border: 1px solid #2b333e2b;
+//   }
+//   .review-status::before {
+//     color: #d4aa32;
+//     font-weight: 600;
+//     content: "REVIEW";
+//     background-color: #fbf8ef;
+//     padding: 5px 15px;
+//     border-radius: 8px;
+//     font-size: 10px;
+//     border: 1px solid #e6a60040;
+//   }
 
-  .eighth-col-last {
-    border-bottom: none;
-    border-bottom-right-radius: 10px;
-    text-align: center;
-  }
+//   .eighth-col-last {
+//     border-bottom: none;
+//     border-bottom-right-radius: 10px;
+//     text-align: center;
+//   }
 
-  .eighth-col {
-    border-bottom-right-radius: 10px;
-    text-align: center;
-  }
+//   .eighth-col {
+//     border-bottom-right-radius: 10px;
+//     text-align: center;
+//   }
 
-  .mat-header-cell {
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    color: #84878f;
-    font-weight: 600;
-  }
+//   .mat-header-cell {
+//     border-top-right-radius: 10px;
+//     border-top-left-radius: 10px;
+//     color: #84878f;
+//     font-weight: 600;
+//   }
 
-  .mat-header-row {
-    background-color: #f9fafc;
-  }
-}
+//   .mat-header-row {
+//     background-color: #f9fafc;
+//   }
+// }
 
 :host ::ng-deep .table-paginator {
   .mat-form-field-underline {

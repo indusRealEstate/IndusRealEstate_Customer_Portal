@@ -112,71 +112,71 @@
   }
 }
 
-.flagged-reqs-filter {
-  margin-bottom: -3px !important;
-  background: rgb(212 170 50 / 10%);
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid #d4aa3230;
+// .flagged-reqs-filter {
+//   margin-bottom: -3px !important;
+//   background: rgb(212 170 50 / 10%);
+//   padding: 3px 8px;
+//   border-radius: 6px;
+//   border: 1px solid #d4aa3230;
 
-  p {
-    font-size: 13px;
-    font-weight: 600;
-    color: #d4aa32;
-  }
+//   p {
+//     font-size: 13px;
+//     font-weight: 600;
+//     color: #d4aa32;
+//   }
 
-  img {
-    cursor: pointer;
-    width: 15px;
-    filter: invert(65%) sepia(100%) saturate(328%) hue-rotate(2deg)
-      brightness(89%) contrast(90%);
-  }
-}
+//   img {
+//     cursor: pointer;
+//     width: 15px;
+//     filter: invert(65%) sepia(100%) saturate(328%) hue-rotate(2deg)
+//       brightness(89%) contrast(90%);
+//   }
+// }
 
-.request-show-type-btns {
-  background-color: #ffffff;
-  border: 1px solid #d1d1d1;
-  box-shadow: none;
-  margin-left: 10px;
-  padding: 6px 7px;
+// .request-show-type-btns {
+//   background-color: #ffffff;
+//   border: 1px solid #d1d1d1;
+//   box-shadow: none;
+//   margin-left: 10px;
+//   padding: 6px 7px;
 
-  img {
-    width: 20px;
-    filter: brightness(0) saturate(100%) invert(72%) sepia(21%) saturate(31%)
-      hue-rotate(76deg) brightness(88%) contrast(92%);
-  }
+//   img {
+//     width: 20px;
+//     filter: brightness(0) saturate(100%) invert(72%) sepia(21%) saturate(31%)
+//       hue-rotate(76deg) brightness(88%) contrast(92%);
+//   }
 
-  &:hover {
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-    border: 1px solid #ffffff;
-  }
-}
+//   &:hover {
+//     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+//     border: 1px solid #ffffff;
+//   }
+// }
 
-.request-show-type-btns-active {
-  background-color: #ffffff;
-  border: 1px solid #ffffff;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-  margin-left: 10px;
-  padding: 6px 7px;
+// .request-show-type-btns-active {
+//   background-color: #ffffff;
+//   border: 1px solid #ffffff;
+//   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+//   margin-left: 10px;
+//   padding: 6px 7px;
 
-  img {
-    width: 20px;
-    filter: brightness(0) saturate(100%) invert(87%) sepia(14%) saturate(2200%)
-      hue-rotate(343deg) brightness(85%) contrast(96%);
-  }
-}
+//   img {
+//     width: 20px;
+//     filter: brightness(0) saturate(100%) invert(87%) sepia(14%) saturate(2200%)
+//       hue-rotate(343deg) brightness(85%) contrast(96%);
+//   }
+// }
 
-.request-approve-btns {
-  background: transparent;
-  color: black;
-  box-shadow: none;
+// .request-approve-btns {
+//   background: transparent;
+//   color: black;
+//   box-shadow: none;
 
-  &:hover {
-    box-shadow: 0 2px 2px 0 rgb(153 153 153 / 14%),
-      0 3px 1px -2px rgb(153 153 153 / 20%), 0 1px 5px 0 rgb(153 153 153 / 12%);
-    color: #d4aa32;
-  }
-}
+//   &:hover {
+//     box-shadow: 0 2px 2px 0 rgb(153 153 153 / 14%),
+//       0 3px 1px -2px rgb(153 153 153 / 20%), 0 1px 5px 0 rgb(153 153 153 / 12%);
+//     color: #d4aa32;
+//   }
+// }
 
 :host ::ng-deep .mat-tab-header {
   background-color: #2b333e !important;
@@ -592,26 +592,26 @@
     font-size: 10px;
     border: 1px solid #ff00003d;
   }
-  .pending-status::before {
-    color: #2b333ea6;
-    font-weight: 700;
-    content: "PENDING";
-    background-color: #2b333e0f;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-size: 10px;
-    border: 1px solid #2b333e2b;
-  }
-  .review-status::before {
-    color: #d4aa32;
-    font-weight: 600;
-    content: "REVIEW";
-    background-color: #fbf8ef;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-size: 10px;
-    border: 1px solid #e6a60040;
-  }
+  // .pending-status::before {
+  //   color: #2b333ea6;
+  //   font-weight: 700;
+  //   content: "PENDING";
+  //   background-color: #2b333e0f;
+  //   padding: 5px 15px;
+  //   border-radius: 8px;
+  //   font-size: 10px;
+  //   border: 1px solid #2b333e2b;
+  // }
+  // .review-status::before {
+  //   color: #d4aa32;
+  //   font-weight: 600;
+  //   content: "REVIEW";
+  //   background-color: #fbf8ef;
+  //   padding: 5px 15px;
+  //   border-radius: 8px;
+  //   font-size: 10px;
+  //   border: 1px solid #e6a60040;
+  // }
 
   .eighth-col-last {
     border-bottom: none;
