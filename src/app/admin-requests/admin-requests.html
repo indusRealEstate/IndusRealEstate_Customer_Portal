@@ -19,7 +19,7 @@
               class="ml-2"
               [ngStyle]="{'background' : tab_1.position == 0 ? '#d4aa32' : '#f9dc8e'}"
               style="color: white; padding: 4px 6px; border-radius: 5px"
-              >{{allRequests.length}}</span
+              >{{allRequests_length}}</span
             >
           </ng-template>
           <requests-table
@@ -31,6 +31,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="allRequests_length"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_2>
@@ -52,6 +55,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="open_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_3>
@@ -73,6 +79,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="assigned_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_4>
@@ -94,6 +103,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="inProgress_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_5>
@@ -115,6 +127,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="completed_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_6>
@@ -136,6 +151,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="hold_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_7>
@@ -157,6 +175,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="reOpen_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_8>
@@ -178,6 +199,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="reAssigned_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_9>
@@ -199,6 +223,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="rejected_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
         <mat-tab #tab_10>
@@ -220,6 +247,9 @@
             (requestUpdatedEmit)="requestUpdate($event)"
             (flagFilterEmit)="closeFilterByFlag($event)"
             (timeLineFilterEmit)="closeTimeLineFilter($event)"
+            [tableLength]="cancelled_requests_count"
+            (pageChangeEmit)="pageChange($event)"
+            (searchEmit)="searchReqs($event)"
           ></requests-table>
         </mat-tab>
       </mat-tab-group>

@@ -176,7 +176,7 @@ export class AdminReport implements OnInit {
       this.allContracts = leaseDataSession;
     }
 
-    this.appAdminService.getAllRequestsAdmin().subscribe((val: any[]) => {
+    this.appAdminService.getAllRequestsAdminCount().subscribe((val: any[]) => {
       this.allRequests = val;
     });
   }
@@ -186,7 +186,7 @@ export class AdminReport implements OnInit {
       case "Total Landlords":
         return this.allUsers.filter((user) => user.user_type == "owner").length;
       case "Total Maintenance Requests":
-        return this.allRequests.length;
+        return this.allRequests;
       case "Total Units":
         return this.allUnits.length;
       case "Total Tenants":

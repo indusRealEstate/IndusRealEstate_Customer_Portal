@@ -14,6 +14,8 @@ export class AdminRequests implements OnInit {
   isUserSignedIn: boolean = false;
 
   allRequests: any[] = [];
+
+  allRequests_length: number = 0;
   allRequestsMatTableData: MatTableDataSource<any>;
   isContentLoading: boolean = false;
 
@@ -62,75 +64,119 @@ export class AdminRequests implements OnInit {
   async ngOnInit() {
     this.fetchData();
     this.firebaseService.getData().subscribe((req_data: any[]) => {
-      var count = 0;
-      var latest_reqs = [];
-      req_data.forEach(async (req) => {
-        if (
-          this.allRequests.filter((all_req) => all_req.request_id == req.id)
-            .length == 0
-        ) {
-          latest_reqs.push(req.id);
-          console.log(req, "new request found");
-        } else {
-          await this.firebaseService.deleteData(req.id);
-        }
-        count++;
-      });
-
-      // setTimeout(() => {
       if (
-        count == req_data.length &&
-        latest_reqs.length != 0 &&
-        this.isContentLoading == false
+        this.request_table_0.paginator != undefined ||
+        this.request_table_1.paginator != undefined
       ) {
-        console.log("count matched", latest_reqs);
+        var ev = this.getPageChangeEvent(this.matTabIndex);
+        this.pageChange(ev, false);
+        this.resetPaginatorLength();
+        this.adminService.getAllRequestsAdminCount().subscribe((c) => {
+          this.allRequests_length = c;
+        });
+
         this.adminService
-          .getLatestServiceRequest(
-            JSON.stringify({
-              reqs: latest_reqs,
-            })
-          )
-          .subscribe((l_req: any[]) => {
-            console.log(l_req, "all new request data");
-            l_req.forEach((req) => {
-              if (!this.allRequests.includes(req)) {
-                console.log(req, "adding new request");
-                this.allRequests.splice(0, 0, req);
-                this.allRequestsMatTableData = new MatTableDataSource(
-                  this.allRequests
-                );
-                this.filterRequests(this.matTabIndex);
-                this.initializePaginator(this.matTabIndex);
-              }
-            });
+          .getAllRequestsAdminCountByStatus(RequestStatuses.open)
+          .subscribe((c) => {
+            this.open_requests_count = c;
           });
       }
-      // }, 500);
     });
   }
 
   fetchData() {
     this.clearAllData();
+    this.getAllRequestsCount();
+    var status = this.getRequestStatusOnIndex(this.matTabIndex);
     this.adminService
-      .getAllRequestsAdmin()
+      .getAllRequestsAdmin(10, 1, status)
       .subscribe((va: any[]) => {
         this.allRequests = va;
         this.allRequestsMatTableData = new MatTableDataSource(va);
-
-        va.forEach((r) => {
-          this.addRequestsCount(r.request_status);
-        });
       })
       .add(() => {
         this.isContentLoading = false;
+      });
+  }
 
-        if (this.matTabIndex != 0) {
-          this.filterRequests(this.matTabIndex);
+  pageChange(event, edit: boolean) {
+    var limit = event.limit;
+    var pageNumber = event.pageNumber + 1;
+    var status = this.getRequestStatusOnIndex(this.matTabIndex);
+    this.adminService
+      .getAllRequestsAdmin(limit, pageNumber, status)
+      .subscribe((va: any[]) => {
+        this.allRequests = va;
+        this.allRequestsMatTableData = new MatTableDataSource(va);
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        this.resetPageChangeLoader();
+
+        if (edit == true) {
+          this.resetPaginatorLength();
+          this.getAllRequestsCount();
         }
+      });
+  }
 
-        setTimeout(() => {
-          this.initializePaginator(this.matTabIndex);
-        });
+  getAllRequestsCount() {
+    this.adminService.getAllRequestsAdminCount().subscribe((c) => {
+      this.allRequests_length = c;
+    });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.open)
+      .subscribe((c) => {
+        this.open_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.assigned)
+      .subscribe((c) => {
+        this.assigned_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.inProgress)
+      .subscribe((c) => {
+        this.inProgress_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.completed)
+      .subscribe((c) => {
+        this.completed_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.hold)
+      .subscribe((c) => {
+        this.hold_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.reOpen)
+      .subscribe((c) => {
+        this.reOpen_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.reAssigned)
+      .subscribe((c) => {
+        this.reAssigned_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.rejected)
+      .subscribe((c) => {
+        this.rejected_requests_count = c;
+      });
+
+    this.adminService
+      .getAllRequestsAdminCountByStatus(RequestStatuses.cancelled)
+      .subscribe((c) => {
+        this.cancelled_requests_count = c;
       });
   }
 
@@ -147,8 +193,6 @@ export class AdminRequests implements OnInit {
   }
 
   requestUpdate(event) {
-    console.log(event);
-
     if (event.type == "flag") {
       var index = this.allRequests.findIndex(
         (req) => req.request_id == event.req_id
@@ -166,25 +210,25 @@ export class AdminRequests implements OnInit {
       var index = this.allRequests.findIndex(
         (req) => req.request_id == event.req_id
       );
-      this.allRequests.splice(index, 1);
-      this.allRequestsMatTableData._updateChangeSubscription();
       this.clearAllData();
-      this.allRequests.forEach((r) => {
-        this.addRequestsCount(r.request_status);
+      var ev = this.getPageChangeEvent(this.matTabIndex);
+      this.request_table_0.requestUpdating.subscribe((res) => {
+        if (res == false) {
+          this.pageChange(ev, true);
+        }
       });
-      this.filterRequests(this.matTabIndex);
     }
     if (event.type == "archived") {
       var index = this.allRequests.findIndex(
         (req) => req.request_id == event.req_id
       );
-      this.allRequests.splice(index, 1);
-      this.allRequestsMatTableData._updateChangeSubscription();
       this.clearAllData();
-      this.allRequests.forEach((r) => {
-        this.addRequestsCount(r.request_status);
+      var ev = this.getPageChangeEvent(this.matTabIndex);
+      this.request_table_0.requestUpdating.subscribe((res) => {
+        if (res == false) {
+          this.pageChange(ev, true);
+        }
       });
-      this.filterRequests(this.matTabIndex);
     }
   }
 
@@ -196,60 +240,171 @@ export class AdminRequests implements OnInit {
   closeFilterByFlag(event) {
     if (event == 0) {
       this.allRequestsMatTableData.data = this.allRequests;
-      this.filterRequests(this.matTabIndex);
+      // this.filterRequests(this.matTabIndex);
     }
   }
 
   closeTimeLineFilter(event) {
     if (event == 0) {
       this.allRequestsMatTableData.data = this.allRequests;
-      this.filterRequests(this.matTabIndex);
+      // this.filterRequests(this.matTabIndex);
     }
   }
 
-  addRequestsCount(status) {
-    switch (status) {
-      case RequestStatuses.open:
-        this.open_requests_count++;
+  searchReqs(text) {
+    var event = this.getPageChangeEvent(this.matTabIndex);
+    var status = this.getRequestStatusOnIndex(this.matTabIndex);
+    this.adminService
+      .getAllRequestsAdminSearch(
+        text,
+        event.limit,
+        event.pageNumber + 1,
+        status
+      )
+      .subscribe((res: any) => {
+        if (res != "no_input") {
+          this.allRequestsMatTableData.data = res;
+          this.resultsPaginatorInitialize(res.length);
+        } else {
+          var ev = this.getPageChangeEvent(this.matTabIndex);
+          this.pageChange(ev, false);
+          this.resetPaginatorLength();
+        }
+      })
+      .add(() => {
+        this.resetPageChangeLoader();
+      });
+  }
+
+  resetPageChangeLoader() {
+    switch (this.matTabIndex) {
+      case 0:
+        this.request_table_0.pageChangerLoading = false;
         break;
-      case RequestStatuses.assigned:
-        this.assigned_requests_count++;
+      case 1:
+        this.request_table_1.pageChangerLoading = false;
         break;
-      case RequestStatuses.inPropress:
-        this.inProgress_requests_count++;
+      case 2:
+        this.request_table_2.pageChangerLoading = false;
         break;
-      case RequestStatuses.completed:
-        this.completed_requests_count++;
+      case 3:
+        this.request_table_3.pageChangerLoading = false;
         break;
-      case RequestStatuses.hold:
-        this.hold_requests_count++;
+      case 4:
+        this.request_table_4.pageChangerLoading = false;
         break;
-      case RequestStatuses.reOpen:
-        this.reOpen_requests_count++;
+      case 5:
+        this.request_table_5.pageChangerLoading = false;
         break;
-      case RequestStatuses.reAssigned:
-        this.reAssigned_requests_count++;
+      case 6:
+        this.request_table_6.pageChangerLoading = false;
         break;
-      case RequestStatuses.rejected:
-        this.rejected_requests_count++;
+      case 7:
+        this.request_table_7.pageChangerLoading = false;
         break;
-      case RequestStatuses.cancelled:
-        this.cancelled_requests_count++;
+      case 8:
+        this.request_table_8.pageChangerLoading = false;
         break;
+      case 9:
+        this.request_table_9.pageChangerLoading = false;
+        break;
+
+      default:
+        this.request_table_0.pageChangerLoading = false;
+        break;
+    }
+  }
+
+  resetPaginatorLength() {
+    switch (this.matTabIndex) {
+      case 0:
+        this.adminService.getAllRequestsAdminCount().subscribe((len) => {
+          this.request_table_0.paginator.length = len;
+        });
+        break;
+      case 1:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.open)
+          .subscribe((len) => {
+            this.request_table_1.paginator.length = len;
+          });
+        break;
+      case 2:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.assigned)
+          .subscribe((len) => {
+            this.request_table_2.paginator.length = len;
+          });
+        break;
+      case 3:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.inProgress)
+          .subscribe((len) => {
+            this.request_table_3.paginator.length = len;
+          });
+        break;
+      case 4:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.completed)
+          .subscribe((len) => {
+            this.request_table_4.paginator.length = len;
+          });
+        break;
+      case 5:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.hold)
+          .subscribe((len) => {
+            this.request_table_5.paginator.length = len;
+          });
+        break;
+      case 6:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.reOpen)
+          .subscribe((len) => {
+            this.request_table_6.paginator.length = len;
+          });
+        break;
+      case 7:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.reAssigned)
+          .subscribe((len) => {
+            this.request_table_7.paginator.length = len;
+          });
+        break;
+      case 8:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.rejected)
+          .subscribe((len) => {
+            this.request_table_8.paginator.length = len;
+          });
+        break;
+      case 9:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(RequestStatuses.cancelled)
+          .subscribe((len) => {
+            this.request_table_9.paginator.length = len;
+          });
+        break;
+
+      default:
+        this.adminService.getAllRequestsAdminCount().subscribe((len) => {
+          this.request_table_0.paginator.length = len;
+        });
+        break;
+    }
+  }
+
+  resultsPaginatorInitialize(length) {
+    switch (this.matTabIndex) {
+      case 0:
+        this.request_table_0.paginator.length = length;
+        break;
+      case 1:
+        this.request_table_1.paginator.length = length;
+        break;
+
       default:
         break;
-    }
-  }
-
-  filterRequests(index) {
-    var status = this.getRequestStatusOnIndex(index);
-    if (status != "no-filter") {
-      var filteredArray = this.allRequests.filter(
-        (req) => req.request_status == status
-      );
-      this.allRequestsMatTableData.data = filteredArray;
-    } else {
-      this.allRequestsMatTableData.data = this.allRequests;
     }
   }
 
@@ -258,92 +413,128 @@ export class AdminRequests implements OnInit {
       case 0:
         return "no-filter";
       case 1:
-        return "open";
+        return RequestStatuses.open;
       case 2:
-        return "assigned";
+        return RequestStatuses.assigned;
       case 3:
-        return "inprogress";
+        return RequestStatuses.inProgress;
       case 4:
-        return "completed";
+        return RequestStatuses.completed;
       case 5:
-        return "hold";
+        return RequestStatuses.hold;
       case 6:
-        return "reopen";
+        return RequestStatuses.reOpen;
       case 7:
-        return "reassigned";
+        return RequestStatuses.reAssigned;
       case 8:
-        return "rejected";
+        return RequestStatuses.rejected;
       case 9:
-        return "cancelled";
+        return RequestStatuses.cancelled;
       default:
         return "no-filter";
     }
   }
 
-  initializePaginator(index) {
+  getPageChangeEvent(index) {
     switch (index) {
       case 0:
         this.request_table_0.table_filter.closeFlaggedRequestFilter();
         this.request_table_0.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_0.paginator;
-        break;
+        var event = {
+          limit: this.request_table_0.paginator.pageSize,
+          pageNumber: this.request_table_0.paginator.pageIndex,
+        };
+        return event;
       case 1:
         this.request_table_1.table_filter.closeFlaggedRequestFilter();
         this.request_table_1.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_1.paginator;
-        break;
+        var event = {
+          limit: this.request_table_1.paginator.pageSize,
+          pageNumber: this.request_table_1.paginator.pageIndex,
+        };
+        return event;
       case 2:
         this.request_table_2.table_filter.closeFlaggedRequestFilter();
         this.request_table_2.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_2.paginator;
-        break;
+        var event = {
+          limit: this.request_table_2.paginator.pageSize,
+          pageNumber: this.request_table_2.paginator.pageIndex,
+        };
+        return event;
       case 3:
         this.request_table_3.table_filter.closeFlaggedRequestFilter();
         this.request_table_3.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_3.paginator;
-        break;
+        var event = {
+          limit: this.request_table_3.paginator.pageSize,
+          pageNumber: this.request_table_3.paginator.pageIndex,
+        };
+        return event;
       case 4:
         this.request_table_4.table_filter.closeFlaggedRequestFilter();
         this.request_table_4.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_4.paginator;
-        break;
+        var event = {
+          limit: this.request_table_4.paginator.pageSize,
+          pageNumber: this.request_table_4.paginator.pageIndex,
+        };
+        return event;
       case 5:
         this.request_table_5.table_filter.closeFlaggedRequestFilter();
         this.request_table_5.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_5.paginator;
-        break;
+        var event = {
+          limit: this.request_table_5.paginator.pageSize,
+          pageNumber: this.request_table_5.paginator.pageIndex,
+        };
+        return event;
       case 6:
         this.request_table_6.table_filter.closeFlaggedRequestFilter();
         this.request_table_6.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_6.paginator;
-        break;
+        var event = {
+          limit: this.request_table_6.paginator.pageSize,
+          pageNumber: this.request_table_6.paginator.pageIndex,
+        };
+        return event;
       case 7:
         this.request_table_7.table_filter.closeFlaggedRequestFilter();
         this.request_table_7.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_7.paginator;
-        break;
+        var event = {
+          limit: this.request_table_7.paginator.pageSize,
+          pageNumber: this.request_table_7.paginator.pageIndex,
+        };
+        return event;
       case 8:
         this.request_table_8.table_filter.closeFlaggedRequestFilter();
         this.request_table_8.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_8.paginator;
-        break;
+        var event = {
+          limit: this.request_table_8.paginator.pageSize,
+          pageNumber: this.request_table_8.paginator.pageIndex,
+        };
+        return event;
       case 9:
         this.request_table_9.table_filter.closeFlaggedRequestFilter();
         this.request_table_9.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_9.paginator;
-        break;
+        var event = {
+          limit: this.request_table_9.paginator.pageSize,
+          pageNumber: this.request_table_9.paginator.pageIndex,
+        };
+        return event;
       default:
         this.request_table_0.table_filter.closeFlaggedRequestFilter();
         this.request_table_0.table_filter.closeTimelineFilter();
-        this.allRequestsMatTableData.paginator = this.request_table_0.paginator;
-        break;
+        var event = {
+          limit: this.request_table_0.paginator.pageSize,
+          pageNumber: this.request_table_0.paginator.pageIndex,
+        };
+        return event;
     }
   }
 
   matTabClick(tab: any) {
     this.allRequestsMatTableData.filter = "";
     this.matTabIndex = tab.index;
-    this.filterRequests(tab.index);
-    this.initializePaginator(tab.index);
+
+    var event = this.getPageChangeEvent(tab.index);
+
+    this.isContentLoading = true;
+    this.pageChange(event, false);
   }
 }

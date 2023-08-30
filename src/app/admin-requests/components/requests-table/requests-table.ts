@@ -15,6 +15,7 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { ViewAllAsignStaff } from "app/components/view_all_assign_staff/view_all_assign_staff";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "requests-table",
@@ -51,11 +52,19 @@ export class RequestsTable implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
+  requestUpdating: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  pageChangerLoading: boolean = false;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
   @Input() tableTitle = "";
+
+  @Input() tableLength = 0;
 
   @Output() refreshTableEmit = new EventEmitter<string>();
 
@@ -64,6 +73,10 @@ export class RequestsTable implements OnInit {
   @Output() flagFilterEmit = new EventEmitter<any>();
 
   @Output() timeLineFilterEmit = new EventEmitter<any>();
+
+  @Output() pageChangeEmit = new EventEmitter<any>();
+
+  @Output() searchEmit = new EventEmitter<any>();
 
   assigned_user: object = {
     job: "",
@@ -195,9 +208,17 @@ export class RequestsTable implements OnInit {
     this.refreshTableEmit.emit();
   }
 
+  pageChange() {
+    this.pageChangerLoading = true;
+    var limit = this.paginator.pageSize;
+    var pageNumber = this.paginator.pageIndex;
+    this.pageChangeEmit.emit({ limit: limit, pageNumber: pageNumber });
+  }
+
   applyFilter(filterValue: any) {
+    this.pageChangerLoading = true;
     var val = new String(filterValue).trim().toLowerCase();
-    this.allRequestsMatTableData.filter = val;
+    this.searchEmit.emit(val);
   }
 
   navigateToUnitDetailPage(unit_id) {
@@ -227,6 +248,8 @@ export class RequestsTable implements OnInit {
   }
 
   updateMore(data: any, type: string) {
+    this.pageChangerLoading = true;
+    this.requestUpdating.next(true);
     this.requestUpdated(data.request_id, type);
     let output = {
       id: data.request_id,
@@ -234,7 +257,10 @@ export class RequestsTable implements OnInit {
     };
     this.adminService
       .updateRequestMore(JSON.stringify(output))
-      .subscribe((value) => {});
+      .subscribe((value) => {})
+      .add(() => {
+        this.requestUpdating.next(false);
+      });
   }
 
   getstaffName(data) {

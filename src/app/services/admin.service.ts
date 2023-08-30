@@ -71,13 +71,55 @@ export class AdminService {
     );
   }
 
-  getAllRequestsAdmin() {
+  getAllRequestsAdmin(limit: number, pageNumber: number, status: string) {
     const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ limit: limit, pageNumber: pageNumber, status: status })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getAllRequestsAdminCount() {
+    const url = `${API_URL}/getMaintenanceRequests_count.php?apikey=1`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
       })
     );
+  }
+
+  getAllRequestsAdminCountByStatus(status) {
+    const url = `${API_URL}/getMaintenanceRequests_count_by_status.php?apikey=1`;
+    return this.http.post<any>(url, JSON.stringify({ status: status })).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllRequestsAdminSearch(text, limit, pageNumber, status) {
+    const url = `${API_URL}/get_all_requests_admin_for_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          input: text,
+          limit: limit,
+          pageNumber: pageNumber,
+          status: status,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   getArchivedRequestsAdmin() {

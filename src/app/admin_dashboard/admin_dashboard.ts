@@ -209,7 +209,7 @@ export class AdminDashboardComponent implements OnInit {
       this.allContracts = leaseDataSession;
     }
 
-    this.adminService.getAllRequestsAdmin().subscribe((val: any[]) => {
+    this.adminService.getAllRequestsAdminCount().subscribe((val: any[]) => {
       this.allRequests = val;
     });
 
@@ -270,7 +270,7 @@ export class AdminDashboardComponent implements OnInit {
       case "Total Landlords":
         return this.allUsers.filter((user) => user.user_type == "owner").length;
       case "Total Maintenance Requests":
-        return this.allRequests.length;
+        return this.allRequests;
       case "Total Units":
         return this.allUnits.length;
       case "Total Tenants":
