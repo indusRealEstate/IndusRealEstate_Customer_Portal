@@ -122,6 +122,61 @@ export class AdminService {
       );
   }
 
+  getAllRequestsAdminFlag(limit, pageNumber, status) {
+    const url = `${API_URL}/get_all_requests_admin_for_flag.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          limit: limit,
+          pageNumber: pageNumber,
+          status: status,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  changePageRequestsFLag(limit, pageNumber, status) {
+    const url = `${API_URL}/get_requests_page_change_flag.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          limit: limit,
+          pageNumber: pageNumber,
+          status: status,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  changePageRequestsSearch(text, limit, pageNumber, status) {
+    const url = `${API_URL}/get_requests_page_change_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          input: text,
+          limit: limit,
+          pageNumber: pageNumber,
+          status: status,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getArchivedRequestsAdmin() {
     const url = `${API_URL}/get_all_requests_admin_archive.php?apikey=1`;
     return this.http.get<any>(url).pipe(

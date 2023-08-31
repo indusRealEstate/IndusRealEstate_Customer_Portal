@@ -1,9 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
+import { RequestStatuses } from "app/models/request_statuses";
 import { AdminService } from "app/services/admin.service";
 import { FirebaseService } from "app/services/firebase.service";
 import { RequestsTable } from "./components/requests-table/requests-table";
-import { RequestStatuses } from "app/models/request_statuses";
 
 @Component({
   selector: "admin-requests",
@@ -68,7 +68,10 @@ export class AdminRequests implements OnInit {
         this.request_table_0.paginator != undefined ||
         this.request_table_1.paginator != undefined
       ) {
-        var ev = this.getPageChangeEvent(this.matTabIndex);
+        var ev = {
+          limit: this.getCurrentTable().paginator.pageSize,
+          pageNumber: this.getCurrentTable().paginator.pageIndex,
+        };
         this.pageChange(ev, false);
         this.resetPaginatorLength();
         this.adminService.getAllRequestsAdminCount().subscribe((c) => {
@@ -100,24 +103,75 @@ export class AdminRequests implements OnInit {
   }
 
   pageChange(event, edit: boolean) {
-    var limit = event.limit;
-    var pageNumber = event.pageNumber + 1;
-    var status = this.getRequestStatusOnIndex(this.matTabIndex);
-    this.adminService
-      .getAllRequestsAdmin(limit, pageNumber, status)
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-      })
-      .add(() => {
-        this.isContentLoading = false;
-        this.resetPageChangeLoader();
+    if (this.getCurrentTable().searchBar.searchText != "") {
+      var limit = event.limit;
+      var pageNumber = event.pageNumber + 1;
+      var status = this.getRequestStatusOnIndex(this.matTabIndex);
+      this.adminService
+        .changePageRequestsSearch(
+          this.getCurrentTable().searchBar.searchText,
+          limit,
+          pageNumber,
+          status
+        )
+        .subscribe((va: any[]) => {
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.isContentLoading = false;
 
-        if (edit == true) {
-          this.resetPaginatorLength();
-          this.getAllRequestsCount();
-        }
-      });
+          if (edit == true) {
+            // this.resetPaginatorLength();
+            this.getCurrentTable().pageChangerLoading = false;
+          } else {
+            this.getCurrentTable().pageChangerLoading = false;
+          }
+        });
+    } else {
+      if (this.getCurrentTable().table_filter.flaggedRequestsFilterOn == true) {
+        var limit = event.limit;
+        var pageNumber = event.pageNumber + 1;
+        var status = this.getRequestStatusOnIndex(this.matTabIndex);
+        this.adminService
+          .changePageRequestsFLag(limit, pageNumber, status)
+          .subscribe((va: any[]) => {
+            this.allRequests = va;
+            this.allRequestsMatTableData = new MatTableDataSource(va);
+          })
+          .add(() => {
+            this.isContentLoading = false;
+
+            if (edit == true) {
+              // this.resetPaginatorLength();
+              this.getCurrentTable().pageChangerLoading = false;
+            } else {
+              this.getCurrentTable().pageChangerLoading = false;
+            }
+          });
+      } else {
+        var limit = event.limit;
+        var pageNumber = event.pageNumber + 1;
+        var status = this.getRequestStatusOnIndex(this.matTabIndex);
+        this.adminService
+          .getAllRequestsAdmin(limit, pageNumber, status)
+          .subscribe((va: any[]) => {
+            this.allRequests = va;
+            this.allRequestsMatTableData = new MatTableDataSource(va);
+          })
+          .add(() => {
+            this.isContentLoading = false;
+
+            if (edit == true) {
+              this.resetPaginatorLength();
+              this.getAllRequestsCount();
+              this.getCurrentTable().pageChangerLoading = false;
+            } else {
+              this.getCurrentTable().pageChangerLoading = false;
+            }
+          });
+      }
+    }
   }
 
   getAllRequestsCount() {
@@ -193,40 +247,65 @@ export class AdminRequests implements OnInit {
   }
 
   requestUpdate(event) {
+    this.getCurrentTable().table_filter.closeFlaggedRequestFilter();
+    this.getCurrentTable().table_filter.closeTimelineFilter();
     if (event.type == "flag") {
       var index = this.allRequests.findIndex(
         (req) => req.request_id == event.req_id
       );
       this.allRequests[index].flag = 1;
+      this.getCurrentTable().pageChangerLoading = false;
     }
     if (event.type == "unflag") {
       var index = this.allRequests.findIndex(
         (req) => req.request_id == event.req_id
       );
       this.allRequests[index].flag = 0;
+      this.getCurrentTable().pageChangerLoading = false;
     }
 
     if (event.type == "spam") {
-      var index = this.allRequests.findIndex(
-        (req) => req.request_id == event.req_id
-      );
       this.clearAllData();
-      var ev = this.getPageChangeEvent(this.matTabIndex);
-      this.request_table_0.requestUpdating.subscribe((res) => {
-        if (res == false) {
+      var ev = {
+        limit: this.getCurrentTable().paginator.pageSize,
+        pageNumber: this.getCurrentTable().paginator.pageIndex,
+      };
+      var fired = 0;
+      this.getCurrentTable().requestUpdating.subscribe((res) => {
+        if (res == true && fired < 1) {
           this.pageChange(ev, true);
+          fired++;
         }
       });
     }
+
     if (event.type == "archived") {
-      var index = this.allRequests.findIndex(
-        (req) => req.request_id == event.req_id
-      );
       this.clearAllData();
-      var ev = this.getPageChangeEvent(this.matTabIndex);
-      this.request_table_0.requestUpdating.subscribe((res) => {
-        if (res == false) {
+      var ev = {
+        limit: this.getCurrentTable().paginator.pageSize,
+        pageNumber: this.getCurrentTable().paginator.pageIndex,
+      };
+      var fired = 0;
+      this.getCurrentTable().requestUpdating.subscribe((res) => {
+        if (res == true && fired < 1) {
           this.pageChange(ev, true);
+          fired++;
+        }
+      });
+    }
+
+    if (event.type == "delete") {
+      this.clearAllData();
+
+      var ev = {
+        limit: this.getCurrentTable().paginator.pageSize,
+        pageNumber: this.getCurrentTable().paginator.pageIndex,
+      };
+      var fired = 0;
+      this.getCurrentTable().requestUpdating.subscribe((res) => {
+        if (res == true && fired < 1) {
+          this.pageChange(ev, true);
+          fired++;
         }
       });
     }
@@ -237,23 +316,52 @@ export class AdminRequests implements OnInit {
     this.fetchData();
   }
 
-  closeFilterByFlag(event) {
-    if (event == 0) {
-      this.allRequestsMatTableData.data = this.allRequests;
-      // this.filterRequests(this.matTabIndex);
+  filterByFlag(event) {
+    this.getCurrentTable().pageChangerLoading = true;
+    if (event == 1) {
+      this.getCurrentTable().searchBar.searchText = "";
+      var limit = this.getCurrentTable().paginator.pageSize;
+      var pageNumber = this.getCurrentTable().paginator.pageIndex + 1;
+      var status = this.getRequestStatusOnIndex(this.matTabIndex);
+      this.adminService
+        .getAllRequestsAdminFlag(limit, pageNumber, status)
+        .subscribe((va: any) => {
+          console.log(va);
+          this.allRequests = va.reqs;
+          this.getCurrentTable().tableLength = va.count;
+          this.allRequestsMatTableData = new MatTableDataSource(va.reqs);
+        })
+        .add(() => {
+          this.getCurrentTable().pageChangerLoading = false;
+        });
+    } else {
+      this.getCurrentTable().table_filter.flaggedRequestsFilterOn = false;
+      var ev = {
+        limit: this.getCurrentTable().paginator.pageSize,
+        pageNumber: this.getCurrentTable().paginator.pageIndex,
+      };
+      this.pageChange(ev, true);
     }
   }
 
   closeTimeLineFilter(event) {
     if (event == 0) {
-      this.allRequestsMatTableData.data = this.allRequests;
+      // this.allRequestsMatTableData.data = this.allRequests;
       // this.filterRequests(this.matTabIndex);
     }
   }
 
   searchReqs(text) {
-    var event = this.getPageChangeEvent(this.matTabIndex);
+    this.getCurrentTable().table_filter.closeFlaggedRequestFilter();
+    this.getCurrentTable().table_filter.closeTimelineFilter();
+
+    var event = {
+      limit: this.getCurrentTable().paginator.pageSize,
+      pageNumber: this.getCurrentTable().paginator.pageIndex,
+    };
     var status = this.getRequestStatusOnIndex(this.matTabIndex);
+
+    console.log(status);
     this.adminService
       .getAllRequestsAdminSearch(
         text,
@@ -262,148 +370,65 @@ export class AdminRequests implements OnInit {
         status
       )
       .subscribe((res: any) => {
+        // console.log(res);
         if (res != "no_input") {
-          this.allRequestsMatTableData.data = res;
-          this.resultsPaginatorInitialize(res.length);
+          this.allRequestsMatTableData.data = res.reqs;
+          this.getCurrentTable().tableLength = res.count;
         } else {
-          var ev = this.getPageChangeEvent(this.matTabIndex);
+          var ev = {
+            limit: this.getCurrentTable().paginator.pageSize,
+            pageNumber: this.getCurrentTable().paginator.pageIndex,
+          };
           this.pageChange(ev, false);
-          this.resetPaginatorLength();
+          this.getCurrentTable().tableLength = res.count;
         }
       })
       .add(() => {
-        this.resetPageChangeLoader();
+        this.getCurrentTable().pageChangerLoading = false;
       });
   }
 
-  resetPageChangeLoader() {
+  getCurrentTable(): RequestsTable {
     switch (this.matTabIndex) {
       case 0:
-        this.request_table_0.pageChangerLoading = false;
-        break;
+        return this.request_table_0;
       case 1:
-        this.request_table_1.pageChangerLoading = false;
-        break;
+        return this.request_table_1;
       case 2:
-        this.request_table_2.pageChangerLoading = false;
-        break;
+        return this.request_table_2;
       case 3:
-        this.request_table_3.pageChangerLoading = false;
-        break;
+        return this.request_table_3;
       case 4:
-        this.request_table_4.pageChangerLoading = false;
-        break;
+        return this.request_table_4;
       case 5:
-        this.request_table_5.pageChangerLoading = false;
-        break;
+        return this.request_table_5;
       case 6:
-        this.request_table_6.pageChangerLoading = false;
-        break;
+        return this.request_table_6;
       case 7:
-        this.request_table_7.pageChangerLoading = false;
-        break;
+        return this.request_table_7;
       case 8:
-        this.request_table_8.pageChangerLoading = false;
-        break;
+        return this.request_table_8;
       case 9:
-        this.request_table_9.pageChangerLoading = false;
-        break;
-
+        return this.request_table_9;
       default:
-        this.request_table_0.pageChangerLoading = false;
-        break;
+        return this.request_table_0;
     }
   }
 
   resetPaginatorLength() {
-    switch (this.matTabIndex) {
-      case 0:
+    var status = this.getRequestStatusOnIndex(this.matTabIndex);
+    switch (status) {
+      case "no-filter":
         this.adminService.getAllRequestsAdminCount().subscribe((len) => {
           this.request_table_0.paginator.length = len;
         });
         break;
-      case 1:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.open)
-          .subscribe((len) => {
-            this.request_table_1.paginator.length = len;
-          });
-        break;
-      case 2:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.assigned)
-          .subscribe((len) => {
-            this.request_table_2.paginator.length = len;
-          });
-        break;
-      case 3:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.inProgress)
-          .subscribe((len) => {
-            this.request_table_3.paginator.length = len;
-          });
-        break;
-      case 4:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.completed)
-          .subscribe((len) => {
-            this.request_table_4.paginator.length = len;
-          });
-        break;
-      case 5:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.hold)
-          .subscribe((len) => {
-            this.request_table_5.paginator.length = len;
-          });
-        break;
-      case 6:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.reOpen)
-          .subscribe((len) => {
-            this.request_table_6.paginator.length = len;
-          });
-        break;
-      case 7:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.reAssigned)
-          .subscribe((len) => {
-            this.request_table_7.paginator.length = len;
-          });
-        break;
-      case 8:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.rejected)
-          .subscribe((len) => {
-            this.request_table_8.paginator.length = len;
-          });
-        break;
-      case 9:
-        this.adminService
-          .getAllRequestsAdminCountByStatus(RequestStatuses.cancelled)
-          .subscribe((len) => {
-            this.request_table_9.paginator.length = len;
-          });
-        break;
-
       default:
-        this.adminService.getAllRequestsAdminCount().subscribe((len) => {
-          this.request_table_0.paginator.length = len;
-        });
-        break;
-    }
-  }
-
-  resultsPaginatorInitialize(length) {
-    switch (this.matTabIndex) {
-      case 0:
-        this.request_table_0.paginator.length = length;
-        break;
-      case 1:
-        this.request_table_1.paginator.length = length;
-        break;
-
-      default:
+        this.adminService
+          .getAllRequestsAdminCountByStatus(status)
+          .subscribe((len) => {
+            this.getCurrentTable().paginator.length = len;
+          });
         break;
     }
   }
@@ -435,104 +460,19 @@ export class AdminRequests implements OnInit {
     }
   }
 
-  getPageChangeEvent(index) {
-    switch (index) {
-      case 0:
-        this.request_table_0.table_filter.closeFlaggedRequestFilter();
-        this.request_table_0.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_0.paginator.pageSize,
-          pageNumber: this.request_table_0.paginator.pageIndex,
-        };
-        return event;
-      case 1:
-        this.request_table_1.table_filter.closeFlaggedRequestFilter();
-        this.request_table_1.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_1.paginator.pageSize,
-          pageNumber: this.request_table_1.paginator.pageIndex,
-        };
-        return event;
-      case 2:
-        this.request_table_2.table_filter.closeFlaggedRequestFilter();
-        this.request_table_2.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_2.paginator.pageSize,
-          pageNumber: this.request_table_2.paginator.pageIndex,
-        };
-        return event;
-      case 3:
-        this.request_table_3.table_filter.closeFlaggedRequestFilter();
-        this.request_table_3.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_3.paginator.pageSize,
-          pageNumber: this.request_table_3.paginator.pageIndex,
-        };
-        return event;
-      case 4:
-        this.request_table_4.table_filter.closeFlaggedRequestFilter();
-        this.request_table_4.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_4.paginator.pageSize,
-          pageNumber: this.request_table_4.paginator.pageIndex,
-        };
-        return event;
-      case 5:
-        this.request_table_5.table_filter.closeFlaggedRequestFilter();
-        this.request_table_5.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_5.paginator.pageSize,
-          pageNumber: this.request_table_5.paginator.pageIndex,
-        };
-        return event;
-      case 6:
-        this.request_table_6.table_filter.closeFlaggedRequestFilter();
-        this.request_table_6.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_6.paginator.pageSize,
-          pageNumber: this.request_table_6.paginator.pageIndex,
-        };
-        return event;
-      case 7:
-        this.request_table_7.table_filter.closeFlaggedRequestFilter();
-        this.request_table_7.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_7.paginator.pageSize,
-          pageNumber: this.request_table_7.paginator.pageIndex,
-        };
-        return event;
-      case 8:
-        this.request_table_8.table_filter.closeFlaggedRequestFilter();
-        this.request_table_8.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_8.paginator.pageSize,
-          pageNumber: this.request_table_8.paginator.pageIndex,
-        };
-        return event;
-      case 9:
-        this.request_table_9.table_filter.closeFlaggedRequestFilter();
-        this.request_table_9.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_9.paginator.pageSize,
-          pageNumber: this.request_table_9.paginator.pageIndex,
-        };
-        return event;
-      default:
-        this.request_table_0.table_filter.closeFlaggedRequestFilter();
-        this.request_table_0.table_filter.closeTimelineFilter();
-        var event = {
-          limit: this.request_table_0.paginator.pageSize,
-          pageNumber: this.request_table_0.paginator.pageIndex,
-        };
-        return event;
-    }
-  }
-
   matTabClick(tab: any) {
+    this.getCurrentTable().searchBar.searchText = "";
+    this.getCurrentTable().searchBar.searchBarOpened = false;
     this.allRequestsMatTableData.filter = "";
     this.matTabIndex = tab.index;
 
-    var event = this.getPageChangeEvent(tab.index);
+    this.getCurrentTable().table_filter.closeFlaggedRequestFilter();
+    this.getCurrentTable().table_filter.closeTimelineFilter();
+
+    var event = {
+      limit: this.getCurrentTable().paginator.pageSize,
+      pageNumber: this.getCurrentTable().paginator.pageIndex,
+    };
 
     this.isContentLoading = true;
     this.pageChange(event, false);

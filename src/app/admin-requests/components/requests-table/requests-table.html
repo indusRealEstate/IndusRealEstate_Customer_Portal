@@ -477,7 +477,7 @@
             [pageSize]="10"
             [pageSizeOptions]="[6, 8, 10, 14, 20]"
             [length]="tableLength"
-            (page)="pageChange()"
+            (page)="pageChange($event)"
             showFirstLastButtons
           ></mat-paginator>
         </div>
