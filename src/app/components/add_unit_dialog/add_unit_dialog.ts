@@ -303,6 +303,9 @@ export class AddUnitDialog implements OnInit {
       unit_id: random_id,
       unit_no: this.unit_number,
       property_id: this.selected_property,
+      property_name: this.properties.find(
+        (prop) => prop.value == this.selected_property
+      ).viewValue,
       unit_type: this.unit_type,
       floor: this.floors,
       size: this.unit_size,
