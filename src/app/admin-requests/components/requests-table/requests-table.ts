@@ -11,11 +11,20 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { ViewAllAsignStaff } from "app/components/view_all_assign_staff/view_all_assign_staff";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { BehaviorSubject } from "rxjs";
+import {
+  BehaviorSubject,
+  Observable,
+  debounceTime,
+  first,
+  last,
+  share,
+  shareReplay,
+} from "rxjs";
 
 @Component({
   selector: "requests-table",
@@ -52,13 +61,14 @@ export class RequestsTable implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
-  requestUpdating: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  requestUpdating: Observable<any>;
+  updateValue: BehaviorSubject<any> = new BehaviorSubject(false);
 
   pageChangerLoading: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
@@ -92,6 +102,8 @@ export class RequestsTable implements OnInit {
     public dialog: MatDialog
   ) {
     this.getScreenSize();
+
+    this.requestUpdating = this.updateValue.asObservable().pipe();
   }
 
   allProperties: any[] = [];
@@ -208,10 +220,10 @@ export class RequestsTable implements OnInit {
     this.refreshTableEmit.emit();
   }
 
-  pageChange() {
+  pageChange(event) {
     this.pageChangerLoading = true;
-    var limit = this.paginator.pageSize;
-    var pageNumber = this.paginator.pageIndex;
+    var limit = event.pageSize;
+    var pageNumber = event.pageIndex;
     this.pageChangeEmit.emit({ limit: limit, pageNumber: pageNumber });
   }
 
@@ -249,7 +261,6 @@ export class RequestsTable implements OnInit {
 
   updateMore(data: any, type: string) {
     this.pageChangerLoading = true;
-    this.requestUpdating.next(true);
     this.requestUpdated(data.request_id, type);
     let output = {
       id: data.request_id,
@@ -259,7 +270,8 @@ export class RequestsTable implements OnInit {
       .updateRequestMore(JSON.stringify(output))
       .subscribe((value) => {})
       .add(() => {
-        this.requestUpdating.next(false);
+        this.updateValue.next(true);
+        this.updateValue.next(false);
       });
   }
 
@@ -272,8 +284,7 @@ export class RequestsTable implements OnInit {
   ///////////////////////////////////////////////////////////////////// filter functions//////////////////////////////////////////////////////////////////
 
   showAllFlaggedRequests() {
-    this.allRequestsMatTableData.data =
-      this.allRequestsMatTableData.data.filter((req) => req.flag == 1);
+    this.flagFilterEmit.emit(1);
   }
   closeFlaggedRequestFilter() {
     this.flagFilterEmit.emit(0);
@@ -313,5 +324,9 @@ export class RequestsTable implements OnInit {
     } else {
       return false;
     }
+  }
+
+  ngOnDestroy() {
+    this.updateValue.unsubscribe();
   }
 }

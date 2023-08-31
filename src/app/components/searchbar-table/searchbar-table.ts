@@ -12,6 +12,8 @@ export class TableSearchBarComponent implements OnInit {
 
   searchBarOpened: boolean = false;
 
+  searchText: any = "";
+
   @Output() myEvent = new EventEmitter<string>();
 
   callParent(val) {
@@ -27,6 +29,7 @@ export class TableSearchBarComponent implements OnInit {
   ngOnInit() {}
 
   searchBarClicked() {
+    this.searchText = "";
     this.searchBarOpened == false
       ? (this.searchBarOpened = true)
       : (this.searchBarOpened = false);
