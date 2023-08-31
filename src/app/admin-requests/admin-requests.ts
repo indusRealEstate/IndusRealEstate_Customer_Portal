@@ -95,6 +95,7 @@ export class AdminRequests implements OnInit {
       .getAllRequestsAdmin(10, 1, status)
       .subscribe((va: any[]) => {
         this.allRequests = va;
+        this.resetPaginatorLength();
         this.allRequestsMatTableData = new MatTableDataSource(va);
       })
       .add(() => {
@@ -360,8 +361,7 @@ export class AdminRequests implements OnInit {
       pageNumber: this.getCurrentTable().paginator.pageIndex,
     };
     var status = this.getRequestStatusOnIndex(this.matTabIndex);
-
-    console.log(status);
+    
     this.adminService
       .getAllRequestsAdminSearch(
         text,

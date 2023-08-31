@@ -6,6 +6,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -36,6 +37,8 @@ export class AdminPropertiesUnits implements OnInit {
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
 
+  pageChangerLoading: boolean = false;
+
   displayedColumns: string[] = [
     // "name",
     "unitNo",
@@ -65,10 +68,14 @@ export class AdminPropertiesUnits implements OnInit {
 
   @ViewChild("table_filter") table_filter: TableFiltersComponent;
 
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
+
   current_sort_option: any = "all";
 
   allProperties: any[] = [];
   allUsers: any[] = [];
+
+  tableLength: number = 0;
 
   constructor(
     private router: Router,
@@ -101,12 +108,27 @@ export class AdminPropertiesUnits implements OnInit {
 
   changeSortOption(option: string) {
     this.current_sort_option = option;
+    this.searchBar.searchText = "";
     if (option != "all") {
-      this.allUnitsMatTableData.data = this.allUnits.filter(
-        (unit) => unit.status == option
-      );
+      this.pageChangerLoading = true;
+
+      this.adminService
+        .getallUnitsFilter(
+          option,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          console.log(va);
+          this.allUnits = va.units;
+          this.allUnitsMatTableData = new MatTableDataSource(va.units);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     } else {
-      this.allUnitsMatTableData.data = this.allUnits;
+      this.fetchData();
     }
   }
 
@@ -134,100 +156,101 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   fetchData() {
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-    if (adminReqDataSession != null) {
-      this.allUnits = adminReqDataSession;
-      this.allUnitsMatTableData.data = adminReqDataSession;
-      this.isContentLoading = false;
-      this.ngAfterViewInitInitialize = true;
-    } else {
+    this.adminService
+      .getallPropertiesUnits(10, 1)
+      .subscribe((va: any) => {
+        console.log(va);
+        this.allUnits = va.units;
+        this.allUnitsMatTableData = new MatTableDataSource(va.units);
+        this.tableLength = va.count;
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        this.pageChangerLoading = false;
+      });
+  }
+
+  pageChange(event) {
+    this.pageChangerLoading = true;
+    if (this.searchBar.searchText != "") {
+      console.log("search");
       this.adminService
-        .getallPropertiesUnitsAdmin()
-        .subscribe((va: any[]) => {
+        .getallUnitsSearchPageChange(
+          this.searchBar.searchText,
+          event.pageSize,
+          event.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          console.log(va);
           this.allUnits = va;
           this.allUnitsMatTableData = new MatTableDataSource(va);
-          setTimeout(() => {
-            if (this.allUnitsMatTableData != undefined) {
-              this.allUnitsMatTableData.paginator = this.paginator;
-            }
-          });
+          // this.tableLength = va.count;
         })
         .add(() => {
-          this.isContentLoading = false;
-          if (this.allUnits.length != 0) {
-            sessionStorage.setItem(
-              "admin_properties_units_session",
-              JSON.stringify(this.allUnits)
-            );
-          }
+          this.pageChangerLoading = false;
         });
-      sessionStorage.setItem(
-        "admin_properties_units_session_time_admin",
-        JSON.stringify(new Date().getMinutes())
-      );
+    } else {
+      if (this.current_sort_option != "all") {
+        this.adminService
+          .getallUnitsFilterPageChange(
+            this.current_sort_option,
+            event.pageSize,
+            event.pageIndex + 1
+          )
+          .subscribe((va: any) => {
+            // console.log(va);
+            this.allUnits = va;
+            this.allUnitsMatTableData = new MatTableDataSource(va);
+            // this.tableLength = va.count;
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      } else {
+        this.adminService
+          .getallPropertiesUnits(event.pageSize, event.pageIndex + 1)
+          .subscribe((va: any) => {
+            // console.log(va);
+            this.allUnits = va.units;
+            this.allUnitsMatTableData = new MatTableDataSource(va.units);
+            // this.tableLength = va.count;
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      }
     }
   }
 
-  getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
+  // getAllData() {
+  //   var propertiesDataSession = JSON.parse(
+  //     sessionStorage.getItem("admin_properties_session")
+  //   );
 
-    if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
-    } else {
-      this.allProperties = propertiesDataSession;
-    }
+  //   if (propertiesDataSession == null) {
+  //     this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+  //       this.allProperties = val;
+  //     });
+  //   } else {
+  //     this.allProperties = propertiesDataSession;
+  //   }
 
-    var usersDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
+  //   var usersDataSession = JSON.parse(
+  //     sessionStorage.getItem("all_users_session")
+  //   );
 
-    if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-        this.allUsers = val;
-      });
-    } else {
-      this.allUsers = usersDataSession;
-    }
-  }
+  //   if (usersDataSession == null) {
+  //     this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+  //       this.allUsers = val;
+  //     });
+  //   } else {
+  //     this.allUsers = usersDataSession;
+  //   }
+  // }
 
   async ngOnInit() {
-    this.getAllData();
-    var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session_time_admin")
-    );
-
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (previous != null) {
-      var diff = now - Number(previous);
-
-      if (diff >= 5) {
-        sessionStorage.removeItem("admin_properties_units_session");
-        this.fetchData();
-      } else {
-        if (adminReqDataSession != null) {
-          this.allUnits = adminReqDataSession;
-          this.allUnitsMatTableData = new MatTableDataSource(
-            adminReqDataSession
-          );
-          this.isContentLoading = false;
-          this.ngAfterViewInitInitialize = true;
-        } else {
-          this.fetchData();
-        }
-      }
-    } else {
-      this.fetchData();
-    }
+    // this.getAllData();
+    this.fetchData();
   }
 
   clearAllVariables() {
@@ -236,7 +259,6 @@ export class AdminPropertiesUnits implements OnInit {
 
   refreshTable() {
     this.current_sort_option = "all";
-    sessionStorage.removeItem("admin_properties_units_session");
     this.isContentLoading = true;
     if (this.table_filter != undefined) {
       this.table_filter.flaggedRequestsFilterOn = false;
@@ -246,9 +268,28 @@ export class AdminPropertiesUnits implements OnInit {
     this.fetchData();
   }
 
-  applyFilter(filterValue: any) {
-    var val = new String(filterValue).trim().toLowerCase();
-    this.allUnitsMatTableData.filter = val;
+  searchUnit(filterValue: any) {
+    this.current_sort_option = "all";
+    this.pageChangerLoading = true;
+    if (filterValue != "") {
+      this.adminService
+        .getallPropertiesUnitsSearch(
+          filterValue,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          console.log(va);
+          this.allUnits = va.units;
+          this.allUnitsMatTableData = new MatTableDataSource(va.units);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.fetchData();
+    }
   }
 
   addUnitDialogOpen() {
@@ -290,7 +331,6 @@ export class AdminPropertiesUnits implements OnInit {
       .afterClosed()
       .subscribe((data) => {
         if (data != undefined) {
-          sessionStorage.removeItem("admin_properties_units_session");
           this.allUnits[index].unit_no =
             data.unit_no != undefined
               ? data.unit_no

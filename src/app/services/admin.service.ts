@@ -239,6 +239,85 @@ export class AdminService {
     );
   }
 
+  getallPropertiesUnits(limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_all_units_pagination.php?apikey=1`;
+    return this.http
+      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallPropertiesUnitsSearch(
+    input: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_all_units_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallUnitsSearchPageChange(
+    input: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_units_page_change_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallUnitsFilter(filter: string, limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_all_units_by_filter.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ filter: filter, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallUnitsFilterPageChange(
+    filter: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_all_units_by_filter_page_change.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ filter: filter, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   addProperty(data: any) {
     const url = `${API_URL}/addProperty.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(
