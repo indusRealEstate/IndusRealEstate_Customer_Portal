@@ -69,4 +69,51 @@ export class PropertiesService {
     });
     return this.http.request(req);
   }
+
+  getAllPropertiesPagination(limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_all_properties_pagination.php?apikey=1`;
+    return this.http
+      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallPropertiesSearch(
+    input: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/getAllPropertiesAdmin_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallPropertiesSearchPageChange(
+    input: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_properties_page_change_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
 }

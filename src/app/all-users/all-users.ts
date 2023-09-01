@@ -6,10 +6,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AuthenticationService } from "app/services/authentication.service";
-import { PropertiesService } from "app/services/properties.service";
-import { UnitsService } from "app/services/units.service";
 import { UserService } from "app/services/user.service";
 import * as XLSX from "xlsx-js-style";
 
@@ -62,10 +61,10 @@ export class AllUsersComponent implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
+  pageChangerLoading: boolean = false;
+
   allProperties: any[] = [];
   allUnits: any[] = [];
-
-  fetching_all_units_under_landlord: boolean = true;
 
   all_units_landlord: any[] = [];
   more_menu_user_all_data: any = "";
@@ -75,13 +74,13 @@ export class AllUsersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @ViewChild("table_filter") table_filter: TableFiltersComponent;
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
+
+  tableLength: number = 0;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private propertyService: PropertiesService,
-    private unitsService: UnitsService,
     private userService: UserService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
@@ -110,12 +109,27 @@ export class AllUsersComponent implements OnInit {
 
   changeSortOption(option: string) {
     this.current_sort_option = option;
+    this.searchBar.searchText = "";
     if (option != "all") {
-      this.allUsersMatTableData.data = this.allUsers.filter(
-        (user) => user.user_type == option
-      );
+      this.pageChangerLoading = true;
+
+      this.userService
+        .getallUsersFilter(
+          option,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          // console.log(va);
+          this.allUsers = va.users;
+          this.allUsersMatTableData = new MatTableDataSource(va.users);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     } else {
-      this.allUsersMatTableData.data = this.allUsers;
+      this.fetchData(this.paginator.pageSize);
     }
   }
 
@@ -128,175 +142,82 @@ export class AllUsersComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allUsersMatTableData != undefined) {
-        this.allUsersMatTableData.paginator = this.paginator;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allUsersMatTableData != undefined) {
-          this.allUsersMatTableData.paginator = this.paginator;
-        }
-      });
+  fetchData(limit?) {
+    if (this.searchBar != undefined) {
+      this.searchBar.searchText = "";
     }
-  }
-
-  fetchingAllUnitsLandlord(user_id) {
-    this.all_units_landlord.length = 0;
-    if (this.allUnits != null) {
-      var count = 0;
-      this.allUnits.forEach((unit) => {
-        var prop = this.allProperties.find(
-          (pr) => pr.property_id == unit.property_id
-        );
-        if (user_id == unit.owner_id) {
-          this.all_units_landlord.push({ unit: unit, prop: prop });
-        }
-        count++;
-      });
-
-      if (count == this.allUnits.length) {
-        // setTimeout(() => {
-        this.fetching_all_units_under_landlord = false;
-        // }, 1000);
-      }
-    }
-  }
-
-  // getbuildingName(prop_id) {
-  //   if (this.allProperties != null) {
-  //     var property = this.allProperties.find(
-  //       (prop) => prop.property_id == prop_id
-  //     );
-  //     if (property != undefined) {
-  //       return property.property_name;
-  //     } else {
-  //       return "loading..";
-  //     }
-  //   } else {
-  //     return "loading..";
-  //   }
-  // }
-
-  getUnitNo(unit_id, user_type) {
-    if (this.allUnits != null) {
-      if (user_type == "tenant") {
-        var unit = this.allUnits.find((u) => u.unit_id == unit_id);
-
-        if (unit != undefined) {
-          var prop = this.allProperties.find(
-            (pr) => pr.property_id == unit.property_id
-          );
-          if (prop != undefined) {
-            return `${unit.unit_no}, ${prop.property_name}, ${prop.address}`;
-          } else {
-            return "loading..";
-          }
-        } else {
-          return "loading..";
-        }
-      } else {
-        var all_units: any[] = JSON.parse(unit_id);
-        if (all_units != undefined) {
-          return `${all_units.length} ${
-            all_units.length == 1 ? "Unit" : "Units"
-          }`;
-        } else {
-          return "loading..";
-        }
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  fetchData() {
     this.userService
-      .getAllUsersAdmin()
-      .subscribe((va: any[]) => {
+      .getAllUsersAdminPagination(limit == undefined ? 10 : limit, 1)
+      .subscribe((va: any) => {
         // console.log(va);
-        this.allUsers = va;
-        this.allUsersMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          if (this.allUsersMatTableData != undefined) {
-            this.allUsersMatTableData.paginator = this.paginator;
-          }
-        });
+        this.allUsers = va.users;
+        this.allUsersMatTableData = new MatTableDataSource(va.users);
+        this.tableLength = va.count;
       })
       .add(() => {
         this.isContentLoading = false;
-        if (this.allUsers.length != 0) {
-          sessionStorage.setItem(
-            "all_users_session",
-            JSON.stringify(this.allUsers)
-          );
-        }
+        this.pageChangerLoading = false;
       });
-    sessionStorage.setItem(
-      "all_users_session_time_admin",
-      JSON.stringify(new Date().getMinutes())
-    );
   }
 
-  getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
+  pageChange(event) {
+    this.pageChangerLoading = true;
+    if (this.searchBar.searchText != "") {
+      this.userService
+        .getallUsersSearchPageChange(
+          this.searchBar.searchText,
+          event.pageSize,
+          event.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          this.allUsers = va;
+          this.allUsersMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     } else {
-      this.allProperties = propertiesDataSession;
+      if (this.current_sort_option != "all") {
+        this.userService
+          .getallUsersFilterPageChange(
+            this.current_sort_option,
+            event.pageSize,
+            event.pageIndex + 1
+          )
+          .subscribe((va: any) => {
+            // console.log(va);
+            this.allUsers = va;
+            this.allUsersMatTableData = new MatTableDataSource(va);
+            // this.tableLength = va.count;
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      } else {
+        this.userService
+          .getAllUsersAdminPagination(event.pageSize, event.pageIndex + 1)
+          .subscribe((va: any) => {
+            console.log(va);
+            this.allUsers = va.users;
+            this.allUsersMatTableData = new MatTableDataSource(va.users);
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      }
     }
+  }
 
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-      });
+  getPropertyAddresses(unit_raw, userType) {
+    if (userType == "tenant") {
+      return JSON.parse(unit_raw)["address"];
     } else {
-      this.allUnits = unitsDataSession;
+      return `${JSON.parse(unit_raw).length} Units`;
     }
   }
 
   async ngOnInit() {
-    this.getAllData();
-    var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("all_users_session_time_admin")
-    );
-
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
-
-    if (previous != null) {
-      var diff = now - Number(previous);
-
-      if (diff >= 5) {
-        sessionStorage.removeItem("all_users_session");
-        this.fetchData();
-      } else {
-        if (adminReqDataSession != null) {
-          this.allUsers = adminReqDataSession;
-          this.allUsersMatTableData = new MatTableDataSource(
-            adminReqDataSession
-          );
-          this.isContentLoading = false;
-          this.ngAfterViewInitInitialize = true;
-        } else {
-          this.fetchData();
-        }
-      }
-    } else {
-      this.fetchData();
-    }
+    this.fetchData();
   }
 
   clearAllVariables() {
@@ -304,20 +225,34 @@ export class AllUsersComponent implements OnInit {
   }
 
   refreshTable() {
+    this.searchBar.searchText = "";
     this.current_sort_option = "all";
-    sessionStorage.removeItem("all_users_session");
     this.isContentLoading = true;
-    if (this.table_filter != undefined) {
-      this.table_filter.flaggedRequestsFilterOn = false;
-      this.table_filter.statusFilterOn = false;
-      this.table_filter.timeLineFilterOn = false;
-    }
     this.fetchData();
   }
 
-  applyFilter(filterValue: any) {
-    var val = new String(filterValue).trim().toLowerCase();
-    this.allUsersMatTableData.filter = val;
+  searchUsers(filterValue: any) {
+    this.current_sort_option = "all";
+    this.pageChangerLoading = true;
+    if (filterValue != "") {
+      this.userService
+        .getallUsersSearch(
+          filterValue,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          // console.log(va);
+          this.allUsers = va.users;
+          this.allUsersMatTableData = new MatTableDataSource(va.users);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.fetchData(this.paginator.pageSize);
+    }
   }
 
   addUserDialogOpen() {
@@ -366,7 +301,6 @@ export class AllUsersComponent implements OnInit {
 
   updateData(data, index) {
     if (data.data != undefined) {
-      sessionStorage.removeItem("all_users_session");
       var updated_data = data.data;
       console.log(updated_data);
 
@@ -383,13 +317,13 @@ export class AllUsersComponent implements OnInit {
     this.openSnackBar("User updated successfully", "Close");
   }
 
-  navigateToUnitDetailPage(unit_id, userType, user_id) {
+  navigateToUnitDetailPage(unit_raw, userType, user_id) {
     if (userType == "tenant") {
       this.router.navigate(["/admin-property-unit-details"], {
-        queryParams: { unit_id: unit_id },
+        queryParams: { unit_id: JSON.parse(unit_raw)["id"] },
       });
     } else {
-      this.fetchingAllUnitsLandlord(user_id);
+      this.all_units_landlord = JSON.parse(unit_raw);
     }
   }
 

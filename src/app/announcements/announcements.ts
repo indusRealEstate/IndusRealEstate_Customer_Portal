@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/add-announcement-dialog";
 import { AnnouncementDetailsDialog } from "app/components/announcement-details-dialog/announcement-details-dialog";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
-import { AdminService } from "app/services/admin.service";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AnnouncementService } from "app/services/announcement.service";
 import { FirebaseService } from "app/services/firebase.service";
 
@@ -37,6 +37,12 @@ export class Announcements implements OnInit {
   ngAfterViewInitInitialize: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  pageChangerLoading: boolean = false;
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
+
+  tableLength: number = 0;
+
   constructor(
     private announcementService: AnnouncementService,
     private firebaseService: FirebaseService,
@@ -59,7 +65,7 @@ export class Announcements implements OnInit {
 
   refreshTable() {
     this.isContentLoading = true;
-    this.selectAllAnnouncement();
+    this.fetchData();
   }
 
   openSnackBar(message: string, action: string) {
@@ -70,8 +76,6 @@ export class Announcements implements OnInit {
     });
   }
 
-  ngAfterViewInit() {}
-
   addAnnouncements() {
     this.dialog
       .open(AddAnnouncementDialog, {
@@ -81,7 +85,7 @@ export class Announcements implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
-          this.selectAllAnnouncement();
+          this.fetchData();
           this.openSnackBar("Announcement added successfully", "Close");
 
           this.firebaseService
@@ -120,24 +124,20 @@ export class Announcements implements OnInit {
       });
   }
 
-  selectAllAnnouncement(): any {
+  fetchData(limit?): any {
+    if (this.searchBar != undefined) {
+      this.searchBar.searchText = "";
+    }
     this.announcementService
-      .selectAllAnnouncement()
-      .subscribe((val: any[]) => {
-        this.allAnnouncement = val;
-        this.allAnnouncementMatTableData = new MatTableDataSource<any>(val);
-        setTimeout(() => {
-          if (this.allAnnouncementMatTableData != undefined) {
-            this.allAnnouncementMatTableData.paginator = this.paginator;
-          } else {
-            setTimeout(() => {
-              this.allAnnouncementMatTableData.paginator = this.paginator;
-            }, 3000);
-          }
-        });
+      .getAllAnnouncementPagination(limit == undefined ? 10 : limit, 1)
+      .subscribe((va: any) => {
+        this.allAnnouncement = va.ann;
+        this.allAnnouncementMatTableData = new MatTableDataSource(va.ann);
+        this.tableLength = va.count;
       })
       .add(() => {
         this.isContentLoading = false;
+        this.pageChangerLoading = false;
       });
   }
 
@@ -150,19 +150,67 @@ export class Announcements implements OnInit {
       .afterClosed()
       .subscribe((value) => {
         if (value != undefined) {
-          this.selectAllAnnouncement();
+          this.fetchData();
           this.openSnackBar("Announcement updated successfully", "Close");
         }
       });
   }
 
   async ngOnInit() {
-    this.selectAllAnnouncement();
+    this.fetchData();
   }
 
-  applyFilter(filterValue: any) {
-    var val = new String(filterValue).trim().toLowerCase();
-    this.allAnnouncementMatTableData.filter = val;
+  pageChange(event) {
+    this.pageChangerLoading = true;
+    if (this.searchBar.searchText != "") {
+      this.announcementService
+        .getallAnnouncementSearchPageChange(
+          this.searchBar.searchText,
+          event.pageSize,
+          event.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          this.allAnnouncement = va;
+          this.allAnnouncementMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.announcementService
+        .getAllAnnouncementPagination(event.pageSize, event.pageIndex + 1)
+        .subscribe((va: any) => {
+          console.log(va);
+          this.allAnnouncement = va.ann;
+          this.allAnnouncementMatTableData = new MatTableDataSource(va.ann);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    }
+  }
+
+  searchAnnouncements(filterValue: any) {
+    this.pageChangerLoading = true;
+    if (filterValue != "") {
+      this.announcementService
+        .getallAnnouncementSearch(
+          filterValue,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          // console.log(va);
+          this.allAnnouncement = va.ann;
+          this.allAnnouncementMatTableData = new MatTableDataSource(va.ann);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.fetchData(this.paginator.pageSize);
+    }
   }
 
   navigateToPropertyDetailsPage(prop_id) {

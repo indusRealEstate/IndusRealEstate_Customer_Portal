@@ -7,11 +7,9 @@ import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
 import { LeaseService } from "app/services/lease.service";
-import { PropertiesService } from "app/services/properties.service";
-import { UnitsService } from "app/services/units.service";
-import { UserService } from "app/services/user.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Lease {
@@ -67,23 +65,21 @@ export class AllLeasesComponent implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
-  allProperties: any[] = [];
-  allUnits: any[] = [];
-  allUsers: any[] = [];
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   current_sort_option: any = "all";
 
   more_menu_lease_all_data: any = "";
   more_menu_lease_loaded: boolean = false;
 
+  pageChangerLoading: boolean = false;
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
+
+  tableLength: number = 0;
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private leaseService: LeaseService,
-    private propertyService: PropertiesService,
-    private unitService: UnitsService,
-    private userService: UserService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -111,12 +107,27 @@ export class AllLeasesComponent implements OnInit {
 
   changeSortOption(option: string) {
     this.current_sort_option = option;
+    this.searchBar.searchText = "";
     if (option != "all") {
-      this.allLeaseMatTableData.data = this.allLease.filter(
-        (unit) => unit.status == option
-      );
+      this.pageChangerLoading = true;
+
+      this.leaseService
+        .getallContractsFilter(
+          option,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          // console.log(va);
+          this.allLease = va.lease;
+          this.allLeaseMatTableData = new MatTableDataSource(va.lease);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     } else {
-      this.allLeaseMatTableData.data = this.allLease;
+      this.fetchData(this.paginator.pageSize);
     }
   }
 
@@ -143,49 +154,6 @@ export class AllLeasesComponent implements OnInit {
     }
   }
 
-  getbuildingName(prop_id) {
-    if (this.allProperties != null) {
-      var property = this.allProperties.find(
-        (prop) => prop.property_id == prop_id
-      );
-      if (property != undefined) {
-        return property.property_name;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  getUnitNo(unit_id) {
-    if (this.allUnits != null) {
-      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
-
-      if (unit != undefined) {
-        return unit.unit_no;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  getUserName(user_id) {
-    if (this.allUsers != null) {
-      var user = this.allUsers.find((u) => u.user_id == user_id);
-
-      if (user != undefined) {
-        return user.name;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
   getLeaseExpiry(end: any) {
     var start_date = new Date();
     var end_date = new Date(end);
@@ -197,103 +165,74 @@ export class AllLeasesComponent implements OnInit {
     return `${Math.round(difference_In_Days)} Days left`;
   }
 
-  fetchData() {
+  fetchData(limit?) {
+    if (this.searchBar != undefined) {
+      this.searchBar.searchText = "";
+    }
     this.leaseService
-      .getAllLeaseAdmin()
-      .subscribe((va: any[]) => {
-        this.allLease = va;
-        this.allLeaseMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          if (this.allLeaseMatTableData != undefined) {
-            this.allLeaseMatTableData.paginator = this.paginator;
-          }
-        });
+      .getAllContractsAdminPagination(limit == undefined ? 10 : limit, 1)
+      .subscribe((va: any) => {
+        // console.log(va);
+        this.allLease = va.lease;
+        this.allLeaseMatTableData = new MatTableDataSource(va.lease);
+        this.tableLength = va.count;
       })
       .add(() => {
         this.isContentLoading = false;
-        if (this.allLease.length != 0) {
-          sessionStorage.setItem(
-            "all_lease_session",
-            JSON.stringify(this.allLease)
-          );
-        }
+        this.pageChangerLoading = false;
       });
-    sessionStorage.setItem(
-      "all_lease_session_time_admin",
-      JSON.stringify(new Date().getMinutes())
-    );
   }
 
-  getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
+  pageChange(event) {
+    this.pageChangerLoading = true;
+    if (this.searchBar.searchText != "") {
+      this.leaseService
+        .getallContractsSearchPageChange(
+          this.searchBar.searchText,
+          event.pageSize,
+          event.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          this.allLease = va;
+          this.allLeaseMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     } else {
-      this.allProperties = propertiesDataSession;
-    }
-
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.unitService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-      });
-    } else {
-      this.allUnits = unitsDataSession;
-    }
-
-    var usersDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
-
-    if (usersDataSession == null) {
-      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
-        this.allUsers = val;
-      });
-    } else {
-      this.allUsers = usersDataSession;
+      if (this.current_sort_option != "all") {
+        this.leaseService
+          .getallContractsFilterPageChange(
+            this.current_sort_option,
+            event.pageSize,
+            event.pageIndex + 1
+          )
+          .subscribe((va: any) => {
+            // console.log(va);
+            this.allLease = va;
+            this.allLeaseMatTableData = new MatTableDataSource(va);
+            // this.tableLength = va.count;
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      } else {
+        this.leaseService
+          .getAllContractsAdminPagination(event.pageSize, event.pageIndex + 1)
+          .subscribe((va: any) => {
+            console.log(va);
+            this.allLease = va.lease;
+            this.allLeaseMatTableData = new MatTableDataSource(va.lease);
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      }
     }
   }
 
   async ngOnInit() {
-    this.getAllData();
-    var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("all_lease_session_time_admin")
-    );
-
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("all_lease_session")
-    );
-
-    if (previous != null) {
-      var diff = now - Number(previous);
-
-      if (diff >= 5) {
-        sessionStorage.removeItem("all_lease_session");
-        this.fetchData();
-      } else {
-        if (adminReqDataSession != null) {
-          this.allLease = adminReqDataSession;
-          this.allLeaseMatTableData = new MatTableDataSource(
-            adminReqDataSession
-          );
-          this.isContentLoading = false;
-          this.ngAfterViewInitInitialize = true;
-        } else {
-          this.fetchData();
-        }
-      }
-    } else {
-      this.fetchData();
-    }
+    this.fetchData();
   }
 
   clearAllVariables() {
@@ -302,15 +241,33 @@ export class AllLeasesComponent implements OnInit {
 
   refreshTable() {
     this.current_sort_option = "all";
-    sessionStorage.removeItem("all_lease_session");
     this.isContentLoading = true;
 
     this.fetchData();
   }
 
-  applyFilter(filterValue: any) {
-    var val = new String(filterValue).trim().toLowerCase();
-    this.allLeaseMatTableData.filter = val;
+  searchContracts(filterValue: any) {
+    this.current_sort_option = "all";
+    this.pageChangerLoading = true;
+    if (filterValue != "") {
+      this.leaseService
+        .getallContractsSearch(
+          filterValue,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          // console.log(va);
+          this.allLease = va.lease;
+          this.allLeaseMatTableData = new MatTableDataSource(va.lease);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.fetchData(this.paginator.pageSize);
+    }
   }
 
   addLeaseDialogOpen() {
@@ -323,8 +280,6 @@ export class AllLeasesComponent implements OnInit {
       .subscribe((res) => {
         if (res != undefined) {
           if (res.completed == true) {
-            sessionStorage.removeItem("admin_properties_units_session");
-            sessionStorage.removeItem("all_users_session");
             this.refreshTable();
             this.openSnackBar("New Lease added successfully", "Close");
           }
@@ -380,8 +335,6 @@ export class AllLeasesComponent implements OnInit {
             this.terminateLease(lease_id, unit_id, tenant_id);
             this.refreshTable();
             this.openSnackBar("Lease terminated successfully", "Close");
-            sessionStorage.removeItem("admin_properties_units_session");
-            sessionStorage.removeItem("all_users_session");
           }
         }
       });
@@ -403,7 +356,6 @@ export class AllLeasesComponent implements OnInit {
 
   updateData(data, index) {
     var updated_data = data.data;
-    sessionStorage.removeItem("all_lease_session");
 
     this.allLease[index].contract_end = updated_data.contract_end;
     this.allLease[index].move_in = updated_data.move_in;
@@ -443,15 +395,15 @@ export class AllLeasesComponent implements OnInit {
     var data: Lease[] = [];
 
     this.allLease.forEach((lease) => {
-      var unit = this.allUnits.find((u) => u.unit_id == lease.unit_id);
-      var tenant = this.allUsers.find((us) => us.user_id == lease.tenant_id);
+      var unit = "";
+      var tenant = "";
       data.push({
-        UNIT: unit.unit_no,
-        "TYPE OF APARTMENT": unit.unit_type,
-        "AREA (SQ/FT)": `${unit.size} SqFt`,
-        TENANT: tenant.name,
-        "PHONE NO": `${tenant.country_code_number} ${tenant.mobile_number}`,
-        "EMAIL ID": tenant.email,
+        UNIT: 0,
+        "TYPE OF APARTMENT": "",
+        "AREA (SQ/FT)": "",
+        TENANT: "",
+        "PHONE NO": "",
+        "EMAIL ID": "",
         "CONTRACT START": lease.contract_start,
         "CONTRACT END": lease.contract_end,
         "CONTRACT PERIOD (MONTHS)": "12",

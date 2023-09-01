@@ -46,7 +46,6 @@ export class AddAnnouncementDialog implements OnInit {
     private firbaseService: FirebaseService
   ) {
     this.getAllPropertiesName();
-    console.log(this.properties);
   }
 
   getAllPropertiesName() {
@@ -159,6 +158,9 @@ export class AddAnnouncementDialog implements OnInit {
     var data = {
       emergency: this.emergency,
       property_id: this.selected_property,
+      property_name: this.properties.find(
+        (prop) => prop.value == this.selected_property
+      ).viewValue,
       announcement_id: random_id,
       title: this.title,
       attachments: JSON.stringify(docs_names),

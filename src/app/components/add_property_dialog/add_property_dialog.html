@@ -92,7 +92,7 @@
             </div>
           </div>
         </div>
-        <div class="row m-0 mt-3">
+        <div class="row m-0 mt-4">
           <div class="col pl-0">
             <mat-form-field class="textField" appearance="outline">
               <mat-label>Property Name*</mat-label>
@@ -114,14 +114,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="mt-2" class="textField" appearance="outline">
-              <mat-label>Property In Charge</mat-label>
-              <input
-                matInput
-                placeholder="Ex. Jhon Due"
-                [(ngModel)]="property_in_charge"
-              />
-            </mat-form-field>
+
             <mat-form-field class="mt-2" class="textField" appearance="outline">
               <mat-label>Description</mat-label>
               <textarea
@@ -153,13 +146,21 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field class="mt-2" class="textField" appearance="outline">
+              <mat-label>Property In Charge</mat-label>
+              <input
+                matInput
+                placeholder="Ex. Jhon Due"
+                [(ngModel)]="property_in_charge"
+              />
+            </mat-form-field>
+            <!-- <mat-form-field class="mt-2" class="textField" appearance="outline">
               <mat-label>No. of Units</mat-label>
               <input
                 type="number"
                 matInput
                 [(ngModel)]="property_no_of_units"
               />
-            </mat-form-field>
+            </mat-form-field> -->
           </div>
 
           <div class="col pr-0" style="height: 35vh; overflow: auto">

@@ -6,9 +6,7 @@ const API_URL = "https://indusre.app/api/admin/lease_api";
 
 @Injectable({ providedIn: "root" })
 export class LeaseService {
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -97,5 +95,80 @@ export class LeaseService {
     });
 
     return this.http.request(req);
+  }
+
+  getAllContractsAdminPagination(limit: number, pageNumber: number) {
+    const url = `${API_URL}/getAllContractsAdmin_pagination.php?apikey=1`;
+    return this.http
+      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallContractsSearch(input: string, limit: number, pageNumber: number) {
+    const url = `${API_URL}/getAllContractsAdmin_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallContractsSearchPageChange(
+    input: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_contracts_page_change_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallContractsFilter(filter: string, limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_all_contracts_by_filter.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ filter: filter, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallContractsFilterPageChange(
+    filter: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_all_contracts_by_filter_page_change.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ filter: filter, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 }

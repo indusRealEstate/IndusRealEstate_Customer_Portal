@@ -142,26 +142,12 @@ export class AdminPropertiesUnits implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allUnitsMatTableData != undefined) {
-        this.allUnitsMatTableData.paginator = this.paginator;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allUnitsMatTableData != undefined) {
-          this.allUnitsMatTableData.paginator = this.paginator;
-        }
-      });
-    }
-  }
-
-  fetchData() {
+  fetchData(limit?) {
     if (this.searchBar != undefined) {
       this.searchBar.searchText = "";
     }
     this.unitService
-      .getallPropertiesUnits(10, 1)
+      .getallPropertiesUnits(limit == undefined ? 10 : limit, 1)
       .subscribe((va: any) => {
         // console.log(va);
         this.allUnits = va.units;
@@ -226,32 +212,6 @@ export class AdminPropertiesUnits implements OnInit {
     }
   }
 
-  // getAllData() {
-  //   var propertiesDataSession = JSON.parse(
-  //     sessionStorage.getItem("admin_properties_session")
-  //   );
-
-  //   if (propertiesDataSession == null) {
-  //     this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-  //       this.allProperties = val;
-  //     });
-  //   } else {
-  //     this.allProperties = propertiesDataSession;
-  //   }
-
-  //   var usersDataSession = JSON.parse(
-  //     sessionStorage.getItem("all_users_session")
-  //   );
-
-  //   if (usersDataSession == null) {
-  //     this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-  //       this.allUsers = val;
-  //     });
-  //   } else {
-  //     this.allUsers = usersDataSession;
-  //   }
-  // }
-
   async ngOnInit() {
     // this.getAllData();
     this.fetchData();
@@ -292,7 +252,7 @@ export class AdminPropertiesUnits implements OnInit {
           this.pageChangerLoading = false;
         });
     } else {
-      this.fetchData();
+      this.fetchData(this.paginator.pageSize);
     }
   }
 

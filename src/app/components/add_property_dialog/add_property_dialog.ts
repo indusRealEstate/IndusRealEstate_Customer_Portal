@@ -40,7 +40,6 @@ export class AddPropertyDialog implements OnInit {
 
   property_name: any = "";
   property_address: any = "";
-  property_no_of_units: any = "";
   property_in_charge: any = "";
 
   property_description: any = "";
@@ -211,7 +210,7 @@ export class AddPropertyDialog implements OnInit {
       address: this.property_address,
       property_type: this.property_building_type,
       locality_name: this.property_locality,
-      no_of_units: this.property_no_of_units,
+      no_of_units: 0,
       property_in_charge: this.property_in_charge,
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
