@@ -8,14 +8,9 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
 
 @Component({
   selector: "edit_category_dialog",
@@ -78,18 +73,16 @@ export class EditCategoryDialog implements OnInit {
   edit_show: boolean = false;
 
   selected_unit: object = {
-    value: '',
-    viewValue: ''
+    value: "",
+    viewValue: "",
   };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditCategoryDialog>,
-    private apiService: ApiService,
-    private apiAdminService: AdminService,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog?: MatDialog
+    private unitsService: UnitsService,
+    private requestService: RequestService,
+    private formBuilder: FormBuilder
   ) {
     this.category_data = data;
     this.name = data.name;
@@ -102,7 +95,7 @@ export class EditCategoryDialog implements OnInit {
 
     this.preview_image = `https://indusre.app/api/upload/category/${this.image}`;
 
-    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+    this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
       console.log(val);
 
       var count = 0;
@@ -193,7 +186,7 @@ export class EditCategoryDialog implements OnInit {
   onCloseDialog() {
     this.dialogRef.close({
       form_submit: this.form_submit,
-      status : this.msg_status,
+      status: this.msg_status,
       msg: this.form_submit ? this.alert_msg : undefined,
     });
   }
@@ -208,7 +201,7 @@ export class EditCategoryDialog implements OnInit {
     };
     let json_format = JSON.stringify(data);
 
-    this.apiAdminService
+    this.requestService
       .changeCategoryStatus(json_format)
       .subscribe((value: any) => {
         console.log(value);
@@ -219,7 +212,7 @@ export class EditCategoryDialog implements OnInit {
 
   delete_item(data: any) {
     this.display_msg = true;
-    this.apiAdminService.deleteServiceCategory(data).subscribe((value: any) => {
+    this.requestService.deleteServiceCategory(data).subscribe((value: any) => {
       if (value.status == 1) {
         this.alert_msg = value.msg;
         this.item_deleted = true;
@@ -241,10 +234,9 @@ export class EditCategoryDialog implements OnInit {
     if (this.category_name !== "" && this.unit_id !== "") {
       this.input_array = [];
 
-      let image_array =
-      this.image_selected
-          ? this.preview_image.split(";base64,")
-          : undefined;
+      let image_array = this.image_selected
+        ? this.preview_image.split(";base64,")
+        : undefined;
       let image_data = image_array != undefined ? image_array[1] : undefined;
       let image_type =
         image_array != undefined ? image_array[0].split("/")[1] : undefined;
@@ -259,7 +251,7 @@ export class EditCategoryDialog implements OnInit {
         unit_type: this.unit_id,
       });
 
-      this.apiAdminService
+      this.requestService
         .updateCategory(JSON.stringify(this.input_array))
         .subscribe((value: any) => {
           this.alert_msg = value.msg;

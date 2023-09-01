@@ -17,6 +17,11 @@ import {
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
+import { LeaseService } from "app/services/lease.service";
+import { PropertiesService } from "app/services/properties.service";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 
 @Component({
   selector: "admin-dashboard",
@@ -51,7 +56,11 @@ export class AdminDashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
+    private leaseService: LeaseService,
+    private requestService: RequestService,
     private firebaseService: FirebaseService,
     private router: Router,
     private authenticationService: AuthenticationService
@@ -152,7 +161,7 @@ export class AdminDashboardComponent implements OnInit {
     );
 
     if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
         this.allProperties = val;
       });
     } else {
@@ -164,7 +173,7 @@ export class AdminDashboardComponent implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
         this.allUnits = val;
         val.forEach((unit) => {
           if (unit.status == "occupied") {
@@ -190,7 +199,7 @@ export class AdminDashboardComponent implements OnInit {
     );
 
     if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
         this.allUsers = val;
       });
     } else {
@@ -202,18 +211,18 @@ export class AdminDashboardComponent implements OnInit {
     );
 
     if (leaseDataSession == null) {
-      this.adminService.getAllLeaseAdmin().subscribe((val: any[]) => {
+      this.leaseService.getAllLeaseAdmin().subscribe((val: any[]) => {
         this.allContracts = val;
       });
     } else {
       this.allContracts = leaseDataSession;
     }
 
-    this.adminService.getAllRequestsAdminCount().subscribe((val: any[]) => {
+    this.requestService.getAllRequestsAdminCount().subscribe((val: any[]) => {
       this.allRequests = val;
     });
 
-    this.adminService
+    this.leaseService
       .getAllContractsReminders()
       .subscribe((res: any[]) => {
         this.total_contracts_reminders_items = res;

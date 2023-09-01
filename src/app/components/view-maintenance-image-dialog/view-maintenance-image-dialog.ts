@@ -1,14 +1,11 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { AdminService } from "app/services/admin.service";
 // import { DownloadService } from "app/services/download.service";
 // import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-  MatDialogModule
+  MatDialogRef
 } from "@angular/material/dialog";
+import { RequestService } from "app/services/request.service";
 
 
 
@@ -34,7 +31,7 @@ export class ViewMaintenanceImageDialog implements OnInit {
     // private dialogRef: MatDialogRef,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewMaintenanceImageDialog>,
-    private appAdminService: AdminService,
+    private requestService: RequestService,
     // private appdownloadService: DownloadService,
   ) {
    
@@ -55,7 +52,7 @@ export class ViewMaintenanceImageDialog implements OnInit {
 
     console.log(data);
 
-    this.appAdminService
+    this.requestService
       .getRequestsDetails(JSON.stringify(data)).subscribe((val) => {
         
         this.all_data = val;

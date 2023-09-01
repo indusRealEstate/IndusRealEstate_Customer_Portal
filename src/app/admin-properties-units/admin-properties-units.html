@@ -371,35 +371,44 @@
             <!-- Name Column -->
             <ng-container matColumnDef="unitNo">
               <th mat-header-cell *matHeaderCellDef>Unit No</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
 
             <ng-container matColumnDef="propertyName">
               <th mat-header-cell *matHeaderCellDef>Property Name</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="floor">
               <th mat-header-cell *matHeaderCellDef>Floors</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="size">
               <th mat-header-cell *matHeaderCellDef>Size</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
             <ng-container matColumnDef="ownerName">
               <th mat-header-cell *matHeaderCellDef>Owner Name</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
             <ng-container matColumnDef="bedroom">
               <th mat-header-cell *matHeaderCellDef>Bedrooms</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
             <ng-container matColumnDef="bathroom">
               <th mat-header-cell *matHeaderCellDef>Bathrooms</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
             <ng-container matColumnDef="more">
               <th mat-header-cell *matHeaderCellDef>More</th>
+              <td mat-cell *matCellDef="let element"></td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -412,7 +421,7 @@
             class="d-flex align-items-center justify-content-center"
             style="
               background: white;
-              margin-top: -2rem;
+              margin-top: -16rem;
               text-align: center;
               box-shadow: none !important;
               border-bottom: 1px solid #e6ebf1;
@@ -420,7 +429,7 @@
               border-right: 1px solid #e6ebf1;
               border-bottom-left-radius: 10px;
               border-bottom-right-radius: 10px;
-              height: 15rem;
+              height: 20rem;
               min-width: 1250px;
             "
           >

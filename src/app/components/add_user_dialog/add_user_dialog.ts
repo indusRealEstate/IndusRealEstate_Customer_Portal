@@ -1,3 +1,4 @@
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {
   Component,
   ElementRef,
@@ -7,11 +8,10 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
+import { UserService } from "app/services/user.service";
+import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
-import { HttpEvent, HttpEventType } from "@angular/common/http";
-import { last, map, tap } from "rxjs";
 
 @Component({
   // standalone: true,
@@ -24,7 +24,7 @@ export class AddUserDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddUserDialog>,
-    private adminService: AdminService,
+    private userService: UserService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -147,10 +147,10 @@ export class AddUserDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.adminService.addUser(data).subscribe((val) => {
+        this.userService.addUser(data).subscribe((val) => {
           if (val == "success") {
             var uploadData = this.setupUploadFiles(random_id, docs_names);
-            this.adminService
+            this.userService
               .uploadAllFilesAddUser(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
@@ -187,7 +187,7 @@ export class AddUserDialog implements OnInit {
         swift_code: this.user_bank_swift_code,
         iban: this.user_bank_iban,
       };
-      this.adminService
+      this.userService
         .addUserBankDetails(JSON.stringify(bank_data))
         .subscribe((val) => {});
     }

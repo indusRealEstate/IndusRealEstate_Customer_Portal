@@ -3,19 +3,12 @@ import {
   EventEmitter,
   Inject,
   OnInit,
-  Output,
-  ViewChild,
+  Output
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { saveAs } from "file-saver";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
 import { DownloadService } from "app/services/download.service";
 
 @Component({

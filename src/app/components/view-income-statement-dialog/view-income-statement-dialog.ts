@@ -1,15 +1,9 @@
-import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {
   Component,
-  ElementRef,
   Inject,
-  OnInit,
-  ViewChild,
+  OnInit
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
-import { catchError, last, map, tap } from "rxjs";
-import * as uuid from "uuid";
 
 interface Staff {
   value: string;
@@ -32,7 +26,6 @@ export class ViewIncomeStatementDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewIncomeStatementDialog>,
-    private appAdminService: AdminService
   ) {}
 
   

@@ -1,16 +1,23 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject, Observable, Observer, of } from "rxjs";
-import { OtherServices } from "./other.service";
+import {
+  BehaviorSubject,
+  Observable,
+  Observer,
+  catchError,
+  map,
+  of,
+} from "rxjs";
 import { io } from "socket.io-client";
-import { ApiService } from "./api.service";
+import { OtherServices } from "./other.service";
+
+const API_URL = "https://indusre.app/user/chat";
 
 @Injectable({ providedIn: "root" })
 export class ChatService implements OnDestroy {
   constructor(
     public http: HttpClient,
     private otherServices: OtherServices,
-    private apiService: ApiService
   ) {}
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -139,8 +146,7 @@ export class ChatService implements OnDestroy {
       console.log(err);
     });
 
-    this.apiService
-      .fetchAllCLientsForChat({ userId: user_id })
+    this.fetchAllCLientsForChat({ userId: user_id })
       .subscribe((va: any[]) => {
         this.allClients.next(va);
       })
@@ -150,16 +156,13 @@ export class ChatService implements OnDestroy {
         });
       });
 
-    this.apiService
-      .fetchAllPeopleSendChats({ userId: user_id })
-      .subscribe((v: any[]) => {
-        this.allChatsPeople.next(v);
-        // console.log(v, "api");
-      });
+    this.fetchAllPeopleSendChats({ userId: user_id }).subscribe((v: any[]) => {
+      this.allChatsPeople.next(v);
+      // console.log(v, "api");
+    });
 
     var e: any[] = [];
-    this.apiService
-      .fetchAllChatMessages({ userId: user_id })
+    this.fetchAllChatMessages({ userId: user_id })
       .subscribe((val: any[]) => {
         e = val;
         e.sort((a, b) => {
@@ -261,6 +264,76 @@ export class ChatService implements OnDestroy {
         this.notTypingUser.next(usr_n);
       }
     });
+  }
+
+  fetchAllCLientsForChat(data: any) {
+    const url = `${API_URL}/fetchAllCLientsForChat.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  fetchAllChatMessages(data: any) {
+    const url = `${API_URL}/fetchAllChatMessages.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  fetchAllPeopleSendChats(data: any) {
+    const url = `${API_URL}/fetchAllPeopleSendChats.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  deleteChatMessage(data: any) {
+    const url = `${API_URL}/deleteChatMessage.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  sendChatMessage(data: any) {
+    const url = `${API_URL}/sendChatMessage.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  updateChatRead(message_id: any) {
+    const url = `${API_URL}/updateChatRead.php?apikey=1`;
+    return this.http.post<any>(url, { message_id: message_id }).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  uploadFileChat(data: any) {
+    const url = `https://indusre.app/api/uploadFileChat.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("uploadFileChat", [])));
+  }
+
+  deleteFileFromServer(data: any) {
+    const url = `https://indusre.app/api/deleteFileFromServer.php?apikey=1`;
+
+    return this.http
+      .post(url, data)
+      .pipe(catchError(this.handleError("deleteFileFromServer", [])));
   }
 
   ngOnDestroy(): void {

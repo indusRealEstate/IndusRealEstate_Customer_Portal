@@ -8,7 +8,6 @@ import { AdminPropertiesUnits } from "app/admin-properties-units/admin-propertie
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 import { AdminReport } from "app/admin-report/admin-report";
-import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsCategory } from "app/admin-requests-category/admin-requests-category";
 import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
@@ -18,21 +17,16 @@ import { ViewUserDetails } from "app/admin-user-details/admin-user-details";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AllUsersComponent } from "app/all-users/all-users";
 import { Announcements } from "app/announcements/announcements";
-import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
-import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { DetailsComponents } from "app/property-details/details-properties";
 import { UserChatsComponent } from "app/user_chats/user_chats";
 
 export const AdminLayoutRoutes: Routes = [
-  { path: "all-clients-documents", component: AllClientsDocuments },
-  { path: "client-documents", component: IndividualDocumentsComponent },
   // admin pages
   { path: "admin-dashboard", component: AdminDashboardComponent },
   { path: "user-chats", component: UserChatsComponent },
   // { path: "admin-requests", component: AdminRequests },
   { path: "admin-requests", component: AdminRequests },
-  { path: "review-request-admin", component: ReviewRequestAdmin },
   { path: "admin-requests-archive", component: AdminRequestsArchive },
   { path: "admin-requests-spam", component: AdminRequestsSpam },
   { path: "login", component: LoginComponent },

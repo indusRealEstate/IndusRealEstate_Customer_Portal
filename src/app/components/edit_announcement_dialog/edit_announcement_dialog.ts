@@ -8,6 +8,8 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
+import { AnnouncementService } from "app/services/announcement.service";
+import { PropertiesService } from "app/services/properties.service";
 import { last, map, tap } from "rxjs";
 
 @Component({
@@ -46,7 +48,8 @@ export class EditAnnouncementDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditAnnouncementDialog>,
-    private adminService: AdminService
+    private announcementService: AnnouncementService,
+    private propertyService: PropertiesService
   ) {
     this.all_data = data;
 
@@ -68,7 +71,7 @@ export class EditAnnouncementDialog implements OnInit {
   }
 
   getAllPropertiesName() {
-    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
       val.forEach((item) =>
         this.properties.push({
           value: item.property_id,
@@ -134,11 +137,11 @@ export class EditAnnouncementDialog implements OnInit {
 
       let data = this.setupData(r_id, docs_names);
       // console.log(this.removed_existing_docs);
-      this.adminService.updateAnnouncement(data).subscribe((value) => {
+      this.announcementService.updateAnnouncement(data).subscribe((value) => {
         // console.log(data);
         if (value == "success") {
           if (this.removed_existing_docs.length != 0) {
-            this.adminService
+            this.announcementService
               .deleteAnnouncementDocs(
                 JSON.stringify({
                   names: this.removed_existing_docs,
@@ -153,7 +156,7 @@ export class EditAnnouncementDialog implements OnInit {
             this.uploading_progress = 0;
             let uploadData = this.setupUploadFiles(r_id, docs_names_new);
             // console.log(uploadData);
-            this.adminService
+            this.announcementService
               .uploadAllFilesAddAnnouncement(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),

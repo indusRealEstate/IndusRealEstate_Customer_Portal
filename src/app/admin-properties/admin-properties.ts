@@ -9,6 +9,8 @@ import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_pro
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { PropertiesService } from "app/services/properties.service";
+import { UnitsService } from "app/services/units.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Property {
@@ -66,7 +68,8 @@ export class AdminProperties implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
+    private unitService: UnitsService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -136,7 +139,7 @@ export class AdminProperties implements OnInit {
       this.isContentLoading = false;
       this.ngAfterViewInitInitialize = true;
     } else {
-      this.adminService
+      this.propertyService
         .getallPropertiesAdmin()
         .subscribe((va: any[]) => {
           this.allProperties = va;
@@ -169,7 +172,7 @@ export class AdminProperties implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+      this.unitService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
         this.allUnits = val;
       });
     } else {
@@ -256,7 +259,7 @@ export class AdminProperties implements OnInit {
 
   openMoreMenu(prop_id) {
     this.more_menu_prop_all_data = "";
-    this.adminService
+    this.propertyService
       .getPropDetails(JSON.stringify({ prop_id: prop_id }))
       .subscribe((value) => {
         this.more_menu_prop_all_data = value;

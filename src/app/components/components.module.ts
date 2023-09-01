@@ -27,6 +27,8 @@ import { AddLeaseDialog } from "./add_lease_dialog/add_lease_dialog";
 import { AddPropertyDialog } from "./add_property_dialog/add_property_dialog";
 import { AddUnitDialog } from "./add_unit_dialog/add_unit_dialog";
 import { AddUserDialog } from "./add_user_dialog/add_user_dialog";
+import { AnnouncementDetailsDialog } from "./announcement-details-dialog/announcement-details-dialog";
+import { CautionDialog } from "./caution-dialog/caution-dialog";
 import { CountryDropdown } from "./country-dropdown/country-dropdown";
 import { DocUploadDialogRegister } from "./dialog/dialog";
 import { DndDirective } from "./dialog/dnd.directive";
@@ -40,13 +42,10 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { ProgressComponent } from "./progressbar/progress";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { SuccessDialogRegister } from "./success-dialog/success_dialog";
-import { ViewImageDialog } from "./view-image-dialog/view-image-dialog";
 import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { DialogViewMedia } from "./view_media/view_media";
-import { CautionDialog } from "./caution-dialog/caution-dialog";
-import { AnnouncementDetailsDialog } from "./announcement-details-dialog/announcement-details-dialog";
 
 @NgModule({
   imports: [
@@ -81,7 +80,6 @@ import { AnnouncementDetailsDialog } from "./announcement-details-dialog/announc
     ProgressComponent,
     SuccessDialogRegister,
     DndDirective,
-    ViewImageDialog,
     AddPropertyDialog,
     EditPropertyDialog,
     AddUnitDialog,

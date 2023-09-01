@@ -7,9 +7,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
+import { PropertiesService } from "app/services/properties.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
-import * as uuid from "uuid";
 
 interface DropDownButtonModel {
   value: string;
@@ -100,7 +101,9 @@ export class EditUnitDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditUnitDialog>,
-    private adminService: AdminService
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
   ) {
     this.all_data = data;
     this.getAllTheDropdowns();
@@ -155,7 +158,7 @@ export class EditUnitDialog implements OnInit {
   }
 
   getAllTheDropdowns() {
-    this.adminService
+    this.propertyService
       .getallPropertiesAdmin()
       .subscribe((val: any[]) => {
         val.forEach((prop) =>
@@ -175,7 +178,7 @@ export class EditUnitDialog implements OnInit {
       });
 
     // this.users = [];
-    this.adminService
+    this.userService
       .getAllUsersAdmin()
       .subscribe((val: any[]) => {
         val.forEach((user) => {
@@ -322,7 +325,7 @@ export class EditUnitDialog implements OnInit {
         data: new_inventories,
       };
 
-      this.adminService.addInventory(JSON.stringify(data)).subscribe((res) => {
+      this.unitsService.addInventory(JSON.stringify(data)).subscribe((res) => {
         console.log(res);
       });
     }
@@ -378,7 +381,7 @@ export class EditUnitDialog implements OnInit {
           this.uploaded_doc
         );
 
-        this.adminService.editUnit(data).subscribe((val) => {
+        this.unitsService.editUnit(data).subscribe((val) => {
           if (val == "success") {
             this.addInventories(random_id);
             var uploadData = this.setupUploadFiles(
@@ -386,7 +389,7 @@ export class EditUnitDialog implements OnInit {
               images_names,
               docs_names
             );
-            this.adminService
+            this.unitsService
               .uploadAllFilesAddUnit(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),

@@ -4,9 +4,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import { PropertiesService } from "app/services/properties.service";
 
 @Component({
   selector: "property-details",
@@ -42,7 +42,7 @@ export class DetailsComponents implements OnInit {
 
   constructor(
     private router: Router,
-    private appAdminService: AdminService,
+    private propertyService: PropertiesService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private otherServices: OtherServices,
@@ -102,7 +102,7 @@ export class DetailsComponents implements OnInit {
     let data = {
       prop_id: this.prop_id,
     };
-    this.appAdminService
+    this.propertyService
       .getPropDetails(JSON.stringify(data))
       .subscribe((value) => {
         console.log(value);

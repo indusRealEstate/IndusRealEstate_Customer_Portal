@@ -8,8 +8,9 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
+import { AnnouncementService } from "app/services/announcement.service";
 import { FirebaseService } from "app/services/firebase.service";
+import { PropertiesService } from "app/services/properties.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
@@ -40,7 +41,8 @@ export class AddAnnouncementDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddAnnouncementDialog>,
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
+    private announcementService: AnnouncementService,
     private firbaseService: FirebaseService
   ) {
     this.getAllPropertiesName();
@@ -48,7 +50,7 @@ export class AddAnnouncementDialog implements OnInit {
   }
 
   getAllPropertiesName() {
-    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
       val.forEach((item) =>
         this.properties.push({
           value: item.property_id,
@@ -91,12 +93,12 @@ export class AddAnnouncementDialog implements OnInit {
         docs_names.push(doc.name);
       }
       var data = this.setupData(random_id, docs_names);
-      this.adminService.addAnnouncement(data).subscribe(async (val) => {
+      this.announcementService.addAnnouncement(data).subscribe(async (val) => {
         if (val == "success") {
           if (this.docsFilesUploaded.length != 0) {
             this.uploading_progress = 0;
             var uploadData = this.setupUploadFiles(random_id, docs_names);
-            this.adminService
+            this.announcementService
               .uploadAllFilesAddAnnouncement(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),

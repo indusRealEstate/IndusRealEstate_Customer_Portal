@@ -7,6 +7,10 @@ import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { PropertiesService } from "app/services/properties.service";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 
 @Component({
   selector: "admin-requests-spam",
@@ -51,7 +55,10 @@ export class AdminRequestsSpam implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
+    private requestService: RequestService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -139,7 +146,7 @@ export class AdminRequestsSpam implements OnInit {
   }
 
   fetchData() {
-    this.adminService
+    this.requestService
       .getSpamRequestsAdmin()
       .subscribe((va: any[]) => {
         this.allRequests = va;
@@ -161,7 +168,7 @@ export class AdminRequestsSpam implements OnInit {
     );
 
     if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
         this.allProperties = val;
       });
     } else {
@@ -173,7 +180,7 @@ export class AdminRequestsSpam implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
         this.allUnits = val;
       });
     } else {
@@ -185,7 +192,7 @@ export class AdminRequestsSpam implements OnInit {
     );
 
     if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
         this.allUsers = val;
       });
     } else {
@@ -262,7 +269,7 @@ export class AdminRequestsSpam implements OnInit {
       id: data.request_id,
       type: type,
     };
-    this.adminService
+    this.requestService
       .updateRequestMore(JSON.stringify(output))
       .subscribe((value) => {
         // this.refreshTable();
@@ -278,7 +285,7 @@ export class AdminRequestsSpam implements OnInit {
     if (data.length == this.allRequests.length) {
       this.allRequests.length = 0;
       this.allRequestsMatTableData._updateChangeSubscription();
-      this.adminService
+      this.requestService
         .removeAllRequestsFromArchive(
           JSON.stringify({ reqs: data, type: "spam" })
         )

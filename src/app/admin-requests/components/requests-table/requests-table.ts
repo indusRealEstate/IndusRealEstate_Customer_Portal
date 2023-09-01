@@ -14,16 +14,14 @@ import { Router } from "@angular/router";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { ViewAllAsignStaff } from "app/components/view_all_assign_staff/view_all_assign_staff";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { PropertiesService } from "app/services/properties.service";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 import {
   BehaviorSubject,
-  Observable,
-  debounceTime,
-  first,
-  last,
-  share,
-  shareReplay,
+  Observable
 } from "rxjs";
 
 @Component({
@@ -98,7 +96,10 @@ export class RequestsTable implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
+    private requestService: RequestService,
     public dialog: MatDialog
   ) {
     this.getScreenSize();
@@ -180,7 +181,7 @@ export class RequestsTable implements OnInit {
     );
 
     if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
         this.allProperties = val;
       });
     } else {
@@ -192,7 +193,7 @@ export class RequestsTable implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
         this.allUnits = val;
       });
     } else {
@@ -204,7 +205,7 @@ export class RequestsTable implements OnInit {
     );
 
     if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
         this.allUsers = val;
       });
     } else {
@@ -266,7 +267,7 @@ export class RequestsTable implements OnInit {
       id: data.request_id,
       type: type,
     };
-    this.adminService
+    this.requestService
       .updateRequestMore(JSON.stringify(output))
       .subscribe((value) => {})
       .add(() => {

@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
+import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
 
@@ -77,7 +77,7 @@ export class EditUserDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditUserDialog>,
-    private adminService: AdminService,
+    private userService: UserService,
     private formBuilder: FormBuilder
   ) {
     console.log(data);
@@ -208,13 +208,13 @@ export class EditUserDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.adminService.editUser(data).subscribe((val) => {
+        this.userService.editUser(data).subscribe((val) => {
           if (val == "success") {
             if (
               this.existing_img_removed == true ||
               this.removed_existing_docs.length != 0
             ) {
-              this.adminService
+              this.userService
                 .deleteRemovedUserFiles(
                   JSON.stringify({
                     img:
@@ -231,7 +231,7 @@ export class EditUserDialog implements OnInit {
             }
 
             var uploadData = this.setupUploadFiles(random_id, docs_names_new);
-            this.adminService
+            this.userService
               .uploadAllFilesAddUser(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
@@ -271,7 +271,7 @@ export class EditUserDialog implements OnInit {
         swift_code: this.user_bank_swift_code,
         iban: this.user_bank_iban,
       };
-      this.adminService
+      this.userService
         .addUserBankDetails(JSON.stringify(bank_data))
         .subscribe((val) => {});
     }

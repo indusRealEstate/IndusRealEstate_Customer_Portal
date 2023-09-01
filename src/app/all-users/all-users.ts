@@ -3,12 +3,14 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { PropertiesService } from "app/services/properties.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface User {
@@ -78,8 +80,9 @@ export class AllUsersComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private readonly route: ActivatedRoute,
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -209,7 +212,7 @@ export class AllUsersComponent implements OnInit {
   }
 
   fetchData() {
-    this.adminService
+    this.userService
       .getAllUsersAdmin()
       .subscribe((va: any[]) => {
         // console.log(va);
@@ -242,7 +245,7 @@ export class AllUsersComponent implements OnInit {
     );
 
     if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
         this.allProperties = val;
       });
     } else {
@@ -254,7 +257,7 @@ export class AllUsersComponent implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
         this.allUnits = val;
       });
     } else {
@@ -336,7 +339,7 @@ export class AllUsersComponent implements OnInit {
 
   openMoreMenu(user_id) {
     this.more_menu_user_all_data = "";
-    this.adminService
+    this.userService
       .getUserDetailsForEdit({ user_id: user_id })
       .subscribe((res) => {
         this.more_menu_user_all_data = res;

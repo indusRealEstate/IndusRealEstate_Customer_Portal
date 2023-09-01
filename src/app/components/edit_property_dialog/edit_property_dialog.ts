@@ -8,6 +8,7 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
+import { PropertiesService } from "app/services/properties.service";
 import { catchError, last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
@@ -79,7 +80,7 @@ export class EditPropertyDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditPropertyDialog>,
-    private adminService: AdminService
+    private propertyService: PropertiesService
   ) {
     this.all_data = data;
 
@@ -269,7 +270,7 @@ export class EditPropertyDialog implements OnInit {
 
         let data = this.setupData(random_id, exist_img, exist_doc);
 
-        this.adminService.updateProperty(data).subscribe((value) => {
+        this.propertyService.updateProperty(data).subscribe((value) => {
           if (value == "success") {
             this.uploading_progress = 0;
             let uploadData = this.setupUploadFiles(
@@ -278,7 +279,7 @@ export class EditPropertyDialog implements OnInit {
               images_names,
               docs_names
             );
-            this.adminService
+            this.propertyService
               .uploadAllFilesEditProperty(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),

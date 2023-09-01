@@ -1,14 +1,9 @@
-import { MatTableDataSource } from '@angular/material/table';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { Component, Inject, OnInit } from "@angular/core";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: "view_all_unit_documents",
@@ -27,11 +22,6 @@ export class ViewAllUnitDocuments implements OnInit {
   constructor( 
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewAllUnitDocuments>,
-    private apiService: ApiService,
-    private apiAdminService: AdminService,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog?: MatDialog
   ) {
     for(let i = 0; i < JSON.parse(data.doc).length; i++){
       this.unit_doc_array.push(JSON.parse(data.doc)[i]);

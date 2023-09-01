@@ -10,12 +10,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
 
 @Component({
   selector: "add_category_dialog",
@@ -66,13 +64,11 @@ export class AddCategoryDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddCategoryDialog>,
-    private apiService: ApiService,
-    private apiAdminService: AdminService,
-    private router: Router,
+    private unitService: UnitsService,
+    private requestService: RequestService,
     private formBuilder: FormBuilder,
-    private dialog?: MatDialog
   ) {
-    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+    this.unitService.getallUnitTypes().subscribe((val: any[]) => {
       val.forEach((unit) => {
         this.units.push({
           value: unit.id,
@@ -187,7 +183,7 @@ export class AddCategoryDialog implements OnInit {
         unit: this.unit_id,
       });
 
-      this.apiAdminService
+      this.requestService
         .insertCategory(JSON.stringify(this.input_array))
         .subscribe((value: any) => {
           this.alert_msg = value.msg;

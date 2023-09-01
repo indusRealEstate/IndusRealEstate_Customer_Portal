@@ -7,9 +7,11 @@ import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { data } from "jquery";
+import { LeaseService } from "app/services/lease.service";
+import { PropertiesService } from "app/services/properties.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Lease {
@@ -78,7 +80,10 @@ export class AllLeasesComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private leaseService: LeaseService,
+    private propertyService: PropertiesService,
+    private unitService: UnitsService,
+    private userService: UserService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -193,7 +198,7 @@ export class AllLeasesComponent implements OnInit {
   }
 
   fetchData() {
-    this.adminService
+    this.leaseService
       .getAllLeaseAdmin()
       .subscribe((va: any[]) => {
         this.allLease = va;
@@ -225,7 +230,7 @@ export class AllLeasesComponent implements OnInit {
     );
 
     if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
         this.allProperties = val;
       });
     } else {
@@ -237,7 +242,7 @@ export class AllLeasesComponent implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+      this.unitService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
         this.allUnits = val;
       });
     } else {
@@ -249,7 +254,7 @@ export class AllLeasesComponent implements OnInit {
     );
 
     if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
         this.allUsers = val;
       });
     } else {
@@ -329,7 +334,7 @@ export class AllLeasesComponent implements OnInit {
 
   openMoreMenu(lease_id) {
     this.more_menu_lease_all_data = "";
-    this.adminService
+    this.leaseService
       .getAllLeaseData({ id: lease_id })
       .subscribe((value) => {
         this.more_menu_lease_all_data = value;
@@ -383,7 +388,7 @@ export class AllLeasesComponent implements OnInit {
   }
 
   terminateLease(lease_id, unit_id, tenant_id) {
-    this.adminService
+    this.leaseService
       .terminateLease(
         JSON.stringify({
           lease_id: lease_id,

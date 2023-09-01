@@ -6,8 +6,8 @@ import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-imag
 import { DialogViewMedia } from "app/components/view_media/view_media";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { DownloadService } from "app/services/download.service";
 import { OtherServices } from "./../services/other.service";
+import { RequestService } from "app/services/request.service";
 //  import { FormsModule } from "@angular/forms";
 interface Staff {
   value: string;
@@ -86,11 +86,10 @@ export class AdminRequestsDetails implements OnInit {
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
-    private appAdminService: AdminService,
+    private requestService: RequestService,
     private otherServices: OtherServices,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private appdownloadService: DownloadService,
     public http: HttpClient,
     public dialog: MatDialog
   ) {
@@ -132,7 +131,7 @@ export class AdminRequestsDetails implements OnInit {
     let data = {
       request_id: this.request_id,
     };
-    this.appAdminService
+    this.requestService
       .getRequestsDetails(JSON.stringify(data))
       .subscribe((val) => {
         this.all_data = val;
@@ -255,7 +254,7 @@ export class AdminRequestsDetails implements OnInit {
       status: status,
     };
 
-    this.appAdminService
+    this.requestService
       .updateRequestStatus(JSON.stringify(data))
       .subscribe((value) => {
         console.log(value);
@@ -382,33 +381,33 @@ export class AdminRequestsDetails implements OnInit {
   }
 
   assignStaff() {
-    if (this.date_select) {
-      if (this.selected_time !== "" && this.select_staff !== "") {
-        this.staff_assigned = true;
-        let format = new Intl.DateTimeFormat("en", {
-          year: "numeric",
-          month: "short",
-          day: "2-digit",
-        }).format(this.assign_date);
-        let selected_date = this.assign_date.toLocaleDateString("en-US");
+    // if (this.date_select) {
+    //   if (this.selected_time !== "" && this.select_staff !== "") {
+    //     this.staff_assigned = true;
+    //     let format = new Intl.DateTimeFormat("en", {
+    //       year: "numeric",
+    //       month: "short",
+    //       day: "2-digit",
+    //     }).format(this.assign_date);
+    //     let selected_date = this.assign_date.toLocaleDateString("en-US");
 
-        let data = {
-          id: this.all_data.main_request_id,
-          name: this.select_staff,
-          date: format,
-          time: this.selected_time,
-        };
+    //     let data = {
+    //       id: this.all_data.main_request_id,
+    //       name: this.select_staff,
+    //       date: format,
+    //       time: this.selected_time,
+    //     };
 
-        this.appAdminService
-          .assignStaff(JSON.stringify(data))
-          .subscribe((value: any) => {
-            console.log(value);
-            this.maintenance_staff = value.data;
-          });
+    //     this.appAdminService
+    //       .assignStaff(JSON.stringify(data))
+    //       .subscribe((value: any) => {
+    //         console.log(value);
+    //         this.maintenance_staff = value.data;
+    //       });
 
-        this.reassign = false;
-      }
-    }
+    //     this.reassign = false;
+    //   }
+    // }
   }
 
   reassignStaff() {

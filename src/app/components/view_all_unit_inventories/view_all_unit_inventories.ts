@@ -1,14 +1,9 @@
-import { MatTableDataSource } from '@angular/material/table';
 import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: "view_all_unit_inventories",
@@ -36,11 +31,6 @@ export class ViewAllUnitInventories implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewAllUnitInventories>,
-    private apiService: ApiService,
-    private apiAdminService: AdminService,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog?: MatDialog
   ) {
     for (let i = 0; i < data.inventories.length; i++) {
       this.unit_inventories_array.push(data.inventories[i]);

@@ -2,9 +2,7 @@ import { Component, HostListener, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "app/services/authentication.service";
-import { FirebaseService } from "app/services/firebase.service";
 import { OtherServices } from "app/services/other.service";
-import { io } from "socket.io-client";
 
 @Component({
   selector: "user-login",
@@ -34,7 +32,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private otherServices: OtherServices,
-    private firebaseService: FirebaseService
   ) {
     this.getScreenSize();
     // redirect to home if already logged in

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { UserService } from "app/services/user.service";
 
 @Component({
   selector: "admin-user-details",
@@ -40,7 +41,7 @@ export class ViewUserDetails implements OnInit {
 
   constructor(
     private router: Router,
-    private appAdminService: AdminService,
+    private userService: UserService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private _snackBar: MatSnackBar,
@@ -157,7 +158,7 @@ export class ViewUserDetails implements OnInit {
       user_id: this.user_id,
       auth: this.user_auth,
     };
-    this.appAdminService
+    this.userService
       .getAllUserDetails(JSON.stringify(data))
       .subscribe((value) => {
         console.log(value);
