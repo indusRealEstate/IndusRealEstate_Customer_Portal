@@ -89,7 +89,7 @@ export class Announcements implements OnInit {
           this.openSnackBar("Announcement added successfully", "Close");
 
           this.firebaseService
-            .sendPushNotification(
+            .sendAnnouncementNotification(
               "New Announcement",
               "Dear tenants new Announcement has been posted. Thank you.",
               res.prop_id

@@ -7,7 +7,6 @@ import { Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
-import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
 import * as XLSX from "xlsx-js-style";
@@ -319,7 +318,7 @@ export class AllUsersComponent implements OnInit {
 
   navigateToUnitDetailPage(unit_raw, userType, user_id) {
     if (userType == "tenant") {
-      this.router.navigate(["/admin-property-unit-details"], {
+      this.router.navigate(["/property-unit-details"], {
         queryParams: { unit_id: JSON.parse(unit_raw)["id"] },
       });
     } else {
@@ -328,7 +327,7 @@ export class AllUsersComponent implements OnInit {
   }
 
   navigateToUnitDetailPageFromUnitsListLandlord(unit_id) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
   }
@@ -340,7 +339,7 @@ export class AllUsersComponent implements OnInit {
   }
 
   viewUser(data: any) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: {
         user_id: data.user_id,
         auth: data.user_type,

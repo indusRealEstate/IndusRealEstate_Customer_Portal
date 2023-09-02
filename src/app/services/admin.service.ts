@@ -15,6 +15,15 @@ export class AdminService {
     };
   }
 
+  getallDataDashboard() {
+    const url = `${API_URL}/get_all_data_dashboard.php?apikey=1`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getallStaffsAdmin() {
     const url = `${API_URL}/get_all_staffs.php?apikey=1`;
     return this.http.get<any>(url).pipe(

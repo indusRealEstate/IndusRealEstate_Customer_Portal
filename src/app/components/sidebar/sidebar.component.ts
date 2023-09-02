@@ -14,19 +14,19 @@ declare interface RouteInfo {
 
 export const HOMEROUTEADMIN: any[] = [
   {
-    path: "/admin-dashboard",
+    path: "/dashboard",
     title: "Overview",
     icon: "assets/img/svg/sidebar/activity.svg",
     class: "",
   },
   {
-    path: "/admin-properties",
+    path: "/properties",
     title: "All Properties",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
   },
   {
-    path: "/admin-properties-units",
+    path: "/properties-units",
     title: "All units",
     icon: "assets/img/svg/sidebar/buildings.svg",
     class: "",
@@ -38,7 +38,7 @@ export const HOMEROUTEADMIN: any[] = [
     class: "",
   },
   {
-    path: "/admin-report",
+    path: "/report",
     title: "Report",
     icon: "assets/img/svg/admin-dashboard/report-com.svg",
     class: "",
@@ -51,20 +51,15 @@ export const HOMEROUTEADMIN: any[] = [
   },
 ];
 
-export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
-  {
-    path: "/admin-requests-archive",
-    title: "Archived Requests",
-    icon: "assets/img/pngs/archive.png",
-    class: "",
-  },
-  {
-    path: "/admin-requests-spam",
-    title: "Spam Requests",
-    icon: "assets/img/pngs/spam-icon.png",
-    class: "",
-  },
-];
+// export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
+ 
+//   {
+//     path: "/admin-requests-spam",
+//     title: "Spam Requests",
+//     icon: "assets/img/pngs/spam-icon.png",
+//     class: "",
+//   },
+// ];
 
 export const CHATSROUTEADMIN: RouteInfo[] = [
   {
@@ -75,24 +70,23 @@ export const CHATSROUTEADMIN: RouteInfo[] = [
   },
 ];
 
-export const DOCUMENTSROUTEADMIN: RouteInfo[] = [
-  {
-    path: "/all-clients-documents",
-    title: "All Clients Documents",
-    icon: "assets/img/svg/sidebar/file-text.svg",
-    class: "",
-  },
-];
+
 
 export const REQUESTSROUTEADMIN: RouteInfo[] = [
   {
-    path: "/admin-requests",
+    path: "/requests",
     title: "All Requests",
     icon: "assets/img/svg/sidebar/service-request-1.svg",
     class: "",
   },
   {
-    path: "/admin-request-category",
+    path: "/requests-archive",
+    title: "Archived Requests",
+    icon: "assets/img/svg/sidebar/archive.svg",
+    class: "",
+  },
+  {
+    path: "/request-category",
     title: "Category",
     icon: "assets/img/svg/sidebar/category.svg",
     class: "",
@@ -101,7 +95,7 @@ export const REQUESTSROUTEADMIN: RouteInfo[] = [
 
 export const LEASEROUTEADMIN: RouteInfo[] = [
   {
-    path: "/admin-lease",
+    path: "/contracts",
     title: "All Lease Contracts",
     icon: "assets/img/svg/sidebar/lease-2.svg",
     class: "",
@@ -118,13 +112,13 @@ export const ROUTES: RouteInfo[] = [];
 export class SidebarComponent implements OnInit {
   homeRouteAdmin: any[];
 
-  documentsRouteAdmin: any[];
+  // documentsRouteAdmin: any[];
 
   requestsRouteAdmin: any[];
 
   leaseRouteAdmin: any[];
 
-  archivedRequestsRouteAdmin: any[];
+  // archivedRequestsRouteAdmin: any[];
   chatsRouteAdmin: any[];
 
   user: User;
@@ -155,10 +149,10 @@ export class SidebarComponent implements OnInit {
       tooltip: "Requests",
       icon: "assets/img/svg/sidebar/menu.svg",
     },
-    {
-      tooltip: "Archives & Spams",
-      icon: "assets/img/svg/sidebar/archive.svg",
-    },
+    // {
+    //   tooltip: "Archives & Spams",
+    //   icon: "assets/img/svg/sidebar/archive.svg",
+    // },
     // {
     //   tooltip: "Chats",
     //   icon: "assets/img/svg/sidebar/messages-1.svg",
@@ -211,10 +205,10 @@ export class SidebarComponent implements OnInit {
         sessionStorage.setItem("current_side_bar_item", "Requests");
         this.miniSideBarClickedRequests();
         break;
-      case "Archives & Spams":
-        sessionStorage.setItem("current_side_bar_item", "Archives & Spams");
-        this.miniSideBarClickedArchivedRequests();
-        break;
+      // case "Archives & Spams":
+      //   sessionStorage.setItem("current_side_bar_item", "Archives & Spams");
+      //   this.miniSideBarClickedArchivedRequests();
+      //   break;
       case "Chats":
         sessionStorage.setItem("current_side_bar_item", "Chats");
         this.miniSideBarClickedChats();
@@ -246,14 +240,11 @@ export class SidebarComponent implements OnInit {
 
     this.homeRouteAdmin = HOMEROUTEADMIN.filter((menuItem) => menuItem);
 
-    this.documentsRouteAdmin = DOCUMENTSROUTEADMIN.filter(
-      (menuItem) => menuItem
-    );
 
     this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
-    this.archivedRequestsRouteAdmin = ARCHIVEDREQUESTSROUTEADMIN.filter(
-      (menuItem) => menuItem
-    );
+    // this.archivedRequestsRouteAdmin = ARCHIVEDREQUESTSROUTEADMIN.filter(
+    //   (menuItem) => menuItem
+    // );
     this.chatsRouteAdmin = CHATSROUTEADMIN.filter((menuItem) => menuItem);
 
     this.leaseRouteAdmin = LEASEROUTEADMIN.filter((menuItem) => menuItem);
@@ -390,28 +381,28 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  miniSideBarClickedArchivedRequests() {
-    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
-    if (sideBarValue == false) {
-      this.otherServices.miniSideBarClicked.next(true);
-      this.isArchiveRequestsOpened = true;
-      this.isRequestsOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-      this.isLeaseOpened = false;
+  // miniSideBarClickedArchivedRequests() {
+  //   var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+  //   if (sideBarValue == false) {
+  //     this.otherServices.miniSideBarClicked.next(true);
+  //     this.isArchiveRequestsOpened = true;
+  //     this.isRequestsOpened = false;
+  //     this.isDashboardOpened = false;
+  //     this.isChatsOpened = false;
+  //     this.isLeaseOpened = false;
 
-      setTimeout(() => {
-        this.sideBarTextShow = true;
-      }, 200);
-    } else {
-      this.isArchiveRequestsOpened = true;
-      this.isRequestsOpened = false;
-      this.isDashboardOpened = false;
-      this.isChatsOpened = false;
-      this.isLeaseOpened = false;
-      this.sideBarTextShow = true;
-    }
-  }
+  //     setTimeout(() => {
+  //       this.sideBarTextShow = true;
+  //     }, 200);
+  //   } else {
+  //     this.isArchiveRequestsOpened = true;
+  //     this.isRequestsOpened = false;
+  //     this.isDashboardOpened = false;
+  //     this.isChatsOpened = false;
+  //     this.isLeaseOpened = false;
+  //     this.sideBarTextShow = true;
+  //   }
+  // }
 
   miniSideBarClickedChats() {
     var sideBarValue = this.otherServices.miniSideBarClicked.getValue();

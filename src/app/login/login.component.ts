@@ -135,7 +135,7 @@ export class LoginComponent implements OnInit {
               // });
 
               // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
-              this.router.navigate(["/admin-dashboard"]);
+              this.router.navigate(["/dashboard"]);
               this.otherServices.userSignedIn.next(true);
             });
           }

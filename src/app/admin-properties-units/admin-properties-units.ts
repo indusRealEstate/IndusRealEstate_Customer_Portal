@@ -266,7 +266,6 @@ export class AdminPropertiesUnits implements OnInit {
         if (res != undefined) {
           if (res.completed == true) {
             this.refreshTable();
-            sessionStorage.removeItem("all_users_session");
             this.openSnackBar("New Unit added successfully", "Close");
           }
         }
@@ -332,7 +331,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   navigateToDetailPage(unit) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit.unit_id },
     });
   }
@@ -344,7 +343,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   navigateToUserDetailsPage(user_id) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: { user_id: user_id },
     });
   }

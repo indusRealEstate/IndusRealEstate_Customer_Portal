@@ -374,19 +374,19 @@ export class AllLeasesComponent implements OnInit {
   }
 
   navigateToUnitDetailPage(unit_id) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
   }
 
   navigateToUserDetailsPage(user_id) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: { user_id: user_id },
     });
   }
 
   viewDetails(data: string) {
-    this.router.navigate(["/admin-lease-details"], {
+    this.router.navigate(["/contract-details"], {
       queryParams: { contact_id: data },
     });
   }

@@ -58,12 +58,12 @@
                 >
                   <span
                     style="font-size: 13px; font-weight: 600; color: #3564a2"
-                    >Vacant : {{all_vacant_units}}</span
+                    >Vacant : {{allUnits_vacant_length}}</span
                   >
                   <span
                     style="font-size: 13px; font-weight: 600; color: #3564a2"
                     class="ml-3"
-                    >Occupied : {{all_occupied_units}}</span
+                    >Occupied : {{allUnits_occupied_length}}</span
                   >
                 </div>
               </div>
@@ -355,7 +355,7 @@
               <div class="row m-0 justify-content-between">
                 <span style="font-weight: 600">Unit Stats</span>
                 <span style="font-weight: 600; color: #d4aa32"
-                  >Total Units : {{allUnits.length}}</span
+                  >Total Units : {{allUnits_length}}</span
                 >
               </div>
             </div>
@@ -415,8 +415,8 @@
                   class="mr-3"
                 ></span>
                 <span style="font-size: 12px; font-weight: 600"
-                  >{{getRoundData((this.all_occupied_units /
-                  this.allUnits.length) * 100)}}% Units Occupied</span
+                  >{{getRoundData((this.allUnits_occupied_length /
+                  this.allUnits_length) * 100)}}% Units Occupied</span
                 >
               </div>
               <div
@@ -427,8 +427,8 @@
                   class="mr-3"
                 ></span>
                 <span style="font-size: 12px; font-weight: 600"
-                  >{{getRoundData((this.all_vacant_units / this.allUnits.length)
-                  * 100)}}% Units Vacant</span
+                  >{{getRoundData((this.allUnits_vacant_length /
+                  this.allUnits_length) * 100)}}% Units Vacant</span
                 >
               </div>
             </div>

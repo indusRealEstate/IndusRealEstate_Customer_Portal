@@ -64,7 +64,6 @@ import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admi
 import { AdminReport } from "app/admin-report/admin-report";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
-import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AllUsersComponent } from "app/all-users/all-users";
@@ -168,7 +167,7 @@ import "hammerjs";
     // AdminRequests,
     AdminRequests,
     AdminRequestsArchive,
-    AdminRequestsSpam,
+    // AdminRequestsSpam,
     AdminDashboardComponent,
     ViewMaintenanceImageDialog,
     // all request components

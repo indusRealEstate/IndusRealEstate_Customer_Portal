@@ -282,9 +282,17 @@ export class AddLeaseDialog implements OnInit {
     var data = {
       contract_id: random_id,
       property_id: this.property_id,
+      property_name: this.properties.find(
+        (prop) => prop.value == this.property_id
+      ).viewValue,
       unit_id: this.unit_data.value,
+      unit_no: this.unit_data.viewValue,
       owner_id: this.owner_id,
+      owner_name: this.all_users.find((usr) => usr.value == this.owner_id)
+        .viewValue,
       tenant_id: this.tenant_id,
+      tenant_name: this.all_users.find((usr) => usr.value == this.tenant_id)
+        .viewValue,
       status: "inactive",
       contract_start: this.contract_start_date,
       contract_end: this.contract_end_date,
