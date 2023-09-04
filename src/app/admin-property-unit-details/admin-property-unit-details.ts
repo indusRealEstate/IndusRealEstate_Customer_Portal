@@ -21,6 +21,8 @@ import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { OtherServices } from "app/services/other.service";
+import { PaymentService } from "app/services/payment.service";
+import { UnitsService } from "app/services/units.service";
 
 @Component({
   selector: "admin-property-unit-details",
@@ -101,7 +103,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private adminService: AdminService,
+    private unitService: UnitsService,
+    private paymentService: PaymentService,
     private otherServices: OtherServices,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
@@ -131,7 +134,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   ngOnChanges() {}
 
   async ngOnInit() {
-    this.adminService
+    this.unitService
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value: any) => {
         this.all_data = value;
@@ -189,7 +192,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       })
       .add(() => {
         this.isContentLoading = false;
-        this.adminService
+        this.unitService
           .getallUnitTypes()
           .subscribe((val: any[]) => {
             val.forEach((unit_type) => {
@@ -570,7 +573,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   private selectTenantDetails(data: string) {
-    this.adminService.selectTenantPayments(data).subscribe((value) => {
+    this.paymentService.selectTenantPayments(data).subscribe((value) => {
       this.all_data.tenant_payments = value;
       this.is_data_loaded = true;
     });

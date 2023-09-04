@@ -8,6 +8,9 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
+import { PropertiesService } from "app/services/properties.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 import { catchError, last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
@@ -25,7 +28,7 @@ export class AddPropertyDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddPropertyDialog>,
-    private adminService: AdminService
+    private propertyService: PropertiesService
   ) {}
 
   @ViewChild("fileInput") fileInput: ElementRef;
@@ -37,7 +40,6 @@ export class AddPropertyDialog implements OnInit {
 
   property_name: any = "";
   property_address: any = "";
-  property_no_of_units: any = "";
   property_in_charge: any = "";
 
   property_description: any = "";
@@ -129,7 +131,7 @@ export class AddPropertyDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, images_names, docs_names);
-        this.adminService.addProperty(data).subscribe((val) => {
+        this.propertyService.addProperty(data).subscribe((val) => {
           if (val == "success") {
             this.uploading_progress = 0;
             var uploadData = this.setupUploadFiles(
@@ -137,7 +139,7 @@ export class AddPropertyDialog implements OnInit {
               images_names,
               docs_names
             );
-            this.adminService
+            this.propertyService
               .uploadAllFilesAddProperty(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
@@ -208,7 +210,7 @@ export class AddPropertyDialog implements OnInit {
       address: this.property_address,
       property_type: this.property_building_type,
       locality_name: this.property_locality,
-      no_of_units: this.property_no_of_units,
+      no_of_units: 0,
       property_in_charge: this.property_in_charge,
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),

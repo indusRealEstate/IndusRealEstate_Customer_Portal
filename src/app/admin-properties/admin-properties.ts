@@ -6,9 +6,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
-import { TableFiltersComponent } from "app/components/table-filters/table-filters";
-import { AdminService } from "app/services/admin.service";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
+import { PropertiesService } from "app/services/properties.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Property {
@@ -30,6 +30,7 @@ export class AdminProperties implements OnInit {
 
   // isLoading: boolean = false;
   isContentLoading: boolean = false;
+  pageChangerLoading: boolean = false;
 
   displayedColumns: string[] = [
     // "name",
@@ -59,14 +60,16 @@ export class AdminProperties implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @ViewChild("table_filter") table_filter: TableFiltersComponent;
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
+
+  tableLength: number = 0;
 
   pushSub: any;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private propertyService: PropertiesService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -78,13 +81,6 @@ export class AdminProperties implements OnInit {
     var user = JSON.parse(userData);
 
     this.userId = user[0]["id"];
-
-    // this.testMessage();
-    // navigator.serviceWorker.ready.then(function (swRegistration) {
-    //   console.log("service worker ready", swRegistration);
-    // });
-    // firebaseService.requestMessagePermission();
-    // firebaseService.getToken();
   }
 
   screenHeight: number;
@@ -112,103 +108,25 @@ export class AdminProperties implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allPropertiesMatTableData != undefined) {
-        this.allPropertiesMatTableData.paginator = this.paginator;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allPropertiesMatTableData != undefined) {
-          this.allPropertiesMatTableData.paginator = this.paginator;
-        }
+  fetchData(limit?) {
+    if (this.searchBar != undefined) {
+      this.searchBar.searchText = "";
+    }
+    this.propertyService
+      .getAllPropertiesPagination(limit == undefined ? 10 : limit, 1)
+      .subscribe((va: any) => {
+        this.allProperties = va.prop;
+        this.allPropertiesMatTableData = new MatTableDataSource(va.prop);
+        this.tableLength = va.count;
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        this.pageChangerLoading = false;
       });
-    }
-  }
-
-  fetchData() {
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-    if (adminReqDataSession != null) {
-      this.allProperties = adminReqDataSession;
-      this.allPropertiesMatTableData.data = adminReqDataSession;
-      this.isContentLoading = false;
-      this.ngAfterViewInitInitialize = true;
-    } else {
-      this.adminService
-        .getallPropertiesAdmin()
-        .subscribe((va: any[]) => {
-          this.allProperties = va;
-          this.allPropertiesMatTableData = new MatTableDataSource(va);
-          setTimeout(() => {
-            if (this.allPropertiesMatTableData != undefined) {
-              this.allPropertiesMatTableData.paginator = this.paginator;
-            }
-          });
-        })
-        .add(() => {
-          this.isContentLoading = false;
-          if (this.allProperties.length != 0) {
-            sessionStorage.setItem(
-              "admin_properties_session",
-              JSON.stringify(this.allProperties)
-            );
-          }
-        });
-      sessionStorage.setItem(
-        "admin_properties_session_time_admin",
-        JSON.stringify(new Date().getMinutes())
-      );
-    }
-  }
-
-  getAllUnits() {
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-      });
-    } else {
-      this.allUnits = unitsDataSession;
-    }
   }
 
   async ngOnInit() {
-    this.getAllUnits();
-    var now = new Date().getMinutes();
-    var previous = JSON.parse(
-      sessionStorage.getItem("admin_properties_session_time_admin")
-    );
-
-    var adminReqDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (previous != null) {
-      var diff = now - Number(previous);
-
-      if (diff >= 5) {
-        sessionStorage.removeItem("admin_properties_session");
-        this.fetchData();
-      } else {
-        if (adminReqDataSession != null) {
-          this.allProperties = adminReqDataSession;
-          this.allPropertiesMatTableData = new MatTableDataSource(
-            adminReqDataSession
-          );
-          this.isContentLoading = false;
-          this.ngAfterViewInitInitialize = true;
-        } else {
-          this.fetchData();
-        }
-      }
-    } else {
-      this.fetchData();
-    }
+    this.fetchData();
   }
 
   clearAllVariables() {
@@ -216,19 +134,62 @@ export class AdminProperties implements OnInit {
   }
 
   refreshTable() {
-    sessionStorage.removeItem("admin_properties_session");
+    this.searchBar.searchText != "";
     this.isContentLoading = true;
-    if (this.table_filter != undefined) {
-      this.table_filter.flaggedRequestsFilterOn = false;
-      this.table_filter.statusFilterOn = false;
-      this.table_filter.timeLineFilterOn = false;
-    }
     this.fetchData();
   }
 
-  applyFilter(filterValue: any) {
-    var val = new String(filterValue).trim().toLowerCase();
-    this.allPropertiesMatTableData.filter = val;
+  searchProperties(filterValue: any) {
+    this.pageChangerLoading = true;
+    if (filterValue != "") {
+      this.propertyService
+        .getallPropertiesSearch(
+          filterValue,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          // console.log(va);
+          this.allProperties = va.prop;
+          this.allPropertiesMatTableData = new MatTableDataSource(va.prop);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.fetchData(this.paginator.pageSize);
+    }
+  }
+
+  pageChange(event) {
+    this.pageChangerLoading = true;
+    if (this.searchBar.searchText != "") {
+      this.propertyService
+        .getallPropertiesSearchPageChange(
+          this.searchBar.searchText,
+          event.pageSize,
+          event.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          this.allProperties = va;
+          this.allPropertiesMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.propertyService
+        .getAllPropertiesPagination(event.pageSize, event.pageIndex + 1)
+        .subscribe((va: any) => {
+          console.log(va);
+          this.allProperties = va.prop;
+          this.allPropertiesMatTableData = new MatTableDataSource(va.prop);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    }
   }
 
   addPropertyDialogOpen() {
@@ -256,7 +217,7 @@ export class AdminProperties implements OnInit {
 
   openMoreMenu(prop_id) {
     this.more_menu_prop_all_data = "";
-    this.adminService
+    this.propertyService
       .getPropDetails(JSON.stringify({ prop_id: prop_id }))
       .subscribe((value) => {
         this.more_menu_prop_all_data = value;
@@ -264,17 +225,6 @@ export class AdminProperties implements OnInit {
       .add(() => {
         this.more_menu_prop_loaded = true;
       });
-  }
-
-  getUnitCount(prop_id) {
-    var unit_count = 0;
-    this.allUnits.forEach((unit) => {
-      if (unit.property_id == prop_id) {
-        unit_count++;
-      }
-    });
-
-    return unit_count;
   }
 
   openEditProperty(index) {
@@ -287,7 +237,6 @@ export class AdminProperties implements OnInit {
         .afterClosed()
         .subscribe((value) => {
           if (value != undefined) {
-            sessionStorage.removeItem("admin_properties_session");
             this.allProperties[index].property_name =
               value.property_name != undefined
                 ? value.property_name
@@ -321,7 +270,7 @@ export class AdminProperties implements OnInit {
         "PROPERTY ADDRESS": prop.address,
         "PROPERTY TYPE": prop.property_type,
         LOCALITY: prop.locality_name,
-        "TOTAL UNITS": JSON.stringify(this.getUnitCount(prop.property_id)),
+        "TOTAL UNITS": "",
         "PROPERTY IN CHARGE": prop.property_in_charge,
       });
     });

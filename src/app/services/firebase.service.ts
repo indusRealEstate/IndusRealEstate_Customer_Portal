@@ -56,7 +56,7 @@ export class FirebaseService {
     });
   }
 
-  sendPushNotification(title: string, body: string, prop_id: string) {
+  sendAnnouncementNotification(title: string, body: string, prop_id: string) {
     var post_obj = {
       notification: {
         title: title,

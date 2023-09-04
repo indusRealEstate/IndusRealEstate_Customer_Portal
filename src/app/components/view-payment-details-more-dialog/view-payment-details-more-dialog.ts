@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
-import { AdminService } from "app/services/admin.service";
+import { PaymentService } from "app/services/payment.service";
 
 @Component({
   selector: "view-income-statement-dialog",
@@ -25,7 +25,7 @@ export class ViewPaymentDetailsMoreDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewPaymentDetailsMoreDialog>,
-    private adminService: AdminService
+    private paymentService: PaymentService
   ) {
     switch (data.method) {
       case "cheque":
@@ -71,7 +71,7 @@ export class ViewPaymentDetailsMoreDialog implements OnInit {
     this.child = data.child;
     this.method = data.method;
 
-    this.adminService
+    this.paymentService
       .selectPaymentAccordeingToTheMothod(data)
       .subscribe((value) => {
         this.all_data = value;

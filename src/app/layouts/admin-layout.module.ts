@@ -62,10 +62,8 @@ import { AdminPropertiesUnits } from "app/admin-properties-units/admin-propertie
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
 import { AdminReport } from "app/admin-report/admin-report";
-import { ReviewRequestAdmin } from "app/admin-request-review-page/admin-request-review-page";
 import { AdminRequestsArchive } from "app/admin-requests-archive/admin-requests-archive";
 import { AdminRequestsDetails } from "app/admin-requests-details/admin-requests-details";
-import { AdminRequestsSpam } from "app/admin-requests-spam/admin-requests-spam";
 import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminDashboardComponent } from "app/admin_dashboard/admin_dashboard";
 import { AllUsersComponent } from "app/all-users/all-users";
@@ -78,8 +76,6 @@ import { LoadingTableAnnouncement } from "app/components/loading-table-announcem
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
-import { AllClientsDocuments } from "app/documents/all-clients-docs/all-clients-docs";
-import { IndividualDocumentsComponent } from "app/documents/individual-docs/individual-docs";
 import { LoginComponent } from "app/login/login.component";
 import { DetailsComponents } from "app/property-details/details-properties";
 import { UserChatsComponent } from "app/user_chats/user_chats";
@@ -171,7 +167,7 @@ import "hammerjs";
     // AdminRequests,
     AdminRequests,
     AdminRequestsArchive,
-    AdminRequestsSpam,
+    // AdminRequestsSpam,
     AdminDashboardComponent,
     ViewMaintenanceImageDialog,
     // all request components
@@ -189,11 +185,8 @@ import "hammerjs";
     AdminPropertiesUnitDetails,
     ViewUserDetails,
     AdminLeaseDetail,
-    IndividualDocumentsComponent,
-    AllClientsDocuments,
     TableSearchBarComponent,
     TableFiltersComponent,
-    ReviewRequestAdmin,
     LoadingTableAdminReqs,
     LoadingTableAdminProperties,
     LoadingTableAdminPropertiesUnits,

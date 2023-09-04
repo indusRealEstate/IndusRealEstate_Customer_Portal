@@ -27,7 +27,7 @@
           />
         </div>
         <div class="row m-0 align-items-center">
-          <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
+          <searchbar-table (myEvent)="searchAnnouncements($event)"></searchbar-table>
           <div
             class="btn"
             style="
@@ -62,6 +62,22 @@
       <!------------------------------------ All Properties ----------------------------------------------------->
       <div *ngIf="isContentLoading == false">
         <div style="overflow: auto; padding: 0 5px; padding-bottom: 1rem">
+          <div
+            *ngIf="pageChangerLoading"
+            style="
+              position: absolute;
+              width: 100%;
+              height: 50rem;
+              background: #ffffffba;
+              text-align: center;
+            "
+          >
+            <span
+              class="spinner-border spinner-border-m mr-2"
+              style="color: #d4aa32; margin-top: 15rem"
+            >
+            </span>
+          </div>
           <table
             mat-table
             [dataSource]="allAnnouncementMatTableData"
@@ -85,7 +101,7 @@
                 "
                 (click)="openAnnouncementDetails(element)"
               >
-                {{element.ann_id}}
+                {{element.announcement_id}}
               </td>
             </ng-container>
             <!-- Weight Column -->
@@ -96,7 +112,7 @@
                 *matCellDef="let element"
                 (click)="openAnnouncementDetails(element)"
               >
-                {{element.a_title | titlecase}}
+                {{element.title | titlecase}}
               </td>
             </ng-container>
 
@@ -106,8 +122,8 @@
                 <span
                   style="font-weight: 600"
                   class="prop_name"
-                  (click)="navigateToPropertyDetailsPage(element.pro_id)"
-                  >{{element.p_name | titlecase}}</span
+                  (click)="navigateToPropertyDetailsPage(element.property_id)"
+                  >{{element.property_name | titlecase}}</span
                 >
               </td>
             </ng-container>
@@ -120,8 +136,8 @@
                 (click)="openAnnouncementDetails(element)"
               >
                 <span
-                  [ngClass]=" element.a_emergency == '0' ? 'not-emergency' : 'emergency'"
-                  >{{element.a_emergency == '1' ? 'Emergency' : 'Not
+                  [ngClass]=" element.emergency == '0' ? 'not-emergency' : 'emergency'"
+                  >{{element.emergency == '1' ? 'Emergency' : 'Not
                   Emergency'}}</span
                 >
               </td>
@@ -134,7 +150,7 @@
                 (click)="openAnnouncementDetails(element)"
                 style="color: #a3a3a3; font-weight: 600"
               >
-                {{element.a_date | date:'M/d/y'}}
+                {{element.date | date:'M/d/y'}}
               </td>
             </ng-container>
 
@@ -296,6 +312,8 @@
             #paginator
             [pageSize]="10"
             [pageSizeOptions]="[6, 8, 10, 14, 20]"
+            [length]="tableLength"
+            (page)="pageChange($event)"
             showFirstLastButtons
           ></mat-paginator>
         </div>

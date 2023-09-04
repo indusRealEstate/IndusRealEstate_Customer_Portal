@@ -1,13 +1,8 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
 
 @Component({
   selector: "view_all_assign_staff",
@@ -26,11 +21,6 @@ export class ViewAllAsignStaff implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewAllAsignStaff>,
-    private apiService: ApiService,
-    private apiAdminService: AdminService,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog?: MatDialog
   ) {
     for (let i = 0; i < JSON.parse(data.staff_assigned).length; i++) {
       let info = {

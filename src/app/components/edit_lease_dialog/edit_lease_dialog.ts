@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
-import { BehaviorSubject, last, map, tap } from "rxjs";
+import { LeaseService } from "app/services/lease.service";
+import { last, map, tap } from "rxjs";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
 
 @Component({
@@ -22,7 +22,7 @@ export class EditLeaseDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditLeaseDialog>,
-    private adminService: AdminService
+    private leaseService: LeaseService
   ) {}
 
   @ViewChild("fileInput") fileInput: ElementRef;
@@ -190,10 +190,10 @@ export class EditLeaseDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.adminService.editLease(data).subscribe((val) => {
+        this.leaseService.editLease(data).subscribe((val) => {
           if (val == "success") {
             if (this.removed_existing_docs.length != 0) {
-              this.adminService
+              this.leaseService
                 .deleteRemovedLeaseDocs(
                   JSON.stringify({
                     names: this.removed_existing_docs,
@@ -205,7 +205,7 @@ export class EditLeaseDialog implements OnInit {
                 });
             }
             var uploadData = this.setupUploadFiles(random_id, docs_names_new);
-            this.adminService
+            this.leaseService
               .uploadAllFilesAddNewLease(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),

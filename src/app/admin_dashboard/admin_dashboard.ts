@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatPaginator } from "@angular/material/paginator";
 import { Router } from "@angular/router";
 import {
   RenderEvent,
@@ -17,6 +17,7 @@ import {
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
+import { LeaseService } from "app/services/lease.service";
 
 @Component({
   selector: "admin-dashboard",
@@ -28,14 +29,14 @@ export class AdminDashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  allProperties: any[] = [];
-  allUnits: any[] = [];
-  allUsers: any[] = [];
-  allContracts: any[] = [];
-  allRequests: any[] = [];
-
-  all_vacant_units: number = 0;
-  all_occupied_units: number = 0;
+  allProperties_length: number = 0;
+  allUnits_length: number = 0;
+  allUnits_vacant_length: number = 0;
+  allUnits_occupied_length: number = 0;
+  allUsers_landlord_length: number = 0;
+  allUsers_tenant_length: number = 0;
+  allContracts_active_length: number = 0;
+  allRequests_length: number = 0;
 
   total_contracts_reminders_items: any[] = [];
   total_contracts_currentItemsToShow: any[] = [];
@@ -52,6 +53,7 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
+    private leaseService: LeaseService,
     private firebaseService: FirebaseService,
     private router: Router,
     private authenticationService: AuthenticationService
@@ -147,73 +149,17 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
-    } else {
-      this.allProperties = propertiesDataSession;
-    }
-
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-        val.forEach((unit) => {
-          if (unit.status == "occupied") {
-            this.all_occupied_units++;
-          } else {
-            this.all_vacant_units++;
-          }
-        });
-      });
-    } else {
-      this.allUnits = unitsDataSession;
-      unitsDataSession.forEach((unit) => {
-        if (unit.status == "occupied") {
-          this.all_occupied_units++;
-        } else {
-          this.all_vacant_units++;
-        }
-      });
-    }
-
-    var usersDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
-
-    if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-        this.allUsers = val;
-      });
-    } else {
-      this.allUsers = usersDataSession;
-    }
-
-    var leaseDataSession = JSON.parse(
-      sessionStorage.getItem("all_lease_session")
-    );
-
-    if (leaseDataSession == null) {
-      this.adminService.getAllLeaseAdmin().subscribe((val: any[]) => {
-        this.allContracts = val;
-      });
-    } else {
-      this.allContracts = leaseDataSession;
-    }
-
-    this.adminService.getAllRequestsAdminCount().subscribe((val: any[]) => {
-      this.allRequests = val;
+    this.adminService.getallDataDashboard().subscribe((res) => {
+      this.allContracts_active_length = res.all_active_contracts;
+      this.allProperties_length = res.all_buildings;
+      this.allUnits_length = res.all_units;
+      this.allUnits_vacant_length = res.vacant_units;
+      this.allUnits_occupied_length = res.occupied_units;
+      this.allUsers_landlord_length = res.landlords;
+      this.allUsers_tenant_length = res.tenants;
     });
 
-    this.adminService
+    this.leaseService
       .getAllContractsReminders()
       .subscribe((res: any[]) => {
         this.total_contracts_reminders_items = res;
@@ -268,19 +214,17 @@ export class AdminDashboardComponent implements OnInit {
   getStatsCount(title) {
     switch (title) {
       case "Total Landlords":
-        return this.allUsers.filter((user) => user.user_type == "owner").length;
+        return this.allUsers_landlord_length;
       case "Total Maintenance Requests":
-        return this.allRequests;
+        return this.allRequests_length;
       case "Total Units":
-        return this.allUnits.length;
+        return this.allUnits_length;
       case "Total Tenants":
-        return this.allUsers.filter((user) => user.user_type == "tenant")
-          .length;
+        return this.allUsers_tenant_length;
       case "Total Active Contracts":
-        return this.allContracts.filter((contrct) => contrct.status == "active")
-          .length;
+        return this.allContracts_active_length;
       case "Total Buildings":
-        return this.allProperties.length;
+        return this.allProperties_length;
       default:
         break;
     }
@@ -319,11 +263,15 @@ export class AdminDashboardComponent implements OnInit {
     setTimeout(() => {
       this.chart_data = [
         {
-          share: `${(this.all_occupied_units / this.allUnits.length) * 100}%`,
+          share: `${
+            (this.allUnits_occupied_length / this.allUnits_length) * 100
+          }%`,
           color: "#fac83a",
         },
         {
-          share: `${(this.all_vacant_units / this.allUnits.length) * 100}%`,
+          share: `${
+            (this.allUnits_vacant_length / this.allUnits_length) * 100
+          }%`,
           color: "#ff5353",
         },
       ];
@@ -397,7 +345,9 @@ export class AdminDashboardComponent implements OnInit {
     //
     // http://www.telerik.com/kendo-angular-ui/components/drawing/api/Text/
     const heading = new Text(
-      `${Math.round((this.all_vacant_units / this.allUnits.length) * 100)}%`,
+      `${Math.round(
+        (this.allUnits_vacant_length / this.allUnits_length) * 100
+      )}%`,
       [0, 0],
       {
         font: "25px 'Montserrat'",

@@ -14,17 +14,9 @@ import { Router } from "@angular/router";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { ViewAllAsignStaff } from "app/components/view_all_assign_staff/view_all_assign_staff";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import {
-  BehaviorSubject,
-  Observable,
-  debounceTime,
-  first,
-  last,
-  share,
-  shareReplay,
-} from "rxjs";
+import { RequestService } from "app/services/request.service";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Component({
   selector: "requests-table",
@@ -98,17 +90,13 @@ export class RequestsTable implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private requestService: RequestService,
     public dialog: MatDialog
   ) {
     this.getScreenSize();
 
     this.requestUpdating = this.updateValue.asObservable().pipe();
   }
-
-  allProperties: any[] = [];
-  allUnits: any[] = [];
-  allUsers: any[] = [];
 
   screenHeight: number;
   screenWidth: number;
@@ -122,49 +110,6 @@ export class RequestsTable implements OnInit {
     this.requestUpdatedEmit.emit({ req_id: req_id, type: type });
   }
 
-  getbuildingName(prop_id) {
-    if (this.allProperties != null) {
-      var property = this.allProperties.find(
-        (prop) => prop.property_id == prop_id
-      );
-      if (property != undefined) {
-        return property.property_name;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  getUnitNo(unit_id) {
-    if (this.allUnits != null) {
-      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
-
-      if (unit != undefined) {
-        return unit.unit_no;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  getUserName(user_id) {
-    if (this.allUsers != null) {
-      var user = this.allUsers.find((u) => u.user_id == user_id);
-
-      if (user != undefined) {
-        return user.name;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -174,46 +119,8 @@ export class RequestsTable implements OnInit {
     }
   }
 
-  getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
-    } else {
-      this.allProperties = propertiesDataSession;
-    }
-
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-      });
-    } else {
-      this.allUnits = unitsDataSession;
-    }
-
-    var usersDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
-
-    if (usersDataSession == null) {
-      this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-        this.allUsers = val;
-      });
-    } else {
-      this.allUsers = usersDataSession;
-    }
-  }
-
   async ngOnInit() {
-    this.getAllData();
+    // this.getAllData();
   }
 
   refreshTable() {
@@ -234,7 +141,7 @@ export class RequestsTable implements OnInit {
   }
 
   navigateToUnitDetailPage(unit_id) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
   }
@@ -246,13 +153,13 @@ export class RequestsTable implements OnInit {
   }
 
   navigateToUserDetailsPage(user_id) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: { user_id: user_id },
     });
   }
 
   viewRequestsDetails(data: any) {
-    this.router.navigate(["/admin-requests-details"], {
+    this.router.navigate(["/requests-details"], {
       queryParams: {
         request_id: data.request_id,
       },
@@ -266,7 +173,7 @@ export class RequestsTable implements OnInit {
       id: data.request_id,
       type: type,
     };
-    this.adminService
+    this.requestService
       .updateRequestMore(JSON.stringify(output))
       .subscribe((value) => {})
       .add(() => {

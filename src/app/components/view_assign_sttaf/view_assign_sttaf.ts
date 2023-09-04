@@ -2,12 +2,9 @@ import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
+import { RequestService } from "app/services/request.service";
 
 @Component({
   selector: "app_view_assign_sttaf",
@@ -41,11 +38,8 @@ export class ViewAssignStaff implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewAssignStaff>,
-    private apiService: ApiService,
-    private apiAdminService: AdminService,
-    private router: Router,
+    private requestService: RequestService,
     private formBuilder: FormBuilder,
-    private dialog?: MatDialog
   ) {
     this.category_name = data["category_name"];
     this.category_icon = data["icon"];
@@ -89,7 +83,7 @@ export class ViewAssignStaff implements OnInit {
 
     this.json_format = JSON.stringify(this.input_array);
 
-    this.apiAdminService
+    this.requestService
       .insertCategory(this.json_format)
       .subscribe((value: any) => {
         this.categoryForm.reset;

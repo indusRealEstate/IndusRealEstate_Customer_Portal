@@ -129,7 +129,7 @@
                 <span
                   class="prop_name"
                   (click)="navigateToPropertyDetailsPage(element.property_id)"
-                  >{{ getbuildingName(element.property_id) }}</span
+                  >{{ element.property_name | titlecase }}</span
                 >
               </td>
             </ng-container>
@@ -144,7 +144,7 @@
                 <span
                   class="prop_name"
                   (click)="navigateToUnitDetailPage(element.unit_id)"
-                  >{{ getUnitNo(element.unit_id) }}</span
+                  >{{ element.unit_no }}</span
                 >
               </td>
             </ng-container>
@@ -211,7 +211,7 @@
                 <span
                   class="prop_name"
                   (click)="navigateToUserDetailsPage(element.user_id)"
-                  >{{ getUserName(element.user_id) }}</span
+                  >{{ element.user_name | titlecase }}</span
                 >
               </td>
             </ng-container>

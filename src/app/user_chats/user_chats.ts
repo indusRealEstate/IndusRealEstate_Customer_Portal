@@ -11,7 +11,6 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DocUploadDialogRegister } from "app/components/dialog/dialog";
-import { ApiService } from "app/services/api.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { ChatService } from "app/services/chat.service";
 import { OtherServices } from "app/services/other.service";
@@ -70,7 +69,6 @@ export class UserChatsComponent implements OnInit {
   uploadedFiles: any[] = [];
 
   constructor(
-    private apiService: ApiService,
     private chatService: ChatService,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -159,20 +157,20 @@ export class UserChatsComponent implements OnInit {
   }
 
   deleteMessage(msg, i) {
-    this.apiService
+    this.chatService
       .deleteChatMessage({ message_id: msg.message_id })
       .subscribe((v) => {
         // console.log(v);
       });
 
     if (msg.file == 1) {
-      this.apiService
+      this.chatService
         .deleteFileFromServer({ file_name: msg.file_path })
         .subscribe((e) => {});
     }
 
     if (msg.image == 1) {
-      this.apiService
+      this.chatService
         .deleteFileFromServer({ file_name: msg.image_path })
         .subscribe((e) => {});
     }
@@ -402,43 +400,43 @@ export class UserChatsComponent implements OnInit {
   ngOnInit() {
     this.isUserSignOut();
 
-    this.apiService
-      .getUser(this.userId)
-      .subscribe((user) => {
-        this.user = user[0];
-        this.chatService.allChatsPeople.subscribe((al_c_p) => {
-          this.chats = al_c_p;
-        });
+    // this.chatService
+    //   .getUser(this.userId)
+    //   .subscribe((user) => {
+    //     this.user = user[0];
+    //     this.chatService.allChatsPeople.subscribe((al_c_p) => {
+    //       this.chats = al_c_p;
+    //     });
 
-        this.chatService.allChats.subscribe((al_c_v) => {
-          this.all_chats = al_c_v;
-        });
-      })
-      .add(() => {
-        this.chats_loading = false;
-        this.ngDoCheckInitialize = true;
-        // console.log(this.chats, "client");
-        this.initFunction();
-        var e = this.all_chats.filter((i) => i.recieved == 1 && i.read == 0);
-        var dup2 = [];
-        this.unread_chats = e.filter(
-          (item) => !dup2.includes(item.user_id) && dup2.push(item.user_id)
-        );
+    //     this.chatService.allChats.subscribe((al_c_v) => {
+    //       this.all_chats = al_c_v;
+    //     });
+    //   })
+    //   .add(() => {
+    //     this.chats_loading = false;
+    //     this.ngDoCheckInitialize = true;
+    //     // console.log(this.chats, "client");
+    //     this.initFunction();
+    //     var e = this.all_chats.filter((i) => i.recieved == 1 && i.read == 0);
+    //     var dup2 = [];
+    //     this.unread_chats = e.filter(
+    //       (item) => !dup2.includes(item.user_id) && dup2.push(item.user_id)
+    //     );
 
-        this.temp_chats = this.chats;
-        this.allClients_temp = this.allClients;
-        this.isAllClientsLoading = false;
+    //     this.temp_chats = this.chats;
+    //     this.allClients_temp = this.allClients;
+    //     this.isAllClientsLoading = false;
 
-        if (this.chats.length != 0 && this.unread_chats.length != 0) {
-          this.unread_chats.forEach((un) => {
-            this.chats.forEach((ch) => {
-              if (un.user_id == ch.user_id) {
-                Object.assign(ch, { new_msg: true });
-              }
-            });
-          });
-        }
-      });
+    //     if (this.chats.length != 0 && this.unread_chats.length != 0) {
+    //       this.unread_chats.forEach((un) => {
+    //         this.chats.forEach((ch) => {
+    //           if (un.user_id == ch.user_id) {
+    //             Object.assign(ch, { new_msg: true });
+    //           }
+    //         });
+    //       });
+    //     }
+    //   });
   }
 
   newChatOpen(c: any, url_opened?) {
@@ -464,7 +462,7 @@ export class UserChatsComponent implements OnInit {
               this.chatroom_msgs.push(this.all_chats[index]);
 
               if (this.all_chats[index].recipient_id == this.userId) {
-                this.apiService
+                this.chatService
                   .updateChatRead(this.all_chats[index].message_id)
                   .subscribe((v) => {});
               }
@@ -489,7 +487,7 @@ export class UserChatsComponent implements OnInit {
               this.chatroom_msgs.push(this.all_chats[index]);
 
               if (this.all_chats[index].recipient_id == this.userId) {
-                this.apiService
+                this.chatService
                   .updateChatRead(this.all_chats[index].message_id)
                   .subscribe((v) => {});
               }
@@ -511,7 +509,7 @@ export class UserChatsComponent implements OnInit {
             this.chatroom_msgs.push(this.all_chats[index]);
 
             if (this.all_chats[index].recipient_id == this.userId) {
-              this.apiService
+              this.chatService
                 .updateChatRead(this.all_chats[index].message_id)
                 .subscribe((v) => {});
             }
@@ -722,11 +720,11 @@ export class UserChatsComponent implements OnInit {
 
         Object.assign(files[index], { random_id: random_id });
 
-        this.apiService.sendChatMessage(JSON.stringify(data)).subscribe(() => {
+        this.chatService.sendChatMessage(JSON.stringify(data)).subscribe(() => {
           if (loop_completed == false) {
             if (upload_data.length == files.length) {
               loop_completed = true;
-              this.apiService
+              this.chatService
                 .uploadFileChat(JSON.stringify(upload_data))
                 .subscribe((e) => {
                   // console.log(e);
@@ -831,7 +829,7 @@ export class UserChatsComponent implements OnInit {
 
       this.sendMessageToSocket(random_id, this.sending_msg, timeStamp);
 
-      this.apiService
+      this.chatService
         .sendChatMessage(JSON.stringify(data))
         .subscribe((val) => {})
         .add(() => {

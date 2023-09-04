@@ -57,31 +57,27 @@ export class NavbarComponent implements OnInit {
     }
 
     if (
-      titlee.split("?")[0] == "/admin-dashboard" ||
-      titlee.split("?")[0] == "/admin-properties" ||
-      titlee.split("?")[0] == "/admin-properties-units" ||
+      titlee.split("?")[0] == "/dashboard" ||
+      titlee.split("?")[0] == "/properties" ||
+      titlee.split("?")[0] == "/properties-units" ||
       titlee.split("?")[0] == "/all-users" ||
       titlee.split("?")[0] == "/property-details" ||
-      titlee.split("?")[0] == "/admin-property-unit-details" ||
-      titlee.split("?")[0] == "/admin-user-details" ||
-      titlee.split("?")[0] == "/admin-report" ||
+      titlee.split("?")[0] == "/property-unit-details" ||
+      titlee.split("?")[0] == "/user-details" ||
+      titlee.split("?")[0] == "/report" ||
       titlee.split("?")[0] == "/announcements"
     ) {
       return "assets/img/svg/sidebar/home.svg";
     } else if (
-      titlee.split("?")[0] == "/admin-requests" ||
-      titlee.split("?")[0] == "/admin-request-category" ||
-      titlee.split("?")[0] == "/admin-requests-details"
+      titlee.split("?")[0] == "/requests" ||
+      titlee.split("?")[0] == "/request-category" ||
+      titlee.split("?")[0] == "/requests-archive" ||
+      titlee.split("?")[0] == "/requests-details"
     ) {
       return "assets/img/svg/sidebar/menu.svg";
     } else if (
-      titlee.split("?")[0] == "/admin-requests-archive" ||
-      titlee.split("?")[0] == "/admin-requests-spam"
-    ) {
-      return "assets/img/svg/sidebar/archive.svg";
-    } else if (
-      titlee.split("?")[0] == "/admin-lease" ||
-      titlee.split("?")[0] == "/admin-lease-details"
+      titlee.split("?")[0] == "/contracts" ||
+      titlee.split("?")[0] == "/contract-details"
     ) {
       return "assets/img/svg/sidebar/lease.svg";
     } else if (titlee.split("?")[0] == "/user-chats") {
@@ -100,31 +96,27 @@ export class NavbarComponent implements OnInit {
     }
 
     if (
-      titlee.split("?")[0] == "/admin-dashboard" ||
-      titlee.split("?")[0] == "/admin-properties" ||
-      titlee.split("?")[0] == "/admin-properties-units" ||
+      titlee.split("?")[0] == "/dashboard" ||
+      titlee.split("?")[0] == "/properties" ||
+      titlee.split("?")[0] == "/properties-units" ||
       titlee.split("?")[0] == "/all-users" ||
       titlee.split("?")[0] == "/property-details" ||
-      titlee.split("?")[0] == "/admin-property-unit-details" ||
-      titlee.split("?")[0] == "/admin-user-details" ||
-      titlee.split("?")[0] == "/admin-report" ||
+      titlee.split("?")[0] == "/property-unit-details" ||
+      titlee.split("?")[0] == "/user-details" ||
+      titlee.split("?")[0] == "/report" ||
       titlee.split("?")[0] == "/announcements"
     ) {
       return "Dashboard";
     } else if (
-      titlee.split("?")[0] == "/admin-requests" ||
-      titlee.split("?")[0] == "/admin-request-category" ||
-      titlee.split("?")[0] == "/admin-requests-details"
+      titlee.split("?")[0] == "/requests" ||
+      titlee.split("?")[0] == "/request-category" ||
+      titlee.split("?")[0] == "/requests-archive" ||
+      titlee.split("?")[0] == "/requests-details"
     ) {
       return "Requests";
     } else if (
-      titlee.split("?")[0] == "/admin-requests-archive" ||
-      titlee.split("?")[0] == "/admin-requests-spam"
-    ) {
-      return "Archives & Spams";
-    } else if (
-      titlee.split("?")[0] == "/admin-lease" ||
-      titlee.split("?")[0] == "/admin-lease-details"
+      titlee.split("?")[0] == "/contracts" ||
+      titlee.split("?")[0] == "/contract-details"
     ) {
       return "Lease Management";
     } else if (titlee.split("?")[0] == "/user-chats") {
@@ -143,37 +135,37 @@ export class NavbarComponent implements OnInit {
     }
 
     switch (titlee.split("?")[0]) {
-      case "/admin-dashboard":
+      case "/dashboard":
         return "Overview";
-      case "/admin-properties":
+      case "/properties":
         return "All Properties";
-      case "/admin-properties-units":
+      case "/properties-units":
         return "All Units";
       case "/all-users":
         return "All Users";
-      case "/admin-lease":
+      case "/contracts":
         return "All Lease Contracts";
-      case "/admin-requests":
+      case "/requests":
         return "Maintenance Requests";
-      case "/admin-request-category":
-        return "Maintenance Requests Category";
-      case "/admin-requests-archive":
+      case "/request-category":
+        return "Requests Category";
+      case "/requests-archive":
         return "Archived Requests";
-      case "/admin-requests-spam":
-        return "Spam Requests";
+      // case "/admin-requests-spam":
+      //   return "Spam Requests";
       case "/user-chats":
         return "All Messages";
       case "/property-details":
         return "All Properties";
-      case "/admin-property-unit-details":
+      case "/property-unit-details":
         return "All Units";
-      case "/admin-user-details":
+      case "/user-details":
         return "All Users";
-      case "/admin-lease-details":
+      case "/contract-details":
         return "All Lease Contracts";
-      case "/admin-requests-details":
+      case "/requests-details":
         return "Maintenance Requests";
-      case "/admin-report":
+      case "/report":
         return "Report";
       case "/announcements":
         return "Announcements";
@@ -193,13 +185,13 @@ export class NavbarComponent implements OnInit {
     switch (titlee.split("?")[0]) {
       case "/property-details":
         return "Property Details";
-      case "/admin-property-unit-details":
+      case "/property-unit-details":
         return "Unit Details";
-      case "/admin-user-details":
+      case "/user-details":
         return "User Details";
-      case "/admin-lease-details":
+      case "/contract-details":
         return "Lease Details";
-      case "/admin-requests-details":
+      case "/requests-details":
         return "Maintenance Request Details";
       default:
         return "no-subtitle";
@@ -220,15 +212,15 @@ export class NavbarComponent implements OnInit {
       }
 
       if (titlee.split("?")[0] == "/property-details") {
-        this.router.navigate(["/admin-properties"]);
-      } else if (titlee.split("?")[0] == "/admin-property-unit-details") {
-        this.router.navigate(["/admin-properties-units"]);
-      } else if (titlee.split("?")[0] == "/admin-user-details") {
+        this.router.navigate(["/properties"]);
+      } else if (titlee.split("?")[0] == "/property-unit-details") {
+        this.router.navigate(["/properties-units"]);
+      } else if (titlee.split("?")[0] == "/user-details") {
         this.router.navigate(["/all-users"]);
-      } else if (titlee.split("?")[0] == "/admin-lease-details") {
-        this.router.navigate(["/admin-lease"]);
-      } else if (titlee.split("?")[0] == "/admin-requests-details") {
-        this.router.navigate(["/admin-requests"]);
+      } else if (titlee.split("?")[0] == "/contract-details") {
+        this.router.navigate(["/contracts"]);
+      } else if (titlee.split("?")[0] == "/requests-details") {
+        this.router.navigate(["/requests"]);
       }
     }
   }

@@ -8,6 +8,9 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AdminService } from "app/services/admin.service";
+import { PropertiesService } from "app/services/properties.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
@@ -29,11 +32,13 @@ export class AddUnitDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddUnitDialog>,
-    private adminService: AdminService
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService
   ) {
     this.getAllProperties();
 
-    this.adminService.getallUnitTypes().subscribe((val: any[]) => {
+    this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
       val.forEach((unit_type) => {
         this.unitTypes.push({
           value: unit_type.id,
@@ -93,7 +98,7 @@ export class AddUnitDialog implements OnInit {
   ];
 
   getAllProperties() {
-    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
       val.forEach((prop) =>
         this.properties.push({
           value: prop.property_id,
@@ -102,7 +107,7 @@ export class AddUnitDialog implements OnInit {
       );
     });
 
-    this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+    this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
       val.forEach((user) => {
         if (user.user_type != "tenant") {
           this.users.push({
@@ -193,7 +198,7 @@ export class AddUnitDialog implements OnInit {
         data: this.inventories,
       };
 
-      this.adminService.addInventory(JSON.stringify(data)).subscribe((res) => {
+      this.unitsService.addInventory(JSON.stringify(data)).subscribe((res) => {
         console.log(res);
       });
     }
@@ -225,7 +230,7 @@ export class AddUnitDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, images_names, docs_names);
-        this.adminService.addUnit(data).subscribe((val) => {
+        this.unitsService.addUnit(data).subscribe((val) => {
           console.log(val);
           if (val == "success") {
             this.addInventories(random_id);
@@ -234,7 +239,7 @@ export class AddUnitDialog implements OnInit {
               images_names,
               docs_names
             );
-            this.adminService
+            this.unitsService
               .uploadAllFilesAddUnit(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),

@@ -5,6 +5,12 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { AdminService } from "app/services/admin.service";
+import { LeaseService } from "app/services/lease.service";
+import { PaymentService } from "app/services/payment.service";
+import { PropertiesService } from "app/services/properties.service";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
+import { UserService } from "app/services/user.service";
 
 // const ELEMENT_DATA: PeriodicElement[] = [
 //   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
@@ -59,7 +65,12 @@ export class AdminReport implements OnInit {
   all_occupied_units: number = 0;
 
   constructor(
-    private appAdminService: AdminService,
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
+    private leaseService: LeaseService,
+    private requestService: RequestService,
+    private paymentService: PaymentService,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -117,7 +128,7 @@ export class AdminReport implements OnInit {
     );
 
     if (propertiesDataSession == null) {
-      this.appAdminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
         this.allProperties = val;
       });
     } else {
@@ -129,18 +140,16 @@ export class AdminReport implements OnInit {
     );
 
     if (unitsDataSession == null) {
-      this.appAdminService
-        .getallPropertiesUnitsAdmin()
-        .subscribe((val: any[]) => {
-          this.allUnits = val;
-          val.forEach((unit) => {
-            if (unit.status == "occupied") {
-              this.all_occupied_units++;
-            } else {
-              this.all_vacant_units++;
-            }
-          });
+      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+        this.allUnits = val;
+        val.forEach((unit) => {
+          if (unit.status == "occupied") {
+            this.all_occupied_units++;
+          } else {
+            this.all_vacant_units++;
+          }
         });
+      });
     } else {
       this.allUnits = unitsDataSession;
       unitsDataSession.forEach((unit) => {
@@ -157,7 +166,7 @@ export class AdminReport implements OnInit {
     );
 
     if (usersDataSession == null) {
-      this.appAdminService.getAllUsersAdmin().subscribe((val: any[]) => {
+      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
         this.allUsers = val;
       });
     } else {
@@ -169,14 +178,14 @@ export class AdminReport implements OnInit {
     );
 
     if (leaseDataSession == null) {
-      this.appAdminService.getAllLeaseAdmin().subscribe((val: any[]) => {
+      this.leaseService.getAllLeaseAdmin().subscribe((val: any[]) => {
         this.allContracts = val;
       });
     } else {
       this.allContracts = leaseDataSession;
     }
 
-    this.appAdminService.getAllRequestsAdminCount().subscribe((val: any[]) => {
+    this.requestService.getAllRequestsAdminCount().subscribe((val: any[]) => {
       this.allRequests = val;
     });
   }
@@ -230,7 +239,7 @@ export class AdminReport implements OnInit {
     this.getAllData();
 
     let data = {};
-    this.appAdminService
+    this.paymentService
       .selectTenantsPaymentsDetails(JSON.stringify(data))
       .subscribe((val) => {
         this.all_data = val;
@@ -250,21 +259,21 @@ export class AdminReport implements OnInit {
         this.isContentLoading = false;
       });
 
-    this.appAdminService
+    this.paymentService
       .totalTenantPayment(JSON.stringify(data))
       .subscribe((val) => {
         this.all_tenant_payment = val;
         // console.log(this.all_tenant_payment);
       });
 
-    this.appAdminService
+    this.paymentService
       .paidTenantPayment(JSON.stringify(data))
       .subscribe((val) => {
         this.tenant_paid_payment = val;
         // console.log(this.tenant_paid_payment);
       });
 
-    this.appAdminService
+    this.paymentService
       .unpaidTenantPayment(JSON.stringify(data))
       .subscribe((value) => {
         this.tenant_unpaid_payment = value;

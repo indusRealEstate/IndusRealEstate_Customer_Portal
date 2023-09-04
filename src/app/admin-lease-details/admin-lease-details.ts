@@ -12,6 +12,7 @@ import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { LeaseService } from "app/services/lease.service";
 
 @Component({
   selector: "admin-lease-details",
@@ -40,7 +41,7 @@ export class AdminLeaseDetail implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
-    private adminService: AdminService,
+    private leaseService: LeaseService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
   ) {
@@ -62,7 +63,7 @@ export class AdminLeaseDetail implements OnInit {
   }
 
   async ngOnInit() {
-    this.adminService
+    this.leaseService
       .getAllLeaseData({ id: this.contract_id })
       .subscribe((value) => {
         this.isContentLoading = true;
@@ -140,7 +141,7 @@ export class AdminLeaseDetail implements OnInit {
   }
 
   terminateLease(lease_id, unit_id, tenant_id) {
-    this.adminService
+    this.leaseService
       .terminateLease(
         JSON.stringify({
           lease_id: lease_id,

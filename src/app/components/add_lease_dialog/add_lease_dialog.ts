@@ -11,6 +11,10 @@ import { AdminService } from "app/services/admin.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
+import { LeaseService } from "app/services/lease.service";
+import { UserService } from "app/services/user.service";
+import { UnitsService } from "app/services/units.service";
+import { PropertiesService } from "app/services/properties.service";
 
 @Component({
   // standalone: true,
@@ -23,7 +27,10 @@ export class AddLeaseDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddLeaseDialog>,
-    private adminService: AdminService
+    private propertyService: PropertiesService,
+    private unitsService: UnitsService,
+    private userService: UserService,
+    private leaseService: LeaseService
   ) {
     this.getAllDropdowns();
 
@@ -129,7 +136,7 @@ export class AddLeaseDialog implements OnInit {
   ];
 
   getAllDropdowns() {
-    this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
+    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
       val.forEach((prop) =>
         this.properties.push({
           value: prop.property_id,
@@ -138,7 +145,7 @@ export class AddLeaseDialog implements OnInit {
       );
     });
 
-    this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
+    this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
       val.forEach((user) => {
         this.all_users.push({
           value: user.user_id,
@@ -164,7 +171,7 @@ export class AddLeaseDialog implements OnInit {
 
   selectProperty(event: any) {
     this.units = [];
-    this.adminService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
+    this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
       val.forEach((un) => {
         if (un.property_id == event.value && un.status != "occupied") {
           this.units.push({
@@ -222,10 +229,10 @@ export class AddLeaseDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.adminService.addNewLease(data).subscribe((val) => {
+        this.leaseService.addNewLease(data).subscribe((val) => {
           if (val == "success") {
             var uploadData = this.setupUploadFiles(random_id, docs_names);
-            this.adminService
+            this.leaseService
               .uploadAllFilesAddNewLease(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
@@ -275,9 +282,17 @@ export class AddLeaseDialog implements OnInit {
     var data = {
       contract_id: random_id,
       property_id: this.property_id,
+      property_name: this.properties.find(
+        (prop) => prop.value == this.property_id
+      ).viewValue,
       unit_id: this.unit_data.value,
+      unit_no: this.unit_data.viewValue,
       owner_id: this.owner_id,
+      owner_name: this.all_users.find((usr) => usr.value == this.owner_id)
+        .viewValue,
       tenant_id: this.tenant_id,
+      tenant_name: this.all_users.find((usr) => usr.value == this.tenant_id)
+        .viewValue,
       status: "inactive",
       contract_start: this.contract_start_date,
       contract_end: this.contract_end_date,

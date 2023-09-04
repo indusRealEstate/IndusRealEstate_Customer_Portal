@@ -10,6 +10,7 @@ import { TableSearchBarComponent } from "app/components/searchbar-table/searchba
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { UnitsService } from "app/services/units.service";
 import * as XLSX from "xlsx-js-style";
 
 declare interface Unit {
@@ -80,7 +81,7 @@ export class AdminPropertiesUnits implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private adminService: AdminService,
+    private unitService: UnitsService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -112,14 +113,14 @@ export class AdminPropertiesUnits implements OnInit {
     if (option != "all") {
       this.pageChangerLoading = true;
 
-      this.adminService
+      this.unitService
         .getallUnitsFilter(
           option,
           this.paginator.pageSize,
           this.paginator.pageIndex + 1
         )
         .subscribe((va: any) => {
-          console.log(va);
+          // console.log(va);
           this.allUnits = va.units;
           this.allUnitsMatTableData = new MatTableDataSource(va.units);
           this.tableLength = va.count;
@@ -141,25 +142,14 @@ export class AdminPropertiesUnits implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allUnitsMatTableData != undefined) {
-        this.allUnitsMatTableData.paginator = this.paginator;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allUnitsMatTableData != undefined) {
-          this.allUnitsMatTableData.paginator = this.paginator;
-        }
-      });
+  fetchData(limit?) {
+    if (this.searchBar != undefined) {
+      this.searchBar.searchText = "";
     }
-  }
-
-  fetchData() {
-    this.adminService
-      .getallPropertiesUnits(10, 1)
+    this.unitService
+      .getallPropertiesUnits(limit == undefined ? 10 : limit, 1)
       .subscribe((va: any) => {
-        console.log(va);
+        // console.log(va);
         this.allUnits = va.units;
         this.allUnitsMatTableData = new MatTableDataSource(va.units);
         this.tableLength = va.count;
@@ -173,15 +163,15 @@ export class AdminPropertiesUnits implements OnInit {
   pageChange(event) {
     this.pageChangerLoading = true;
     if (this.searchBar.searchText != "") {
-      console.log("search");
-      this.adminService
+      // console.log("search");
+      this.unitService
         .getallUnitsSearchPageChange(
           this.searchBar.searchText,
           event.pageSize,
           event.pageIndex + 1
         )
         .subscribe((va: any) => {
-          console.log(va);
+          // console.log(va);
           this.allUnits = va;
           this.allUnitsMatTableData = new MatTableDataSource(va);
           // this.tableLength = va.count;
@@ -191,7 +181,7 @@ export class AdminPropertiesUnits implements OnInit {
         });
     } else {
       if (this.current_sort_option != "all") {
-        this.adminService
+        this.unitService
           .getallUnitsFilterPageChange(
             this.current_sort_option,
             event.pageSize,
@@ -207,7 +197,7 @@ export class AdminPropertiesUnits implements OnInit {
             this.pageChangerLoading = false;
           });
       } else {
-        this.adminService
+        this.unitService
           .getallPropertiesUnits(event.pageSize, event.pageIndex + 1)
           .subscribe((va: any) => {
             // console.log(va);
@@ -221,32 +211,6 @@ export class AdminPropertiesUnits implements OnInit {
       }
     }
   }
-
-  // getAllData() {
-  //   var propertiesDataSession = JSON.parse(
-  //     sessionStorage.getItem("admin_properties_session")
-  //   );
-
-  //   if (propertiesDataSession == null) {
-  //     this.adminService.getallPropertiesAdmin().subscribe((val: any[]) => {
-  //       this.allProperties = val;
-  //     });
-  //   } else {
-  //     this.allProperties = propertiesDataSession;
-  //   }
-
-  //   var usersDataSession = JSON.parse(
-  //     sessionStorage.getItem("all_users_session")
-  //   );
-
-  //   if (usersDataSession == null) {
-  //     this.adminService.getAllUsersAdmin().subscribe((val: any[]) => {
-  //       this.allUsers = val;
-  //     });
-  //   } else {
-  //     this.allUsers = usersDataSession;
-  //   }
-  // }
 
   async ngOnInit() {
     // this.getAllData();
@@ -272,14 +236,14 @@ export class AdminPropertiesUnits implements OnInit {
     this.current_sort_option = "all";
     this.pageChangerLoading = true;
     if (filterValue != "") {
-      this.adminService
+      this.unitService
         .getallPropertiesUnitsSearch(
           filterValue,
           this.paginator.pageSize,
           this.paginator.pageIndex + 1
         )
         .subscribe((va: any) => {
-          console.log(va);
+          // console.log(va);
           this.allUnits = va.units;
           this.allUnitsMatTableData = new MatTableDataSource(va.units);
           this.tableLength = va.count;
@@ -288,7 +252,7 @@ export class AdminPropertiesUnits implements OnInit {
           this.pageChangerLoading = false;
         });
     } else {
-      this.fetchData();
+      this.fetchData(this.paginator.pageSize);
     }
   }
 
@@ -302,7 +266,6 @@ export class AdminPropertiesUnits implements OnInit {
         if (res != undefined) {
           if (res.completed == true) {
             this.refreshTable();
-            sessionStorage.removeItem("all_users_session");
             this.openSnackBar("New Unit added successfully", "Close");
           }
         }
@@ -311,7 +274,7 @@ export class AdminPropertiesUnits implements OnInit {
 
   openMoreMenu(unit_id) {
     this.more_menu_unit_all_data = "";
-    this.adminService
+    this.unitService
       .getUnitAllData({ id: unit_id })
       .subscribe((value) => {
         this.more_menu_unit_all_data = value;
@@ -368,7 +331,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   navigateToDetailPage(unit) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit.unit_id },
     });
   }
@@ -380,7 +343,7 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   navigateToUserDetailsPage(user_id) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: { user_id: user_id },
     });
   }

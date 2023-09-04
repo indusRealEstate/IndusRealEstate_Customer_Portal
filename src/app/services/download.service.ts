@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
-import { Observable, of } from "rxjs";
+import { Observable, map, of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class DownloadService {
@@ -19,6 +19,22 @@ export class DownloadService {
     return this.http.get(url, {
       responseType: 'blob'
     })
+  }
+
+  downloadFile(file_path) {
+    return this.http
+      .get(file_path, {
+        responseType: "blob",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,POST,OPTIONS,DELETE,PUT",
+        },
+      })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 }
 

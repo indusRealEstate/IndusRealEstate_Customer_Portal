@@ -3,8 +3,7 @@ import {
   EventEmitter,
   Inject,
   OnInit,
-  Output,
-  ViewChild,
+  Output
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -14,7 +13,6 @@ import {
 } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
-import { ApiService } from "app/services/api.service";
 
 @Component({
   selector: "app_dialog_assign_staff",
@@ -54,7 +52,6 @@ export class DialogAssignStaff implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogAssignStaff>,
-    private apiService: ApiService,
     private apiAdminService: AdminService,
     private router: Router,
     private formBuilder: FormBuilder,

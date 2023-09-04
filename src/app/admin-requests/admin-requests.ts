@@ -1,8 +1,8 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { RequestStatuses } from "app/models/request_statuses";
-import { AdminService } from "app/services/admin.service";
 import { FirebaseService } from "app/services/firebase.service";
+import { RequestService } from "app/services/request.service";
 import { RequestsTable } from "./components/requests-table/requests-table";
 
 @Component({
@@ -45,7 +45,7 @@ export class AdminRequests implements OnInit {
 
   constructor(
     private firebaseService: FirebaseService,
-    private adminService: AdminService
+    private requestService: RequestService,
   ) {
     this.getScreenSize();
     this.isContentLoading = true;
@@ -74,11 +74,11 @@ export class AdminRequests implements OnInit {
         };
         this.pageChange(ev, false);
         this.resetPaginatorLength();
-        this.adminService.getAllRequestsAdminCount().subscribe((c) => {
+        this.requestService.getAllRequestsAdminCount().subscribe((c) => {
           this.allRequests_length = c;
         });
 
-        this.adminService
+        this.requestService
           .getAllRequestsAdminCountByStatus(RequestStatuses.open)
           .subscribe((c) => {
             this.open_requests_count = c;
@@ -88,10 +88,13 @@ export class AdminRequests implements OnInit {
   }
 
   fetchData() {
+    if (this.getCurrentTable() != undefined) {
+      this.getCurrentTable().searchBar.searchText = "";
+    }
     this.clearAllData();
     this.getAllRequestsCount();
     var status = this.getRequestStatusOnIndex(this.matTabIndex);
-    this.adminService
+    this.requestService
       .getAllRequestsAdmin(10, 1, status)
       .subscribe((va: any[]) => {
         this.allRequests = va;
@@ -108,7 +111,7 @@ export class AdminRequests implements OnInit {
       var limit = event.limit;
       var pageNumber = event.pageNumber + 1;
       var status = this.getRequestStatusOnIndex(this.matTabIndex);
-      this.adminService
+      this.requestService
         .changePageRequestsSearch(
           this.getCurrentTable().searchBar.searchText,
           limit,
@@ -134,7 +137,7 @@ export class AdminRequests implements OnInit {
         var limit = event.limit;
         var pageNumber = event.pageNumber + 1;
         var status = this.getRequestStatusOnIndex(this.matTabIndex);
-        this.adminService
+        this.requestService
           .changePageRequestsFLag(limit, pageNumber, status)
           .subscribe((va: any[]) => {
             this.allRequests = va;
@@ -154,7 +157,7 @@ export class AdminRequests implements OnInit {
         var limit = event.limit;
         var pageNumber = event.pageNumber + 1;
         var status = this.getRequestStatusOnIndex(this.matTabIndex);
-        this.adminService
+        this.requestService
           .getAllRequestsAdmin(limit, pageNumber, status)
           .subscribe((va: any[]) => {
             this.allRequests = va;
@@ -176,59 +179,59 @@ export class AdminRequests implements OnInit {
   }
 
   getAllRequestsCount() {
-    this.adminService.getAllRequestsAdminCount().subscribe((c) => {
+    this.requestService.getAllRequestsAdminCount().subscribe((c) => {
       this.allRequests_length = c;
     });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.open)
       .subscribe((c) => {
         this.open_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.assigned)
       .subscribe((c) => {
         this.assigned_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.inProgress)
       .subscribe((c) => {
         this.inProgress_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.completed)
       .subscribe((c) => {
         this.completed_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.hold)
       .subscribe((c) => {
         this.hold_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.reOpen)
       .subscribe((c) => {
         this.reOpen_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.reAssigned)
       .subscribe((c) => {
         this.reAssigned_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.rejected)
       .subscribe((c) => {
         this.rejected_requests_count = c;
       });
 
-    this.adminService
+    this.requestService
       .getAllRequestsAdminCountByStatus(RequestStatuses.cancelled)
       .subscribe((c) => {
         this.cancelled_requests_count = c;
@@ -324,7 +327,7 @@ export class AdminRequests implements OnInit {
       var limit = this.getCurrentTable().paginator.pageSize;
       var pageNumber = this.getCurrentTable().paginator.pageIndex + 1;
       var status = this.getRequestStatusOnIndex(this.matTabIndex);
-      this.adminService
+      this.requestService
         .getAllRequestsAdminFlag(limit, pageNumber, status)
         .subscribe((va: any) => {
           console.log(va);
@@ -361,8 +364,8 @@ export class AdminRequests implements OnInit {
       pageNumber: this.getCurrentTable().paginator.pageIndex,
     };
     var status = this.getRequestStatusOnIndex(this.matTabIndex);
-    
-    this.adminService
+
+    this.requestService
       .getAllRequestsAdminSearch(
         text,
         event.limit,
@@ -419,12 +422,12 @@ export class AdminRequests implements OnInit {
     var status = this.getRequestStatusOnIndex(this.matTabIndex);
     switch (status) {
       case "no-filter":
-        this.adminService.getAllRequestsAdminCount().subscribe((len) => {
+        this.requestService.getAllRequestsAdminCount().subscribe((len) => {
           this.request_table_0.paginator.length = len;
         });
         break;
       default:
-        this.adminService
+        this.requestService
           .getAllRequestsAdminCountByStatus(status)
           .subscribe((len) => {
             this.getCurrentTable().paginator.length = len;

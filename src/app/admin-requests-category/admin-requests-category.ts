@@ -13,6 +13,8 @@ import { AddCategoryDialog } from "app/components/add_category_dialog/add_catego
 import { EditCategoryDialog } from "app/components/edit_category_dialog/edit_category_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { RequestService } from "app/services/request.service";
+import { UnitsService } from "app/services/units.service";
 
 @Component({
   selector: "admin-requests-spam",
@@ -49,12 +51,13 @@ export class AdminRequestsCategory implements OnInit {
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private apiAdminService: AdminService
+    private requestService: RequestService,
+    private unitsService: UnitsService
   ) {
     this.isCategoryLoading = true;
     this.unitTypesFilter = this.unitTypes;
 
-    this.apiAdminService.getallUnitTypes().subscribe((val: any[]) => {
+    this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
       val.forEach((unit_type) => {
         this.unitTypes.push({
           value: unit_type.id,
@@ -155,7 +158,7 @@ export class AdminRequestsCategory implements OnInit {
   ngAfterViewInit() {}
 
   selectAllCategories(): any {
-    this.apiAdminService
+    this.requestService
       .selecteCategory()
       .subscribe((val: any[]) => {
         // console.log(val);
@@ -175,7 +178,7 @@ export class AdminRequestsCategory implements OnInit {
   }
 
   delete_item(data: any) {
-    this.apiAdminService
+    this.requestService
       .deleteServiceCategory(data)
       .subscribe((value: any) => {
         if (value.status == 1) {
@@ -202,7 +205,7 @@ export class AdminRequestsCategory implements OnInit {
     };
     let json_format = JSON.stringify(data);
 
-    this.apiAdminService
+    this.requestService
       .changeCategoryStatus(json_format)
       .subscribe((value: any) => {
         // console.log(value);
