@@ -303,7 +303,7 @@
                   Occupancy Rates
                 </span>
                 <span style="font-weight: 600; color: #d4aa32"
-                  >Total Units : {{allUnits.length}}</span
+                  >Total Units : {{allUnits_length}}</span
                 >
               </div>
             </div>
@@ -333,7 +333,7 @@
                   <p
                     style="margin-left: 0rem; font-size: 30px; font-weight: 600"
                   >
-                    {{all_occupied_units}}
+                    {{allUnits_occupied_length}}
                   </p>
                 </div>
                 <div class="col-4">
@@ -360,7 +360,7 @@
                   <p
                     style="margin-left: 0rem; font-size: 30px; font-weight: 600"
                   >
-                    {{all_vacant_units}}
+                    {{allUnits_vacant_length}}
                   </p>
                 </div>
                 <!-- <div class="col-4">
@@ -394,7 +394,7 @@
 
               <div class="row p-3">
                 <div
-                  [ngStyle]="{width : (all_occupied_units / allUnits.length) * 100 + '%'}"
+                  [ngStyle]="{width : (allUnits_occupied_length / allUnits_length) * 100 + '%'}"
                   style="
                     background-color: rgb(46, 108, 46);
                     border-radius: 0.8rem;
@@ -402,7 +402,7 @@
                   "
                 ></div>
                 <div
-                  [ngStyle]="{width : (all_occupied_units / allUnits.length) * 100 + '%'}"
+                  [ngStyle]="{width : (allUnits_occupied_length / allUnits_length) * 100 + '%'}"
                   class="col"
                   style="
                     background-color: rgb(124, 182, 124);

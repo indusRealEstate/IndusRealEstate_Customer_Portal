@@ -43,24 +43,6 @@ export class AnnouncementService {
     );
   }
 
-  selectAllAnnouncement() {
-    const url = `${API_URL}/selectAllAnnouncement.php?apikey=1`;
-    return this.http.get(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
-  selectSingleAnnouncementDetail(data: any) {
-    const url = `${API_URL}/selectSingleAnnouncementDetail.php?apikey=1`;
-    return this.http.post(url, data).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
   updateAnnouncement(data: any) {
     const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(

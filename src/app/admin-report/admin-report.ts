@@ -5,18 +5,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { AdminService } from "app/services/admin.service";
-import { LeaseService } from "app/services/lease.service";
 import { PaymentService } from "app/services/payment.service";
-import { PropertiesService } from "app/services/properties.service";
 import { RequestService } from "app/services/request.service";
-import { UnitsService } from "app/services/units.service";
-import { UserService } from "app/services/user.service";
 
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
-//   {UnitName: '3 Central Ave', Tenant:'kiran', Rent: 55000, PaymentMode: 'Card', PaymentAmount:20000, PaymentDetails: '12345644434'},
-
-// ];
 interface DropDownButtonModel {
   value: string;
   viewValue: string;
@@ -53,22 +44,19 @@ export class AdminReport implements OnInit {
   payment_id: number;
   @ViewChild("paginator") paginator: MatPaginator;
   uid: number;
-  allProperties: any[] = [];
-  allUnits: any[] = [];
-  allUsers: any[] = [];
-  allContracts: any[] = [];
+  allProperties_length: number = 0;
+  allUnits_length: number = 0;
+  allUnits_vacant_length: number = 0;
+  allUnits_occupied_length: number = 0;
+  allUsers_landlord_length: any[] = [];
+  allUsers_tenant_length: any[] = [];
+  allContracts_active_length: number = 0;
   allRequests: any[] = [];
 
   allMatTableData: MatTableDataSource<any>;
 
-  all_vacant_units: number = 0;
-  all_occupied_units: number = 0;
-
   constructor(
-    private propertyService: PropertiesService,
-    private unitsService: UnitsService,
-    private userService: UserService,
-    private leaseService: LeaseService,
+    private adminService: AdminService,
     private requestService: RequestService,
     private paymentService: PaymentService,
     private dialog: MatDialog
@@ -123,67 +111,15 @@ export class AdminReport implements OnInit {
   ngAfterViewInit() {}
 
   getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
-    } else {
-      this.allProperties = propertiesDataSession;
-    }
-
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-        val.forEach((unit) => {
-          if (unit.status == "occupied") {
-            this.all_occupied_units++;
-          } else {
-            this.all_vacant_units++;
-          }
-        });
-      });
-    } else {
-      this.allUnits = unitsDataSession;
-      unitsDataSession.forEach((unit) => {
-        if (unit.status == "occupied") {
-          this.all_occupied_units++;
-        } else {
-          this.all_vacant_units++;
-        }
-      });
-    }
-
-    var usersDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
-
-    if (usersDataSession == null) {
-      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
-        this.allUsers = val;
-      });
-    } else {
-      this.allUsers = usersDataSession;
-    }
-
-    var leaseDataSession = JSON.parse(
-      sessionStorage.getItem("all_lease_session")
-    );
-
-    if (leaseDataSession == null) {
-      this.leaseService.getAllLeaseAdmin().subscribe((val: any[]) => {
-        this.allContracts = val;
-      });
-    } else {
-      this.allContracts = leaseDataSession;
-    }
+    this.adminService.getallDataDashboard().subscribe((res) => {
+      this.allContracts_active_length = res.all_active_contracts;
+      this.allProperties_length = res.all_buildings;
+      this.allUnits_length = res.all_units;
+      this.allUnits_vacant_length = res.vacant_units;
+      this.allUnits_occupied_length = res.occupied_units;
+      this.allUsers_landlord_length = res.landlords;
+      this.allUsers_tenant_length = res.tenants;
+    });
 
     this.requestService.getAllRequestsAdminCount().subscribe((val: any[]) => {
       this.allRequests = val;
@@ -193,19 +129,17 @@ export class AdminReport implements OnInit {
   getStatsCount(title) {
     switch (title) {
       case "Total Landlords":
-        return this.allUsers.filter((user) => user.user_type == "owner").length;
+        return this.allUsers_landlord_length;
       case "Total Maintenance Requests":
         return this.allRequests;
       case "Total Units":
-        return this.allUnits.length;
+        return this.allUnits_length;
       case "Total Tenants":
-        return this.allUsers.filter((user) => user.user_type == "tenant")
-          .length;
+        return this.allUsers_tenant_length;
       case "Total Active Contracts":
-        return this.allContracts.filter((contrct) => contrct.status == "active")
-          .length;
+        return this.allContracts_active_length;
       case "Total Buildings":
-        return this.allProperties.length;
+        return this.allProperties_length;
       default:
         break;
     }

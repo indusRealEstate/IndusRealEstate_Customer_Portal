@@ -278,7 +278,7 @@ export class AdminLeaseDetail implements OnInit {
   }
 
   navigateToUnit(unit) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit },
     });
   }

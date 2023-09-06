@@ -161,7 +161,7 @@ export class ViewUserDetails implements OnInit {
     this.userService
       .getAllUserDetails(JSON.stringify(data))
       .subscribe((value) => {
-        console.log(value);
+        // console.log(value);
         this.all_data = value;
         if (this.all_data.user_allocates_unit != undefined) {
           if (this.all_data.user_type == "owner") {
@@ -246,30 +246,6 @@ export class ViewUserDetails implements OnInit {
     );
   }
 
-  openProperty() {
-    if (this.isOwner) {
-      this.opropertyURL();
-    } else {
-      if (this.all_data.unit !== "none") {
-        this.unitURL(this.all_data.unit.unit_id);
-      }
-    }
-  }
-
-  opropertyURL() {
-    this.router.navigate(["/property-details"], {
-      queryParams: {
-        prop_id: this.all_data.user_prop_id,
-      },
-    });
-  }
-
-  unitURL(data: any) {
-    this.router.navigate(["/admin-property-unit-details"], {
-      queryParams: { unit_id: data },
-    });
-  }
-
   navigateToProprety(data: any) {
     this.router.navigate(["/property-details"], {
       queryParams: {
@@ -279,7 +255,7 @@ export class ViewUserDetails implements OnInit {
   }
 
   navigateToUnit(data: any) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: data },
     });
   }

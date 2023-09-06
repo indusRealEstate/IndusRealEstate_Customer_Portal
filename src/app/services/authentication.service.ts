@@ -89,7 +89,7 @@ export class AuthenticationService {
     var result: string;
     navigator.mediaDevices
       .getUserMedia({
-        audio: true, 
+        audio: true,
         // video: true,
       })
       .then((stream) => {
@@ -138,49 +138,5 @@ export class AuthenticationService {
         this.router.navigate(["/login"]);
       }, 1000);
     }, 500);
-  }
-
-  public fetchNewLandlordAllDetails(data: any) {
-    const url = `${API_URL}/fetchNewLandlordAllDetails.php?apikey=1`;
-    try {
-      return this.http
-        .post(url, data)
-        .pipe(catchError(this.handleError("fetchNewLandlordAllDetails", [])));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  public fetchNewTenantAllDetails(data: any) {
-    const url = `${API_URL}/fetchNewTenantAllDetails.php?apikey=1`;
-    try {
-      return this.http
-        .post(url, data)
-        .pipe(catchError(this.handleError("fetchNewLandlordAllDetails", [])));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  public addNewLandlord(data: any) {
-    const url = `${API_URL}/addNewLandlord.php?apikey=1`;
-    try {
-      return this.http
-        .post(url, data)
-        .pipe(catchError(this.handleError("addNewLandlord", [])));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  public addNewTenant(data: any) {
-    const url = `${API_URL}/addNewTenant.php?apikey=1`;
-    try {
-      return this.http
-        .post(url, data)
-        .pipe(catchError(this.handleError("addNewLandlord", [])));
-    } catch (error) {
-      console.log(error);
-    }
   }
 }

@@ -460,12 +460,12 @@
                           "
                         >
                           <span
-                            *ngIf="all_data.tenant_country_code_alternative_number != '' && all_data.tenant_alternative_mobile_number != ''"
+                            *ngIf="all_data.tenant_alternative_mobile_number != 0"
                             >{{all_data.tenant_country_code_alternative_number}}
                             {{all_data.tenant_alternative_mobile_number}}</span
                           >
                           <span
-                            *ngIf="all_data.tenant_country_code_alternative_number == '' && all_data.tenant_alternative_mobile_number == ''"
+                            *ngIf="all_data.tenant_alternative_mobile_number == 0"
                             >-</span
                           >
                         </span>
@@ -642,14 +642,12 @@
                           "
                         >
                           <span
-                            *ngIf="all_data.user_country_code_alternative_number != '' && all_data.user_alternative_mobile_number
-                            != ''"
+                            *ngIf="all_data.user_alternative_mobile_number != 0"
                             >{{all_data.user_country_code_alternative_number}}
                             {{all_data.user_alternative_mobile_number }}</span
                           >
                           <span
-                            *ngIf="all_data.user_country_code_alternative_number == '' && all_data.user_alternative_mobile_number
-                            == ''"
+                            *ngIf="all_data.user_alternative_mobile_number == 0"
                             >-</span
                           >
                         </span>

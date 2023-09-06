@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
 import { AnnouncementService } from "app/services/announcement.service";
 import { PropertiesService } from "app/services/properties.service";
 import { last, map, tap } from "rxjs";
@@ -52,14 +51,15 @@ export class EditAnnouncementDialog implements OnInit {
     private propertyService: PropertiesService
   ) {
     this.all_data = data;
+    console.log(data);
 
-    this.title = this.all_data.a_title;
-    this.announce_id = this.all_data.ann_id;
+    this.title = this.all_data.title;
+    this.announce_id = this.all_data.announcement_id;
 
-    this.description = this.all_data.a_description;
-    this.emergency = this.all_data.a_emergency > "0" ? true : false;
-    this.p_id = this.all_data.p_id;
-    this.p_name = this.all_data.p_name;
+    this.description = this.all_data.description;
+    this.emergency = this.all_data.emergency > "0" ? true : false;
+    this.p_id = this.all_data.property_id;
+    this.p_name = this.all_data.property_name;
     //console.log(this.all_data.a_emergency);
 
     this.getAllPropertiesName();

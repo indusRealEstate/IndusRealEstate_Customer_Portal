@@ -45,14 +45,14 @@
         <div class="row m-0">
           <div class="col-7 pl-0">
             <p style="font-size: 18px; font-weight: 500; color: #d4aa32">
-              {{announcementData.a_title | titlecase}}
+              {{announcementData.title | titlecase}}
             </p>
             <div class="mb-4" style="max-height: 20rem; overflow: auto">
               <p
                 style="font-size: 16px; font-weight: 400; color: #808080d9"
                 class="mb-0"
               >
-                {{announcementData.a_description | titlecase}}
+                {{announcementData.description | titlecase}}
               </p>
             </div>
             <div
@@ -71,7 +71,7 @@
                   <span
                     class="prop-name"
                     (click)="navigateToProprety(announcementData.pro_id)"
-                    >{{announcementData.p_name | titlecase}}</span
+                    >{{announcementData.property_name | titlecase}}</span
                   >
                 </div>
                 <div class="col pr-0">
@@ -79,7 +79,7 @@
                     Emergency
                   </p>
                   <span
-                    [ngClass]=" announcementData.a_emergency == '0' ? 'not-emergency' : 'emergency'"
+                    [ngClass]=" announcementData.emergency == '0' ? 'not-emergency' : 'emergency'"
                   >
                     {{emergency}}
                   </span>
@@ -91,7 +91,7 @@
                     Created Date
                   </p>
                   <span class="prop-name"
-                    >{{announcementData.a_date | date:'M/d/y'}}</span
+                    >{{announcementData.date | date:'M/d/y'}}</span
                   >
                 </div>
               </div>
@@ -119,7 +119,7 @@
                 >
                   This Announcement will deliver to all tenants under
                   <span style="font-weight: 700"
-                    >{{announcementData.p_name | titlecase}}</span
+                    >{{announcementData.property_name | titlecase}}</span
                   >
                   property.
                 </p>

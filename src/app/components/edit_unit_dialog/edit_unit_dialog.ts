@@ -81,14 +81,7 @@ export class EditUnitDialog implements OnInit {
 
   images_fully_loaded: boolean = false;
 
-  unitTypes: DropDownButtonModel[] = [
-    { value: "appartment", viewValue: "Appartment" },
-    { value: "penthouse", viewValue: "Penthouse" },
-    { value: "duplex", viewValue: "Duplex" },
-    { value: "office", viewValue: "Office" },
-    { value: "shop", viewValue: "Shop" },
-    { value: "villa", viewValue: "Villa" },
-  ];
+  unitTypes: DropDownButtonModel[] = [];
 
   locality: DropDownButtonModel[] = [
     { value: "0", viewValue: "Al Barsha" },
@@ -106,7 +99,17 @@ export class EditUnitDialog implements OnInit {
     private userService: UserService,
   ) {
     this.all_data = data;
+    console.log(data);
     this.getAllTheDropdowns();
+
+    this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
+      val.forEach((unit_type) => {
+        this.unitTypes.push({
+          value: unit_type.id,
+          viewValue: unit_type.type,
+        });
+      });
+    });
 
     // console.log(this.all_data);
     var count = 0;

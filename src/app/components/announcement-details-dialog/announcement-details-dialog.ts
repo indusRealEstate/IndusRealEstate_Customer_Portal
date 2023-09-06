@@ -20,7 +20,7 @@ export class AnnouncementDetailsDialog implements OnInit {
     this.announcementData = data;
 
     this.emergency =
-      data.a_emergency == "0" ? "Not Emergency" : "Emergency";
+      data.emergency == "0" ? "Not Emergency" : "Emergency";
     this.attachments = JSON.parse(data.attachments);
     console.log(data);
   }

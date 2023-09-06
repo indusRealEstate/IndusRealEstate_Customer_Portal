@@ -148,13 +148,13 @@
             <div class="row m-0 mt-2">
               <div class="col-4 pl-0">
                 <p class="mb-1 personel-info-tabs">Date of Birth</p>
-                <p class="personel-info-tabs-val">
+                <p class="personel-info-tabs-val">  
                   {{all_data.user_dob | date:'M/d/y'}}
                 </p>
               </div>
               <div class="col">
                 <p class="mb-1 personel-info-tabs">Gender</p>
-                <p class="personel-info-tabs-val">{{all_data.user_gender}}</p>
+                <p class="personel-info-tabs-val">{{all_data.user_gender != '' ? (all_data.user_gender | titlecase) : '-'}}</p>
               </div>
             </div>
             <div class="row m-0 mt-2">
