@@ -6,11 +6,16 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { PropertiesService } from "app/services/properties.service";
 import { UnitsService } from "app/services/units.service";
 import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
+import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
 interface DropDownButtonModel {
   value: string;
@@ -37,10 +42,10 @@ export class EditUnitDialog implements OnInit {
   amenties: any[] = [];
   inventories: any[] = [];
 
-  selected_property: any = "";
+  selected_property: any;
   unit_type: any = "";
   unit_number: any = "";
-  owner: any = "";
+  owner: any;
   govt_id: any = "";
   floors: any = "";
   unit_size: any = "";
@@ -97,10 +102,20 @@ export class EditUnitDialog implements OnInit {
     private propertyService: PropertiesService,
     private unitsService: UnitsService,
     private userService: UserService,
+    private dialog: MatDialog
   ) {
     this.all_data = data;
     console.log(data);
-    this.getAllTheDropdowns();
+
+    this.selected_property = {
+      id: data.prop_uid,
+      name: data.prop_name,
+    };
+
+    this.owner = {
+      id: data.user_uid,
+      name: data.user_name,
+    };
 
     this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
       val.forEach((unit_type) => {
@@ -154,53 +169,37 @@ export class EditUnitDialog implements OnInit {
     this.unit_description = this.all_data.unit_description;
   }
 
+  addPaginatorDialog(type: string) {
+    this.dialog
+      .open(PaginatorDialog, {
+        width: "60%",
+        data: {
+          type: type,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          // console.log(res);
+          if (type == "property") {
+            this.selected_property = {
+              id: res.property_id,
+              name: res.property_name,
+            };
+          } else {
+            this.owner = {
+              id: res.user_id,
+              name: res.name,
+            };
+          }
+        }
+      });
+  }
+
   selectUnit(event: any) {
     var e = this.users.find((u) => u.value == event.value.owner_id);
     this.owner.viewValue = e.viewValue;
     this.owner.value = e.value;
-  }
-
-  getAllTheDropdowns() {
-    this.propertyService
-      .getallPropertiesAdmin()
-      .subscribe((val: any[]) => {
-        val.forEach((prop) =>
-          this.properties.push({
-            value: prop.property_id,
-            viewValue: prop.property_name,
-          })
-        );
-      })
-      .add(() => {
-        var sel_prop = this.properties.find(
-          (pr) => pr.value == this.all_data.prop_uid
-        );
-        // console.log(sel_prop);
-
-        this.selected_property = sel_prop.value;
-      });
-
-    // this.users = [];
-    this.userService
-      .getAllUsersAdmin()
-      .subscribe((val: any[]) => {
-        val.forEach((user) => {
-          if (user.user_type != "tenant") {
-            this.users.push({
-              value: user.user_id,
-              user_type: user.user_type,
-              viewValue: user.name,
-            });
-          }
-        });
-      })
-      .add(() => {
-        let selected_user = this.users.find(
-          (result) => result.value == this.all_data.user_uid
-        );
-        this.owner = selected_user;
-        // console.log(selected_user);
-      });
   }
 
   getUserType(user_type) {
@@ -463,7 +462,8 @@ export class EditUnitDialog implements OnInit {
     var data = {
       unit_id: random_id,
       unit_no: this.unit_number,
-      property_id: this.selected_property,
+      property_id: this.selected_property.id,
+      property_name: this.selected_property.name,
       unit_type: this.unit_type,
       floor: this.floors,
       size: this.unit_size,
@@ -471,7 +471,7 @@ export class EditUnitDialog implements OnInit {
       bedroom: this.bedrooms,
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
-      owner: this.owner.viewValue,
+      owner: this.owner.name,
       tenant_id:
         this.all_data.tenant_uid == undefined ? "" : this.all_data.tenant_uid,
       lease_id:
@@ -479,7 +479,7 @@ export class EditUnitDialog implements OnInit {
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
-      user_id: this.owner.value,
+      user_id: this.owner.id,
       description: this.unit_description,
     };
 

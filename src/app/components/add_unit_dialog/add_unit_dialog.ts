@@ -6,13 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
-import { PropertiesService } from "app/services/properties.service";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { UnitsService } from "app/services/units.service";
-import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
+import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
 interface DropDownButtonModel {
   value: string;
@@ -32,12 +34,9 @@ export class AddUnitDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddUnitDialog>,
-    private propertyService: PropertiesService,
     private unitsService: UnitsService,
-    private userService: UserService
+    private dialog: MatDialog
   ) {
-    this.getAllProperties();
-
     this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
       val.forEach((unit_type) => {
         this.unitTypes.push({
@@ -58,10 +57,10 @@ export class AddUnitDialog implements OnInit {
   amenties: any[] = [];
   inventories: any[] = [];
 
-  selected_property: any = "";
+  selected_property: any;
   unit_type: any = "";
   unit_number: any = "";
-  owner: any = "";
+  owner: any;
   floors: any = "";
   unit_size: any = "";
 
@@ -97,27 +96,31 @@ export class AddUnitDialog implements OnInit {
     { value: "4", viewValue: "JVC" },
   ];
 
-  getAllProperties() {
-    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-      val.forEach((prop) =>
-        this.properties.push({
-          value: prop.property_id,
-          viewValue: prop.property_name,
-        })
-      );
-    });
-
-    this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
-      val.forEach((user) => {
-        if (user.user_type != "tenant") {
-          this.users.push({
-            value: user.user_id,
-            user_type: user.user_type,
-            viewValue: user.name,
-          });
+  addPaginatorDialog(type: string) {
+    this.dialog
+      .open(PaginatorDialog, {
+        width: "60%",
+        data: {
+          type: type,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          // console.log(res);
+          if (type == "property") {
+            this.selected_property = {
+              id: res.property_id,
+              name: res.property_name,
+            };
+          } else {
+            this.owner = {
+              id: res.user_id,
+              name: res.name,
+            };
+          }
         }
       });
-    });
   }
 
   getUserType(user_type) {
@@ -131,8 +134,6 @@ export class AddUnitDialog implements OnInit {
   }
 
   ngOnInit() {}
-
-  ngAfterViewInit() {}
 
   onCloseDialog() {
     this.dialogRef.close();
@@ -210,10 +211,10 @@ export class AddUnitDialog implements OnInit {
       this.docsFilesUploaded.length != 0
     ) {
       if (
-        this.selected_property != "" &&
+        this.selected_property != undefined &&
         this.unit_type != "" &&
         this.unit_number != "" &&
-        this.owner != ""
+        this.owner != undefined
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
@@ -307,10 +308,8 @@ export class AddUnitDialog implements OnInit {
     var data = {
       unit_id: random_id,
       unit_no: this.unit_number,
-      property_id: this.selected_property,
-      property_name: this.properties.find(
-        (prop) => prop.value == this.selected_property
-      ).viewValue,
+      property_id: this.selected_property.id,
+      property_name: this.selected_property.name,
       unit_type: this.unit_type,
       floor: this.floors,
       size: this.unit_size,
@@ -318,13 +317,13 @@ export class AddUnitDialog implements OnInit {
       bedroom: this.bedrooms,
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
-      owner: this.owner.viewValue,
+      owner: this.owner.name,
       tenant_id: "",
       lease_id: "",
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
-      user_id: this.owner.value,
+      user_id: this.owner.id,
       description: this.unit_description,
     };
 

@@ -27,17 +27,24 @@
 
       <div class="row m-0 mt-3">
         <div class="col pl-0">
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Select Property*</mat-label>
-            <mat-select
-              [(ngModel)]="property_id"
-              (selectionChange)="selectProperty($event)"
+          <div
+            class="m-0 mb-4 btn w-100"
+            (click)="addPaginatorDialog('property')"
+            style="
+              text-align: start;
+              background: white;
+              box-shadow: none;
+              border: 1px solid #d4aa32;
+              color: black;
+              padding: 17px 13px;
+              font-size: 15px;
+            "
+          >
+            <span style="color: grey"
+              >{{ selected_property == undefined ? 'Select Property*' :
+              selected_property.name}}</span
             >
-              <mat-option *ngFor="let prop of properties" [value]="prop.value">
-                {{prop.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          </div>
           <mat-form-field class="mat-datepicker textField" appearance="outline">
             <mat-label>Choose Contract Start Date</mat-label>
             <input

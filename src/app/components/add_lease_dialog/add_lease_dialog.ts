@@ -6,15 +6,17 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
+import { LeaseService } from "app/services/lease.service";
+import { UnitsService } from "app/services/units.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
-import { LeaseService } from "app/services/lease.service";
-import { UserService } from "app/services/user.service";
-import { UnitsService } from "app/services/units.service";
-import { PropertiesService } from "app/services/properties.service";
+import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
 @Component({
   // standalone: true,
@@ -27,13 +29,10 @@ export class AddLeaseDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddLeaseDialog>,
-    private propertyService: PropertiesService,
     private unitsService: UnitsService,
-    private userService: UserService,
-    private leaseService: LeaseService
+    private leaseService: LeaseService,
+    private dialog: MatDialog
   ) {
-    this.getAllDropdowns();
-
     if (data != null) {
       // console.log(data);
       if (this.properties != null) {
@@ -76,6 +75,8 @@ export class AddLeaseDialog implements OnInit {
   govt_charges: any = "";
   security_deposit: any = "";
   yearly_amount: any = "";
+
+  selected_property: any;
 
   dewa: boolean = false;
   chiller: boolean = false;
@@ -135,32 +136,31 @@ export class AddLeaseDialog implements OnInit {
     { value: "7", viewValue: "7 Cheques" },
   ];
 
-  getAllDropdowns() {
-    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-      val.forEach((prop) =>
-        this.properties.push({
-          value: prop.property_id,
-          viewValue: prop.property_name,
-        })
-      );
-    });
-
-    this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
-      val.forEach((user) => {
-        this.all_users.push({
-          value: user.user_id,
-          user_type: user.user_type,
-          viewValue: user.name,
-        });
-        if (user.user_type != "owner" && user.user_type != "tenant") {
-          this.users.push({
-            value: user.user_id,
-            user_type: user.user_type,
-            viewValue: user.name,
-          });
+  addPaginatorDialog(type: string) {
+    this.dialog
+      .open(PaginatorDialog, {
+        width: "60%",
+        data: {
+          type: type,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          // console.log(res);
+          if (type == "property") {
+            this.selected_property = {
+              id: res.property_id,
+              name: res.property_name,
+            };
+          } else {
+            this.owner = {
+              id: res.user_id,
+              name: res.name,
+            };
+          }
         }
       });
-    });
   }
 
   selectUnit(event: any) {

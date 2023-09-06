@@ -97,6 +97,7 @@ import { LoadingTableAdminAllLease } from "app/components/loading-table-admin-al
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
 import "hammerjs";
+import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialog";
 
 @NgModule({
   imports: [
@@ -200,6 +201,7 @@ import "hammerjs";
     BackButtonDirective,
     AllLeasesComponent,
     Announcements,
+    PaginatorDialog,
     // AdminStaffs,
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],

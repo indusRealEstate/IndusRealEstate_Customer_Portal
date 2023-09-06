@@ -260,6 +260,7 @@ export class AdminPropertiesUnits implements OnInit {
     this.dialog
       .open(AddUnitDialog, {
         width: "100%",
+        autoFocus: false,
       })
       .afterClosed()
       .subscribe((res) => {

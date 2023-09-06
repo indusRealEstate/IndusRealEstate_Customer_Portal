@@ -108,6 +108,23 @@ export class AdminProperties implements OnInit {
     }
   }
 
+  getPropertyType(type) {
+    switch (type) {
+      case "commercial":
+        return "Commercial";
+      case "co_living":
+        return "Co-Living";
+      case "co_working":
+        return "Co-Working";
+      case "residential":
+        return "Residential";
+      case "others":
+        return "Others";
+      default:
+        return "Others";
+    }
+  }
+
   fetchData(limit?) {
     if (this.searchBar != undefined) {
       this.searchBar.searchText = "";

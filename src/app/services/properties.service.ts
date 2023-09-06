@@ -6,9 +6,7 @@ const API_URL = "https://indusre.app/api/admin/properties_api";
 
 @Injectable({ providedIn: "root" })
 export class PropertiesService {
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -34,6 +32,17 @@ export class PropertiesService {
         return data;
       })
     );
+  }
+
+  getallProperties(limit: number, pageNumber: number) {
+    const url = `${API_URL}/getAllProperties.php?apikey=1`;
+    return this.http
+      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   getPropDetails(data: any) {
@@ -81,11 +90,7 @@ export class PropertiesService {
       );
   }
 
-  getallPropertiesSearch(
-    input: string,
-    limit: number,
-    pageNumber: number
-  ) {
+  getallPropertiesSearch(input: string, limit: number, pageNumber: number) {
     const url = `${API_URL}/getAllPropertiesAdmin_search.php?apikey=1`;
     return this.http
       .post<any>(

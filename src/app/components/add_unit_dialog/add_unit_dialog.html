@@ -94,18 +94,24 @@
         </div>
         <div class="row m-0 mt-3">
           <div class="col pl-0">
-            <mat-form-field class="mt-2 textField" appearance="outline">
-              <mat-label>Select Property*</mat-label>
-              <mat-select [(ngModel)]="selected_property">
-                <mat-option
-                  *ngFor="let prop of properties"
-                  [value]="prop.value"
-                >
-                  {{prop.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
+            <div
+              class="mt-2 mb-4 btn w-100"
+              (click)="addPaginatorDialog('property')"
+              style="
+                text-align: start;
+                background: white;
+                box-shadow: none;
+                border: 1px solid #d4aa32;
+                color: black;
+                padding: 15px 13px;
+                font-size: 15px;
+              "
+            >
+              <span style="color: grey"
+                >{{ selected_property == undefined ? 'Select Property*' :
+                selected_property.name}}</span
+              >
+            </div>
             <mat-form-field class="textField" appearance="outline">
               <mat-label>Unit Number*</mat-label>
               <input
@@ -154,36 +160,23 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="mt-2 textField" appearance="outline">
-              <mat-label>Owner*</mat-label>
-              <mat-select [(ngModel)]="owner">
-                <mat-select-trigger> {{ owner.viewValue }} </mat-select-trigger>
-                <mat-option *ngFor="let usr of users" [value]="usr">
-                  <div class="row m-0">
-                    <span>{{usr.viewValue}}</span>
-                    <div
-                      class="my-auto ml-2"
-                      style="
-                        background: #d4aa322e;
-                        height: 30px;
-                        text-align: center;
-                        display: flex;
-                        align-items: center;
-                        padding: 0px 10px;
-                        border-radius: 6px;
-                        font-size: 12px;
-                        font-weight: 600;
-                        border: 1px solid #d4aa32;
-                      "
-                    >
-                      <span style="color: #9c770c"
-                        >{{getUserType(usr.user_type)}}</span
-                      >
-                    </div>
-                  </div>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <div
+              class="mt-2 mb-4 btn w-100"
+              (click)="addPaginatorDialog('user')"
+              style="
+                text-align: start;
+                background: white;
+                box-shadow: none;
+                border: 1px solid #d4aa32;
+                color: black;
+                padding: 15px 13px;
+                font-size: 15px;
+              "
+            >
+              <span style="color: grey"
+                >{{ owner == undefined ? 'Owner*' : owner.name}}</span
+              >
+            </div>
 
             <mat-form-field class="textField" appearance="outline">
               <mat-label>Floors</mat-label>

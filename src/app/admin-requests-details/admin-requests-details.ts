@@ -4,10 +4,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-image-dialog/view-maintenance-image-dialog";
 import { DialogViewMedia } from "app/components/view_media/view_media";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
-import { OtherServices } from "./../services/other.service";
 import { RequestService } from "app/services/request.service";
+import { OtherServices } from "./../services/other.service";
 //  import { FormsModule } from "@angular/forms";
 interface Staff {
   value: string;
@@ -190,7 +189,7 @@ export class AdminRequestsDetails implements OnInit {
     throw new Error("Method not implemented.");
   }
   navigateToUnitDetailPage(unit_id: any) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
   }
@@ -222,7 +221,7 @@ export class AdminRequestsDetails implements OnInit {
   }
 
   navigateToUnit(unit) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit },
     });
   }
@@ -281,7 +280,7 @@ export class AdminRequestsDetails implements OnInit {
   // }
 
   viewUser(data: any) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: {
         user_id: data,
       },
@@ -426,25 +425,18 @@ export class AdminRequestsDetails implements OnInit {
     switch (data) {
       case "cancelled":
         return "red";
-        break;
       case "rejected":
         return "red";
-        break;
       case "open":
         return "#029fad";
-        break;
       case "reopen":
         return "#029fad";
-        break;
       case "reassigned":
         return "#029fad";
-        break;
       case "inprogress":
         return "#c3660b";
-        break;
       case "completed":
         return "green";
-        break;
       default:
         return "#2b333e";
     }

@@ -6,10 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { AnnouncementService } from "app/services/announcement.service";
 import { PropertiesService } from "app/services/properties.service";
 import { last, map, tap } from "rxjs";
+import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
 @Component({
   selector: "edit_announcement_dialog",
@@ -48,7 +53,7 @@ export class EditAnnouncementDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditAnnouncementDialog>,
     private announcementService: AnnouncementService,
-    private propertyService: PropertiesService
+    private dialog: MatDialog
   ) {
     this.all_data = data;
     console.log(data);
@@ -62,23 +67,35 @@ export class EditAnnouncementDialog implements OnInit {
     this.p_name = this.all_data.property_name;
     //console.log(this.all_data.a_emergency);
 
-    this.getAllPropertiesName();
-    this.selected_property = this.p_id;
+    this.selected_property = {
+      id: this.p_id,
+      name: this.p_name,
+    };
 
     JSON.parse(this.data.attachments).forEach((doc) => {
       this.docsFilesUploaded.push({ name: doc, old: true });
     });
   }
 
-  getAllPropertiesName() {
-    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-      val.forEach((item) =>
-        this.properties.push({
-          value: item.property_id,
-          viewValue: item.property_name,
-        })
-      );
-    });
+  addPaginatorDialog(type: string) {
+    this.dialog
+      .open(PaginatorDialog, {
+        width: "60%",
+        data: {
+          type: type,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (type == "property") {
+            this.selected_property = {
+              id: res.property_id,
+              name: res.property_name,
+            };
+          }
+        }
+      });
   }
 
   ngOnInit() {}
@@ -205,7 +222,8 @@ export class EditAnnouncementDialog implements OnInit {
       title: this.title,
       emergency: this.emergency,
       description: this.description,
-      p_id: this.selected_property,
+      p_id: this.selected_property.id,
+      p_name: this.selected_property.name,
       documents: JSON.stringify(docs_names_new),
     };
     //console.log(data);

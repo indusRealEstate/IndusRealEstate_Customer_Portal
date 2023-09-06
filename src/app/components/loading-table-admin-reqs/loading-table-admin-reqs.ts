@@ -19,7 +19,6 @@ export class LoadingTableAdminReqs implements OnInit {
     "reqFor",
     "reqcategory",
     "status",
-    "staff",
     "userName",
     "more",
   ];

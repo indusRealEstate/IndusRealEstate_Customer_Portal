@@ -6,9 +6,7 @@ const API_URL = "https://indusre.app/api/admin/requests_api";
 
 @Injectable({ providedIn: "root" })
 export class RequestService {
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
@@ -50,13 +48,15 @@ export class RequestService {
       );
   }
 
-  getArchivedRequestsAdmin() {
+  getArchivedRequestsAdmin(limit: number, pageNumber: number) {
     const url = `${API_URL}/get_all_requests_admin_archive.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+    return this.http
+      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   getAllRequestsAdminFlag(limit, pageNumber, status) {
@@ -87,6 +87,24 @@ export class RequestService {
           limit: limit,
           pageNumber: pageNumber,
           status: status,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getAllArchivedRequestsSearch(text, limit, pageNumber) {
+    const url = `${API_URL}/get_all_archive_requests_for_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          input: text,
+          limit: limit,
+          pageNumber: pageNumber,
         })
       )
       .pipe(
@@ -142,6 +160,24 @@ export class RequestService {
           limit: limit,
           pageNumber: pageNumber,
           status: status,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  changePageArchiveRequestsSearch(text, limit, pageNumber) {
+    const url = `${API_URL}/get_archive_requests_page_change_search.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          input: text,
+          limit: limit,
+          pageNumber: pageNumber,
         })
       )
       .pipe(

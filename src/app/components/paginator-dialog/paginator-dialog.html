@@ -1,0 +1,93 @@
+<div class="card m-0" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="card-body" style="padding: 2rem 2rem">
+    <div class="row m-0 justify-content-between align-item-center">
+      <p style="font-size: 17px; font-weight: 500">Select {{getTitle(type)}}</p>
+      <searchbar-table (myEvent)="searchProperties($event)"></searchbar-table>
+    </div>
+
+    <div
+      *ngIf="isContentLoading"
+      class="d-flex justify-content-center align-items-center w-100"
+      style="height: 20rem"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <table
+      *ngIf="!isContentLoading"
+      #table
+      style="box-shadow: none; border: 1px solid #e0e0e0"
+      mat-table
+      [dataSource]="matTableDataSource"
+      class="mat-elevation-z8 mt-2"
+    >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{getName(element)}}<span *ngIf="type == 'user'">, </span>
+          <span
+            *ngIf="type == 'user'"
+            style="
+              color: #a78011;
+              background: #d4aa321f;
+              border: 1px solid #d4aa3282;
+              border-radius: 3px;
+              padding: 2px 10px;
+              font-size: 11px;
+            "
+            >{{ getUserType(element) }}</span
+          >
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>
+          {{type == 'property' ? 'Address' : 'Email'}}
+        </th>
+        <td mat-cell *matCellDef="let element">{{getSecondData(element)}}</td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns"
+        style="background: rgba(212, 170, 50, 0.0392156863)"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;"
+        (click)="onCloseDialog(row)"
+      ></tr>
+    </table>
+
+    <div
+      [ngStyle]="{ 'height' : getLoaderHeight() }"
+      *ngIf="pageChangerLoading"
+      style="
+        position: absolute;
+        width: 93%;
+        background: #ffffffba;
+        text-align: center;
+        top: 8rem;
+        left: 34px;
+      "
+    >
+      <span
+        class="spinner-border spinner-border-m mr-2"
+        style="color: #d4aa32; margin-top: 4rem"
+      >
+      </span>
+    </div>
+
+    <div style="margin-top: 25px" class="table-paginator">
+      <mat-paginator
+        #paginator
+        [pageSize]="5"
+        [pageSizeOptions]="[1,2,5, 8, 10, 14, 20]"
+        [length]="tableLength"
+        (page)="pageChange($event)"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

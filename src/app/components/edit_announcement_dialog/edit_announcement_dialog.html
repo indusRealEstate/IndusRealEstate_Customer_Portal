@@ -31,14 +31,24 @@
             <input matInput [(ngModel)]="title" placeholder="Ex. Water" />
           </mat-form-field>
 
-          <mat-form-field class="mt-2" class="textField" appearance="outline">
-            <mat-label>Building Name*</mat-label>
-            <mat-select [(ngModel)]="selected_property">
-              <mat-option *ngFor="let item of properties" [value]="item.value">
-                {{item.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div
+            class="mt-2 mb-4 btn w-100"
+            (click)="addPaginatorDialog('property')"
+            style="
+              text-align: start;
+              background: white;
+              box-shadow: none;
+              border: 1px solid #d4aa32;
+              color: black;
+              padding: 15px 13px;
+              font-size: 15px;
+            "
+          >
+            <span style="color: grey"
+              >{{ selected_property == undefined ? 'Select Building*' :
+              selected_property.name}}</span
+            >
+          </div>
 
           <mat-form-field class="mt-2" class="textField" appearance="outline">
             <mat-label>Description</mat-label>

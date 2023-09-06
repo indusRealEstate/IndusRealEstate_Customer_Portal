@@ -148,7 +148,7 @@
                 [ngClass]="last ? 'third-col-last' : 'third-col'"
                 (click)="viewPropInfo(element)"
               >
-                {{ element.property_type | titlecase}}
+                {{ getPropertyType(element.property_type)}}
               </td>
             </ng-container>
 

@@ -40,7 +40,6 @@ export class RequestsTable implements OnInit {
     "reqFor",
     "reqcategory",
     "status",
-    "staff",
     "userName",
     "more",
   ];

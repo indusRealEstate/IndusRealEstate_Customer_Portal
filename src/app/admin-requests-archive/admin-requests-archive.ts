@@ -4,13 +4,9 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
-import { TableFiltersComponent } from "app/components/table-filters/table-filters";
-import { AdminService } from "app/services/admin.service";
+import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
-import { PropertiesService } from "app/services/properties.service";
 import { RequestService } from "app/services/request.service";
-import { UnitsService } from "app/services/units.service";
-import { UserService } from "app/services/user.service";
 
 @Component({
   selector: "admin-requests-archive",
@@ -34,7 +30,6 @@ export class AdminRequestsArchive implements OnInit {
     "reqFor",
     "reqcategory",
     "status",
-    "staff",
     "userName",
     "more",
   ];
@@ -50,14 +45,14 @@ export class AdminRequestsArchive implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @ViewChild("table_filter") table_filter: TableFiltersComponent;
+  pageChangerLoading: boolean = false;
+  @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
+
+  tableLength: number = 0;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private propertyService: PropertiesService,
-    private unitsService: UnitsService,
-    private userService: UserService,
     private requestService: RequestService,
     private dialog: MatDialog
   ) {
@@ -79,49 +74,6 @@ export class AdminRequestsArchive implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  getbuildingName(prop_id) {
-    if (this.allProperties != null) {
-      var property = this.allProperties.find(
-        (prop) => prop.property_id == prop_id
-      );
-      if (property != undefined) {
-        return property.property_name;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  getUnitNo(unit_id) {
-    if (this.allUnits != null) {
-      var unit = this.allUnits.find((u) => u.unit_id == unit_id);
-
-      if (unit != undefined) {
-        return unit.unit_no;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
-  getUserName(user_id) {
-    if (this.allUsers != null) {
-      var user = this.allUsers.find((u) => u.user_id == user_id);
-
-      if (user != undefined) {
-        return user.name;
-      } else {
-        return "loading..";
-      }
-    } else {
-      return "loading..";
-    }
-  }
-
   isUserSignOut() {
     if (this.authenticationService.currentUserValue) {
       this.isUserSignedIn = true;
@@ -131,77 +83,50 @@ export class AdminRequestsArchive implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allRequestsMatTableData != undefined) {
-        this.allRequestsMatTableData.paginator = this.paginator;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allRequestsMatTableData != undefined) {
-          this.allRequestsMatTableData.paginator = this.paginator;
-        }
-      });
-    }
-  }
-
-  fetchData() {
+  fetchData(limit?) {
     this.requestService
-      .getArchivedRequestsAdmin()
-      .subscribe((va: any[]) => {
-        this.allRequests = va;
-        this.allRequestsMatTableData = new MatTableDataSource(va);
-        setTimeout(() => {
-          if (this.allRequestsMatTableData != undefined) {
-            this.allRequestsMatTableData.paginator = this.paginator;
-          }
-        });
+      .getArchivedRequestsAdmin(limit != undefined ? limit : 10, 1)
+      .subscribe((va: any) => {
+        this.allRequests = va.reqs;
+        this.allRequestsMatTableData = new MatTableDataSource(va.reqs);
+        this.tableLength = va.count;
       })
       .add(() => {
         this.isContentLoading = false;
       });
   }
 
-  getAllData() {
-    var propertiesDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_session")
-    );
-
-    if (propertiesDataSession == null) {
-      this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-        this.allProperties = val;
-      });
+  pageChange(event) {
+    this.pageChangerLoading = true;
+    if (this.searchBar.searchText != "") {
+      this.requestService
+        .changePageArchiveRequestsSearch(
+          this.searchBar.searchText,
+          event.pageSize,
+          event.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          this.allRequests = va;
+          this.allRequestsMatTableData = new MatTableDataSource(va);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     } else {
-      this.allProperties = propertiesDataSession;
-    }
-
-    var unitsDataSession = JSON.parse(
-      sessionStorage.getItem("admin_properties_units_session")
-    );
-
-    if (unitsDataSession == null) {
-      this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-        this.allUnits = val;
-      });
-    } else {
-      this.allUnits = unitsDataSession;
-    }
-
-    var usersDataSession = JSON.parse(
-      sessionStorage.getItem("all_users_session")
-    );
-
-    if (usersDataSession == null) {
-      this.userService.getAllUsersAdmin().subscribe((val: any[]) => {
-        this.allUsers = val;
-      });
-    } else {
-      this.allUsers = usersDataSession;
+      this.requestService
+        .getArchivedRequestsAdmin(event.pageSize, event.pageIndex + 1)
+        .subscribe((va: any) => {
+          console.log(va);
+          this.allRequests = va.reqs;
+          this.allRequestsMatTableData = new MatTableDataSource(va.reqs);
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
     }
   }
 
   async ngOnInit() {
-    this.getAllData();
     this.fetchData();
   }
 
@@ -211,17 +136,29 @@ export class AdminRequestsArchive implements OnInit {
 
   refreshTable() {
     this.isContentLoading = true;
-    if (this.table_filter != undefined) {
-      this.table_filter.flaggedRequestsFilterOn = false;
-      this.table_filter.statusFilterOn = false;
-      this.table_filter.timeLineFilterOn = false;
-    }
     this.fetchData();
   }
 
-  applyFilter(filterValue: any) {
-    var val = new String(filterValue).trim().toLowerCase();
-    this.allRequestsMatTableData.filter = val;
+  searchRequests(filterValue: any) {
+    this.pageChangerLoading = true;
+    if (filterValue != "") {
+      this.requestService
+        .getAllArchivedRequestsSearch(
+          filterValue,
+          this.paginator.pageSize,
+          this.paginator.pageIndex + 1
+        )
+        .subscribe((va: any) => {
+          this.allRequests = va.reqs;
+          this.allRequestsMatTableData = new MatTableDataSource(va.reqs);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.pageChangerLoading = false;
+        });
+    } else {
+      this.fetchData(this.paginator.pageSize);
+    }
   }
 
   addUnitDialogOpen() {
@@ -235,7 +172,7 @@ export class AdminRequestsArchive implements OnInit {
   }
 
   navigateToUnitDetailPage(unit_id) {
-    this.router.navigate(["/admin-property-unit-details"], {
+    this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit_id },
     });
   }
@@ -247,13 +184,13 @@ export class AdminRequestsArchive implements OnInit {
   }
 
   navigateToUserDetailsPage(user_id) {
-    this.router.navigate(["/admin-user-details"], {
+    this.router.navigate(["/user-details"], {
       queryParams: { user_id: user_id },
     });
   }
 
   viewRequestsDetails(data: any) {
-    this.router.navigate(["/admin-requests-details"], {
+    this.router.navigate(["/requests-details"], {
       queryParams: {
         request_id: data.request_id,
       },

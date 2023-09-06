@@ -7,12 +7,16 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { AnnouncementService } from "app/services/announcement.service";
 import { FirebaseService } from "app/services/firebase.service";
-import { PropertiesService } from "app/services/properties.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
+import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
 @Component({
   selector: "add-announcement-dialog",
@@ -30,7 +34,7 @@ export class AddAnnouncementDialog implements OnInit {
   uploading: boolean = false;
   formNotFilled: boolean = false;
   properties: any[] = [];
-  selected_property: any = "";
+  selected_property: any;
 
   docsFilesUploaded: File[] = [];
   imageNotAdded: boolean;
@@ -41,22 +45,30 @@ export class AddAnnouncementDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddAnnouncementDialog>,
-    private propertyService: PropertiesService,
     private announcementService: AnnouncementService,
-    private firbaseService: FirebaseService
-  ) {
-    this.getAllPropertiesName();
-  }
+    private firbaseService: FirebaseService,
+    private dialog: MatDialog
+  ) {}
 
-  getAllPropertiesName() {
-    this.propertyService.getallPropertiesAdmin().subscribe((val: any[]) => {
-      val.forEach((item) =>
-        this.properties.push({
-          value: item.property_id,
-          viewValue: item.property_name,
-        })
-      );
-    });
+  addPaginatorDialog(type: string) {
+    this.dialog
+      .open(PaginatorDialog, {
+        width: "60%",
+        data: {
+          type: type,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          if (type == "property") {
+            this.selected_property = {
+              id: res.property_id,
+              name: res.property_name,
+            };
+          }
+        }
+      });
   }
 
   ngOnInit() {}
@@ -157,10 +169,8 @@ export class AddAnnouncementDialog implements OnInit {
     var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       emergency: this.emergency,
-      property_id: this.selected_property,
-      property_name: this.properties.find(
-        (prop) => prop.value == this.selected_property
-      ).viewValue,
+      property_id: this.selected_property.id,
+      property_name: this.selected_property.name,
       announcement_id: random_id,
       title: this.title,
       attachments: JSON.stringify(docs_names),

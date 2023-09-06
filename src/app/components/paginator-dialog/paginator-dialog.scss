@@ -1,0 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+
+.mat-mdc-table {
+  .mat-mdc-row {
+    cursor: pointer;
+    &:hover {
+      background: #d4aa3236;
+    }
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 1rem;
+}

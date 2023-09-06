@@ -696,18 +696,18 @@
       <div class="col-md-12">
         <div class="card card-main">
           <div class="card-header">
-            <h4 class="title-header">Assign Staff & Change Request Stauts</h4>
+            <h4 class="title-header">Change Request Status</h4>
           </div>
           <div class="card-body">
             <div class="row">
-              <ngx-skeleton-loader
+              <!-- <ngx-skeleton-loader
                 *ngIf="isContentLoading"
                 [theme]="{
                   width: sideBar_opened? ((screenWidth)  - 450) + 'px' : ((screenWidth/2)  - 300) + 'px',
                     height: '30vh',
                   }">
-              </ngx-skeleton-loader>
-              <div class="col-md-8 mb-5"
+              </ngx-skeleton-loader> -->
+              <!-- <div class="col-md-8 mb-5"
                 *ngIf="!isContentLoading && maintenance_staff !== undefined">
                 <div class="table-row">
                   <table
@@ -741,9 +741,9 @@
                   matTooltipPosition="above"
                   style="background: #d4aa32;"
                   (click)="reassignStaff()">Reassign</button>
-              </div>
+              </div> -->
 
-              <ng-container *ngIf="maintenance_staff == undefined">
+              <!-- <ng-container *ngIf="maintenance_staff == undefined">
                 <div class="col-md-8" *ngIf="!staff_assigned">
                   <mat-form-field class="w-100 mat-datepicker textField"
                     appearance="outline" *ngIf="!staff_selected">
@@ -830,7 +830,7 @@
                     (click)="assignStaff()">ASSIGN
                     STAFF</button>
                 </div>
-              </ng-container>
+              </ng-container> -->
 
               <div class="col-md-4">
                 <button class="btn mx-auto mb-auto"

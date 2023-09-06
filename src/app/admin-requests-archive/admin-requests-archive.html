@@ -42,7 +42,7 @@
           ></table-filters> -->
         </div>
         <div class="row m-0 align-items-end mb-3">
-          <searchbar-table (myEvent)="applyFilter($event)"></searchbar-table>
+          <searchbar-table (myEvent)="searchRequests($event)"></searchbar-table>
         </div>
       </div>
 
@@ -129,7 +129,7 @@
                 <span
                   class="prop_name"
                   (click)="navigateToPropertyDetailsPage(element.property_id)"
-                  >{{ getbuildingName(element.property_id) }}</span
+                  >{{ element.property_name }}</span
                 >
               </td>
             </ng-container>
@@ -144,7 +144,7 @@
                 <span
                   class="prop_name"
                   (click)="navigateToUnitDetailPage(element.unit_id)"
-                  >{{ getUnitNo(element.unit_id) }}</span
+                  >{{ element.unit_no }}</span
                 >
               </td>
             </ng-container>
@@ -180,7 +180,7 @@
                 {{ element.request_status | titlecase}}
               </td>
             </ng-container>
-            <ng-container matColumnDef="staff">
+            <!-- <ng-container matColumnDef="staff">
               <th mat-header-cell *matHeaderCellDef>Assigned Staff</th>
               <td
                 mat-cell
@@ -192,7 +192,7 @@
                   >{{getOnlyName(element.staff_assigned)}}</span
                 >
               </td>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="userName">
               <th mat-header-cell *matHeaderCellDef>Requested User</th>
               <td
@@ -203,7 +203,7 @@
                 <span
                   class="prop_name"
                   (click)="navigateToUserDetailsPage(element.user_id)"
-                  >{{ getUserName(element.user_id) }}</span
+                  >{{ element.user_name }}</span
                 >
               </td>
             </ng-container>
@@ -347,10 +347,10 @@
               <th mat-header-cell *matHeaderCellDef>Request Status</th>
               <td mat-cell *matCellDef="let element;let last = last"></td>
             </ng-container>
-            <ng-container matColumnDef="staff">
+            <!-- <ng-container matColumnDef="staff">
               <th mat-header-cell *matHeaderCellDef>Assigned Staff</th>
               <td mat-cell *matCellDef="let element;let last = last"></td>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="userName">
               <th mat-header-cell *matHeaderCellDef>Requested User</th>
               <td mat-cell *matCellDef="let element;let last = last"></td>
@@ -398,6 +398,8 @@
             #paginator
             [pageSize]="10"
             [pageSizeOptions]="[6, 8, 10, 14, 20]"
+            [length]="tableLength"
+            (page)="pageChange($event)"
             showFirstLastButtons
           ></mat-paginator>
         </div>
