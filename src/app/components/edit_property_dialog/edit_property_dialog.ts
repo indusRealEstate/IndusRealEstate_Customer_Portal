@@ -7,10 +7,8 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
 import { PropertiesService } from "app/services/properties.service";
-import { catchError, last, map, tap } from "rxjs";
-import * as uuid from "uuid";
+import { last, map, tap } from "rxjs";
 
 interface DropDownButtonModel {
   value: string;
@@ -361,7 +359,6 @@ export class EditPropertyDialog implements OnInit {
       address: this.property_address,
       property_type: this.property_building_type,
       locality_name: this.property_locality,
-      no_of_units: this.property_no_of_units,
       property_in_charge: this.property_in_charge,
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
