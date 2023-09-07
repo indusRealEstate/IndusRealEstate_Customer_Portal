@@ -61,7 +61,7 @@ export class AddUserDialog implements OnInit {
   user_bank_iban: any = "";
 
   formNotFilled: boolean = false;
-  imageNotAdded: boolean = false;
+  // imageNotAdded: boolean = false;
   documentNotAdded: boolean = false;
   uploading: boolean = false;
 
@@ -227,7 +227,8 @@ export class AddUserDialog implements OnInit {
       nationality: this.country_dropdown.selectedCountry,
       dob: this.user_dob,
       allocated_unit: "",
-      profile_img: this.imgFileUploaded.name,
+      profile_img:
+        this.imgFileUploaded != undefined ? this.imgFileUploaded.name : "",
       documents: JSON.stringify(docs_names),
       joined_date: new Date(),
     };

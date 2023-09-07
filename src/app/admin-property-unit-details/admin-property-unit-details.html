@@ -345,7 +345,7 @@
                 <div class="row m-0 align-items-start">
                   <div class="col-3 d-flex pl-0">
                     <img
-                      src="https://www.indusre.app/api/upload/user/{{all_data.tenant_uid}}/image/{{all_data.tenant_profile_img}}"
+                      src="{{ all_data.tenant_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.tenant_uid + '/image/' + all_data.tenant_profile_img : 'assets/img/images/user.png'}}"
                       alt
                       class="card-img-top user-image m-auto"
                     />
@@ -527,7 +527,7 @@
                 <div class="row m-0 align-items-start">
                   <div class="col-3 d-flex pl-0">
                     <img
-                      src="https://www.indusre.app/api/upload/user/{{all_data.user_uid}}/image/{{all_data.user_profile_img}}"
+                      src="{{ all_data.user_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.user_uid + '/image/' + all_data.user_profile_img : 'assets/img/images/user.png'}}"
                       alt
                       class="card-img-top user-image m-auto"
                     />

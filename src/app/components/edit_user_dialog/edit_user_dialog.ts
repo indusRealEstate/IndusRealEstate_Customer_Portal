@@ -54,7 +54,7 @@ export class EditUserDialog implements OnInit {
   user_bank_iban: any = "";
 
   formNotFilled: boolean = false;
-  imageNotAdded: boolean = false;
+  // imageNotAdded: boolean = false;
   documentNotAdded: boolean = false;
   uploading: boolean = false;
 
@@ -80,7 +80,6 @@ export class EditUserDialog implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder
   ) {
-    console.log(data);
     this.user_name = data.user_name;
     this.user_email = data.user_email;
     this.user_alternative_email = data.user_alternative_email;
@@ -95,7 +94,10 @@ export class EditUserDialog implements OnInit {
       data.user_country_code_alternative_number;
     this.user_alternative_number = data.user_alternative_mobile_number;
 
-    this.imgFileBase64Uploaded = `https://indusre.app/api/upload/user/${data.user_uid}/image/${data.user_profile_img}`;
+    this.imgFileBase64Uploaded =
+      data.user_profile_img == ""
+        ? ""
+        : `https://indusre.app/api/upload/user/${data.user_uid}/image/${data.user_profile_img}`;
 
     JSON.parse(data.user_documents).forEach((doc) => {
       this.docsFilesUploaded.push({ name: doc, old: true });
@@ -318,7 +320,9 @@ export class EditUserDialog implements OnInit {
       dob: this.user_dob,
       profile_img:
         this.existing_img_removed == true
-          ? this.imgFileUploaded.name
+          ? this.imgFileUploaded != undefined
+            ? this.imgFileUploaded.name
+            : ""
           : this.data.user_profile_img,
       documents: JSON.stringify(docs_names),
     };
