@@ -11,6 +11,7 @@ import { PropertiesService } from "app/services/properties.service";
 import { TableSearchBarComponent } from "../searchbar-table/searchbar-table";
 import { MatPaginator } from "@angular/material/paginator";
 import { UserService } from "app/services/user.service";
+import { UnitsService } from "app/services/units.service";
 
 @Component({
   selector: "paginator-dialog",
@@ -19,6 +20,8 @@ import { UserService } from "app/services/user.service";
 })
 export class PaginatorDialog implements OnInit {
   type: any = "";
+  prop_id: any;
+  user_type: any;
   tableLength: number = 0;
   matTableDataSource: MatTableDataSource<any>;
 
@@ -36,13 +39,18 @@ export class PaginatorDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<PaginatorDialog>,
     public propertyService: PropertiesService,
-    public userService: UserService
+    public userService: UserService,
+    public unitService: UnitsService
   ) {
     this.type = data.type;
+    this.prop_id = data.prop;
+    this.user_type = data.user_type;
 
     if (data.type == "property") {
       this.fetchData(data.type);
     } else if (data.type == "user") {
+      this.fetchData(data.type);
+    } else if (data.type == "unit") {
       this.fetchData(data.type);
     }
   }
@@ -53,7 +61,8 @@ export class PaginatorDialog implements OnInit {
         return "Property";
       case "user":
         return "User";
-
+      case "unit":
+        return "Unit";
       default:
         break;
     }
@@ -67,9 +76,32 @@ export class PaginatorDialog implements OnInit {
         return "Tenant";
       case "new_user":
         return "New User";
-
       default:
         break;
+    }
+  }
+
+  getRowClass(row) {
+    if (this.type == "unit") {
+      if (row.property_id != this.prop_id || row.status == "occupied") {
+        return "mat-mdc-row-disabled";
+      }
+    } else if (this.type == "user") {
+      if (this.user_type == "owner") {
+        if (row.user_type == "owner" || row.user_type == "new_user") {
+          return "mat-mdc-row";
+        } else {
+          return "mat-mdc-row-disabled";
+        }
+      } else if (this.user_type == "tenant") {
+        if (row.user_type == "new_user") {
+          return "mat-mdc-row";
+        } else {
+          return "mat-mdc-row-disabled";
+        }
+      }
+    } else {
+      return "mat-mdc-row";
     }
   }
 
@@ -134,6 +166,31 @@ export class PaginatorDialog implements OnInit {
             this.pageChangerLoading = false;
           });
       }
+    } else if (this.type == "unit") {
+      if (this.searchBar.searchText != "") {
+        // console.log("search");
+        this.unitService
+          .getallUnitsSearchPageChange(
+            this.searchBar.searchText,
+            event.pageSize,
+            event.pageIndex + 1
+          )
+          .subscribe((va: any) => {
+            this.matTableDataSource = new MatTableDataSource(va);
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      } else {
+        this.unitService
+          .getallPropertiesUnits(event.pageSize, event.pageIndex + 1)
+          .subscribe((va: any) => {
+            this.matTableDataSource = new MatTableDataSource(va.units);
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      }
     }
   }
 
@@ -165,28 +222,67 @@ export class PaginatorDialog implements OnInit {
           this.isContentLoading = false;
           this.pageChangerLoading = false;
         });
+    } else if (type == "unit") {
+      this.unitService
+        .getallPropertiesUnits(limit == undefined ? 5 : limit, 1)
+        .subscribe((va: any) => {
+          this.matTableDataSource = new MatTableDataSource(va.units);
+          this.tableLength = va.count;
+        })
+        .add(() => {
+          this.isContentLoading = false;
+          this.pageChangerLoading = false;
+        });
     }
   }
 
-  getName(element) {
+  getFirstDataHeader() {
     switch (this.data.type) {
       case "property":
-        return element.property_name;
+        return "Name";
       case "user":
-        return element.name;
-
+        return "Name";
+      case "unit":
+        return "Unit No.";
       default:
         break;
     }
   }
 
-  getSecondData(element) {
+  getFirstDataValue(element) {
+    switch (this.data.type) {
+      case "property":
+        return element.property_name;
+      case "user":
+        return element.name;
+      case "unit":
+        return element.unit_no;
+      default:
+        break;
+    }
+  }
+
+  getSecondDataHeader() {
+    switch (this.data.type) {
+      case "property":
+        return "Address";
+      case "user":
+        return "Email";
+      case "unit":
+        return "Property Name";
+      default:
+        break;
+    }
+  }
+
+  getSecondDataValue(element) {
     switch (this.data.type) {
       case "property":
         return element.address;
       case "user":
         return element.email;
-
+      case "unit":
+        return element.property_name;
       default:
         break;
     }
@@ -231,10 +327,51 @@ export class PaginatorDialog implements OnInit {
       } else {
         this.fetchData(this.type, this.paginator.pageSize);
       }
+    } else if (this.type == "unit") {
+      if (filterValue != "") {
+        this.unitService
+          .getallPropertiesUnitsSearch(
+            filterValue,
+            this.paginator.pageSize,
+            this.paginator.pageIndex + 1
+          )
+          .subscribe((va: any) => {
+            this.matTableDataSource = new MatTableDataSource(va.units);
+            this.tableLength = va.count;
+          })
+          .add(() => {
+            this.pageChangerLoading = false;
+          });
+      } else {
+        this.fetchData(this.type, this.paginator.pageSize);
+      }
     }
   }
 
   onCloseDialog(selected_val) {
-    this.dialogRef.close(selected_val);
+    if (this.type == "unit") {
+      if (
+        selected_val.property_id == this.prop_id &&
+        selected_val.status == "vacant"
+      ) {
+        this.dialogRef.close(selected_val);
+        console.log(selected_val);
+      }
+    } else if (this.type == "property") {
+      this.dialogRef.close(selected_val);
+    } else if (this.type == "user") {
+      if (this.user_type == "owner") {
+        if (
+          selected_val.user_type == "owner" ||
+          selected_val.user_type == "new_user"
+        ) {
+          this.dialogRef.close(selected_val);
+        }
+      } else if (this.user_type == "tenant") {
+        if (selected_val.user_type == "new_user") {
+          this.dialogRef.close(selected_val);
+        }
+      }
+    }
   }
 }

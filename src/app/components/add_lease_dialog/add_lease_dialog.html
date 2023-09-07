@@ -71,20 +71,23 @@
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Select Unit*</mat-label>
-            <mat-select
-              [(ngModel)]="unit_data"
-              (selectionChange)="selectUnit($event)"
+          <div
+            class="m-0 mb-4 btn w-100"
+            (click)="addPaginatorDialog('unit')"
+            style="
+              text-align: start;
+              background: white;
+              box-shadow: none;
+              border: 1px solid #d4aa32;
+              color: black;
+              padding: 17px 13px;
+              font-size: 15px;
+            "
+          >
+            <span style="color: grey"
+              >{{ unit_data == undefined ? 'Select Unit*' : unit_data.no}}</span
             >
-              <mat-select-trigger>
-                {{ unit_data.viewValue }}
-              </mat-select-trigger>
-              <mat-option *ngFor="let unit of units" [value]="unit">
-                {{unit.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          </div>
 
           <mat-form-field class="mat-datepicker textField" appearance="outline">
             <mat-label>Choose Contract End Date</mat-label>
@@ -119,7 +122,7 @@
               matInput
               type="text"
               placeholder="Ex. Jhon"
-              value="{{owner}}"
+              value="{{owner == undefined ? 'Select a Unit' : owner.name}}"
               disabled
             />
           </mat-form-field>
@@ -150,14 +153,24 @@
         </div>
 
         <div class="col">
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Select Tenant*</mat-label>
-            <mat-select [(ngModel)]="tenant_id">
-              <mat-option *ngFor="let usr of users" [value]="usr.value">
-                {{usr.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div
+            class="m-0 mb-4 btn w-100"
+            (click)="addPaginatorDialog('user')"
+            style="
+              text-align: start;
+              background: white;
+              box-shadow: none;
+              border: 1px solid #d4aa32;
+              color: black;
+              padding: 17px 13px;
+              font-size: 15px;
+            "
+          >
+            <span style="color: grey"
+              >{{ tenant_data == undefined ? 'Select Tenant*' :
+              tenant_data.name}}</span
+            >
+          </div>
 
           <mat-form-field class="mat-datepicker textField" appearance="outline">
             <mat-label>Choose Move-out Date</mat-label>
@@ -343,6 +356,19 @@
             border-radius: 7px;
           "
           >Please add atleast 1 document.</span
+        >
+        <span
+          class="mr-3"
+          *ngIf="property_not_selected"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please select a property first.</span
         >
         <span
           *ngIf="uploading"

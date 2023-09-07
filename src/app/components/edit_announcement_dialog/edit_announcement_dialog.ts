@@ -80,7 +80,7 @@ export class EditAnnouncementDialog implements OnInit {
   addPaginatorDialog(type: string) {
     this.dialog
       .open(PaginatorDialog, {
-        width: "60%",
+        width: "50%",
         data: {
           type: type,
         },

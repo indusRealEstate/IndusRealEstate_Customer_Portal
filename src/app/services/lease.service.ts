@@ -61,15 +61,6 @@ export class LeaseService {
     );
   }
 
-  getAllLeaseAdmin() {
-    const url = `${API_URL}/getAllLeaseAdmin.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
   getAllLeaseData(data: any) {
     const url = `${API_URL}/getAllLeaseDetails.php?apikey=1`;
     return this.http.post(url, data).pipe(

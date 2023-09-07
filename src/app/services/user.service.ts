@@ -60,15 +60,6 @@ export class UserService {
     );
   }
 
-  getAllUsersAdmin() {
-    const url = `${API_URL}/getAllUsersAdmin.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
   getAllUsersAdminPagination(limit: number, pageNumber: number) {
     const url = `${API_URL}/getAllUsersAdmin_pagination.php?apikey=1`;
     return this.http
@@ -80,11 +71,7 @@ export class UserService {
       );
   }
 
-  getallUsersSearch(
-    input: string,
-    limit: number,
-    pageNumber: number
-  ) {
+  getallUsersSearch(input: string, limit: number, pageNumber: number) {
     const url = `${API_URL}/getAllUsersAdmin_search.php?apikey=1`;
     return this.http
       .post<any>(
@@ -155,17 +142,6 @@ export class UserService {
         return data;
       })
     );
-  }
-
-  getUserAllDocuments(userId: any, client_id: any) {
-    const url = `${API_URL}/getUserAllDocuments.php?apikey=1`;
-    return this.http
-      .post<any>(url, { userId: userId, client_id: client_id })
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      );
   }
 
   getUserDetailsForEdit(data: any) {

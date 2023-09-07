@@ -25,26 +25,6 @@ export class PropertiesService {
     );
   }
 
-  getallPropertiesAdmin() {
-    const url = `${API_URL}/getAllProperties.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
-  }
-
-  getallProperties(limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllProperties.php?apikey=1`;
-    return this.http
-      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
-      .pipe(
-        map((data) => {
-          return data;
-        })
-      );
-  }
-
   getPropDetails(data: any) {
     const url = `${API_URL}/selectPropertyDetails.php?apikey=1`;
     return this.http.post(url, data).pipe(

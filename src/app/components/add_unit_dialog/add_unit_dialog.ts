@@ -99,9 +99,10 @@ export class AddUnitDialog implements OnInit {
   addPaginatorDialog(type: string) {
     this.dialog
       .open(PaginatorDialog, {
-        width: "60%",
+        width: "50%",
         data: {
           type: type,
+          user_type: type == "user" ? "owner" : undefined,
         },
       })
       .afterClosed()

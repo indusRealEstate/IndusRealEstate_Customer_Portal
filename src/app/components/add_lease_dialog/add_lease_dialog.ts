@@ -12,7 +12,6 @@ import {
   MatDialogRef,
 } from "@angular/material/dialog";
 import { LeaseService } from "app/services/lease.service";
-import { UnitsService } from "app/services/units.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
@@ -29,26 +28,9 @@ export class AddLeaseDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddLeaseDialog>,
-    private unitsService: UnitsService,
     private leaseService: LeaseService,
     private dialog: MatDialog
-  ) {
-    if (data != null) {
-      // console.log(data);
-      if (this.properties != null) {
-        this.selectProperty({ value: data.prop_id });
-        this.property_id = data.prop_id;
-
-        setTimeout(() => {
-          if (this.units.length != 0) {
-            var un = this.units.find((u) => u.value == data.unit_id);
-            this.selectUnit({ value: un });
-            this.unit_data = un;
-          }
-        }, 2000);
-      }
-    }
-  }
+  ) {}
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
@@ -57,11 +39,8 @@ export class AddLeaseDialog implements OnInit {
 
   docsFilesUploaded: File[] = [];
 
-  property_id: any = "";
-  unit_data: any = "";
-  owner: any = "Select a Unit";
-  owner_id: any = "";
-  tenant_id: any = "";
+  unit_data: any;
+  owner: any;
   contract_start_date: any = "";
   contract_end_date: any = "";
   move_in_date: any = "";
@@ -77,6 +56,9 @@ export class AddLeaseDialog implements OnInit {
   yearly_amount: any = "";
 
   selected_property: any;
+  tenant_data: any;
+
+  property_not_selected: boolean = false;
 
   dewa: boolean = false;
   chiller: boolean = false;
@@ -87,11 +69,6 @@ export class AddLeaseDialog implements OnInit {
   uploading: boolean = false;
 
   uploading_progress: any = 0;
-
-  properties: any[] = [];
-  units: any[] = [];
-  users: any[] = [];
-  all_users: any[] = [];
 
   notice_period_lists: any[] = [
     { value: "1", viewValue: "1 Month" },
@@ -137,56 +114,58 @@ export class AddLeaseDialog implements OnInit {
   ];
 
   addPaginatorDialog(type: string) {
-    this.dialog
-      .open(PaginatorDialog, {
-        width: "60%",
-        data: {
-          type: type,
-        },
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res != undefined) {
-          // console.log(res);
-          if (type == "property") {
-            this.selected_property = {
-              id: res.property_id,
-              name: res.property_name,
-            };
-          } else {
-            this.owner = {
-              id: res.user_id,
-              name: res.name,
-            };
+    if (type == "unit" && this.selected_property == undefined) {
+      this.property_not_selected = true;
+
+      setTimeout(() => {
+        this.property_not_selected = false;
+      }, 3000);
+    } else {
+      this.dialog
+        .open(PaginatorDialog, {
+          width: "50%",
+          data: {
+            type: type,
+            user_type: type == "user" ? "tenant" : undefined,
+            prop:
+              this.selected_property != undefined
+                ? this.selected_property.id
+                : undefined,
+          },
+        })
+        .afterClosed()
+        .subscribe((res) => {
+          if (res != undefined) {
+            // console.log(res);
+            if (type == "property") {
+              this.selected_property = {
+                id: res.property_id,
+                name: res.property_name,
+              };
+              this.unit_data = undefined;
+              this.owner = undefined;
+            } else if (type == "unit") {
+              this.unit_data = {
+                id: res.unit_id,
+                no: res.unit_no,
+              };
+
+              this.owner = {
+                id: res.owner_id,
+                name: res.owner,
+              };
+            } else if (type == "user") {
+              this.tenant_data = {
+                id: res.user_id,
+                name: res.name,
+              };
+            }
           }
-        }
-      });
-  }
-
-  selectUnit(event: any) {
-    var e = this.all_users.find((u) => u.value == event.value.owner_id);
-    this.owner = e.viewValue;
-    this.owner_id = e.value;
-  }
-
-  selectProperty(event: any) {
-    this.units = [];
-    this.unitsService.getallPropertiesUnitsAdmin().subscribe((val: any[]) => {
-      val.forEach((un) => {
-        if (un.property_id == event.value && un.status != "occupied") {
-          this.units.push({
-            value: un.unit_id,
-            viewValue: un.unit_no,
-            owner_id: un.owner_id,
-          });
-        }
-      });
-    });
+        });
+    }
   }
 
   ngOnInit() {}
-
-  ngAfterViewInit() {}
 
   onCloseDialog() {
     this.dialogRef.close();
@@ -206,9 +185,9 @@ export class AddLeaseDialog implements OnInit {
   onSubmit() {
     if (this.docsFilesUploaded.length != 0) {
       if (
-        this.property_id != "" &&
-        this.unit_data != "" &&
-        this.tenant_id != "" &&
+        this.selected_property != undefined &&
+        this.unit_data != undefined &&
+        this.tenant_data != undefined &&
         this.contract_start_date != "" &&
         this.contract_end_date != "" &&
         this.notice_period != "" &&
@@ -281,18 +260,14 @@ export class AddLeaseDialog implements OnInit {
   setupData(random_id: any, docs_names: any[]): string {
     var data = {
       contract_id: random_id,
-      property_id: this.property_id,
-      property_name: this.properties.find(
-        (prop) => prop.value == this.property_id
-      ).viewValue,
-      unit_id: this.unit_data.value,
-      unit_no: this.unit_data.viewValue,
-      owner_id: this.owner_id,
-      owner_name: this.all_users.find((usr) => usr.value == this.owner_id)
-        .viewValue,
-      tenant_id: this.tenant_id,
-      tenant_name: this.all_users.find((usr) => usr.value == this.tenant_id)
-        .viewValue,
+      property_id: this.selected_property.id,
+      property_name: this.selected_property.name,
+      unit_id: this.unit_data.id,
+      unit_no: this.unit_data.no,
+      owner_id: this.owner.id,
+      owner_name: this.owner.name,
+      tenant_id: this.tenant_data.id,
+      tenant_name: this.tenant_data.name,
       status: "inactive",
       contract_start: this.contract_start_date,
       contract_end: this.contract_end_date,
