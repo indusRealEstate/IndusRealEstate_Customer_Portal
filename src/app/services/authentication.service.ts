@@ -132,11 +132,10 @@ export class AuthenticationService {
 
     setTimeout(() => {
       this.currentUserSubject.next(null);
-
       setTimeout(() => {
-        this.otherServices.isLogoutProcessing.next(false);
         this.router.navigate(["/login"]);
-      }, 1000);
-    }, 500);
+        this.otherServices.isLogoutProcessing.next(false);
+      }, 200);
+    });
   }
 }

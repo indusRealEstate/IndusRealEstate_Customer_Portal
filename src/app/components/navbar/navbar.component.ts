@@ -39,13 +39,10 @@ export class NavbarComponent implements OnInit {
   userLogOut() {
     this.otherServices.isLogoutProcessing.next(true);
     this.authenticationService.logout();
-    // this.chatService.user_leave(JSON.stringify({ user_id: this.user.id }));
-
     setTimeout(() => {
-      // this.chatService.socket_disconnect();
       this.otherServices.isUserSignedOut.next(true);
-      location.reload();
-    }, 1500);
+      this.otherServices.userSignedIn.next(false);
+    });
   }
 
   getMiniTabIcon() {

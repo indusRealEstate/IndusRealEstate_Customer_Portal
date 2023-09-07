@@ -31,12 +31,12 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private otherServices: OtherServices,
+    private otherServices: OtherServices
   ) {
     this.getScreenSize();
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
-      this.router.navigate([`/admin-dashboard`]);
+      this.router.navigate([`/dashboard`]);
     }
   }
 
@@ -110,34 +110,8 @@ export class LoginComponent implements OnInit {
             this.loading = false;
           } else {
             this.otherServices.isUserSignedOut.next(false);
-            var userData = localStorage.getItem("currentUser");
-            var user = JSON.parse(userData);
-
-            setTimeout(async () => {
-              // await this.authenticationService.getIPAddress();
-              // .then((res) => {
-              //   var date = this.getCurrentDate();
-              //   console.log(res);
-              // setTimeout(() => {
-              //   res.subscribe((ip) => {
-              //     var ip_data = {
-              //       date: date,
-              //       ip: ip["ip"],
-              //     };
-
-              //     this.authenticationService
-              //       .storeClientIP(JSON.stringify(ip_data))
-              //       .subscribe((e) => {
-              //         // console.log(e);
-              //       });
-              //   });
-              // });
-              // });
-
-              // window.location.replace(`/admin-dashboard?uid=${user[0]["id"]}`);
-              this.router.navigate(["/dashboard"]);
-              this.otherServices.userSignedIn.next(true);
-            });
+            this.otherServices.userSignedIn.next(true);
+            this.router.navigate(["/dashboard"]);
           }
         },
         (error) => {

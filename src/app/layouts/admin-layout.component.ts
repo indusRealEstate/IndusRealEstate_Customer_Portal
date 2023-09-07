@@ -29,7 +29,6 @@ export class AdminLayoutComponent implements OnInit {
   ) {
     if (this.authenticationService.currentUserValue) {
       otherServices.isUserSignedOut.next(false);
-      // this.chatService.socket_connect();
     } else {
       otherServices.isUserSignedOut.next(true);
       this.router.navigate(["/login"]);
