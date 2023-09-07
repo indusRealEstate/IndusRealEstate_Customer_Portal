@@ -30,7 +30,19 @@ export class AddLeaseDialog implements OnInit {
     public dialogRef: MatDialogRef<AddLeaseDialog>,
     private leaseService: LeaseService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    if (data != undefined) {
+      this.selected_property = {
+        id: data.prop_id,
+        name: data.prop_name,
+      };
+
+      this.unit_data = {
+        id: data.unit_id,
+        no: data.unit_no,
+      };
+    }
+  }
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;

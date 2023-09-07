@@ -429,7 +429,9 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       .open(AddLeaseDialog, {
         width: "80%",
         data: {
+          prop_name: this.all_data.prop_name,
           prop_id: this.all_data.prop_uid,
+          unit_no: this.all_data.unit_no,
           unit_id: this.all_data.unit_id,
         },
       })
