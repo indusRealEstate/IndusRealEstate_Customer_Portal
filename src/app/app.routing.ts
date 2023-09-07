@@ -10,12 +10,11 @@ import { Routes, RouterModule } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout.component";
 
 var userData = localStorage.getItem("currentUser");
-var user = JSON.parse(userData);
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: userData == null ? "login" : `home?uid=${user[0]["id"]}`,
+    redirectTo: userData == null ? "login" : "dashboard",
     pathMatch: "full",
   },
   {
