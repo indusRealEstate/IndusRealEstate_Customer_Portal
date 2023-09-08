@@ -62,6 +62,8 @@ export class AddUnitDialog implements OnInit {
   unit_number: any = "";
   owner: any;
   floors: any = "";
+  premises_no: any = "";
+  plot_no: any = "";
   unit_size: any = "";
 
   bedrooms: any = "";
@@ -83,6 +85,10 @@ export class AddUnitDialog implements OnInit {
   uploading: boolean = false;
 
   uploading_progress: any = 0;
+
+  extra_living_room: boolean = false;
+  maids_room: boolean = false;
+  family_room: boolean = false;
 
   properties: any[] = [];
 
@@ -207,10 +213,7 @@ export class AddUnitDialog implements OnInit {
   }
 
   onSubmit() {
-    if (
-      this.imgFilesUploaded.length != 0 &&
-      this.docsFilesUploaded.length != 0
-    ) {
+    if (this.docsFilesUploaded.length != 0) {
       if (
         this.selected_property != undefined &&
         this.unit_type != "" &&
@@ -233,7 +236,7 @@ export class AddUnitDialog implements OnInit {
 
         var data = this.setupData(random_id, images_names, docs_names);
         this.unitsService.addUnit(data).subscribe((val) => {
-          console.log(val);
+          // console.log(val);
           if (val == "success") {
             this.addInventories(random_id);
             var uploadData = this.setupUploadFiles(
@@ -264,12 +267,7 @@ export class AddUnitDialog implements OnInit {
         }, 3000);
       }
     } else {
-      if (this.imgFilesUploaded.length == 0) {
-        this.imageNotAdded = true;
-        setTimeout(() => {
-          this.imageNotAdded = false;
-        }, 3000);
-      } else if (this.docsFilesUploaded.length == 0) {
+      if (this.docsFilesUploaded.length == 0) {
         this.documentNotAdded = true;
         setTimeout(() => {
           this.documentNotAdded = false;
@@ -278,12 +276,35 @@ export class AddUnitDialog implements OnInit {
     }
   }
 
+  dataURItoBlob(dataURI: string) {
+    const byteString = window.atob(dataURI.split(";base64,")[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: "image/jpeg" });
+    return blob;
+  }
+
   setupUploadFiles(
     random_id: any,
     images_names: any[],
     docs_names: any[]
   ): FormData {
     const formdata: FormData = new FormData();
+    var imageFile: File;
+    if (this.imgFilesBase64Uploaded.length == 0) {
+      var base64Img = this.generateDefaultImage(
+        `${this.unit_number}, ${this.selected_property.name}`
+      );
+
+      const imageBlob = this.dataURItoBlob(base64Img);
+
+      imageFile = new File([imageBlob], `${this.unit_number}_demo_img.jpg`, {
+        type: "image/jpeg",
+      });
+    }
 
     var img_count = 0;
     for (let img of this.imgFilesUploaded) {
@@ -302,6 +323,8 @@ export class AddUnitDialog implements OnInit {
 
     formdata.append("unit_id", random_id);
 
+    formdata.append("base_img", imageFile);
+
     return formdata;
   }
 
@@ -313,6 +336,11 @@ export class AddUnitDialog implements OnInit {
       property_name: this.selected_property.name,
       unit_type: this.unit_type,
       floor: this.floors,
+      premises_no: this.premises_no,
+      plot_no: this.plot_no,
+      extra_living_room: this.extra_living_room == true ? 1 : 0,
+      maids_room: this.maids_room == true ? 1 : 0,
+      family_room: this.family_room == true ? 1 : 0,
       size: this.unit_size,
       status: "vacant",
       bedroom: this.bedrooms,
@@ -321,7 +349,10 @@ export class AddUnitDialog implements OnInit {
       owner: this.owner.name,
       tenant_id: "",
       lease_id: "",
-      images: JSON.stringify(images_names),
+      images:
+        images_names.length == 0
+          ? JSON.stringify([`${this.unit_number}_demo_img.jpg`])
+          : JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
       user_id: this.owner.id,
@@ -353,5 +384,26 @@ export class AddUnitDialog implements OnInit {
       default:
         return `File surprising upload event: ${event.type}.`;
     }
+  }
+
+  generateDefaultImage(name: string) {
+    const canvas = document.createElement("canvas");
+    canvas.style.display = "none";
+    canvas.width = 1000;
+    canvas.height = 500;
+    document.body.appendChild(canvas);
+    const context = canvas.getContext("2d")!;
+    context.fillStyle = "#ffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.font = "50px Helvetica";
+    context.fillStyle = "blue";
+    var x = canvas.width / 3;
+    var y = canvas.height / 2;
+    context.fillText(name, x, y);
+
+    const data = canvas.toDataURL();
+    document.body.removeChild(canvas);
+
+    return data;
   }
 }

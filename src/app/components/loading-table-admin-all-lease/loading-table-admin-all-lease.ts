@@ -17,12 +17,12 @@ export class LoadingTableAdminAllLease implements OnInit {
     "leaseExpiry",
     "owner",
     "tenant",
-    "moveIn",
-    "moveOut",
+    // "moveIn",
+    // "moveOut",
     "contractStartDate",
     "contractEndDate",
+    "rentYearly",
     "deposit",
-    "rentAmount",
     "more",
   ];
   loadingTable: any[] = [1, 2, 3, 4, 5];

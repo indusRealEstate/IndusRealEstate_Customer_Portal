@@ -12,12 +12,12 @@ export class LoadingTableAdminPropertiesUnits implements OnInit {
     // "name",
     "unitNo",
     "propertyName",
-    "floor",
     "size",
     "status",
-    "ownerName",
-    "bedroom",
-    "bathroom",
+    "tenant",
+    "premises",
+    "plot",
+    "type",
     "more",
   ];
   loadingTable: any[] = [1, 2, 3, 4, 5];

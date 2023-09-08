@@ -47,12 +47,12 @@ export class AllLeasesComponent implements OnInit {
     "leaseExpiry",
     "owner",
     "tenant",
-    "moveIn",
-    "moveOut",
+    // "moveIn",
+    // "moveOut",
     "contractStartDate",
     "contractEndDate",
+    "rentYearly",
     "deposit",
-    "rentAmount",
     "more",
   ];
 

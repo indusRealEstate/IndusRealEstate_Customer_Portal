@@ -186,6 +186,16 @@
             </mat-form-field>
 
             <mat-form-field class="textField" appearance="outline">
+              <mat-label>Plot No.</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 10"
+                [(ngModel)]="plot_no"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="textField" appearance="outline">
               <mat-label>Bathrooms</mat-label>
               <input
                 matInput
@@ -214,6 +224,25 @@
             </mat-form-field>
 
             <div
+              class="row m-0 justify-content-between"
+              style="margin-top: -20px !important"
+            >
+              <div class="checkbox-add-unit">
+                <mat-checkbox [(ngModel)]="extra_living_room"
+                  >Extra Living Room</mat-checkbox
+                >
+              </div>
+              <div class="checkbox-add-unit">
+                <mat-checkbox [(ngModel)]="maids_room">Maids Room</mat-checkbox>
+              </div>
+              <div class="checkbox-add-unit">
+                <mat-checkbox [(ngModel)]="family_room"
+                  >Family Room</mat-checkbox
+                >
+              </div>
+            </div>
+
+            <div
               class="mt-2 mb-4 btn w-100"
               (click)="addPaginatorDialog('user')"
               style="
@@ -230,6 +259,16 @@
                 >{{ owner == undefined ? 'Owner*' : owner.name}}</span
               >
             </div>
+
+            <mat-form-field class="textField" appearance="outline">
+              <mat-label>Premises No.</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Ex. 675692831"
+                [(ngModel)]="premises_no"
+              />
+            </mat-form-field>
 
             <mat-form-field class="textField" appearance="outline">
               <mat-label>Floors</mat-label>

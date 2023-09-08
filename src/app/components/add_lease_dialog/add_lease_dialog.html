@@ -63,7 +63,7 @@
             <mat-datepicker #start_date_picker></mat-datepicker>
           </mat-form-field>
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Notice Period (Months)*</mat-label>
+            <mat-label>Notice Period (Months)</mat-label>
             <mat-select [(ngModel)]="notice_period">
               <mat-option
                 *ngFor="let item of notice_period_lists"
@@ -212,7 +212,7 @@
       <div class="row m-0 mt-3">
         <div class="col pl-0">
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Select Currency*</mat-label>
+            <mat-label>Select Currency</mat-label>
             <mat-select [(ngModel)]="payment_currency">
               <mat-option
                 *ngFor="let item of currency_list"
@@ -224,7 +224,7 @@
           </mat-form-field>
 
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Rent Amount*</mat-label>
+            <mat-label>Rent Amount</mat-label>
             <input
               matInput
               type="number"
@@ -233,7 +233,7 @@
             />
           </mat-form-field>
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Government Charges*</mat-label>
+            <mat-label>Government Charges</mat-label>
             <input
               matInput
               type="number"
@@ -276,7 +276,7 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Security Deposit*</mat-label>
+            <mat-label>Security Deposit</mat-label>
             <input
               matInput
               type="number"

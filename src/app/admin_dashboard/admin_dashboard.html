@@ -131,7 +131,7 @@
                 </div>
 
                 <div
-                  *ngIf="!total_contracts_reminders_loading && total_contracts_reminders_items.length == 0"
+                  *ngIf="!total_contracts_reminders_loading && reminders_length == 0"
                   class="d-flex w-100 justify-content-center align-items-center"
                   style="height: 80px"
                 >
@@ -141,10 +141,10 @@
                   >
                 </div>
                 <div
-                  *ngIf="!total_contracts_reminders_loading && total_contracts_reminders_items.length != 0"
+                  *ngIf="!total_contracts_reminders_loading && reminders_length != 0"
                 >
                   <div
-                    *ngFor="let contract of total_contracts_currentItemsToShow;let index = index"
+                    *ngFor="let contract of contracts_reminders;let index = index"
                     class="row m-0 mb-2 justify-content-between"
                     style="
                       padding: 8px 15px;
@@ -224,11 +224,11 @@
                 </div>
 
                 <mat-paginator
-                  #paginator
+                  #paginator_reminder
                   (page)="onPaginateChange($event)"
-                  [length]="total_contracts_reminders_items.length"
+                  [length]="reminders_length"
                   [pageSize]="3"
-                  [pageSizeOptions]="[3, 5, 10]"
+                  [pageSizeOptions]="[3, 5]"
                   aria-label="Select page"
                 >
                 </mat-paginator>

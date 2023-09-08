@@ -111,6 +111,14 @@ export class EditLeaseDialog implements OnInit {
     { value: "5", viewValue: "5 Cheques" },
     { value: "6", viewValue: "6 Cheques" },
     { value: "7", viewValue: "7 Cheques" },
+    { value: "8", viewValue: "8 Cheques" },
+    { value: "9", viewValue: "9 Cheques" },
+    { value: "10", viewValue: "10 Cheques" },
+    { value: "11", viewValue: "11 Cheques" },
+    { value: "12", viewValue: "12 Cheques" },
+    { value: "13", viewValue: "13 Cheques" },
+    { value: "14", viewValue: "14 Cheques" },
+    { value: "15", viewValue: "15 Cheques" },
   ];
 
   ngOnInit() {}
@@ -168,12 +176,8 @@ export class EditLeaseDialog implements OnInit {
       if (
         this.contract_start_date != "" &&
         this.contract_end_date != "" &&
-        this.notice_period != "" &&
         this.purpose != "" &&
-        this.payment_currency != "" &&
         this.no_of_cheques != "" &&
-        this.rent_amount != "" &&
-        this.security_deposit != "" &&
         this.yearly_amount != ""
       ) {
         this.uploading = true;
@@ -220,7 +224,7 @@ export class EditLeaseDialog implements OnInit {
                 last()
               )
               .subscribe((v) => {
-                console.log(v);
+                this.onCloseDialog();
               });
           }
         });

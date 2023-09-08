@@ -8,10 +8,11 @@ import { AddUnitDialog } from "app/components/add_unit_dialog/add_unit_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UnitsService } from "app/services/units.service";
 import * as XLSX from "xlsx-js-style";
+
+import * as FileSaver from "file-saver";
 
 declare interface Unit {
   "UNIT No.": number;
@@ -44,12 +45,12 @@ export class AdminPropertiesUnits implements OnInit {
     // "name",
     "unitNo",
     "propertyName",
-    "floor",
     "size",
     "status",
-    "ownerName",
-    "bedroom",
-    "bathroom",
+    "tenant",
+    "premises",
+    "plot",
+    "type",
     "more",
   ];
 
@@ -78,6 +79,8 @@ export class AdminPropertiesUnits implements OnInit {
 
   tableLength: number = 0;
 
+  unitTypes: any[] = [];
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -89,6 +92,23 @@ export class AdminPropertiesUnits implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
+    this.unitService.getallUnitTypes().subscribe((val: any[]) => {
+      val.forEach((unit_type) => {
+        this.unitTypes.push({
+          value: unit_type.id,
+          viewValue: unit_type.type,
+        });
+      });
+    });
+  }
+
+  getUnitType(unit_type_id) {
+    if (this.unitTypes.length != 0) {
+      return this.unitTypes.find((type) => type.value == unit_type_id)
+        .viewValue;
+    } else {
+      return "Loading..";
+    }
   }
 
   screenHeight: number;

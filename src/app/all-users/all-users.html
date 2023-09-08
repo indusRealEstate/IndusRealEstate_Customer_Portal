@@ -141,7 +141,13 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
                 (click)="viewUser(element)"
-                style="cursor: pointer"
+                style="
+                  cursor: pointer;
+                  max-width: 200px;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
               >
                 {{ element.name}}
               </td>

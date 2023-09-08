@@ -18,6 +18,7 @@ import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
 import { LeaseService } from "app/services/lease.service";
+import { event } from "jquery";
 
 @Component({
   selector: "admin-dashboard",
@@ -38,9 +39,6 @@ export class AdminDashboardComponent implements OnInit {
   allContracts_active_length: number = 0;
   allRequests_length: number = 0;
 
-  total_contracts_reminders_items: any[] = [];
-  total_contracts_currentItemsToShow: any[] = [];
-
   total_contracts_reminders_loading: boolean = true;
 
   donut_chart_loading: boolean = true;
@@ -49,7 +47,10 @@ export class AdminDashboardComponent implements OnInit {
 
   reminder_button_loading: boolean = true;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  reminders_length: number = 0;
+  contracts_reminders: any[] = [];
+
+  @ViewChild("paginator_reminder") paginator_reminder: MatPaginator;
 
   constructor(
     private adminService: AdminService,
@@ -121,12 +122,17 @@ export class AdminDashboardComponent implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
-  onPaginateChange($event) {
-    this.total_contracts_currentItemsToShow =
-      this.total_contracts_reminders_items.slice(
-        $event.pageIndex * $event.pageSize,
-        $event.pageIndex * $event.pageSize + $event.pageSize
-      );
+  onPaginateChange(event) {
+    this.total_contracts_reminders_loading = true;
+    this.leaseService
+      .getAllContractsReminders(event.pageSize, event.pageIndex + 1)
+      .subscribe((res: any) => {
+        this.contracts_reminders = res.lease;
+        this.reminders_length = res.count;
+      })
+      .add(() => {
+        this.total_contracts_reminders_loading = false;
+      });
   }
 
   async sendContractReminder(contract) {
@@ -160,10 +166,10 @@ export class AdminDashboardComponent implements OnInit {
     });
 
     this.leaseService
-      .getAllContractsReminders()
-      .subscribe((res: any[]) => {
-        this.total_contracts_reminders_items = res;
-        this.total_contracts_currentItemsToShow = res;
+      .getAllContractsReminders(3, 1)
+      .subscribe((res: any) => {
+        this.contracts_reminders = res.lease;
+        this.reminders_length = res.count;
       })
       .add(() => {
         this.total_contracts_reminders_loading = false;
@@ -248,17 +254,6 @@ export class AdminDashboardComponent implements OnInit {
 
   ngAfterViewInit() {
     this.isLoading = false;
-
-    setTimeout(() => {
-      if (this.paginator != undefined) {
-        this.total_contracts_currentItemsToShow =
-          this.total_contracts_reminders_items.slice(
-            this.paginator.pageIndex * this.paginator.pageSize,
-            this.paginator.pageIndex * this.paginator.pageSize +
-              this.paginator.pageSize
-          );
-      }
-    });
 
     setTimeout(() => {
       this.chart_data = [

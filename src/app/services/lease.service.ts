@@ -52,13 +52,15 @@ export class LeaseService {
     );
   }
 
-  getAllContractsReminders() {
+  getAllContractsReminders(limit: number, pageNumber: number) {
     const url = `${API_URL}/get_all_contracts_reminders.php?apikey=1`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+    return this.http
+      .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   getAllLeaseData(data: any) {

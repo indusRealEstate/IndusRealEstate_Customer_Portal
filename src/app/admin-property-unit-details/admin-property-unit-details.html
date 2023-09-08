@@ -32,7 +32,7 @@
             *ngIf="all_data != null"
           >
             <span class="item-header">
-              {{all_data.unit_no}}, {{all_data.prop_address | titlecase}}
+              {{all_data.unit_no}}, {{all_data.prop_name | titlecase}}
             </span>
 
             <span
@@ -338,21 +338,20 @@
 
           <div class="col-md-4 pr-0" *ngIf="!isContentLoading && isOcupied">
             <div class="card main-card" style="height: 93%">
-              <div class="card-header">
+              <div class="card-header row m-0 justify-content-between">
                 <h4 class="overview-header">Tenant Details</h4>
+                <img
+                  src="{{ all_data.tenant_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.tenant_uid + '/image/' + all_data.tenant_profile_img : 'assets/img/images/user.png'}}"
+                  alt
+                  class="card-img-top user-image"
+                  style="width: 2rem"
+                />
               </div>
               <div class="card-body" style="padding: 25px 20px">
                 <div class="row m-0 align-items-start">
-                  <div class="col-3 d-flex pl-0">
-                    <img
-                      src="{{ all_data.tenant_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.tenant_uid + '/image/' + all_data.tenant_profile_img : 'assets/img/images/user.png'}}"
-                      alt
-                      class="card-img-top user-image m-auto"
-                    />
-                  </div>
-                  <div class="col-9 p-0">
+                  <div class="col p-0">
                     <div class="row m-0">
-                      <div class="col-5 pr-0" style="display: grid">
+                      <div class="col p-0">
                         <span
                           style="
                             font-size: 14px;
@@ -361,53 +360,8 @@
                           "
                           >Name</span
                         >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Email</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Alternative email</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Phone</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Alternative phone</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Gender</span
-                        >
                       </div>
-                      <div class="col-7 pr-0" style="display: grid">
+                      <div class="col pr-0">
                         <span
                           style="
                             color: #d4aa32;
@@ -416,8 +370,21 @@
                           "
                           >{{all_data.tenant_name}}</span
                         >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -425,8 +392,21 @@
                           "
                           >{{all_data.tenant_email}}</span
                         >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -440,8 +420,21 @@
                             >-</span
                           >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -451,8 +444,21 @@
                           {{all_data.tenant_country_code_number}}
                           {{all_data.tenant_mobile_number}}
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -469,8 +475,21 @@
                             >-</span
                           >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Gender</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -520,21 +539,20 @@
             *ngIf="!isContentLoading && all_data.user_uid !== ''"
           >
             <div class="card main-card" style="height: 93%">
-              <div class="card-header">
+              <div class="card-header row m-0 justify-content-between">
                 <h4 class="overview-header">Owner Details</h4>
+                <img
+                  src="{{ all_data.user_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.user_uid + '/image/' + all_data.user_profile_img : 'assets/img/images/user.png'}}"
+                  alt
+                  class="card-img-top user-image"
+                  style="width: 2rem"
+                />
               </div>
               <div class="card-body" style="padding: 25px 20px">
                 <div class="row m-0 align-items-start">
-                  <div class="col-3 d-flex pl-0">
-                    <img
-                      src="{{ all_data.user_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.user_uid + '/image/' + all_data.user_profile_img : 'assets/img/images/user.png'}}"
-                      alt
-                      class="card-img-top user-image m-auto"
-                    />
-                  </div>
-                  <div class="col-9 p-0">
+                  <div class="col p-0">
                     <div class="row m-0">
-                      <div class="col-5 pr-0" style="display: grid">
+                      <div class="col p-0">
                         <span
                           style="
                             font-size: 14px;
@@ -543,53 +561,8 @@
                           "
                           >Name</span
                         >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Email</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Alternative email</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Phone</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Alternative phone</span
-                        >
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          "
-                          >Gender</span
-                        >
                       </div>
-                      <div class="col-7 pr-0" style="display: grid">
+                      <div class="col pr-0">
                         <span
                           style="
                             color: #d4aa32;
@@ -598,8 +571,21 @@
                           "
                           >{{all_data.user_name}}</span
                         >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -607,8 +593,21 @@
                           "
                           >{{all_data.user_email}}</span
                         >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -622,8 +621,21 @@
                             >-</span
                           >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -633,8 +645,21 @@
                           {{all_data.user_country_code_number}}
                           {{all_data.user_mobile_number}}
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -644,15 +669,28 @@
                           <span
                             *ngIf="all_data.user_alternative_mobile_number != 0"
                             >{{all_data.user_country_code_alternative_number}}
-                            {{all_data.user_alternative_mobile_number }}</span
+                            {{all_data.user_alternative_mobile_number}}</span
                           >
                           <span
                             *ngIf="all_data.user_alternative_mobile_number == 0"
                             >-</span
                           >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Gender</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
@@ -721,6 +759,16 @@
                       <td class="p-3 col-md-8">{{all_data.unit_no}}</td>
                     </tr>
                     <tr scope="row m-0">
+                      <th class="p-3 col-md-4" scope="row">Premises No.</th>
+                      <td class="p-3 col-md-8">
+                        {{all_data.unit_premises_no}}
+                      </td>
+                    </tr>
+                    <tr scope="row m-0">
+                      <th class="p-3 col-md-4" scope="row">Plot No.</th>
+                      <td class="p-3 col-md-8">{{all_data.unit_plot_no}}</td>
+                    </tr>
+                    <tr scope="row m-0">
                       <th class="p-3 col-md-4" scope="row">inventories</th>
                       <td class="p-3 col-md-8">
                         <button
@@ -758,7 +806,8 @@
                             class="col-12"
                             style="max-height: 20vh; overflow-y: auto"
                           >
-                            {{all_data.unit_description}}
+                            {{all_data.unit_description == '' ? '-' :
+                            (all_data.unit_description | titlecase)}}
                           </div>
                         </div>
                       </td>

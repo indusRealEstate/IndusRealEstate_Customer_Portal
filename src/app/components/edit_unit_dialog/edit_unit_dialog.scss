@@ -4,6 +4,19 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .checkbox-add-unit {
+  .mat-mdc-checkbox-checked {
+    .mdc-checkbox__background {
+      background-color: #d4aa32 !important;
+      border-color: #d4aa32 !important;
+    }
+  }
+
+  label {
+    margin: 0 !important;
+  }
+}
+
 ::ng-deep .mat-dialog-container {
   padding: 0 !important;
   border-radius: 1rem;

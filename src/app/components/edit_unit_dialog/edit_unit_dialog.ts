@@ -71,6 +71,9 @@ export class EditUnitDialog implements OnInit {
 
   uploading_progress: any = 0;
 
+  premises_no: any = "";
+  plot_no: any = "";
+
   properties: any[] = [];
 
   users: any[] = [];
@@ -83,6 +86,10 @@ export class EditUnitDialog implements OnInit {
   deleted_doc: string[] = [];
 
   is_submit: boolean = false;
+
+  extra_living_room: boolean = false;
+  maids_room: boolean = false;
+  family_room: boolean = false;
 
   images_fully_loaded: boolean = false;
 
@@ -167,6 +174,12 @@ export class EditUnitDialog implements OnInit {
     this.bathrooms = this.all_data.unit_bath;
     this.number_of_parking = this.all_data.unit_parking;
     this.unit_description = this.all_data.unit_description;
+    this.premises_no = this.all_data.unit_premises_no;
+    this.plot_no = this.all_data.unit_plot_no;
+    this.extra_living_room =
+      this.all_data.unit_extra_living_room == "1" ? true : false;
+    this.maids_room = this.all_data.unit_maids_room == "1" ? true : false;
+    this.family_room = this.all_data.unit_family_room == "1" ? true : false;
   }
 
   addPaginatorDialog(type: string) {
@@ -334,10 +347,7 @@ export class EditUnitDialog implements OnInit {
   }
 
   onSubmit() {
-    if (
-      this.imgFilesUploaded.length != 0 &&
-      this.docsFilesUploaded.length != 0
-    ) {
+    if (this.docsFilesUploaded.length != 0) {
       if (
         this.selected_property != "" &&
         this.unit_type != "" &&
@@ -391,21 +401,26 @@ export class EditUnitDialog implements OnInit {
               images_names,
               docs_names
             );
-            this.unitsService
-              .uploadAllFilesAddUnit(uploadData)
-              .pipe(
-                map((event) => this.getEventMessage(event)),
-                tap((message) => {
-                  if (message == "File was completely uploaded!") {
-                    this.is_submit = true;
-                    this.onCloseDialog();
-                  }
-                }),
-                last()
-              )
-              .subscribe((v) => {
-                // console.log(v);
-              });
+
+            if (this.selected_images.length != 0) {
+              this.unitsService
+                .uploadAllFilesAddUnit(uploadData)
+                .pipe(
+                  map((event) => this.getEventMessage(event)),
+                  tap((message) => {
+                    if (message == "File was completely uploaded!") {
+                      this.is_submit = true;
+                      this.onCloseDialog();
+                    }
+                  }),
+                  last()
+                )
+                .subscribe((v) => {
+                  // console.log(v);
+                });
+            } else {
+              this.onCloseDialog();
+            }
           }
         });
       } else {
@@ -415,12 +430,7 @@ export class EditUnitDialog implements OnInit {
         }, 3000);
       }
     } else {
-      if (this.imgFilesUploaded.length == 0) {
-        this.imageNotAdded = true;
-        setTimeout(() => {
-          this.imageNotAdded = false;
-        }, 3000);
-      } else if (this.docsFilesUploaded.length == 0) {
+      if (this.docsFilesUploaded.length == 0) {
         this.documentNotAdded = true;
         setTimeout(() => {
           this.documentNotAdded = false;
@@ -429,12 +439,35 @@ export class EditUnitDialog implements OnInit {
     }
   }
 
+  dataURItoBlob(dataURI: string) {
+    const byteString = window.atob(dataURI.split(";base64,")[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: "image/jpeg" });
+    return blob;
+  }
+
   setupUploadFiles(
     random_id: any,
     images_names: any[],
     docs_names: any[]
   ): FormData {
     const formdata: FormData = new FormData();
+    var imageFile: File;
+    if (this.imgFilesBase64Uploaded.length == 0) {
+      var base64Img = this.generateDefaultImage(
+        `${this.unit_number}, ${this.selected_property.name}`
+      );
+
+      const imageBlob = this.dataURItoBlob(base64Img);
+
+      imageFile = new File([imageBlob], `${this.unit_number}_demo_img.jpg`, {
+        type: "image/jpeg",
+      });
+    }
 
     var img_count = 0;
     for (let img of this.selected_images) {
@@ -455,6 +488,8 @@ export class EditUnitDialog implements OnInit {
 
     formdata.append("unit_id", random_id);
 
+    formdata.append("base_img", imageFile);
+
     return formdata;
   }
 
@@ -465,6 +500,11 @@ export class EditUnitDialog implements OnInit {
       property_id: this.selected_property.id,
       property_name: this.selected_property.name,
       unit_type: this.unit_type,
+      premises_no: this.premises_no,
+      plot_no: this.plot_no,
+      extra_living_room: this.extra_living_room == true ? 1 : 0,
+      maids_room: this.maids_room == true ? 1 : 0,
+      family_room: this.family_room == true ? 1 : 0,
       floor: this.floors,
       size: this.unit_size,
       status: this.all_data.unit_status,
@@ -476,7 +516,10 @@ export class EditUnitDialog implements OnInit {
         this.all_data.tenant_uid == undefined ? "" : this.all_data.tenant_uid,
       lease_id:
         this.all_data.lease_uid == undefined ? "" : this.all_data.lease_uid,
-      images: JSON.stringify(images_names),
+      images:
+        images_names.length == 0
+          ? JSON.stringify([`${this.unit_number}_demo_img.jpg`])
+          : JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
       user_id: this.owner.id,
@@ -508,5 +551,26 @@ export class EditUnitDialog implements OnInit {
       default:
         return `File surprising upload event: ${event.type}.`;
     }
+  }
+
+  generateDefaultImage(name: string) {
+    const canvas = document.createElement("canvas");
+    canvas.style.display = "none";
+    canvas.width = 1000;
+    canvas.height = 500;
+    document.body.appendChild(canvas);
+    const context = canvas.getContext("2d")!;
+    context.fillStyle = "#ffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.font = "50px Helvetica";
+    context.fillStyle = "blue";
+    var x = canvas.width / 3;
+    var y = canvas.height / 2;
+    context.fillText(name, x, y);
+
+    const data = canvas.toDataURL();
+    document.body.removeChild(canvas);
+
+    return data;
   }
 }
