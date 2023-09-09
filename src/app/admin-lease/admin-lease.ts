@@ -162,7 +162,26 @@ export class AllLeasesComponent implements OnInit {
 
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
 
-    return `${Math.round(difference_In_Days)} Days left`;
+    if (difference_In_Days < 0) {
+      return `Expired ${Math.round(Math.abs(difference_In_Days))} days ago.`;
+    } else {
+      return `${Math.round(difference_In_Days)} Days left`;
+    }
+  }
+  
+  getLeaseExpiryStyleClass(end: any) {
+    var start_date = new Date();
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    if (difference_In_Days < 0) {
+      return 'lease-expired-date';
+    } else {
+      return 'lease-expiry-date';
+    }
   }
 
   fetchData(limit?) {

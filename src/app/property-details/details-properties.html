@@ -26,7 +26,7 @@
     </ngx-skeleton-loader>
     <div class="row m-0 justify-content-between" *ngIf="!isContentLoading">
       <span class="item-header">
-        {{all_data.prop_address}}, {{all_data.prop_name}}
+        {{all_data.prop_name | titlecase}}, {{all_data.prop_address | titlecase}}
       </span>
 
       <div class="row m-0">

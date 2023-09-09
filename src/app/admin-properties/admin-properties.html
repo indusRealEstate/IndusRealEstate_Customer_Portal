@@ -123,7 +123,7 @@
                 [ngClass]="last ? 'first-col-last' : 'first-col'"
                 (click)="viewPropInfo(element)"
               >
-                {{ element.property_name}}
+                {{ element.property_name | titlecase}}
               </td>
             </ng-container>
 

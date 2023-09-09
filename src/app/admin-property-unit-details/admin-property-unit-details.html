@@ -80,7 +80,7 @@
               border: 1px solid #d4aa3259;
             "
           >
-            {{getUnitType(all_data.unit_type) | titlecase}}
+            {{getUnitType(all_data.unit_type)}}
           </div>
 
           <div
@@ -1181,18 +1181,46 @@
                       </td>
                     </tr>
                     <tr scope="row m-0">
+                      <th class="p-3 col-md-4" scope="row">
+                        Number of cheques
+                      </th>
+                      <td class="p-3 col-md-8">
+                        {{all_data.lease_no_of_cheques}}
+                        {{all_data.lease_no_of_cheques > 1 ? 'Cheques' :
+                        'Cheque'}}
+                      </td>
+                    </tr>
+                    <tr scope="row m-0">
+                      <th class="p-3 col-md-4" scope="row">Annual Rent</th>
+                      <td class="p-3 col-md-8">
+                        {{all_data.lease_yearly_amount | currency:'AED '}}
+                      </td>
+                    </tr>
+                    <tr scope="row m-0">
+                      <th class="p-3 col-md-4" scope="row">Security deposit</th>
+                      <td class="p-3 col-md-8">
+                        {{all_data.lease_security_deposit == 0 ? '-' :
+                        (all_data.lease_security_deposit | currency:'AED ')}}
+                      </td>
+                    </tr>
+                    <tr scope="row m-0">
                       <th class="p-3 col-md-4" scope="row">Move In</th>
                       <td class="p-3 col-md-8">
-                        {{all_data.lease_move_in | date}}
+                        {{all_data.lease_move_in == '0000-00-00' ? '-' :
+                        (all_data.lease_move_in | date)}}
                       </td>
                     </tr>
                     <tr scope="row m-0">
                       <th class="p-3 col-md-4" scope="row">Move Out</th>
                       <td class="p-3 col-md-8">
-                        {{all_data.lease_move_out | date}}
+                        {{all_data.lease_move_out == '0000-00-00' ? '-' :
+                        (all_data.lease_move_out | date)}}
                       </td>
                     </tr>
-                    <tr scope="row m-0">
+                    <tr
+                      scope="row m-0"
+                      *ngIf="all_data.lease_notice_period != ''"
+                    >
                       <th class="p-3 col-md-4" scope="row">Notice period</th>
                       <td class="p-3 col-md-8">
                         {{all_data.lease_notice_period}}
@@ -1200,41 +1228,32 @@
                         'month')}}
                       </td>
                     </tr>
-                    <tr scope="row m-0">
+                    <tr
+                      scope="row m-0"
+                      *ngIf="all_data.lease_payment_currency != ''"
+                    >
                       <th class="p-3 col-md-4" scope="row">Payment Currency</th>
                       <td class="p-3 col-md-8">
                         {{all_data.lease_payment_currency}}
                       </td>
                     </tr>
-                    <tr scope="row m-0">
+
+                    <tr
+                      scope="row m-0"
+                      *ngIf="all_data.lease_rent_amount != '0'"
+                    >
                       <th class="p-3 col-md-4" scope="row">
-                        Number of cheques
+                        Monthly Rent Amount
                       </th>
-                      <td class="p-3 col-md-8">
-                        {{all_data.lease_no_of_cheques}}
-                      </td>
-                    </tr>
-                    <tr scope="row m-0">
-                      <th class="p-3 col-md-4" scope="row">Rent Amount</th>
                       <td class="p-3 col-md-8">
                         {{all_data.lease_rent_amount | currency:'AED '}}
                       </td>
                     </tr>
-                    <tr scope="row m-0">
-                      <th class="p-3 col-md-4" scope="row">Security deposit</th>
-                      <td class="p-3 col-md-8">
-                        {{all_data.lease_security_deposit | currency:'AED '}}
-                      </td>
-                    </tr>
-                    <tr scope="row m-0">
-                      <th class="p-3 col-md-4" scope="row">
-                        Yearly Contract Amount
-                      </th>
-                      <td class="p-3 col-md-8">
-                        {{all_data.lease_yearly_amount | currency:'AED '}}
-                      </td>
-                    </tr>
-                    <tr scope="row m-0">
+
+                    <tr
+                      scope="row m-0"
+                      *ngIf="all_data.lease_govt_charges != '0'"
+                    >
                       <th class="p-3 col-md-4" scope="row">
                         government charges
                       </th>

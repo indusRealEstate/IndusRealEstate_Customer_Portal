@@ -170,18 +170,14 @@
                         </p>
                         <p
                           class="mb-1"
-                          style="
-                            font-weight: 600;
-                            background: white;
-                            color: red;
-                            padding: 0px 10px;
-                            border-radius: 5px;
-                            font-size: 12px;
-                          "
+                          [ngClass]="getLeaseExpiryStyleClass(contract.contract_end)"
                         >
-                          This contract will end within
-                          {{getContractsEndsInPeriod(contract.contract_end)}}
-                          days.
+                          {{getContractsEndsInPeriod(contract.contract_end) < 0
+                          ? 'This Contract has been Expired for ' +
+                          getContractsExpiredPeriod(contract.contract_end) + '
+                          days.' : 'This contract will end within ' +
+                          getContractsEndsInPeriod(contract.contract_end) + '
+                          days.'}}
                         </p>
                       </div>
                     </div>

@@ -247,6 +247,32 @@ export class AdminDashboardComponent implements OnInit {
     return Math.round(difference_In_Days);
   }
 
+  getContractsExpiredPeriod(end: any) {
+    var start_date = new Date();
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    return Math.round(Math.abs(difference_In_Days));
+  }
+
+  getLeaseExpiryStyleClass(end: any) {
+    var start_date = new Date();
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    if (difference_In_Days < 0) {
+      return 'lease-expired-date-dashboard';
+    } else {
+      return 'lease-expiry-date-dashboard';
+    }
+  }
+
   async ngOnInit() {
     await this.getAllData();
     this.isUserSignOut();

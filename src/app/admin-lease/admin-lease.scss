@@ -4,10 +4,27 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .lease-expiry-date {
+  color: #0058e9;
+  background: #0058e917;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid #0058e929;
+}
+::ng-deep .lease-expired-date {
+  color: red;
+  background: #ff000017;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid #ff00003b;
+}
+
 ::ng-deep .mdc-snackbar__surface {
   background-color: #313a46 !important;
-  
-  .mat-mdc-button-ripple{
+
+  .mat-mdc-button-ripple {
     color: #d4aa32 !important;
   }
   .mdc-button__label {
