@@ -11,9 +11,7 @@ import {
   MatDialog,
   MatDialogRef,
 } from "@angular/material/dialog";
-import { PropertiesService } from "app/services/properties.service";
 import { UnitsService } from "app/services/units.service";
-import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
 import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
@@ -103,83 +101,89 @@ export class EditUnitDialog implements OnInit {
     { value: "4", viewValue: "JVC" },
   ];
 
+  isContentLoading: boolean = true;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditUnitDialog>,
-    private propertyService: PropertiesService,
     private unitsService: UnitsService,
-    private userService: UserService,
+    private unitService: UnitsService,
     private dialog: MatDialog
   ) {
-    this.all_data = data;
-    console.log(data);
+    this.unitService
+      .getUnitAllData({ id: data })
+      .subscribe((value) => {
+        this.all_data = value;
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        this.selected_property = {
+          id: data.prop_uid,
+          name: data.prop_name,
+        };
 
-    this.selected_property = {
-      id: data.prop_uid,
-      name: data.prop_name,
-    };
+        this.owner = {
+          id: data.user_uid,
+          name: data.user_name,
+        };
 
-    this.owner = {
-      id: data.user_uid,
-      name: data.user_name,
-    };
-
-    this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
-      val.forEach((unit_type) => {
-        this.unitTypes.push({
-          value: unit_type.id,
-          viewValue: unit_type.type,
+        this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
+          val.forEach((unit_type) => {
+            this.unitTypes.push({
+              value: unit_type.id,
+              viewValue: unit_type.type,
+            });
+          });
         });
+
+        // console.log(this.all_data);
+        var count = 0;
+        for (let item of JSON.parse(this.all_data.unit_images)) {
+          let link = `https://indusre.app/api/upload/unit/${this.all_data.unit_id}/images/`;
+          this.imgFilesBase64Uploaded.push(link + item);
+          this.imgFilesUploaded.push(item);
+          count++;
+        }
+        if (count == JSON.parse(this.all_data.unit_images).length) {
+          this.images_fully_loaded = true;
+        }
+
+        for (let item of JSON.parse(this.all_data.unit_doc)) {
+          this.docsFilesUploaded.push(item);
+        }
+
+        for (let item of JSON.parse(this.all_data.unit_amenties)) {
+          this.amenties.push(item);
+        }
+
+        if (this.all_data.inventories != undefined) {
+          for (let item of this.all_data.inventories) {
+            this.inventories.push({
+              name: item.inventory_name,
+              place: item.inventory_place,
+              count: item.inventory_count,
+              new: false,
+            });
+          }
+        }
+
+        this.unit_type = this.all_data.unit_type;
+        this.unit_number = this.all_data.unit_no;
+        this.govt_id = this.all_data.prop_gov_id;
+        this.floors = this.all_data.unit_floor;
+        this.unit_size = this.all_data.unit_size;
+        this.unit_description = this.all_data.unit_description;
+        this.bedrooms = this.all_data.unit_bed;
+        this.bathrooms = this.all_data.unit_bath;
+        this.number_of_parking = this.all_data.unit_parking;
+        this.unit_description = this.all_data.unit_description;
+        this.premises_no = this.all_data.unit_premises_no;
+        this.plot_no = this.all_data.unit_plot_no;
+        this.extra_living_room =
+          this.all_data.unit_extra_living_room == "1" ? true : false;
+        this.maids_room = this.all_data.unit_maids_room == "1" ? true : false;
+        this.family_room = this.all_data.unit_family_room == "1" ? true : false;
       });
-    });
-
-    // console.log(this.all_data);
-    var count = 0;
-    for (let item of JSON.parse(this.all_data.unit_images)) {
-      let link = `https://indusre.app/api/upload/unit/${this.all_data.unit_id}/images/`;
-      this.imgFilesBase64Uploaded.push(link + item);
-      this.imgFilesUploaded.push(item);
-      count++;
-    }
-    if (count == JSON.parse(this.all_data.unit_images).length) {
-      this.images_fully_loaded = true;
-    }
-
-    for (let item of JSON.parse(this.all_data.unit_doc)) {
-      this.docsFilesUploaded.push(item);
-    }
-
-    for (let item of JSON.parse(this.all_data.unit_amenties)) {
-      this.amenties.push(item);
-    }
-
-    if (this.all_data.inventories != undefined) {
-      for (let item of this.all_data.inventories) {
-        this.inventories.push({
-          name: item.inventory_name,
-          place: item.inventory_place,
-          count: item.inventory_count,
-          new: false,
-        });
-      }
-    }
-
-    this.unit_type = this.all_data.unit_type;
-    this.unit_number = this.all_data.unit_no;
-    this.govt_id = this.all_data.prop_gov_id;
-    this.floors = this.all_data.unit_floor;
-    this.unit_size = this.all_data.unit_size;
-    this.unit_description = this.all_data.unit_description;
-    this.bedrooms = this.all_data.unit_bed;
-    this.bathrooms = this.all_data.unit_bath;
-    this.number_of_parking = this.all_data.unit_parking;
-    this.unit_description = this.all_data.unit_description;
-    this.premises_no = this.all_data.unit_premises_no;
-    this.plot_no = this.all_data.unit_plot_no;
-    this.extra_living_room =
-      this.all_data.unit_extra_living_room == "1" ? true : false;
-    this.maids_room = this.all_data.unit_maids_room == "1" ? true : false;
-    this.family_room = this.all_data.unit_family_room == "1" ? true : false;
   }
 
   addPaginatorDialog(type: string) {

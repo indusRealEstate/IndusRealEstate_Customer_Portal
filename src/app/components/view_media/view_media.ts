@@ -1,14 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-  Output
-} from "@angular/core";
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef
-} from "@angular/material/dialog";
+import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { DownloadService } from "app/services/download.service";
 
 @Component({
@@ -41,13 +32,12 @@ export class DialogViewMedia implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogViewMedia>,
-    private downloadServices: DownloadService
+    private downloadService: DownloadService
   ) {
-    
-    this.all_data = data; 
+    this.all_data = data;
     this.link = this.all_data.link;
 
-    // console.log(this.link);
+    console.log(data);
   }
 
   get_image_data(event) {}
@@ -65,14 +55,19 @@ export class DialogViewMedia implements OnInit {
   }
 
   downloadItem(data: any, type: string, file: string) {
-    this.downloadServices.download(data).subscribe((res) => {
-      console.log(res);
-    });
+    // this.downloadService
+    //   .downloadFile(
+    //     `https://www.indusre.app/api/mobile_app/upload/service-request/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
+    //   )
+    //   .subscribe((res: Blob) => {
+    //     console.log(res);
+    //     FileSaver.saveAs(res, this.selectDoc);
+    //   });
   }
 
   checkImageLoaded(data: any) {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.image_loaded = true;
-    },1000)
+    }, 1000);
   }
 }

@@ -63,8 +63,8 @@ export class AdminPropertiesUnits implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
-  more_menu_unit_all_data: any = "";
-  more_menu_unit_loaded: boolean = false;
+  // more_menu_unit_all_data: any = "";
+  // more_menu_unit_loaded: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -293,24 +293,23 @@ export class AdminPropertiesUnits implements OnInit {
       });
   }
 
-  openMoreMenu(unit_id) {
-    this.more_menu_unit_all_data = "";
-    this.unitService
-      .getUnitAllData({ id: unit_id })
-      .subscribe((value) => {
-        this.more_menu_unit_all_data = value;
-      })
-      .add(() => {
-        this.more_menu_unit_loaded = true;
-      });
-  }
+  // openMoreMenu(unit_id) {
+  //   this.more_menu_unit_all_data = "";
+  //   this.unitService
+  //     .getUnitAllData({ id: unit_id })
+  //     .subscribe((value) => {
+  //       this.more_menu_unit_all_data = value;
+  //     })
+  //     .add(() => {
+  //       this.more_menu_unit_loaded = true;
+  //     });
+  // }
 
-  openEditUnit(index) {
-    var data = this.more_menu_unit_all_data;
+  openEditUnit(index, unit_id) {
     this.dialog
       .open(EditUnitDialog, {
         width: "100%",
-        data,
+        data : unit_id,
       })
       .afterClosed()
       .subscribe((data) => {

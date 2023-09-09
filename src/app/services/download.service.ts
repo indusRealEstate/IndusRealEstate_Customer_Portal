@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, map, of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
@@ -17,18 +17,19 @@ export class DownloadService {
 
   download(url: string): Observable<Blob> {
     return this.http.get(url, {
-      responseType: 'blob'
-    })
+      responseType: "blob",
+    });
   }
 
   downloadFile(file_path) {
+    const headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*");
+    headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS,DELETE,PUT");
+    // headers.set("Content-Type", "application/pdf");
     return this.http
       .get(file_path, {
         responseType: "blob",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST,OPTIONS,DELETE,PUT",
-        },
+        headers: headers,
       })
       .pipe(
         map((data) => {
@@ -37,4 +38,3 @@ export class DownloadService {
       );
   }
 }
-

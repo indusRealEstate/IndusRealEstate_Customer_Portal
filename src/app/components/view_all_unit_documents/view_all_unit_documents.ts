@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef
-} from "@angular/material/dialog";
-import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
+import { DownloadService } from "app/services/download.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "view_all_unit_documents",
@@ -11,19 +10,18 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: "./view_all_unit_documents.html",
 })
 export class ViewAllUnitDocuments implements OnInit {
-
   unit_doc_array: string[] = [];
   unit_id: string;
   selected_doc: string = "";
   data_source: MatTableDataSource<any>;
-  displayedColumns: string[] = ["name","download"];
-  
+  displayedColumns: string[] = ["name", "download"];
 
-  constructor( 
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ViewAllUnitDocuments>,
+    private downloadService: DownloadService
   ) {
-    for(let i = 0; i < JSON.parse(data.doc).length; i++){
+    for (let i = 0; i < JSON.parse(data.doc).length; i++) {
       this.unit_doc_array.push(JSON.parse(data.doc)[i]);
     }
     this.unit_id = data.id;
@@ -33,27 +31,28 @@ export class ViewAllUnitDocuments implements OnInit {
     console.log(this.unit_doc_array);
   }
 
-  ngOnChanges(){
-    
-  }
-
+  ngOnChanges() {}
 
   ngOnInit() {
-    window.addEventListener("scrol",()=>{
+    window.addEventListener("scrol", () => {
       console.log("hi");
-    })
-
+    });
   }
 
   ngAfterViewInit() {}
 
   onCloseDialog() {
-    this.dialogRef.close({
-      
-    });
+    this.dialogRef.close({});
   }
 
-  downloadDoc(data: string){
-    window.open(`https://indusre.app/api/upload/unit/${this.unit_id}/documents/${data}`)
+  downloadDoc(data: string) {
+    this.downloadService
+      .downloadFile(
+        `https://indusre.app/api/upload/unit/${this.unit_id}/documents/${data}`
+      )
+      .subscribe((res: Blob) => {
+        console.log(res);
+        FileSaver.saveAs(res, data);
+      });
   }
 }

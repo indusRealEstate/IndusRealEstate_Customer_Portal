@@ -20,9 +20,11 @@ import { ViewAllUnitDocuments } from "app/components/view_all_unit_documents/vie
 import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories/view_all_unit_inventories";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { DownloadService } from "app/services/download.service";
 import { OtherServices } from "app/services/other.service";
 import { PaymentService } from "app/services/payment.service";
 import { UnitsService } from "app/services/units.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "admin-property-unit-details",
@@ -106,6 +108,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     private unitService: UnitsService,
     private paymentService: PaymentService,
     private otherServices: OtherServices,
+    private downloadService: DownloadService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
   ) {
@@ -342,9 +345,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
 
   downloadDoc() {
     if (this.selected_document != "") {
-      window.open(
-        `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${this.selected_document}`
-      );
+      this.downloadService
+        .downloadFile(
+          `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${this.selected_document}`
+        )
+        .subscribe((res: Blob) => {
+          console.log(res);
+          FileSaver.saveAs(res, this.selected_document);
+        });
     }
   }
 

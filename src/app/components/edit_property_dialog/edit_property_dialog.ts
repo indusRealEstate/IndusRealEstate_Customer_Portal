@@ -57,6 +57,8 @@ export class EditPropertyDialog implements OnInit {
 
   images_fully_loaded: boolean = false;
 
+  isContentLoading: boolean = true;
+
   buildingTypes: DropDownButtonModel[] = [
     { value: "commercial", viewValue: "Commercial" },
     { value: "co_living", viewValue: "Co-Living" },
@@ -80,21 +82,27 @@ export class EditPropertyDialog implements OnInit {
     public dialogRef: MatDialogRef<EditPropertyDialog>,
     private propertyService: PropertiesService
   ) {
-    this.all_data = data;
+    this.propertyService
+      .getPropDetails(JSON.stringify({ prop_id: data }))
+      .subscribe((value) => {
+        this.all_data = value;
+      })
+      .add(() => {
+        this.isContentLoading = false;
+        this.property_name = this.all_data.prop_name;
+        this.property_address = this.all_data.prop_address;
+        // this.property_govt_id = this.all_data.prop_gov_id;
+        this.property_no_of_units = this.all_data.prop_no_of_units;
+        this.property_in_charge = this.all_data.prop_in_charge;
 
-    this.property_name = this.all_data.prop_name;
-    this.property_address = this.all_data.prop_address;
-    // this.property_govt_id = this.all_data.prop_gov_id;
-    this.property_no_of_units = this.all_data.prop_no_of_units;
-    this.property_in_charge = this.all_data.prop_in_charge;
+        this.property_description = this.all_data.prop_description;
 
-    this.property_description = this.all_data.prop_description;
+        this.property_building_type = this.all_data.prop_type;
+        this.property_locality = this.all_data.prop_locality_name;
 
-    this.property_building_type = this.all_data.prop_type;
-    this.property_locality = this.all_data.prop_locality_name;
-
-    this.assignImages();
-    this.assignDoc();
+        this.assignImages();
+        this.assignDoc();
+      });
   }
 
   async assignImages() {

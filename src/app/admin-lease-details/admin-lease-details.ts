@@ -12,7 +12,9 @@ import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { DownloadService } from "app/services/download.service";
 import { LeaseService } from "app/services/lease.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "admin-lease-details",
@@ -42,6 +44,7 @@ export class AdminLeaseDetail implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private leaseService: LeaseService,
+    private downloadService: DownloadService,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog // private viewImage: ViewImageOfUnit,
   ) {
@@ -102,9 +105,14 @@ export class AdminLeaseDetail implements OnInit {
 
   downloadDoc() {
     if (this.selectDoc != "") {
-      window.open(
-        `https://www.indusre.app/api/upload/contract/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
-      );
+      this.downloadService
+        .downloadFile(
+          `https://www.indusre.app/api/upload/contract/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
+        )
+        .subscribe((res: Blob) => {
+          console.log(res);
+          FileSaver.saveAs(res, this.selectDoc);
+        });
     }
   }
 

@@ -173,9 +173,9 @@
                           [ngClass]="getLeaseExpiryStyleClass(contract.contract_end)"
                         >
                           {{getContractsEndsInPeriod(contract.contract_end) < 0
-                          ? 'This Contract has been Expired for ' +
+                          ? 'This Contract has been Expired ' +
                           getContractsExpiredPeriod(contract.contract_end) + '
-                          days.' : 'This contract will end within ' +
+                          days ago.' : 'This contract will end within ' +
                           getContractsEndsInPeriod(contract.contract_end) + '
                           days.'}}
                         </p>

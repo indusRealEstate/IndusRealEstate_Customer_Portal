@@ -51,8 +51,8 @@ export class AdminProperties implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
-  more_menu_prop_all_data: any = "";
-  more_menu_prop_loaded: boolean = false;
+  // more_menu_prop_all_data: any = "";
+  // more_menu_prop_loaded: boolean = false;
 
   allUnits: any[] = [];
 
@@ -232,50 +232,51 @@ export class AdminProperties implements OnInit {
     });
   }
 
-  openMoreMenu(prop_id) {
-    this.more_menu_prop_all_data = "";
-    this.propertyService
-      .getPropDetails(JSON.stringify({ prop_id: prop_id }))
-      .subscribe((value) => {
-        this.more_menu_prop_all_data = value;
+  // openMoreMenu(prop_id) {
+  //   this.more_menu_prop_all_data = "";
+  //   this.propertyService
+  //     .getPropDetails(JSON.stringify({ prop_id: prop_id }))
+  //     .subscribe((value) => {
+  //       this.more_menu_prop_all_data = value;
+  //     })
+  //     .add(() => {
+  //       this.more_menu_prop_loaded = true;
+  //     });
+  // }
+
+  openEditProperty(index, prop_id) {
+    // if (this.more_menu_prop_all_data != undefined) {
+    //   var data = this.more_menu_prop_all_data;
+    this.dialog
+      .open(EditPropertyDialog, {
+        width: "100%",
+        data: prop_id,
       })
-      .add(() => {
-        this.more_menu_prop_loaded = true;
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          this.allProperties[index].property_name =
+            value.property_name != undefined
+              ? value.property_name
+              : this.allProperties[index].property_name;
+          this.allProperties[index].address =
+            value.property_address != undefined
+              ? value.property_address
+              : this.allProperties[index].address;
+          this.allProperties[index].property_type =
+            value.property_building_type != undefined
+              ? value.property_building_type
+              : this.allProperties[index].property_type;
+
+          this.allProperties[index].locality_name =
+            value.property_locality != undefined
+              ? value.property_locality
+              : this.allProperties[index].locality_name;
+
+          this.openSnackBar("Property updated successfully", "Close");
+        }
       });
-  }
-
-  openEditProperty(index) {
-    if (this.more_menu_prop_all_data != undefined) {
-      var data = this.more_menu_prop_all_data;
-      this.dialog
-        .open(EditPropertyDialog, {
-          data,
-        })
-        .afterClosed()
-        .subscribe((value) => {
-          if (value != undefined) {
-            this.allProperties[index].property_name =
-              value.property_name != undefined
-                ? value.property_name
-                : this.allProperties[index].property_name;
-            this.allProperties[index].address =
-              value.property_address != undefined
-                ? value.property_address
-                : this.allProperties[index].address;
-            this.allProperties[index].property_type =
-              value.property_building_type != undefined
-                ? value.property_building_type
-                : this.allProperties[index].property_type;
-
-            this.allProperties[index].locality_name =
-              value.property_locality != undefined
-                ? value.property_locality
-                : this.allProperties[index].locality_name;
-
-            this.openSnackBar("Property updated successfully", "Close");
-          }
-        });
-    }
+    // }
   }
 
   exportExcelFile() {

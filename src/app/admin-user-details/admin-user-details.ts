@@ -6,7 +6,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
+import { DownloadService } from "app/services/download.service";
 import { UserService } from "app/services/user.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "admin-user-details",
@@ -42,6 +44,7 @@ export class ViewUserDetails implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
+    private downloadService: DownloadService,
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private _snackBar: MatSnackBar,
@@ -241,9 +244,13 @@ export class ViewUserDetails implements OnInit {
   }
 
   downloadDoc(item) {
-    window.open(
-      `https://indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${item}`
-    );
+    this.downloadService
+      .downloadFile(
+        `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${item}`
+      )
+      .subscribe((res: Blob) => {
+        FileSaver.saveAs(res, item);
+      });
   }
 
   navigateToProprety(data: any) {

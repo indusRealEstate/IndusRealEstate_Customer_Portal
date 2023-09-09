@@ -5,8 +5,10 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { AuthenticationService } from "app/services/authentication.service";
+import { DownloadService } from "app/services/download.service";
 import { OtherServices } from "app/services/other.service";
 import { PropertiesService } from "app/services/properties.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "property-details",
@@ -46,6 +48,7 @@ export class DetailsComponents implements OnInit {
     private authenticationService: AuthenticationService,
     private readonly route: ActivatedRoute,
     private otherServices: OtherServices,
+    private downloadService: DownloadService,
     private _snackBar: MatSnackBar,
     public http: HttpClient,
     public dialog: MatDialog
@@ -322,18 +325,15 @@ export class DetailsComponents implements OnInit {
   }
 
   downloadDoc() {
-    // let data = {
-    //   "contract_id": this.all_data.lease_uid,
-    //   "file":doc
-    // }
     if (this.selected_document != "") {
-      window.open(
-        `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${this.selected_document}`
-      );
+      this.downloadService
+        .downloadFile(
+          `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${this.selected_document}`
+        )
+        .subscribe((res: Blob) => {
+          console.log(res);
+          FileSaver.saveAs(res, this.selected_document);
+        });
     }
-
-    // this.adminService.downoadLeaseDoc(data).subscribe((val)=>{
-    //   console.log(val);
-    // })
   }
 }
