@@ -84,6 +84,30 @@
         }
       }
     }
+
+    .mat-mdc-menu-item-reniew {
+      border: 1px solid #e6ebf1;
+      border-radius: 5px;
+      margin: 10px 0;
+      min-height: 40px;
+
+      &:hover {
+        background: #00800012 !important;
+      }
+
+      .mdc-list-item__primary-text {
+        width: 100%;
+        .row {
+          span {
+            font-size: 14px;
+          }
+
+          img {
+            width: 15px;
+          }
+        }
+      }
+    }
   }
 }
 

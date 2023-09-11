@@ -190,7 +190,7 @@
                 (click)="viewDetails(element.contract_id)"
               >
                 <div
-                  *ngIf="element.status == 'inactive'"
+                  *ngIf="getLeaseExpiryStyleClass(element.contract_end) == 'lease-expired-date'"
                   class="d-flex justify-content-center"
                   style="
                     color: #d29c00;
@@ -205,7 +205,7 @@
                 </div>
 
                 <div
-                  *ngIf="element.status == 'active'"
+                  *ngIf="getLeaseExpiryStyleClass(element.contract_end) == 'lease-expiry-date'"
                   class="d-flex justify-content-center"
                   style="
                     color: #37b400;
@@ -397,6 +397,7 @@
                     </div>
                   </button>
                   <button
+                    *ngIf="getLeaseExpiryStyleClass(element.contract_end) == 'lease-expiry-date'"
                     mat-menu-item
                     (click)="openCautionDialog(element.contract_id, element.unit_id , element.tenant_id)"
                   >
@@ -408,6 +409,24 @@
                         style="
                           filter: invert(56%) sepia(71%) saturate(3838%)
                             hue-rotate(328deg) brightness(97%) contrast(90%);
+                        "
+                      />
+                    </div>
+                  </button>
+                  <button
+                    (click)="reniewContract(element.contract_id)"
+                    mat-menu-item
+                    class="mat-mdc-menu-item-reniew"
+                    *ngIf="getLeaseExpiryStyleClass(element.contract_end) == 'lease-expired-date'"
+                  >
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: green">Reniew</span>
+                      <img
+                        src="assets/img/svg/add-square.svg"
+                        alt
+                        style="
+                          filter: invert(26%) sepia(90%) saturate(1528%)
+                            hue-rotate(93deg) brightness(98%) contrast(106%);
                         "
                       />
                     </div>

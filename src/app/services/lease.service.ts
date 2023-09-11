@@ -52,6 +52,15 @@ export class LeaseService {
     );
   }
 
+  reniewContract(data: any) {
+    const url = `${API_URL}/reniewContract.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllContractsReminders(limit: number, pageNumber: number) {
     const url = `${API_URL}/get_all_contracts_reminders.php?apikey=1`;
     return this.http

@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
+import { ReniewContractDialog } from "app/components/reniew-contract-dialog/reniew-contract-dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
 import { LeaseService } from "app/services/lease.service";
@@ -181,6 +182,17 @@ export class AllLeasesComponent implements OnInit {
     }
   }
 
+  reniewContract(contract_id) {
+    this.dialog
+      .open(ReniewContractDialog, {
+        width: "70%",
+        data: contract_id,
+        //height: "40rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+  }
+
   fetchData(limit?) {
     if (this.searchBar != undefined) {
       this.searchBar.searchText = "";
@@ -318,7 +330,7 @@ export class AllLeasesComponent implements OnInit {
   openEditLease(index, lease_id) {
     this.dialog
       .open(EditLeaseDialog, {
-        width : '100%',
+        width: "100%",
         data: lease_id,
       })
       .afterClosed()

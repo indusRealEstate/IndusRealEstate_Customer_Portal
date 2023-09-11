@@ -46,6 +46,7 @@ import { ViewPaymentDetailsMoreDialog } from "./view-payment-details-more-dialog
 import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { DialogViewMedia } from "./view_media/view_media";
+import { ReniewContractDialog } from "./reniew-contract-dialog/reniew-contract-dialog";
 
 @NgModule({
   imports: [
@@ -98,6 +99,7 @@ import { DialogViewMedia } from "./view_media/view_media";
     EditLeaseDialog,
     CautionDialog,
     AnnouncementDetailsDialog,
+    ReniewContractDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

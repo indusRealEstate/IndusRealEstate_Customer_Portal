@@ -189,7 +189,7 @@ export class EditLeaseDialog implements OnInit {
         this.yearly_amount != ""
       ) {
         this.uploading = true;
-        var random_id = this.data.lease_contract_id;
+        var random_id = this.data;
 
         var docs_names = [];
         var docs_names_new = [];
@@ -203,6 +203,7 @@ export class EditLeaseDialog implements OnInit {
 
         var data = this.setupData(random_id, docs_names);
         this.leaseService.editLease(data).subscribe((val) => {
+          console.log(JSON.parse(data));
           if (val == "success") {
             if (this.removed_existing_docs.length != 0) {
               this.leaseService
