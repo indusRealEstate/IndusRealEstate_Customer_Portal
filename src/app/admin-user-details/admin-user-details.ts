@@ -245,7 +245,7 @@ export class ViewUserDetails implements OnInit {
   downloadDoc(item) {
     this.downloadService
       .downloadFile(
-        `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${item}`
+        `user/${this.all_data.user_uid}/documents/${item}`
       )
       .subscribe((res: any) => {
         FileSaver.saveAs(res, item);

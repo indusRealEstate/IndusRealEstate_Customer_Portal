@@ -48,7 +48,7 @@ export class ViewAllUnitDocuments implements OnInit {
   downloadDoc(data: string) {
     this.downloadService
       .downloadFile(
-        `https://indusre.app/api/upload/unit/${this.unit_id}/documents/${data}`
+        `unit/${this.unit_id}/documents/${data}`
       )
       .subscribe((res: any) => {
         // console.log(res);
