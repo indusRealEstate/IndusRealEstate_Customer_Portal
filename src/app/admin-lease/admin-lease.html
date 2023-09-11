@@ -364,7 +364,6 @@
                 [ngClass]="last ? 'eighth-col-last' : 'eighth-col'"
               >
                 <img
-                  (click)="openMoreMenu(element.contract_id)"
                   [matMenuTriggerFor]="menu"
                   matTooltip="More Actions"
                   matTooltipClass="tooltip"
@@ -381,50 +380,38 @@
                 />
 
                 <mat-menu #menu="matMenu" class="more-menu-lease">
-                  <div
-                    *ngIf="!more_menu_lease_loaded || more_menu_lease_all_data == ''"
-                    class="d-flex justify-content-center align-items-center"
-                    style="height: 110px"
+                  <button
+                    mat-menu-item
+                    (click)="openEditLease(index,element.contract_id)"
                   >
-                    <span
-                      class="spinner-border spinner-border-m mr-2"
-                      style="color: #d4aa32"
-                    >
-                    </span>
-                  </div>
-                  <div
-                    *ngIf="more_menu_lease_loaded && more_menu_lease_all_data != ''"
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: #c89914">Edit</span>
+                      <img
+                        src="assets/img/svg/property-page/edit.svg"
+                        alt
+                        style="
+                          filter: invert(68%) sepia(13%) saturate(2701%)
+                            hue-rotate(5deg) brightness(110%) contrast(66%);
+                        "
+                      />
+                    </div>
+                  </button>
+                  <button
+                    mat-menu-item
+                    (click)="openCautionDialog(element.contract_id, element.unit_id , element.tenant_id)"
                   >
-                    <button mat-menu-item (click)="openEditLease(index)">
-                      <div class="row m-0 justify-content-between">
-                        <span style="color: #c89914">Edit</span>
-                        <img
-                          src="assets/img/svg/property-page/edit.svg"
-                          alt
-                          style="
-                            filter: invert(68%) sepia(13%) saturate(2701%)
-                              hue-rotate(5deg) brightness(110%) contrast(66%);
-                          "
-                        />
-                      </div>
-                    </button>
-                    <button
-                      mat-menu-item
-                      (click)="openCautionDialog(element.contract_id, element.unit_id , element.tenant_id)"
-                    >
-                      <div class="row m-0 justify-content-between">
-                        <span style="color: red">Terminate</span>
-                        <img
-                          src="assets/img/svg/delete.svg"
-                          alt
-                          style="
-                            filter: invert(56%) sepia(71%) saturate(3838%)
-                              hue-rotate(328deg) brightness(97%) contrast(90%);
-                          "
-                        />
-                      </div>
-                    </button>
-                  </div>
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: red">Terminate</span>
+                      <img
+                        src="assets/img/svg/delete.svg"
+                        alt
+                        style="
+                          filter: invert(56%) sepia(71%) saturate(3838%)
+                            hue-rotate(328deg) brightness(97%) contrast(90%);
+                        "
+                      />
+                    </div>
+                  </button>
                 </mat-menu>
               </td>
             </ng-container>

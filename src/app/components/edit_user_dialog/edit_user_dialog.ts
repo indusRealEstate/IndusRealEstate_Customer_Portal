@@ -61,6 +61,9 @@ export class EditUserDialog implements OnInit {
   uploading_progress: any = 0;
 
   existing_img_removed: boolean = false;
+  isContentLoading: boolean = true;
+
+  all_data: any;
 
   removed_existing_docs: any[] = [];
 
@@ -79,56 +82,64 @@ export class EditUserDialog implements OnInit {
     public dialogRef: MatDialogRef<EditUserDialog>,
     private userService: UserService,
     private formBuilder: FormBuilder
-  ) {
-    this.user_name = data.user_name;
-    this.user_email = data.user_email;
-    this.user_alternative_email = data.user_alternative_email;
-    this.user_dob = data.user_dob;
-    this.user_gender = data.user_gender;
-    this.user_id_type = data.user_id_type;
-    this.user_id_number = data.user_id_number;
-
-    this.user_country_code = data.user_country_code_number;
-    this.user_mobile_number = data.user_mobile_number;
-    this.user_alternative_country_code =
-      data.user_country_code_alternative_number;
-    this.user_alternative_number = data.user_alternative_mobile_number;
-
-    this.imgFileBase64Uploaded =
-      data.user_profile_img == ""
-        ? ""
-        : `https://indusre.app/api/upload/user/${data.user_uid}/image/${data.user_profile_img}`;
-
-    JSON.parse(data.user_documents).forEach((doc) => {
-      this.docsFilesUploaded.push({ name: doc, old: true });
-    });
-
-    if (data.bank_details != undefined) {
-      this.user_bank_ac_no = data.bank_details.bank_ac_number;
-      this.user_bank_name = data.bank_details.bank_name;
-      this.user_bank_iban = data.bank_details.iban;
-      this.user_bank_swift_code = data.bank_details.swift_code;
-    }
-  }
+  ) {}
 
   ngOnInit() {
-    this.phoneForm = this.formBuilder.group({
-      phone: [
-        this.data.user_country_code_number + this.data.user_mobile_number,
-        Validators.required,
-      ],
-      alt_phone: [
-        this.data.user_alternative_mobile_number == 0
-          ? ""
-          : this.data.user_country_code_alternative_number +
-            this.data.user_alternative_mobile_number,
-      ],
-    });
+    this.userService
+      .getUserDetailsForEdit({ user_id: this.data })
+      .subscribe((res) => {
+        this.all_data = res;
+        this.user_name = res.user_name;
+        this.user_email = res.user_email;
+        this.user_alternative_email = res.user_alternative_email;
+        this.user_dob = res.user_dob;
+        this.user_gender = res.user_gender;
+        this.user_id_type = res.user_id_type;
+        this.user_id_number = res.user_id_number;
+
+        this.user_country_code = res.user_country_code_number;
+        this.user_mobile_number = res.user_mobile_number;
+        this.user_alternative_country_code =
+          res.user_country_code_alternative_number;
+        this.user_alternative_number = res.user_alternative_mobile_number;
+
+        this.imgFileBase64Uploaded =
+          res.user_profile_img == ""
+            ? ""
+            : `https://indusre.app/api/upload/user/${res.user_uid}/image/${res.user_profile_img}`;
+
+        JSON.parse(res.user_documents).forEach((doc) => {
+          this.docsFilesUploaded.push({ name: doc, old: true });
+        });
+
+        if (res.bank_details != undefined) {
+          this.user_bank_ac_no = res.bank_details.bank_ac_number;
+          this.user_bank_name = res.bank_details.bank_name;
+          this.user_bank_iban = res.bank_details.iban;
+          this.user_bank_swift_code = res.bank_details.swift_code;
+        }
+
+        this.phoneForm = this.formBuilder.group({
+          phone: [
+            res.user_country_code_number + res.user_mobile_number,
+            Validators.required,
+          ],
+          alt_phone: [
+            res.user_alternative_mobile_number == 0
+              ? ""
+              : res.user_country_code_alternative_number +
+                res.user_alternative_mobile_number,
+          ],
+        });
+      })
+      .add(() => {
+        this.isContentLoading = false;
+      });
   }
 
   ngAfterViewInit() {
     if (this.country_dropdown != undefined) {
-      this.country_dropdown.selectedCountry = this.data.user_nationality;
+      this.country_dropdown.selectedCountry = this.all_data.user_nationality;
     }
   }
 

@@ -121,7 +121,7 @@
               "
             />
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openEditUnit(all_data)">
+              <button mat-menu-item (click)="openEditUnit()">
                 Edit
               </button>
             </mat-menu>
@@ -211,7 +211,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col" *ngIf="all_data.unit_bath != '0'">
                     <span style="color: #2b333ebf; font-weight: 500"
                       >Bathrooms</span
                     >
@@ -266,7 +266,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col" *ngIf="all_data.unit_floor != '0'">
                     <span style="color: #2b333ebf; font-weight: 500"
                       >Floors</span
                     >

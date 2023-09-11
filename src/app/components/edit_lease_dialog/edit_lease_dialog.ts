@@ -19,11 +19,43 @@ import { CountryDropdown } from "../country-dropdown/country-dropdown";
   // imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class EditLeaseDialog implements OnInit {
+  isContentLoading: boolean = true;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditLeaseDialog>,
     private leaseService: LeaseService
-  ) {}
+  ) {
+    this.leaseService
+      .getAllLeaseData({ id: data })
+      .subscribe((value: any) => {
+        this.property = value.prop_name;
+        this.unit_data = value.unit_no;
+        this.owner = value.user_name;
+        this.tenant = value.tenant_name;
+        this.contract_start_date = value.lease_contract_start;
+        this.contract_end_date = value.lease_contract_end;
+        this.move_in_date = value.lease_move_in;
+        this.move_out_date = value.lease_move_out;
+        this.notice_period = value.lease_notice_period;
+        this.purpose = value.lease_purpose;
+        this.dewa = value.lease_dewa_inclusive == "0" ? false : true;
+        this.chiller = value.lease_chiller_inclusive == "0" ? false : true;
+        this.gas = value.lease_gas_inclusive == "0" ? false : true;
+        this.payment_currency = value.lease_payment_currency;
+        this.yearly_amount = value.lease_yearly_amount;
+        this.rent_amount = value.lease_rent_amount;
+        this.no_of_cheques = value.lease_no_of_cheques;
+        this.govt_charges = value.lease_govt_charges;
+        this.security_deposit = value.lease_security_deposit;
+
+        JSON.parse(value.lease_docs).forEach((doc) => {
+          this.docsFilesUploaded.push({ name: doc, old: true });
+        });
+      })
+      .add(() => {
+        this.isContentLoading = false;
+      });
+  }
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
@@ -123,31 +155,7 @@ export class EditLeaseDialog implements OnInit {
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
-    this.property = this.data.prop_name;
-    this.unit_data = this.data.unit_no;
-    this.owner = this.data.user_name;
-    this.tenant = this.data.tenant_name;
-    this.contract_start_date = this.data.lease_contract_start;
-    this.contract_end_date = this.data.lease_contract_end;
-    this.move_in_date = this.data.lease_move_in;
-    this.move_out_date = this.data.lease_move_out;
-    this.notice_period = this.data.lease_notice_period;
-    this.purpose = this.data.lease_purpose;
-    this.dewa = this.data.lease_dewa_inclusive == "0" ? false : true;
-    this.chiller = this.data.lease_chiller_inclusive == "0" ? false : true;
-    this.gas = this.data.lease_gas_inclusive == "0" ? false : true;
-    this.payment_currency = this.data.lease_payment_currency;
-    this.yearly_amount = this.data.lease_yearly_amount;
-    this.rent_amount = this.data.lease_rent_amount;
-    this.no_of_cheques = this.data.lease_no_of_cheques;
-    this.govt_charges = this.data.lease_govt_charges;
-    this.security_deposit = this.data.lease_security_deposit;
-
-    JSON.parse(this.data.lease_docs).forEach((doc) => {
-      this.docsFilesUploaded.push({ name: doc, old: true });
-    });
-  }
+  ngAfterViewInit() {}
 
   onCloseDialog() {
     this.dialogRef.close();

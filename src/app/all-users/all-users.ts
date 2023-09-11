@@ -66,8 +66,6 @@ export class AllUsersComponent implements OnInit {
   allUnits: any[] = [];
 
   all_units_landlord: any[] = [];
-  more_menu_user_all_data: any = "";
-  more_menu_user_loaded: boolean = false;
 
   current_sort_option: any = "all";
 
@@ -271,22 +269,10 @@ export class AllUsersComponent implements OnInit {
       });
   }
 
-  openMoreMenu(user_id) {
-    this.more_menu_user_all_data = "";
-    this.userService
-      .getUserDetailsForEdit({ user_id: user_id })
-      .subscribe((res) => {
-        this.more_menu_user_all_data = res;
-      })
-      .add(() => {
-        this.more_menu_user_loaded = true;
-      });
-  }
-
-  editUserDialogOpen(index) {
+  editUserDialogOpen(index, user_id) {
     this.dialog
       .open(EditUserDialog, {
-        data: this.more_menu_user_all_data,
+        data: user_id,
         width: "75%",
         height: "50rem",
       })

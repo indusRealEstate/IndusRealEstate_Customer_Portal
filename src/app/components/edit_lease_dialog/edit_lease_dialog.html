@@ -6,7 +6,15 @@
 >
   <!-- <div class="card-header"></div> -->
   <div class="card-body" style="padding: 1.5rem 1.5rem">
-    <div class="col">
+    <div
+      *ngIf="isContentLoading"
+      class="d-flex justify-content-center align-items-center"
+      style="height: 40rem"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <div class="col" *ngIf="!isContentLoading">
       <div class="row m-0 align-items-start w-100">
         <p
           class="mr-2"

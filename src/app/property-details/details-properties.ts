@@ -229,10 +229,11 @@ export class DetailsComponents implements OnInit {
     });
   }
 
-  openEditProperty(data: string) {
+  openEditProperty() {
     this.dialog
       .open(EditPropertyDialog, {
-        data,
+        width: "100%",
+        data: this.all_data.prop_uid,
       })
       .afterClosed()
       .subscribe((value) => {

@@ -105,9 +105,8 @@ export class ViewUserDetails implements OnInit {
   openEditUser() {
     this.dialog
       .open(EditUserDialog, {
-        data: this.all_data,
+        data: this.all_data.user_uid,
         width: "75%",
-        height: "50rem",
       })
       .afterClosed()
       .subscribe((res) => {
@@ -164,7 +163,7 @@ export class ViewUserDetails implements OnInit {
     this.userService
       .getAllUserDetails(JSON.stringify(data))
       .subscribe((value) => {
-        // console.log(value);
+        console.log(value);
         this.all_data = value;
         if (this.all_data.user_allocates_unit != undefined) {
           if (this.all_data.user_type == "owner") {

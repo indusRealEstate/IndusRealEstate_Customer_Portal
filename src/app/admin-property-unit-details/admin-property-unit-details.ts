@@ -455,10 +455,11 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       });
   }
 
-  openEditUnit(data: object) {
+  openEditUnit() {
     this.dialog
       .open(EditUnitDialog, {
-        data,
+        width : '100%',
+        data: this.all_data.unit_id,
       })
       .afterClosed()
       .subscribe((data) => {

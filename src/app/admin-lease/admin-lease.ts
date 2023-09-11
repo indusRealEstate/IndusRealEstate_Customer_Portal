@@ -68,9 +68,6 @@ export class AllLeasesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   current_sort_option: any = "all";
 
-  more_menu_lease_all_data: any = "";
-  more_menu_lease_loaded: boolean = false;
-
   pageChangerLoading: boolean = false;
   @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
 
@@ -168,7 +165,7 @@ export class AllLeasesComponent implements OnInit {
       return `${Math.round(difference_In_Days)} Days left`;
     }
   }
-  
+
   getLeaseExpiryStyleClass(end: any) {
     var start_date = new Date();
     var end_date = new Date(end);
@@ -178,9 +175,9 @@ export class AllLeasesComponent implements OnInit {
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
 
     if (difference_In_Days < 0) {
-      return 'lease-expired-date';
+      return "lease-expired-date";
     } else {
-      return 'lease-expiry-date';
+      return "lease-expiry-date";
     }
   }
 
@@ -306,32 +303,30 @@ export class AllLeasesComponent implements OnInit {
       });
   }
 
-  openMoreMenu(lease_id) {
-    this.more_menu_lease_all_data = "";
-    this.leaseService
-      .getAllLeaseData({ id: lease_id })
-      .subscribe((value) => {
-        this.more_menu_lease_all_data = value;
-      })
-      .add(() => {
-        this.more_menu_lease_loaded = true;
-      });
-  }
+  // openMoreMenu(lease_id) {
+  //   this.more_menu_lease_all_data = "";
+  //   this.leaseService
+  //     .getAllLeaseData({ id: lease_id })
+  //     .subscribe((value) => {
+  //       this.more_menu_lease_all_data = value;
+  //     })
+  //     .add(() => {
+  //       this.more_menu_lease_loaded = true;
+  //     });
+  // }
 
-  openEditLease(index) {
-    if (this.more_menu_lease_all_data != undefined) {
-      var data = this.more_menu_lease_all_data;
-      this.dialog
-        .open(EditLeaseDialog, {
-          data,
-        })
-        .afterClosed()
-        .subscribe((value) => {
-          if (value != undefined) {
-            this.updateData(value, index);
-          }
-        });
-    }
+  openEditLease(index, lease_id) {
+    this.dialog
+      .open(EditLeaseDialog, {
+        width : '100%',
+        data: lease_id,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          this.updateData(value, index);
+        }
+      });
   }
 
   openCautionDialog(lease_id, unit_id, tenant_id) {
