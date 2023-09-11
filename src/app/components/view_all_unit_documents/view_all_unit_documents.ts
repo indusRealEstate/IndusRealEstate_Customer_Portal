@@ -50,8 +50,8 @@ export class ViewAllUnitDocuments implements OnInit {
       .downloadFile(
         `https://indusre.app/api/upload/unit/${this.unit_id}/documents/${data}`
       )
-      .subscribe((res: Blob) => {
-        console.log(res);
+      .subscribe((res: any) => {
+        // console.log(res);
         FileSaver.saveAs(res, data);
       });
   }

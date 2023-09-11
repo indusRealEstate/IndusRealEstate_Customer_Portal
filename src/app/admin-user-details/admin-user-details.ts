@@ -247,7 +247,7 @@ export class ViewUserDetails implements OnInit {
       .downloadFile(
         `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/documents/${item}`
       )
-      .subscribe((res: Blob) => {
+      .subscribe((res: any) => {
         FileSaver.saveAs(res, item);
       });
   }

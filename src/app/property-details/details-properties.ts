@@ -329,10 +329,9 @@ export class DetailsComponents implements OnInit {
     if (this.selected_document != "") {
       this.downloadService
         .downloadFile(
-          `https://www.indusre.app/api/upload/property/${this.all_data.prop_uid}/documents/${this.selected_document}`
+          `property/${this.all_data.prop_uid}/documents/${this.selected_document}`
         )
-        .subscribe((res: Blob) => {
-          console.log(res);
+        .subscribe((res: any) => {
           FileSaver.saveAs(res, this.selected_document);
         });
     }

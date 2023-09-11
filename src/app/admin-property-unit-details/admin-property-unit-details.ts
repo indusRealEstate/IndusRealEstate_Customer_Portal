@@ -349,8 +349,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
         .downloadFile(
           `https://www.indusre.app/api/upload/contract/${this.all_data.lease_uid}/documents/${this.selected_document}`
         )
-        .subscribe((res: Blob) => {
-          console.log(res);
+        .subscribe((res: any) => {
+          // console.log(res);
           FileSaver.saveAs(res, this.selected_document);
         });
     }

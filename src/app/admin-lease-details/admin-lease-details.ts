@@ -107,10 +107,10 @@ export class AdminLeaseDetail implements OnInit {
     if (this.selectDoc != "") {
       this.downloadService
         .downloadFile(
-          `https://www.indusre.app/api/upload/contract/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
+          `contract/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
         )
-        .subscribe((res: Blob) => {
-          console.log(res);
+        .subscribe((res: any) => {
+          // console.log(res);
           FileSaver.saveAs(res, this.selectDoc);
         });
     }

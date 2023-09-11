@@ -22,14 +22,13 @@ export class DownloadService {
   }
 
   downloadFile(file_path) {
-    const headers = new HttpHeaders();
-    headers.set("Access-Control-Allow-Origin", "*");
-    headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS,DELETE,PUT");
-    // headers.set("Content-Type", "application/pdf");
+    const url = `https://indusre.app/api/admin/downloadDocument.php?apikey=1`;
     return this.http
-      .get(file_path, {
+      .post(url, JSON.stringify({ file: file_path }), {
+        headers: new HttpHeaders({
+          Accept: "text/html, application/xhtml+xml, */*",
+        }),
         responseType: "blob",
-        headers: headers,
       })
       .pipe(
         map((data) => {
