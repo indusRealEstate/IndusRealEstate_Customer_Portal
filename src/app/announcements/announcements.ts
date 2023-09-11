@@ -115,10 +115,10 @@ export class Announcements implements OnInit {
     this.announcementService
       .deleteAnnouncement(JSON.stringify({ id: ann_id }))
       .subscribe(async (res) => {
-        if (res.status == 1) {
+        // console.log(res);
+        if (res == true) {
           this.allAnnouncement.splice(index, 1);
           this.allAnnouncementMatTableData.data = this.allAnnouncement;
-          await this.firebaseService.deleteAnnouncementData(ann_id);
           this.openSnackBar("Announcement deleted successfully", "Close");
         }
       });

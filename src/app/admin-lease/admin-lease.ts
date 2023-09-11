@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
@@ -79,6 +79,7 @@ export class AllLeasesComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private leaseService: LeaseService,
     private _snackBar: MatSnackBar,
+    private rout: ActivatedRoute,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -101,6 +102,16 @@ export class AllLeasesComponent implements OnInit {
       horizontalPosition: "right",
       duration: 3000,
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.rout.queryParams.subscribe((q) => {
+        if (q.type != undefined) {
+          this.changeSortOption(q.type);
+        }
+      });
+    }, 800);
   }
 
   changeSortOption(option: string) {
@@ -135,20 +146,6 @@ export class AllLeasesComponent implements OnInit {
     } else {
       this.isUserSignedIn = false;
       this.router.navigate(["/login"]);
-    }
-  }
-
-  ngAfterViewInit() {
-    if (this.ngAfterViewInitInitialize == true) {
-      if (this.allLeaseMatTableData != undefined) {
-        this.allLeaseMatTableData.paginator = this.paginator;
-      }
-    } else {
-      setTimeout(() => {
-        if (this.allLeaseMatTableData != undefined) {
-          this.allLeaseMatTableData.paginator = this.paginator;
-        }
-      });
     }
   }
 

@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
@@ -77,6 +77,7 @@ export class AllUsersComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private rout: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private _snackBar: MatSnackBar,
@@ -94,6 +95,16 @@ export class AllUsersComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.rout.queryParams.subscribe((q) => {
+        if (q.type != undefined) {
+          this.changeSortOption(q.type);
+        }
+      });
+    }, 500);
   }
 
   openSnackBar(message: string, action: string) {
@@ -250,6 +261,18 @@ export class AllUsersComponent implements OnInit {
     } else {
       this.fetchData(this.paginator.pageSize);
     }
+  }
+
+  emailUser(email) {
+    location.href =
+      "mailto:" +
+      email +
+      "?cc=" +
+      "sample@sdsd.ae" +
+      "&subject=" +
+      "test" +
+      "&body=" +
+      "hi";
   }
 
   addUserDialogOpen() {

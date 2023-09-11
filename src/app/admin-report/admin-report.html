@@ -606,7 +606,8 @@
                   "
                 />
                 <a
-                  routerLink="{{card.url}}"
+                  [routerLink]="[card.url]"
+                  [queryParams]="{ type : card.queryparam}"
                   class="small-box-footer"
                   style="font-size: 13px; font-weight: 600"
                   >More info
@@ -663,7 +664,8 @@
                   "
                 />
                 <a
-                  routerLink="{{card.url}}"
+                  [routerLink]="[card.url]"
+                  [queryParams]="{ type : card.queryparam}"
                   class="small-box-footer"
                   style="font-size: 13px; font-weight: 600"
                   >More info

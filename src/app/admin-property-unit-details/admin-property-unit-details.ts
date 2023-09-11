@@ -343,6 +343,14 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     });
   }
 
+  navigateLeaseDetails() {
+    this.router.navigate(["/contract-details"], {
+      queryParams: {
+        contact_id: this.all_data.lease_uid,
+      },
+    });
+  }
+
   downloadDoc() {
     if (this.selected_document != "") {
       this.downloadService
@@ -394,6 +402,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       this.all_data.user_country_code_number + this.all_data.user_mobile_number
     }`;
   }
+  
   email_person() {
     location.href =
       "mailto:" +

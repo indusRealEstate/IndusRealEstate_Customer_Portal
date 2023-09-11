@@ -38,7 +38,8 @@
             <span
               class="mt-2"
               style="color: #d8a20a; font-weight: 400; font-size: 15px"
-              >{{all_data.prop_name}}</span
+              >{{all_data.prop_locality_name}}, {{all_data.prop_address |
+              titlecase}}</span
             >
           </div>
 
@@ -121,9 +122,7 @@
               "
             />
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openEditUnit()">
-                Edit
-              </button>
+              <button mat-menu-item (click)="openEditUnit()">Edit</button>
             </mat-menu>
           </div>
         </div>
@@ -755,6 +754,14 @@
                   </thead>
                   <tbody class="tbody text-uppercase">
                     <tr scope="row m-0">
+                      <th class="p-3 col-md-4" scope="row">Property</th>
+                      <td class="p-3 col-md-8">
+                        <span class="prop_name_link" (click)="openProperty()"
+                          >{{all_data.prop_name | titlecase}}</span
+                        >
+                      </td>
+                    </tr>
+                    <tr scope="row m-0">
                       <th class="p-3 col-md-4" scope="row">unit number</th>
                       <td class="p-3 col-md-8">{{all_data.unit_no}}</td>
                     </tr>
@@ -1068,7 +1075,11 @@
                     >
                   </h4>
 
-                  <button class="btn open-external-link-icon" title="extenal">
+                  <button
+                    class="btn open-external-link-icon"
+                    title="extenal"
+                    (click)="navigateLeaseDetails()"
+                  >
                     <img
                       src="assets/img/svg/common-icons/open-external-link-icon.svg"
                       alt

@@ -4,10 +4,17 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .email_link {
+  &:hover {
+    text-decoration: underline;
+    color: blue;
+  }
+}
+
 ::ng-deep .mdc-snackbar__surface {
   background-color: #313a46 !important;
-  
-  .mat-mdc-button-ripple{
+
+  .mat-mdc-button-ripple {
     color: #d4aa32 !important;
   }
   .mdc-button__label {

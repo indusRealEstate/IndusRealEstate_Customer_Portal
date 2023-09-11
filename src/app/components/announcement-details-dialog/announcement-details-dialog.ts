@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { DownloadService } from "app/services/download.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "announcement-details-dialog",
@@ -15,12 +17,12 @@ export class AnnouncementDetailsDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AnnouncementDetailsDialog>,
-    private router: Router
+    private router: Router,
+    private downloadService: DownloadService
   ) {
     this.announcementData = data;
 
-    this.emergency =
-      data.emergency == "0" ? "Not Emergency" : "Emergency";
+    this.emergency = data.emergency == "0" ? "Not Emergency" : "Emergency";
     this.attachments = JSON.parse(data.attachments);
     console.log(data);
   }
@@ -29,7 +31,15 @@ export class AnnouncementDetailsDialog implements OnInit {
 
   ngAfterViewInit() {}
 
-  downloadAttachment(att) {}
+  downloadDoc(item) {
+    this.downloadService
+      .downloadFile(
+        `announcement/${this.announcementData.announcement_id}/${item}`
+      )
+      .subscribe((res: any) => {
+        FileSaver.saveAs(res, item);
+      });
+  }
 
   onCloseDialog() {
     this.dialogRef.close();

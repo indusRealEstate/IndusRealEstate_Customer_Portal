@@ -4,6 +4,15 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .prop_name_link {
+  cursor: pointer;
+  &:hover {
+    color: #2b333e;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}
+
 ::ng-deep .mdc-snackbar__surface {
   background-color: #313a46 !important;
 

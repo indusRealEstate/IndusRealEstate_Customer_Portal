@@ -189,9 +189,6 @@ export class AdminLeaseDetail implements OnInit {
               this.all_data.lease_tenant_id
             );
             this.openSnackBar("Lease terminated successfully", "Close");
-            sessionStorage.removeItem("all_lease_session");
-            sessionStorage.removeItem("admin_properties_units_session");
-            sessionStorage.removeItem("all_users_session");
             this.router.navigate(["/admin-lease"]);
           }
         }
@@ -222,10 +219,10 @@ export class AdminLeaseDetail implements OnInit {
   }
 
   openEditLease() {
-    var data = this.all_data;
     this.dialog
       .open(EditLeaseDialog, {
-        data,
+        width: "100%",
+        data: this.all_data.lease_contract_id,
       })
       .afterClosed()
       .subscribe((value) => {

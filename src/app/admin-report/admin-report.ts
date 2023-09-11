@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
 import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { AdminService } from "app/services/admin.service";
@@ -59,6 +60,7 @@ export class AdminReport implements OnInit {
     private adminService: AdminService,
     private requestService: RequestService,
     private paymentService: PaymentService,
+    private router: Router,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
@@ -70,16 +72,17 @@ export class AdminReport implements OnInit {
       title: "Total Landlords",
       icon: "assets/img/pngs/dashboard/landlord.png",
       url: "/all-users",
+      queryparam: "owner",
     },
     {
       title: "Total Maintenance Requests",
       icon: "assets/img/pngs/dashboard/maintenance.png",
-      url: "/admin-requests",
+      url: "/requests",
     },
     {
       title: "Total Units",
       icon: "assets/img/pngs/dashboard/unit.png",
-      url: "/admin-properties-units",
+      url: "/properties-units",
     },
   ];
 
@@ -88,15 +91,18 @@ export class AdminReport implements OnInit {
       title: "Total Tenants",
       icon: "assets/img/pngs/dashboard/tenant-2.png",
       url: "/all-users",
+      queryparam: "tenant",
     },
     {
       title: "Total Active Contracts",
       icon: "assets/img/pngs/dashboard/contract.png",
+      url: "/contracts",
+      queryparam: "active",
     },
     {
       title: "Total Buildings",
       icon: "assets/img/pngs/dashboard/property.png",
-      url: "/admin-properties",
+      url: "/properties",
     },
   ];
 

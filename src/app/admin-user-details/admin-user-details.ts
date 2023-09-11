@@ -199,25 +199,27 @@ export class ViewUserDetails implements OnInit {
   // }
 
   viewImageOfUnit() {
-    let constainer = document.getElementById("full-screen-image");
-    constainer.style.display = "flex";
-    constainer.style.width = "100vw";
-    constainer.style.height = "100vh";
-    constainer.style.backgroundColor = "#000000bd";
-    constainer.style.position = "fixed";
-    constainer.style.zIndex = "1000";
-    constainer.style.top = "0";
-    constainer.style.left = "0";
-    let image = document.getElementById("image");
-    image.setAttribute(
-      "src",
-      `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/image/${this.all_data.user_profile_img}`
-    );
-    image.style.width = "75vw";
-    image.style.height = "75vh";
-    image.style.objectFit = "contain";
-    image.style.objectPosition = "top";
-    image.style.margin = "auto";
+    if (this.profile_image != "assets/img/images/user.png") {
+      let constainer = document.getElementById("full-screen-image");
+      constainer.style.display = "flex";
+      constainer.style.width = "100vw";
+      constainer.style.height = "100vh";
+      constainer.style.backgroundColor = "#000000bd";
+      constainer.style.position = "fixed";
+      constainer.style.zIndex = "1000";
+      constainer.style.top = "0";
+      constainer.style.left = "0";
+      let image = document.getElementById("image");
+      image.setAttribute(
+        "src",
+        `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/image/${this.all_data.user_profile_img}`
+      );
+      image.style.width = "75vw";
+      image.style.height = "75vh";
+      image.style.objectFit = "contain";
+      image.style.objectPosition = "top";
+      image.style.margin = "auto";
+    }
   }
 
   onCloseDialog() {
@@ -244,9 +246,7 @@ export class ViewUserDetails implements OnInit {
 
   downloadDoc(item) {
     this.downloadService
-      .downloadFile(
-        `user/${this.all_data.user_uid}/documents/${item}`
-      )
+      .downloadFile(`user/${this.all_data.user_uid}/documents/${item}`)
       .subscribe((res: any) => {
         FileSaver.saveAs(res, item);
       });

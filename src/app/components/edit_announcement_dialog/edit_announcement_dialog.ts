@@ -150,7 +150,7 @@ export class EditAnnouncementDialog implements OnInit {
         }
       }
 
-      let r_id = this.all_data.ann_id;
+      let r_id = this.all_data.announcement_id;
 
       let data = this.setupData(r_id, docs_names);
       // console.log(this.removed_existing_docs);
