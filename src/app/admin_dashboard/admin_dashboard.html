@@ -182,7 +182,10 @@
                       </div>
                     </div>
 
-                    <div class="row m-0 align-items-center">
+                    <div
+                      class="row m-0 align-items-center"
+                      *ngIf="getContractsEndsInPeriod(contract.contract_end) > 0"
+                    >
                       <p
                         class="m-0 mr-3"
                         *ngIf="getReminderSendedTime(contract) != 'loading..'"
@@ -209,6 +212,25 @@
                       >
                         Send Reminder
                       </div>
+                      <div
+                        class="btn ml-2"
+                        style="padding: 5px 10px; background: #ff5353"
+                      >
+                        Ignore
+                      </div>
+                    </div>
+                    <div
+                      class="row m-0 align-items-center"
+                      *ngIf="getContractsEndsInPeriod(contract.contract_end) < 0"
+                    >
+                      <div
+                        (click)="reniewContract(contract)"
+                        class="btn"
+                        style="padding: 5px 10px; background: #4caf50"
+                      >
+                        Reniew
+                      </div>
+
                       <div
                         class="btn ml-2"
                         style="padding: 5px 10px; background: #ff5353"

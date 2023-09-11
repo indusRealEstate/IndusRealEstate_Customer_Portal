@@ -62,8 +62,8 @@
       />
       <mat-menu #menuEdit="matMenu">
         <button mat-menu-item (click)="openEditLease()">Edit</button>
-        <button mat-menu-item (click)="openCautionDialog()">
-          Terminate Lease
+        <button mat-menu-item (click)="openMoreMenu()">
+          {{getExpiryText()}}
         </button>
       </mat-menu>
     </div>
@@ -485,7 +485,7 @@
                 class="card-header row m-0 justify-content-between align-items-center"
               >
                 <h4 class="m-0" style="text-shadow: none; font-weight: 500">
-                  Owner Details
+                  Tenant Details
                 </h4>
                 <img
                   src="{{ all_data.tenant_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.tenant_uid + '/image/' + all_data.tenant_profile_img : 'assets/img/images/user.png'}}"

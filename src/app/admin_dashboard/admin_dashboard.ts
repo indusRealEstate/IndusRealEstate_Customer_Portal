@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { Router } from "@angular/router";
 import {
@@ -14,6 +15,7 @@ import {
   Text,
   geometry,
 } from "@progress/kendo-drawing";
+import { ReniewContractDialog } from "app/components/reniew-contract-dialog/reniew-contract-dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
@@ -57,7 +59,8 @@ export class AdminDashboardComponent implements OnInit {
     private leaseService: LeaseService,
     private firebaseService: FirebaseService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog
   ) {
     this.isLoading = true;
     this.getScreenSize();
@@ -236,6 +239,17 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
+  reniewContract(contract) {
+    this.dialog
+      .open(ReniewContractDialog, {
+        width: "70%",
+        data: contract.contract_id,
+        //height: "40rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+  }
+
   getContractsEndsInPeriod(end: any) {
     var start_date = new Date();
     var end_date = new Date(end);
@@ -267,9 +281,9 @@ export class AdminDashboardComponent implements OnInit {
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
 
     if (difference_In_Days < 0) {
-      return 'lease-expired-date-dashboard';
+      return "lease-expired-date-dashboard";
     } else {
-      return 'lease-expiry-date-dashboard';
+      return "lease-expiry-date-dashboard";
     }
   }
 

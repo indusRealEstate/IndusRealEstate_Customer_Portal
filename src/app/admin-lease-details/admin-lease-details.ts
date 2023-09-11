@@ -10,6 +10,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
+import { ReniewContractDialog } from "app/components/reniew-contract-dialog/reniew-contract-dialog";
 import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { DownloadService } from "app/services/download.service";
@@ -114,6 +115,55 @@ export class AdminLeaseDetail implements OnInit {
           FileSaver.saveAs(res, this.selectDoc);
         });
     }
+  }
+
+  openMoreMenu() {
+    var start_date = new Date();
+    var end = "";
+    if (this.all_data != undefined) {
+      end = this.all_data.lease_contract_end;
+    }
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    if (difference_In_Days < 0) {
+      this.reniewContract();
+    } else {
+      this.openCautionDialog();
+    }
+  }
+
+  getExpiryText() {
+    var start_date = new Date();
+    var end = "";
+    if (this.all_data != undefined) {
+      end = this.all_data.lease_contract_end;
+    }
+    var end_date = new Date(end);
+
+    var difference_In_Time = end_date.getTime() - start_date.getTime();
+
+    var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+
+    if (difference_In_Days < 0) {
+      return "Reniew Contract";
+    } else {
+      return "Terminate Contract";
+    }
+  }
+
+  reniewContract() {
+    this.dialog
+      .open(ReniewContractDialog, {
+        width: "70%",
+        data: this.all_data.lease_contract_id,
+        //height: "40rem",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
   }
 
   openCautionDialog() {
