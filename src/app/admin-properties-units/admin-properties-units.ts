@@ -129,7 +129,7 @@ export class AdminPropertiesUnits implements OnInit {
 
   changeSortOption(option: string) {
     this.current_sort_option = option;
-    this.searchBar.searchText = "";
+    this.searchBar.searchText = ""; 
     if (option != "all") {
       this.pageChangerLoading = true;
 

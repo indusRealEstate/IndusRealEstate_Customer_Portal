@@ -148,4 +148,13 @@ export class UnitsService {
 
     return this.http.request(req);
   }
+
+  updateAmenities(data: any){
+    const url = `${API_URL}/updateAmenies.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
 }

@@ -59,7 +59,7 @@
     "crypto-js": "^4.1.1",
     "express": "4.17.3",
     "file-saver": "^2.0.5",
-    "firebase": "^9.9.1",
+    "firebase": "^10.3.0",
     "firebase-tools": "^9.9.0",
     "googleapis": "99.0.0",
     "hammerjs": "^2.0.0",
