@@ -14,7 +14,17 @@
   }
   .card-body {
     padding: 1.5rem;
-
+    ::ng-deep.mdc-text-field--filled {
+      .mdc-line-ripple::before {
+        border-bottom: 1px solid #2b333ea6;
+      }
+      .mdc-line-ripple::after {
+        border-bottom: 2px solid #d4aa32;
+      }
+      .mdc-line-danger {
+        border-bottom: 2px solid #d43232;
+      }
+    }
     .col {
       .details-title {
         color: #3c4858;

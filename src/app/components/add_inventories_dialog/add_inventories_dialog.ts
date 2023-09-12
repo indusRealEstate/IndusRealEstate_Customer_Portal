@@ -18,11 +18,17 @@ import { UnitsService } from "app/services/units.service";
   templateUrl: "./add_inventories_dialog.html",
 })
 export class AddInventoriesDialog implements OnInit {
-  amenities: string = "";
-  amenities_array: string[] = [];
   unit_id: string = "";
   updated: boolean = false;
   msg: string = "";
+  inventory_place: string = "";
+  inventory_name: string = "";
+  inventory_count: string = "";
+  inventory_array: object[] = [];
+  permission: boolean = false;
+  name_empty: boolean = false;
+  place_empty: boolean = false;
+  count_empty: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,45 +40,74 @@ export class AddInventoriesDialog implements OnInit {
     this.unit_id = data.unit_id;
   }
 
-  ngOnInit() {}
-
-  addAmenies() {
-    this.amenities_array.push(this.amenities);
+  checkPermission(event) {
+    if (event.key == "Enter") {
+      this.name_empty =
+        this.inventory_name !== "" || this.inventory_name !== null
+          ? false
+          : true;
+      this.place_empty =
+        this.inventory_place !== "" || this.inventory_place !== null
+          ? false
+          : true;
+      this.count_empty =
+        this.inventory_count !== "" || this.inventory_count !== null
+          ? false
+          : true;
+    }
+    this.permission =
+      this.inventory_place !== "" &&
+      this.inventory_name !== "" &&
+      this.inventory_count !== "" &&
+      this.inventory_place !== null &&
+      this.inventory_name !== null &&
+      this.inventory_count !== null
+        ? true
+        : false;
   }
 
-  amenitiesInput(event) {
-    if (event.key === "Enter") {
-      this.addAmenies();
-      this.amenities = "";
+  ngOnInit() {}
+
+  ngAfterViewInit() {}
+
+  addInventories() {
+    if (this.permission) {
+      let data = {
+        inventory_name: this.inventory_name,
+        inventory_place: this.inventory_place,
+        inventory_count: this.inventory_count,
+      };
+      this.inventory_array.push(data);
+      this.inventory_name = "";
+      this.inventory_place = "";
+      this.inventory_count = "";
+      this.permission = false;
+      console.log(this.inventory_array);
     }
   }
 
-  deleteAmenities(index) {
-    this.amenities_array.splice(index, 1);
+  deleteInventories(index) {
+    this.inventory_array.splice(index, 1);
   }
 
-  updateAmenies() {
-    let data = {
-      unit_id: this.unit_id,
-      amenities: JSON.stringify(this.amenities_array),
-    };
-    this.unitService.updateAmenities(data).subscribe((value: any) => {
-      let status = value.status;
-      let msg = value.msg;
-      // this.updated = true;
-      this.msg = msg;
-      this.onCloseDialog();
-    });
+  updateInventories() {
+    if (this.inventory_array.length > 0) {
+      let data = {
+        unit_id: this.unit_id,
+        inventories: JSON.stringify(this.inventory_array),
+      };
+      this.unitService.updateInventories(data).subscribe((data: any) => {
+        this.msg = data.msg;
+        this.onCloseDialog();
+      });
+    }
   }
 
-  ngAfterViewInit() {}
-  // this.alert_msg = value.msg;
-  // this.form_submit
   onCloseDialog() {
     this.dialogRef.close({
-      amenities: JSON.stringify(this.amenities_array),
-      msg: this.msg
+      msg:this.msg,
+      inventories: this.inventory_array
     });
-    this.amenities_array = [];
+    this.inventory_array = [];
   }
 }

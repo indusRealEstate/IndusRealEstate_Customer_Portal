@@ -1,6 +1,6 @@
 <div
   class="card"
-  style="margin: 0; background: none;box-shadow: 0px 0px 0px;"
+  style="margin: 0; background: none;box-shadow: 0px 0px 0px; width: 100%; height: 100%;"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane">
 
@@ -25,7 +25,7 @@
           alt />
         <p class="mr-2"
           style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem;">
-          Add amenities
+          Add inventories
         </p>
         <img
           matTooltip="Close"
@@ -39,27 +39,47 @@
 
       <div class="row mx-0 mt-0 mb-1 align-items-start w-100">
         <p class="details-title my-4">
-          Add Amenities
+          Add Inventories
         </p>
       </div>
 
       <div class="row">
         <div class="col-9">
-          <mat-form-field class="example-full-width w-100">
-            <mat-label>Favorite food</mat-label>
-            <input matInput placeholder [(ngModel)]="amenities" (keyup)="amenitiesInput($event)">
-          </mat-form-field>
+          <div class="row">
+            <div class="col-4">
+              <mat-form-field class="example-full-width w-100">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput placeholder
+                  [(ngModel)]="inventory_name" (keyup)="checkPermission($event)">
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="example-full-width w-100">
+                <mat-label>Place</mat-label>
+                <input type="text" matInput placeholder
+                  [(ngModel)]="inventory_place"
+                  (keyup)="checkPermission($event)">
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="example-full-width w-100">
+                <mat-label>Count</mat-label>
+                <input type="number" matInput placeholder
+                  [(ngModel)]="inventory_count"
+                  (keyup)="checkPermission($event)">
+              </mat-form-field>
+            </div>
+          </div>
         </div>
         <div class="col-3">
-          <button type="button"
-            matTooltip="Add Amenities"
+          <button type="button" class="btn btn-dark" (click)="addInventories()"
+            matTooltip="Add Inventories"
             matTooltipClass="tooltip"
             matTooltipPosition="above"
-            class="btn btn-dark"
-            (click)="addAmenies()"
-            style="background-color: #2b333ee3; border-radius: 5px;">Add</button>
+            [ngStyle]="{'background-color': permission == true ? '#2b333ee3' : '#171e2786','cursor' :  permission == true ? 'pointer' : 'not-allowed'}">Add</button>
         </div>
       </div>
+
       <div class="row">
         <div class="col-9">
           <ul
@@ -70,7 +90,7 @@
             padding: 0;
             flex-wrap: wrap;
           ">
-            <li *ngFor="let item of amenities_array;let i = index" style="
+            <li *ngFor="let item of inventory_array;let i = index" style="
               position: relative;
               background: #ffd45b8f;
               padding: 5px 10px;
@@ -100,37 +120,43 @@
                     align-content: center;
                     flex-wrap: wrap;
                   "
-                  (click)="deleteAmenities(i)"
-                >
-                <img
-                src="assets/img/svg/common-icons/bin.svg"
-                alt="delete button"
-                style="
+                  (click)="deleteInventories(i)">
+                  <img
+                    src="assets/img/svg/common-icons/bin.svg"
+                    alt="delete button"
+                    style="
                   display: flex;
                   width: 12px;
                   height: 12px;
                   filter: invert(1);
                   margin: auto;
                   transform: translateX(0px);
-                "
-                />
+                " />
                 </button>
-                {{item}}
+                {{item.inventory_name}}
               </ng-container>
             </li>
           </ul>
         </div>
         <div class="col-3">
-          <button type="button"
-            matTooltip="Update Amenities"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            class="btn btn-dark"
-            (click)="updateAmenies()"
-            style="background-color: #2b333ee3; border-radius: 5px;">Update</button>
+          &nbsp;
         </div>
       </div>
-
     </div>
+    <button type="button"
+      matTooltip="Update Inventories"
+      matTooltipClass="tooltip"
+      matTooltipPosition="above"
+      class="btn btn-dark"
+      (click)="updateInventories()"
+      [ngStyle]="{'background-color': inventory_array.length > 0 ? '#2b333ee3' : '#171e2786','cursor' :  inventory_array.length > 0 ? 'pointer' : 'not-allowed'}"
+      style="
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 25px 50px;
+      ">
+      Submit
+    </button>
   </div>
 </div>

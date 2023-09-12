@@ -37,13 +37,15 @@ export class AddAmenitiesDialog implements OnInit {
   ngOnInit() {}
 
   addAmenies() {
-    this.amenities_array.push(this.amenities);
+    if (this.amenities !== "") {
+      this.amenities_array.push(this.amenities);
+      this.amenities = "";
+    }
   }
 
   amenitiesInput(event) {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && this.amenities !== "") {
       this.addAmenies();
-      this.amenities = "";
     }
   }
 
@@ -52,17 +54,19 @@ export class AddAmenitiesDialog implements OnInit {
   }
 
   updateAmenies() {
-    let data = {
-      unit_id: this.unit_id,
-      amenities: JSON.stringify(this.amenities_array),
-    };
-    this.unitService.updateAmenities(data).subscribe((value: any) => {
-      let status = value.status;
-      let msg = value.msg;
-      // this.updated = true;
-      this.msg = msg;
-      this.onCloseDialog();
-    });
+    if (this.amenities_array.length > 0) {
+      let data = {
+        unit_id: this.unit_id,
+        amenities: JSON.stringify(this.amenities_array),
+      };
+      this.unitService.updateAmenities(data).subscribe((value: any) => {
+        let status = value.status;
+        let msg = value.msg;
+        // this.updated = true;
+        this.msg = msg;
+        this.onCloseDialog();
+      });
+    }
   }
 
   ngAfterViewInit() {}
@@ -71,7 +75,7 @@ export class AddAmenitiesDialog implements OnInit {
   onCloseDialog() {
     this.dialogRef.close({
       amenities: JSON.stringify(this.amenities_array),
-      msg: this.msg
+      msg: this.msg,
     });
     this.amenities_array = [];
   }

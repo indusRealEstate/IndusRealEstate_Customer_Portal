@@ -168,7 +168,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.isOcupied = false;
         }
 
-        console.log(this.all_data);
+        console.log(this.all_data.inventories);
 
         this.address = this.all_data.prop_address;
         this.allocated_unit = this.all_data.user_allocates_unit;
@@ -637,18 +637,29 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((data) => {
-        this.openSnackBar(data.msg, "Close");
-        this.amenties(data.amenities);
+        if (data.msg !== "") {
+          this.openSnackBar(data.msg, "Close");
+          this.amenties(data.amenities);
+        }
+        
       });
   }
 
   addInventories() {
-    this.dialog.open(AddInventoriesDialog, {
-      width: "50vw",
-      height: "50vh",
-      data: {
-        unit_id: this.all_data.unit_id,
-      },
-    });
+    this.dialog
+      .open(AddInventoriesDialog, {
+        width: "50vw",
+        height: "50vh",
+        data: {
+          unit_id: this.all_data.unit_id,
+        },
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data.msg !== "") {
+          this.openSnackBar(data.msg, "Close");
+          this.all_data.inventories = data.inventories;
+        }
+      });
   }
 }
