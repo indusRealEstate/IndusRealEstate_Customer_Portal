@@ -1,8 +1,5 @@
-
-
 <div class="main-content" *ngIf="screenWidth > 430">
   <div class="container-fluid">
-
     <div class="row">
       <div class="col-12">
         <ngx-skeleton-loader
@@ -12,25 +9,25 @@
           width: (700) + 'px',
            height: '40px',
            marginLeft : '20px'
-           }">
+           }"
+        >
         </ngx-skeleton-loader>
-        <div
-          *ngIf="!isContentLoading"
-          style="display: grid">
+        <div *ngIf="!isContentLoading" style="display: grid">
           <span class="item-header">
             {{'Maintenance request - ' + all_data.main_request_category + ' - '
-            |
-            titlecase}} <span style="text-transform: capitalize;"
-              [ngStyle]="{'color' : assignColor(main_request_status)}">{{main_request_status}}</span>
+            | titlecase}}
+            <span
+              style="text-transform: capitalize"
+              [ngStyle]="{'color' : assignColor(main_request_status)}"
+              >{{main_request_status}}</span
+            >
           </span>
         </div>
       </div>
-
     </div>
 
     <div class="row">
       <div class="col-md-8">
-
         <ngx-skeleton-loader
           *ngIf="isContentLoading"
           class="skeleton-left"
@@ -38,7 +35,8 @@
           width: sideBar_opened? (((screenWidth/2) + ((screenWidth/2)/2)) - 450) + 'px' : (((screenWidth/2) + ((screenWidth/2)/2)) - 300) + 'px',
           height: '50vh',
           marginLeft: '20px'
-          }">
+          }"
+        >
         </ngx-skeleton-loader>
         <div class="row" *ngIf="!isContentLoading">
           <div class="col-md-12">
@@ -57,14 +55,21 @@
                     </thead>
                     <tbody class="tbody text-uppercase">
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">Date of request</th>
-                        <td class="p-3 col-md-8">{{all_data.main_request_date |
-                          date}}</td>
+                        <th class="p-3 col-md-4" scope="row">
+                          Date of request
+                        </th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.main_request_date | date}}
+                        </td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">Type of request</th>
-                        <td class="p-3 col-md-8"
-                          [ngStyle]="all_data.main_request_type.toLowerCase() == 'urgent' ? {'color':  '#ff0000', 'font-weight' : '700'} : {}">
+                        <th class="p-3 col-md-4" scope="row">
+                          Type of request
+                        </th>
+                        <td
+                          class="p-3 col-md-8"
+                          [ngStyle]="all_data.main_request_type.toLowerCase() == 'urgent' ? {'color':  '#ff0000', 'font-weight' : '700'} : {}"
+                        >
                           {{all_data.main_request_type}}
                         </td>
                       </tr>
@@ -75,16 +80,27 @@
                         </td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">Category of request</th>
+                        <th class="p-3 col-md-4" scope="row">
+                          Category of request
+                        </th>
                         <td class="p-3 col-md-8">
                           {{all_data.main_request_category}}
                         </td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">Status of request</th>
+                        <th class="p-3 col-md-4" scope="row">
+                          Status of request
+                        </th>
                         <td class="p-3 col-md-8">
-                          <span style="text-transform: capitalize; font-weight: 700; padding: 5px 10px; border-radius: 5px;"
-                            [ngStyle]="{'background-color' : assignColor(main_request_status)}">
+                          <span
+                            style="
+                              text-transform: capitalize;
+                              font-weight: 700;
+                              padding: 5px 10px;
+                              border-radius: 5px;
+                            "
+                            [ngStyle]="{'background-color' : assignColor(main_request_status)}"
+                          >
                             {{main_request_status}}
                           </span>
                         </td>
@@ -101,7 +117,9 @@
                         </td>
                       </tr> -->
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">Tenant availability</th>
+                        <th class="p-3 col-md-4" scope="row">
+                          Tenant availability
+                        </th>
                         <td class="p-3 col-md-8">
                           {{all_data.main_user_availability_time}} on
                           {{all_data.main_user_availability_date | date}}
@@ -117,7 +135,8 @@
                             matTooltip="View media"
                             matTooltipClass="tooltip"
                             matTooltipPosition="above"
-                            style="background-color: #2b333e;">
+                            style="background-color: #2b333e"
+                          >
                             View media
                           </button>
                         </td>
@@ -136,7 +155,8 @@
             width: sideBar_opened? (((screenWidth/2) + ((screenWidth/2)/2)) - 450) + 'px' : (((screenWidth/2) + ((screenWidth/2)/2)) - 300) + 'px',
             height: '30vh',
             marginLeft: '20px',
-          }">
+          }"
+        >
         </ngx-skeleton-loader>
         <div class="row" *ngIf="!isContentLoading">
           <div class="col-md-6">
@@ -154,10 +174,12 @@
                       matTooltipClass="tooltip"
                       matTooltipPosition="above"
                       (click)="navigateToUnit(all_data.unit_id)"
-                      class="btn open-external-link-icon">
+                      class="btn open-external-link-icon"
+                    >
                       <img
                         src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                        alt />
+                        alt
+                      />
                     </button>
                   </div>
                 </div>
@@ -165,10 +187,15 @@
               <div class="card-body">
                 <div class="row m-0">
                   <div class="col">
-                    <span style="color: #2b333ebf; font-weight: 500">Bedrooms</span>
+                    <span style="color: #2b333ebf; font-weight: 500"
+                      >Bedrooms</span
+                    >
                     <div class="row m-0 mt-2">
-                      <span class="mr-3"
-                        style="font-size: 20px; font-weight: 600">{{all_data.unit_bed}}</span>
+                      <span
+                        class="mr-3"
+                        style="font-size: 20px; font-weight: 600"
+                        >{{all_data.unit_bed}}</span
+                      >
                       <img
                         src="assets/img/svg/bedroom.svg"
                         alt
@@ -177,14 +204,20 @@
                             hue-rotate(328deg) brightness(88%) contrast(87%);
                           width: 20px;
                           cursor: pointer;
-                        " />
+                        "
+                      />
                     </div>
                   </div>
                   <div class="col">
-                    <span style="color: #2b333ebf; font-weight: 500">Bathrooms</span>
+                    <span style="color: #2b333ebf; font-weight: 500"
+                      >Bathrooms</span
+                    >
                     <div class="row m-0 mt-2">
-                      <span class="mr-3"
-                        style="font-size: 20px; font-weight: 600">{{all_data.unit_bath}}</span>
+                      <span
+                        class="mr-3"
+                        style="font-size: 20px; font-weight: 600"
+                        >{{all_data.unit_bath}}</span
+                      >
                       <img
                         src="assets/img/svg/bath.svg"
                         alt
@@ -193,23 +226,31 @@
                             hue-rotate(328deg) brightness(88%) contrast(87%);
                           width: 20px;
                           cursor: pointer;
-                        " />
+                        "
+                      />
                     </div>
                   </div>
                   <div class="col">
                     <span style="color: #2b333ebf; font-weight: 500">Area</span>
-                    <p class="m-0 mt-2"
-                      style="font-size: 20px; font-weight: 600">
+                    <p
+                      class="m-0 mt-2"
+                      style="font-size: 20px; font-weight: 600"
+                    >
                       {{all_data.unit_size}} SqFt
                     </p>
                   </div>
                 </div>
                 <div class="row m-0 mt-3">
                   <div class="col">
-                    <span style="color: #2b333ebf; font-weight: 500">Parking</span>
+                    <span style="color: #2b333ebf; font-weight: 500"
+                      >Parking</span
+                    >
                     <div class="row m-0 mt-2">
-                      <span class="mr-3"
-                        style="font-size: 20px; font-weight: 600">{{all_data.unit_parking}}</span>
+                      <span
+                        class="mr-3"
+                        style="font-size: 20px; font-weight: 600"
+                        >{{all_data.unit_parking}}</span
+                      >
                       <img
                         src="assets/img/svg/parking.svg"
                         alt
@@ -218,14 +259,20 @@
                             hue-rotate(328deg) brightness(88%) contrast(87%);
                           width: 20px;
                           cursor: pointer;
-                        " />
+                        "
+                      />
                     </div>
                   </div>
                   <div class="col">
-                    <span style="color: #2b333ebf; font-weight: 500">Floors</span>
+                    <span style="color: #2b333ebf; font-weight: 500"
+                      >Floors</span
+                    >
                     <div class="row m-0 mt-2">
-                      <span class="mr-3"
-                        style="font-size: 20px; font-weight: 600">{{all_data.unit_floor}}</span>
+                      <span
+                        class="mr-3"
+                        style="font-size: 20px; font-weight: 600"
+                        >{{all_data.unit_floor}}</span
+                      >
                       <img
                         src="assets/img/svg/parking.svg"
                         alt
@@ -234,14 +281,16 @@
                             hue-rotate(328deg) brightness(88%) contrast(87%);
                           width: 20px;
                           cursor: pointer;
-                        " />
+                        "
+                      />
                     </div>
                   </div>
                   <div class="col"></div>
                 </div>
                 <div
                   class="mt-4 mb-3 mx-auto"
-                  style="height: 2px; width: 90%; background: #faebd7a6"></div>
+                  style="height: 2px; width: 90%; background: #faebd7a6"
+                ></div>
                 <div class="col">
                   <p class="m-0" style="color: #2b333ebf; font-weight: 500">
                     Amenities
@@ -258,7 +307,8 @@
                         margin-right: 10px;
                       "
                       class="d-flex mt-2"
-                      *ngFor="let item of amenities; let index = i">
+                      *ngFor="let item of amenities; let index = i"
+                    >
                       <span>{{item | titlecase}}</span>
                     </div>
                   </div>
@@ -281,10 +331,12 @@
                       matTooltipPosition="above"
                       (click)="openProperty()"
                       class="btn open-external-link-icon"
-                      title>
+                      title
+                    >
                       <img
                         src="assets/img/svg/common-icons/open-external-link-icon.svg"
-                        alt />
+                        alt
+                      />
                     </button>
                   </div>
                 </div>
@@ -312,8 +364,12 @@
                         <td class="p-3 col-md-8">{{all_data.prop_type}}</td>
                       </tr>
                       <tr scope="row">
-                        <th class="p-3 col-md-4" scope="row">number of units</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_no_of_units}}</td>
+                        <th class="p-3 col-md-4" scope="row">
+                          number of units
+                        </th>
+                        <td class="p-3 col-md-8">
+                          {{all_data.prop_no_of_units}}
+                        </td>
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">locality name</th>
@@ -323,7 +379,9 @@
                       </tr>
                       <tr scope="row">
                         <th class="p-3 col-md-4" scope="row">incharge</th>
-                        <td class="p-3 col-md-8">{{all_data.prop_in_charge}}</td>
+                        <td class="p-3 col-md-8">
+                          {{all_data.prop_in_charge}}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -335,157 +393,211 @@
       </div>
 
       <div class="col-md-4">
-
         <div class="row">
-          <ngx-skeleton-loader
-            *ngIf="isContentLoading"
-            [theme]="{ 
-                width: sideBar_opened? (((screenWidth/2) - ((screenWidth/2)/2)) - 25) + 'px' : (((screenWidth/2) - ((screenWidth/2)/2))) + 'px',
-                height: '30vh' 
-              }">
-          </ngx-skeleton-loader>
-          <div class="col-md-12 pr-0" *ngIf="!isContentLoading">
+         
+          <div class="col-md-12 " *ngIf="!isContentLoading">
             <div class="card card-main" style="height: 93%">
-              <div class="card-header">
-                <h4 class="title-header">Tenant Details</h4>
+              <div class="card-header row m-0 justify-content-between">
+                <h4
+                  class="overview-header"
+                  style="
+                    padding: 0;
+                    display: flex;
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    align-items: center;
+                    text-shadow: none;
+                  "
+                >
+                  Tenant Details
+                </h4>
+                <img
+                  src="{{ all_data.tenant_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.tenant_uid + '/image/' + all_data.tenant_profile_img : 'assets/img/images/user.png'}}"
+                  alt
+                  class="card-img-top user-image"
+                  style="width: 2.5rem"
+                />
               </div>
               <div class="card-body" style="padding: 25px 20px">
                 <div class="row m-0 align-items-start">
-                  <div class="col-3 d-flex pl-0">
-                    <img
-                      src="https://www.indusre.app/api/upload/user/{{all_data.tenant_uid}}/image/{{all_data.tenant_profile_img}}"
-                      alt
-                      class="card-img-top user-image m-auto" />
-                  </div>
-                  <div class="col-9 p-0">
+                  <div class="col p-0">
                     <div class="row m-0">
-                      <div class="col-5 pr-0" style="display: grid">
+                      <div class="col p-0">
                         <span
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Name</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Email</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Alternative email</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Phone</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Alternative phone</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Gender</span>
+                          "
+                          >Name</span
+                        >
                       </div>
-                      <div class="col-7 pr-0" style="display: grid">
+                      <div class="col pr-0">
                         <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.tenant_name}}</span>
+                          "
+                          >{{all_data.tenant_name}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.tenant_email}}</span>
+                          "
+                          >{{all_data.tenant_email}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
-                          <span *ngIf="all_data.tenant_alternative_email != ''">{{all_data.tenant_alternative_email}}</span>
-                          <span *ngIf="all_data.tenant_alternative_email == ''">-</span>
+                          "
+                        >
+                          <span *ngIf="all_data.tenant_alternative_email != ''"
+                            >{{all_data.tenant_alternative_email}}</span
+                          >
+                          <span *ngIf="all_data.tenant_alternative_email == ''"
+                            >-</span
+                          >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           {{all_data.tenant_country_code_number}}
                           {{all_data.tenant_mobile_number}}
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           <span
-                            *ngIf="all_data.tenant_country_code_alternative_number != '' && all_data.tenant_alternative_mobile_number != ''">{{all_data.tenant_country_code_alternative_number}}
-                            {{all_data.tenant_alternative_mobile_number}}</span>
+                            *ngIf="all_data.tenant_alternative_mobile_number != 0"
+                            >{{all_data.tenant_country_code_alternative_number}}
+                            {{all_data.tenant_alternative_mobile_number}}</span
+                          >
                           <span
-                            *ngIf="all_data.tenant_country_code_alternative_number == '' && all_data.tenant_alternative_mobile_number == ''">-</span>
+                            *ngIf="all_data.tenant_alternative_mobile_number == 0"
+                            >-</span
+                          >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Gender</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.tenant_gender | titlecase}}</span>
+                          "
+                          >{{all_data.tenant_gender | titlecase}}</span
+                        >
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="row m-0 mt-4 d-flex justify-content-end">
                   <button
-                    matTooltip="Call"
-                    matTooltipClass="tooltip"
-                    matTooltipPosition="above"
                     class="call-btn btn"
-                    (click)="call_tenant_person()">
+                    (click)="call_tenant_person()"
+                    title="CALL"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/phone.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Call</span>
                   </button>
 
                   <button
-                    matTooltip="Mial"
-                    matTooltipClass="tooltip"
-                    matTooltipPosition="above"
                     class="email-btn btn"
-                    (click)="email_tenant_person()">
+                    (click)="email_tenant_person()"
+                    title="MAIL"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/email-with-at.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Mail</span>
                   </button>
                 </div>
@@ -500,154 +612,212 @@
             [theme]="{
               width: sideBar_opened? (((screenWidth/2) - ((screenWidth/2)/2)) - 25) + 'px' : (((screenWidth/2) - ((screenWidth/2)/2))) + 'px', 
               height: '30vh'
-          }">
+          }"
+          >
           </ngx-skeleton-loader>
-          <div
-            class="col-md-12"
-            *ngIf="!isContentLoading">
+          <div class="col-md-12" *ngIf="!isContentLoading">
             <div class="card card-main" style="height: 93%">
-              <div class="card-header">
-                <h4 class="title-header">Owner Details</h4>
+              <div class="card-header row m-0 justify-content-between">
+                <h4
+                  class="overview-header"
+                  style="
+                    padding: 0;
+                    display: flex;
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    align-items: center;
+                    text-shadow: none;
+                  "
+                >
+                  Owner Details
+                </h4>
+                <img
+                  src="{{ all_data.user_profile_img != '' ? 'https://www.indusre.app/api/upload/user/' + all_data.user_uid + '/image/' + all_data.user_profile_img : 'assets/img/images/user.png'}}"
+                  alt
+                  class="card-img-top user-image"
+                  style="width: 2.5rem"
+                />
               </div>
               <div class="card-body" style="padding: 25px 20px">
                 <div class="row m-0 align-items-start">
-                  <div class="col-3 d-flex pl-0">
-                    <img
-                      src="https://indusre.app/api/upload/user/{{all_data.user_uid}}/image/{{all_data.user_profile_img}}"
-                      alt
-                      class="card-img-top user-image m-auto" />
-                  </div>
-                  <div class="col-9 p-0">
+                  <div class="col p-0">
                     <div class="row m-0">
-                      <div class="col-5 pr-0" style="display: grid">
+                      <div class="col p-0">
                         <span
                           style="
                             font-size: 14px;
                             font-weight: 400;
                             color: #2b333ec4;
-                          ">Name</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Email</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Alternative email</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Phone</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Alternative phone</span>
-                        <span
-                          class="mt-2"
-                          style="
-                            font-size: 14px;
-                            font-weight: 400;
-                            color: #2b333ec4;
-                          ">Gender</span>
+                          "
+                          >Name</span
+                        >
                       </div>
-                      <div class="col-7 pr-0" style="display: grid">
+                      <div class="col pr-0">
                         <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.user_name}}</span>
+                          "
+                          >{{all_data.user_name}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.user_email}}</span>
+                          "
+                          >{{all_data.user_email}}</span
+                        >
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative email</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
-                          <span *ngIf="all_data.user_alternative_email != ''">{{all_data.user_alternative_email}}</span>
-                          <span *ngIf="all_data.user_alternative_email == ''">-</span>
+                          "
+                        >
+                          <span *ngIf="all_data.user_alternative_email != ''"
+                            >{{all_data.user_alternative_email}}</span
+                          >
+                          <span *ngIf="all_data.user_alternative_email == ''"
+                            >-</span
+                          >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           {{all_data.user_country_code_number}}
                           {{all_data.user_mobile_number}}
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Alternative phone</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">
+                          "
+                        >
                           <span
-                            *ngIf="all_data.user_country_code_alternative_number != '' && all_data.user_alternative_mobile_number
-                            != ''">{{all_data.user_country_code_alternative_number}}
-                            {{all_data.user_alternative_mobile_number }}</span>
+                            *ngIf="all_data.user_alternative_mobile_number != 0"
+                            >{{all_data.user_country_code_alternative_number}}
+                            {{all_data.user_alternative_mobile_number}}</span
+                          >
                           <span
-                            *ngIf="all_data.user_country_code_alternative_number == '' && all_data.user_alternative_mobile_number
-                            == ''">-</span>
+                            *ngIf="all_data.user_alternative_mobile_number == 0"
+                            >-</span
+                          >
                         </span>
+                      </div>
+                    </div>
+                    <div class="row m-0 mt-2">
+                      <div class="col p-0">
                         <span
-                          class="mt-2"
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #2b333ec4;
+                          "
+                          >Gender</span
+                        >
+                      </div>
+                      <div class="col pr-0">
+                        <span
                           style="
                             color: #d4aa32;
                             font-size: 14px;
                             font-weight: 500;
-                          ">{{all_data.user_gender | titlecase}}</span>
+                          "
+                          >{{all_data.user_gender | titlecase}}</span
+                        >
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="row m-0 mt-4 d-flex justify-content-end">
                   <button
-                    matTooltip="Call"
-                    matTooltipClass="tooltip"
-                    matTooltipPosition="above"
                     class="call-btn btn"
-                    (click)="call_person()">
+                    (click)="call_person()"
+                    title="CALL"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/phone.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Call</span>
                   </button>
 
                   <button
-                    matTooltip="Mail"
-                    matTooltipClass="tooltip"
-                    matTooltipPosition="above"
                     class="email-btn btn"
-                    (click)="email_person()">
+                    (click)="email_person()"
+                    title="MAIL"
+                  >
                     <img
                       class="mr-1"
                       style="width: 16px"
                       src="assets/img/svg/common-icons/email-with-at.svg"
-                      alt />
+                      alt
+                    />
                     <span class="ml-2">Mail</span>
                   </button>
                 </div>
@@ -662,24 +832,31 @@
             [theme]="{
               width: sideBar_opened? (((screenWidth/2) - ((screenWidth/2)/2)) - 25) + 'px' : (((screenWidth/2) - ((screenWidth/2)/2))) + 'px', 
               height: '30vh'
-          }">
+          }"
+          >
           </ngx-skeleton-loader>
-          <div class="col-12"
-            *ngIf="!isContentLoading && all_data.main_description !== null">
+          <div
+            class="col-12"
+            *ngIf="!isContentLoading && all_data.main_description !== null"
+          >
             <div class="card card-main">
               <div class="card-header">
                 <h4 class="title-header">Description</h4>
               </div>
-              <div class="card-body" style="font-size: 1rem;
-              font-weight: 500;
-              height: 14vh;
-              overflow-y: auto;">
+              <div
+                class="card-body"
+                style="
+                  font-size: 1rem;
+                  font-weight: 500;
+                  height: 14vh;
+                  overflow-y: auto;
+                "
+              >
                 {{all_data.main_description}}
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -690,7 +867,8 @@
             width: sideBar_opened? ((screenWidth/2) - 450) + 'px' : ((screenWidth/2) - 300) + 'px',
             height: '50vh',
             marginLeft: '20px'
-            }">
+            }"
+    >
     </ngx-skeleton-loader>
     <div class="row mt-5" *ngIf="!isContentLoading">
       <div class="col-md-12">
@@ -833,49 +1011,109 @@
               </ng-container> -->
 
               <div class="col-md-4">
-                <button class="btn mx-auto mb-auto"
+                <button
+                  class="btn mx-auto mb-auto"
                   [matMenuTriggerFor]="menu"
                   matTooltip="Change Request Status"
                   matTooltipClass="tooltip"
                   matTooltipPosition="above"
-                  style="background-color: #d4aa32;font-weight: 600;">
+                  style="background-color: #d4aa32; font-weight: 600"
+                >
                   Change Request Status
                 </button>
 
-                <mat-card class="mt-5"
-                  style="border: 0; background-color: #d4a932;">
+                <mat-card
+                  class="mt-5"
+                  style="border: 0; background-color: #d4a932"
+                >
                   <mat-card-content
-                    style="font-weight: 600; font-size: 20px; text-align: center; text-transform: uppercase; color: #ffff;">
-                    current request status <br> <br> <span
-                      style="padding: 5px 10px; border-radius: 10px; margin-top: 5px;"
-                      [ngStyle]="{'background-color': assignColor(main_request_status)}">{{main_request_status}}</span>
+                    style="
+                      font-weight: 600;
+                      font-size: 20px;
+                      text-align: center;
+                      text-transform: uppercase;
+                      color: #ffff;
+                    "
+                  >
+                    current request status <br />
+                    <br />
+                    <span
+                      style="
+                        padding: 5px 10px;
+                        border-radius: 10px;
+                        margin-top: 5px;
+                      "
+                      [ngStyle]="{'background-color': assignColor(main_request_status)}"
+                      >{{main_request_status}}</span
+                    >
                   </mat-card-content>
                 </mat-card>
                 <mat-menu #menu="matMenu" class="more-menu">
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'open')">Open</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'assigned')">Assigned</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'inprogress')">In
-                    Progress</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'completed')">Complete</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'hold')">Hold</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'reopen')">Re
-                    Open</button>
-                  <button mat-menu-item class="more-archived"
-                    (click)="changeStatus(all_data.main_request_id,'reassigned')">Re
-                    Assigned</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'rejected')">Rejected</button>
-                  <button mat-menu-item class="more-span"
-                    (click)="changeStatus(all_data.main_request_id,'cancelled')">Cancelled</button>
+                  <button
+                    mat-menu-item
+                    class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'open')"
+                  >
+                    Open
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'assigned')"
+                  >
+                    Assigned
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'inprogress')"
+                  >
+                    In Progress
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'completed')"
+                  >
+                    Complete
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'hold')"
+                  >
+                    Hold
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'reopen')"
+                  >
+                    Re Open
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-archived"
+                    (click)="changeStatus(all_data.main_request_id,'reassigned')"
+                  >
+                    Re Assigned
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'rejected')"
+                  >
+                    Rejected
+                  </button>
+                  <button
+                    mat-menu-item
+                    class="more-span"
+                    (click)="changeStatus(all_data.main_request_id,'cancelled')"
+                  >
+                    Cancelled
+                  </button>
                 </mat-menu>
               </div>
-
             </div>
             <!-- <ul
                   style="list-style: none;margin: 0;padding: 0; flex-wrap: wrap; display: flex;">
@@ -897,6 +1135,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
