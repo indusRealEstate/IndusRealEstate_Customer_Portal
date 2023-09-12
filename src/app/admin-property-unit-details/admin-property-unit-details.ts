@@ -142,6 +142,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.unitService
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value: any) => {
+        // console.log(value); 
         this.all_data = value;
         this.all_payments_data = new MatTableDataSource<any>(
           value.tenant_payments
@@ -168,7 +169,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.isOcupied = false;
         }
 
-        console.log(this.all_data.inventories);
+        // console.log(this.all_data.inventories);
 
         this.address = this.all_data.prop_address;
         this.allocated_unit = this.all_data.user_allocates_unit;
@@ -546,7 +547,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((value) => {
-        console.log(value);
+        // console.log(value);
       });
   }
 
@@ -565,7 +566,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   }
 
   filterByTimeline(trigger: MatMenuTrigger) {
-    console.log(this.first_selected_timeline);
+    // console.log(this.first_selected_timeline);
     if (this.first_selected_timeline && this.last_selected_timeline) {
       var first = new Date(this.first_selected_timeline).getTime();
       var last = new Date(this.last_selected_timeline).getTime();

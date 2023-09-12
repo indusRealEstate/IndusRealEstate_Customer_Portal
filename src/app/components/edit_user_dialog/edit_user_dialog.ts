@@ -88,6 +88,12 @@ export class EditUserDialog implements OnInit {
     this.userService
       .getUserDetailsForEdit({ user_id: this.data })
       .subscribe((res) => {
+        setTimeout(() => {
+          if (this.country_dropdown != undefined) {
+            this.country_dropdown.selectedCountry = res.user_nationality;
+          }
+        }, 1000);
+
         this.all_data = res;
         this.user_name = res.user_name;
         this.user_email = res.user_email;

@@ -118,13 +118,13 @@ export class EditUnitDialog implements OnInit {
       .add(() => {
         this.isContentLoading = false;
         this.selected_property = {
-          id: data.prop_uid,
-          name: data.prop_name,
+          id: this.all_data.prop_uid,
+          name: this.all_data.prop_name,
         };
 
         this.owner = {
-          id: data.user_uid,
-          name: data.user_name,
+          id: this.all_data.user_uid,
+          name: this.all_data.user_name,
         };
 
         this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
