@@ -82,6 +82,7 @@
             </div>
           </div>
           <div
+            (click)="exportExcelFile()"
             matTooltip="Export Excel File"
             matTooltipClass="tooltip"
             matTooltipPosition="above"
@@ -471,7 +472,6 @@
             <ng-container matColumnDef="dob">
               <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
               <td mat-cell *matCellDef="let element"></td>
-
             </ng-container>
             <ng-container matColumnDef="allocated_unit">
               <th mat-header-cell *matHeaderCellDef>Allocated unit</th>

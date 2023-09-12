@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
+import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { ReniewContractDialog } from "app/components/reniew-contract-dialog/reniew-contract-dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
@@ -415,109 +416,12 @@ export class AllLeasesComponent implements OnInit {
   }
 
   exportExcelFile() {
-    var data: Lease[] = [];
-
-    this.allLease.forEach((lease) => {
-      var unit = "";
-      var tenant = "";
-      data.push({
-        UNIT: 0,
-        "TYPE OF APARTMENT": "",
-        "AREA (SQ/FT)": "",
-        TENANT: "",
-        "PHONE NO": "",
-        "EMAIL ID": "",
-        "CONTRACT START": lease.contract_start,
-        "CONTRACT END": lease.contract_end,
-        "CONTRACT PERIOD (MONTHS)": "12",
-        "CONTRACT VALUE (AED)": lease.yearly_amount,
-        "NO. OF CHEQUES": lease.no_of_cheques,
-        "SECURITY DEPOSIT (AED)": lease.security_deposit,
-      });
-    });
-
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-
-    ws["!cols"] = [
-      { wch: 15 },
-      { wch: 30 },
-      { wch: 25 },
-      { wch: 25 },
-      { wch: 25 },
-      { wch: 30 },
-      { wch: 30 },
-      { wch: 40 },
-      { wch: 40 },
-      { wch: 30 },
-      { wch: 35 },
-      { wch: 35 },
-    ];
-
-    ws["!rows"] = [{ hpt: 30 }];
-
-    for (var i in ws) {
-      // console.log(ws[i]);
-      if (typeof ws[i] != "object") continue;
-      let cell = XLSX.utils.decode_cell(i);
-
-      ws[i].s = {
-        // styling for all cells
-        font: {
-          name: "arial",
-        },
-        alignment: {
-          vertical: "center",
-          horizontal: "center",
-          wrapText: "1", // any truthy value here
-        },
-        border: {
-          right: {
-            style: "thin",
-            color: "000000",
-          },
-          left: {
-            style: "thin",
-            color: "000000",
-          },
-        },
-      };
-
-      if (cell.r == 0) {
-        // first row
-        ws[i].s = {
-          font: {
-            name: "Calibri",
-            sz: "14",
-            bold: true,
-          },
-          border: {
-            bottom: {
-              style: "thin",
-              color: "000000",
-            },
-          },
-          fill: { fgColor: { rgb: "f8e7b4" } },
-          alignment: {
-            vertical: "center",
-            horizontal: "center",
-            wrapText: "1", // any truthy value here
-          },
-        };
-      }
-
-      if (cell.r % 2) {
-        // every other row
-        ws[i].s.fill = {
-          // background color
-          patternType: "solid",
-          fgColor: { rgb: "fef7e3" },
-          bgColor: { rgb: "fef7e3" },
-        };
-      }
-    }
-
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, "Total-Lease-Contracts.xlsx");
+    this.dialog
+      .open(GenerateExcelDialog, {
+        width: "40%",
+        data: "contract",
+      })
+      .afterClosed()
+      .subscribe((value) => {});
   }
 }

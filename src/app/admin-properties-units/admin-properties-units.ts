@@ -13,6 +13,7 @@ import { UnitsService } from "app/services/units.service";
 import * as XLSX from "xlsx-js-style";
 
 import * as FileSaver from "file-saver";
+import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 
 declare interface Unit {
   "UNIT No.": number;
@@ -309,7 +310,7 @@ export class AdminPropertiesUnits implements OnInit {
     this.dialog
       .open(EditUnitDialog, {
         width: "100%",
-        data : unit_id,
+        data: unit_id,
       })
       .afterClosed()
       .subscribe((data) => {
@@ -369,111 +370,12 @@ export class AdminPropertiesUnits implements OnInit {
   }
 
   exportExcelFile() {
-    var data: Unit[] = [];
-
-    this.allUnits.forEach((unit) => {
-      var property = this.allProperties.find(
-        (prop) => prop.property_id == unit.property_id
-      );
-      data.push({
-        "UNIT No.": unit.unit_no,
-        "UNIT TYPE": unit.unit_type,
-        BUILDING: property.property_name,
-        FLOORS: unit.floor,
-        "UNIT SIZE": `${unit.size} SqFt`,
-        "OCCUPANCY STATUS": unit.status,
-        OWNER: unit.owner,
-        TENANT:
-          unit.tenant_id != ""
-            ? this.allUsers.find((user) => user.user_id == unit.tenant_id).name
-            : "-",
-        BEDROOMS: unit.bedroom,
-        BATHROOMS: unit.bathroom,
-        PARKING: unit.no_of_parking,
-      });
-    });
-
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-
-    ws["!cols"] = [
-      { wch: 30 },
-      { wch: 40 },
-      { wch: 35 },
-      { wch: 30 },
-      { wch: 35 },
-      { wch: 40 },
-      { wch: 30 },
-      { wch: 30 },
-      { wch: 30 },
-      { wch: 30 },
-      { wch: 30 },
-    ];
-
-    ws["!rows"] = [{ hpt: 30 }];
-
-    for (var i in ws) {
-      // console.log(ws[i]);
-      if (typeof ws[i] != "object") continue;
-      let cell = XLSX.utils.decode_cell(i);
-
-      ws[i].s = {
-        // styling for all cells
-        font: {
-          name: "arial",
-        },
-        alignment: {
-          vertical: "center",
-          horizontal: "center",
-          wrapText: "1", // any truthy value here
-        },
-        border: {
-          right: {
-            style: "thin",
-            color: "000000",
-          },
-          left: {
-            style: "thin",
-            color: "000000",
-          },
-        },
-      };
-
-      if (cell.r == 0) {
-        // first row
-        ws[i].s = {
-          font: {
-            name: "Calibri",
-            sz: "14",
-            bold: true,
-          },
-          border: {
-            bottom: {
-              style: "thin",
-              color: "000000",
-            },
-          },
-          fill: { fgColor: { rgb: "f8e7b4" } },
-          alignment: {
-            vertical: "center",
-            horizontal: "center",
-            wrapText: "1", // any truthy value here
-          },
-        };
-      }
-
-      if (cell.r % 2) {
-        // every other row
-        ws[i].s.fill = {
-          // background color
-          patternType: "solid",
-          fgColor: { rgb: "fef7e3" },
-          bgColor: { rgb: "fef7e3" },
-        };
-      }
-    }
-
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, "Total-Units.xlsx");
+    this.dialog
+      .open(GenerateExcelDialog, {
+        width: "40%",
+        data: "unit",
+      })
+      .afterClosed()
+      .subscribe((value) => {});
   }
 }

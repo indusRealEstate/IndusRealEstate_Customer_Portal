@@ -47,6 +47,7 @@ import { ViewAllUnitDocuments } from "./view_all_unit_documents/view_all_unit_do
 import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_unit_inventories";
 import { DialogViewMedia } from "./view_media/view_media";
 import { ReniewContractDialog } from "./reniew-contract-dialog/reniew-contract-dialog";
+import { GenerateExcelDialog } from "./generate_excel/generate_excel";
 
 @NgModule({
   imports: [
@@ -100,6 +101,7 @@ import { ReniewContractDialog } from "./reniew-contract-dialog/reniew-contract-d
     CautionDialog,
     AnnouncementDetailsDialog,
     ReniewContractDialog,
+    GenerateExcelDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

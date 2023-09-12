@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, HostListener, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { AdminService } from "app/services/admin.service";
@@ -41,6 +42,11 @@ export class ViewUserDetails implements OnInit {
 
   is_user_image_loading: boolean = true;
 
+  matTableDataSource: MatTableDataSource<any>;
+  tableLength: number = 0;
+
+  pageChangeUnitsTable: boolean = false;
+
   constructor(
     private router: Router,
     private userService: UserService,
@@ -60,6 +66,8 @@ export class ViewUserDetails implements OnInit {
       this.user_auth = val.auth;
     });
   }
+
+  displayedColumns: string[] = ["unit", "property", "tenant", "link"];
 
   screenHeight: number;
   screenWidth: number;
@@ -156,6 +164,7 @@ export class ViewUserDetails implements OnInit {
   }
 
   async ngOnInit() {
+    // this.pageChangeUnitsTable = true;
     let data = {
       user_id: this.user_id,
       auth: this.user_auth,
@@ -187,7 +196,38 @@ export class ViewUserDetails implements OnInit {
             : "assets/img/images/user.png";
       })
       .add(() => {
+        if (
+          this.user_auth == "owner" &&
+          this.all_data.user_allocates_unit != ""
+        ) {
+          this.userService
+            .getAllUserAllocatedUnits(this.user_id, 5, 1)
+            .subscribe((res) => {
+              // console.log(res);
+              this.matTableDataSource = new MatTableDataSource<any>(res.units);
+              this.tableLength = res.count;
+            })
+            .add(() => {
+              this.pageChangeUnitsTable = false;
+            });
+        }
         this.isContentLoading = false;
+      });
+  }
+
+  pageChange(event) {
+    this.pageChangeUnitsTable = true;
+    this.userService
+      .getAllUserAllocatedUnits(
+        this.user_id,
+        event.pageSize,
+        event.pageIndex + 1
+      )
+      .subscribe((res) => {
+        this.matTableDataSource = new MatTableDataSource<any>(res.units);
+      })
+      .add(() => {
+        this.pageChangeUnitsTable = false;
       });
   }
 

@@ -60,6 +60,24 @@ export class UserService {
     );
   }
 
+  getAllUserAllocatedUnits(user_id: string, limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_user_allocated_units_pagination.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          limit: limit,
+          pageNumber: pageNumber,
+          user_id: user_id,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getAllUsersAdminPagination(limit: number, pageNumber: number) {
     const url = `${API_URL}/getAllUsersAdmin_pagination.php?apikey=1`;
     return this.http

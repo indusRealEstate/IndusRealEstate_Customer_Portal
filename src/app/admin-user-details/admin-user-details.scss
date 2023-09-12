@@ -4,10 +4,23 @@
   font-family: "Montserrat";
 }
 
+// .mat-mdc-table {
+//   .mat-mdc-row {
+//     cursor: pointer;
+//     &:hover {
+//       background: #d4aa3236;
+//     }
+//   }
+// }
+
+::ng-deep .units-paginator {
+  background: transparent;
+}
+
 ::ng-deep .mdc-snackbar__surface {
   background-color: #313a46 !important;
-  
-  .mat-mdc-button-ripple{
+
+  .mat-mdc-button-ripple {
     color: #d4aa32 !important;
   }
   .mdc-button__label {
@@ -36,7 +49,7 @@
     cursor: pointer;
     filter: brightness(0) saturate(100%) invert(72%) sepia(0%) saturate(9%)
       hue-rotate(146deg) brightness(90%) contrast(93%);
-    transition: all ease-in-out 100ms;  
+    transition: all ease-in-out 100ms;
 
     &:hover {
       transform: scale(1.1);

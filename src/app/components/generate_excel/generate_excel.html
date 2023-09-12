@@ -1,0 +1,68 @@
+<div class="card m-0" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div class="col p-0">
+      <div class="row m-0 justify-content-between">
+        <p class="mb-3" style="font-size: 20px; font-weight: 500">
+          Generate Excel
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="closeDialogWithoutSaving()"
+          class="close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+
+      <p style="font-size: 15px; font-weight: 500; color: #808080bd">
+        Create a Microsoft Excel spreadsheet containing the information from
+        this {{type}} table.
+      </p>
+
+      <p>Total rows : {{total_count}}</p>
+
+      <div class="row m-0 mt-4 justify-content-between align-items-start">
+        <mat-form-field appearance="outline">
+          <mat-label>Count*</mat-label>
+          <mat-select [(ngModel)]="selected_count">
+            <mat-option *ngFor="let type of generateCount" [value]="type.value">
+              {{type.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div
+          (click)="submit()"
+          style="
+            background: #d4aa32;
+            padding: 17px 40px;
+            font-size: 15px;
+            font-weight: 500;
+          "
+          class="btn m-0"
+        >
+          Generate
+        </div>
+      </div>
+
+      <p style="font-weight: 400; color: #ff0000d6" *ngIf="count_not_selected">
+        Please select a count.
+      </p>
+
+      <span
+        *ngIf="fetching"
+        class="mr-3"
+        style="font-size: 19px; font-weight: 600; color: #3c4858"
+        >{{fetching_progress}}%</span
+      >
+      <div class="progress-bar mr-4" *ngIf="fetching">
+        <div
+          class="progress-bar-fill"
+          [ngStyle]="{'width.%': fetching_progress % 100}"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

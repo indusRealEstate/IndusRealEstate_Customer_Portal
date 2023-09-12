@@ -63,6 +63,7 @@
             </div>
           </div>
           <div
+            (click)="exportExcelFile()"
             matTooltip="Export Excel File"
             matTooltipClass="tooltip"
             matTooltipPosition="above"
@@ -215,7 +216,10 @@
                   <!-- <div
                     *ngIf="more_menu_prop_loaded && more_menu_prop_all_data != ''"
                   > -->
-                  <button mat-menu-item (click)="openEditProperty(index, element.property_id)">
+                  <button
+                    mat-menu-item
+                    (click)="openEditProperty(index, element.property_id)"
+                  >
                     <div class="row m-0 justify-content-between">
                       <span style="color: #c89914">Edit</span>
                       <img

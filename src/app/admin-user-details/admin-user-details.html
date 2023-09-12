@@ -102,18 +102,39 @@
               </p>
             </div>
           </div>
-          <img
-            matTooltip="Message"
-            matTooltipClass="tooltip"
-            matTooltipPosition="above"
-            src="assets/img/svg/sidebar/messages-1.svg"
-            alt=""
-            style="
-              cursor: pointer;
-              filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
-                saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
-            "
-          />
+          <div class="row m-0">
+            <div
+              style="font-size: 13px; font-weight: 400"
+              *ngIf="user_auth == 'owner'"
+              class="mr-3"
+            >
+              Current Plan :
+              <span
+                style="
+                  background: #4caf5017;
+                  color: #4caf50;
+                  border: 1px solid #4caf50;
+                  font-size: 13px;
+                  font-weight: 500;
+                  padding: 3px 8px;
+                  border-radius: 4px;
+                "
+                >Open</span
+              >
+            </div>
+            <img
+              matTooltip="Message"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              src="assets/img/svg/sidebar/messages-1.svg"
+              alt=""
+              style="
+                cursor: pointer;
+                filter: brightness(0) saturate(100%) invert(72%) sepia(0%)
+                  saturate(9%) hue-rotate(146deg) brightness(90%) contrast(93%);
+              "
+            />
+          </div>
         </div>
         <div class="card card-main mt-3 mb-0">
           <div class="card-header">
@@ -148,13 +169,16 @@
             <div class="row m-0 mt-2">
               <div class="col-4 pl-0">
                 <p class="mb-1 personel-info-tabs">Date of Birth</p>
-                <p class="personel-info-tabs-val">  
+                <p class="personel-info-tabs-val">
                   {{all_data.user_dob | date:'M/d/y'}}
                 </p>
               </div>
               <div class="col">
                 <p class="mb-1 personel-info-tabs">Gender</p>
-                <p class="personel-info-tabs-val">{{all_data.user_gender != '' ? (all_data.user_gender | titlecase) : '-'}}</p>
+                <p class="personel-info-tabs-val">
+                  {{all_data.user_gender != '' ? (all_data.user_gender |
+                  titlecase) : '-'}}
+                </p>
               </div>
             </div>
             <div class="row m-0 mt-2">
@@ -201,7 +225,7 @@
 
     <div
       class="row mt-3"
-      *ngIf="!isContentLoading && all_data.user_allocates_unit != ''"
+      *ngIf="!isContentLoading && all_data.user_allocates_unit != '' && user_auth == 'tenant'"
     >
       <div class="col-md-12 mx-auto" *ngIf="all_data.unit != 'none'">
         <div class="card card-main mb-0">
@@ -278,6 +302,89 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div
+      *ngIf="!isContentLoading && all_data.user_allocates_unit != '' && user_auth == 'owner'"
+    >
+      <p class="mt-3 ml-2" style="font-size: 17px; font-weight: 500">
+        Landlord Units
+      </p>
+      <div
+        *ngIf="pageChangeUnitsTable"
+        style="
+          position: absolute;
+          width: 96%;
+          height: 20rem;
+          background: #ffffffba;
+          text-align: center;
+        "
+      >
+        <span
+          class="spinner-border spinner-border-m mr-2"
+          style="color: #d4aa32; margin-top: 10rem"
+        >
+        </span>
+      </div>
+
+      <table
+        #table
+        style="box-shadow: none; border: 1px solid #e0e0e0"
+        mat-table
+        [dataSource]="matTableDataSource"
+        class="mat-elevation-z8 mt-3"
+      >
+        <ng-container matColumnDef="unit">
+          <th mat-header-cell *matHeaderCellDef>Unit No.</th>
+          <td mat-cell *matCellDef="let element">
+            <span>{{ element.unit_no }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="property">
+          <th mat-header-cell *matHeaderCellDef>Property Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.property_name }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="tenant">
+          <th mat-header-cell *matHeaderCellDef>Tenant</th>
+          <td mat-cell *matCellDef="let element">{{ element.tenant_name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="link">
+          <th mat-header-cell *matHeaderCellDef>Link</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              (click)="navigateToUnit(element.unit_id)"
+              class="btn open-external-link-icon"
+              title="extenal"
+            >
+              <img
+                src="assets/img/svg/common-icons/open-external-link-icon.svg"
+                alt
+              />
+            </button>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+          style="background: rgba(212, 170, 50, 0.0392156863)"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator
+        class="units-paginator mt-2"
+        #paginator
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 8]"
+        [length]="tableLength"
+        (page)="pageChange($event)"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </div>
 </div>

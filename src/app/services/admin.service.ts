@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -41,6 +41,24 @@ export class AdminService {
         return data;
       })
     );
+  }
+
+  getTablesCount(data: any) {
+    const url = `${API_URL}/get_table_counts.php?apikey=1`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  getDataForExcel(data: any) {
+    const url = `${API_URL}/get_all_data_for_excel.php?apikey=1`;
+    const req = new HttpRequest("POST", url, data, {
+      reportProgress: true,
+    });
+
+    return this.http.request(req);
   }
 
   selectStaff() {

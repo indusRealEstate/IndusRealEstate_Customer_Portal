@@ -6,6 +6,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
+import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
@@ -367,150 +368,12 @@ export class AllUsersComponent implements OnInit {
   }
 
   exportExcelFile() {
-    var data: User[] = [];
-
-    this.allUsers.forEach((user) => {
-      var units_val: any[] = [];
-      var unit_val: any = "";
-
-      if (user.user_type == "owner") {
-        var arr: any[] = JSON.parse(user.allocated_unit);
-        arr.forEach((a) => {
-          var unit = this.allUnits.find((unit) => unit.unit_id == a);
-          if (unit != undefined) {
-            console.log(unit);
-            var building = this.allProperties.find(
-              (prop) => prop.property_id == unit.property_id
-            );
-
-            if (building != undefined) {
-              console.log(building);
-              units_val.push(
-                `${unit.unit_no} - ${building.property_name}, ${building.address}`
-              );
-            }
-          }
-        });
-      } else if (user.user_type == "tenant") {
-        var unit = this.allUnits.find(
-          (unit) => unit.unit_id == user.allocated_unit
-        );
-        if (unit != undefined) {
-          var building = this.allProperties.find(
-            (prop) => prop.property_id == unit.property_id
-          );
-          unit_val = `${unit.unit_no} - ${building.property_name}, ${building.address}`;
-        }
-      }
-
-      data.push({
-        NAME: user.name,
-        "MOBILE No.": `${user.country_code_number} ${user.mobile_number}`,
-        "ALTERNATIVE MOBILE No.":
-          user.alternative_mobile_number != ""
-            ? `${user.country_code_alternative_number} ${user.alternative_mobile_number}`
-            : "-",
-        "USER TYPE": user.user_type,
-        EMAIL: user.email,
-        "ALTERNATIVE EMAIL":
-          user.alternative_email != "" ? user.alternative_email : "-",
-        "ID TYPE": user.id_type,
-        "ID NUMBER": user.id_number,
-        "DATE OF BIRTH": user.dob,
-        NATIONALITY: user.nationality,
-        GENDER: user.gender,
-        "ALLOCATED UNIT":
-          user.allocated_unit != ""
-            ? user.user_type == "owner"
-              ? this.getArrayUnits(units_val)
-              : unit_val
-            : "-",
-      });
-    });
-
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-
-    ws["!cols"] = [
-      { wch: 30 },
-      { wch: 35 },
-      { wch: 50 },
-      { wch: 30 },
-      { wch: 25 },
-      { wch: 40 },
-      { wch: 30 },
-      { wch: 30 },
-      { wch: 40 },
-      { wch: 35 },
-      { wch: 25 },
-      { wch: 40 },
-      { wch: 30 },
-    ];
-
-    ws["!rows"] = [{ hpt: 30 }];
-
-    for (var i in ws) {
-      // console.log(ws[i]);
-      if (typeof ws[i] != "object") continue;
-      let cell = XLSX.utils.decode_cell(i);
-
-      ws[i].s = {
-        // styling for all cells
-        font: {
-          name: "arial",
-        },
-        alignment: {
-          vertical: "center",
-          horizontal: "center",
-          wrapText: "1", // any truthy value here
-        },
-        border: {
-          right: {
-            style: "thin",
-            color: "000000",
-          },
-          left: {
-            style: "thin",
-            color: "000000",
-          },
-        },
-      };
-
-      if (cell.r == 0) {
-        // first row
-        ws[i].s = {
-          font: {
-            name: "Calibri",
-            sz: "14",
-            bold: true,
-          },
-          border: {
-            bottom: {
-              style: "thin",
-              color: "000000",
-            },
-          },
-          fill: { fgColor: { rgb: "f8e7b4" } },
-          alignment: {
-            vertical: "center",
-            horizontal: "center",
-            wrapText: "1", // any truthy value here
-          },
-        };
-      }
-
-      if (cell.r % 2) {
-        // every other row
-        ws[i].s.fill = {
-          // background color
-          patternType: "solid",
-          fgColor: { rgb: "fef7e3" },
-          bgColor: { rgb: "fef7e3" },
-        };
-      }
-    }
-
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, "Total-Users.xlsx");
+    this.dialog
+      .open(GenerateExcelDialog, {
+        width: "40%",
+        data: "user",
+      })
+      .afterClosed()
+      .subscribe((value) => {});
   }
 }
