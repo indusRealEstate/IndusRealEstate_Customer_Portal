@@ -279,13 +279,13 @@ export class AdminRequestsDetails implements OnInit {
   //   });
   // }
 
-  viewUser(data: any) {
-    this.router.navigate(["/user-details"], {
-      queryParams: {
-        user_id: data,
-      },
-    });
-  }
+  // viewUser(data: any) {
+  //   this.router.navigate(["/user-details"], {
+  //     queryParams: {
+  //       user_id: data,
+  //     },
+  //   });
+  // }
 
   assignStaffSelect(event) {
     let data = event.value;

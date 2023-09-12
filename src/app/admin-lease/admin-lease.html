@@ -249,7 +249,7 @@
               >
                 <span
                   class="prop_name"
-                  (click)="navigateToUserDetailsPage(element.owner_id)"
+                  (click)="navigateToUserDetailsPage(element.owner_id, 'owner')"
                   >{{ element.owner_name | titlecase}}</span
                 >
               </td>
@@ -270,7 +270,7 @@
               >
                 <span
                   class="prop_name"
-                  (click)="navigateToUserDetailsPage(element.tenant_id)"
+                  (click)="navigateToUserDetailsPage(element.tenant_id, 'tenant')"
                   >{{ element.tenant_name | titlecase}}</span
                 >
               </td>

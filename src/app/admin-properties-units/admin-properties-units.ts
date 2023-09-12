@@ -130,7 +130,7 @@ export class AdminPropertiesUnits implements OnInit {
 
   changeSortOption(option: string) {
     this.current_sort_option = option;
-    this.searchBar.searchText = ""; 
+    this.searchBar.searchText = "";
     if (option != "all") {
       this.pageChangerLoading = true;
 
@@ -363,9 +363,9 @@ export class AdminPropertiesUnits implements OnInit {
     });
   }
 
-  navigateToUserDetailsPage(user_id) {
+  navigateToUserDetailsPage(user_id, auth) {
     this.router.navigate(["/user-details"], {
-      queryParams: { user_id: user_id },
+      queryParams: { user_id: user_id, auth: auth },
     });
   }
 

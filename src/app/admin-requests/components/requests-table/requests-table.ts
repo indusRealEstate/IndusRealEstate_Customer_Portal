@@ -151,9 +151,9 @@ export class RequestsTable implements OnInit {
     });
   }
 
-  navigateToUserDetailsPage(user_id) {
+  navigateToUserDetailsPage(user_id, auth) {
     this.router.navigate(["/user-details"], {
-      queryParams: { user_id: user_id },
+      queryParams: { user_id: user_id, auth: auth },
     });
   }
 
