@@ -13,6 +13,8 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AddAmenitiesDialog } from "app/components/add_amenities_dialog/add_amenities_dialog";
+import { AddInventoriesDialog } from "app/components/add_inventories_dialog/add_inventories_dialog";
 import { AddLeaseDialog } from "app/components/add_lease_dialog/add_lease_dialog";
 import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
@@ -166,7 +168,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.isOcupied = false;
         }
 
-        console.log(this.all_data);
+        console.log(this.all_data.inventories);
 
         this.address = this.all_data.prop_address;
         this.allocated_unit = this.all_data.user_allocates_unit;
@@ -467,7 +469,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   openEditUnit() {
     this.dialog
       .open(EditUnitDialog, {
-        width : '100%',
+        width: "100%",
         data: this.all_data.unit_id,
       })
       .afterClosed()
@@ -631,5 +633,42 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
         child: "Payment Details",
       },
     });
+  }
+
+  addAmenties() {
+    this.dialog
+      .open(AddAmenitiesDialog, {
+        width: "50vw",
+        height: "50vh",
+        data: {
+          unit_id: this.all_data.unit_id,
+        },
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data.msg !== "") {
+          this.openSnackBar(data.msg, "Close");
+          this.amenties(data.amenities);
+        }
+        
+      });
+  }
+
+  addInventories() {
+    this.dialog
+      .open(AddInventoriesDialog, {
+        width: "50vw",
+        height: "50vh",
+        data: {
+          unit_id: this.all_data.unit_id,
+        },
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data.msg !== "") {
+          this.openSnackBar(data.msg, "Close");
+          this.all_data.inventories = data.inventories;
+        }
+      });
   }
 }

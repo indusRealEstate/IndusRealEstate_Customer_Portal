@@ -48,6 +48,8 @@ import { ViewAllUnitInventories } from "./view_all_unit_inventories/view_all_uni
 import { DialogViewMedia } from "./view_media/view_media";
 import { ReniewContractDialog } from "./reniew-contract-dialog/reniew-contract-dialog";
 import { GenerateExcelDialog } from "./generate_excel/generate_excel";
+import { AddAmenitiesDialog } from "./add_amenities_dialog/add_amenities_dialog";
+import { AddInventoriesDialog } from "./add_inventories_dialog/add_inventories_dialog";
 
 @NgModule({
   imports: [
@@ -102,6 +104,8 @@ import { GenerateExcelDialog } from "./generate_excel/generate_excel";
     AnnouncementDetailsDialog,
     ReniewContractDialog,
     GenerateExcelDialog,
+    AddAmenitiesDialog,
+    AddInventoriesDialog
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })
