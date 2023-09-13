@@ -1,0 +1,108 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900);
+
+* {
+  font-family: "Montserrat";
+}
+
+.demo-table {
+  box-shadow: none !important;
+  border: 1px solid #e6ebf1;
+  border-radius: 10px;
+  min-width: 1250px;
+  width: 100%;
+  margin-top: 35px;
+
+  .mat-mdc-header-row {
+    background: #d4aa320a;
+  }
+
+
+  .mat-row {
+    &:hover {
+      cursor: pointer;
+      background: #fbf9f2;
+
+      .more-btn {
+        display: block !important;
+      }
+      .more-btn-disabled {
+        display: none;
+      }
+    }
+  }
+
+  .first-col {
+    border-bottom-left-radius: 10px;
+    font-weight: 600;
+  }
+
+  .first-col-last {
+    border-bottom-left-radius: 10px;
+    border-bottom: none;
+    font-weight: 600;
+  }
+
+  .second-col {
+    color: #a3a3a3;
+    font-weight: 600;
+  }
+  .second-col-last {
+    border-bottom: none;
+    color: #a3a3a3;
+    font-weight: 600;
+  }
+
+  .third-col {
+    font-weight: 600;
+  }
+  .third-col-last {
+    border-bottom: none;
+    font-weight: 600;
+  }
+
+  .fourth-col {
+    font-weight: 600;
+  }
+  .fourth-col-last {
+    border-bottom: none;
+    font-weight: 600;
+  }
+
+  .fifth-col {
+    font-weight: 600;
+  }
+  .fifth-col-last {
+    border-bottom: none;
+    font-weight: 600;
+  }
+
+  .sixth-col {
+    font-weight: 600;
+  }
+  .sixth-col-last {
+    border-bottom: none;
+    font-weight: 600;
+  }
+
+  .eighth-col-last {
+    border-bottom: none;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+  }
+
+  .eighth-col {
+    border-bottom-right-radius: 10px;
+    text-align: center;
+  }
+
+  .mat-header-cell {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: #84878f;
+    font-weight: 600;
+  }
+
+  .mat-header-row {
+    background-color: #f9fafc;
+  }
+}

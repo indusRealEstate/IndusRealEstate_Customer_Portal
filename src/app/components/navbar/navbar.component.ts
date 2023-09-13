@@ -79,6 +79,8 @@ export class NavbarComponent implements OnInit {
       return "assets/img/svg/sidebar/lease.svg";
     } else if (titlee.split("?")[0] == "/user-chats") {
       return "assets/img/svg/sidebar/messages-1.svg";
+    } else if (titlee.split("?")[0] == "/payments") {
+      return "assets/img/svg/payment/wallet-2.svg";
     } else if (titlee.split("?")[0] == "/404") {
       return "404";
     }
@@ -118,6 +120,8 @@ export class NavbarComponent implements OnInit {
       return "Lease Management";
     } else if (titlee.split("?")[0] == "/user-chats") {
       return "Chats";
+    } else if (titlee.split("?")[0] == "/payments") {
+      return "Payments";
     } else if (titlee.split("?")[0] == "/404") {
       return "404";
     }
@@ -166,6 +170,8 @@ export class NavbarComponent implements OnInit {
         return "Report";
       case "/announcements":
         return "Announcements";
+      case "/payments":
+        return "All Payments";
       default:
         return "404";
     }

@@ -25,6 +25,8 @@ export class PaginatorDialog implements OnInit {
   tableLength: number = 0;
   matTableDataSource: MatTableDataSource<any>;
 
+  payment: any;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(TableSearchBarComponent) searchBar: TableSearchBarComponent;
@@ -45,6 +47,7 @@ export class PaginatorDialog implements OnInit {
     this.type = data.type;
     this.prop_id = data.prop;
     this.user_type = data.user_type;
+    this.payment = data.payment;
 
     if (data.type == "property") {
       this.fetchData(data.type);
@@ -83,8 +86,14 @@ export class PaginatorDialog implements OnInit {
 
   getRowClass(row) {
     if (this.type == "unit") {
-      if (row.property_id != this.prop_id || row.status == "occupied") {
-        return "mat-mdc-row-disabled";
+      if (this.payment == undefined) {
+        if (row.property_id != this.prop_id || row.status == "occupied") {
+          return "mat-mdc-row-disabled";
+        }
+      } else {
+        if (row.property_id != this.prop_id || row.status == "vacant") {
+          return "mat-mdc-row-disabled";
+        }
       }
     } else if (this.type == "user") {
       if (this.user_type == "owner") {
@@ -350,12 +359,20 @@ export class PaginatorDialog implements OnInit {
 
   onCloseDialog(selected_val) {
     if (this.type == "unit") {
-      if (
-        selected_val.property_id == this.prop_id &&
-        selected_val.status == "vacant"
-      ) {
-        this.dialogRef.close(selected_val);
-        console.log(selected_val);
+      if (this.payment == undefined) {
+        if (
+          selected_val.property_id == this.prop_id &&
+          selected_val.status == "vacant"
+        ) {
+          this.dialogRef.close(selected_val);
+        }
+      } else {
+        if (
+          selected_val.property_id == this.prop_id &&
+          selected_val.status == "occupied"
+        ) {
+          this.dialogRef.close(selected_val);
+        }
       }
     } else if (this.type == "property") {
       this.dialogRef.close(selected_val);

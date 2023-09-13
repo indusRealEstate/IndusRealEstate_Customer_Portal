@@ -142,7 +142,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.unitService
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value: any) => {
-        // console.log(value); 
+        console.log(value); 
         this.all_data = value;
         this.all_payments_data = new MatTableDataSource<any>(
           value.tenant_payments
@@ -453,6 +453,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           prop_id: this.all_data.prop_uid,
           unit_no: this.all_data.unit_no,
           unit_id: this.all_data.unit_id,
+          owner_name : this.all_data.unit_owner,
+          owner_id : this.all_data.unit_owner_id
         },
       })
       .afterClosed()

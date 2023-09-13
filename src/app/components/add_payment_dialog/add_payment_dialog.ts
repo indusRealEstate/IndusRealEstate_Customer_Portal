@@ -11,7 +11,7 @@ import {
   MatDialog,
   MatDialogRef,
 } from "@angular/material/dialog";
-import { LeaseService } from "app/services/lease.service";
+import { PaymentService } from "app/services/payment.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
@@ -19,35 +19,18 @@ import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 
 @Component({
   // standalone: true,
-  selector: "add_lease_dialog",
-  styleUrls: ["./add_lease_dialog.scss"],
-  templateUrl: "./add_lease_dialog.html",
+  selector: "add_payment_dialog",
+  styleUrls: ["./add_payment_dialog.scss"],
+  templateUrl: "./add_payment_dialog.html",
   // imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class AddLeaseDialog implements OnInit {
+export class AddPaymentDialog implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddLeaseDialog>,
-    private leaseService: LeaseService,
+    public dialogRef: MatDialogRef<AddPaymentDialog>,
+    private paymentService: PaymentService,
     private dialog: MatDialog
-  ) {
-    if (data != undefined) {
-      this.selected_property = {
-        id: data.prop_id,
-        name: data.prop_name,
-      };
-
-      this.unit_data = {
-        id: data.unit_id,
-        no: data.unit_no,
-      };
-
-      this.owner = {
-        name: data.owner_name,
-        id: data.owner_id,
-      };
-    }
-  }
+  ) {}
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
@@ -57,29 +40,32 @@ export class AddLeaseDialog implements OnInit {
   docsFilesUploaded: File[] = [];
 
   unit_data: any;
-  owner: any;
-  contract_start_date: any = "";
-  contract_end_date: any = "";
-  move_in_date: any = "";
-  move_out_date: any = "";
-  notice_period: any = "";
   purpose: any = "";
-  payment_currency: any = "";
-  payment_method: any = "";
-  rent_amount: any = "";
-  no_of_cheques: any = "";
-  govt_charges: any = "";
-  security_deposit: any = "";
-  yearly_amount: any = "";
-
+  payment_method: any;
+  payment_status: any = "";
+  amount: any = "";
   selected_property: any;
+
+  issued_date: any;
+
+  owner: any;
   tenant_data: any;
 
-  property_not_selected: boolean = false;
+  contract_id: any;
 
-  dewa: boolean = false;
-  chiller: boolean = false;
-  gas: boolean = false;
+  cheque_no: any;
+  cheque_name: any;
+  cheque_date: any;
+
+  cash_details: any;
+
+  bank_name: any;
+  bank_branch: any;
+  bank_no: any;
+  bank_iban: any;
+  bank_holder_name: any;
+
+  property_not_selected: boolean = false;
 
   formNotFilled: boolean = false;
   documentNotAdded: boolean = false;
@@ -87,55 +73,22 @@ export class AddLeaseDialog implements OnInit {
 
   uploading_progress: any = 0;
 
-  notice_period_lists: any[] = [
-    { value: "1", viewValue: "1 Month" },
-    { value: "2", viewValue: "2 Months" },
-    { value: "3", viewValue: "3 Months" },
-    { value: "4", viewValue: "4 Months" },
-    { value: "5", viewValue: "5 Months" },
-    { value: "6", viewValue: "6 Months" },
-    { value: "7", viewValue: "7 Months" },
-    { value: "8", viewValue: "8 Months" },
-    { value: "9", viewValue: "9 Months" },
-    { value: "10", viewValue: "10 Months" },
-    { value: "11", viewValue: "11 Months" },
-    { value: "12", viewValue: "12 Months" },
-  ];
-
   purpose_list: any[] = [
-    { value: "commercial", viewValue: "Commercial" },
-    { value: "residential", viewValue: "Residential" },
-    { value: "industrial", viewValue: "Industrial" },
+    { value: "rent", viewValue: "Rent" },
+    { value: "security_deposit", viewValue: "Security Deposit" },
+    { value: "maintenance", viewValue: "Maintenance" },
+    { value: "other", viewValue: "Other" },
   ];
 
-  currency_list: any[] = [
-    { value: "aed", viewValue: "AED" },
-    { value: "usd", viewValue: "USD" },
-    { value: "other", viewValue: "Other" },
+  payment_status_list: any[] = [
+    { value: "paid", viewValue: "Paid" },
+    { value: "unpaid", viewValue: "Unpaid" },
   ];
 
   payment_method_list: any[] = [
     { value: "cheque", viewValue: "Cheque" },
     { value: "cash", viewValue: "Cash" },
     { value: "online", viewValue: "Online" },
-  ];
-
-  no_of_cheques_list: any[] = [
-    { value: "1", viewValue: "1 Cheque" },
-    { value: "2", viewValue: "2 Cheques" },
-    { value: "3", viewValue: "3 Cheques" },
-    { value: "4", viewValue: "4 Cheques" },
-    { value: "5", viewValue: "5 Cheques" },
-    { value: "6", viewValue: "6 Cheques" },
-    { value: "7", viewValue: "7 Cheques" },
-    { value: "8", viewValue: "8 Cheques" },
-    { value: "9", viewValue: "9 Cheques" },
-    { value: "10", viewValue: "10 Cheques" },
-    { value: "11", viewValue: "11 Cheques" },
-    { value: "12", viewValue: "12 Cheques" },
-    { value: "13", viewValue: "13 Cheques" },
-    { value: "14", viewValue: "14 Cheques" },
-    { value: "15", viewValue: "15 Cheques" },
   ];
 
   addPaginatorDialog(type: string) {
@@ -152,6 +105,7 @@ export class AddLeaseDialog implements OnInit {
           data: {
             type: type,
             user_type: type == "user" ? "tenant" : undefined,
+            payment: true,
             prop:
               this.selected_property != undefined
                 ? this.selected_property.id
@@ -179,14 +133,46 @@ export class AddLeaseDialog implements OnInit {
                 id: res.owner_id,
                 name: res.owner,
               };
-            } else if (type == "user") {
+
               this.tenant_data = {
-                id: res.user_id,
-                name: res.name,
+                id: res.tenant_id,
+                name: res.tenant_name,
               };
+
+              this.contract_id = res.lease_id;
             }
           }
         });
+    }
+  }
+
+  checkPaymentMethodDetailsNotEmpty() {
+    if (this.payment_method == "cheque") {
+      if (
+        this.cheque_no != undefined &&
+        this.cheque_name != undefined &&
+        this.cheque_date != undefined
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (this.payment_method == "online") {
+      if (
+        this.bank_name != undefined &&
+        this.bank_holder_name != undefined &&
+        this.bank_no != undefined
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (this.payment_method == "cash") {
+      if (this.cash_details != undefined) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -213,11 +199,11 @@ export class AddLeaseDialog implements OnInit {
         this.selected_property != undefined &&
         this.unit_data != undefined &&
         this.tenant_data != undefined &&
-        this.contract_start_date != "" &&
-        this.contract_end_date != "" &&
         this.purpose != "" &&
-        this.no_of_cheques != "" &&
-        this.yearly_amount != ""
+        this.payment_method != "" &&
+        this.payment_status != "" &&
+        this.amount != "" &&
+        this.checkPaymentMethodDetailsNotEmpty() != false
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
@@ -229,11 +215,11 @@ export class AddLeaseDialog implements OnInit {
         }
 
         var data = this.setupData(random_id, docs_names);
-        this.leaseService.addNewLease(data).subscribe((val) => {
+        this.paymentService.addNewPayment(data).subscribe((val) => {
           if (val == "success") {
             var uploadData = this.setupUploadFiles(random_id, docs_names);
-            this.leaseService
-              .uploadAllFilesAddNewLease(uploadData)
+            this.paymentService
+              .uploadAllFilesAddNewPayment(uploadData)
               .pipe(
                 map((event) => this.getEventMessage(event)),
                 tap((message) => {
@@ -273,39 +259,53 @@ export class AddLeaseDialog implements OnInit {
       formdata.append(`doc_${doc_count}`, doc);
     }
 
-    formdata.append("contract_id", random_id);
+    formdata.append("payment_id", random_id);
 
     return formdata;
   }
 
+  getMethodDetails(method) {
+    switch (method) {
+      case "cheque":
+        return {
+          cheque_no: this.cheque_no,
+          cheque_date: this.cheque_date,
+          name_on_cheque: this.cheque_name,
+        };
+      case "online":
+        return {
+          bank_name: this.bank_name,
+          branch: this.bank_branch,
+          ac_no: this.bank_no,
+          bank_holder_name: this.bank_holder_name,
+          iban: this.bank_iban,
+        };
+      case "cash":
+        return {
+          details: this.cash_details,
+        };
+      default:
+        break;
+    }
+  }
+
   setupData(random_id: any, docs_names: any[]): string {
     var data = {
-      contract_id: random_id,
-      property_id: this.selected_property.id,
-      property_name: this.selected_property.name,
-      unit_id: this.unit_data.id,
-      unit_no: this.unit_data.no,
-      owner_id: this.owner.id,
-      owner_name: this.owner.name,
+      payment_id: random_id,
       tenant_id: this.tenant_data.id,
       tenant_name: this.tenant_data.name,
-      status: "active",
-      contract_start: this.contract_start_date,
-      contract_end: this.contract_end_date,
-      move_in: this.move_in_date,
-      move_out: this.move_out_date,
-      notice_period: this.notice_period,
+      contract_id: this.contract_id,
+      unit_id: this.unit_data.id,
+      unit_no: this.unit_data.no,
+      property_id: this.selected_property.id,
+      property_name: this.selected_property.name,
+      amount: this.amount,
       purpose: this.purpose,
-      yearly_amount: this.yearly_amount,
-      payment_currency: this.payment_currency,
-      rent_amount: this.rent_amount,
-      no_of_cheques: this.no_of_cheques,
-      govt_charges: this.govt_charges,
-      security_deposit: this.security_deposit,
+      payment_method: this.payment_method,
+      status: this.payment_status,
       documents: JSON.stringify(docs_names),
-      dewa: this.dewa == false ? 0 : 1,
-      chiller: this.chiller == false ? 0 : 1,
-      gas: this.gas == false ? 0 : 1,
+      date: this.issued_date,
+      method_details: this.getMethodDetails(this.payment_method),
     };
 
     return JSON.stringify(data);

@@ -98,6 +98,8 @@ import { ViewMaintenanceImageDialog } from "app/components/view-maintenance-imag
 import { ViewAssignStaff } from "app/components/view_assign_sttaf/view_assign_sttaf";
 import "hammerjs";
 import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialog";
+import { AdminPayments } from "app/admin-payments/admin-payments";
+import { LoadingTableAdminPayments } from "app/components/loading-table-admin-payments/loading-table-admin-payments";
 
 @NgModule({
   imports: [
@@ -165,7 +167,7 @@ import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialo
   ],
   declarations: [
     PageNotFoundComponent,
-    // AdminRequests,
+    AdminPayments,
     AdminRequests,
     AdminRequestsArchive,
     // AdminRequestsSpam,
@@ -194,6 +196,7 @@ import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialo
     LoadingTableAdminAllUsers,
     LoadingTableAdminAllLease,
     LoadingTableAnnouncement,
+    LoadingTableAdminPayments,
     // LoadingTableAdminStaffs,
     UserChatsComponent,
     EditAnnouncementDialog,

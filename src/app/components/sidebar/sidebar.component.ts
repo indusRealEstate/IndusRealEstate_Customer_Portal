@@ -52,7 +52,7 @@ export const HOMEROUTEADMIN: any[] = [
 ];
 
 // export const ARCHIVEDREQUESTSROUTEADMIN: RouteInfo[] = [
- 
+
 //   {
 //     path: "/admin-requests-spam",
 //     title: "Spam Requests",
@@ -69,8 +69,6 @@ export const CHATSROUTEADMIN: RouteInfo[] = [
     class: "",
   },
 ];
-
-
 
 export const REQUESTSROUTEADMIN: RouteInfo[] = [
   {
@@ -102,6 +100,15 @@ export const LEASEROUTEADMIN: RouteInfo[] = [
   },
 ];
 
+export const PAYMENTSROUTE: RouteInfo[] = [
+  {
+    path: "/payments",
+    title: "All Payments",
+    icon: "assets/img/svg/money-recive.svg",
+    class: "",
+  },
+];
+
 export const ROUTES: RouteInfo[] = [];
 
 @Component({
@@ -118,6 +125,8 @@ export class SidebarComponent implements OnInit {
 
   leaseRouteAdmin: any[];
 
+  paymentsRouteAdmin: any[];
+
   // archivedRequestsRouteAdmin: any[];
   chatsRouteAdmin: any[];
 
@@ -130,8 +139,9 @@ export class SidebarComponent implements OnInit {
 
   isRequestsOpened: boolean = false;
 
+  isPaymentsOpened: boolean = false;
+
   isLeaseOpened: boolean = false;
-  isArchiveRequestsOpened: boolean = false;
   isChatsOpened: boolean = false;
 
   currentPage: any;
@@ -148,6 +158,10 @@ export class SidebarComponent implements OnInit {
     {
       tooltip: "Requests",
       icon: "assets/img/svg/sidebar/menu.svg",
+    },
+    {
+      tooltip: "Payments",
+      icon: "assets/img/svg/payment/wallet-2.svg",
     },
     // {
     //   tooltip: "Archives & Spams",
@@ -205,14 +219,18 @@ export class SidebarComponent implements OnInit {
         sessionStorage.setItem("current_side_bar_item", "Requests");
         this.miniSideBarClickedRequests();
         break;
+      case "Payments":
+        sessionStorage.setItem("current_side_bar_item", "Payments");
+        this.miniSideBarClickedPayments();
+        break;
       // case "Archives & Spams":
       //   sessionStorage.setItem("current_side_bar_item", "Archives & Spams");
       //   this.miniSideBarClickedArchivedRequests();
       //   break;
-      case "Chats":
-        sessionStorage.setItem("current_side_bar_item", "Chats");
-        this.miniSideBarClickedChats();
-        break;
+      // case "Chats":
+      //   sessionStorage.setItem("current_side_bar_item", "Chats");
+      //   this.miniSideBarClickedChats();
+      //   break;
       default:
         break;
     }
@@ -226,10 +244,10 @@ export class SidebarComponent implements OnInit {
         return this.isLeaseOpened;
       case "Requests":
         return this.isRequestsOpened;
-      case "Archives & Spams":
-        return this.isArchiveRequestsOpened;
-      case "Chats":
-        return this.isChatsOpened;
+      case "Payments":
+        return this.isPaymentsOpened;
+      // case "Chats":
+      //   return this.isChatsOpened;
       default:
         break;
     }
@@ -240,7 +258,6 @@ export class SidebarComponent implements OnInit {
 
     this.homeRouteAdmin = HOMEROUTEADMIN.filter((menuItem) => menuItem);
 
-
     this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
     // this.archivedRequestsRouteAdmin = ARCHIVEDREQUESTSROUTEADMIN.filter(
     //   (menuItem) => menuItem
@@ -248,6 +265,8 @@ export class SidebarComponent implements OnInit {
     this.chatsRouteAdmin = CHATSROUTEADMIN.filter((menuItem) => menuItem);
 
     this.leaseRouteAdmin = LEASEROUTEADMIN.filter((menuItem) => menuItem);
+
+    this.paymentsRouteAdmin = PAYMENTSROUTE.filter((menuItem) => menuItem);
   }
 
   isMobileMenu() {
@@ -293,7 +312,8 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       if (
         this.isRequestsOpened == false &&
-        this.isArchiveRequestsOpened == false &&
+        this.isLeaseOpened == false &&
+        this.isPaymentsOpened == false &&
         this.isChatsOpened == false
       ) {
         this.isDashboardOpened = true;
@@ -319,8 +339,8 @@ export class SidebarComponent implements OnInit {
       this.isDashboardOpened = true;
       this.isRequestsOpened = false;
       this.isLeaseOpened = false;
-      this.isArchiveRequestsOpened = false;
       this.isChatsOpened = false;
+      this.isPaymentsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -328,7 +348,30 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isDashboardOpened = true;
       this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
+      this.isChatsOpened = false;
+      this.isLeaseOpened = false;
+      this.isPaymentsOpened = false;
+      this.sideBarTextShow = true;
+    }
+  }
+
+  miniSideBarClickedPayments() {
+    var sideBarValue = this.otherServices.miniSideBarClicked.getValue();
+    if (sideBarValue == false) {
+      this.otherServices.miniSideBarClicked.next(true);
+      this.isPaymentsOpened = true;
+      this.isRequestsOpened = false;
+      this.isDashboardOpened = false;
+      this.isChatsOpened = false;
+      this.isLeaseOpened = false;
+
+      setTimeout(() => {
+        this.sideBarTextShow = true;
+      }, 200);
+    } else {
+      this.isPaymentsOpened = true;
+      this.isRequestsOpened = false;
+      this.isDashboardOpened = false;
       this.isChatsOpened = false;
       this.isLeaseOpened = false;
       this.sideBarTextShow = true;
@@ -340,20 +383,20 @@ export class SidebarComponent implements OnInit {
     if (sideBarValue == false) {
       this.otherServices.miniSideBarClicked.next(true);
       this.isRequestsOpened = true;
-      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
       this.isLeaseOpened = false;
+      this.isPaymentsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
       }, 200);
     } else {
       this.isRequestsOpened = true;
-      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
       this.isLeaseOpened = false;
+      this.isPaymentsOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -364,9 +407,9 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isLeaseOpened = true;
       this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
+      this.isPaymentsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -374,9 +417,9 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isLeaseOpened = true;
       this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
       this.isChatsOpened = false;
+      this.isPaymentsOpened = false;
       this.sideBarTextShow = true;
     }
   }
@@ -410,9 +453,9 @@ export class SidebarComponent implements OnInit {
       this.otherServices.miniSideBarClicked.next(true);
       this.isChatsOpened = true;
       this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
       this.isLeaseOpened = false;
+      this.isPaymentsOpened = false;
 
       setTimeout(() => {
         this.sideBarTextShow = true;
@@ -420,8 +463,8 @@ export class SidebarComponent implements OnInit {
     } else {
       this.isChatsOpened = true;
       this.isRequestsOpened = false;
-      this.isArchiveRequestsOpened = false;
       this.isDashboardOpened = false;
+      this.isPaymentsOpened = false;
       this.isLeaseOpened = false;
       this.sideBarTextShow = true;
     }

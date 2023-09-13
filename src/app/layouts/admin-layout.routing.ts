@@ -4,6 +4,7 @@ import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
+import { AdminPayments } from "app/admin-payments/admin-payments";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
 import { AdminProperties } from "app/admin-properties/admin-properties";
 import { AdminPropertiesUnitDetails } from "app/admin-property-unit-details/admin-property-unit-details";
@@ -45,6 +46,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "contract-details", component: AdminLeaseDetail },
   { path: "user-details", component: ViewUserDetails },
   { path: "announcements", component: Announcements },
+  { path: "payments", component: AdminPayments },
   // { path: "staffs", component: AdminStaffs },
   { path: "**", redirectTo: "/404" },
 ];

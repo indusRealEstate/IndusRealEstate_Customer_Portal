@@ -230,6 +230,29 @@
           </li>
         </div>
 
+        <div *ngIf="isPaymentsOpened == true" style="height: 80%">
+          <li
+            *ngFor="let item of paymentsRouteAdmin"
+            class="{{ item.class }} nav-item sideBarNav-Item"
+          >
+            <a
+              class="nav-link"
+              [routerLink]="[item.path]"
+              [class.active]="isLinkActive(item.path)"
+            >
+              <!-- <i class="material-icons">{{ item.icon }}</i> -->
+              <div class="row">
+                <img
+                  class="sidebar-items-icon"
+                  [src]="[item.icon]"
+                  alt="hello"
+                />
+                <p class="nav-item-title">{{ item.title }}</p>
+              </div>
+            </a>
+          </li>
+        </div>
+
         <div
           style="
             height: 10%;

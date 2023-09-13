@@ -1,0 +1,380 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div
+      *ngIf="isContentLoading"
+      class="d-flex justify-content-center align-items-center"
+      style="height: 40rem"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <div class="col" *ngIf="!isContentLoading">
+      <div class="row m-0 align-items-start w-100">
+        <p
+          class="mr-2"
+          style="font-weight: 500; color: #3c4858b5; font-size: 20px"
+        >
+          Edit Payment
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="mr-2 mt-1 close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+
+      <div class="row m-0 mt-3">
+        <div class="col-3 pl-0">
+          <div
+            class="m-0 mb-4 btn w-100"
+            (click)="addPaginatorDialog('property')"
+            style="
+              text-align: start;
+              background: white;
+              box-shadow: none;
+              border: 1px solid #d4aa32;
+              color: black;
+              padding: 17px 13px;
+              font-size: 15px;
+              max-width: 20rem;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            "
+          >
+            <span style="color: grey"
+              >{{ selected_property == undefined ? 'Select Property*' :
+              selected_property.name}}</span
+            >
+          </div>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 12000"
+              [(ngModel)]="amount"
+            />
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Purpose</mat-label>
+            <mat-select [(ngModel)]="purpose">
+              <mat-option
+                *ngFor="let item of purpose_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Status*</mat-label>
+            <mat-select [(ngModel)]="payment_status">
+              <mat-option
+                *ngFor="let item of payment_status_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <div
+            class="m-0 mb-4 btn w-100"
+            (click)="addPaginatorDialog('unit')"
+            style="
+              text-align: start;
+              background: white;
+              box-shadow: none;
+              border: 1px solid #d4aa32;
+              color: black;
+              padding: 17px 13px;
+              font-size: 15px;
+              max-width: 20rem;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            "
+          >
+            <span style="color: grey"
+              >{{ unit_data == undefined ? 'Select Unit*' : unit_data.no}}</span
+            >
+          </div>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Payment Method*</mat-label>
+            <mat-select [(ngModel)]="payment_method">
+              <mat-option
+                *ngFor="let item of payment_method_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Issued Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="issue_date_picker"
+              [(ngModel)]="issued_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="issue_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #issue_date_picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-6" style="height: 30vh; overflow: auto">
+          <div
+            (click)="fileInput.click()"
+            class="btn ml-4"
+            style="background: #d4aa32"
+          >
+            Add Documents
+          </div>
+          <input
+            multiple
+            hidden
+            (change)="onFileSelected($event.target.files)"
+            #fileInput
+            type="file"
+            id="file"
+          />
+
+          <div *ngIf="docsFilesUploaded.length != 0">
+            <div
+              *ngFor="let file of docsFilesUploaded;let index=index"
+              class="row m-0 mt-2 align-items-center"
+              style="
+                background: #d4aa3230;
+                border: solid 1px #d4aa32;
+                border-radius: 5px;
+                padding: 10px 10px;
+              "
+            >
+              <img src="assets/img/svg/documents/document-text.svg" alt="" />
+              <span
+                class="m-0 ml-3"
+                style="
+                  font-weight: 500;
+                  text-overflow: ellipsis;
+                  max-width: 160px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+                >{{file.name}}</span
+              >
+              <img
+                (click)="removeUploadedDoc(index,file)"
+                src="assets/img/svg/success-dialog/close-square.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 25px;
+                  width: 20px;
+                  cursor: pointer;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="payment_method != undefined"
+        class="my-3"
+        style="width: 100%; height: 2px; background: #f0ba243b"
+      ></div>
+      <span
+        *ngIf="payment_method != undefined"
+        style="font-size: 17px; font-weight: 500; color: #3c4858b5"
+        >Payment Method Details</span
+      >
+      <div class="row m-0 mt-3" *ngIf="payment_method == 'cheque'">
+        <div class="col pl-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Cheque No.</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 12000"
+              [(ngModel)]="cheque_no"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Name On Cheque</mat-label>
+            <input
+              matInput
+              type="name"
+              placeholder="Ex. Jhon Due"
+              [(ngModel)]="cheque_name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Cheque Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="cheque_date_picker"
+              [(ngModel)]="cheque_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="cheque_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #cheque_date_picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row m-0 mt-3" *ngIf="payment_method == 'online'">
+        <div class="col pl-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Bank Name</mat-label>
+            <input
+              matInput
+              type="name"
+              placeholder="Ex. ADCB"
+              [(ngModel)]="bank_name"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Branch</mat-label>
+            <input
+              matInput
+              type="name"
+              placeholder="Ex. Downtown Dubai"
+              [(ngModel)]="bank_branch"
+            />
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>IBAN</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Ex. ADCB3434124124"
+              [(ngModel)]="bank_iban"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Account No.</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 1231232132"
+              [(ngModel)]="bank_no"
+            />
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Bank Holder Name</mat-label>
+            <input
+              matInput
+              type="name"
+              placeholder="Ex. Jhon Due"
+              [(ngModel)]="bank_holder_name"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row m-0 mt-3" *ngIf="payment_method == 'cash'">
+        <div class="col pl-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Cash Recieved Details</mat-label>
+            <input
+              matInput
+              type="name"
+              placeholder="Ex. Details"
+              [(ngModel)]="cash_details"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col"></div>
+      </div>
+
+      <div class="row m-0 w-100 justify-content-end align-items-center">
+        <span
+          class="mr-3"
+          *ngIf="formNotFilled"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please fill the form.</span
+        >
+
+        <span
+          class="mr-3"
+          *ngIf="documentNotAdded"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please add atleast 1 document.</span
+        >
+        <span
+          class="mr-3"
+          *ngIf="property_not_selected"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please select a property first.</span
+        >
+        <span
+          *ngIf="uploading"
+          class="mr-3"
+          style="font-size: 19px; font-weight: 600; color: #3c4858"
+          >{{uploading_progress}}%</span
+        >
+        <div class="progress-bar mr-4" *ngIf="uploading">
+          <div
+            class="progress-bar-fill"
+            [ngStyle]="{'width.%': uploading_progress % 100}"
+          ></div>
+        </div>
+        <div
+          class="btn"
+          style="background: #3c4858; min-width: 120px; padding: 10px 20px"
+          (click)="onSubmit()"
+        >
+          <span *ngIf="!uploading">Submit</span>
+          <span
+            *ngIf="uploading"
+            class="spinner-border spinner-border-m mx-auto"
+            style="height: 25px; width: 25px"
+          >
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

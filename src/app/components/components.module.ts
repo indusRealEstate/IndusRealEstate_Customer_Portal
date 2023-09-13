@@ -50,6 +50,9 @@ import { ReniewContractDialog } from "./reniew-contract-dialog/reniew-contract-d
 import { GenerateExcelDialog } from "./generate_excel/generate_excel";
 import { AddAmenitiesDialog } from "./add_amenities_dialog/add_amenities_dialog";
 import { AddInventoriesDialog } from "./add_inventories_dialog/add_inventories_dialog";
+import { AddPaymentDialog } from "./add_payment_dialog/add_payment_dialog";
+import { EditPaymentDialog } from "./edit_payment_dialog/edit_payment_dialog";
+import { PaymentDetailsDialog } from "./payment-details-dialog/payment-details-dialog";
 
 @NgModule({
   imports: [
@@ -105,7 +108,10 @@ import { AddInventoriesDialog } from "./add_inventories_dialog/add_inventories_d
     ReniewContractDialog,
     GenerateExcelDialog,
     AddAmenitiesDialog,
-    AddInventoriesDialog
+    AddInventoriesDialog,
+    AddPaymentDialog,
+    EditPaymentDialog,
+    PaymentDetailsDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

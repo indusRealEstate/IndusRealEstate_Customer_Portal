@@ -1,0 +1,329 @@
+<div
+  class="card"
+  style="margin: 0"
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+>
+  <!-- <div class="card-header"></div> -->
+  <div
+    class="card-body"
+    style="padding: 1.5rem 2.5rem; padding-bottom: 4rem !important"
+  >
+    <div
+      *ngIf="isContentLoading"
+      class="d-flex justify-content-center align-items-center"
+      style="height: 40rem"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <div class="col p-0" *ngIf="!isContentLoading">
+      <div class="row m-0 align-items-start w-100">
+        <div class="row m-0 align-items-start w-100">
+          <p
+            class="mr-2"
+            style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
+          >
+            All Payments
+          </p>
+          <img
+            class="mr-2 mt-1 header-arrow-icon"
+            src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
+            alt
+          />
+          <p
+            class="mr-2"
+            style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
+          >
+            Payment Details
+          </p>
+        </div>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+
+      <div class="col mt-2 p-0 w-100">
+        <div class="row m-0">
+          <div class="col-7 pl-0">
+            <div
+              class="card m-0"
+              style="
+                box-shadow: none;
+                border: 1px solid #e6ebf1;
+                padding: 15px 15px;
+              "
+            >
+              <div class="row m-0">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Payment Amount
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_amount | currency:'AED '}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Purpose
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_purpose | titlecase}}
+                  </span>
+                </div>
+              </div>
+              <div class="row m-0 mt-3">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Payment Method
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_method | titlecase}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Payment Status
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_status | titlecase}}
+                  </span>
+                </div>
+              </div>
+              <div class="row m-0 mt-3">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Unit No.
+                  </p>
+                  <span
+                    class="prop-name"
+                    (click)="navigateToUnit(all_data.unit_id)"
+                  >
+                    {{all_data.unit_no}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Property Name
+                  </p>
+                  <span
+                    class="prop-name"
+                    (click)="navigateToProprety(all_data.property_id)"
+                  >
+                    {{all_data.property_name | titlecase}}
+                  </span>
+                </div>
+              </div>
+              <div class="row m-0 mt-3">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Tenant
+                  </p>
+                  <span
+                    class="prop-name"
+                    (click)="navigateToUserDetails(all_data.tenant_uid, 'tenant')"
+                  >
+                    {{all_data.tenant_name | titlecase}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Issued Date
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_date | date:'M/d/y'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p
+              class="ml-2 mt-3 mb-2"
+              style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
+            >
+              Payment Method Details
+            </p>
+            <div
+              class="card m-0"
+              style="
+                box-shadow: none;
+                border: 1px solid #e6ebf1;
+                padding: 15px 15px;
+              "
+            >
+              <div class="row m-0" *ngIf="all_data.payment_method == 'online'">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Bank Name
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_bank_name | titlecase}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Branch
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_bank_branch | titlecase}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row m-0" *ngIf="all_data.payment_method == 'online'">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Bank Account No.
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_bank_ac_no}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Bank Holder Name
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_bank_holder_name | titlecase}}
+                  </span>
+                </div>
+              </div>
+              <div class="row m-0" *ngIf="all_data.payment_method == 'online'">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    IBAN
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_bank_iban}}
+                  </span>
+                </div>
+                <div class="col pr-0"></div>
+              </div>
+
+              <div class="row m-0" *ngIf="all_data.payment_method == 'cheque'">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Cheque No.
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_cheque_no}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Name On Cheque
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_name_on_cheque | titlecase}}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                class="row m-0 mt-3"
+                *ngIf="all_data.payment_method == 'cheque'"
+              >
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Cheque Date
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_cheque_date | date:'M/d/y'}}
+                  </span>
+                </div>
+                <div class="col pr-0"></div>
+              </div>
+
+              <div
+                class="row m-0 mt-3"
+                *ngIf="all_data.payment_method == 'cash'"
+              >
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Details
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_cash_details}}
+                  </span>
+                </div>
+                <div class="col pr-0"></div>
+              </div>
+            </div>
+            <div
+              class="row m-0 mt-3 align-items-start"
+              style="
+                background: #1c274c24;
+                border-left: 4px solid #1c274c;
+                border-radius: 5px;
+                padding: 10px 15px;
+              "
+            >
+              <img src="assets/img/svg/info.svg" alt="" style="width: 25px" />
+              <div class="col" style="text-align: start">
+                <p
+                  style="font-size: 15px; font-weight: 600; color: #1c274c"
+                  class="m-0"
+                >
+                  Info
+                </p>
+                <p
+                  class="mb-1"
+                  style="font-size: 13px; font-weight: 400; color: #1c274cd9"
+                >
+                  Payment details include issued method details.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col pr-0">
+            <p style="font-size: 18px; font-weight: 500; color: #596677">
+              Attached Files
+            </p>
+            <p *ngIf="attachments.length == 0">No Attachments!</p>
+            <div
+              *ngIf="attachments.length != 0"
+              style="height: 20rem; overflow: auto"
+            >
+              <div
+                class="row m-0 mb-2 justify-content-between"
+                *ngFor="let att of attachments"
+                style="
+                  border: 1px solid #929aa5ad;
+                  padding: 7px 15px;
+                  max-width: 20rem;
+                  border-radius: 3px;
+                "
+              >
+                <p
+                  class="m-0"
+                  style="
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-weight: 500;
+                  "
+                >
+                  {{att}}
+                </p>
+                <img
+                  style="width: 20px; cursor: pointer"
+                  matTooltip="Download"
+                  matTooltipClass="tooltip"
+                  matTooltipPosition="above"
+                  (click)="downloadDoc(att)"
+                  src="assets/img/svg/document-download.svg"
+                  alt
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
