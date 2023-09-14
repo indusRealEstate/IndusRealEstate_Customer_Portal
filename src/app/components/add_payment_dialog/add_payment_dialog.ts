@@ -30,7 +30,27 @@ export class AddPaymentDialog implements OnInit {
     public dialogRef: MatDialogRef<AddPaymentDialog>,
     private paymentService: PaymentService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    if (data != undefined) {
+      this.contract_id = data.contract_id;
+      this.unit_data = {
+        id: data.unit_id,
+        no: data.unit_no,
+      };
+
+      this.selected_property = {
+        id: data.property_id,
+        name: data.property_name,
+      };
+
+      this.tenant_data = {
+        id: data.tenant_id,
+        name: data.tenant_name,
+      };
+    }
+
+    this.payment_id = uuid.v4();
+  }
 
   @ViewChild("fileInput") fileInput: ElementRef;
   @ViewChild("fileInputImage") fileInputImage: ElementRef;
@@ -38,6 +58,8 @@ export class AddPaymentDialog implements OnInit {
   @ViewChild("country_dropdown") country_dropdown: CountryDropdown;
 
   docsFilesUploaded: File[] = [];
+
+  payment_id: any;
 
   unit_data: any;
   purpose: any = "";
@@ -184,7 +206,7 @@ export class AddPaymentDialog implements OnInit {
         this.purpose != "" &&
         this.payment_status != "" &&
         this.amount != "" &&
-        this.transaction_id != "" 
+        this.transaction_id != ""
       ) {
         return true;
       } else {
@@ -259,54 +281,95 @@ export class AddPaymentDialog implements OnInit {
   }
 
   onSubmit() {
-    if (this.docsFilesUploaded.length != 0) {
-      if (
-        this.selected_property != undefined &&
-        this.unit_data != undefined &&
-        this.tenant_data != undefined &&
-        this.payment_method != "" &&
-        this.checkPaymentMethodDetailsNotEmpty() != false
-      ) {
-        this.uploading = true;
-        var random_id = uuid.v4();
+    if (this.data != undefined) {
+      if (this.data.type == "lease") {
+        if (this.docsFilesUploaded.length != 0) {
+          if (
+            this.selected_property != undefined &&
+            this.unit_data != undefined &&
+            this.tenant_data != undefined &&
+            this.payment_method != "" &&
+            this.checkPaymentMethodDetailsNotEmpty() != false
+          ) {
+            var docs_names = [];
 
-        var docs_names = [];
+            for (var doc of this.docsFilesUploaded) {
+              docs_names.push(doc.name);
+            }
 
-        for (var doc of this.docsFilesUploaded) {
-          docs_names.push(doc.name);
-        }
+            var setup_data = this.setupData(this.payment_id, docs_names);
+            var uploadData = this.setupUploadFiles(this.payment_id, docs_names);
 
-        var data = this.setupData(random_id, docs_names);
-        this.paymentService.addNewPayment(data).subscribe((val) => {
-          if (val == "success") {
-            var uploadData = this.setupUploadFiles(random_id, docs_names);
-            this.paymentService
-              .uploadAllFilesAddNewPayment(uploadData)
-              .pipe(
-                map((event) => this.getEventMessage(event)),
-                tap((message) => {
-                  if (message == "File was completely uploaded!") {
-                    this.dialogRef.close({ completed: true });
-                  }
-                }),
-                last()
-              )
-              .subscribe((v) => {
-                console.log(v);
-              });
+            this.dialogRef.close({
+              data: JSON.parse(setup_data),
+              upload_data: uploadData,
+              docs: this.docsFilesUploaded,
+            });
+          } else {
+            this.formNotFilled = true;
+            setTimeout(() => {
+              this.formNotFilled = false;
+            }, 3000);
           }
-        });
-      } else {
-        this.formNotFilled = true;
-        setTimeout(() => {
-          this.formNotFilled = false;
-        }, 3000);
+        } else {
+          this.documentNotAdded = true;
+          setTimeout(() => {
+            this.documentNotAdded = false;
+          }, 3000);
+        }
       }
     } else {
-      this.documentNotAdded = true;
-      setTimeout(() => {
-        this.documentNotAdded = false;
-      }, 3000);
+      if (this.docsFilesUploaded.length != 0) {
+        if (
+          this.selected_property != undefined &&
+          this.unit_data != undefined &&
+          this.tenant_data != undefined &&
+          this.payment_method != "" &&
+          this.checkPaymentMethodDetailsNotEmpty() != false
+        ) {
+          this.uploading = true;
+
+          var docs_names = [];
+
+          for (var doc of this.docsFilesUploaded) {
+            docs_names.push(doc.name);
+          }
+
+          var data = this.setupData(this.payment_id, docs_names);
+          this.paymentService.addNewPayment(data).subscribe((val) => {
+            if (val == "success") {
+              var uploadData = this.setupUploadFiles(
+                this.payment_id,
+                docs_names
+              );
+              this.paymentService
+                .uploadAllFilesAddNewPayment(uploadData)
+                .pipe(
+                  map((event) => this.getEventMessage(event)),
+                  tap((message) => {
+                    if (message == "File was completely uploaded!") {
+                      this.dialogRef.close({ completed: true });
+                    }
+                  }),
+                  last()
+                )
+                .subscribe((v) => {
+                  console.log(v);
+                });
+            }
+          });
+        } else {
+          this.formNotFilled = true;
+          setTimeout(() => {
+            this.formNotFilled = false;
+          }, 3000);
+        }
+      } else {
+        this.documentNotAdded = true;
+        setTimeout(() => {
+          this.documentNotAdded = false;
+        }, 3000);
+      }
     }
   }
 

@@ -1,9 +1,14 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { DownloadService } from "app/services/download.service";
 import { PaymentService } from "app/services/payment.service";
 import * as FileSaver from "file-saver";
+import { ViewChequeDialog } from "../view-cheque-dialog/view-cheque-dialog";
 
 @Component({
   selector: "payment-details-dialog",
@@ -21,7 +26,8 @@ export class PaymentDetailsDialog implements OnInit {
     public dialogRef: MatDialogRef<PaymentDetailsDialog>,
     private router: Router,
     private downloadService: DownloadService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private dialog: MatDialog
   ) {
     this.paymentService
       .getPaymentAllDetails(
@@ -77,5 +83,15 @@ export class PaymentDetailsDialog implements OnInit {
     this.router.navigate(["/user-details"], {
       queryParams: { user_id: user_id, auth: auth },
     });
+  }
+
+  viewCheque(cheque) {
+    this.dialog
+      .open(ViewChequeDialog, {
+        width: "50%",
+        data: cheque,
+      })
+      .afterClosed()
+      .subscribe((res) => {});
   }
 }

@@ -6,10 +6,16 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
 import { LeaseService } from "app/services/lease.service";
 import { last, map, tap } from "rxjs";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
+import { PaymentService } from "app/services/payment.service";
+import { AddPaymentDialog } from "../add_payment_dialog/add_payment_dialog";
 
 @Component({
   // standalone: true,
@@ -20,14 +26,28 @@ import { CountryDropdown } from "../country-dropdown/country-dropdown";
 })
 export class EditLeaseDialog implements OnInit {
   isContentLoading: boolean = true;
+  all_data: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditLeaseDialog>,
-    private leaseService: LeaseService
+    private leaseService: LeaseService,
+    private paymentService: PaymentService,
+    private dialog: MatDialog
   ) {
+    leaseService
+      .getContractPaymentsCount(
+        JSON.stringify({
+          contract_id: data,
+        })
+      )
+      .subscribe((count) => {
+        this.tottal_added_payments_count = count;
+      });
     this.leaseService
       .getAllLeaseData({ id: data })
       .subscribe((value: any) => {
+        this.all_data = value;
+        console.log(value);
         this.property = value.prop_name;
         this.unit_data = value.unit_no;
         this.owner = value.user_name;
@@ -65,6 +85,10 @@ export class EditLeaseDialog implements OnInit {
   docsFilesUploaded: any[] = [];
 
   docsFilesUploaded_new: File[] = [];
+
+  payment_details_data: any[] = [];
+
+  tottal_added_payments_count: any;
 
   property: any = "";
   unit_data: any = "";
@@ -217,6 +241,10 @@ export class EditLeaseDialog implements OnInit {
                   console.log(res);
                 });
             }
+
+            if (this.payment_details_data.length != 0) {
+              this.submitPaymentDetails();
+            }
             var uploadData = this.setupUploadFiles(random_id, docs_names_new);
             this.leaseService
               .uploadAllFilesAddNewLease(uploadData)
@@ -313,5 +341,52 @@ export class EditLeaseDialog implements OnInit {
       default:
         return `File surprising upload event: ${event.type}.`;
     }
+  }
+
+  addPayments() {
+    this.dialog
+      .open(AddPaymentDialog, {
+        width: "100%",
+        data: {
+          contract_id: this.data,
+          property_id: this.all_data.prop_uid,
+          property_name: this.all_data.prop_name,
+          unit_id: this.all_data.unit_id,
+          unit_no: this.all_data.unit_no,
+          tenant_id: this.all_data.tenant_uid,
+          tenant_name: this.all_data.tenant_name,
+          type: "lease",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          this.payment_details_data.push(res);
+          this.tottal_added_payments_count++;
+        }
+      });
+  }
+
+  submitPaymentDetails() {
+    // var count = 0;
+    this.payment_details_data.forEach((pd) => {
+      this.paymentService.addNewPayment(pd.data).subscribe((val) => {
+        if (val == "success") {
+          this.paymentService
+            .uploadAllFilesAddNewPayment(pd.upload_data)
+            .pipe(
+              map((event) => this.getEventMessage(event)),
+              tap((message) => {
+                if (message == "File was completely uploaded!") {
+                }
+              }),
+              last()
+            )
+            .subscribe((v) => {
+              console.log(v);
+            });
+        }
+      });
+    });
   }
 }

@@ -1,0 +1,76 @@
+<div class="card m-0" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div class="col p-0">
+      <div class="row m-0 justify-content-between">
+        <p style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem">
+          Cheque Details
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+      <div
+        class="card m-0"
+        style="box-shadow: none; border: 1px solid #e6ebf1; padding: 15px 15px"
+      >
+        <div class="row m-0 mt-2">
+          <div class="col pl-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Cheque No.
+            </p>
+            <span style="font-weight: 400"> {{cheque_data.cheque_no}} </span>
+          </div>
+          <div class="col pr-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">Amount</p>
+            <span style="font-weight: 400">
+              {{cheque_data.amount | currency:'AED '}}
+            </span>
+          </div>
+        </div>
+        <div class="row m-0 mt-3">
+          <div class="col pl-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Cheque Date
+            </p>
+            <span style="font-weight: 400">
+              {{cheque_data.cheque_date | date:'M/d/y'}}
+            </span>
+          </div>
+          <div class="col pr-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Name On Cheque
+            </p>
+            <span style="font-weight: 400">
+              {{cheque_data.name_on_cheque | titlecase}}
+            </span>
+          </div>
+          
+        </div>
+        <div class="row m-0 mt-3">
+          <div class="col pl-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Payment Status
+            </p>
+            <span style="font-weight: 400">
+              {{cheque_data.status | titlecase}}
+            </span>
+          </div>
+          <div class="col pr-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Payment Purpose
+            </p>
+            <span style="font-weight: 400">
+              {{cheque_data.purpose | titlecase}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

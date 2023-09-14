@@ -16,6 +16,15 @@ export class LeaseService {
     };
   }
 
+  getContractPaymentsCount(data: any) {
+    const url = `${API_URL}/get_contract_payments_count.php?apikey=1`;
+    return this.http.post<any>(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   addNewLease(data: any) {
     const url = `${API_URL}/addNewLease.php?apikey=1`;
     return this.http.post<any>(url, data).pipe(

@@ -53,6 +53,7 @@ import { AddInventoriesDialog } from "./add_inventories_dialog/add_inventories_d
 import { AddPaymentDialog } from "./add_payment_dialog/add_payment_dialog";
 import { EditPaymentDialog } from "./edit_payment_dialog/edit_payment_dialog";
 import { PaymentDetailsDialog } from "./payment-details-dialog/payment-details-dialog";
+import { ViewChequeDialog } from "./view-cheque-dialog/view-cheque-dialog";
 
 @NgModule({
   imports: [
@@ -112,6 +113,7 @@ import { PaymentDetailsDialog } from "./payment-details-dialog/payment-details-d
     AddPaymentDialog,
     EditPaymentDialog,
     PaymentDetailsDialog,
+    ViewChequeDialog,
   ],
   exports: [FooterComponent, NavbarComponent, SidebarComponent],
 })

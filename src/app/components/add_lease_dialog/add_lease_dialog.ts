@@ -17,6 +17,7 @@ import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
 import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 import { AddPaymentDialog } from "../add_payment_dialog/add_payment_dialog";
+import { PaymentService } from "app/services/payment.service";
 
 @Component({
   // standalone: true,
@@ -30,6 +31,7 @@ export class AddLeaseDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddLeaseDialog>,
     private leaseService: LeaseService,
+    private paymentService: PaymentService,
     private dialog: MatDialog
   ) {
     if (data != undefined) {
@@ -48,6 +50,8 @@ export class AddLeaseDialog implements OnInit {
         id: data.owner_id,
       };
     }
+
+    this.contract_id = uuid.v4();
   }
 
   @ViewChild("fileInput") fileInput: ElementRef;
@@ -56,6 +60,10 @@ export class AddLeaseDialog implements OnInit {
   @ViewChild("country_dropdown") country_dropdown: CountryDropdown;
 
   docsFilesUploaded: File[] = [];
+
+  payment_details_data: any[] = [];
+
+  contract_id: any;
 
   unit_data: any;
   owner: any;
@@ -77,6 +85,8 @@ export class AddLeaseDialog implements OnInit {
   tenant_data: any;
 
   property_not_selected: boolean = false;
+
+  payment_add__details_not_selected: boolean = false;
 
   dewa: boolean = false;
   chiller: boolean = false;
@@ -221,7 +231,6 @@ export class AddLeaseDialog implements OnInit {
         this.yearly_amount != ""
       ) {
         this.uploading = true;
-        var random_id = uuid.v4();
 
         var docs_names = [];
 
@@ -229,10 +238,16 @@ export class AddLeaseDialog implements OnInit {
           docs_names.push(doc.name);
         }
 
-        var data = this.setupData(random_id, docs_names);
+        var data = this.setupData(this.contract_id, docs_names);
         this.leaseService.addNewLease(data).subscribe((val) => {
           if (val == "success") {
-            var uploadData = this.setupUploadFiles(random_id, docs_names);
+            if (this.payment_details_data.length != 0) {
+              this.submitPaymentDetails();
+            }
+            var uploadData = this.setupUploadFiles(
+              this.contract_id,
+              docs_names
+            );
             this.leaseService
               .uploadAllFilesAddNewLease(uploadData)
               .pipe(
@@ -336,15 +351,60 @@ export class AddLeaseDialog implements OnInit {
     }
   }
 
-  addPayments(contract_id) {
-    this.dialog
-      .open(AddPaymentDialog, {
-        width: "100%",
-        data: {
-          id: contract_id,
-        },
-      })
-      .afterClosed()
-      .subscribe((res) => {});
+  addPayments() {
+    if (
+      this.selected_property != undefined &&
+      this.tenant_data != undefined &&
+      this.unit_data != undefined
+    ) {
+      this.dialog
+        .open(AddPaymentDialog, {
+          width: "100%",
+          data: {
+            contract_id: this.contract_id,
+            property_id: this.selected_property.id,
+            property_name: this.selected_property.name,
+            unit_id: this.unit_data.id,
+            unit_no: this.unit_data.no,
+            tenant_id: this.tenant_data.id,
+            tenant_name: this.tenant_data.name,
+            type: "lease",
+          },
+        })
+        .afterClosed()
+        .subscribe((res) => {
+          if (res != undefined) {
+            this.payment_details_data.push(res);
+          }
+        });
+    } else {
+      this.payment_add__details_not_selected = true;
+      setTimeout(() => {
+        this.payment_add__details_not_selected = false;
+      }, 3000);
+    }
+  }
+
+  submitPaymentDetails() {
+    // var count = 0;
+    this.payment_details_data.forEach((pd) => {
+      this.paymentService.addNewPayment(pd.data).subscribe((val) => {
+        if (val == "success") {
+          this.paymentService
+            .uploadAllFilesAddNewPayment(pd.upload_data)
+            .pipe(
+              map((event) => this.getEventMessage(event)),
+              tap((message) => {
+                if (message == "File was completely uploaded!") {
+                }
+              }),
+              last()
+            )
+            .subscribe((v) => {
+              console.log(v);
+            });
+        }
+      });
+    });
   }
 }

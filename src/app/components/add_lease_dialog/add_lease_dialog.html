@@ -246,7 +246,7 @@
             <div
               class="btn m-0"
               style="width: 55%; background: #d4aa32"
-              (click)="addPayments('')"
+              (click)="addPayments()"
             >
               Add Payments
             </div>
@@ -260,7 +260,7 @@
                 border-radius: 3px;
               "
             >
-              0 Cheques Added
+              {{payment_details_data.length}} Payment Added
             </div>
           </div>
         </div>
@@ -403,6 +403,19 @@
             border-radius: 7px;
           "
           >Please select a property first.</span
+        >
+        <span
+          class="mr-3"
+          *ngIf="payment_add__details_not_selected"
+          style="
+            color: #ff0000db;
+            font-weight: 500;
+            background: #ff000017;
+            padding: 7px 20px;
+            border: 1px solid #d1000033;
+            border-radius: 7px;
+          "
+          >Please select a property, unit and tenant.</span
         >
         <span
           *ngIf="uploading"
