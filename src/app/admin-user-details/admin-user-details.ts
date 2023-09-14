@@ -150,7 +150,11 @@ export class ViewUserDetails implements OnInit {
         this.user_doc.push(doc);
       });
 
-      this.profile_image = `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/image/${updated_data.profile_img}`;
+      if (updated_data.profile_img != undefined) {
+        this.profile_image = `https://www.indusre.app/api/upload/user/${this.all_data.user_uid}/image/${updated_data.profile_img}`;
+      } else {
+        this.profile_image = "assets/img/images/user.png";
+      }
     }
     this.openSnackBar("User updated successfully", "Close");
   }

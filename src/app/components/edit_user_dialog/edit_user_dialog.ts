@@ -214,7 +214,7 @@ export class EditUserDialog implements OnInit {
         this.user_id_number != ""
       ) {
         this.uploading = true;
-        var random_id = this.data.user_uid;
+        var random_id = this.data;
 
         var docs_names = [];
         var docs_names_new = [];
@@ -238,10 +238,10 @@ export class EditUserDialog implements OnInit {
                   JSON.stringify({
                     img:
                       this.existing_img_removed == true
-                        ? this.data.user_profile_img
+                        ? this.all_data.user_profile_img
                         : "",
                     names: this.removed_existing_docs,
-                    id: this.data.user_uid,
+                    id: this.data,
                   })
                 )
                 .subscribe((res) => {
