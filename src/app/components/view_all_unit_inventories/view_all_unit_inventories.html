@@ -1,7 +1,7 @@
 <div
   class="card"
   cdkDrag
-  cdkDragRootElement=".cdk-overlay-pane" class="category-dialog">
+  cdkDragRootElement=".cdk-overlay-pane">
   <div class="card-body">
     <div class="col">
 
@@ -77,7 +77,7 @@
                 {{element.inventory_count !== '' ? element.inventory_count :
                 'No data'}}</td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>

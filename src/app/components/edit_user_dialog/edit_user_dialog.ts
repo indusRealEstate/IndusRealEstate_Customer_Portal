@@ -287,7 +287,7 @@ export class EditUserDialog implements OnInit {
         user_id: random_id,
         bank_name: this.user_bank_name,
         bank_ac_number: this.user_bank_ac_no,
-        swift_code: this.user_bank_swift_code,
+        swift_code: this.user_bank_swift_code, 
         iban: this.user_bank_iban,
       };
       this.userService

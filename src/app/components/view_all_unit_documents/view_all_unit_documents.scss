@@ -13,7 +13,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 2px;
 }
 
 /* Track */
@@ -24,13 +24,13 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgb(219 165 62 / 34%);
-  border-radius: 50rem;
+  border-radius: 0rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(219 165 62 / 50%);
-  border-radius: 50rem;
+  border-radius: 0rem;
 }
 
 .main-card {
@@ -144,14 +144,20 @@
 
       .table-row {
         height: 50vh !important;
-        overflow: auto !important;
+        overflow: scroll !important;
         margin-bottom: 30px;
+        border-top-right-radius: 10px !important;
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+
         ::ng-deep .mat-mdc-table {
           box-shadow: 0rem 0rem 0rem !important;
           border-radius: 10px !important;
           background-color: #faf4e7 !important;
           thead {
-            background-color: rgb(219 165 62 / 50%) !important;
+            // background-color: rgb(219 165 62 / 50%) !important;
+            background-color: rgb(219 165 62) !important;
             th {
               color: #fff !important;
               font-weight: 600 !important;

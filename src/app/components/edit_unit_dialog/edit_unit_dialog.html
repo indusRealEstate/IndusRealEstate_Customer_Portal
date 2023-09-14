@@ -1,47 +1,45 @@
-<div
+<divt
   class="card"
   style="margin: 0"
   cdkDrag
-  cdkDragRootElement=".cdk-overlay-pane"
->
+  cdkDragRootElement=".cdk-overlay-pane">
   <!-- <div class="card-header"></div> -->
   <div class="card-body" style="padding: 1.5rem 1.5rem">
     <div
       *ngIf="isContentLoading"
       class="d-flex justify-content-center align-items-center"
-      style="height: 40rem"
-    >
+      style="height: 40rem">
       <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
       </span>
     </div>
     <div class="col" *ngIf="!isContentLoading">
-      <div class="row m-0 align-items-start w-100">
+      <div class="row m-0 align-items-start w-100" style="
+      position: sticky;
+      top: 0px;
+      background: #fff !important;
+      z-index: 10;
+      padding: 10px 0px;">
         <p
           class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
-        >
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem">
           All Units
         </p>
         <img
           class="mr-2 mt-1 header-arrow-icon"
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
-          alt
-        />
+          alt />
         <p
           class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
-        >
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem">
           Unit Details
         </p>
         <img
           class="mr-2 mt-1 header-arrow-icon"
           src="assets/img/svg/admin-dashboard/arrow-right-1.svg"
-          alt
-        />
+          alt />
         <p
           class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem"
-        >
+          style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem">
           Edit Unit
         </p>
         <img
@@ -51,14 +49,12 @@
           (click)="closeDialogWithoutSaving()"
           class="mr-2 mt-1 close-icon"
           src="assets/img/svg/req-details/close-circle.svg"
-          alt
-        />
+          alt />
       </div>
       <div class="row mx-0 mb-0 mt-3 align-items-start w-100">
         <p
           class="mr-2"
-          style="font-weight: 500; color: #3c4858b5; font-size: 20px"
-        >
+          style="font-weight: 500; color: #3c4858b5; font-size: 20px">
           Edit Unit
         </p>
         <!-- <img
@@ -83,14 +79,12 @@
             border-radius: 8px;
             padding: 10px 10px;
             cursor: pointer;
-          "
-        >
+          ">
           <img
             class="mx-auto"
             src="assets/img/pngs/add-image.png"
-            alt=""
-            style="width: 30px"
-          />
+            alt
+            style="width: 30px" />
           <span class="mx-auto mt-2">Add Images</span>
           <input
             multiple
@@ -98,24 +92,20 @@
             (change)="onImageFileSelected($event.target.files)"
             #fileInputImage
             type="file"
-            accept="image/*"
-          />
+            accept="image/*" />
         </div>
 
         <div
           class="d-flex"
-          style="max-width: calc(100% - 135px); overflow: auto"
-        >
+          style="max-width: calc(100% - 135px); overflow: auto">
           <div
             class="mx-3"
             *ngFor="let img of imgFilesBase64Uploaded;let index = index"
-            style="max-width: 80px; background: #d4aa3229; min-width: 100px"
-          >
+            style="max-width: 80px; background: #d4aa3229; min-width: 100px">
             <div
               class="row m-0"
               style="position: relative"
-              *ngIf="images_fully_loaded"
-            >
+              *ngIf="images_fully_loaded">
               <div
                 [ngStyle]="{'background-image' : 'url(\'' + img + '\')'}"
                 style="
@@ -126,8 +116,7 @@
                   background-position: center;
                   background-repeat: no-repeat;
                   border-radius: 10px;
-                "
-              >
+                ">
                 <!-- <img
                   src="{{img}}"
                   style="height: 100%; width: 100%; object-fit: contain"
@@ -136,9 +125,8 @@
                 <img
                   (click)="removeUploadedImg(index)"
                   src="assets/img/svg/success-dialog/close-square.svg"
-                  alt=""
-                  style="position: absolute; width: 20px; cursor: pointer"
-                />
+                  alt
+                  style="position: absolute; width: 20px; cursor: pointer" />
               </div>
             </div>
           </div>
@@ -156,12 +144,10 @@
                 color: black;
                 padding: 15px 13px;
                 font-size: 15px;
-              "
-            >
-              <span style="color: grey"
-                >{{ selected_property == undefined ? 'Select Property*' :
-                selected_property.name}}</span
-              >
+              ">
+              <span style="color: grey">{{ selected_property == undefined ?
+                'Select Property*' :
+                selected_property.name}}</span>
             </div>
 
             <mat-form-field class="textField" appearance="outline">
@@ -170,8 +156,7 @@
                 matInput
                 type="number"
                 placeholder="Ex. 101"
-                [(ngModel)]="unit_number"
-              />
+                [(ngModel)]="unit_number" />
             </mat-form-field>
 
             <!-- <mat-form-field class="mt-2 textField" appearance="outline">
@@ -189,8 +174,7 @@
                 matInput
                 type="number"
                 placeholder="Ex. 1250"
-                [(ngModel)]="unit_size"
-              />
+                [(ngModel)]="unit_size" />
             </mat-form-field>
 
             <mat-form-field class="textField" appearance="outline">
@@ -199,8 +183,7 @@
                 matInput
                 type="number"
                 placeholder="Ex. 10"
-                [(ngModel)]="plot_no"
-              />
+                [(ngModel)]="plot_no" />
             </mat-form-field>
 
             <mat-form-field class="textField" appearance="outline">
@@ -209,16 +192,14 @@
                 matInput
                 type="number"
                 placeholder="Ex. 1"
-                [(ngModel)]="bathrooms"
-              />
+                [(ngModel)]="bathrooms" />
             </mat-form-field>
             <mat-form-field class="mt-2" class="textField" appearance="outline">
               <mat-label>Description</mat-label>
               <textarea
                 matInput
                 rows="2"
-                [(ngModel)]="unit_description"
-              ></textarea>
+                [(ngModel)]="unit_description"></textarea>
             </mat-form-field>
           </div>
           <div class="col">
@@ -233,20 +214,15 @@
 
             <div
               class="row m-0 justify-content-between"
-              style="margin-top: -20px !important"
-            >
+              style="margin-top: -20px !important">
               <div class="checkbox-add-unit">
-                <mat-checkbox [(ngModel)]="extra_living_room"
-                  >Extra Living Room</mat-checkbox
-                >
+                <mat-checkbox [(ngModel)]="extra_living_room">Extra Living Room</mat-checkbox>
               </div>
               <div class="checkbox-add-unit">
                 <mat-checkbox [(ngModel)]="maids_room">Maids Room</mat-checkbox>
               </div>
               <div class="checkbox-add-unit">
-                <mat-checkbox [(ngModel)]="family_room"
-                  >Family Room</mat-checkbox
-                >
+                <mat-checkbox [(ngModel)]="family_room">Family Room</mat-checkbox>
               </div>
             </div>
 
@@ -261,11 +237,9 @@
                 color: black;
                 padding: 15px 13px;
                 font-size: 15px;
-              "
-            >
-              <span style="color: grey"
-                >{{ owner == undefined ? 'Owner*' : owner.name}}</span
-              >
+              ">
+              <span style="color: grey">{{ owner == undefined ? 'Owner*' :
+                owner.name}}</span>
             </div>
 
             <mat-form-field class="textField" appearance="outline">
@@ -274,8 +248,7 @@
                 matInput
                 type="number"
                 placeholder="Ex. 675692831"
-                [(ngModel)]="premises_no"
-              />
+                [(ngModel)]="premises_no" />
             </mat-form-field>
 
             <mat-form-field class="textField" appearance="outline">
@@ -284,8 +257,7 @@
                 matInput
                 type="number"
                 placeholder="Ex. 1"
-                [(ngModel)]="floors"
-              />
+                [(ngModel)]="floors" />
             </mat-form-field>
 
             <mat-form-field class="textField" appearance="outline">
@@ -294,8 +266,7 @@
                 matInput
                 type="number"
                 placeholder="Ex. 1"
-                [(ngModel)]="bedrooms"
-              />
+                [(ngModel)]="bedrooms" />
             </mat-form-field>
             <mat-form-field class="textField" appearance="outline">
               <mat-label>No. of Parking</mat-label>
@@ -303,27 +274,29 @@
                 matInput
                 type="number"
                 placeholder="Ex. 2"
-                [(ngModel)]="number_of_parking"
-              />
+                [(ngModel)]="number_of_parking" />
             </mat-form-field>
           </div>
 
           <div class="col" style="height: 31vh; overflow: auto">
-            <div
+            <button
+              matTooltip="Add Document"
+              matTooltipClass="tooltip"
+              matTooltipPosition="above"
+              type="button"
               (click)="fileInput.click()"
-              class="btn ml-4"
-              style="background: #d4aa32"
-            >
-              Add Documents
-            </div>
+              class="btn"
+              style="background-color: #d4aa32;">
+              Add Document
+            </button>
+
             <input
               multiple
               hidden
               (change)="onFileSelected($event.target.files)"
               #fileInput
               type="file"
-              id="file"
-            />
+              id="file" />
 
             <div *ngIf="docsFilesUploaded.length != 0">
               <div
@@ -334,9 +307,8 @@
                   border: solid 1px #d4aa32;
                   border-radius: 5px;
                   padding: 10px 10px;
-                "
-              >
-                <img src="assets/img/svg/documents/document-text.svg" alt="" />
+                ">
+                <img src="assets/img/svg/documents/document-text.svg" alt />
                 <span
                   class="m-0 ml-3"
                   style="
@@ -345,20 +317,17 @@
                     max-width: 160px;
                     overflow: hidden;
                     white-space: nowrap;
-                  "
-                  >{{file.name != undefined ? file.name : file}}</span
-                >
+                  ">{{file.name != undefined ? file.name : file}}</span>
                 <img
                   (click)="removeUploadedDoc(index)"
                   src="assets/img/svg/success-dialog/close-square.svg"
-                  alt=""
+                  alt
                   style="
                     position: absolute;
                     right: 25px;
                     width: 20px;
                     cursor: pointer;
-                  "
-                />
+                  " />
               </div>
             </div>
           </div>
@@ -368,31 +337,25 @@
               <mat-form-field
                 class="textField"
                 style="width: unset !important"
-                appearance="outline"
-              >
+                appearance="outline">
                 <mat-label>Add amenties</mat-label>
                 <input
                   matInput
                   type="text"
                   placeholder="Ex. Water, ELectricity"
-                  [(ngModel)]="new_amenty"
-                />
+                  (keydown)="enterAmenity($event)"
+                  [(ngModel)]="new_amenty" />
               </mat-form-field>
-              <div
-                *ngIf="new_amenty != ''"
+              <button type="button"
+                matTooltip="Add Amenities"
+                matTooltipClass="tooltip"
+                matTooltipPosition="above"
                 (click)="addAmenty()"
                 class="btn"
-                style="padding: 7px 10px; background: #d4aa32"
-              >
+                [ngStyle]="{'background-color' : new_amenty !== '' ? '#d4aa32' : '#999999', 'cursor' : new_amenty !== '' ? 'pointer' : 'not-allowed'}">
                 Add
-              </div>
-              <div
-                *ngIf="new_amenty == ''"
-                class="btn"
-                style="padding: 7px 10px"
-              >
-                Add
-              </div>
+              </button>
+
             </div>
             <div
               class="row m-0 align-items-center my-2"
@@ -402,20 +365,18 @@
                 padding: 6px 15px;
                 border: 1px solid #3c48585c;
                 border-radius: 6px;
-              "
-            >
+              ">
               <span>{{am}}</span>
               <img
                 (click)="deleteAmenty(index)"
                 src="assets/img/svg/success-dialog/close-square.svg"
-                alt=""
+                alt
                 style="
                   position: absolute;
                   right: 15px;
                   width: 20px;
                   cursor: pointer;
-                "
-              />
+                " />
             </div>
           </div>
         </div>
@@ -429,8 +390,7 @@
                   matInput
                   type="text"
                   placeholder="Ex. Refrigerator"
-                  [(ngModel)]="inventory_name"
-                />
+                  [(ngModel)]="inventory_name" />
               </mat-form-field>
             </div>
             <div class="col">
@@ -440,8 +400,7 @@
                   matInput
                   type="text"
                   placeholder="Ex. Kitchen"
-                  [(ngModel)]="inventory_place"
-                />
+                  [(ngModel)]="inventory_place" />
               </mat-form-field>
             </div>
             <div class="col">
@@ -451,42 +410,42 @@
                   matInput
                   type="number"
                   placeholder="Ex. 2"
-                  [(ngModel)]="inventory_count"
-                />
+                  [(ngModel)]="inventory_count" />
               </mat-form-field>
             </div>
             <div class="col pr-0">
-              <div
+              <button type="button" (click)="addinventory()" class="btn"
+                matTooltip="Add Inventories"
+                matTooltipClass="tooltip"
+                matTooltipPosition="above"
+                [ngStyle]="{'background-color' : inventory_name != '' && inventory_place != '' && inventory_count != '' ? '#d4aa32' : '#999999','cursor' :inventory_name != '' && inventory_place != '' && inventory_count != 'pointer' ? '' : 'not-allowed'}">Add</button>
+              <!-- <div
                 *ngIf="inventory_name == '' || inventory_place == '' || inventory_count == ''"
                 class="btn"
-                style="padding: 9px 20px"
-              >
+                style="padding: 9px 20px">
                 Add
               </div>
               <div
                 (click)="addinventory()"
                 *ngIf="inventory_name != '' && inventory_place != '' && inventory_count != ''"
                 class="btn"
-                style="padding: 9px 20px; background: #d4aa32"
-              >
+                style="padding: 9px 20px; background: #d4aa32">
                 Add
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="d-flex my-2" style="max-width: 100%; overflow: auto">
             <div
               class="mx-2 mb-2"
               *ngFor="let inventory of inventories;let index = index"
-              style="background: #d4aa3229; min-width: 215px"
-            >
+              style="background: #d4aa3229; min-width: 215px">
               <div
                 class="row m-0 justify-content-between"
                 style="
                   padding: 5px 10px;
                   border: 1px solid #d4aa3291;
                   border-radius: 7px;
-                "
-              >
+                ">
                 <span
                   style="
                     font-weight: 500;
@@ -494,16 +453,13 @@
                     max-width: 160px;
                     overflow: hidden;
                     white-space: nowrap;
-                  "
-                  >{{inventory.name}}</span
-                >
+                  ">{{inventory.name}}</span>
                 <img
                   class="ml-2"
                   (click)="deleteInventory(index)"
                   src="assets/img/svg/success-dialog/close-square.svg"
-                  alt=""
-                  style="width: 20px; cursor: pointer"
-                />
+                  alt
+                  style="width: 20px; cursor: pointer" />
               </div>
             </div>
           </div>
@@ -520,9 +476,7 @@
               padding: 7px 20px;
               border: 1px solid #d1000033;
               border-radius: 7px;
-            "
-            >Please fill the form.</span
-          >
+            ">Please fill the form.</span>
           <span
             class="mr-3"
             *ngIf="imageNotAdded"
@@ -533,9 +487,7 @@
               padding: 7px 20px;
               border: 1px solid #d1000033;
               border-radius: 7px;
-            "
-            >Please add atleast 1 image.</span
-          >
+            ">Please add atleast 1 image.</span>
           <span
             class="mr-3"
             *ngIf="documentNotAdded"
@@ -546,36 +498,32 @@
               padding: 7px 20px;
               border: 1px solid #d1000033;
               border-radius: 7px;
-            "
-            >Please add atleast 1 document.</span
-          >
+            ">Please add atleast 1 document.</span>
           <span
             *ngIf="uploading"
             class="mr-3"
-            style="font-size: 19px; font-weight: 600; color: #3c4858"
-            >{{uploading_progress}}%</span
-          >
+            style="font-size: 19px; font-weight: 600; color: #3c4858">{{uploading_progress}}%</span>
           <div class="progress-bar mr-4" *ngIf="uploading">
             <div
               class="progress-bar-fill"
-              [ngStyle]="{'width.%': uploading_progress % 100}"
-            ></div>
+              [ngStyle]="{'width.%': uploading_progress % 100}"></div>
           </div>
           <div
+            matTooltip="Update"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
             class="btn"
             style="background: #3c4858; min-width: 120px; padding: 10px 20px"
-            (click)="onSubmit()"
-          >
+            (click)="onSubmit()">
             <span *ngIf="!uploading">Update</span>
             <span
               *ngIf="uploading"
               class="spinner-border spinner-border-m mx-auto"
-              style="height: 25px; width: 25px"
-            >
+              style="height: 25px; width: 25px">
             </span>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</divt>

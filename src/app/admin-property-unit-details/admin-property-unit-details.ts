@@ -473,10 +473,12 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.dialog
       .open(EditUnitDialog, {
         width: "100%",
+        height: "90vh",
         data: this.all_data.unit_id,
       })
       .afterClosed()
       .subscribe((data) => {
+        console.log(data);
         if (data != undefined) {
           this.all_data.unit_amenties =
             data.amenties != undefined
