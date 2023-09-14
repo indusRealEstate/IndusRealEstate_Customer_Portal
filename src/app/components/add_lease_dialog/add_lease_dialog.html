@@ -224,7 +224,7 @@
           </mat-form-field>
 
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Rent Amount</mat-label>
+            <mat-label>Monthly Rent Amount</mat-label>
             <input
               matInput
               type="number"
@@ -241,6 +241,28 @@
               [(ngModel)]="govt_charges"
             />
           </mat-form-field>
+
+          <div class="row m-0">
+            <div
+              class="btn m-0"
+              style="width: 55%; background: #d4aa32"
+              (click)="addPayments('')"
+            >
+              Add Payments
+            </div>
+            <div
+              class="ml-2 d-flex justify-content-center align-items-center"
+              style="
+                width: calc(45% - 0.5rem);
+                background: #3c485817;
+                color: #3c4858;
+                border: 1px solid #3c4858;
+                border-radius: 3px;
+              "
+            >
+              0 Cheques Added
+            </div>
+          </div>
         </div>
         <div class="col">
           <!-- <mat-form-field class="textField" appearance="outline">

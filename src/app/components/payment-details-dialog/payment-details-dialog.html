@@ -60,24 +60,6 @@
                 padding: 15px 15px;
               "
             >
-              <div class="row m-0">
-                <div class="col pl-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Payment Amount
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_amount | currency:'AED '}}
-                  </span>
-                </div>
-                <div class="col pr-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Purpose
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_purpose | titlecase}}
-                  </span>
-                </div>
-              </div>
               <div class="row m-0 mt-3">
                 <div class="col pl-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
@@ -85,27 +67,6 @@
                   </p>
                   <span style="font-weight: 400">
                     {{all_data.payment_method | titlecase}}
-                  </span>
-                </div>
-                <div class="col pr-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Payment Status
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_status | titlecase}}
-                  </span>
-                </div>
-              </div>
-              <div class="row m-0 mt-3">
-                <div class="col pl-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Unit No.
-                  </p>
-                  <span
-                    class="prop-name"
-                    (click)="navigateToUnit(all_data.unit_id)"
-                  >
-                    {{all_data.unit_no}}
                   </span>
                 </div>
                 <div class="col pr-0">
@@ -123,13 +84,13 @@
               <div class="row m-0 mt-3">
                 <div class="col pl-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Tenant
+                    Unit No.
                   </p>
                   <span
                     class="prop-name"
-                    (click)="navigateToUserDetails(all_data.tenant_uid, 'tenant')"
+                    (click)="navigateToUnit(all_data.unit_id)"
                   >
-                    {{all_data.tenant_name | titlecase}}
+                    {{all_data.unit_no}}
                   </span>
                 </div>
                 <div class="col pr-0">
@@ -138,6 +99,19 @@
                   </p>
                   <span style="font-weight: 400">
                     {{all_data.payment_date | date:'M/d/y'}}
+                  </span>
+                </div>
+              </div>
+              <div class="row m-0 mt-3">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Tenant
+                  </p>
+                  <span
+                    class="prop-name"
+                    (click)="navigateToUserDetails(all_data.tenant_uid, 'tenant')"
+                  >
+                    {{all_data.tenant_name | titlecase}}
                   </span>
                 </div>
               </div>
@@ -156,7 +130,59 @@
                 padding: 15px 15px;
               "
             >
+              <div
+                *ngIf="all_data.payment_method == 'cheque'"
+                style="max-height: 10rem; overflow: auto"
+              >
+                <p class="mb-1" style="color: #d4aa32; font-weight: 500">
+                  All Cheques
+                </p>
+                <div class="row m-0 mb-2" *ngFor="let ch of all_data.cheques">
+                  <span
+                    style="
+                      background: #dfe1e6;
+                      border: 1px solid #1c274c3b;
+                      padding: 1px 6px;
+                      border-radius: 3px;
+                      font-weight: 500;
+                    "
+                    >Cheque No. : {{ch.cheque_no}}</span
+                  >
+                  <img
+                    class="ml-2"
+                    style="width: 20px; cursor: pointer"
+                    matTooltip="View Cheque"
+                    matTooltipClass="tooltip"
+                    matTooltipPosition="above"
+                    src="assets/img/svg/common-icons/open-external-link-icon.svg"
+                    style="width: 15px; cursor: pointer"
+                    alt=""
+                  />
+                </div>
+              </div>
               <div class="row m-0" *ngIf="all_data.payment_method == 'online'">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Payment Purpose
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_online_purpose | titlecase}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Payment Status
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_online_status | titlecase}}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                class="row m-0 mt-2"
+                *ngIf="all_data.payment_method == 'online'"
+              >
                 <div class="col pl-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
                     Bank Name
@@ -175,7 +201,10 @@
                 </div>
               </div>
 
-              <div class="row m-0" *ngIf="all_data.payment_method == 'online'">
+              <div
+                class="row m-0 mt-2"
+                *ngIf="all_data.payment_method == 'online'"
+              >
                 <div class="col pl-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
                     Bank Account No.
@@ -193,7 +222,10 @@
                   </span>
                 </div>
               </div>
-              <div class="row m-0" *ngIf="all_data.payment_method == 'online'">
+              <div
+                class="row m-0 mt-2"
+                *ngIf="all_data.payment_method == 'online'"
+              >
                 <div class="col pl-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
                     IBAN
@@ -202,45 +234,37 @@
                     {{all_data.payment_bank_iban}}
                   </span>
                 </div>
-                <div class="col pr-0"></div>
-              </div>
-
-              <div class="row m-0" *ngIf="all_data.payment_method == 'cheque'">
-                <div class="col pl-0">
+                <div class="col pr-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Cheque No.
+                    Transaction ID
                   </p>
                   <span style="font-weight: 400">
-                    {{all_data.payment_cheque_no}}
+                    {{all_data.payment_bank_transaction_id}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row m-0" *ngIf="all_data.payment_method == 'cash'">
+                <div class="col pl-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Payment Purpose
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_cash_purpose | titlecase}}
                   </span>
                 </div>
                 <div class="col pr-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Name On Cheque
+                    Payment Status
                   </p>
                   <span style="font-weight: 400">
-                    {{all_data.payment_name_on_cheque | titlecase}}
+                    {{all_data.payment_cash_status | titlecase}}
                   </span>
                 </div>
               </div>
 
               <div
-                class="row m-0 mt-3"
-                *ngIf="all_data.payment_method == 'cheque'"
-              >
-                <div class="col pl-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Cheque Date
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_cheque_date | date:'M/d/y'}}
-                  </span>
-                </div>
-                <div class="col pr-0"></div>
-              </div>
-
-              <div
-                class="row m-0 mt-3"
+                class="row m-0 mt-2"
                 *ngIf="all_data.payment_method == 'cash'"
               >
                 <div class="col pl-0">
@@ -251,7 +275,14 @@
                     {{all_data.payment_cash_details}}
                   </span>
                 </div>
-                <div class="col pr-0"></div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Amount
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_cash_amount}}
+                  </span>
+                </div>
               </div>
             </div>
             <div

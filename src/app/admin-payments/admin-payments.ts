@@ -29,11 +29,8 @@ export class AdminPayments implements OnInit {
     "id",
     "unit",
     "tenant",
-    "amount",
-    "purpose",
     "method",
     "property",
-    "status",
     "date",
     "more",
   ];
@@ -185,7 +182,9 @@ export class AdminPayments implements OnInit {
 
   addPaymentDialogOpen() {
     this.dialog
-      .open(AddPaymentDialog)
+      .open(AddPaymentDialog, {
+        width: "100%",
+      })
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
@@ -236,7 +235,7 @@ export class AdminPayments implements OnInit {
       .afterClosed()
       .subscribe((value) => {
         if (value != undefined) {
-          this.openSnackBar("Property updated successfully", "Close");
+          this.openSnackBar("Payment updated successfully", "Close");
         }
       });
     // }

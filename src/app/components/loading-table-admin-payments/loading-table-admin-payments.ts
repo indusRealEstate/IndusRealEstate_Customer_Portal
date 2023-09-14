@@ -13,11 +13,8 @@ export class LoadingTableAdminPayments implements OnInit {
     "id",
     "unit",
     "tenant",
-    "amount",
-    "purpose",
     "method",
     "property",
-    "status",
     "date",
     "more",
   ];

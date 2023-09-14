@@ -65,6 +65,8 @@ export class AddPaymentDialog implements OnInit {
   bank_iban: any;
   bank_holder_name: any;
 
+  no_of_cheques: any = "";
+
   property_not_selected: boolean = false;
 
   formNotFilled: boolean = false;
@@ -72,6 +74,9 @@ export class AddPaymentDialog implements OnInit {
   uploading: boolean = false;
 
   uploading_progress: any = 0;
+  transaction_id: any;
+
+  added_cheques: any[] = [];
 
   purpose_list: any[] = [
     { value: "rent", viewValue: "Rent" },
@@ -89,6 +94,24 @@ export class AddPaymentDialog implements OnInit {
     { value: "cheque", viewValue: "Cheque" },
     { value: "cash", viewValue: "Cash" },
     { value: "online", viewValue: "Online" },
+  ];
+
+  no_of_cheques_list: any[] = [
+    { value: "1", viewValue: "1 Cheque" },
+    { value: "2", viewValue: "2 Cheques" },
+    { value: "3", viewValue: "3 Cheques" },
+    { value: "4", viewValue: "4 Cheques" },
+    { value: "5", viewValue: "5 Cheques" },
+    { value: "6", viewValue: "6 Cheques" },
+    { value: "7", viewValue: "7 Cheques" },
+    { value: "8", viewValue: "8 Cheques" },
+    { value: "9", viewValue: "9 Cheques" },
+    { value: "10", viewValue: "10 Cheques" },
+    { value: "11", viewValue: "11 Cheques" },
+    { value: "12", viewValue: "12 Cheques" },
+    { value: "13", viewValue: "13 Cheques" },
+    { value: "14", viewValue: "14 Cheques" },
+    { value: "15", viewValue: "15 Cheques" },
   ];
 
   addPaginatorDialog(type: string) {
@@ -148,32 +171,74 @@ export class AddPaymentDialog implements OnInit {
 
   checkPaymentMethodDetailsNotEmpty() {
     if (this.payment_method == "cheque") {
-      if (
-        this.cheque_no != undefined &&
-        this.cheque_name != undefined &&
-        this.cheque_date != undefined
-      ) {
-        return true;
-      } else {
+      if (this.no_of_cheques == "" || this.added_cheques.length == 0) {
         return false;
+      } else {
+        return true;
       }
     } else if (this.payment_method == "online") {
       if (
         this.bank_name != undefined &&
         this.bank_holder_name != undefined &&
-        this.bank_no != undefined
+        this.bank_no != undefined &&
+        this.purpose != "" &&
+        this.payment_status != "" &&
+        this.amount != "" &&
+        this.transaction_id != "" 
       ) {
         return true;
       } else {
         return false;
       }
     } else if (this.payment_method == "cash") {
-      if (this.cash_details != undefined) {
+      if (
+        this.cash_details != undefined &&
+        this.purpose != "" &&
+        this.payment_status != "" &&
+        this.amount != ""
+      ) {
         return true;
       } else {
         return false;
       }
     }
+  }
+
+  addCheque() {
+    if (
+      this.cheque_no != "" &&
+      this.cheque_name != "" &&
+      this.cheque_date != "" &&
+      this.purpose != "" &&
+      this.payment_status != "" &&
+      this.amount != ""
+    ) {
+      this.added_cheques.push({
+        no: this.cheque_no,
+        name: this.cheque_name,
+        date: this.cheque_date,
+        purpose: this.purpose_list.find((p) => p.value == this.purpose)
+          .viewValue,
+        status: this.payment_status_list.find(
+          (s) => s.value == this.payment_status
+        ).viewValue,
+
+        amount: this.amount,
+      });
+
+      setTimeout(() => {
+        this.cheque_no = "";
+        this.cheque_name = "";
+        this.cheque_date = "";
+        this.purpose = "";
+        this.payment_status = "";
+        this.amount = "";
+      }, 100);
+    }
+  }
+
+  deleteCheque(index) {
+    this.added_cheques.splice(index, 1);
   }
 
   ngOnInit() {}
@@ -199,10 +264,7 @@ export class AddPaymentDialog implements OnInit {
         this.selected_property != undefined &&
         this.unit_data != undefined &&
         this.tenant_data != undefined &&
-        this.purpose != "" &&
         this.payment_method != "" &&
-        this.payment_status != "" &&
-        this.amount != "" &&
         this.checkPaymentMethodDetailsNotEmpty() != false
       ) {
         this.uploading = true;
@@ -267,11 +329,7 @@ export class AddPaymentDialog implements OnInit {
   getMethodDetails(method) {
     switch (method) {
       case "cheque":
-        return {
-          cheque_no: this.cheque_no,
-          cheque_date: this.cheque_date,
-          name_on_cheque: this.cheque_name,
-        };
+        return this.added_cheques;
       case "online":
         return {
           bank_name: this.bank_name,
@@ -279,10 +337,17 @@ export class AddPaymentDialog implements OnInit {
           ac_no: this.bank_no,
           bank_holder_name: this.bank_holder_name,
           iban: this.bank_iban,
+          status: this.payment_status,
+          purpose: this.purpose,
+          amount: this.amount,
+          transaction_id: this.transaction_id,
         };
       case "cash":
         return {
           details: this.cash_details,
+          status: this.payment_status,
+          purpose: this.purpose,
+          amount: this.amount,
         };
       default:
         break;
@@ -299,12 +364,10 @@ export class AddPaymentDialog implements OnInit {
       unit_no: this.unit_data.no,
       property_id: this.selected_property.id,
       property_name: this.selected_property.name,
-      amount: this.amount,
-      purpose: this.purpose,
       payment_method: this.payment_method,
-      status: this.payment_status,
+      no_of_cheques: this.no_of_cheques,
       documents: JSON.stringify(docs_names),
-      date: this.issued_date,
+      date: new Date(),
       method_details: this.getMethodDetails(this.payment_method),
     };
 

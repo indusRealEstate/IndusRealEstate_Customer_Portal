@@ -49,31 +49,12 @@
               selected_property.name}}</span
             >
           </div>
+
           <mat-form-field class="textField" appearance="outline">
-            <mat-label>Amount</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 12000"
-              [(ngModel)]="amount"
-            />
-          </mat-form-field>
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Purpose</mat-label>
-            <mat-select [(ngModel)]="purpose">
+            <mat-label>Payment Method*</mat-label>
+            <mat-select [(ngModel)]="payment_method">
               <mat-option
-                *ngFor="let item of purpose_list"
-                [value]="item.value"
-              >
-                {{item.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Status*</mat-label>
-            <mat-select [(ngModel)]="payment_status">
-              <mat-option
-                *ngFor="let item of payment_status_list"
+                *ngFor="let item of payment_method_list"
                 [value]="item.value"
               >
                 {{item.viewValue}}
@@ -104,11 +85,15 @@
             >
           </div>
 
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Payment Method*</mat-label>
-            <mat-select [(ngModel)]="payment_method">
+          <mat-form-field
+            class="textField"
+            appearance="outline"
+            *ngIf="payment_method == 'cheque'"
+          >
+            <mat-label>No. of Cheques*</mat-label>
+            <mat-select [(ngModel)]="no_of_cheques">
               <mat-option
-                *ngFor="let item of payment_method_list"
+                *ngFor="let item of no_of_cheques_list"
                 [value]="item.value"
               >
                 {{item.viewValue}}
@@ -116,7 +101,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="mat-datepicker textField" appearance="outline">
+          <!-- <mat-form-field class="mat-datepicker textField" appearance="outline">
             <mat-label>Issued Date</mat-label>
             <input
               matInput
@@ -128,9 +113,9 @@
               [for]="issue_date_picker"
             ></mat-datepicker-toggle>
             <mat-datepicker #issue_date_picker></mat-datepicker>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
-        <div class="col-6" style="height: 30vh; overflow: auto">
+        <div class="col-6" style="height: 20vh; overflow: auto">
           <div
             (click)="fileInput.click()"
             class="btn ml-4"
@@ -195,18 +180,81 @@
         style="font-size: 17px; font-weight: 500; color: #3c4858b5"
         >Payment Method Details</span
       >
+      <div
+        class="mt-1"
+        *ngIf="payment_method == 'cheque' && added_cheques.length != 0"
+        style="max-height: 15rem; overflow: auto"
+      >
+        <span style="font-size: 14px; font-weight: 500; color: #d4aa32"
+          >Added Cheques</span
+        >
+        <span
+          class="row m-0 mt-2"
+          *ngFor="let cheque of added_cheques;let index = index"
+        >
+          <span class="d-flex align-items-center mr-2" style="font-weight: 400"
+            >{{index + 1}} :
+          </span>
+          <span
+            style="
+              background: #3c485812;
+              color: #3c4858;
+              border: 1px solid #3c4858;
+              border-radius: 3px;
+              padding: 4px 10px;
+              font-weight: 400;
+            "
+          >
+            <span class="mr-2"
+              >Cheque No. :
+              <span style="font-weight: 600">{{cheque.no}},</span></span
+            >
+            <span class="mr-2"
+              >Name On Cheque :
+              <span style="font-weight: 600">{{cheque.name}},</span></span
+            >
+            <span class="mr-2"
+              >Cheque Date :
+              <span style="font-weight: 600"
+                >{{cheque.date | date:'M/d/y'}},</span
+              ></span
+            >
+            <span class="mr-2"
+              >Cheque Amount :
+              <span style="font-weight: 600"
+                >{{cheque.amount | currency:'AED '}},</span
+              ></span
+            >
+            <span class="mr-2"
+              >Cheque Purpose :
+              <span style="font-weight: 600">{{cheque.purpose}},</span></span
+            >
+            <span
+              >Cheque Status :
+              <span style="font-weight: 600">{{cheque.status}}</span></span
+            >
+          </span>
+          <img
+            (click)="deleteCheque(index)"
+            class="ml-2"
+            style="width: 20px; cursor: pointer"
+            matTooltip="Delete Cheque"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            src="assets/img/svg/delete.svg"
+            alt=""
+          />
+        </span>
+      </div>
       <div class="row m-0 mt-3" *ngIf="payment_method == 'cheque'">
-        <div class="col pl-0">
+        <div class="col p-0">
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Cheque No.</mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Ex. 12000"
-              [(ngModel)]="cheque_no"
-            />
+            <input matInput placeholder="Ex. 12000" [(ngModel)]="cheque_no" />
           </mat-form-field>
+        </div>
 
+        <div class="col pr-0">
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Name On Cheque</mat-label>
             <input
@@ -217,7 +265,8 @@
             />
           </mat-form-field>
         </div>
-        <div class="col">
+
+        <div class="col pr-0">
           <mat-form-field class="mat-datepicker textField" appearance="outline">
             <mat-label>Cheque Date</mat-label>
             <input
@@ -232,11 +281,69 @@
             <mat-datepicker #cheque_date_picker></mat-datepicker>
           </mat-form-field>
         </div>
+
+        <div class="col pr-0"></div>
       </div>
+      <div class="row m-0" *ngIf="payment_method == 'cheque'">
+        <div class="col p-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Purpose</mat-label>
+            <mat-select [(ngModel)]="purpose">
+              <mat-option
+                *ngFor="let item of purpose_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col pr-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Status*</mat-label>
+            <mat-select [(ngModel)]="payment_status">
+              <mat-option
+                *ngFor="let item of payment_status_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col pr-0">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 12000"
+              [(ngModel)]="amount"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col pr-0">
+          <div
+            (click)="addCheque()"
+            class="btn m-0"
+            style="
+              background: #d4aa32;
+              height: 54px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0;
+              font-size: 15px;
+            "
+          >
+            Add
+          </div>
+        </div>
+      </div>
+
       <div class="row m-0 mt-3" *ngIf="payment_method == 'online'">
         <div class="col pl-0">
-          
-
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Bank Name</mat-label>
             <input
@@ -265,6 +372,27 @@
               [(ngModel)]="bank_iban"
             />
           </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Status*</mat-label>
+            <mat-select [(ngModel)]="payment_status">
+              <mat-option
+                *ngFor="let item of payment_status_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 12000"
+              [(ngModel)]="amount"
+            />
+          </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="textField" appearance="outline">
@@ -285,6 +413,28 @@
               [(ngModel)]="bank_holder_name"
             />
           </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Transaction ID</mat-label>
+            <input
+              matInput
+              placeholder="Ex. ADCB2345325HJHVJHVH"
+              [(ngModel)]="transaction_id"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Purpose</mat-label>
+            <mat-select [(ngModel)]="purpose">
+              <mat-option
+                *ngFor="let item of purpose_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
         </div>
       </div>
       <div class="row m-0 mt-3" *ngIf="payment_method == 'cash'">
@@ -293,13 +443,44 @@
             <mat-label>Cash Recieved Details</mat-label>
             <input
               matInput
-              type="name"
               placeholder="Ex. Details"
               [(ngModel)]="cash_details"
             />
           </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Status*</mat-label>
+            <mat-select [(ngModel)]="payment_status">
+              <mat-option
+                *ngFor="let item of payment_status_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Purpose</mat-label>
+            <mat-select [(ngModel)]="purpose">
+              <mat-option
+                *ngFor="let item of purpose_list"
+                [value]="item.value"
+              >
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="textField" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Ex. 12000"
+              [(ngModel)]="amount"
+            />
+          </mat-form-field>
+        </div>
       </div>
 
       <div class="row m-0 w-100 justify-content-end align-items-center">

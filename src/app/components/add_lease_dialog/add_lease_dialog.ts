@@ -16,6 +16,7 @@ import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
 import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
+import { AddPaymentDialog } from "../add_payment_dialog/add_payment_dialog";
 
 @Component({
   // standalone: true,
@@ -333,5 +334,17 @@ export class AddLeaseDialog implements OnInit {
       default:
         return `File surprising upload event: ${event.type}.`;
     }
+  }
+
+  addPayments(contract_id) {
+    this.dialog
+      .open(AddPaymentDialog, {
+        width: "100%",
+        data: {
+          id: contract_id,
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
   }
 }

@@ -59,30 +59,50 @@ export class EditPaymentDialog implements OnInit {
 
         this.contract_id = res.contract_id;
 
-        this.amount = res.payment_amount;
+        this.no_of_cheques = res.payment_no_of_cheques;
 
         this.payment_method = res.payment_method;
-        this.purpose = res.payment_purpose;
         this.issued_date = res.payment_date;
-        this.payment_status = res.payment_status;
 
-        if (res.payment_method == "cheque") {
-          this.cheque_no = res.payment_cheque_no;
-          this.cheque_name = res.payment_name_on_cheque;
-          this.cheque_date = res.payment_cheque_date;
-        } else if (res.payment_method == "online") {
+        if (res.payment_method == "online") {
           this.bank_name = res.payment_bank_name;
           this.bank_branch = res.payment_bank_branch;
           this.bank_no = res.payment_bank_ac_no;
           this.bank_iban = res.payment_bank_iban;
           this.bank_holder_name = res.payment_bank_holder_name;
+          this.amount = res.payment_online_amount;
+          this.purpose = res.payment_online_purpose;
+          this.payment_status = res.payment_online_status;
+          this.transaction_id = res.payment_bank_transaction_id;
         } else if (res.payment_method == "cash") {
           this.cash_details = res.payment_cash_details;
+          this.amount = res.payment_cash_amount;
+          this.purpose = res.payment_cash_purpose;
+          this.payment_status = res.payment_cash_status;
         }
 
         JSON.parse(res.payment_documents).forEach((doc) => {
           this.docsFilesUploaded.push({ name: doc, old: true });
         });
+
+        if (res.payment_method == "cheque") {
+          res.cheques.forEach((ch) => {
+            this.added_cheques.push({
+              no: ch.cheque_no,
+              name: ch.name_on_cheque,
+              date: ch.cheque_date,
+              purpose: this.purpose_list.find((p) => p.viewValue == ch.purpose)
+                .viewValue,
+              status: this.payment_status_list.find(
+                (s) => s.viewValue == ch.status
+              ).viewValue,
+
+              amount: ch.amount,
+              old: true,
+              id: ch.id,
+            });
+          });
+        }
       })
       .add(() => {
         this.isContentLoading = false;
@@ -96,6 +116,7 @@ export class EditPaymentDialog implements OnInit {
 
   docsFilesUploaded_new: File[] = [];
   removed_existing_docs: any[] = [];
+  added_cheques: any[] = [];
 
   unit_data: any;
   purpose: any = "";
@@ -131,6 +152,14 @@ export class EditPaymentDialog implements OnInit {
 
   uploading_progress: any = 0;
 
+  no_of_cheques: any = "";
+
+  removed_cheques: any[] = [];
+
+  new_cheques: any[] = [];
+
+  transaction_id: any;
+
   purpose_list: any[] = [
     { value: "rent", viewValue: "Rent" },
     { value: "security_deposit", viewValue: "Security Deposit" },
@@ -147,6 +176,24 @@ export class EditPaymentDialog implements OnInit {
     { value: "cheque", viewValue: "Cheque" },
     { value: "cash", viewValue: "Cash" },
     { value: "online", viewValue: "Online" },
+  ];
+
+  no_of_cheques_list: any[] = [
+    { value: "1", viewValue: "1 Cheque" },
+    { value: "2", viewValue: "2 Cheques" },
+    { value: "3", viewValue: "3 Cheques" },
+    { value: "4", viewValue: "4 Cheques" },
+    { value: "5", viewValue: "5 Cheques" },
+    { value: "6", viewValue: "6 Cheques" },
+    { value: "7", viewValue: "7 Cheques" },
+    { value: "8", viewValue: "8 Cheques" },
+    { value: "9", viewValue: "9 Cheques" },
+    { value: "10", viewValue: "10 Cheques" },
+    { value: "11", viewValue: "11 Cheques" },
+    { value: "12", viewValue: "12 Cheques" },
+    { value: "13", viewValue: "13 Cheques" },
+    { value: "14", viewValue: "14 Cheques" },
+    { value: "15", viewValue: "15 Cheques" },
   ];
 
   addPaginatorDialog(type: string) {
@@ -206,31 +253,92 @@ export class EditPaymentDialog implements OnInit {
 
   checkPaymentMethodDetailsNotEmpty() {
     if (this.payment_method == "cheque") {
-      if (
-        this.cheque_no != undefined &&
-        this.cheque_name != undefined &&
-        this.cheque_date != undefined
-      ) {
-        return true;
-      } else {
+      if (this.no_of_cheques == "" || this.added_cheques.length == 0) {
         return false;
+      } else {
+        return true;
       }
     } else if (this.payment_method == "online") {
       if (
         this.bank_name != undefined &&
         this.bank_holder_name != undefined &&
-        this.bank_no != undefined
+        this.bank_no != undefined &&
+        this.purpose != "" &&
+        this.payment_status != "" &&
+        this.amount != ""
       ) {
         return true;
       } else {
         return false;
       }
     } else if (this.payment_method == "cash") {
-      if (this.cash_details != undefined) {
+      if (
+        this.cash_details != undefined &&
+        this.purpose != "" &&
+        this.payment_status != "" &&
+        this.amount != ""
+      ) {
         return true;
       } else {
         return false;
       }
+    }
+  }
+
+  addCheque() {
+    if (
+      this.cheque_no != "" &&
+      this.cheque_name != "" &&
+      this.cheque_date != "" &&
+      this.purpose != "" &&
+      this.payment_status != "" &&
+      this.amount != ""
+    ) {
+      this.added_cheques.push({
+        no: this.cheque_no,
+        name: this.cheque_name,
+        date: this.cheque_date,
+        purpose: this.purpose_list.find((p) => p.value == this.purpose)
+          .viewValue,
+        status: this.payment_status_list.find(
+          (s) => s.value == this.payment_status
+        ).viewValue,
+
+        amount: this.amount,
+        old: false,
+      });
+
+      this.new_cheques.push({
+        no: this.cheque_no,
+        name: this.cheque_name,
+        date: this.cheque_date,
+        purpose: this.purpose_list.find((p) => p.value == this.purpose)
+          .viewValue,
+        status: this.payment_status_list.find(
+          (s) => s.value == this.payment_status
+        ).viewValue,
+
+        amount: this.amount,
+      });
+
+      setTimeout(() => {
+        this.cheque_no = "";
+        this.cheque_name = "";
+        this.cheque_date = "";
+        this.purpose = "";
+        this.payment_status = "";
+        this.amount = "";
+      }, 100);
+    }
+  }
+
+  deleteCheque(index, cheque) {
+    this.added_cheques.splice(index, 1);
+
+    if (cheque.old == true) {
+      this.removed_cheques.push(cheque.id);
+    } else {
+      this.new_cheques.splice(index, 1);
     }
   }
 
@@ -264,10 +372,7 @@ export class EditPaymentDialog implements OnInit {
         this.selected_property != undefined &&
         this.unit_data != undefined &&
         this.tenant_data != undefined &&
-        this.purpose != "" &&
         this.payment_method != "" &&
-        this.payment_status != "" &&
-        this.amount != "" &&
         this.checkPaymentMethodDetailsNotEmpty() != false
       ) {
         this.uploading = true;
@@ -320,8 +425,11 @@ export class EditPaymentDialog implements OnInit {
   setupUploadFiles(random_id: any, docs_names: any[]): FormData {
     const formdata: FormData = new FormData();
 
-    if(this.removed_existing_docs.length != 0){
-      formdata.append("deleted_doc", JSON.stringify(this.removed_existing_docs));
+    if (this.removed_existing_docs.length != 0) {
+      formdata.append(
+        "deleted_doc",
+        JSON.stringify(this.removed_existing_docs)
+      );
     }
 
     formdata.append("docs_names", JSON.stringify(docs_names));
@@ -340,11 +448,7 @@ export class EditPaymentDialog implements OnInit {
   getMethodDetails(method) {
     switch (method) {
       case "cheque":
-        return {
-          cheque_no: this.cheque_no,
-          cheque_date: this.cheque_date,
-          name_on_cheque: this.cheque_name,
-        };
+        return this.new_cheques;
       case "online":
         return {
           bank_name: this.bank_name,
@@ -352,10 +456,16 @@ export class EditPaymentDialog implements OnInit {
           ac_no: this.bank_no,
           bank_holder_name: this.bank_holder_name,
           iban: this.bank_iban,
+          status: this.payment_status,
+          purpose: this.purpose,
+          amount: this.amount,
         };
       case "cash":
         return {
           details: this.cash_details,
+          status: this.payment_status,
+          purpose: this.purpose,
+          amount: this.amount,
         };
       default:
         break;
@@ -372,12 +482,11 @@ export class EditPaymentDialog implements OnInit {
       unit_no: this.unit_data.no,
       property_id: this.selected_property.id,
       property_name: this.selected_property.name,
-      amount: this.amount,
-      purpose: this.purpose,
       payment_method: this.payment_method,
-      status: this.payment_status,
+      no_of_cheques: this.no_of_cheques,
       documents: JSON.stringify(docs_names),
       date: this.issued_date,
+      removed_cheques: this.removed_cheques,
       method_details: this.getMethodDetails(this.payment_method),
     };
 

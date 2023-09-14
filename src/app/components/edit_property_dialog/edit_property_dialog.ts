@@ -73,6 +73,9 @@ export class EditPropertyDialog implements OnInit {
     { value: "2", viewValue: "Nad Al Sheba" },
     { value: "3", viewValue: "Nashama Town Square" },
     { value: "4", viewValue: "JVC" },
+    { value: "5", viewValue: "International City" },
+    { value: "6", viewValue: "Downtown Dubai" },
+    { value: "7", viewValue: "JLT" },
   ];
 
   testImage: any;
