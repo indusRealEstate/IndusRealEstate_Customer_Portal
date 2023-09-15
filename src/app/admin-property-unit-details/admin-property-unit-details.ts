@@ -472,6 +472,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           unit_id: this.all_data.unit_id,
           owner_name: this.all_data.unit_owner,
           owner_id: this.all_data.unit_owner_id,
+          ownership_type: this.ownership_type,
+          all_owners: this.all_owners,
         },
       })
       .afterClosed()

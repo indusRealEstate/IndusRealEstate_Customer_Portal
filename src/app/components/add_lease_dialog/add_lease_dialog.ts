@@ -45,10 +45,15 @@ export class AddLeaseDialog implements OnInit {
         no: data.unit_no,
       };
 
-      this.owner = {
-        name: data.owner_name,
-        id: data.owner_id,
-      };
+      if (data.ownership_type == "multiple") {
+        this.ownership_type = "multiple";
+        this.all_owners = data.all_owners;
+      } else {
+        this.owner = {
+          name: data.owner_name,
+          id: data.owner_id,
+        };
+      }
     }
 
     this.contract_id = uuid.v4();

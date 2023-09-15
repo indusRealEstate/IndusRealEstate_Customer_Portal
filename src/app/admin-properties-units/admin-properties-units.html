@@ -47,6 +47,13 @@
             >
               Vacant
             </div>
+            <div
+              [ngClass]="current_sort_option == 'multiple_owners' ? 'sort-unit-btns-active' : 'sort-unit-btns'"
+              class="btn m-0 ml-2"
+              (click)="changeSortOption('multiple_owners')"
+            >
+              Multiple Owners
+            </div>
           </div>
         </div>
         <div class="row m-0 align-items-center">

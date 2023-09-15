@@ -10,24 +10,7 @@ import { TableSearchBarComponent } from "app/components/searchbar-table/searchba
 import { TableFiltersComponent } from "app/components/table-filters/table-filters";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UnitsService } from "app/services/units.service";
-import * as XLSX from "xlsx-js-style";
-
-import * as FileSaver from "file-saver";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
-
-declare interface Unit {
-  "UNIT No.": number;
-  "UNIT TYPE": string;
-  BUILDING: string;
-  FLOORS: string;
-  "UNIT SIZE": string;
-  "OCCUPANCY STATUS": string;
-  OWNER: string;
-  TENANT: string;
-  BEDROOMS: number;
-  BATHROOMS: number;
-  PARKING: number;
-}
 
 @Component({
   selector: "admin-properties-units",
