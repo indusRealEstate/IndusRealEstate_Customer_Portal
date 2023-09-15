@@ -33,6 +33,10 @@ export class EditUnitDialog implements OnInit {
 
   all_data: any;
 
+  private text_reg = /^[a-zA-Z]*$/;
+  private number_reg = /^[0-9]*$/;
+  private text_and_number_reg = /^[A-Za-z0-9]*/;
+
   docsFilesUploaded: any[] = [];
   imgFilesBase64Uploaded: any[] = [];
   imgFilesUploaded: any[] = [];
@@ -84,6 +88,8 @@ export class EditUnitDialog implements OnInit {
   deleted_doc: string[] = [];
 
   is_submit: boolean = false;
+
+  number_of_doc: number = 0;
 
   extra_living_room: boolean = false;
   maids_room: boolean = false;
@@ -238,16 +244,11 @@ export class EditUnitDialog implements OnInit {
   }
 
   onCloseDialog() {
-    if (this.is_submit == true) {
-      var sel_prop_name = this.properties.find(
-        (pr) => pr.value == this.selected_property
-      ).viewValue;
-    }
-
+   
     this.dialogRef.close({
       unit_no: this.is_submit ? this.unit_number : undefined,
-      property_id: this.is_submit ? this.selected_property : undefined,
-      property_name: this.is_submit ? sel_prop_name : undefined,
+      property_id: this.is_submit ? this.selected_property.id : undefined,
+      property_name: this.is_submit ? this.selected_property.name : undefined,
       unit_type: this.is_submit ? this.unit_type : undefined,
       floor: this.is_submit ? this.floors : undefined,
       size: this.is_submit ? this.unit_size : undefined,
@@ -255,8 +256,8 @@ export class EditUnitDialog implements OnInit {
       bedroom: this.is_submit ? this.bedrooms : undefined,
       bathroom: this.is_submit ? this.bathrooms : undefined,
       no_of_parking: this.is_submit ? this.number_of_parking : undefined,
-      owner: this.is_submit ? this.owner.viewValue : undefined,
-      owner_id: this.is_submit ? this.owner.value : undefined,
+      owner: this.is_submit ? this.owner.name : undefined,
+      owner_id: this.is_submit ? this.owner.id : undefined,
       tenant_id: this.is_submit
         ? this.all_data.tenant_uid == undefined
           ? ""
@@ -270,22 +271,27 @@ export class EditUnitDialog implements OnInit {
       images: this.is_submit ? JSON.stringify(this.uploaded_images) : undefined,
       documents: this.is_submit ? JSON.stringify(this.uploaded_doc) : undefined,
       amenties: this.is_submit ? JSON.stringify(this.amenties) : undefined,
-      user_id: this.is_submit ? this.owner.value : undefined,
+      user_id: this.is_submit ? this.owner.id : undefined,
       description: this.is_submit ? this.unit_description : undefined,
     });
   }
 
   addinventory() {
-    this.inventories.push({
-      name: this.inventory_name,
-      place: this.inventory_place,
-      count: this.inventory_count,
-      new: true,
-    });
-
-    this.inventory_name = "";
-    this.inventory_place = "";
-    this.inventory_count = "";
+    if (
+      this.inventory_name !== "" &&
+      this.inventory_place !== "" &&
+      this.inventory_count !== ""
+    ) {
+      this.inventories.push({
+        name: this.inventory_name,
+        place: this.inventory_place,
+        count: this.inventory_count,
+        new: true,
+      });
+      this.inventory_name = "";
+      this.inventory_place = "";
+      this.inventory_count = "";
+    }
   }
 
   deleteInventory(index) {
@@ -293,8 +299,24 @@ export class EditUnitDialog implements OnInit {
   }
 
   addAmenty() {
-    this.amenties.push(this.new_amenty);
-    this.new_amenty = "";
+    if (this.new_amenty !== "") {
+      let new_amenities_array: string[] = [];
+      this.amenties.map((item) => {
+        new_amenities_array.push(item.toLowerCase());
+      });
+      if (!new_amenities_array.includes(this.new_amenty.toLowerCase())) {
+        if (this.new_amenty.match(this.text_reg)) {
+          this.amenties.push(this.new_amenty);
+          this.new_amenty = "";
+        }
+      }
+    }
+  }
+
+  enterAmenity(event) {
+    if (event.code == "Enter") {
+      this.addAmenty();
+    }
   }
 
   deleteAmenty(index) {
@@ -302,6 +324,7 @@ export class EditUnitDialog implements OnInit {
   }
 
   onFileSelected(files: Array<any>) {
+    this.number_of_doc = files.length;
     for (var item of files) {
       this.docsFilesUploaded.push(item);
     }
@@ -423,6 +446,7 @@ export class EditUnitDialog implements OnInit {
                   // console.log(v);
                 });
             } else {
+              this.is_submit = true;
               this.onCloseDialog();
             }
           }

@@ -1,6 +1,6 @@
 <div
   class="card"
-  style="margin: 0"
+  style="margin: 10px 0px; box-shadow: 0px 0px 0px;"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane"
 >
@@ -138,7 +138,7 @@
               matInput
               type="text"
               placeholder="Ex. Jhon"
-              [(ngModel)]="user_mobile_number"
+              [(ngModel)]="user_mobile_number" 
             />
           </mat-form-field> -->
 
@@ -276,7 +276,9 @@
           <div
             (click)="fileInput.click()"
             class="btn ml-4"
-            style="background: #d4aa32"
+            style="background: #d4aa32;position: sticky; top: 0;
+            "
+
           >
             Add Documents
           </div>
