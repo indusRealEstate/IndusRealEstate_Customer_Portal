@@ -149,6 +149,21 @@ export class AddLeaseDialog implements OnInit {
     { value: "15", viewValue: "15 Cheques" },
   ];
 
+  all_owners: any[] = [];
+  ownership_type: any = "single";
+
+  getOwnerValue() {
+    if (this.ownership_type == "multiple") {
+      return `${this.all_owners.length} Owners`;
+    } else {
+      if (this.owner == undefined) {
+        return "Select a Unit";
+      } else {
+        return this.owner.name;
+      }
+    }
+  }
+
   addPaginatorDialog(type: string) {
     if (type == "unit" && this.selected_property == undefined) {
       this.property_not_selected = true;
@@ -172,7 +187,6 @@ export class AddLeaseDialog implements OnInit {
         .afterClosed()
         .subscribe((res) => {
           if (res != undefined) {
-            // console.log(res);
             if (type == "property") {
               this.selected_property = {
                 id: res.property_id,
@@ -186,10 +200,15 @@ export class AddLeaseDialog implements OnInit {
                 no: res.unit_no,
               };
 
-              this.owner = {
-                id: res.owner_id,
-                name: res.owner,
-              };
+              if (res.owner_type == "multiple") {
+                this.ownership_type = "multiple";
+                this.all_owners = JSON.parse(res.all_owners);
+              } else {
+                this.owner = {
+                  id: res.owner_id,
+                  name: res.owner,
+                };
+              }
             } else if (type == "user") {
               this.tenant_data = {
                 id: res.user_id,
@@ -301,8 +320,10 @@ export class AddLeaseDialog implements OnInit {
       property_name: this.selected_property.name,
       unit_id: this.unit_data.id,
       unit_no: this.unit_data.no,
-      owner_id: this.owner.id,
-      owner_name: this.owner.name,
+      ownership_type: this.ownership_type,
+      all_owners: JSON.stringify(this.all_owners),
+      owner_id: this.owner != undefined ? this.owner.id : "",
+      owner_name: this.owner != undefined ? this.owner.name : "",
       tenant_id: this.tenant_data.id,
       tenant_name: this.tenant_data.name,
       status: "active",

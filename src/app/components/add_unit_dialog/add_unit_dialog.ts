@@ -94,12 +94,13 @@ export class AddUnitDialog implements OnInit {
 
   users: any[] = [];
 
-  locality: DropDownButtonModel[] = [
-    { value: "0", viewValue: "Al Barsha" },
-    { value: "1", viewValue: "Dubai Internet City" },
-    { value: "2", viewValue: "Nad Al Sheba" },
-    { value: "3", viewValue: "Nashama Town Square" },
-    { value: "4", viewValue: "JVC" },
+  selected_owner_type: any = "single";
+
+  selected_all_owners: any[] = [];
+
+  owner_type: DropDownButtonModel[] = [
+    { value: "single", viewValue: "Single" },
+    { value: "multiple", viewValue: "Multiple" },
   ];
 
   addPaginatorDialog(type: string) {
@@ -114,20 +115,47 @@ export class AddUnitDialog implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res != undefined) {
-          // console.log(res);
           if (type == "property") {
             this.selected_property = {
               id: res.property_id,
               name: res.property_name,
             };
           } else {
-            this.owner = {
-              id: res.user_id,
-              name: res.name,
-            };
+            if (this.selected_owner_type == "single") {
+              this.owner = {
+                id: res.user_id,
+                name: res.name,
+              };
+            } else {
+              if (
+                this.selected_all_owners.filter((o) => o.id == res.user_id)
+                  .length == 0
+              ) {
+                this.selected_all_owners.push({
+                  id: res.user_id,
+                  name: res.name,
+                });
+              }
+            }
           }
         }
       });
+  }
+
+  removeOwner(index) {
+    this.selected_all_owners.splice(index, 1);
+  }
+
+  getSelectOwnerTitle() {
+    if (this.selected_owner_type == "single") {
+      if (this.owner == undefined) {
+        return "Owner*";
+      } else {
+        return this.owner.name;
+      }
+    } else {
+      return "Add Owner";
+    }
   }
 
   getUserType(user_type) {
@@ -212,13 +240,29 @@ export class AddUnitDialog implements OnInit {
     }
   }
 
+  getOwnerValidation() {
+    if (this.selected_owner_type == "single") {
+      if (this.owner == undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      if (this.selected_all_owners.length == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
   onSubmit() {
     if (this.docsFilesUploaded.length != 0) {
       if (
         this.selected_property != undefined &&
         this.unit_type != "" &&
         this.unit_number != "" &&
-        this.owner != undefined
+        this.getOwnerValidation() != false
       ) {
         this.uploading = true;
         var random_id = uuid.v4();
@@ -346,7 +390,9 @@ export class AddUnitDialog implements OnInit {
       bedroom: this.bedrooms,
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
-      owner: this.owner.name,
+      owner_type: this.selected_owner_type,
+      all_owners: JSON.stringify(this.selected_all_owners),
+      owner: this.owner != undefined ? this.owner.name : "",
       tenant_id: "",
       lease_id: "",
       images:
@@ -355,7 +401,7 @@ export class AddUnitDialog implements OnInit {
           : JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
-      user_id: this.owner.id,
+      user_id: this.owner != undefined ? this.owner.id : "",
       description: this.unit_description,
     };
 

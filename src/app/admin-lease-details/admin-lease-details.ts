@@ -66,13 +66,30 @@ export class AdminLeaseDetail implements OnInit {
     });
   }
 
+  all_owners: any[] = [];
+  ownership_type: any = "single";
+
+  navigateUserDetails(user_id, auth) {
+    this.router.navigate(["/user-details"], {
+      queryParams: {
+        user_id: user_id,
+        auth: auth,
+      },
+    });
+  }
+
   async ngOnInit() {
     this.leaseService
       .getAllLeaseData({ id: this.contract_id })
-      .subscribe((value) => {
+      .subscribe((value: any) => {
         this.isContentLoading = true;
         this.all_data = value;
         console.log(this.all_data);
+
+        if (value.lease_unit_ownership_type == "multiple") {
+          this.ownership_type = "multiple";
+          this.all_owners = JSON.parse(value.lease_unit_all_owners);
+        }
 
         for (let i = 0; i < JSON.parse(this.all_data.lease_docs).length; i++) {
           this.lease_doc.push(JSON.parse(this.all_data.lease_docs)[i]);

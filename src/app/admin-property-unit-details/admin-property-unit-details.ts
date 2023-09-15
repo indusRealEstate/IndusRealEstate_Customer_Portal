@@ -20,7 +20,6 @@ import { EditUnitDialog } from "app/components/edit_unit_dialog/edit_unit_dialog
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { ViewAllUnitDocuments } from "app/components/view_all_unit_documents/view_all_unit_documents";
 import { ViewAllUnitInventories } from "app/components/view_all_unit_inventories/view_all_unit_inventories";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { DownloadService } from "app/services/download.service";
 import { OtherServices } from "app/services/other.service";
@@ -136,13 +135,17 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     });
   }
 
+  ownership_type: any = "";
+  all_owners: any[] = [];
+
   ngOnChanges() {}
 
   async ngOnInit() {
     this.unitService
       .getUnitAllData({ id: this.unit_id })
       .subscribe((value: any) => {
-        console.log(value); 
+        console.log(value);
+
         this.all_data = value;
         this.all_payments_data = new MatTableDataSource<any>(
           value.tenant_payments
@@ -197,6 +200,11 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
         }
       })
       .add(() => {
+        this.ownership_type = this.all_data.unit_owner_type;
+        if (this.all_data.unit_owner_type == "multiple") {
+          this.all_owners = JSON.parse(this.all_data.unit_all_owners);
+        }
+
         this.isContentLoading = false;
         this.unitService
           .getallUnitTypes()
@@ -354,6 +362,15 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     });
   }
 
+  navigateUserDetails(user_id, auth) {
+    this.router.navigate(["/user-details"], {
+      queryParams: {
+        user_id: user_id,
+        auth: auth,
+      },
+    });
+  }
+
   downloadDoc() {
     if (this.selected_document != "") {
       this.downloadService
@@ -405,7 +422,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
       this.all_data.user_country_code_number + this.all_data.user_mobile_number
     }`;
   }
-  
+
   email_person() {
     location.href =
       "mailto:" +
@@ -453,8 +470,8 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           prop_id: this.all_data.prop_uid,
           unit_no: this.all_data.unit_no,
           unit_id: this.all_data.unit_id,
-          owner_name : this.all_data.unit_owner,
-          owner_id : this.all_data.unit_owner_id
+          owner_name: this.all_data.unit_owner,
+          owner_id: this.all_data.unit_owner_id,
         },
       })
       .afterClosed()
@@ -655,7 +672,6 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
           this.openSnackBar(data.msg, "Close");
           this.amenties(data.amenities);
         }
-        
       });
   }
 

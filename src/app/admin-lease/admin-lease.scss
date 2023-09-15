@@ -752,3 +752,37 @@
     color: #c49920;
   }
 }
+
+::ng-deep .owners-more-menu {
+  max-width: none !important;
+
+  .mat-mdc-menu-content {
+    max-height: 400px;
+    padding: 5px 15px;
+    width: 300px;
+
+    .mat-mdc-menu-item {
+      border: 1px solid #e6ebf1;
+      border-radius: 5px;
+      margin: 10px 0;
+      min-height: 40px;
+
+      &:hover {
+        background: #d4a9321a;
+
+        .mdc-list-item__primary-text {
+          color: #d4aa32;
+        }
+      }
+
+      .mdc-list-item__primary-text {
+        width: 100%;
+        font-size: 14px;
+        text-overflow: ellipsis;
+        max-width: 230px;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+}

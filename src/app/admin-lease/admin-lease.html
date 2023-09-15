@@ -248,10 +248,35 @@
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
               >
                 <span
+                  *ngIf="element.ownership_type != 'multiple'"
                   class="prop_name"
                   (click)="navigateToUserDetailsPage(element.owner_id, 'owner')"
                   >{{ element.owner_name | titlecase}}</span
                 >
+
+                <span
+                  *ngIf="element.ownership_type == 'multiple'"
+                  [matMenuTriggerFor]="ownerMoreInfo"
+                  style="
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    color: #4185e3;
+                  "
+                  class="prop_name"
+                  (click)="multipleOwnersButtonClicked(element.all_owners)"
+                  >{{getAllOwners(element.all_owners).length}} Owners</span
+                >
+
+                <mat-menu #ownerMoreInfo="matMenu" class="owners-more-menu">
+                  <button
+                    mat-menu-item
+                    *ngFor="let ow of all_owners"
+                    (click)="navigateToUserDetailsPage(ow.id, 'owner')"
+                  >
+                    {{ow.name}}
+                  </button>
+                </mat-menu>
               </td>
             </ng-container>
             <ng-container matColumnDef="tenant">

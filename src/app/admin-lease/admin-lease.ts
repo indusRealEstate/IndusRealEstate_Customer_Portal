@@ -115,6 +115,17 @@ export class AllLeasesComponent implements OnInit {
     }, 800);
   }
 
+  all_owners: any[] = [];
+
+  getAllOwners(owners): any[] {
+    var owners_arr: any[] = JSON.parse(owners);
+    return owners_arr;
+  }
+
+  multipleOwnersButtonClicked(owners) {
+    this.all_owners = JSON.parse(owners);
+  }
+
   changeSortOption(option: string) {
     this.current_sort_option = option;
     this.searchBar.searchText = "";

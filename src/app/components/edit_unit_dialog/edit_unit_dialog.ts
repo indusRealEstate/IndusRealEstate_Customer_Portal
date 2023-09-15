@@ -99,12 +99,15 @@ export class EditUnitDialog implements OnInit {
 
   unitTypes: DropDownButtonModel[] = [];
 
-  locality: DropDownButtonModel[] = [
-    { value: "0", viewValue: "Al Barsha" },
-    { value: "1", viewValue: "Dubai Internet City" },
-    { value: "2", viewValue: "Nad Al Sheba" },
-    { value: "3", viewValue: "Nashama Town Square" },
-    { value: "4", viewValue: "JVC" },
+  selected_owner_type: any = "single";
+
+  selected_all_owners: any[] = [];
+
+  removed_owners: any[] = [];
+
+  owner_type: DropDownButtonModel[] = [
+    { value: "single", viewValue: "Single" },
+    { value: "multiple", viewValue: "Multiple" },
   ];
 
   isContentLoading: boolean = true;
@@ -119,6 +122,7 @@ export class EditUnitDialog implements OnInit {
     this.unitService
       .getUnitAllData({ id: data })
       .subscribe((value) => {
+        console.log(value);
         this.all_data = value;
       })
       .add(() => {
@@ -126,11 +130,6 @@ export class EditUnitDialog implements OnInit {
         this.selected_property = {
           id: this.all_data.prop_uid,
           name: this.all_data.prop_name,
-        };
-
-        this.owner = {
-          id: this.all_data.user_uid,
-          name: this.all_data.user_name,
         };
 
         this.unitsService.getallUnitTypes().subscribe((val: any[]) => {
@@ -189,6 +188,18 @@ export class EditUnitDialog implements OnInit {
           this.all_data.unit_extra_living_room == "1" ? true : false;
         this.maids_room = this.all_data.unit_maids_room == "1" ? true : false;
         this.family_room = this.all_data.unit_family_room == "1" ? true : false;
+
+        if (this.all_data.unit_owner_type == "multiple") {
+          this.selected_owner_type = this.all_data.unit_owner_type;
+          JSON.parse(this.all_data.unit_all_owners).forEach((ow) => {
+            this.selected_all_owners.push(ow);
+          });
+        } else {
+          this.owner = {
+            id: this.all_data.user_uid,
+            name: this.all_data.user_name,
+          };
+        }
       });
   }
 
@@ -198,6 +209,7 @@ export class EditUnitDialog implements OnInit {
         width: "60%",
         data: {
           type: type,
+          user_type: type == "user" ? "owner" : undefined,
         },
       })
       .afterClosed()
@@ -210,13 +222,42 @@ export class EditUnitDialog implements OnInit {
               name: res.property_name,
             };
           } else {
-            this.owner = {
-              id: res.user_id,
-              name: res.name,
-            };
+            if (this.selected_owner_type == "single") {
+              this.owner = {
+                id: res.user_id,
+                name: res.name,
+              };
+            } else {
+              if (
+                this.selected_all_owners.filter((o) => o.id == res.user_id)
+                  .length == 0
+              ) {
+                this.selected_all_owners.push({
+                  id: res.user_id,
+                  name: res.name,
+                });
+              }
+            }
           }
         }
       });
+  }
+
+  removeOwner(index, id) {
+    this.selected_all_owners.splice(index, 1);
+    this.removed_owners.push(id);
+  }
+
+  getSelectOwnerTitle() {
+    if (this.selected_owner_type == "single") {
+      if (this.owner == undefined) {
+        return "Owner*";
+      } else {
+        return this.owner.name;
+      }
+    } else {
+      return "Add Owner";
+    }
   }
 
   selectUnit(event: any) {
@@ -244,7 +285,6 @@ export class EditUnitDialog implements OnInit {
   }
 
   onCloseDialog() {
-   
     this.dialogRef.close({
       unit_no: this.is_submit ? this.unit_number : undefined,
       property_id: this.is_submit ? this.selected_property.id : undefined,
@@ -256,8 +296,6 @@ export class EditUnitDialog implements OnInit {
       bedroom: this.is_submit ? this.bedrooms : undefined,
       bathroom: this.is_submit ? this.bathrooms : undefined,
       no_of_parking: this.is_submit ? this.number_of_parking : undefined,
-      owner: this.is_submit ? this.owner.name : undefined,
-      owner_id: this.is_submit ? this.owner.id : undefined,
       tenant_id: this.is_submit
         ? this.all_data.tenant_uid == undefined
           ? ""
@@ -271,7 +309,6 @@ export class EditUnitDialog implements OnInit {
       images: this.is_submit ? JSON.stringify(this.uploaded_images) : undefined,
       documents: this.is_submit ? JSON.stringify(this.uploaded_doc) : undefined,
       amenties: this.is_submit ? JSON.stringify(this.amenties) : undefined,
-      user_id: this.is_submit ? this.owner.id : undefined,
       description: this.is_submit ? this.unit_description : undefined,
     });
   }
@@ -373,13 +410,29 @@ export class EditUnitDialog implements OnInit {
     }
   }
 
+  getOwnerValidation() {
+    if (this.selected_owner_type == "single") {
+      if (this.owner == undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      if (this.selected_all_owners.length == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
   onSubmit() {
     if (this.docsFilesUploaded.length != 0) {
       if (
         this.selected_property != "" &&
         this.unit_type != "" &&
         this.unit_number != "" &&
-        this.owner != ""
+        this.getOwnerValidation() != false
       ) {
         this.uploading = true;
         var random_id = this.all_data.unit_id;
@@ -539,7 +592,10 @@ export class EditUnitDialog implements OnInit {
       bedroom: this.bedrooms,
       bathroom: this.bathrooms,
       no_of_parking: this.number_of_parking,
-      owner: this.owner.name,
+      owner_type: this.selected_owner_type,
+      all_owners: JSON.stringify(this.selected_all_owners),
+      removed_owners: JSON.stringify(this.removed_owners),
+      owner: this.owner != undefined ? this.owner.name : "",
       tenant_id:
         this.all_data.tenant_uid == undefined ? "" : this.all_data.tenant_uid,
       lease_id:
@@ -550,7 +606,7 @@ export class EditUnitDialog implements OnInit {
           : JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       amenties: JSON.stringify(this.amenties),
-      user_id: this.owner.id,
+      user_id: this.owner != undefined ? this.owner.id : "",
       description: this.unit_description,
     };
 

@@ -28,19 +28,30 @@ export class GenerateExcelDialog implements OnInit {
       .subscribe((res: any) => {
         this.total_count = res;
         if (res > 5000) {
+          this.generateCount.push({ value: "10" });
+          this.generateCount.push({ value: "50" });
+          this.generateCount.push({ value: "100" });
+          this.generateCount.push({ value: "500" });
+          this.generateCount.push({ value: "1000" });
           this.generateCount.push({ value: "5000" });
-          this.generateCount.push({ value: "1000" });
-          this.generateCount.push({ value: "500" });
-          this.generateCount.push({ value: "100" });
         } else if (res > 1000) {
+          this.generateCount.push({ value: "10" });
+          this.generateCount.push({ value: "50" });
+          this.generateCount.push({ value: "100" });
+          this.generateCount.push({ value: "500" });
           this.generateCount.push({ value: "1000" });
-          this.generateCount.push({ value: "500" });
-          this.generateCount.push({ value: "100" });
         } else if (res > 500) {
+          this.generateCount.push({ value: "10" });
+          this.generateCount.push({ value: "50" });
+          this.generateCount.push({ value: "100" });
           this.generateCount.push({ value: "500" });
-          this.generateCount.push({ value: "100" });
         } else if (res > 100) {
+          this.generateCount.push({ value: "10" });
+          this.generateCount.push({ value: "50" });
           this.generateCount.push({ value: "100" });
+        } else if (res > 50) {
+          this.generateCount.push({ value: "10" });
+          this.generateCount.push({ value: "50" });
         } else if (res > 10) {
           this.generateCount.push({ value: "10" });
         }

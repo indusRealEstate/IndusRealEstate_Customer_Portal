@@ -50,7 +50,6 @@ export class EditLeaseDialog implements OnInit {
         console.log(value);
         this.property = value.prop_name;
         this.unit_data = value.unit_no;
-        this.owner = value.user_name;
         this.tenant = value.tenant_name;
         this.contract_start_date = value.lease_contract_start;
         this.contract_end_date = value.lease_contract_end;
@@ -71,6 +70,13 @@ export class EditLeaseDialog implements OnInit {
         JSON.parse(value.lease_docs).forEach((doc) => {
           this.docsFilesUploaded.push({ name: doc, old: true });
         });
+
+        if (value.lease_unit_ownership_type == "multiple") {
+          this.ownership_type = "multiple";
+          this.all_owners = JSON.parse(value.lease_unit_all_owners);
+        } else {
+          this.owner = value.user_name;
+        }
       })
       .add(() => {
         this.isContentLoading = false;
@@ -176,6 +182,17 @@ export class EditLeaseDialog implements OnInit {
     { value: "14", viewValue: "14 Cheques" },
     { value: "15", viewValue: "15 Cheques" },
   ];
+
+  all_owners: any[] = [];
+  ownership_type: any = "single";
+
+  getOwnerValue() {
+    if (this.ownership_type == "multiple") {
+      return `${this.all_owners.length} Owners`;
+    } else {
+      return this.owner;
+    }
+  }
 
   ngOnInit() {}
 

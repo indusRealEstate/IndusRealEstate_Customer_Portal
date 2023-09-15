@@ -23,7 +23,9 @@
 }
 
 .card-body {
-  height: 60rem;
+  // height: 60rem;
+  max-height: 60rem;
+  overflow: auto;
 
   .header-arrow-icon {
     filter: invert(79%) sepia(23%) saturate(1398%) hue-rotate(355deg)
