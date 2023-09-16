@@ -136,7 +136,7 @@
                 [ngClass]="last ? 'second-col-last' : 'second-col'"
                 (click)="viewPropInfo(element)"
               >
-                {{ element.address }}
+                {{ element.address == '' ? '-' : element.address }}
               </td>
             </ng-container>
 

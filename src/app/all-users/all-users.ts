@@ -48,7 +48,6 @@ export class AllUsersComponent implements OnInit {
     "idNumber",
     "nationality",
     "dob",
-    "allocated_unit",
     "more",
   ];
 

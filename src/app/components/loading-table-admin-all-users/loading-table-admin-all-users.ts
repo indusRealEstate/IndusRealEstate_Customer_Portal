@@ -18,7 +18,6 @@ export class LoadingTableAdminAllUsers implements OnInit {
     "idNumber",
     "nationality",
     "dob",
-    "allocated_unit",
     "more",
   ];
   loadingTable: any[] = [1, 2, 3, 4, 5];

@@ -67,7 +67,7 @@ export class ViewUserDetails implements OnInit {
     });
   }
 
-  displayedColumns: string[] = ["unit", "property", "tenant", "link"];
+  displayedColumns: string[] = ["unit", "property", "status", "tenant", "link"];
 
   screenHeight: number;
   screenWidth: number;
@@ -308,5 +308,15 @@ export class ViewUserDetails implements OnInit {
     this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: data },
     });
+  }
+
+  navigateToUserDetails(user_id: any, auth: any) {
+    this.router.navigate(["/user-details"], {
+      queryParams: { user_id: user_id, auth: auth },
+    });
+    setTimeout(() => {
+      location.reload();
+    }, 500);
+    
   }
 }

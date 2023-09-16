@@ -104,6 +104,7 @@ export class AddPaymentDialog implements OnInit {
     { value: "rent", viewValue: "Rent" },
     { value: "security_deposit", viewValue: "Security Deposit" },
     { value: "maintenance", viewValue: "Maintenance" },
+    { value: "admin_fee", viewValue: "Admin Fee" },
     { value: "other", viewValue: "Other" },
   ];
 
