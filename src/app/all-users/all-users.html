@@ -263,7 +263,7 @@
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="viewUser(element)"
               >
-                {{ element.nationality}}
+                {{ element.nationality == '' ? '-' : element.nationality }}
               </td>
             </ng-container>
             <ng-container matColumnDef="dob">

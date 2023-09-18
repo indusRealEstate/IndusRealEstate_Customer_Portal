@@ -133,7 +133,7 @@ export class EditPaymentDialog implements OnInit {
   contract_id: any;
 
   cheque_no: any;
-  cheque_name: any;
+  cheque_name: any = "";
   cheque_date: any;
 
   cash_details: any;
@@ -289,7 +289,6 @@ export class EditPaymentDialog implements OnInit {
   addCheque() {
     if (
       this.cheque_no != "" &&
-      this.cheque_name != "" &&
       this.cheque_date != "" &&
       this.purpose != "" &&
       this.payment_status != "" &&

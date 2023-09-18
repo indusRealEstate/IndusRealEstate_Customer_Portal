@@ -4,6 +4,10 @@
   font-family: "Montserrat";
 }
 
+::ng-deep .units-paginator {
+  background: transparent;
+}
+
 ::ng-deep .mdc-snackbar__surface {
   background-color: #313a46 !important;
   

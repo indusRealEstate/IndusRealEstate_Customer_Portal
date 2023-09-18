@@ -115,6 +115,28 @@ export class PaymentService {
     return this.http.request(req);
   }
 
+  getAllPaymentsByContract(
+    contract_id: any,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_all_payments_by_contract.php?apikey=1`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({
+          limit: limit,
+          pageNumber: pageNumber,
+          contract_id: contract_id,
+        })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getAllPaymentsPagination(limit: number, pageNumber: number) {
     const url = `${API_URL}/get_all_payments_pagination.php?apikey=1`;
     return this.http

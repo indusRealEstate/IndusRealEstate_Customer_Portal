@@ -1,20 +1,16 @@
-import {
-  Component,
-  HostListener,
-  OnChanges,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dialog";
+import { PaymentDetailsDialog } from "app/components/payment-details-dialog/payment-details-dialog";
 import { ReniewContractDialog } from "app/components/reniew-contract-dialog/reniew-contract-dialog";
-import { AdminService } from "app/services/admin.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { DownloadService } from "app/services/download.service";
 import { LeaseService } from "app/services/lease.service";
+import { PaymentService } from "app/services/payment.service";
 import * as FileSaver from "file-saver";
 
 @Component({
@@ -47,7 +43,8 @@ export class AdminLeaseDetail implements OnInit {
     private leaseService: LeaseService,
     private downloadService: DownloadService,
     private _snackBar: MatSnackBar,
-    private dialog: MatDialog // private viewImage: ViewImageOfUnit,
+    private dialog: MatDialog,
+    private paymentService: PaymentService
   ) {
     this.isContentLoading = true;
 
@@ -56,6 +53,43 @@ export class AdminLeaseDetail implements OnInit {
     });
 
     this.getScreenSize();
+  }
+
+  payment_table_length: any = 0;
+  paymentsMatTableDataSource: MatTableDataSource<any>;
+  pageChangePaymentTable: boolean = false;
+
+  displayedColumns: string[] = ["id", "mode", "no_of_cheques", "date"];
+
+  paymentTablePageChange(event) {
+    this.pageChangePaymentTable = true;
+    this.paymentService
+      .getAllPaymentsByContract(
+        this.contract_id,
+        event.pageSize,
+        event.pageIndex + 1
+      )
+      .subscribe((res) => {
+        this.paymentsMatTableDataSource = new MatTableDataSource<any>(
+          res.payments
+        );
+      })
+      .add(() => {
+        this.pageChangePaymentTable = false;
+      });
+  }
+
+  viewPaymentDetails(payment_id: any, method) {
+    this.dialog
+      .open(PaymentDetailsDialog, {
+        width: "100%",
+        data: {
+          id: payment_id,
+          method: method,
+        },
+      })
+      .afterClosed()
+      .subscribe((value) => {});
   }
 
   openSnackBar(message: string, action: string) {
@@ -104,6 +138,19 @@ export class AdminLeaseDetail implements OnInit {
       })
       .add(() => {
         this.isContentLoading = false;
+      });
+
+    this.pageChangePaymentTable = true;
+    this.paymentService
+      .getAllPaymentsByContract(this.contract_id, 5, 1)
+      .subscribe((res) => {
+        this.paymentsMatTableDataSource = new MatTableDataSource<any>(
+          res.payments
+        );
+        this.payment_table_length = res.count;
+      })
+      .add(() => {
+        this.pageChangePaymentTable = false;
       });
   }
 

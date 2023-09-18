@@ -47,10 +47,10 @@
               Issued By
             </p>
             <span style="font-weight: 400">
-              {{cheque_data.name_on_cheque | titlecase}}
+              {{cheque_data.name_on_cheque == '' ? '-' :
+              (cheque_data.name_on_cheque | titlecase) }}
             </span>
           </div>
-          
         </div>
         <div class="row m-0 mt-3">
           <div class="col pl-0">

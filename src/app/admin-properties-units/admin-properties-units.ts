@@ -153,7 +153,7 @@ export class AdminPropertiesUnits implements OnInit {
     this.unitService
       .getallPropertiesUnits(limit == undefined ? 10 : limit, 1)
       .subscribe((va: any) => {
-        console.log(va);
+        // console.log(va);
         this.allUnits = va.units;
         this.allUnitsMatTableData = new MatTableDataSource(va.units);
         this.tableLength = va.count;
