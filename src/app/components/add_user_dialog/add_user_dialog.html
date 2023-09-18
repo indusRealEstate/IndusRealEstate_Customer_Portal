@@ -182,6 +182,19 @@
           </mat-form-field>
 
           <country-dropdown #country_dropdown></country-dropdown>
+
+          <mat-form-field
+            class="mat-datepicker mt-2 textField"
+            appearance="outline"
+          >
+            <mat-label>ID Expiry Date</mat-label>
+            <input matInput [matDatepicker]="id_expiry" [(ngModel)]="user_id_expiry" />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="id_expiry"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #id_expiry></mat-datepicker>
+          </mat-form-field>
         </div>
 
         <div class="col">

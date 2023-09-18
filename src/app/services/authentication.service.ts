@@ -40,7 +40,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    const url = `${API_URL}/login.php?apikey=1`;
+    const url = `${API_URL}/login.php`;
 
     return this.http
       .post<any>(url, { username: username, password: password })
@@ -75,7 +75,7 @@ export class AuthenticationService {
   }
 
   public storeClientIP(data: any) {
-    const url = `${API_URL}/storeClientIP.php?apikey=1`;
+    const url = `${API_URL}/storeClientIP.php`;
     try {
       return this.http
         .post(url, data)

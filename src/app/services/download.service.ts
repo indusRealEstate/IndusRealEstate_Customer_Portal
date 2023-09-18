@@ -15,11 +15,11 @@ export class DownloadService {
     };
   }
 
-  download(url: string): Observable<Blob> {
-    return this.http.get(url, {
-      responseType: "blob",
-    });
-  }
+  // download(url: string): Observable<Blob> {
+  //   return this.http.get(url, {
+  //     responseType: "blob",
+  //   });
+  // }
 
   downloadFile(file_path) {
     const url = `https://indusre.app/api/admin/downloadDocument.php?apikey=1`;

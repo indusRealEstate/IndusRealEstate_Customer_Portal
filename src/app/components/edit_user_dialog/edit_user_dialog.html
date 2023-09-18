@@ -1,6 +1,6 @@
 <div
   class="card"
-  style="margin: 10px 0px; box-shadow: 0px 0px 0px;"
+  style="margin: 10px 0px; box-shadow: 0px 0px 0px"
   cdkDrag
   cdkDragRootElement=".cdk-overlay-pane"
 >
@@ -190,6 +190,23 @@
           </mat-form-field>
 
           <country-dropdown #country_dropdown></country-dropdown>
+
+          <mat-form-field
+            class="mat-datepicker mt-2 textField"
+            appearance="outline"
+          >
+            <mat-label>ID Expiry Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="id_expiry"
+              [(ngModel)]="user_id_expiry"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="id_expiry"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #id_expiry></mat-datepicker>
+          </mat-form-field>
         </div>
 
         <div class="col">
@@ -276,9 +293,7 @@
           <div
             (click)="fileInput.click()"
             class="btn ml-4"
-            style="background: #d4aa32;position: sticky; top: 0;
-            "
-
+            style="background: #d4aa32; position: sticky; top: 0"
           >
             Add Documents
           </div>

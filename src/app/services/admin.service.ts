@@ -16,7 +16,7 @@ export class AdminService {
   }
 
   getallDataDashboard() {
-    const url = `${API_URL}/get_all_data_dashboard.php?apikey=1`;
+    const url = `${API_URL}/get_all_data_dashboard.php`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
@@ -25,7 +25,7 @@ export class AdminService {
   }
 
   getallStaffsAdmin() {
-    const url = `${API_URL}/get_all_staffs.php?apikey=1`;
+    const url = `${API_URL}/get_all_staffs.php`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class AdminService {
 
   getDownloadDocument(data: any) {
     //console.log(data);
-    const url = `${API_URL}/downloadDocument.php?apikey=1`;
+    const url = `${API_URL}/downloadDocument.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -44,7 +44,7 @@ export class AdminService {
   }
 
   getTablesCount(data: any) {
-    const url = `${API_URL}/get_table_counts.php?apikey=1`;
+    const url = `${API_URL}/get_table_counts.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -53,7 +53,7 @@ export class AdminService {
   }
 
   getDataForExcel(data: any) {
-    const url = `${API_URL}/get_all_data_for_excel.php?apikey=1`;
+    const url = `${API_URL}/get_all_data_for_excel.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -62,7 +62,7 @@ export class AdminService {
   }
 
   selectStaff() {
-    const url = `${API_URL}/selectStaff.php?apikey=1`;
+    const url = `${API_URL}/selectStaff.php`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
@@ -71,7 +71,7 @@ export class AdminService {
   }
 
   assignStaff(data: string) {
-    const url = `${API_URL}/assignStaff.php?apikey=1`;
+    const url = `${API_URL}/assignStaff.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -80,7 +80,7 @@ export class AdminService {
   }
 
   convertImgIntoWebp(data: any) {
-    const url = `https://indusre.app/api/convert_img_to_webp.php?apikey=1`;
+    const url = `https://indusre.app/api/convert_img_to_webp.php`;
 
     return this.http
       .post(url, data)

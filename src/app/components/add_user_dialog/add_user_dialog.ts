@@ -55,6 +55,7 @@ export class AddUserDialog implements OnInit {
   user_gender: any = "";
   user_id_type: any = "";
   user_id_number: any = "";
+  user_id_expiry: any = "";
   user_bank_name: any = "";
   user_bank_ac_no: any = "";
   user_bank_swift_code: any = "";
@@ -223,6 +224,7 @@ export class AddUserDialog implements OnInit {
       alternative_email: this.user_alternative_email,
       id_type: this.user_id_type,
       id_number: this.user_id_number,
+      id_expiry: this.user_id_expiry,
       gender: this.user_gender,
       nationality: this.country_dropdown.selectedCountry,
       dob: this.user_dob,

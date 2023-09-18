@@ -54,6 +54,27 @@
             >
               Multiple Owners
             </div>
+            <div
+              style="
+                padding: 0;
+                background: #5778ae;
+                max-width: 25rem;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              "
+              class="btn m-0 ml-4"
+              (click)="selectProperty()"
+            >
+              <p style="margin: 5px 10px">Sort By Building</p>
+
+              <span
+                *ngIf="sort_property != undefined"
+                style="font-weight: 600; font-size: 13px"
+                >{{sort_property != undefined ? ' : ' + sort_property.name :
+                ''}}</span
+              >
+            </div>
           </div>
         </div>
         <div class="row m-0 align-items-center">

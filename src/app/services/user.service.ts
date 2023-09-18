@@ -16,7 +16,7 @@ export class UserService {
   }
 
   addUserBankDetails(data: any) {
-    const url = `${API_URL}/add_user_bank_details.php?apikey=1`;
+    const url = `${API_URL}/add_user_bank_details.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -25,7 +25,7 @@ export class UserService {
   }
 
   addUser(data: any) {
-    const url = `${API_URL}/addUser.php?apikey=1`;
+    const url = `${API_URL}/addUser.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -34,7 +34,7 @@ export class UserService {
   }
 
   deleteRemovedUserFiles(data: any) {
-    const url = `${API_URL}/deleteRemovedUserFiles.php?apikey=1`;
+    const url = `${API_URL}/deleteRemovedUserFiles.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -43,7 +43,7 @@ export class UserService {
   }
 
   downloadUserDocuments(data: any) {
-    const url = `${API_URL}/downloadUserDocuments.php?apikey=1`;
+    const url = `${API_URL}/downloadUserDocuments.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -52,7 +52,7 @@ export class UserService {
   }
 
   editUser(data: any) {
-    const url = `${API_URL}/editUser.php?apikey=1`;
+    const url = `${API_URL}/editUser.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -61,7 +61,7 @@ export class UserService {
   }
 
   getAllUserAllocatedUnits(user_id: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_user_allocated_units_pagination.php?apikey=1`;
+    const url = `${API_URL}/get_user_allocated_units_pagination.php`;
     return this.http
       .post<any>(
         url,
@@ -79,7 +79,7 @@ export class UserService {
   }
 
   getAllUsersAdminPagination(limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllUsersAdmin_pagination.php?apikey=1`;
+    const url = `${API_URL}/getAllUsersAdmin_pagination.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -90,7 +90,7 @@ export class UserService {
   }
 
   getallUsersSearch(input: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllUsersAdmin_search.php?apikey=1`;
+    const url = `${API_URL}/getAllUsersAdmin_search.php`;
     return this.http
       .post<any>(
         url,
@@ -108,7 +108,7 @@ export class UserService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_users_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_users_page_change_search.php`;
     return this.http
       .post<any>(
         url,
@@ -122,7 +122,7 @@ export class UserService {
   }
 
   getallUsersFilter(filter: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_users_by_filter.php?apikey=1`;
+    const url = `${API_URL}/get_all_users_by_filter.php`;
     return this.http
       .post<any>(
         url,
@@ -140,7 +140,7 @@ export class UserService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_all_users_by_filter_page_change.php?apikey=1`;
+    const url = `${API_URL}/get_all_users_by_filter_page_change.php`;
     return this.http
       .post<any>(
         url,
@@ -154,7 +154,7 @@ export class UserService {
   }
 
   getAllUserDetails(data: any) {
-    const url = `${API_URL}/getUserAllDetails.php?apikey=1`;
+    const url = `${API_URL}/getUserAllDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -163,7 +163,7 @@ export class UserService {
   }
 
   getUserDetailsForEdit(data: any) {
-    const url = `${API_URL}/getUserDetailsForEdit.php?apikey=1`;
+    const url = `${API_URL}/getUserDetailsForEdit.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -172,7 +172,7 @@ export class UserService {
   }
 
   uploadAllFilesAddUser(data: any) {
-    const url = `${API_URL}/upload_add_user_files.php?apikey=1`;
+    const url = `${API_URL}/upload_add_user_files.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });

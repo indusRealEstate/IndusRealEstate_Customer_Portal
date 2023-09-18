@@ -17,7 +17,7 @@ export class PropertiesService {
   }
 
   addProperty(data: any) {
-    const url = `${API_URL}/addProperty.php?apikey=1`;
+    const url = `${API_URL}/addProperty.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -26,7 +26,7 @@ export class PropertiesService {
   }
 
   getPropDetails(data: any) {
-    const url = `${API_URL}/selectPropertyDetails.php?apikey=1`;
+    const url = `${API_URL}/selectPropertyDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class PropertiesService {
   }
 
   updateProperty(data: any) {
-    const url = `${API_URL}/updateProperty.php?apikey=1`;
+    const url = `${API_URL}/updateProperty.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -44,7 +44,7 @@ export class PropertiesService {
   }
 
   uploadAllFilesAddProperty(data: any) {
-    const url = `${API_URL}/upload_add_property_files.php?apikey=1`;
+    const url = `${API_URL}/upload_add_property_files.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -52,7 +52,7 @@ export class PropertiesService {
   }
 
   uploadAllFilesEditProperty(data: any) {
-    const url = `${API_URL}/upload_edit_property_files.php?apikey=1`;
+    const url = `${API_URL}/upload_edit_property_files.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -60,7 +60,7 @@ export class PropertiesService {
   }
 
   getAllPropertiesPagination(limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_properties_pagination.php?apikey=1`;
+    const url = `${API_URL}/get_all_properties_pagination.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -71,7 +71,7 @@ export class PropertiesService {
   }
 
   getallPropertiesSearch(input: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllPropertiesAdmin_search.php?apikey=1`;
+    const url = `${API_URL}/getAllPropertiesAdmin_search.php`;
     return this.http
       .post<any>(
         url,
@@ -89,7 +89,7 @@ export class PropertiesService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_properties_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_properties_page_change_search.php`;
     return this.http
       .post<any>(
         url,

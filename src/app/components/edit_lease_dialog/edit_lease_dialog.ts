@@ -244,7 +244,7 @@ export class EditLeaseDialog implements OnInit {
 
         var data = this.setupData(random_id, docs_names);
         this.leaseService.editLease(data).subscribe((val) => {
-          console.log(JSON.parse(data));
+          console.log(val);
           if (val == "success") {
             if (this.removed_existing_docs.length != 0) {
               this.leaseService
@@ -313,10 +313,24 @@ export class EditLeaseDialog implements OnInit {
   }
 
   setupData(random_id: any, docs_names: any[]): string {
+    const start = new Date(this.contract_start_date);
+    const end = new Date(this.contract_end_date);
     var data = {
       contract_id: random_id,
-      contract_start: this.contract_start_date,
-      contract_end: this.contract_end_date,
+      contract_start: new Date(
+        start.getFullYear(),
+        start.getMonth(),
+        start.getDate(),
+        start.getHours(),
+        start.getMinutes() - start.getTimezoneOffset()
+      ).toISOString(),
+      contract_end: new Date(
+        end.getFullYear(),
+        end.getMonth(),
+        end.getDate(),
+        end.getHours(),
+        end.getMinutes() - end.getTimezoneOffset()
+      ).toISOString(),
       move_in: this.move_in_date,
       move_out: this.move_out_date,
       notice_period: this.notice_period,

@@ -17,7 +17,7 @@ export class LeaseService {
   }
 
   getContractPaymentsCount(data: any) {
-    const url = `${API_URL}/get_contract_payments_count.php?apikey=1`;
+    const url = `${API_URL}/get_contract_payments_count.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -26,7 +26,7 @@ export class LeaseService {
   }
 
   addNewLease(data: any) {
-    const url = `${API_URL}/addNewLease.php?apikey=1`;
+    const url = `${API_URL}/addNewLease.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class LeaseService {
   }
 
   deleteRemovedLeaseDocs(data: any) {
-    const url = `${API_URL}/deleteRemovedLeaseDocs.php?apikey=1`;
+    const url = `${API_URL}/deleteRemovedLeaseDocs.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -44,7 +44,7 @@ export class LeaseService {
   }
 
   downoadLeaseDoc(data: any) {
-    const url = `${API_URL}/downloadLeaseDoc.php?apikey=1`;
+    const url = `${API_URL}/downloadLeaseDoc.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -53,7 +53,7 @@ export class LeaseService {
   }
 
   editLease(data: any) {
-    const url = `${API_URL}/editLease.php?apikey=1`;
+    const url = `${API_URL}/editLease.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -62,7 +62,7 @@ export class LeaseService {
   }
 
   reniewContract(data: any) {
-    const url = `${API_URL}/reniewContract.php?apikey=1`;
+    const url = `${API_URL}/reniewContract.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -71,7 +71,7 @@ export class LeaseService {
   }
 
   getAllContractsReminders(limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_contracts_reminders.php?apikey=1`;
+    const url = `${API_URL}/get_all_contracts_reminders.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -82,7 +82,7 @@ export class LeaseService {
   }
 
   getAllLeaseData(data: any) {
-    const url = `${API_URL}/getAllLeaseDetails.php?apikey=1`;
+    const url = `${API_URL}/getAllLeaseDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -91,7 +91,7 @@ export class LeaseService {
   }
 
   terminateLease(data: any) {
-    const url = `${API_URL}/terminateLease.php?apikey=1`;
+    const url = `${API_URL}/terminateLease.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -100,7 +100,7 @@ export class LeaseService {
   }
 
   uploadAllFilesAddNewLease(data: any) {
-    const url = `${API_URL}/upload_add_lease_files.php?apikey=1`;
+    const url = `${API_URL}/upload_add_lease_files.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -109,7 +109,7 @@ export class LeaseService {
   }
 
   getAllContractsAdminPagination(limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllContractsAdmin_pagination.php?apikey=1`;
+    const url = `${API_URL}/getAllContractsAdmin_pagination.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -120,7 +120,7 @@ export class LeaseService {
   }
 
   getallContractsSearch(input: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllContractsAdmin_search.php?apikey=1`;
+    const url = `${API_URL}/getAllContractsAdmin_search.php`;
     return this.http
       .post<any>(
         url,
@@ -138,7 +138,7 @@ export class LeaseService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_contracts_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_contracts_page_change_search.php`;
     return this.http
       .post<any>(
         url,
@@ -152,7 +152,7 @@ export class LeaseService {
   }
 
   getallContractsFilter(filter: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_contracts_by_filter.php?apikey=1`;
+    const url = `${API_URL}/get_all_contracts_by_filter.php`;
     return this.http
       .post<any>(
         url,
@@ -170,7 +170,7 @@ export class LeaseService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_all_contracts_by_filter_page_change.php?apikey=1`;
+    const url = `${API_URL}/get_all_contracts_by_filter_page_change.php`;
     return this.http
       .post<any>(
         url,

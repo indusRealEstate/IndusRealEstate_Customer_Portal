@@ -17,7 +17,7 @@ export class RequestService {
   }
 
   changeCategoryStatus(data: any) {
-    const url = `${API_URL}/changeCategoryStatus.php?apikey=1`;
+    const url = `${API_URL}/changeCategoryStatus.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -26,7 +26,7 @@ export class RequestService {
   }
 
   deleteServiceCategory(data: any) {
-    const url = `${API_URL}/deleteServiceCategory.php?apikey=1`;
+    const url = `${API_URL}/deleteServiceCategory.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class RequestService {
   }
 
   getAllRequestsAdmin(limit: number, pageNumber: number, status: string) {
-    const url = `${API_URL}/get_all_requests_admin.php?apikey=1`;
+    const url = `${API_URL}/get_all_requests_admin.php`;
     return this.http
       .post<any>(
         url,
@@ -49,7 +49,7 @@ export class RequestService {
   }
 
   getArchivedRequestsAdmin(limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_requests_admin_archive.php?apikey=1`;
+    const url = `${API_URL}/get_all_requests_admin_archive.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -60,7 +60,7 @@ export class RequestService {
   }
 
   getAllRequestsAdminFlag(limit, pageNumber, status) {
-    const url = `${API_URL}/get_all_requests_admin_for_flag.php?apikey=1`;
+    const url = `${API_URL}/get_all_requests_admin_for_flag.php`;
     return this.http
       .post<any>(
         url,
@@ -78,7 +78,7 @@ export class RequestService {
   }
 
   getAllRequestsAdminSearch(text, limit, pageNumber, status) {
-    const url = `${API_URL}/get_all_requests_admin_for_search.php?apikey=1`;
+    const url = `${API_URL}/get_all_requests_admin_for_search.php`;
     return this.http
       .post<any>(
         url,
@@ -97,7 +97,7 @@ export class RequestService {
   }
 
   getAllArchivedRequestsSearch(text, limit, pageNumber) {
-    const url = `${API_URL}/get_all_archive_requests_for_search.php?apikey=1`;
+    const url = `${API_URL}/get_all_archive_requests_for_search.php`;
     return this.http
       .post<any>(
         url,
@@ -115,7 +115,7 @@ export class RequestService {
   }
 
   getSpamRequestsAdmin() {
-    const url = `${API_URL}/get_all_requests_admin_spam.php?apikey=1`;
+    const url = `${API_URL}/get_all_requests_admin_spam.php`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
@@ -124,7 +124,7 @@ export class RequestService {
   }
 
   getLatestServiceRequest(data: any) {
-    const url = `${API_URL}/get_latest_service_requests.php?apikey=1`;
+    const url = `${API_URL}/get_latest_service_requests.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -133,7 +133,7 @@ export class RequestService {
   }
 
   changePageRequestsFLag(limit, pageNumber, status) {
-    const url = `${API_URL}/get_requests_page_change_flag.php?apikey=1`;
+    const url = `${API_URL}/get_requests_page_change_flag.php`;
     return this.http
       .post<any>(
         url,
@@ -151,7 +151,7 @@ export class RequestService {
   }
 
   changePageRequestsSearch(text, limit, pageNumber, status) {
-    const url = `${API_URL}/get_requests_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_requests_page_change_search.php`;
     return this.http
       .post<any>(
         url,
@@ -170,7 +170,7 @@ export class RequestService {
   }
 
   changePageArchiveRequestsSearch(text, limit, pageNumber) {
-    const url = `${API_URL}/get_archive_requests_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_archive_requests_page_change_search.php`;
     return this.http
       .post<any>(
         url,
@@ -188,7 +188,7 @@ export class RequestService {
   }
 
   getAllRequestsAdminCount() {
-    const url = `${API_URL}/getMaintenanceRequests_count.php?apikey=1`;
+    const url = `${API_URL}/getMaintenanceRequests_count.php`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
@@ -197,7 +197,7 @@ export class RequestService {
   }
 
   getAllRequestsAdminCountByStatus(status) {
-    const url = `${API_URL}/getMaintenanceRequests_count_by_status.php?apikey=1`;
+    const url = `${API_URL}/getMaintenanceRequests_count_by_status.php`;
     return this.http.post<any>(url, JSON.stringify({ status: status })).pipe(
       map((data) => {
         return data;
@@ -206,7 +206,7 @@ export class RequestService {
   }
 
   insertCategory(data: any) {
-    const url = `${API_URL}/insert_request_category.php?apikey=1`;
+    const url = `${API_URL}/insert_request_category.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -215,7 +215,7 @@ export class RequestService {
   }
 
   removeAllRequestsFromArchive(data: any) {
-    const url = `${API_URL}/remove_all_requests_from_archive_spam.php?apikey=1`;
+    const url = `${API_URL}/remove_all_requests_from_archive_spam.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -224,7 +224,7 @@ export class RequestService {
   }
 
   getAllCategories(data: any) {
-    const url = `${API_URL}/select_all_categories.php?apikey=1`;
+    const url = `${API_URL}/select_all_categories.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -233,13 +233,13 @@ export class RequestService {
   }
 
   selecteCategory() {
-    const url = `${API_URL}/select_all_categories.php?apikey=1`;
+    const url = `${API_URL}/select_all_categories.php`;
     return this.http.get(url);
   }
 
   getRequestsDetails(data: any) {
     // console.log(data);
-    const url = `${API_URL}/selectRequestsDetails.php?apikey=1`;
+    const url = `${API_URL}/selectRequestsDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -248,7 +248,7 @@ export class RequestService {
   }
 
   updateRequestMore(data: any) {
-    const url = `${API_URL}/updateRequestMore.php?apikey=1`;
+    const url = `${API_URL}/updateRequestMore.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -257,7 +257,7 @@ export class RequestService {
   }
 
   updateRequestStatus(data: any) {
-    const url = `${API_URL}/updateRequestStatus.php?apikey=1`;
+    const url = `${API_URL}/updateRequestStatus.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -266,7 +266,7 @@ export class RequestService {
   }
 
   updateCategory(data: any) {
-    const url = `${API_URL}/updateServiceCategory.php?apikey=1`;
+    const url = `${API_URL}/updateServiceCategory.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;

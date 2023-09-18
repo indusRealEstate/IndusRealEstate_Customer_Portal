@@ -267,7 +267,7 @@ export class ChatService implements OnDestroy {
   }
 
   fetchAllCLientsForChat(data: any) {
-    const url = `${API_URL}/fetchAllCLientsForChat.php?apikey=1`;
+    const url = `${API_URL}/fetchAllCLientsForChat.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -276,7 +276,7 @@ export class ChatService implements OnDestroy {
   }
 
   fetchAllChatMessages(data: any) {
-    const url = `${API_URL}/fetchAllChatMessages.php?apikey=1`;
+    const url = `${API_URL}/fetchAllChatMessages.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -285,7 +285,7 @@ export class ChatService implements OnDestroy {
   }
 
   fetchAllPeopleSendChats(data: any) {
-    const url = `${API_URL}/fetchAllPeopleSendChats.php?apikey=1`;
+    const url = `${API_URL}/fetchAllPeopleSendChats.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -294,7 +294,7 @@ export class ChatService implements OnDestroy {
   }
 
   deleteChatMessage(data: any) {
-    const url = `${API_URL}/deleteChatMessage.php?apikey=1`;
+    const url = `${API_URL}/deleteChatMessage.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -303,7 +303,7 @@ export class ChatService implements OnDestroy {
   }
 
   sendChatMessage(data: any) {
-    const url = `${API_URL}/sendChatMessage.php?apikey=1`;
+    const url = `${API_URL}/sendChatMessage.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -312,7 +312,7 @@ export class ChatService implements OnDestroy {
   }
 
   updateChatRead(message_id: any) {
-    const url = `${API_URL}/updateChatRead.php?apikey=1`;
+    const url = `${API_URL}/updateChatRead.php`;
     return this.http.post<any>(url, { message_id: message_id }).pipe(
       map((data) => {
         return data;
@@ -321,7 +321,7 @@ export class ChatService implements OnDestroy {
   }
 
   uploadFileChat(data: any) {
-    const url = `https://indusre.app/api/uploadFileChat.php?apikey=1`;
+    const url = `https://indusre.app/api/uploadFileChat.php`;
 
     return this.http
       .post(url, data)
@@ -329,7 +329,7 @@ export class ChatService implements OnDestroy {
   }
 
   deleteFileFromServer(data: any) {
-    const url = `https://indusre.app/api/deleteFileFromServer.php?apikey=1`;
+    const url = `https://indusre.app/api/deleteFileFromServer.php`;
 
     return this.http
       .post(url, data)

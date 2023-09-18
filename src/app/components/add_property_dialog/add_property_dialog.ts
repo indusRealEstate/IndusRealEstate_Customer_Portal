@@ -75,7 +75,7 @@ export class AddPropertyDialog implements OnInit {
     { value: "9", viewValue: "Jabel Ali First" },
     { value: "11", viewValue: "Burj khalifa" },
     { value: "12", viewValue: "DSO" },
-    { value: "13", viewValue: "Me'Aisem First" },
+    { value: "13", viewValue: "Me'Aisem First" },
   ];
 
   ngOnInit() {}
@@ -140,6 +140,7 @@ export class AddPropertyDialog implements OnInit {
 
         var data = this.setupData(random_id, images_names, docs_names);
         this.propertyService.addProperty(data).subscribe((val) => {
+          console.log(val);
           if (val == "success") {
             this.uploading_progress = 0;
             var uploadData = this.setupUploadFiles(

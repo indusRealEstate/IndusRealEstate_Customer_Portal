@@ -17,7 +17,7 @@ export class AnnouncementService {
   }
 
   addAnnouncement(data: string) {
-    const url = `${API_URL}/addAnnouncement.php?apikey=1`;
+    const url = `${API_URL}/addAnnouncement.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -26,7 +26,7 @@ export class AnnouncementService {
   }
 
   deleteAnnouncement(data: any) {
-    const url = `${API_URL}/deleteAnnouncement.php?apikey=1`;
+    const url = `${API_URL}/deleteAnnouncement.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class AnnouncementService {
   }
 
   deleteAnnouncementDocs(data: any) {
-    const url = `${API_URL}/deleteAnnouncementDocs.php?apikey=1`;
+    const url = `${API_URL}/deleteAnnouncementDocs.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -44,7 +44,7 @@ export class AnnouncementService {
   }
 
   updateAnnouncement(data: any) {
-    const url = `${API_URL}/updateAnnouncement.php?apikey=1`;
+    const url = `${API_URL}/updateAnnouncement.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -53,7 +53,7 @@ export class AnnouncementService {
   }
 
   uploadAllFilesAddAnnouncement(data: any) {
-    const url = `${API_URL}/upload_add_announcement_files.php?apikey=1`;
+    const url = `${API_URL}/upload_add_announcement_files.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -61,7 +61,7 @@ export class AnnouncementService {
   }
 
   getAllAnnouncementPagination(limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_announcement_pagination.php?apikey=1`;
+    const url = `${API_URL}/get_all_announcement_pagination.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -72,7 +72,7 @@ export class AnnouncementService {
   }
 
   getallAnnouncementSearch(input: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/getAllAnnouncement_search.php?apikey=1`;
+    const url = `${API_URL}/getAllAnnouncement_search.php`;
     return this.http
       .post<any>(
         url,
@@ -90,7 +90,7 @@ export class AnnouncementService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_announcement_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_announcement_page_change_search.php`;
     return this.http
       .post<any>(
         url,

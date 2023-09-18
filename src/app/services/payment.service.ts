@@ -17,7 +17,7 @@ export class PaymentService {
   }
 
   paidTenantPayment(data: string) {
-    const url = `${API_URL}/paidTenantPayment.php?apikey=1`;
+    const url = `${API_URL}/paidTenantPayment.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -26,7 +26,7 @@ export class PaymentService {
   }
 
   paymentsDetails(data: any) {
-    const url = `${API_URL}/paymentsDetails.php?apikey=1`;
+    const url = `${API_URL}/paymentsDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class PaymentService {
   }
 
   selectPaymentAccordeingToTheMothod(data: string) {
-    const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php?apikey=1`;
+    const url = `${API_URL}/selectPaymentAccordeingToTheMothod.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -44,7 +44,7 @@ export class PaymentService {
   }
 
   selectTenantPayments(data: string) {
-    const url = `${API_URL}/selectTenantPayments.php?apikey=1`;
+    const url = `${API_URL}/selectTenantPayments.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -53,7 +53,7 @@ export class PaymentService {
   }
 
   selectTenantsPaymentsDetails(data: any) {
-    const url = `${API_URL}/selectTenantsPaymentsDetails.php?apikey=1`;
+    const url = `${API_URL}/selectTenantsPaymentsDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -62,7 +62,7 @@ export class PaymentService {
   }
 
   totalTenantPayment(data: string) {
-    const url = `${API_URL}/totalTenantPayment.php?apikey=1`;
+    const url = `${API_URL}/totalTenantPayment.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -71,7 +71,7 @@ export class PaymentService {
   }
 
   unpaidTenantPayment(data: string) {
-    const url = `${API_URL}/unpaidTenantPayment.php?apikey=1`;
+    const url = `${API_URL}/unpaidTenantPayment.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -80,7 +80,7 @@ export class PaymentService {
   }
 
   getPaymentAllDetails(data: any) {
-    const url = `${API_URL}/select_payment_details.php?apikey=1`;
+    const url = `${API_URL}/select_payment_details.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -89,7 +89,7 @@ export class PaymentService {
   }
 
   addNewPayment(data: any) {
-    const url = `${API_URL}/add_new_payment.php?apikey=1`;
+    const url = `${API_URL}/add_new_payment.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -98,7 +98,7 @@ export class PaymentService {
   }
 
   editPayment(data: any) {
-    const url = `${API_URL}/edit_payment.php?apikey=1`;
+    const url = `${API_URL}/edit_payment.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -107,7 +107,7 @@ export class PaymentService {
   }
 
   uploadAllFilesAddNewPayment(data: any) {
-    const url = `${API_URL}/upload_payment_docs.php?apikey=1`;
+    const url = `${API_URL}/upload_payment_docs.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -120,7 +120,7 @@ export class PaymentService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_all_payments_by_contract.php?apikey=1`;
+    const url = `${API_URL}/get_all_payments_by_contract.php`;
     return this.http
       .post<any>(
         url,
@@ -138,7 +138,7 @@ export class PaymentService {
   }
 
   getAllPaymentsPagination(limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_payments_pagination.php?apikey=1`;
+    const url = `${API_URL}/get_all_payments_pagination.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -149,7 +149,7 @@ export class PaymentService {
   }
 
   getallPaymentsSearch(input: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_payments_search.php?apikey=1`;
+    const url = `${API_URL}/get_all_payments_search.php`;
     return this.http
       .post<any>(
         url,
@@ -167,7 +167,7 @@ export class PaymentService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_all_payments_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_all_payments_page_change_search.php`;
     return this.http
       .post<any>(
         url,

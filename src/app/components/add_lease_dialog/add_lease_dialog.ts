@@ -319,6 +319,8 @@ export class AddLeaseDialog implements OnInit {
   }
 
   setupData(random_id: any, docs_names: any[]): string {
+    const start = new Date(this.contract_start_date);
+    const end = new Date(this.contract_end_date);
     var data = {
       contract_id: random_id,
       property_id: this.selected_property.id,
@@ -332,8 +334,20 @@ export class AddLeaseDialog implements OnInit {
       tenant_id: this.tenant_data.id,
       tenant_name: this.tenant_data.name,
       status: "active",
-      contract_start: this.contract_start_date,
-      contract_end: this.contract_end_date,
+      contract_start: new Date(
+        start.getFullYear(),
+        start.getMonth(),
+        start.getDate(),
+        start.getHours(),
+        start.getMinutes() - start.getTimezoneOffset()
+      ).toISOString(),
+      contract_end: new Date(
+        end.getFullYear(),
+        end.getMonth(),
+        end.getDate(),
+        end.getHours(),
+        end.getMinutes() - end.getTimezoneOffset()
+      ).toISOString(),
       move_in: this.move_in_date,
       move_out: this.move_out_date,
       notice_period: this.notice_period,

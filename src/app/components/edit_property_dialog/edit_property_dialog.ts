@@ -80,7 +80,7 @@ export class EditPropertyDialog implements OnInit {
     { value: "9", viewValue: "Jabel Ali First" },
     { value: "11", viewValue: "Burj khalifa" },
     { value: "12", viewValue: "DSO" },
-    { value: "13", viewValue: "Me'Aisem First" },
+    { value: "13", viewValue: "Me'Aisem First" },
   ];
 
   testImage: any;

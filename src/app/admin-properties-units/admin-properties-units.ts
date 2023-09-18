@@ -11,6 +11,7 @@ import { TableFiltersComponent } from "app/components/table-filters/table-filter
 import { AuthenticationService } from "app/services/authentication.service";
 import { UnitsService } from "app/services/units.service";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
+import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialog";
 
 @Component({
   selector: "admin-properties-units",
@@ -46,6 +47,8 @@ export class AdminPropertiesUnits implements OnInit {
 
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
+
+  sort_property: any;
 
   // more_menu_unit_all_data: any = "";
   // more_menu_unit_loaded: boolean = false;
@@ -84,6 +87,25 @@ export class AdminPropertiesUnits implements OnInit {
         });
       });
     });
+  }
+
+  selectProperty() {
+    this.dialog
+      .open(PaginatorDialog, {
+        width: "50%",
+        data: {
+          type: "property",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined) {
+          this.sort_property = {
+            id: res.property_id,
+            name: res.property_name,
+          };
+        }
+      });
   }
 
   getUnitType(unit_type_id) {

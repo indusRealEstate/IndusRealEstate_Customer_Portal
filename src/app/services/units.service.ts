@@ -17,7 +17,7 @@ export class UnitsService {
   }
 
   addInventory(data: any) {
-    const url = `${API_URL}/addInventory.php?apikey=1`;
+    const url = `${API_URL}/addInventory.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -26,7 +26,7 @@ export class UnitsService {
   }
 
   addUnit(data: any) {
-    const url = `${API_URL}/addUnit.php?apikey=1`;
+    const url = `${API_URL}/addUnit.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -35,7 +35,7 @@ export class UnitsService {
   }
 
   getallUnitsFilter(filter: string, limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_units_by_filter.php?apikey=1`;
+    const url = `${API_URL}/get_all_units_by_filter.php`;
     return this.http
       .post<any>(
         url,
@@ -53,7 +53,7 @@ export class UnitsService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_all_units_by_filter_page_change.php?apikey=1`;
+    const url = `${API_URL}/get_all_units_by_filter_page_change.php`;
     return this.http
       .post<any>(
         url,
@@ -67,7 +67,7 @@ export class UnitsService {
   }
 
   getallPropertiesUnits(limit: number, pageNumber: number) {
-    const url = `${API_URL}/get_all_units_pagination.php?apikey=1`;
+    const url = `${API_URL}/get_all_units_pagination.php`;
     return this.http
       .post<any>(url, JSON.stringify({ limit: limit, pageNumber: pageNumber }))
       .pipe(
@@ -82,7 +82,7 @@ export class UnitsService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_all_units_search.php?apikey=1`;
+    const url = `${API_URL}/get_all_units_search.php`;
     return this.http
       .post<any>(
         url,
@@ -100,7 +100,7 @@ export class UnitsService {
     limit: number,
     pageNumber: number
   ) {
-    const url = `${API_URL}/get_units_page_change_search.php?apikey=1`;
+    const url = `${API_URL}/get_units_page_change_search.php`;
     return this.http
       .post<any>(
         url,
@@ -114,7 +114,7 @@ export class UnitsService {
   }
 
   getallUnitTypes() {
-    const url = `${API_URL}/getAll_unit_types.php?apikey=1`;
+    const url = `${API_URL}/getAll_unit_types.php`;
     return this.http.get<any>(url).pipe(
       map((data) => {
         return data;
@@ -123,7 +123,7 @@ export class UnitsService {
   }
 
   getUnitAllData(data: any) {
-    const url = `${API_URL}/selectUnitAllDetails.php?apikey=1`;
+    const url = `${API_URL}/selectUnitAllDetails.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -132,7 +132,7 @@ export class UnitsService {
   }
 
   editUnit(data: any) {
-    const url = `${API_URL}/updateUnit.php?apikey=1`;
+    const url = `${API_URL}/updateUnit.php`;
     return this.http.post<any>(url, data).pipe(
       map((data) => {
         return data;
@@ -141,7 +141,7 @@ export class UnitsService {
   }
 
   uploadAllFilesAddUnit(data: any) {
-    const url = `${API_URL}/upload_add_unit_files.php?apikey=1`;
+    const url = `${API_URL}/upload_add_unit_files.php`;
     const req = new HttpRequest("POST", url, data, {
       reportProgress: true,
     });
@@ -150,7 +150,7 @@ export class UnitsService {
   }
 
   updateAmenities(data: any){
-    const url = `${API_URL}/updateAmenies.php?apikey=1`;
+    const url = `${API_URL}/updateAmenies.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
@@ -159,7 +159,7 @@ export class UnitsService {
   }
 
   updateInventories(data: any){
-    const url = `${API_URL}/updateInventories.php?apikey=1`;
+    const url = `${API_URL}/updateInventories.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
         return data;
