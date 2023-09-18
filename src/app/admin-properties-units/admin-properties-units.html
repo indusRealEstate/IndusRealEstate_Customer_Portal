@@ -278,7 +278,7 @@
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="navigateToDetailPage(element)"
               >
-                {{ element.premises_no}}
+                {{ element.premises_no == '0' ? '-' : element.premises_no }}
               </td>
             </ng-container>
 
@@ -290,7 +290,7 @@
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="navigateToDetailPage(element)"
               >
-                {{ element.plot_no}}
+                {{ element.plot_no == '0' ? '-' : element.plot_no }}
               </td>
             </ng-container>
             <ng-container matColumnDef="type">

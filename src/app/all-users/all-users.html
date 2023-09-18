@@ -274,7 +274,7 @@
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="viewUser(element)"
               >
-                {{ element.dob | date:'M/d/y'}}
+                {{ element.dob == '0000-00-00' ? '-' : (element.dob | date:'M/d/y') }}
               </td>
             </ng-container>
 
