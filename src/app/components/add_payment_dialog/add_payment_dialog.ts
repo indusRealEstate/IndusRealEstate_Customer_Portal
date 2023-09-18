@@ -86,6 +86,7 @@ export class AddPaymentDialog implements OnInit {
   bank_no: any;
   bank_iban: any;
   bank_holder_name: any;
+  bank_issued_date: any;
 
   no_of_cheques: any = "";
 
@@ -201,13 +202,11 @@ export class AddPaymentDialog implements OnInit {
       }
     } else if (this.payment_method == "online") {
       if (
-        this.bank_name != undefined &&
-        this.bank_holder_name != undefined &&
-        this.bank_no != undefined &&
         this.purpose != "" &&
         this.payment_status != "" &&
         this.amount != "" &&
-        this.transaction_id != ""
+        this.transaction_id != "" &&
+        this.bank_issued_date != "" 
       ) {
         return true;
       } else {
@@ -396,14 +395,12 @@ export class AddPaymentDialog implements OnInit {
       case "online":
         return {
           bank_name: this.bank_name,
-          branch: this.bank_branch,
-          ac_no: this.bank_no,
           bank_holder_name: this.bank_holder_name,
-          iban: this.bank_iban,
+          bank_issued_date : this.bank_issued_date,
+          transaction_id : this.transaction_id,
           status: this.payment_status,
           purpose: this.purpose,
           amount: this.amount,
-          transaction_id: this.transaction_id,
         };
       case "cash":
         return {

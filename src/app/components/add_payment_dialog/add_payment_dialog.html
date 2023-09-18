@@ -354,24 +354,8 @@
             />
           </mat-form-field>
 
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Branch</mat-label>
-            <input
-              matInput
-              type="name"
-              placeholder="Ex. Downtown Dubai"
-              [(ngModel)]="bank_branch"
-            />
-          </mat-form-field>
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>IBAN</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Ex. ADCB3434124124"
-              [(ngModel)]="bank_iban"
-            />
-          </mat-form-field>
+          
+         
 
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Status*</mat-label>
@@ -393,17 +377,23 @@
               [(ngModel)]="amount"
             />
           </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="textField" appearance="outline">
-            <mat-label>Account No.</mat-label>
+
+          <mat-form-field class="mat-datepicker textField" appearance="outline">
+            <mat-label>Issued Date</mat-label>
             <input
               matInput
-              type="number"
-              placeholder="Ex. 1231232132"
-              [(ngModel)]="bank_no"
+              [matDatepicker]="online_date_picker"
+              [(ngModel)]="bank_issued_date"
             />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="online_date_picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #online_date_picker></mat-datepicker>
           </mat-form-field>
+        </div>
+        <div class="col">
+          
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Bank Holder Name</mat-label>
             <input

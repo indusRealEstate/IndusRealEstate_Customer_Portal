@@ -423,7 +423,7 @@
                     </div>
                   </button>
                   <button
-                    *ngIf="getLeaseExpiryStyleClass(element.contract_end) == 'lease-expiry-date'"
+                    class="mat-mdc-menu-item-terminate"
                     mat-menu-item
                     (click)="openCautionDialog(element.contract_id, element.unit_id , element.tenant_id)"
                   >

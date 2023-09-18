@@ -104,6 +104,12 @@ export class AdminPropertiesUnits implements OnInit {
             id: res.property_id,
             name: res.property_name,
           };
+
+          this.current_sort_option = {
+            type: "prop",
+            id: res.property_id,
+          };
+          this.changeSortOption(JSON.stringify(this.current_sort_option));
         }
       });
   }
@@ -137,6 +143,13 @@ export class AdminPropertiesUnits implements OnInit {
     this.current_sort_option = option;
     this.searchBar.searchText = "";
     if (option != "all") {
+      if (
+        option == "occupied" ||
+        option == "vacant" ||
+        option == "multiple_owners"
+      ) {
+        this.sort_property = undefined;
+      }
       this.pageChangerLoading = true;
 
       this.unitService
@@ -155,6 +168,7 @@ export class AdminPropertiesUnits implements OnInit {
           this.pageChangerLoading = false;
         });
     } else {
+      this.sort_property = undefined;
       this.fetchData();
     }
   }
@@ -260,6 +274,7 @@ export class AdminPropertiesUnits implements OnInit {
 
   searchUnit(filterValue: any) {
     this.current_sort_option = "all";
+    this.sort_property = undefined;
     this.pageChangerLoading = true;
     if (filterValue != "") {
       this.unitService

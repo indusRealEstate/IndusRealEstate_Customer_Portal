@@ -56,21 +56,29 @@
             </div>
             <div
               style="
-                padding: 0;
-                background: #5778ae;
+                padding: 5px;
                 max-width: 25rem;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
+                background: #5778ae;
               "
               class="btn m-0 ml-4"
               (click)="selectProperty()"
             >
-              <p style="margin: 5px 10px">Sort By Building</p>
+              <span style="padding: 5px 10px; background: #5778ae"
+                >Sort By Building</span
+              >
 
               <span
                 *ngIf="sort_property != undefined"
-                style="font-weight: 600; font-size: 13px"
+                style="
+                  font-weight: 600;
+                  font-size: 13px;
+                  padding: 7px 10px;
+                  background: #d4aa32;
+                  margin-right: -5px;
+                "
                 >{{sort_property != undefined ? ' : ' + sort_property.name :
                 ''}}</span
               >
@@ -193,7 +201,7 @@
                 [ngClass]="last ? 'fourth-col-last' : 'fourth-col'"
                 (click)="navigateToDetailPage(element)"
               >
-                {{ element.size }} Sqft
+                {{ element.size == '0' ? '-' : element.size + ' Sqft' }}
               </td>
             </ng-container>
 

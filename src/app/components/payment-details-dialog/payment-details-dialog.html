@@ -189,15 +189,17 @@
                     Bank Name
                   </p>
                   <span style="font-weight: 400">
-                    {{all_data.payment_bank_name | titlecase}}
+                    {{all_data.payment_bank_name == '' ? '-' :
+                    (all_data.payment_bank_name | titlecase)}}
                   </span>
                 </div>
                 <div class="col pr-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Branch
+                    Bank Holder Name
                   </p>
                   <span style="font-weight: 400">
-                    {{all_data.payment_bank_branch | titlecase}}
+                    {{all_data.payment_bank_holder_name == '' ? '-' :
+                    (all_data.payment_bank_holder_name | titlecase)}}
                   </span>
                 </div>
               </div>
@@ -208,39 +210,18 @@
               >
                 <div class="col pl-0">
                   <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Bank Account No.
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_bank_ac_no}}
-                  </span>
-                </div>
-                <div class="col pr-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    Bank Holder Name
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_bank_holder_name | titlecase}}
-                  </span>
-                </div>
-              </div>
-              <div
-                class="row m-0 mt-2"
-                *ngIf="all_data.payment_method == 'online'"
-              >
-                <div class="col pl-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
-                    IBAN
-                  </p>
-                  <span style="font-weight: 400">
-                    {{all_data.payment_bank_iban}}
-                  </span>
-                </div>
-                <div class="col pr-0">
-                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
                     Transaction ID
                   </p>
                   <span style="font-weight: 400">
                     {{all_data.payment_bank_transaction_id}}
+                  </span>
+                </div>
+                <div class="col pr-0">
+                  <p class="mb-0" style="font-size: 15px; font-weight: 600">
+                    Issued Date
+                  </p>
+                  <span style="font-weight: 400">
+                    {{all_data.payment_online_date | date:'M/y/d'}}
                   </span>
                 </div>
               </div>
