@@ -106,6 +106,17 @@ export class PaymentService {
     );
   }
 
+  deletePayment(payment_id: any) {
+    const url = `${API_URL}/delete_payment.php`;
+    return this.http
+      .post<any>(url, JSON.stringify({ payment_id: payment_id }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   uploadAllFilesAddNewPayment(data: any) {
     const url = `${API_URL}/upload_payment_docs.php`;
     const req = new HttpRequest("POST", url, data, {

@@ -254,7 +254,10 @@
                       />
                     </div>
                   </button>
-                  <button mat-menu-item>
+                  <button
+                    mat-menu-item
+                    (click)="deletePayment(element.payment_id)"
+                  >
                     <div class="row m-0 justify-content-between">
                       <span style="color: red">Delete</span>
                       <img

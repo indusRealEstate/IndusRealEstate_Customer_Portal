@@ -294,32 +294,67 @@ export class EditPaymentDialog implements OnInit {
       this.payment_status != "" &&
       this.amount != ""
     ) {
-      this.added_cheques.push({
-        no: this.cheque_no,
-        name: this.cheque_name,
-        date: this.cheque_date,
-        purpose: this.purpose_list.find((p) => p.value == this.purpose)
-          .viewValue,
-        status: this.payment_status_list.find(
-          (s) => s.value == this.payment_status
-        ).viewValue,
 
-        amount: this.amount,
-        old: false,
-      });
+      if (this.edit_index != undefined) {
+        this.added_cheques[this.edit_index] = {
+          no: this.cheque_no,
+          name: this.cheque_name,
+          date: this.cheque_date,
+          purpose: this.purpose_list.find((p) => p.value == this.purpose)
+            .viewValue,
+          status: this.payment_status_list.find(
+            (s) => s.value == this.payment_status
+          ).viewValue,
 
-      this.new_cheques.push({
-        no: this.cheque_no,
-        name: this.cheque_name,
-        date: this.cheque_date,
-        purpose: this.purpose_list.find((p) => p.value == this.purpose)
-          .viewValue,
-        status: this.payment_status_list.find(
-          (s) => s.value == this.payment_status
-        ).viewValue,
+          amount: this.amount,
+        };
 
-        amount: this.amount,
-      });
+        if(this.added_cheques[this.edit_index].old == undefined){
+          var index = this.new_cheques.findIndex((nc)=> nc.no == this.added_cheques[this.edit_index].no);
+          this.new_cheques[index] = {
+            no: this.cheque_no,
+            name: this.cheque_name,
+            date: this.cheque_date,
+            purpose: this.purpose_list.find((p) => p.value == this.purpose)
+              .viewValue,
+            status: this.payment_status_list.find(
+              (s) => s.value == this.payment_status
+            ).viewValue,
+  
+            amount: this.amount,
+          };
+        }
+
+        this.edit_index = undefined;
+      } else {
+        this.added_cheques.push({
+          no: this.cheque_no,
+          name: this.cheque_name,
+          date: this.cheque_date,
+          purpose: this.purpose_list.find((p) => p.value == this.purpose)
+            .viewValue,
+          status: this.payment_status_list.find(
+            (s) => s.value == this.payment_status
+          ).viewValue,
+  
+          amount: this.amount,
+          old: false,
+        });
+  
+        this.new_cheques.push({
+          no: this.cheque_no,
+          name: this.cheque_name,
+          date: this.cheque_date,
+          purpose: this.purpose_list.find((p) => p.value == this.purpose)
+            .viewValue,
+          status: this.payment_status_list.find(
+            (s) => s.value == this.payment_status
+          ).viewValue,
+  
+          amount: this.amount,
+        });
+      }
+      
 
       setTimeout(() => {
         this.cheque_no = "";
@@ -340,6 +375,23 @@ export class EditPaymentDialog implements OnInit {
     } else {
       this.new_cheques.splice(index, 1);
     }
+  }
+
+  edit_index: any;
+
+  editCheque(index, cheque) {
+    this.edit_index = index;
+    this.added_cheques[index].edit = true;
+    this.cheque_no = cheque.no;
+    this.cheque_name = cheque.name;
+    this.cheque_date = cheque.date;
+    this.purpose = this.purpose_list.find(
+      (pr) => pr.viewValue == cheque.purpose
+    ).value;
+    this.payment_status = this.payment_status_list.find(
+      (st) => st.viewValue == cheque.status
+    ).value;
+    this.amount = cheque.amount;
   }
 
   ngOnInit() {}

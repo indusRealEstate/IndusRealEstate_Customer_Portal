@@ -221,7 +221,7 @@
                     </div>
                     <div
                       class="row m-0 align-items-center"
-                      *ngIf="getContractsEndsInPeriod(contract.contract_end) < 0"
+                      *ngIf="getContractsEndsInPeriod(contract.contract_end) <= 0"
                     >
                       <div
                         (click)="reniewContract(contract)"

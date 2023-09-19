@@ -5,6 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddPaymentDialog } from "app/components/add_payment_dialog/add_payment_dialog";
+import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditPaymentDialog } from "app/components/edit_payment_dialog/edit_payment_dialog";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { PaymentDetailsDialog } from "app/components/payment-details-dialog/payment-details-dialog";
@@ -191,6 +192,38 @@ export class AdminPayments implements OnInit {
           if (res.completed == true) {
             this.refreshTable();
             this.openSnackBar("New payment added successfully", "Close");
+          }
+        }
+      });
+  }
+
+  deletePayment(prop_id: any) {
+    var data = {
+      title: "Delete Payment?",
+      subtitle:
+        "Are you sure you want to delete this payment? You can't undo this action.",
+      warning:
+        "By deleting this payment, all the documents and images uploaded will be lost.",
+      delete_text: "Delete Payment",
+    };
+    this.dialog
+      .open(CautionDialog, {
+        width: "45%",
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          if (value == true) {
+            this.paymentService
+              .deletePayment(prop_id)
+              .subscribe((res) => {
+                console.log(res);
+              })
+              .add(() => {
+                this.refreshTable();
+                this.openSnackBar("Payment deleted successfully", "Close");
+              });
           }
         }
       });

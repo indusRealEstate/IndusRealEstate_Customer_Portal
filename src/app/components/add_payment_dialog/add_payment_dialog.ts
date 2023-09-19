@@ -206,7 +206,7 @@ export class AddPaymentDialog implements OnInit {
         this.payment_status != "" &&
         this.amount != "" &&
         this.transaction_id != "" &&
-        this.bank_issued_date != "" 
+        this.bank_issued_date != ""
       ) {
         return true;
       } else {
@@ -234,18 +234,35 @@ export class AddPaymentDialog implements OnInit {
       this.payment_status != "" &&
       this.amount != ""
     ) {
-      this.added_cheques.push({
-        no: this.cheque_no,
-        name: this.cheque_name,
-        date: this.cheque_date,
-        purpose: this.purpose_list.find((p) => p.value == this.purpose)
-          .viewValue,
-        status: this.payment_status_list.find(
-          (s) => s.value == this.payment_status
-        ).viewValue,
+      if (this.edit_index != undefined) {
+        this.added_cheques[this.edit_index] = {
+          no: this.cheque_no,
+          name: this.cheque_name,
+          date: this.cheque_date,
+          purpose: this.purpose_list.find((p) => p.value == this.purpose)
+            .viewValue,
+          status: this.payment_status_list.find(
+            (s) => s.value == this.payment_status
+          ).viewValue,
 
-        amount: this.amount,
-      });
+          amount: this.amount,
+        };
+
+        this.edit_index = undefined;
+      } else {
+        this.added_cheques.push({
+          no: this.cheque_no,
+          name: this.cheque_name,
+          date: this.cheque_date,
+          purpose: this.purpose_list.find((p) => p.value == this.purpose)
+            .viewValue,
+          status: this.payment_status_list.find(
+            (s) => s.value == this.payment_status
+          ).viewValue,
+
+          amount: this.amount,
+        });
+      }
 
       setTimeout(() => {
         this.cheque_no = "";
@@ -260,6 +277,23 @@ export class AddPaymentDialog implements OnInit {
 
   deleteCheque(index) {
     this.added_cheques.splice(index, 1);
+  }
+
+  edit_index: any;
+
+  editCheque(index, cheque) {
+    this.edit_index = index;
+    this.added_cheques[index].edit = true;
+    this.cheque_no = cheque.no;
+    this.cheque_name = cheque.name;
+    this.cheque_date = cheque.date;
+    this.purpose = this.purpose_list.find(
+      (pr) => pr.viewValue == cheque.purpose
+    ).value;
+    this.payment_status = this.payment_status_list.find(
+      (st) => st.viewValue == cheque.status
+    ).value;
+    this.amount = cheque.amount;
   }
 
   ngOnInit() {}
@@ -396,8 +430,8 @@ export class AddPaymentDialog implements OnInit {
         return {
           bank_name: this.bank_name,
           bank_holder_name: this.bank_holder_name,
-          bank_issued_date : this.bank_issued_date,
-          transaction_id : this.transaction_id,
+          bank_issued_date: this.bank_issued_date,
+          transaction_id: this.transaction_id,
           status: this.payment_status,
           purpose: this.purpose,
           amount: this.amount,

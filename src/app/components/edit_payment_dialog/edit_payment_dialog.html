@@ -228,8 +228,18 @@
             >
           </span>
           <img
+            (click)="editCheque(index, cheque)"
+            class="ml-3"
+            style="width: 20px; cursor: pointer"
+            matTooltip="Edit Cheque"
+            matTooltipClass="tooltip"
+            matTooltipPosition="above"
+            src="assets/img/svg/property-page/edit.svg"
+            alt=""
+          />
+          <img
             (click)="deleteCheque(index,cheque)"
-            class="ml-2"
+            class="ml-3"
             style="width: 20px; cursor: pointer"
             matTooltip="Delete Cheque"
             matTooltipClass="tooltip"
@@ -237,6 +247,23 @@
             src="assets/img/svg/delete.svg"
             alt=""
           />
+          <span
+            class="ml-2"
+            *ngIf="cheque.edit != undefined"
+            style="
+              background: #d4aa322e;
+              display: flex;
+              align-items: center;
+              padding: 0 8px;
+              border-radius: 3px;
+              font-weight: 500;
+              border: 1px solid #d4aa32;
+              color: #b58a10;
+              height: 28px;
+              font-size: 12px;
+            "
+            >Editing</span
+          >
         </span>
       </div>
       <div class="row m-0 mt-3" *ngIf="payment_method == 'cheque'">
@@ -330,7 +357,7 @@
               font-size: 15px;
             "
           >
-            Add
+            {{edit_index != undefined ? 'Edit' : 'Add'}}
           </div>
         </div>
       </div>
@@ -346,8 +373,6 @@
               [(ngModel)]="bank_name"
             />
           </mat-form-field>
-
-          
 
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Status*</mat-label>
@@ -385,7 +410,6 @@
           </mat-form-field>
         </div>
         <div class="col">
-          
           <mat-form-field class="textField" appearance="outline">
             <mat-label>Bank Holder Name</mat-label>
             <input

@@ -166,6 +166,7 @@ export class AdminDashboardComponent implements OnInit {
       this.allUnits_occupied_length = res.occupied_units;
       this.allUsers_landlord_length = res.landlords;
       this.allUsers_tenant_length = res.tenants;
+      this.allRequests_length = res.all_requests;
     });
 
     this.leaseService
@@ -257,7 +258,7 @@ export class AdminDashboardComponent implements OnInit {
     var difference_In_Time = end_date.getTime() - start_date.getTime();
 
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
-
+    
     return Math.round(difference_In_Days);
   }
 
