@@ -282,6 +282,9 @@ export class AddPaymentDialog implements OnInit {
   edit_index: any;
 
   editCheque(index, cheque) {
+    if (this.edit_index != undefined) {
+      this.added_cheques[this.edit_index].edit = undefined;
+    }
     this.edit_index = index;
     this.added_cheques[index].edit = true;
     this.cheque_no = cheque.no;
