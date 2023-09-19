@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { User } from "../models/user.model";
 import { OtherServices } from "./other.service";
+import * as CryptoJS from "crypto-js";
 
 const API_URL = "https://indusre.app/api/auth";
 
@@ -35,6 +36,46 @@ export class AuthenticationService {
     };
   }
 
+  getJWTToken() {
+    const url = `https://indusre.app/api/create_jwt_token.php`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  decodeToken(token: string) {
+    const key = "fcvxcnfrhrtghkfghgwerikdf";
+    const rec_hash = token.split(".")[2];
+    const client_hash = CryptoJS.HmacSHA512(
+      `${token.split(".")[0]}.${token.split(".")[1]}`,
+      key
+    ).toString(CryptoJS.enc.Base64);
+
+    if (this.base64UrlDecode(rec_hash) == client_hash) {
+      sessionStorage.setItem("jwt_token", window.atob(token.split(".")[1]));
+      sessionStorage.setItem(
+        "jwt_token_exp",
+        JSON.parse(window.atob(token.split(".")[1]))["exp"]
+      );
+      sessionStorage.setItem(
+        "jwt_token_iss",
+        JSON.parse(window.atob(token.split(".")[1]))["iat"]
+      );
+      return token;
+    } else {
+      return "fail";
+    }
+  }
+
+  base64UrlDecode(text: string) {
+    var text1 = text.replace(/-/g, "+");
+    var text2 = text1.replace(/_/g, "/");
+    var text3 = text2.replace(/#/g, "=");
+    return text3;
+  }
+
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
@@ -46,12 +87,20 @@ export class AuthenticationService {
       .post<any>(url, { username: username, password: password })
       .pipe(
         map((userData) => {
-          console.log(userData);
+          // console.log(userData);
 
           // login successful if there's a jwt token in the response
           if (userData && userData[0]["token"]) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem("currentUser", JSON.stringify(userData));
+            this.getJWTToken().subscribe((tkn) => {
+              const res = this.decodeToken(tkn);
+              if (res != "fail") {
+                this.router.navigate(["/dashboard"], {
+                  queryParams: { token: res },
+                });
+              }
+            });
             this.currentUserSubject.next(userData);
             sessionStorage.clear();
           }

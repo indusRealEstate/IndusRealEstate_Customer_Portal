@@ -111,7 +111,6 @@ export class LoginComponent implements OnInit {
           } else {
             this.otherServices.isUserSignedOut.next(false);
             this.otherServices.userSignedIn.next(true);
-            this.router.navigate(["/dashboard"]);
           }
         },
         (error) => {
