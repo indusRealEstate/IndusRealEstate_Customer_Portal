@@ -60,6 +60,15 @@ export class UserService {
     );
   }
 
+  deleteUser(user_id: any) {
+    const url = `${API_URL}/delete_user.php`;
+    return this.http.post<any>(url, JSON.stringify({ user_id: user_id })).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllUserAllocatedUnits(user_id: string, limit: number, pageNumber: number) {
     const url = `${API_URL}/get_user_allocated_units_pagination.php`;
     return this.http

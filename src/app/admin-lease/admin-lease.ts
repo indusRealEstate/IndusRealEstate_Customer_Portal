@@ -148,6 +148,7 @@ export class AllLeasesComponent implements OnInit {
           this.pageChangerLoading = false;
         });
     } else {
+      this.pageChangerLoading = true;
       this.fetchData(this.paginator.pageSize);
     }
   }
@@ -169,8 +170,16 @@ export class AllLeasesComponent implements OnInit {
 
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
 
+    var diffHrs = Math.floor(
+      ((start_date.getTime() - end_date.getTime()) % 86400000) / 3600000
+    );
+
     if (difference_In_Days < 0) {
-      return `Expired ${Math.round(Math.abs(difference_In_Days))} days ago.`;
+      if (Math.round(Math.abs(difference_In_Days)) == 0) {
+        return `Expired ${diffHrs} hours ago.`;
+      } else {
+        return `Expired ${Math.round(Math.abs(difference_In_Days))} days ago.`;
+      }
     } else {
       return `${Math.round(difference_In_Days)} Days left`;
     }
@@ -357,6 +366,7 @@ export class AllLeasesComponent implements OnInit {
         "Are you sure you want to terminate this contract? You can't undo this action.",
       warning:
         "By terminating this agreement, Unit will be designated as empty and current tenant's lease would be revoked.",
+      delete_text: "Terminate Contract",
     };
     this.dialog
       .open(CautionDialog, {

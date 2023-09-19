@@ -274,7 +274,8 @@
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="viewUser(element)"
               >
-                {{ element.dob == '0000-00-00' ? '-' : (element.dob | date:'M/d/y') }}
+                {{ element.dob == '0000-00-00' ? '-' : (element.dob |
+                date:'M/d/y') }}
               </td>
             </ng-container>
 
@@ -382,7 +383,11 @@
                       />
                     </div>
                   </button>
-                  <button mat-menu-item>
+                  <button
+                    *ngIf="element.user_type == 'new_user'"
+                    mat-menu-item
+                    (click)="deleteUser(element.user_id)"
+                  >
                     <div class="row m-0 justify-content-between">
                       <span style="color: red">Delete</span>
                       <img

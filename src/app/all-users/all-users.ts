@@ -5,6 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddUserDialog } from "app/components/add_user_dialog/add_user_dialog";
+import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
@@ -97,6 +98,38 @@ export class AllUsersComponent implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
+  deleteUser(user_id: any) {
+    var data = {
+      title: "Delete User?",
+      subtitle:
+        "Are you sure you want to delete this user? You can't undo this action.",
+      warning:
+        "By deleting this user, all the documents and images uploaded will be lost.",
+      delete_text: "Delete User",
+    };
+    this.dialog
+      .open(CautionDialog, {
+        width: "45%",
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          if (value == true) {
+            this.userService
+              .deleteUser(user_id)
+              .subscribe((res) => {
+                console.log(res);
+              })
+              .add(() => {
+                this.refreshTable();
+                this.openSnackBar("User deleted successfully", "Close");
+              });
+          }
+        }
+      });
+  }
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.rout.queryParams.subscribe((q) => {
@@ -137,6 +170,7 @@ export class AllUsersComponent implements OnInit {
           this.pageChangerLoading = false;
         });
     } else {
+      this.pageChangerLoading = true;
       this.fetchData(this.paginator.pageSize);
     }
   }

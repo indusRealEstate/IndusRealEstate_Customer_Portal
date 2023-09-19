@@ -12,6 +12,7 @@ import { AuthenticationService } from "app/services/authentication.service";
 import { UnitsService } from "app/services/units.service";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialog";
+import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 
 @Component({
   selector: "admin-properties-units",
@@ -168,6 +169,7 @@ export class AdminPropertiesUnits implements OnInit {
           this.pageChangerLoading = false;
         });
     } else {
+      this.pageChangerLoading = true;
       this.sort_property = undefined;
       this.fetchData();
     }
@@ -309,6 +311,38 @@ export class AdminPropertiesUnits implements OnInit {
           if (res.completed == true) {
             this.refreshTable();
             this.openSnackBar("New Unit added successfully", "Close");
+          }
+        }
+      });
+  }
+
+  deletePropertyUnit(unit_id: any, index: any) {
+    var data = {
+      title: "Delete Unit?",
+      subtitle:
+        "Are you sure you want to delete this unit? You can't undo this action.",
+      warning:
+        "By deleting this unit, all the documents and images uploaded will be lost.",
+      delete_text: "Delete Unit",
+    };
+    this.dialog
+      .open(CautionDialog, {
+        width: "45%",
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          if (value == true) {
+            this.unitService
+              .deleteUnit(unit_id)
+              .subscribe((res) => {
+                console.log(res);
+              })
+              .add(() => {
+                this.refreshTable();
+                this.openSnackBar("Unit deleted successfully", "Close");
+              });
           }
         }
       });

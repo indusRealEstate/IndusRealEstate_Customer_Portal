@@ -5,12 +5,12 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AddPropertyDialog } from "app/components/add_property_dialog/add_property_dialog";
+import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AuthenticationService } from "app/services/authentication.service";
 import { PropertiesService } from "app/services/properties.service";
-
 
 declare interface Property {
   "PROPERTY NAME": string;
@@ -90,6 +90,38 @@ export class AdminProperties implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  deleteProperty(prop_id: any) {
+    var data = {
+      title: "Delete Property?",
+      subtitle:
+        "Are you sure you want to delete this property? You can't undo this action.",
+      warning:
+        "By deleting this property, all the documents and images uploaded will be lost.",
+      delete_text: "Delete Property",
+    };
+    this.dialog
+      .open(CautionDialog, {
+        width: "45%",
+        data,
+      })
+      .afterClosed()
+      .subscribe((value) => {
+        if (value != undefined) {
+          if (value == true) {
+            this.propertyService
+              .deleteProperty(prop_id)
+              .subscribe((res) => {
+                console.log(res);
+              })
+              .add(() => {
+                this.refreshTable();
+                this.openSnackBar("Property deleted successfully", "Close");
+              });
+          }
+        }
+      });
   }
 
   openSnackBar(message: string, action: string) {

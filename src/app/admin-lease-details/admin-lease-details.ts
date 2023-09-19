@@ -237,6 +237,7 @@ export class AdminLeaseDetail implements OnInit {
         "Are you sure you want to terminate this contract? You can't undo this action.",
       warning:
         "By terminating this agreement, Unit will be designated as empty and current tenant's lease would be revoked.",
+      delete_text: "Terminate Contract",
     };
     this.dialog
       .open(CautionDialog, {

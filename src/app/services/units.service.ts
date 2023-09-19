@@ -25,6 +25,15 @@ export class UnitsService {
     );
   }
 
+  deleteUnit(unit_id: any) {
+    const url = `${API_URL}/delete_unit.php`;
+    return this.http.post<any>(url, JSON.stringify({ unit_id: unit_id })).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   addUnit(data: any) {
     const url = `${API_URL}/addUnit.php`;
     return this.http.post<any>(url, data).pipe(
@@ -149,7 +158,7 @@ export class UnitsService {
     return this.http.request(req);
   }
 
-  updateAmenities(data: any){
+  updateAmenities(data: any) {
     const url = `${API_URL}/updateAmenies.php`;
     return this.http.post(url, data).pipe(
       map((data) => {
@@ -158,7 +167,7 @@ export class UnitsService {
     );
   }
 
-  updateInventories(data: any){
+  updateInventories(data: any) {
     const url = `${API_URL}/updateInventories.php`;
     return this.http.post(url, data).pipe(
       map((data) => {

@@ -43,6 +43,17 @@ export class PropertiesService {
     );
   }
 
+  deleteProperty(property_id: any) {
+    const url = `${API_URL}/delete_property.php`;
+    return this.http
+      .post<any>(url, JSON.stringify({ property_id: property_id }))
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   uploadAllFilesAddProperty(data: any) {
     const url = `${API_URL}/upload_add_property_files.php`;
     const req = new HttpRequest("POST", url, data, {

@@ -10,6 +10,8 @@ export class CautionDialog implements OnInit {
   title: any = "";
   subtitle: any = "";
   warning: any = "";
+
+  delete_button: any = "";
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CautionDialog>
@@ -17,6 +19,7 @@ export class CautionDialog implements OnInit {
     this.title = data.title;
     this.subtitle = data.subtitle;
     this.warning = data.warning;
+    this.delete_button = data.delete_text;
   }
 
   ngOnInit() {}

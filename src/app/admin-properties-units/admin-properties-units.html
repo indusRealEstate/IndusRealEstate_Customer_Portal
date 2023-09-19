@@ -212,7 +212,7 @@
                 *matCellDef="let element;let last = last"
                 [ngClass]="last ? 'fifth-col-last' : 'fifth-col'"
                 (click)="navigateToDetailPage(element)"
-                style="max-width: 100px"
+                style="width: 130px"
               >
                 <div
                   *ngIf="element.status == 'vacant'"
@@ -345,7 +345,11 @@
                       />
                     </div>
                   </button>
-                  <button mat-menu-item>
+                  <button
+                    *ngIf="element.status == 'vacant'"
+                    mat-menu-item
+                    (click)="deletePropertyUnit(element.unit_id, index)"
+                  >
                     <div class="row m-0 justify-content-between">
                       <span style="color: red">Delete</span>
                       <img
