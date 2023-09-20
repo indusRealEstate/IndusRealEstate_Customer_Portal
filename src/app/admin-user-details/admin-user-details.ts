@@ -65,6 +65,12 @@ export class ViewUserDetails implements OnInit {
       this.user_id = val.user_id;
       this.user_auth = val.auth;
     });
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   displayedColumns: string[] = ["unit", "property", "status", "tenant", "link"];

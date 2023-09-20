@@ -84,6 +84,12 @@ export class AdminDashboardComponent implements OnInit {
         }
       });
     });
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   dashboardMainCards: any[] = [
@@ -315,23 +321,23 @@ export class AdminDashboardComponent implements OnInit {
     }, 1500);
   }
 
-  navigateToTotalProperties() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    var userId = user[0]["id"];
-    this.router.navigate(["/admin-properties"], {
-      queryParams: { uid: userId },
-    });
-  }
+  // navigateToTotalProperties() {
+  //   var userData = localStorage.getItem("currentUser");
+  //   var user = JSON.parse(userData);
+  //   var userId = user[0]["id"];
+  //   this.router.navigate(["/admin-properties"], {
+  //     queryParams: { uid: userId },
+  //   });
+  // }
 
-  navigateToTotalUnits() {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    var userId = user[0]["id"];
-    this.router.navigate(["/admin-properties-units"], {
-      queryParams: { uid: userId },
-    });
-  }
+  // navigateToTotalUnits() {
+  //   var userData = localStorage.getItem("currentUser");
+  //   var user = JSON.parse(userData);
+  //   var userId = user[0]["id"];
+  //   this.router.navigate(["/admin-properties-units"], {
+  //     queryParams: { uid: userId },
+  //   });
+  // }
 
   getRoundData(num: number) {
     return Math.round(num);

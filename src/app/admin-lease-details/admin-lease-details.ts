@@ -53,6 +53,12 @@ export class AdminLeaseDetail implements OnInit {
     });
 
     this.getScreenSize();
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   payment_table_length: any = 0;

@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatMenuTrigger } from "@angular/material/menu";
-import { Router } from "@angular/router";
-import { OtherServices } from "app/services/other.service";
 
 @Component({
   selector: "table-filters",
@@ -82,11 +80,7 @@ export class TableFiltersComponent implements OnInit {
     this.timeLineFilterOn = false;
   }
 
-  constructor(private router: Router, private otherServices: OtherServices) {
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-    this.userId = user[0]["id"];
-  }
+  constructor() {}
 
   ngOnInit() {}
 }

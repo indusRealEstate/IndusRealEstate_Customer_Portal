@@ -125,6 +125,12 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
     this.otherServices.miniSideBarClicked.subscribe((val) => {
       this.sidebar_opened = val;
     });
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   openSnackBar(message: string, action: string) {

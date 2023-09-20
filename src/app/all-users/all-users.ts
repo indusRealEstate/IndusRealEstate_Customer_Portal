@@ -88,6 +88,12 @@ export class AllUsersComponent implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   screenHeight: number;

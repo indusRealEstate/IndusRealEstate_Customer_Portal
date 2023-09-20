@@ -94,9 +94,6 @@ export class AdminRequestsDetails implements OnInit {
   ) {
     this.getScreenSize();
     this.isContentLoading = true;
-    var userData = localStorage.getItem("currentUser");
-
-    var user = JSON.parse(userData);
 
     this.route.queryParams.subscribe((val) => {
       this.request_id = val.request_id;
@@ -104,6 +101,12 @@ export class AdminRequestsDetails implements OnInit {
 
     this.otherServices.miniSideBarClicked.subscribe((val) => {
       this.sideBar_opened = val;
+    });
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
     });
   }
 

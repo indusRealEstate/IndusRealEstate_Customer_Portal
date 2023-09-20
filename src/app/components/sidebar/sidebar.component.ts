@@ -254,8 +254,6 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDataFromLocal();
-
     this.homeRouteAdmin = HOMEROUTEADMIN.filter((menuItem) => menuItem);
 
     this.requestsRouteAdmin = REQUESTSROUTEADMIN.filter((menuItem) => menuItem);
@@ -282,20 +280,20 @@ export class SidebarComponent implements OnInit {
     return baseUrl == url;
   }
 
-  getUserDataFromLocal() {
-    var data = localStorage.getItem("currentUser");
-    var user = JSON.parse(data);
+  // getUserDataFromLocal() {
+  //   var data = localStorage.getItem("currentUser");
+  //   var user = JSON.parse(data);
 
-    this.user = new User(
-      user[0]["id"],
-      user[0]["auth_type"],
-      user[0]["username"],
-      user[0]["firstname"],
-      user[0]["lastname"],
-      user[0]["password"],
-      user[0]["token"]
-    );
-  }
+  //   this.user = new User(
+  //     user[0]["id"],
+  //     user[0]["auth_type"],
+  //     user[0]["username"],
+  //     user[0]["firstname"],
+  //     user[0]["lastname"],
+  //     user[0]["password"],
+  //     user[0]["token"]
+  //   );
+  // }
 
   userLogOut() {
     this.otherServices.isLogoutProcessing.next(true);

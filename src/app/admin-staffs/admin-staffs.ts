@@ -54,7 +54,7 @@ export class AdminStaffs implements OnInit {
 
   allUnits: any[] = [];
 
-  userId: any;
+  // userId: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -73,10 +73,6 @@ export class AdminStaffs implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.userId = user[0]["id"];
   }
 
   screenHeight: number;

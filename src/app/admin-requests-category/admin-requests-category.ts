@@ -65,6 +65,12 @@ export class AdminRequestsCategory implements OnInit {
         });
       });
     });
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   screenHeight: number;

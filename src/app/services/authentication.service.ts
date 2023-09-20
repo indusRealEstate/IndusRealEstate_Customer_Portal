@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, of } from "rxjs";
@@ -6,6 +6,7 @@ import { catchError, map } from "rxjs/operators";
 import { User } from "../models/user.model";
 import { OtherServices } from "./other.service";
 import * as CryptoJS from "crypto-js";
+import * as moment from "moment";
 
 const API_URL = "https://indusre.app/api/auth";
 
@@ -36,45 +37,63 @@ export class AuthenticationService {
     };
   }
 
-  getJWTToken() {
-    const url = `https://indusre.app/api/create_jwt_token.php`;
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        return data;
-      })
-    );
+  // private setSession(authResult) {
+  //   const parsed_json = JSON.parse(window.atob(authResult.split(".")[1]));
+  //   const expiresAt = moment().add(parsed_json.exp, "second");
+
+  //   localStorage.setItem("id_token", authResult);
+  //   localStorage.setItem("token_raw", parsed_json);
+  //   localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+  // }
+
+  // getExpiration() {
+  //   const expiration = localStorage.getItem("expires_at");
+  //   const expiresAt = JSON.parse(expiration);
+  //   return moment(expiresAt);
+  // }
+
+  private getAuthorizationHeaders(): HttpHeaders {
+    const token = localStorage.getItem("token");
+    const headers: HttpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return headers;
   }
 
-  decodeToken(token: string) {
-    const key = "fcvxcnfrhrtghkfghgwerikdf";
-    const rec_hash = token.split(".")[2];
-    const client_hash = CryptoJS.HmacSHA512(
-      `${token.split(".")[0]}.${token.split(".")[1]}`,
-      key
-    ).toString(CryptoJS.enc.Base64);
-
-    if (this.base64UrlDecode(rec_hash) == client_hash) {
-      sessionStorage.setItem("jwt_token", window.atob(token.split(".")[1]));
-      sessionStorage.setItem(
-        "jwt_token_exp",
-        JSON.parse(window.atob(token.split(".")[1]))["exp"]
+  validateToken() {
+    const url = `https://indusre.app/api/validate_token.php`;
+    return this.http
+      .get<any>(url, { headers: this.getAuthorizationHeaders() })
+      .pipe(
+        map((data) => {
+          return data;
+        })
       );
-      sessionStorage.setItem(
-        "jwt_token_iss",
-        JSON.parse(window.atob(token.split(".")[1]))["iat"]
-      );
-      return token;
-    } else {
-      return "fail";
-    }
   }
 
-  base64UrlDecode(text: string) {
-    var text1 = text.replace(/-/g, "+");
-    var text2 = text1.replace(/_/g, "/");
-    var text3 = text2.replace(/#/g, "=");
-    return text3;
-  }
+  // decodeToken(token: string) {
+  //   const key = "fcvxcnfrhrtghkfghgwerikdf";
+  //   const rec_hash = token.split(".")[2];
+  //   const client_hash = CryptoJS.HmacSHA512(
+  //     `${token.split(".")[0]}.${token.split(".")[1]}`,
+  //     key
+  //   ).toString(CryptoJS.enc.Base64);
+
+  //   if (this.base64UrlDecode(rec_hash) == client_hash) {
+  //     this.setSession(token);
+  //     return token;
+  //   } else {
+  //     return "fail";
+  //   }
+  // }
+
+  // base64UrlDecode(text: string) {
+  //   var text1 = text.replace(/-/g, "+");
+  //   var text2 = text1.replace(/_/g, "/");
+  //   var text3 = text2.replace(/#/g, "=");
+  //   return text3;
+  // }
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
@@ -87,25 +106,24 @@ export class AuthenticationService {
       .post<any>(url, { username: username, password: password })
       .pipe(
         map((userData) => {
-          // console.log(userData);
-
-          // login successful if there's a jwt token in the response
-          if (userData && userData[0]["token"]) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem("currentUser", JSON.stringify(userData));
-            this.getJWTToken().subscribe((tkn) => {
-              const res = this.decodeToken(tkn);
-              if (res != "fail") {
-                this.router.navigate(["/dashboard"], {
-                  queryParams: { token: res },
-                });
-              }
-            });
-            this.currentUserSubject.next(userData);
+          if (userData != "invalid-user") {
+            console.log(userData);
+            localStorage.setItem(
+              "currentUser",
+              JSON.stringify(userData.userData)
+            );
+            localStorage.setItem("token", JSON.stringify(userData.token));
+            // this.getJWTToken().subscribe((tkn) => {
+            //   const res = this.decodeToken(tkn);
+            //   if (res != "fail") {
+            this.router.navigate(["/dashboard"]);
+            //   }
+            // });
+            this.currentUserSubject.next(userData.userData);
             sessionStorage.clear();
           }
 
-          if (userData != null) {
+          if (userData != "invalid-user") {
             return userData;
           } else {
             return "invalid-user";
@@ -174,6 +192,8 @@ export class AuthenticationService {
   }
 
   logout() {
+    this.otherServices.isLogoutProcessing.next(true);
+    // setTimeout(() => {});
     // remove user from local storage to log user out
     localStorage.removeItem("currentUser");
     localStorage.clear();
@@ -184,7 +204,9 @@ export class AuthenticationService {
       setTimeout(() => {
         this.router.navigate(["/login"]);
         this.otherServices.isLogoutProcessing.next(false);
-      }, 200);
+        this.otherServices.isUserSignedOut.next(true);
+        this.otherServices.userSignedIn.next(false);
+      }, 500);
     });
   }
 }

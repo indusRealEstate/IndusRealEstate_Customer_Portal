@@ -88,6 +88,12 @@ export class AdminPropertiesUnits implements OnInit {
         });
       });
     });
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   selectProperty() {

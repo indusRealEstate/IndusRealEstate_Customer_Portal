@@ -57,7 +57,7 @@ export class AdminProperties implements OnInit {
 
   allUnits: any[] = [];
 
-  userId: any;
+  // userId: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -78,10 +78,12 @@ export class AdminProperties implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
 
-    this.userId = user[0]["id"];
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   screenHeight: number;
@@ -199,7 +201,7 @@ export class AdminProperties implements OnInit {
           this.paginator.pageIndex + 1
         )
         .subscribe((va: any) => {
-          // console.log(va);
+          console.log(va);
           this.allProperties = va.prop;
           this.allPropertiesMatTableData = new MatTableDataSource(va.prop);
           this.tableLength = va.count;
@@ -232,7 +234,7 @@ export class AdminProperties implements OnInit {
       this.propertyService
         .getAllPropertiesPagination(event.pageSize, event.pageIndex + 1)
         .subscribe((va: any) => {
-          console.log(va);
+          // console.log(va);
           this.allProperties = va.prop;
           this.allPropertiesMatTableData = new MatTableDataSource(va.prop);
         })

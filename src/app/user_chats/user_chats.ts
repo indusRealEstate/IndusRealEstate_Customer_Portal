@@ -82,19 +82,11 @@ export class UserChatsComponent implements OnInit {
     this.isAllClientsLoading = true;
     this.chats_loading = true;
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
-
-    this.userId = user[0]["id"];
-
-    this.route.queryParams.subscribe((e) => {
-      if (e == null) {
-        router.navigate(["/user-chats"], {
-          queryParams: { uid: user[0]["id"] },
-        });
+    
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
       }
-
-      this.urlInit(e, user[0]["id"]);
     });
   }
 

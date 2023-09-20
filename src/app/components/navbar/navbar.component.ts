@@ -37,12 +37,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {}
 
   userLogOut() {
-    this.otherServices.isLogoutProcessing.next(true);
     this.authenticationService.logout();
-    setTimeout(() => {
-      this.otherServices.isUserSignedOut.next(true);
-      this.otherServices.userSignedIn.next(false);
-    });
   }
 
   getMiniTabIcon() {
@@ -203,10 +198,6 @@ export class NavbarComponent implements OnInit {
 
   gotoTitlePage() {
     if (this.getSubTitle() != "no-subtitle") {
-      var userData = localStorage.getItem("currentUser");
-      var user = JSON.parse(userData);
-      var userId = user[0]["id"];
-
       this.currentPage = this.router.url.split("?")[0].split("/")[1];
       var titlee = this.location.prepareExternalUrl(this.location.path());
 

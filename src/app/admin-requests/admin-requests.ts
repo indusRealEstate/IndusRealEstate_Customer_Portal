@@ -4,6 +4,7 @@ import { RequestStatuses } from "app/models/request_statuses";
 import { FirebaseService } from "app/services/firebase.service";
 import { RequestService } from "app/services/request.service";
 import { RequestsTable } from "./components/requests-table/requests-table";
+import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
   selector: "admin-requests",
@@ -46,9 +47,16 @@ export class AdminRequests implements OnInit {
   constructor(
     private firebaseService: FirebaseService,
     private requestService: RequestService,
+    private authenticationService: AuthenticationService
   ) {
     this.getScreenSize();
     this.isContentLoading = true;
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   screenHeight: number;

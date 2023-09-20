@@ -9,6 +9,7 @@ import { AnnouncementDetailsDialog } from "app/components/announcement-details-d
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
 import { AnnouncementService } from "app/services/announcement.service";
+import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
 
 @Component({
@@ -45,6 +46,7 @@ export class Announcements implements OnInit {
 
   constructor(
     private announcementService: AnnouncementService,
+    private authenticationService: AuthenticationService,
     private firebaseService: FirebaseService,
     private _snackBar: MatSnackBar,
     private router: Router,
@@ -53,6 +55,12 @@ export class Announcements implements OnInit {
     // this.isLoading = true;
     this.isContentLoading = true;
     this.getScreenSize();
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   screenHeight: number;

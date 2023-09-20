@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { ViewIncomeStatementDialog } from "app/components/view-income-statement-dialog/view-income-statement-dialog";
 import { ViewPaymentDetailsMoreDialog } from "app/components/view-payment-details-more-dialog/view-payment-details-more-dialog";
 import { AdminService } from "app/services/admin.service";
+import { AuthenticationService } from "app/services/authentication.service";
 import { PaymentService } from "app/services/payment.service";
 import { RequestService } from "app/services/request.service";
 
@@ -60,12 +61,19 @@ export class AdminReport implements OnInit {
     private adminService: AdminService,
     private requestService: RequestService,
     private paymentService: PaymentService,
+    private authenticationService: AuthenticationService,
     private router: Router,
     private dialog: MatDialog
   ) {
     // this.isLoading = true;
     this.isContentLoading = true;
     this.getScreenSize();
+
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
   dashboardMainCards: any[] = [
     {

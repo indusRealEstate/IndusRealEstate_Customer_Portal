@@ -45,7 +45,7 @@ export class AdminPayments implements OnInit {
   statusMenuOpened: boolean = false;
   flaggedRequest: boolean = false;
 
-  userId: any;
+  // userId: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -66,10 +66,12 @@ export class AdminPayments implements OnInit {
     this.isContentLoading = true;
 
     this.getScreenSize();
-    var userData = localStorage.getItem("currentUser");
-    var user = JSON.parse(userData);
 
-    this.userId = user[0]["id"];
+    authenticationService.validateToken().subscribe((res) => {
+      if (res != "not-expired") {
+        authenticationService.logout();
+      }
+    });
   }
 
   screenHeight: number;

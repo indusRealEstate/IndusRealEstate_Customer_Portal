@@ -17,32 +17,6 @@ export class AppComponent {
     this.authenticationService.currentUser.subscribe(
       (x) => (this.currentUser = x)
     );
-
-    // to clear the localStorage after 1 hour
-    // (if someone want to clear after 8hrs simply change hours=8)
-
-    var hours = 3;
-
-    var now = new Date().getTime();
-    var setupTime = JSON.parse(localStorage.getItem("setupTime"));
-    if (setupTime == null) {
-      console.log("setuped now");
-      localStorage.setItem("setupTime", JSON.stringify(now));
-    } else {
-      if (now - setupTime > hours * 60 * 60 * 1000) {
-        console.log("cleared now");
-        localStorage.clear();
-        sessionStorage.clear();
-        localStorage.setItem("setupTime", JSON.stringify(now));
-
-        window.location.replace("/login");
-      }
-    }
-  }
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(["/login"]);
   }
 
   onActivate(event) {
