@@ -68,19 +68,20 @@ export class AdminDashboardComponent implements OnInit {
     this.firebaseService.firebaseLogin().then(() => {
       this.firebaseService.userLoggedIn.subscribe(async (res) => {
         if (res == true) {
-          this.firebaseService.requestToken();
-          this.firebaseService.recieveMessages();
-          await this.firebaseService.getAllContractsReminders().then((obs) => {
-            obs.subscribe((val: any[]) => {
-              if (this.firestore_contracts_reminders.length == 0) {
-                this.firestore_contracts_reminders = val;
-              } else {
-                val.forEach((r) => {
-                  this.firestore_contracts_reminders.push(r);
-                });
-              }
-            });
-          });
+          // console.log('user logged in.')
+          // this.firebaseService.requestToken();
+          // this.firebaseService.recieveMessages();
+          // await this.firebaseService.getAllContractsReminders().then((obs) => {
+          //   obs.subscribe((val: any[]) => {
+          //     if (this.firestore_contracts_reminders.length == 0) {
+          //       this.firestore_contracts_reminders = val;
+          //     } else {
+          //       val.forEach((r) => {
+          //         this.firestore_contracts_reminders.push(r);
+          //       });
+          //     }
+          //   });
+          // });
         }
       });
     });

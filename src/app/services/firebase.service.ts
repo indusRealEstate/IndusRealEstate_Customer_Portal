@@ -8,6 +8,7 @@ import {
   Firestore,
   collection,
   collectionChanges,
+  getDocs,
 } from "@angular/fire/firestore";
 import { BehaviorSubject, Observable, map, of } from "rxjs";
 
@@ -94,7 +95,7 @@ export class FirebaseService {
         await this.auth
           .signInWithEmailAndPassword("webtech@indusre.ae", "Ajeermdk@1820#")
           .then((result) => {
-            // console.log(result);
+            console.log(result);
           })
           .catch((error) => {
             console.log(error);
@@ -132,18 +133,15 @@ export class FirebaseService {
     });
   }
 
-  getData() {
-    return collectionChanges(
-      collection(this.firestore, "service_requests")
-    ).pipe(
-      map((items) =>
-        items.map((item) => {
-          const data = item.doc.data();
-          const id = item.doc.id;
-          return { id, ...data };
+  getLatestRequests() {
+    return this.db
+      .collection("service_requests")
+      .valueChanges()
+      .pipe(
+        map((item) => {
+          return item;
         })
-      )
-    );
+      );
   }
 
   async deleteData(id) {

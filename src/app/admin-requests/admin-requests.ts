@@ -71,7 +71,7 @@ export class AdminRequests implements OnInit {
 
   async ngOnInit() {
     this.fetchData();
-    this.firebaseService.getData().subscribe((req_data: any[]) => {
+    this.firebaseService.getLatestRequests().subscribe((req_data: any[]) => {
       if (
         this.request_table_0.paginator != undefined ||
         this.request_table_1.paginator != undefined
