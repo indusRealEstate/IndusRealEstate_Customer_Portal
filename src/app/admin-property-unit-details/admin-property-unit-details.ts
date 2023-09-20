@@ -363,7 +363,7 @@ export class AdminPropertiesUnitDetails implements OnInit, OnChanges {
   navigateLeaseDetails() {
     this.router.navigate(["/contract-details"], {
       queryParams: {
-        contact_id: this.all_data.lease_uid,
+        contract_id: this.all_data.lease_uid,
       },
     });
   }

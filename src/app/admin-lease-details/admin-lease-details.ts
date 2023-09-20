@@ -49,7 +49,7 @@ export class AdminLeaseDetail implements OnInit {
     this.isContentLoading = true;
 
     this.route.queryParams.subscribe((param) => {
-      this.contract_id = param.contact_id;
+      this.contract_id = param.contract_id;
     });
 
     this.getScreenSize();

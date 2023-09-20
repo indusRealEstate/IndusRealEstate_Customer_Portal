@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 import { PageNotFoundComponent } from "app/404_page_not_found/404_page_not_found.component";
 // import { AdminRequests } from "app/admin-requests/admin-requests";
 import { AdminLeaseDetail } from "app/admin-lease-details/admin-lease-details";
+import { AllLeasesRemindersComponent } from "app/admin-lease-reminders/admin-lease-reminders";
 import { AllLeasesComponent } from "app/admin-lease/admin-lease";
 import { AdminPayments } from "app/admin-payments/admin-payments";
 import { AdminPropertiesUnits } from "app/admin-properties-units/admin-properties-units";
@@ -37,6 +38,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "all-users", component: AllUsersComponent },
   { path: "report", component: AdminReport },
   { path: "contracts", component: AllLeasesComponent },
+  { path: "contracts-reminders", component: AllLeasesRemindersComponent },
   { path: "404", component: PageNotFoundComponent },
   { path: "request-category", component: AdminRequestsCategory },
   {

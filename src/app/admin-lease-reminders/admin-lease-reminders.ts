@@ -14,11 +14,11 @@ import { AuthenticationService } from "app/services/authentication.service";
 import { LeaseService } from "app/services/lease.service";
 
 @Component({
-  selector: "admin-lease",
-  templateUrl: "./admin-lease.html",
-  styleUrls: ["./admin-lease.scss"],
+  selector: "admin-lease-reminders",
+  templateUrl: "./admin-lease-reminders.html",
+  styleUrls: ["./admin-lease-reminders.scss"],
 })
-export class AllLeasesComponent implements OnInit {
+export class AllLeasesRemindersComponent implements OnInit {
   isUserSignedIn: boolean = false;
 
   // isLoading: boolean = false;
@@ -123,7 +123,7 @@ export class AllLeasesComponent implements OnInit {
       this.pageChangerLoading = true;
 
       this.leaseService
-        .getallContractsFilter(
+        .getallContractsRemindersFilter(
           option,
           this.paginator.pageSize,
           this.paginator.pageIndex + 1
@@ -206,7 +206,7 @@ export class AllLeasesComponent implements OnInit {
       this.searchBar.searchText = "";
     }
     this.leaseService
-      .getAllContractsAdminPagination(limit == undefined ? 10 : limit, 1)
+      .getAllContractsReminders(limit == undefined ? 10 : limit, 1)
       .subscribe((va: any) => {
         // console.log(va);
         this.allLease = va.lease;
@@ -223,7 +223,7 @@ export class AllLeasesComponent implements OnInit {
     this.pageChangerLoading = true;
     if (this.searchBar.searchText != "") {
       this.leaseService
-        .getallContractsSearchPageChange(
+        .getallContractsRemindersSearchPageChange(
           this.searchBar.searchText,
           event.pageSize,
           event.pageIndex + 1
@@ -238,7 +238,7 @@ export class AllLeasesComponent implements OnInit {
     } else {
       if (this.current_sort_option != "all") {
         this.leaseService
-          .getallContractsFilterPageChange(
+          .getallContractsRemindersFilterPageChange(
             this.current_sort_option,
             event.pageSize,
             event.pageIndex + 1
@@ -254,7 +254,7 @@ export class AllLeasesComponent implements OnInit {
           });
       } else {
         this.leaseService
-          .getAllContractsAdminPagination(event.pageSize, event.pageIndex + 1)
+          .getAllContractsReminders(event.pageSize, event.pageIndex + 1)
           .subscribe((va: any) => {
             console.log(va);
             this.allLease = va.lease;
@@ -287,7 +287,7 @@ export class AllLeasesComponent implements OnInit {
     this.pageChangerLoading = true;
     if (filterValue != "") {
       this.leaseService
-        .getallContractsSearch(
+        .getallContractsRemindersSearch(
           filterValue,
           this.paginator.pageSize,
           this.paginator.pageIndex + 1
@@ -304,23 +304,6 @@ export class AllLeasesComponent implements OnInit {
     } else {
       this.fetchData(this.paginator.pageSize);
     }
-  }
-
-  addLeaseDialogOpen() {
-    this.dialog
-      .open(AddLeaseDialog, {
-        width: "90%",
-        height: "auto",
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res != undefined) {
-          if (res.completed == true) {
-            this.refreshTable();
-            this.openSnackBar("New Lease added successfully", "Close");
-          }
-        }
-      });
   }
 
   // openMoreMenu(lease_id) {

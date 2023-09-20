@@ -110,7 +110,15 @@
             >
               <div class="card-header" style="border-bottom: 1px solid #e6ebf1">
                 <div class="row m-0 justify-content-between">
-                  <span style="font-weight: 600">Upcoming Contracts</span>
+                  <div class="row m-0">
+                    <span style="font-weight: 600">Upcoming Contracts</span>
+                    <span
+                      [routerLink]="['/contracts-reminders']"
+                      class="ml-3 contract-reminder-id"
+                      style="font-weight: 600; font-size: 13px; color: #d4aa32"
+                      >More</span
+                    >
+                  </div>
                   <span style="font-weight: 600; color: #d4aa32"
                     >Total Reminders : 10</span
                   >
@@ -162,20 +170,20 @@
                       />
                       <div class="col">
                         <p
-                          [routerLink]="['/admin-lease-details']"
-                          [queryParams]="{contact_id : contract.contract_id }"
+                          [routerLink]="['/property-unit-details']"
+                          [queryParams]="{unit_id : contract.unit_id }"
                           class="mb-1 contract-reminder-id"
                         >
-                          #{{contract.contract_id}}
+                          {{contract.unit_no}}, {{contract.property_name}}
                         </p>
                         <p
                           class="mb-1"
                           [ngClass]="getLeaseExpiryStyleClass(contract.contract_end)"
                         >
                           {{getContractsEndsInPeriod(contract.contract_end) < 0
-                          ? 'This Contract has been Expired ' +
+                          ? 'This unit contract has been Expired ' +
                           getContractsExpiredPeriod(contract.contract_end) + '
-                          days ago.' : 'This contract will end within ' +
+                          days ago.' : 'This unit contract will end within ' +
                           getContractsEndsInPeriod(contract.contract_end) + '
                           days.'}}
                         </p>
@@ -212,12 +220,12 @@
                       >
                         Send Reminder
                       </div>
-                      <div
+                      <!-- <div
                         class="btn ml-2"
                         style="padding: 5px 10px; background: #ff5353"
                       >
                         Ignore
-                      </div>
+                      </div> -->
                     </div>
                     <div
                       class="row m-0 align-items-center"
@@ -231,12 +239,12 @@
                         Reniew
                       </div>
 
-                      <div
+                      <!-- <div
                         class="btn ml-2"
                         style="padding: 5px 10px; background: #ff5353"
                       >
                         Ignore
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -251,14 +259,14 @@
                 >
                 </mat-paginator>
 
-                <div class="row m-0 w-100 mt-1 justify-content-end">
+                <!-- <div class="row m-0 w-100 mt-1 justify-content-end">
                   <div
                     class="btn"
                     style="padding: 5px 15px; background: #313a46"
                   >
                     Clear All
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

@@ -100,6 +100,7 @@ import "hammerjs";
 import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialog";
 import { AdminPayments } from "app/admin-payments/admin-payments";
 import { LoadingTableAdminPayments } from "app/components/loading-table-admin-payments/loading-table-admin-payments";
+import { AllLeasesRemindersComponent } from "app/admin-lease-reminders/admin-lease-reminders";
 
 @NgModule({
   imports: [
@@ -203,6 +204,7 @@ import { LoadingTableAdminPayments } from "app/components/loading-table-admin-pa
     AllUsersComponent,
     BackButtonDirective,
     AllLeasesComponent,
+    AllLeasesRemindersComponent,
     Announcements,
     PaginatorDialog,
     // AdminStaffs,

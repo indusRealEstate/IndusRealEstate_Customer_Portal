@@ -69,7 +69,8 @@ export class NavbarComponent implements OnInit {
       return "assets/img/svg/sidebar/menu.svg";
     } else if (
       titlee.split("?")[0] == "/contracts" ||
-      titlee.split("?")[0] == "/contract-details"
+      titlee.split("?")[0] == "/contract-details" ||
+      titlee.split("?")[0] == "/contracts-reminders" 
     ) {
       return "assets/img/svg/sidebar/lease.svg";
     } else if (titlee.split("?")[0] == "/user-chats") {
@@ -110,7 +111,8 @@ export class NavbarComponent implements OnInit {
       return "Requests";
     } else if (
       titlee.split("?")[0] == "/contracts" ||
-      titlee.split("?")[0] == "/contract-details"
+      titlee.split("?")[0] == "/contract-details" ||
+      titlee.split("?")[0] == "/contracts-reminders"
     ) {
       return "Lease Management";
     } else if (titlee.split("?")[0] == "/user-chats") {
@@ -141,6 +143,8 @@ export class NavbarComponent implements OnInit {
         return "All Users";
       case "/contracts":
         return "All Lease Contracts";
+      case "/contracts-reminders":
+        return "Contracts Reminders";
       case "/requests":
         return "Maintenance Requests";
       case "/request-category":

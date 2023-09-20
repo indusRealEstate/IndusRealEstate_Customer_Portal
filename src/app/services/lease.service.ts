@@ -133,12 +133,44 @@ export class LeaseService {
       );
   }
 
+  getallContractsRemindersSearch(input: string, limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_contracts_reminders_search.php`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getallContractsSearchPageChange(
     input: string,
     limit: number,
     pageNumber: number
   ) {
     const url = `${API_URL}/get_contracts_page_change_search.php`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ input: input, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallContractsRemindersSearchPageChange(
+    input: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_contracts_reminders_search_page_change.php`;
     return this.http
       .post<any>(
         url,
@@ -165,12 +197,44 @@ export class LeaseService {
       );
   }
 
+  getallContractsRemindersFilter(filter: string, limit: number, pageNumber: number) {
+    const url = `${API_URL}/get_contracts_reminders_filter.php`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ filter: filter, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getallContractsFilterPageChange(
     filter: string,
     limit: number,
     pageNumber: number
   ) {
     const url = `${API_URL}/get_all_contracts_by_filter_page_change.php`;
+    return this.http
+      .post<any>(
+        url,
+        JSON.stringify({ filter: filter, limit: limit, pageNumber: pageNumber })
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  getallContractsRemindersFilterPageChange(
+    filter: string,
+    limit: number,
+    pageNumber: number
+  ) {
+    const url = `${API_URL}/get_contracts_reminders_filter_page_change.php`;
     return this.http
       .post<any>(
         url,

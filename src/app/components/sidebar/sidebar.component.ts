@@ -94,8 +94,14 @@ export const REQUESTSROUTEADMIN: RouteInfo[] = [
 export const LEASEROUTEADMIN: RouteInfo[] = [
   {
     path: "/contracts",
-    title: "All Lease Contracts",
+    title: "All Contracts",
     icon: "assets/img/svg/sidebar/lease-2.svg",
+    class: "",
+  },
+  {
+    path: "/contracts-reminders",
+    title: "Contracts Reminders",
+    icon: "assets/img/svg/sidebar/reminder.svg",
     class: "",
   },
 ];
