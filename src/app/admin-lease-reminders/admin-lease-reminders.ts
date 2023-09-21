@@ -10,6 +10,7 @@ import { EditLeaseDialog } from "app/components/edit_lease_dialog/edit_lease_dia
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { ReniewContractDialog } from "app/components/reniew-contract-dialog/reniew-contract-dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
+import { ViewCreatedUserDetailsDialog } from "app/components/view-created-user-details-dialog/view-created-user-details-dialog";
 import { AuthenticationService } from "app/services/authentication.service";
 import { LeaseService } from "app/services/lease.service";
 
@@ -85,6 +86,20 @@ export class AllLeasesRemindersComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  viewCreatedDetails(lease) {
+    this.dialog
+      .open(ViewCreatedUserDetailsDialog, {
+        width: "50%",
+        data: {
+          details: lease,
+          type: "contract",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+    // console.log(prop);
   }
 
   openSnackBar(message: string, action: string) {

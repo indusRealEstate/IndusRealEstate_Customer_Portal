@@ -414,7 +414,7 @@ export class EditLeaseDialog implements OnInit {
               last()
             )
             .subscribe((v) => {
-              console.log(v);
+              console.log(v, 'payment added');
             });
         }
       });

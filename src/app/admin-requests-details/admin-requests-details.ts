@@ -7,6 +7,8 @@ import { DialogViewMedia } from "app/components/view_media/view_media";
 import { AuthenticationService } from "app/services/authentication.service";
 import { RequestService } from "app/services/request.service";
 import { OtherServices } from "./../services/other.service";
+import { DownloadService } from "app/services/download.service";
+import * as FileSaver from "file-saver";
 //  import { FormsModule } from "@angular/forms";
 interface Staff {
   value: string;
@@ -88,6 +90,7 @@ export class AdminRequestsDetails implements OnInit {
     private requestService: RequestService,
     private otherServices: OtherServices,
     private authenticationService: AuthenticationService,
+    private downloadService: DownloadService,
     private readonly route: ActivatedRoute,
     public http: HttpClient,
     public dialog: MatDialog
@@ -215,14 +218,6 @@ export class AdminRequestsDetails implements OnInit {
     constainer.style.display = "none";
   }
 
-  downloadDoc() {
-    if (this.selectImage != "") {
-      window.open(
-        `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/${this.selectImage}`
-      );
-    }
-  }
-
   navigateToUnit(unit) {
     this.router.navigate(["/property-unit-details"], {
       queryParams: { unit_id: unit },
@@ -243,6 +238,7 @@ export class AdminRequestsDetails implements OnInit {
         height: "75vh",
         width: "75vw",
         data: {
+          id: this.all_data.main_request_id,
           link: `https://indusre.app/api/mobile_app/upload/service-request/${this.all_data.main_request_id}/`,
           data: data,
         },
@@ -392,21 +388,18 @@ export class AdminRequestsDetails implements OnInit {
     //       day: "2-digit",
     //     }).format(this.assign_date);
     //     let selected_date = this.assign_date.toLocaleDateString("en-US");
-
     //     let data = {
     //       id: this.all_data.main_request_id,
     //       name: this.select_staff,
     //       date: format,
     //       time: this.selected_time,
     //     };
-
     //     this.appAdminService
     //       .assignStaff(JSON.stringify(data))
     //       .subscribe((value: any) => {
     //         console.log(value);
     //         this.maintenance_staff = value.data;
     //       });
-
     //     this.reassign = false;
     //   }
     // }

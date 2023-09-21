@@ -10,6 +10,7 @@ import { EditPaymentDialog } from "app/components/edit_payment_dialog/edit_payme
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { PaymentDetailsDialog } from "app/components/payment-details-dialog/payment-details-dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
+import { ViewCreatedUserDetailsDialog } from "app/components/view-created-user-details-dialog/view-created-user-details-dialog";
 import { AuthenticationService } from "app/services/authentication.service";
 import { PaymentService } from "app/services/payment.service";
 
@@ -80,6 +81,20 @@ export class AdminPayments implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  viewCreatedDetails(payment) {
+    this.dialog
+      .open(ViewCreatedUserDetailsDialog, {
+        width: "50%",
+        data: {
+          details: payment,
+          type: "payment",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+    // console.log(prop);
   }
 
   openSnackBar(message: string, action: string) {

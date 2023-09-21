@@ -12,6 +12,7 @@ import { UserService } from "app/services/user.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
+import { formatDate } from "@angular/common";
 
 @Component({
   // standalone: true,
@@ -212,6 +213,7 @@ export class AddUserDialog implements OnInit {
   }
 
   setupData(random_id: any, docs_names: any[]): string {
+    var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       user_id: random_id,
       name: this.user_name,
@@ -232,7 +234,8 @@ export class AddUserDialog implements OnInit {
       profile_img:
         this.imgFileUploaded != undefined ? this.imgFileUploaded.name : "",
       documents: JSON.stringify(docs_names),
-      joined_date: new Date(),
+      joined_date: timeStamp,
+      created_user_id: JSON.parse(localStorage.getItem("currentUser")).id,
     };
 
     return JSON.stringify(data);

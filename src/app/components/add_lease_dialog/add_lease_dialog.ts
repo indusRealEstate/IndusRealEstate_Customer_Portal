@@ -18,6 +18,7 @@ import { CountryDropdown } from "../country-dropdown/country-dropdown";
 import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
 import { AddPaymentDialog } from "../add_payment_dialog/add_payment_dialog";
 import { PaymentService } from "app/services/payment.service";
+import { formatDate } from "@angular/common";
 
 @Component({
   // standalone: true,
@@ -321,6 +322,7 @@ export class AddLeaseDialog implements OnInit {
   setupData(random_id: any, docs_names: any[]): string {
     const start = new Date(this.contract_start_date);
     const end = new Date(this.contract_end_date);
+    var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       contract_id: random_id,
       property_id: this.selected_property.id,
@@ -362,6 +364,8 @@ export class AddLeaseDialog implements OnInit {
       dewa: this.dewa == false ? 0 : 1,
       chiller: this.chiller == false ? 0 : 1,
       gas: this.gas == false ? 0 : 1,
+      created_date: timeStamp,
+      created_user_id: JSON.parse(localStorage.getItem("currentUser")).id,
     };
 
     return JSON.stringify(data);

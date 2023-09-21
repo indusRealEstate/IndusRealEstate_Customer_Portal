@@ -13,6 +13,7 @@ import { UnitsService } from "app/services/units.service";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { PaginatorDialog } from "app/components/paginator-dialog/paginator-dialog";
 import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
+import { ViewCreatedUserDetailsDialog } from "app/components/view-created-user-details-dialog/view-created-user-details-dialog";
 
 @Component({
   selector: "admin-properties-units",
@@ -94,6 +95,20 @@ export class AdminPropertiesUnits implements OnInit {
         authenticationService.logout();
       }
     });
+  }
+
+  viewCreatedDetails(unit) {
+    this.dialog
+      .open(ViewCreatedUserDetailsDialog, {
+        width: "50%",
+        data: {
+          details: unit,
+          type: "unit",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+    // console.log(prop);
   }
 
   selectProperty() {

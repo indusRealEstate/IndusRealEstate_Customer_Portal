@@ -16,6 +16,7 @@ import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { CountryDropdown } from "../country-dropdown/country-dropdown";
 import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
+import { formatDate } from "@angular/common";
 
 @Component({
   // standalone: true,
@@ -452,6 +453,7 @@ export class AddPaymentDialog implements OnInit {
   }
 
   setupData(random_id: any, docs_names: any[]): string {
+    var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       payment_id: random_id,
       tenant_id: this.tenant_data.id,
@@ -464,8 +466,9 @@ export class AddPaymentDialog implements OnInit {
       payment_method: this.payment_method,
       no_of_cheques: this.no_of_cheques,
       documents: JSON.stringify(docs_names),
-      date: new Date(),
+      date: timeStamp,
       method_details: this.getMethodDetails(this.payment_method),
+      created_user_id: JSON.parse(localStorage.getItem("currentUser")).id,
     };
 
     return JSON.stringify(data);

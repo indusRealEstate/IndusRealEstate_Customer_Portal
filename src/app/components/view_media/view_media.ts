@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { DownloadService } from "app/services/download.service";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "app_dialog_view_media",
@@ -26,6 +27,7 @@ export class DialogViewMedia implements OnInit {
     "webm",
   ];
   link: string = "";
+  req_id: string = "";
   all_data: any;
   image_loaded: boolean = false;
 
@@ -36,6 +38,7 @@ export class DialogViewMedia implements OnInit {
   ) {
     this.all_data = data;
     this.link = this.all_data.link;
+    this.req_id = this.all_data.id;
 
     console.log(data);
   }
@@ -55,14 +58,12 @@ export class DialogViewMedia implements OnInit {
   }
 
   downloadItem(data: any, type: string, file: string) {
-    // this.downloadService
-    //   .downloadFile(
-    //     `https://www.indusre.app/api/mobile_app/upload/service-request/${this.all_data.lease_contract_id}/documents/${this.selectDoc}`
-    //   )
-    //   .subscribe((res: Blob) => {
-    //     console.log(res);
-    //     FileSaver.saveAs(res, this.selectDoc);
-    //   });
+    // console.log(data);
+    this.downloadService
+      .downloadRequestMedia(`${this.req_id}/${file}`)
+      .subscribe((res: any) => {
+        FileSaver.saveAs(res, file);
+      });
   }
 
   checkImageLoaded(data: any) {

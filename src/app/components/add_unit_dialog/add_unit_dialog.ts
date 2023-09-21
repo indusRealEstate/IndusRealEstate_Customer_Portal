@@ -15,6 +15,7 @@ import { UnitsService } from "app/services/units.service";
 import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 import { PaginatorDialog } from "../paginator-dialog/paginator-dialog";
+import { formatDate } from "@angular/common";
 
 interface DropDownButtonModel {
   value: string;
@@ -373,6 +374,7 @@ export class AddUnitDialog implements OnInit {
   }
 
   setupData(random_id: any, images_names: any[], docs_names: any[]): string {
+    var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       unit_id: random_id,
       unit_no: this.unit_number,
@@ -403,6 +405,8 @@ export class AddUnitDialog implements OnInit {
       amenties: JSON.stringify(this.amenties),
       user_id: this.owner != undefined ? this.owner.id : "",
       description: this.unit_description,
+      created_date: timeStamp,
+      created_user_id: JSON.parse(localStorage.getItem("currentUser")).id,
     };
 
     return JSON.stringify(data);

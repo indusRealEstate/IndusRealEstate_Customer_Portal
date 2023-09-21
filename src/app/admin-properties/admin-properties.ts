@@ -9,6 +9,7 @@ import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditPropertyDialog } from "app/components/edit_property_dialog/edit_property_dialog";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
+import { ViewCreatedUserDetailsDialog } from "app/components/view-created-user-details-dialog/view-created-user-details-dialog";
 import { AuthenticationService } from "app/services/authentication.service";
 import { PropertiesService } from "app/services/properties.service";
 
@@ -92,6 +93,20 @@ export class AdminProperties implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  viewCreatedDetails(prop) {
+    this.dialog
+      .open(ViewCreatedUserDetailsDialog, {
+        width: "50%",
+        data: {
+          details: prop,
+          type: "property",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+    // console.log(prop);
   }
 
   deleteProperty(prop_id: any) {

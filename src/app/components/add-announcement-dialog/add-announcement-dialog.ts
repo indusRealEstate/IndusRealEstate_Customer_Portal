@@ -176,6 +176,7 @@ export class AddAnnouncementDialog implements OnInit {
       attachments: JSON.stringify(docs_names),
       description: this.description,
       date: timeStamp,
+      created_user_id: JSON.parse(localStorage.getItem("currentUser")).id,
     };
 
     return JSON.stringify(data);

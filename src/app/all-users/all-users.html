@@ -384,6 +384,24 @@
                     </div>
                   </button>
                   <button
+                    class="mat-mdc-menu-item-details"
+                    mat-menu-item
+                    *ngIf="element.created_user_id != ''"
+                    (click)="viewCreatedDetails(element)"
+                  >
+                    <div class="row m-0 justify-content-between">
+                      <span style="color: #c89914">Details</span>
+                      <img
+                        src="assets/img/svg/info-circle.svg"
+                        alt
+                        style="
+                          filter: invert(68%) sepia(13%) saturate(2701%)
+                            hue-rotate(5deg) brightness(110%) contrast(66%);
+                        "
+                      />
+                    </div>
+                  </button>
+                  <button
                     *ngIf="element.user_type == 'new_user'"
                     mat-menu-item
                     (click)="deleteUser(element.user_id)"

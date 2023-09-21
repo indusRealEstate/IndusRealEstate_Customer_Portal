@@ -9,6 +9,7 @@ import { CautionDialog } from "app/components/caution-dialog/caution-dialog";
 import { EditUserDialog } from "app/components/edit_user_dialog/edit_user_dialog";
 import { GenerateExcelDialog } from "app/components/generate_excel/generate_excel";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
+import { ViewCreatedUserDetailsDialog } from "app/components/view-created-user-details-dialog/view-created-user-details-dialog";
 import { AuthenticationService } from "app/services/authentication.service";
 import { UserService } from "app/services/user.service";
 import * as XLSX from "xlsx-js-style";
@@ -102,6 +103,20 @@ export class AllUsersComponent implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  viewCreatedDetails(user) {
+    this.dialog
+      .open(ViewCreatedUserDetailsDialog, {
+        width: "50%",
+        data: {
+          details: user,
+          type: "user",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+    // console.log(prop);
   }
 
   deleteUser(user_id: any) {

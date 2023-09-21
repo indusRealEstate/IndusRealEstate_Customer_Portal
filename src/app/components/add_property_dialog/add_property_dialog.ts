@@ -1,3 +1,4 @@
+import { formatDate } from "@angular/common";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {
   Component,
@@ -7,11 +8,8 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AdminService } from "app/services/admin.service";
 import { PropertiesService } from "app/services/properties.service";
-import { UnitsService } from "app/services/units.service";
-import { UserService } from "app/services/user.service";
-import { catchError, last, map, tap } from "rxjs";
+import { last, map, tap } from "rxjs";
 import * as uuid from "uuid";
 
 interface DropDownButtonModel {
@@ -213,6 +211,7 @@ export class AddPropertyDialog implements OnInit {
   }
 
   setupData(random_id: any, images_names: any[], docs_names: any[]): string {
+    var timeStamp = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss", "en");
     var data = {
       property_id: random_id,
       property_name: this.property_name,
@@ -224,6 +223,8 @@ export class AddPropertyDialog implements OnInit {
       images: JSON.stringify(images_names),
       documents: JSON.stringify(docs_names),
       description: this.property_description,
+      created_date: timeStamp,
+      created_user_id: JSON.parse(localStorage.getItem("currentUser")).id,
     };
 
     return JSON.stringify(data);

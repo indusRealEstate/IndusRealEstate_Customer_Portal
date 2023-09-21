@@ -1,0 +1,65 @@
+<div class="card m-0" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="card-body" style="padding: 1.5rem 1.5rem">
+    <div
+      *ngIf="isContentLoading"
+      class="d-flex justify-content-center align-items-center"
+      style="height: 10rem"
+    >
+      <span class="spinner-border spinner-border-m mr-2" style="color: #d4aa32">
+      </span>
+    </div>
+    <div class="col p-0" *ngIf="!isContentLoading">
+      <div class="row m-0 justify-content-between">
+        <p style="font-weight: 500; color: #3c4858b5; font-size: 0.87rem">
+          {{type | titlecase}} Created Details
+        </p>
+        <img
+          matTooltip="Close"
+          matTooltipClass="tooltip"
+          matTooltipPosition="above"
+          (click)="onCloseDialog()"
+          class="close-icon"
+          src="assets/img/svg/req-details/close-circle.svg"
+          alt=""
+        />
+      </div>
+      <div
+        class="card m-0"
+        style="box-shadow: none; border: 1px solid #e6ebf1; padding: 15px 15px"
+      >
+        <div class="row m-0 mt-2">
+          <div class="col pl-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Created User
+            </p>
+            <span style="font-weight: 400">
+              {{user_data.firstname | titlecase}}
+            </span>
+          </div>
+          <div class="col pr-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Username
+            </p>
+            <span style="font-weight: 400"> {{user_data.username}} </span>
+          </div>
+        </div>
+        <div class="row m-0 mt-3">
+          <div class="col pl-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Created Date
+            </p>
+            <span style="font-weight: 400">
+              {{created_time | date:'M/d/y'}}
+            </span>
+          </div>
+          <div class="col pr-0">
+            <p class="mb-0" style="font-size: 15px; font-weight: 600">
+              Created Time
+            </p>
+            <span style="font-weight: 400"> {{created_time | date:'h:mm:ss a'}} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

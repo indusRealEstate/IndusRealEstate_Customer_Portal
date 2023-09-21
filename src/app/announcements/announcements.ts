@@ -8,6 +8,7 @@ import { AddAnnouncementDialog } from "app/components/add-announcement-dialog/ad
 import { AnnouncementDetailsDialog } from "app/components/announcement-details-dialog/announcement-details-dialog";
 import { EditAnnouncementDialog } from "app/components/edit_announcement_dialog/edit_announcement_dialog";
 import { TableSearchBarComponent } from "app/components/searchbar-table/searchbar-table";
+import { ViewCreatedUserDetailsDialog } from "app/components/view-created-user-details-dialog/view-created-user-details-dialog";
 import { AnnouncementService } from "app/services/announcement.service";
 import { AuthenticationService } from "app/services/authentication.service";
 import { FirebaseService } from "app/services/firebase.service";
@@ -69,6 +70,20 @@ export class Announcements implements OnInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
+  }
+
+  viewCreatedDetails(ann) {
+    this.dialog
+      .open(ViewCreatedUserDetailsDialog, {
+        width: "50%",
+        data: {
+          details: ann,
+          type: "announcement",
+        },
+      })
+      .afterClosed()
+      .subscribe((res) => {});
+    // console.log(prop);
   }
 
   refreshTable() {

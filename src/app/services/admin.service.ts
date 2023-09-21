@@ -52,6 +52,15 @@ export class AdminService {
     );
   }
 
+  getAdminDetails(data: any) {
+    const url = `${API_URL}/get_admin_details.php`;
+    return this.http.post(url, data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   getDataForExcel(data: any) {
     const url = `${API_URL}/get_all_data_for_excel.php`;
     const req = new HttpRequest("POST", url, data, {
